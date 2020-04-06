@@ -17,7 +17,7 @@
 import os
 import subprocess
 from typing import Iterable, List
-from matrix import Config
+from matrixctl import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

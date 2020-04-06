@@ -18,7 +18,7 @@ import json
 from logging import debug, error
 from typing import Optional
 import requests
-from matrix import Config, __version__
+from matrixctl import Config, __version__
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

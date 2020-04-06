@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# matrixctl
+# matrixctl.py
 # Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -14,19 +14,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from matrix import Config, git_pull
+import sys
+from matrixctl.application import main
 
-__author__: str = "Michael Sasser"
-__email__: str = "Michael@MichaelSasser.org"
-
-
-__all__ = [
-    "update",
-]
-
-
-def update(_, cnf: Config, ___):
-    git_pull(cnf)
-
+if __name__ == "__main__":
+    sys.exit(main())
 
 # vim: set ft=python :

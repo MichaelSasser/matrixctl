@@ -48,6 +48,10 @@ black = { version = "*", allow-prereleases = true }
 # pyls-isort = "^0.1.1"
 # pyls-black = "^0.4.4"
 
+
+[tool.poetry.scripts]
+matrixctl = "matrixctl.application:main"
+
 [tool.black]
 line-length = 79
 include = '\.pyi?$'

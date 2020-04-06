@@ -19,7 +19,7 @@ import git
 import datetime
 
 from logging import debug
-from matrix import Config
+from matrixctl import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

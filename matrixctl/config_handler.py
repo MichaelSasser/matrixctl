@@ -22,7 +22,7 @@ from typing import Tuple
 from pathlib import Path
 from logging import debug, fatal
 
-from matrix import HOME
+from matrixctl import HOME
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

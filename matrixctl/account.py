@@ -19,7 +19,7 @@ import string
 import getpass
 import secrets
 from typing import Optional
-from matrix import ansible_synapse
+from matrixctl import ansible_synapse
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

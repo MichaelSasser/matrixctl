@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# matrixctl.py
+# matrixctl
 # Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -16,12 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import argparse
-from logging import basicConfig as loggingBasicConfig
-from logging import DEBUG, WARN, debug, warning
+from logging import debug, warning
 
 import coloredlogs
 
-from matrix import (
+from matrixctl import (
     Config,
     Api,
     maintainance,
@@ -39,7 +38,7 @@ __email__: str = "Michael@MichaelSasser.org"
 # API: https://github.com/matrix-org/synapse/blob/master/docs/admin_api/user_admin_api.rst
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument(
