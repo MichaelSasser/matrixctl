@@ -1,0 +1,88 @@
+[tool.poetry]
+name = "matrixctl"
+version = "0.1.0"
+description = "Controls a synapse oci-container instance via ansible"
+license = "GPL-3.0+"
+readme = "README.md"
+repository = "https://github.com/MichaelSasser/matrixctl"
+homepage = "https://github.com/MichaelSasser/matrixctl"
+documentation = "https://github.com/MichaelSasser/matrixctl"
+keywords = ['Matrix', 'Synapse', 'Docker', 'OCI-Container']
+authors = ["Michael Sasser <Michael@MichaelSasser.org>"]
+# Look here for all Classifiers:
+# https://pypi.python.org/pypi?%3Aaction=list_classifiers
+classifiers = [
+    # 'Development Status :: 3 - Alpha',
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Environment :: Win32 (MS Windows)",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Other Audience",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Other/Nonlisted Topic",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.23.0"
+GitPython = "^3.1.0"
+coloredlogs = "^14.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5"
+flake8 = "^3.7"
+neovim = "^0.3.1"
+pydocstyle = "^4.0"
+pylint = "^2.4"
+pycodestyle = "^2.5"
+yapf = "^0.29.0"
+vulture = "^1.2"
+mypy = "^0.750.0"
+python-language-server = {version = "^0.31.9", extras = ["all"]}
+black = { version = "*", allow-prereleases = true }
+# pyls-mypy = "^0.1.8"
+# pyls-isort = "^0.1.1"
+# pyls-black = "^0.4.4"
+
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+# exclude __init__.py because of ordered importing
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.github
+  | \.mypy_cache
+  | \.venv
+  | _build
+  | build
+  | dist
+  | __init__.py
+)
+'''
+
+# [tool.flake8]
+# disable=F403
+
+[tool.isort]
+line_length = 79
+force_single_line = true
+atomic = true
+include_trailing_comma = true
+lines_after_imports = 2
+lines_between_types = 1
+multi_line_output = 3
+use_parentheses = true
+# not_skip = "__init__.py"
+# skip_glob = ["*/setup.py"]
+filter_files = true
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
