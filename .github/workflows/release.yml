@@ -50,7 +50,7 @@ jobs:
           # The target directory for distribution
           # packages_dir: # optional, default is dist
       - name: Zip project
-        run: zip --junk-paths "matrixctl-${{ github.ref }}.zip"  dist/* README.md LICENSE.txt
+        run: zip --junk-paths matrixctl.zip  dist/* README.md LICENSE.txt
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -68,6 +68,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "./matrixctl-${{ github.ref }}.zip"
-          asset_name: "matrixctl-${{ github.ref }}.zip"
+          asset_path: ./matrixctl.zip
+          asset_name: matrixctl.zip
           asset_content_type: application/zip
