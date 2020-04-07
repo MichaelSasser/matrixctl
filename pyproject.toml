@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.1.1"
+version = "0.1.2"
 description = "Controls a synapse oci-container instance via ansible"
 license = "GPL-3.0+"
 readme = "README.md"
@@ -26,6 +26,7 @@ requests = "^2.23.0"
 GitPython = "^3.1.0"
 coloredlogs = "^14.0"
 argcomplete = "^1.11.1"
+tabulate = "^0.8.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5"

@@ -27,7 +27,7 @@ from .config_handler import Config
 from .api_handler import Api
 from .housekeeping import maintainance
 from .updating import update
-from .account import adduser, deluser
+from .account import adduser, deluser, list_users
 from .provisioning import deploy
 
 
@@ -62,6 +62,16 @@ def main():
         "--ansible", action="store_true", help="Use ansible insted of the api"
     )
     adduser_parser.set_defaults(func=adduser)
+
+    # list-users
+    list_users_parser = subparsers.add_parser("list-users", help="Lists users")
+    list_users_parser.add_argument(
+        "-g", "--guests", action="store_true", help="Shows the users"
+    )
+    list_users_parser.add_argument(
+        "-b", "--no-bots", action="store_true", help="Hide bots"
+    )
+    list_users_parser.set_defaults(func=list_users)
 
     # deluser
     deluser_parser = subparsers.add_parser("deluser", help="Deletes a user")
