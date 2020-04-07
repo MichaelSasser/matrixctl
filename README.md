@@ -13,11 +13,12 @@ it is also useful for someone else.
 
 ```
 # matrixctl
-usage: matrixctl [-h] [--version] [-d] {adduser,deluser,deploy,update,maintainance} ...
+usage: matrixctl [-h] [--version] [-d] {adduser,list-users,deluser,deploy,update,maintainance} ...
 
 positional arguments:
-  {adduser,deluser,deploy,update,maintainance}
+  {adduser,list-users,deluser,deploy,update,maintainance}
     adduser             Add a user
+    list-users          Lists users
     deluser             Deletes a user
     deploy              Provision and deploy
     update              Updates the ansible repo

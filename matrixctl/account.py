@@ -18,6 +18,9 @@ import string
 import getpass
 import secrets
 from typing import Optional
+from tabulate import tabulate
+from .ansible_handler import ansible_synapse
+from .config_handler import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -25,6 +28,9 @@ __email__: str = "Michael@MichaelSasser.org"
 
 SPECIAL = "!\"§$%&/()=?.,;:_-#'+*~{}[]`´°^@<>|\\"
 ALPHABET = string.ascii_letters + string.digits + SPECIAL
+
+
+BOTS = {"whatsapp_", "whatsappbot", "telegram_", "telegrambot"}
 
 
 def ask_password() -> Optional[str]:
@@ -62,7 +68,7 @@ def ask_question(question: str = "Is everything ok?") -> True:
     return answer in ("y", "j")
 
 
-def adduser(arg, cfg, adminapi):
+def adduser(arg, cfg: Config, adminapi):
     """Adds a User to the synapse instance"""
 
     while True:
@@ -101,8 +107,47 @@ def adduser(arg, cfg, adminapi):
         adminapi.adduser(arg.user, arg.passwd, arg.admin)
 
 
-def deluser(arg, _, adminapi):
+def deluser(arg, _: Config, adminapi):
     adminapi.deluser(arg.user)
+
+
+def list_users(arg, cfg: Config, adminapi):
+    len_domain = len(cfg.api_domain) + 1  # 1 for :
+    from_user: int = 0
+    users: list = []
+
+    while True:
+        lst = adminapi.list_users(from_user, show_guests=arg.guests).json()
+
+        users += lst["users"]
+        try:
+            from_user = lst["next_token"]
+        except KeyError:
+            break
+
+    user_list: list = []
+
+    for user in users:
+        name = user["name"][1:-len_domain]
+        no_passwd_hash: bool = user["password_hash"] == ""
+        deactivated: bool = bool(int(user["deactivated"]))
+        admin: bool = bool(int(user["admin"]))
+        guest: bool = bool(int(user["is_guest"]))
+
+        # if no_bots and any([name.startswith(bot) for bot in BOTS]):
+        #     continue
+
+        if arg.no_bots and no_passwd_hash:
+            continue
+
+        user_list.append((name, deactivated, admin, guest,))
+    print(
+        tabulate(
+            user_list,
+            headers=("Name", "Deactivated", "Is Admin", "Is Guest"),
+            tablefmt="psql",
+        )
+    )
 
 
 # vim: set ft=python :
