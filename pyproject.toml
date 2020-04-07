@@ -12,17 +12,11 @@ authors = ["Michael Sasser <Michael@MichaelSasser.org>"]
 # Look here for all Classifiers:
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
 classifiers = [
-    # 'Development Status :: 3 - Alpha',
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 3 - Alpha",
     "Environment :: Console",
-    "Environment :: Win32 (MS Windows)",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Other Audience",
     "Natural Language :: English",
-    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.8",
-    "Topic :: Other/Nonlisted Topic",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
 ]
 
@@ -45,10 +39,6 @@ vulture = "^1.2"
 mypy = "^0.750.0"
 python-language-server = {version = "^0.31.9", extras = ["all"]}
 black = { version = "*", allow-prereleases = true }
-# pyls-mypy = "^0.1.8"
-# pyls-isort = "^0.1.1"
-# pyls-black = "^0.4.4"
-
 
 [tool.poetry.scripts]
 matrixctl = "matrixctl.application:main"
@@ -67,12 +57,8 @@ exclude = '''
   | _build
   | build
   | dist
-  | __init__.py
 )
 '''
-
-# [tool.flake8]
-# disable=F403
 
 [tool.isort]
 line_length = 79

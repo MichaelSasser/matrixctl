@@ -1,3 +1,5 @@
+![GitHub](https://img.shields.io/github/license/MichaelSasser/matrixctl?style=flat-square)
+
 # MatrixCtl
 
 MatrixCtl is a python program to control, manage, provision and deploy our
@@ -10,8 +12,8 @@ trick for now. I will continue to port the rest of the scripts. Maybe
 it is also useful for someone else.
 
 ```
-# ./matrixctl.py
-usage: matrixctl.py [-h] [--version] [-d] {adduser,deluser,deploy,update,maintainance} ...
+# matrixctl
+usage: matrixctl [-h] [--version] [-d] {adduser,deluser,deploy,update,maintainance} ...
 
 positional arguments:
   {adduser,deluser,deploy,update,maintainance}
@@ -37,16 +39,16 @@ To use this program you need to have this config file in
 # The absolute path to the fully configured matrix-docker-ansible-deploy
 # playbook.
 
-MatrixDockerAnsibleDeployPath=/absolut/path/to/matrix-docker-ansible-deploy
+MatrixDockerAnsibleDeployPath="/absolut/path/to/matrix-docker-ansible-deploy"
 
 [SERVER]
 # If you have your own playbook, to provision your matrix server, you can
 # fill out the server section. matrixctl will run it before the
 # matrix-docker-ansible-deploy playbook.
 
-# AnsibleCfg=/absolut/path/to/ansible.cfg
-# AnsiblePlaybook=/absolut/path/to/site.yml
-# AnsibleTags=MyTag,MyOtherTag
+# AnsibleCfg="/absolut/path/to/ansible.cfg"
+# AnsiblePlaybook="/absolut/path/to/site.yml"
+# AnsibleTags="MyTag,MyOtherTag"
 
 [API]
 # If your matrix server is deployed, you may want to fill out the API section.
@@ -55,8 +57,8 @@ MatrixDockerAnsibleDeployPath=/absolut/path/to/matrix-docker-ansible-deploy
 # "matrixctl adduser --ansible YourUsername" and add your privileges after
 # that.
 
-# Domain=domain.tld
-# Token=MyMatrixToken
+# Domain="domain.tld"
+# Token="MyMatrixToken"
 ```
 
 ## License

@@ -147,16 +147,6 @@ class Config:
 
     @property
     @error_if_not_available
-    def api_user(self) -> str:
-        return self.config_api["Username"]
-
-    @property
-    @error_if_not_available
-    def api_password(self) -> str:
-        return self.config_api["Password"]
-
-    @property
-    @error_if_not_available
     def api_token(self) -> str:
         return self.config_api["Token"]
 
