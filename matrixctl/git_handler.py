@@ -15,19 +15,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # import configparser
-import git
 import datetime
-
 from logging import debug
-from matrixctl import Config
+
+import git
+
+from .config_handler import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
-
-
-__all__ = [
-    "git_pull",
-]
 
 
 def git_pull(cnf: Config):

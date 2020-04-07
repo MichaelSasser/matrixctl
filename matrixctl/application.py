@@ -20,16 +20,13 @@ from logging import debug, warning
 
 import coloredlogs
 
-from matrixctl import (
-    Config,
-    Api,
-    maintainance,
-    update,
-    adduser,
-    deluser,
-    deploy,
-    __version__,
-)
+from matrixctl import __version__
+from .config_handler import Config
+from .api_handler import Api
+from .housekeeping import maintainance
+from .updating import update
+from .account import adduser, deluser
+from .provisioning import deploy
 
 
 __author__: str = "Michael Sasser"

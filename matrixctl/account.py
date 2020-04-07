@@ -14,21 +14,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import os
 import string
 import getpass
 import secrets
 from typing import Optional
-from matrixctl import ansible_synapse
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
-
-
-__all__ = [
-    "adduser",
-    "deluser",
-]
 
 
 SPECIAL = "!\"§$%&/()=?.,;:_-#'+*~{}[]`´°^@<>|\\"

@@ -17,15 +17,14 @@
 import json
 from logging import debug, error
 from typing import Optional
+
 import requests
-from matrixctl import Config, __version__
+
+from matrixctl import __version__
+from .config_handler import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
-
-__all__ = [
-    "Api",
-]
 
 
 class Api:

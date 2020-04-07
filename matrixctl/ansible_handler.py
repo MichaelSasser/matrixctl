@@ -17,15 +17,10 @@
 import os
 import subprocess
 from typing import Iterable, List
-from matrixctl import Config
+from .config_handler import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
-
-__all__ = [
-    "ansible_synapse",
-    "ansible_server",
-]
 
 
 def ansible_server(cfg: Config) -> None:

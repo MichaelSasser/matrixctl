@@ -25,24 +25,3 @@ from pkg_resources import get_distribution
 __version__ = get_distribution("matrixctl").version
 
 HOME: str = str(Path.home())
-
-# Don't mover these up
-from .config_handler import *
-from .ansible_handler import *
-from .api_handler import *
-from .git_handler import *
-from .updating import *
-from .housekeeping import *
-from .account import *
-from .provisioning import *
-
-__all__ = (
-    *config_handler.__all__,
-    *ansible_handler.__all__,
-    *api_handler.__all__,
-    *git_handler.__all__,
-    *updating.__all__,
-    *housekeeping.__all__,
-    *account.__all__,
-    *provisioning.__all__,
-)

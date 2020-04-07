@@ -15,15 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from logging import debug
-from matrixctl import ansible_synapse
+from .ansible_handler import ansible_synapse
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
-
-
-__all__ = [
-    "maintainance",
-]
 
 
 def maintainance(_, cfg, __):

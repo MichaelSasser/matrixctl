@@ -14,15 +14,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from matrixctl import Config, git_pull
+from .config_handler import Config
+from .git_handler import git_pull
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
-
-
-__all__ = [
-    "update",
-]
 
 
 def update(_, cnf: Config, ___):
