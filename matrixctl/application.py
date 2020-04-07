@@ -14,11 +14,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# PYTHON_ARGCOMPLETE_OK
 import sys
 import argparse
 from logging import debug, warning
 
 import coloredlogs
+import argcomplete
 
 from matrixctl import __version__
 from .config_handler import Config
@@ -37,6 +39,7 @@ __email__: str = "Michael@MichaelSasser.org"
 
 def main():
     parser = argparse.ArgumentParser()
+
     parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument(
         "-d", "--debug", action="store_true", help="Enables debugging mode."
@@ -83,6 +86,7 @@ def main():
     )
     maintainance_parser.set_defaults(func=maintainance)
 
+    argcomplete.autocomplete(parser)
     args = parser.parse_args()
 
     coloredlogs.DEFAULT_LOG_FORMAT = (
