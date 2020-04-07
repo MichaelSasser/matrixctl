@@ -1,0 +1,73 @@
+# matrixctl
+# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+---
+name: Upload Release Asset
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install Poetry
+        uses: dschep/install-poetry-action@v1.3
+        with:
+          version: 1.0.5
+      - name: Build project
+        run: poetry build
+      - name: pypi-publish
+        uses: pypa/gh-action-pypi-publish@v1.1.0
+        with:
+          # PyPI user
+          # user: # optional, default is __token__
+          # Password for your PyPI user or an access token
+          password: ${{ secrets.pypi_token }}
+          # The repository URL to use
+          # repository_url: # optional
+          # The target directory for distribution
+          # packages_dir: # optional, default is dist
+      - name: Zip project
+        run: zip --junk-paths "matrixctl-${{ github.ref }}.zip"  dist/* README.md LICENSE.txt
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "./matrixctl-${{ github.ref }}.zip"
+          asset_name: "matrixctl-${{ github.ref }}.zip"
+          asset_content_type: application/zip
