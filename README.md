@@ -24,7 +24,7 @@ Maybe it is also useful for someone else.
 
 This repository uses the
 [git-flow](https://danielkummer.github.io/git-flow-cheatsheet/index.html)
-branching model by [Vincent Driessen] (https://nvie.com/about/).
+branching model by [Vincent Driessen](https://nvie.com/about/).
 It has two branches with infinite lifetime:
 
 * [master](https://github.com/MichaelSasser/matrixctl/tree/master)
