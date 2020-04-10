@@ -40,11 +40,14 @@ but breaking changes may be introduced, even in a minor change.
 
 ```
 # matrixctl
-usage: matrixctl [-h] [--version] [-d] {adduser,list-users,deluser,deploy,update,maintainance} ...
+usage: matrixctl [-h] [--version] [-d]
+              {adduser,adduser-jitsi,deluser-jitsi,list-users,deluser,deploy,update,maintainance} ...
 
 positional arguments:
-  {adduser,list-users,deluser,deploy,update,maintainance}
-    adduser             Add a user
+  {adduser,adduser-jitsi,deluser-jitsi,list-users,deluser,deploy,update,maintainance}
+    adduser             Add a new matrix user
+    adduser-jitsi       Add a new jitsi user
+    deluser-jitsi       Deletes a jitsi user
     list-users          Lists users
     deluser             Deletes a user
     deploy              Provision and deploy

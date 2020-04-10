@@ -21,6 +21,7 @@ from typing import Optional
 from tabulate import tabulate
 from .ansible_handler import ansible_synapse
 from .config_handler import Config
+from .ssh_handler import Ssh
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -107,8 +108,43 @@ def adduser(arg, cfg: Config, adminapi):
         adminapi.adduser(arg.user, arg.passwd, arg.admin)
 
 
+def adduser_jitsi(arg, cfg: Config, _):
+    """Adds a User to the synapse instance"""
+
+    while True:
+        passwd_generated: bool = False
+
+        if arg.passwd is None:
+            arg.passwd = ask_password()
+
+        if arg.passwd == "":
+            arg.passwd = gen_password()
+            passwd_generated = True
+
+        print(f"Username: {arg.user}")
+
+        if passwd_generated:
+            print(f"Password (generated): {arg.passwd}")
+        else:
+            print(f"Password: **HIDDEN**")
+
+        answer = ask_question()
+
+        if answer:
+            break
+        arg.passwd = None
+
+    with Ssh(cfg) as ssh:
+        ssh.adduser(arg.user, arg.passwd)
+
+
 def deluser(arg, _: Config, adminapi):
     adminapi.deluser(arg.user)
+
+
+def deluser_jitsi(arg, cfg: Config, _):
+    with Ssh(cfg) as ssh:
+        ssh.deluser(arg.user)
 
 
 def list_users(arg, cfg: Config, adminapi):

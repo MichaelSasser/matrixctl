@@ -27,7 +27,7 @@ from .config_handler import Config
 from .api_handler import Api
 from .housekeeping import maintainance
 from .updating import update
-from .account import adduser, deluser, list_users
+from .account import adduser, deluser, list_users, adduser_jitsi, deluser_jitsi
 from .provisioning import deploy
 
 
@@ -46,8 +46,11 @@ def main():
     )
     subparsers = parser.add_subparsers()
 
+    ##########################################################################
     # adduser
-    adduser_parser = subparsers.add_parser("adduser", help="Add a user")
+    adduser_parser = subparsers.add_parser(
+        "adduser", help="Add a new matrix user"
+    )
     adduser_parser.add_argument("user", help="The Username of the new user")
     adduser_parser.add_argument(
         "-p",
@@ -63,6 +66,33 @@ def main():
     )
     adduser_parser.set_defaults(func=adduser)
 
+    ##########################################################################
+    # adduser-jitsi
+    adduser_jitsi_parser = subparsers.add_parser(
+        "adduser-jitsi", help="Add a new jitsi user"
+    )
+    adduser_jitsi_parser.add_argument(
+        "user", help="The Username of the new jitsi user"
+    )
+    adduser_jitsi_parser.add_argument(
+        "-p",
+        "--passwd",
+        help="The password of the new jitsi user. (If you don't enter a "
+        "password, you will be asked later.)",
+    )
+    adduser_jitsi_parser.set_defaults(func=adduser_jitsi)
+
+    ##########################################################################
+    # deluser
+    deluser_jitsi_parser = subparsers.add_parser(
+        "deluser-jitsi", help="Deletes a jitsi user"
+    )
+    deluser_jitsi_parser.add_argument(
+        "user", help="The jitsi username to delete"
+    )
+    deluser_jitsi_parser.set_defaults(func=deluser_jitsi)
+
+    ##########################################################################
     # list-users
     list_users_parser = subparsers.add_parser("list-users", help="Lists users")
     list_users_parser.add_argument(
@@ -73,23 +103,27 @@ def main():
     )
     list_users_parser.set_defaults(func=list_users)
 
+    ##########################################################################
     # deluser
     deluser_parser = subparsers.add_parser("deluser", help="Deletes a user")
-    deluser_parser.add_argument("user", help="The Username to delete")
+    deluser_parser.add_argument("user", help="The username to delete")
     deluser_parser.set_defaults(func=deluser)
 
+    ##########################################################################
     # deploy
     deploy_parser = subparsers.add_parser(
         "deploy", help="Provision and deploy"
     )
     deploy_parser.set_defaults(func=deploy)
 
+    ##########################################################################
     # deploy
     update_parser = subparsers.add_parser(
         "update", help="Updates the ansible repo"
     )
     update_parser.set_defaults(func=update)
 
+    ##########################################################################
     # maintainance
     maintainance_parser = subparsers.add_parser(
         "maintainance", help="Run Maintainance tasks"
@@ -102,7 +136,7 @@ def main():
     coloredlogs.DEFAULT_LOG_FORMAT = (
         "%(asctime)s - %(levelname)s - %(message)s"
     )
-    coloredlogs.DEFAULT_LOG_LEVEL = 0 if args.debug else 20
+    coloredlogs.DEFAULT_LOG_LEVEL = 0 if args.debug else 21
     coloredlogs.install()
 
     config = Config()
