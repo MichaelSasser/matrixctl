@@ -25,7 +25,7 @@ import argcomplete
 from matrixctl import __version__
 from .config_handler import Config
 from .api_handler import Api
-from .housekeeping import maintainance
+from .housekeeping import maintainance, restart
 from .updating import update
 from .account import adduser, deluser, list_users, adduser_jitsi, deluser_jitsi
 from .provisioning import deploy
@@ -67,6 +67,16 @@ def main():
     adduser_parser.set_defaults(func=adduser)
 
     ##########################################################################
+    # deluser
+    deluser_jitsi_parser = subparsers.add_parser(
+        "deluser-jitsi", help="Deletes a jitsi user"
+    )
+    deluser_jitsi_parser.add_argument(
+        "user", help="The jitsi username to delete"
+    )
+    deluser_jitsi_parser.set_defaults(func=deluser_jitsi)
+
+    ##########################################################################
     # adduser-jitsi
     adduser_jitsi_parser = subparsers.add_parser(
         "adduser-jitsi", help="Add a new jitsi user"
@@ -84,13 +94,9 @@ def main():
 
     ##########################################################################
     # deluser
-    deluser_jitsi_parser = subparsers.add_parser(
-        "deluser-jitsi", help="Deletes a jitsi user"
-    )
-    deluser_jitsi_parser.add_argument(
-        "user", help="The jitsi username to delete"
-    )
-    deluser_jitsi_parser.set_defaults(func=deluser_jitsi)
+    deluser_parser = subparsers.add_parser("deluser", help="Deletes a user")
+    deluser_parser.add_argument("user", help="The username to delete")
+    deluser_parser.set_defaults(func=deluser)
 
     ##########################################################################
     # list-users
@@ -104,10 +110,11 @@ def main():
     list_users_parser.set_defaults(func=list_users)
 
     ##########################################################################
-    # deluser
-    deluser_parser = subparsers.add_parser("deluser", help="Deletes a user")
-    deluser_parser.add_argument("user", help="The username to delete")
-    deluser_parser.set_defaults(func=deluser)
+    # update
+    update_parser = subparsers.add_parser(
+        "update", help="Updates the ansible repo"
+    )
+    update_parser.set_defaults(func=update)
 
     ##########################################################################
     # deploy
@@ -117,11 +124,18 @@ def main():
     deploy_parser.set_defaults(func=deploy)
 
     ##########################################################################
-    # deploy
-    update_parser = subparsers.add_parser(
-        "update", help="Updates the ansible repo"
+    # restart
+    restart_parser = subparsers.add_parser(
+        "restart", help="Restarts all OCI containers"
     )
-    update_parser.set_defaults(func=update)
+    restart_parser.set_defaults(func=restart)
+
+    ##########################################################################
+    # start
+    start_parser = subparsers.add_parser(
+        "start", help="Starts all OCI containers"
+    )
+    start_parser.set_defaults(func=restart)  # Keep it "restart"
 
     ##########################################################################
     # maintainance
@@ -130,6 +144,8 @@ def main():
     )
     maintainance_parser.set_defaults(func=maintainance)
 
+    ##########################################################################
+    # Parsing
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
 

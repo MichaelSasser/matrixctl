@@ -28,4 +28,9 @@ def maintainance(_, cfg, __):
     )
 
 
+def restart(_, cfg, __):
+    debug(f"restart")
+    ansible_synapse(["--tags=start"], cfg)
+
+
 # vim: set ft=python :
