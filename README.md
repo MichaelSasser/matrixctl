@@ -41,18 +41,22 @@ but breaking changes may be introduced, even in a minor change.
 ```
 # matrixctl
 usage: matrixctl [-h] [--version] [-d]
-              {adduser,adduser-jitsi,deluser-jitsi,list-users,deluser,deploy,update,maintainance} ...
+              {adduser,deluser,adduser-jitsi,deluser-jitsi,list-users,update,deploy,start,restart,maintainance,check}
+              ...
 
 positional arguments:
-  {adduser,adduser-jitsi,deluser-jitsi,list-users,deluser,deploy,update,maintainance}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,list-users,update,deploy,start,restart,maintainance,check}
     adduser             Add a new matrix user
+    deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
     deluser-jitsi       Deletes a jitsi user
     list-users          Lists users
-    deluser             Deletes a user
-    deploy              Provision and deploy
     update              Updates the ansible repo
-    maintainance        Run Maintainance tasks
+    deploy              Provision and deploy
+    start               Starts all OCI containers
+    restart             Restarts all OCI containers (alias for start)
+    maintainance        Run maintainance tasks
+    check               Checks the OCI containers
 
 optional arguments:
   -h, --help            show this help message and exit
