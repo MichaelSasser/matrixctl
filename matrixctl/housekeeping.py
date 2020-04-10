@@ -22,15 +22,20 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 def maintainance(_, cfg, __):
-    debug(f"maintainance")
+    debug("maintainance")
     ansible_synapse(
         ["--tags=run-postgres-synapse-janitor,run-postgres-vacuum,start"], cfg
     )
 
 
 def restart(_, cfg, __):
-    debug(f"restart")
+    debug("restart")
     ansible_synapse(["--tags=start"], cfg)
+
+
+def check(_, cfg, __):
+    debug("check")
+    ansible_synapse(["--tags=check"], cfg)
 
 
 # vim: set ft=python :

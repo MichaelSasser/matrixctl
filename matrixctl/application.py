@@ -25,7 +25,7 @@ import argcomplete
 from matrixctl import __version__
 from .config_handler import Config
 from .api_handler import Api
-from .housekeeping import maintainance, restart
+from .housekeeping import maintainance, restart, check
 from .updating import update
 from .account import adduser, deluser, list_users, adduser_jitsi, deluser_jitsi
 from .provisioning import deploy
@@ -68,13 +68,9 @@ def main():
 
     ##########################################################################
     # deluser
-    deluser_jitsi_parser = subparsers.add_parser(
-        "deluser-jitsi", help="Deletes a jitsi user"
-    )
-    deluser_jitsi_parser.add_argument(
-        "user", help="The jitsi username to delete"
-    )
-    deluser_jitsi_parser.set_defaults(func=deluser_jitsi)
+    deluser_parser = subparsers.add_parser("deluser", help="Deletes a user")
+    deluser_parser.add_argument("user", help="The username to delete")
+    deluser_parser.set_defaults(func=deluser)
 
     ##########################################################################
     # adduser-jitsi
@@ -93,10 +89,14 @@ def main():
     adduser_jitsi_parser.set_defaults(func=adduser_jitsi)
 
     ##########################################################################
-    # deluser
-    deluser_parser = subparsers.add_parser("deluser", help="Deletes a user")
-    deluser_parser.add_argument("user", help="The username to delete")
-    deluser_parser.set_defaults(func=deluser)
+    # deluser-jitsi
+    deluser_jitsi_parser = subparsers.add_parser(
+        "deluser-jitsi", help="Deletes a jitsi user"
+    )
+    deluser_jitsi_parser.add_argument(
+        "user", help="The jitsi username to delete"
+    )
+    deluser_jitsi_parser.set_defaults(func=deluser_jitsi)
 
     ##########################################################################
     # list-users
@@ -124,13 +124,6 @@ def main():
     deploy_parser.set_defaults(func=deploy)
 
     ##########################################################################
-    # restart
-    restart_parser = subparsers.add_parser(
-        "restart", help="Restarts all OCI containers"
-    )
-    restart_parser.set_defaults(func=restart)
-
-    ##########################################################################
     # start
     start_parser = subparsers.add_parser(
         "start", help="Starts all OCI containers"
@@ -138,11 +131,25 @@ def main():
     start_parser.set_defaults(func=restart)  # Keep it "restart"
 
     ##########################################################################
+    # restart
+    restart_parser = subparsers.add_parser(
+        "restart", help="Restarts all OCI containers (alias for start)"
+    )
+    restart_parser.set_defaults(func=restart)
+
+    ##########################################################################
     # maintainance
     maintainance_parser = subparsers.add_parser(
-        "maintainance", help="Run Maintainance tasks"
+        "maintainance", help="Run maintainance tasks"
     )
     maintainance_parser.set_defaults(func=maintainance)
+
+    ##########################################################################
+    # check
+    check_parser = subparsers.add_parser(
+        "check", help="Checks the OCI containers"
+    )
+    check_parser.set_defaults(func=check)
 
     ##########################################################################
     # Parsing
