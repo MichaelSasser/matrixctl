@@ -27,7 +27,14 @@ from .config_handler import Config
 from .api_handler import Api
 from .housekeeping import maintainance, restart, check
 from .updating import update
-from .account import adduser, deluser, users, adduser_jitsi, deluser_jitsi
+from .account import (
+    adduser,
+    deluser,
+    users,
+    adduser_jitsi,
+    deluser_jitsi,
+    user,
+)
 from .provisioning import deploy
 
 
@@ -110,6 +117,14 @@ def main():
     users_parser.set_defaults(func=users)
 
     ##########################################################################
+    # user
+    user_parser = subparsers.add_parser(
+        "user", help="Get information about a specific user"
+    )
+    user_parser.add_argument("user", help="The username of the user")
+    user_parser.set_defaults(func=user)
+
+    ##########################################################################
     # update
     update_parser = subparsers.add_parser(
         "update", help="Updates the ansible repo"
@@ -164,6 +179,8 @@ def main():
 
     config = Config()
     api = Api(config)
+
+    debug(f"{args=}")
 
     if args.debug:
         debug("Disabing help on AttributeError")

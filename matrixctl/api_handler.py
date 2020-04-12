@@ -72,6 +72,16 @@ class Api:
 
         return response
 
+    def user(self, user: str):
+        """Add a user to the matrix server."""
+        path = f"/users/{user}"
+        response = self.send(path, method="GET")
+
+        if response.status_code not in (201, requests.codes.ok):
+            error("The request was not successful.")
+
+        return response
+
     def send(
         self,
         path: str,
