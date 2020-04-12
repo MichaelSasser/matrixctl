@@ -40,17 +40,16 @@ but breaking changes may be introduced, even in a minor change.
 
 ```
 # matrixctl
-usage: matrixctl [-h] [--version] [-d]
-              {adduser,deluser,adduser-jitsi,deluser-jitsi,users,update,deploy,start,restart,maintainance,check}
-              ...
+usage: matrixctl [-h] [--version] [-d] {adduser,deluser,adduser-jitsi,deluser-jitsi,users,user,update,deploy,start,restart,maintainance,check} ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,users,update,deploy,start,restart,maintainance,check}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,users,user,update,deploy,start,restart,maintainance,check}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
     deluser-jitsi       Deletes a jitsi user
     users               Lists users
+    user                Get information about a specific user
     update              Updates the ansible repo
     deploy              Provision and deploy
     start               Starts all OCI containers
@@ -123,10 +122,10 @@ MatrixDockerAnsibleDeployPath="/absolut/path/to/matrix-docker-ansible-deploy"
 [SemVer](https://semver.org/) for its release
 cycle.
 
-**Before release "1.0.0"** it uses "0.MAJOR.MINOR_or_PATCH".
-This means, if breaking changes are introduced, it results in a major version
-change (e.g. "0.1.0" -> "0.2.0"). Minor changes, like new features or patches
-are bumping the last digit (e.g. "0.1.1" -> "0.1.2").
+**Before release "1.0.0"** it uses "0.y.z".
+This means, if breaking changes are introduced, it results in a "y" version
+change (e.g. "0.1.0" -> "0.2.0"). "z" changes, like new features or patches
+are bumping the last significant digit (e.g. "0.1.1" -> "0.1.2").
 
 ## License
 Copyright &copy; 2020 Michael Sasser <Info@MichaelSasser.org>. Released under
