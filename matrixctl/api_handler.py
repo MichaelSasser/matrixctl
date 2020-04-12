@@ -58,7 +58,7 @@ class Api:
         if response.status_code not in (201, requests.codes.ok):
             error("The User was not added.")
 
-    def list_users(self, from_user: int = 0, show_guests: bool = False):
+    def users(self, from_user: int = 0, show_guests: bool = False):
         """Add a user to the matrix server."""
         path = f"/users"
         params = {
@@ -66,6 +66,16 @@ class Api:
             "guests": "true" if show_guests else "false",
         }
         response = self.send(path, method="GET", params=params)
+
+        if response.status_code not in (201, requests.codes.ok):
+            error("The request was not successful.")
+
+        return response
+
+    def user(self, user: str):
+        """Add a user to the matrix server."""
+        path = f"/users/{user}"
+        response = self.send(path, method="GET")
 
         if response.status_code not in (201, requests.codes.ok):
             error("The request was not successful.")
