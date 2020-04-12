@@ -13,7 +13,9 @@
 import os
 import sys
 import sphinx_rtd_theme
-from matrixctl import __version__
+from pkg_resources import get_distribution
+
+__version__ = get_distribution("matrixctl").version
 
 # sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath("../"))
