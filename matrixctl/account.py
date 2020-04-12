@@ -147,13 +147,13 @@ def deluser_jitsi(arg, cfg: Config, _):
         ssh.deluser(arg.user)
 
 
-def list_users(arg, cfg: Config, adminapi):
+def users(arg, cfg: Config, adminapi):
     len_domain = len(cfg.api_domain) + 1  # 1 for :
     from_user: int = 0
     users: list = []
 
     while True:
-        lst = adminapi.list_users(from_user, show_guests=arg.guests).json()
+        lst = adminapi.users(from_user, show_guests=arg.guests).json()
 
         users += lst["users"]
         try:

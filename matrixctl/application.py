@@ -27,7 +27,7 @@ from .config_handler import Config
 from .api_handler import Api
 from .housekeeping import maintainance, restart, check
 from .updating import update
-from .account import adduser, deluser, list_users, adduser_jitsi, deluser_jitsi
+from .account import adduser, deluser, users, adduser_jitsi, deluser_jitsi
 from .provisioning import deploy
 
 
@@ -99,15 +99,15 @@ def main():
     deluser_jitsi_parser.set_defaults(func=deluser_jitsi)
 
     ##########################################################################
-    # list-users
-    list_users_parser = subparsers.add_parser("list-users", help="Lists users")
-    list_users_parser.add_argument(
+    # users
+    users_parser = subparsers.add_parser("users", help="Lists users")
+    users_parser.add_argument(
         "-g", "--guests", action="store_true", help="Shows the users"
     )
-    list_users_parser.add_argument(
+    users_parser.add_argument(
         "-b", "--no-bots", action="store_true", help="Hide bots"
     )
-    list_users_parser.set_defaults(func=list_users)
+    users_parser.set_defaults(func=users)
 
     ##########################################################################
     # update

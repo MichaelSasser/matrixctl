@@ -58,7 +58,7 @@ class Api:
         if response.status_code not in (201, requests.codes.ok):
             error("The User was not added.")
 
-    def list_users(self, from_user: int = 0, show_guests: bool = False):
+    def users(self, from_user: int = 0, show_guests: bool = False):
         """Add a user to the matrix server."""
         path = f"/users"
         params = {
