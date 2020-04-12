@@ -14,10 +14,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import sys
 import string
 import getpass
 import secrets
-from typing import Optional
+import datetime
+from typing import Optional, List, Tuple, Any, Dict
+from logging import debug, error
 from tabulate import tabulate
 from .ansible_handler import ansible_synapse
 from .config_handler import Config
@@ -147,13 +150,13 @@ def deluser_jitsi(arg, cfg: Config, _):
         ssh.deluser(arg.user)
 
 
-def list_users(arg, cfg: Config, adminapi):
+def users(arg, cfg: Config, adminapi):
     len_domain = len(cfg.api_domain) + 1  # 1 for :
     from_user: int = 0
     users: list = []
 
     while True:
-        lst = adminapi.list_users(from_user, show_guests=arg.guests).json()
+        lst = adminapi.users(from_user, show_guests=arg.guests).json()
 
         users += lst["users"]
         try:
@@ -184,6 +187,81 @@ def list_users(arg, cfg: Config, adminapi):
             tablefmt="psql",
         )
     )
+
+
+def generate_user_tables(
+    user_dict, len_domain: int, threepids: bool = False
+) -> Tuple[List[Tuple[Any]]]:
+    """
+    Generates a main user table and a additional table for every threepids
+    This function is recursive.
+    """
+
+    table: List[List[Tuple[Any]]] = [[]]  # main, threepids_0, .. ,threepids_n
+
+    for k in user_dict:
+        if k == "errcode":
+            error("There is no user with that username.")
+            sys.exit(1)
+        key: Optional[str] = None
+
+        if k == "threepids":
+            for tk in user_dict[k]:
+                ret: Tuple[List[Tuple[Any]]] = generate_user_tables(
+                    tk, len_domain, True
+                )
+                table.append(ret[0])
+
+            continue  # Don't add threepids to "table"
+
+        if k == "name":
+            value = user_dict[k][1:-len_domain]
+        elif k == "is_guest":
+            value = bool(int(user_dict[k]))
+            key = "Guest"
+        elif k in ("admin", "deactivated"):
+            value = bool(int(user_dict[k]))
+        elif k.endswith("_ts"):
+            value = str(datetime.datetime.fromtimestamp(user_dict[k]))  # UTC?
+        elif k.endswith("_at"):
+            value = str(
+                datetime.datetime.fromtimestamp(user_dict[k] / 1000.0)
+            )  # UTC?
+
+        else:
+            value: str = user_dict[k]
+
+        if key is None:
+            key = k.replace("_", " ").title()
+
+        table[0].append((key, value))
+
+    return table
+
+
+def user(arg, cfg: Config, adminapi):
+    from pprint import pprint  # noqa
+
+    user_str: str = f"@{arg.user}:{cfg.api_domain}"
+    user: Dict[Any] = adminapi.user(user_str).json()
+
+    len_domain = len(cfg.api_domain) + 1  # 1 for :
+    user_tables = generate_user_tables(user, len_domain)
+
+    debug(f"User: {user_tables=}")
+
+    for num, table in enumerate(user_tables):
+
+        if num < 1:
+            print("User:")
+        else:
+            print("\nThreepid:")
+        print(tabulate(table, tablefmt="psql",))
+
+    # print("-----------------")
+    # pprint(user_tables[0])
+    # print("-----------------")
+    # pprint(user_tables[1])
 
 
 # vim: set ft=python :
