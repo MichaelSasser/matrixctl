@@ -190,7 +190,7 @@ def users(arg, cfg: Config, adminapi):
 
 
 def generate_user_tables(
-    user_dict, len_domain: int, threepids: bool = False
+    user_dict, len_domain: int
 ) -> Tuple[List[Tuple[Any]]]:
     """
     Generates a main user table and a additional table for every threepids
@@ -208,7 +208,7 @@ def generate_user_tables(
         if k == "threepids":
             for tk in user_dict[k]:
                 ret: Tuple[List[Tuple[Any]]] = generate_user_tables(
-                    tk, len_domain, True
+                    tk, len_domain
                 )
                 table.append(ret[0])
 
@@ -240,8 +240,6 @@ def generate_user_tables(
 
 
 def user(arg, cfg: Config, adminapi):
-    from pprint import pprint  # noqa
-
     user_str: str = f"@{arg.user}:{cfg.api_domain}"
     user: Dict[Any] = adminapi.user(user_str).json()
 
@@ -257,11 +255,6 @@ def user(arg, cfg: Config, adminapi):
         else:
             print("\nThreepid:")
         print(tabulate(table, tablefmt="psql",))
-
-    # print("-----------------")
-    # pprint(user_tables[0])
-    # print("-----------------")
-    # pprint(user_tables[1])
 
 
 # vim: set ft=python :
