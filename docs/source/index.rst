@@ -8,6 +8,7 @@ MatrixCtl documentation
    :caption: Contents:
 
    installation
+   getting_started/index
    matrixctl
 
 Branching Model
@@ -23,7 +24,10 @@ Command line tool
 Configuration File
 ^^^^^^^^^^^^^^^^^^
 
-.. include::  config_file.rst
+To use this program you need to have this config file in
+``/etc/matrixctl/config`` or in ``~/.config/matrixctl/config``.
+
+.. include::  getting_started/config_file_snippet.rst
 
 
 Semantic Versioning

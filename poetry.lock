@@ -972,10 +972,10 @@ python-versions = "*"
 version = "0.29.0"
 
 [extras]
-docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints"]
+docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "sphinxcontrib-programoutput"]
 
 [metadata]
-content-hash = "363e7bbd7af2e5740f3d1cea7f04390601ba0a4660a08e2059f59f75ef24643d"
+content-hash = "c4d64d4f6462404fa03f9faeebba9e00faf763d3dec6f0bf29761790077cae47"
 python-versions = "^3.8"
 
 [metadata.files]
