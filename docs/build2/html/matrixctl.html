@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contributer Documentation &mdash; MatrixCtl 0.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="SSH Public Key" href="getting_started/ssh_pubkey.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MatrixCtl
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributer Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.account"><strong>Account</strong> - account.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.ansible_handler"><strong>Ansible Handler</strong> - ansible_handler.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.api_handler"><strong>API Handler</strong> - api_handler.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.application"><strong>Application</strong> - application.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.config_handler"><strong>Config Handler</strong> - config_handler.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.git_handler"><strong>Git Handler</strong> - git_handler.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.housekeeping"><strong>Housekeeping</strong> - housekeeping.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.provisioning"><strong>Provisioning</strong> - provisioning.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.ssh_handler"><strong>SSH Handler</strong> - ssh_handler.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.updating"><strong>Updating</strong> - updating.py</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MatrixCtl</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Contributer Documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/matrixctl.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="contributer-documentation">
+<h1>Contributer Documentation<a class="headerlink" href="#contributer-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-matrixctl.account">
+<span id="account-account-py"></span><h2><strong>Account</strong> - account.py<a class="headerlink" href="#module-matrixctl.account" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="matrixctl.account.adduser">
+<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">adduser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">cfg</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em>, <em class="sig-param"><span class="n">adminapi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.adduser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a User to the synapse instance</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.account.adduser_jitsi">
+<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">adduser_jitsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">cfg</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em>, <em class="sig-param"><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.adduser_jitsi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a User to the synapse instance</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.account.ask_password">
+<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">ask_password</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>str<span class="p">]</span><a class="headerlink" href="#matrixctl.account.ask_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.account.ask_question">
+<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">ask_question</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">question</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'Is everything ok?'</span></em><span class="sig-paren">)</span> &#x2192; True<a class="headerlink" href="#matrixctl.account.ask_question" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.account.deluser">
+<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">deluser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">_</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em>, <em class="sig-param"><span class="n">adminapi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.deluser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.account.deluser_jitsi">
+<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">deluser_jitsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">cfg</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em>, <em class="sig-param"><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.deluser_jitsi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.account.gen_password">
+<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">gen_password</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#matrixctl.account.gen_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.account.generate_user_tables">
+<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">generate_user_tables</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_dict</span></em>, <em class="sig-param"><span class="n">len_domain</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>List<span class="p">[</span>Tuple<span class="p">[</span>Any<span class="p">]</span><span class="p">]</span><span class="p">]</span><a class="headerlink" href="#matrixctl.account.generate_user_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a main user table and a additional table for every threepids
+This function is recursive.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.account.user">
+<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">cfg</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em>, <em class="sig-param"><span class="n">adminapi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.account.users">
+<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">cfg</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em>, <em class="sig-param"><span class="n">adminapi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.users" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.ansible_handler">
+<span id="ansible-handler-ansible-handler-py"></span><h2><strong>Ansible Handler</strong> - ansible_handler.py<a class="headerlink" href="#module-matrixctl.ansible_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="matrixctl.ansible_handler.ansible_server">
+<code class="sig-prename descclassname">matrixctl.ansible_handler.</code><code class="sig-name descname">ansible_server</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cfg</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#matrixctl.ansible_handler.ansible_server" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.ansible_handler.ansible_synapse">
+<code class="sig-prename descclassname">matrixctl.ansible_handler.</code><code class="sig-name descname">ansible_synapse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arguments</span><span class="p">:</span> <span class="n">Iterable<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">cfg</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#matrixctl.ansible_handler.ansible_synapse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.api_handler">
+<span id="api-handler-api-handler-py"></span><h2><strong>API Handler</strong> - api_handler.py<a class="headerlink" href="#module-matrixctl.api_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="matrixctl.api_handler.Api">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.api_handler.</code><code class="sig-name descname">Api</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="matrixctl.api_handler.Api.adduser">
+<code class="sig-name descname">adduser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">password</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">admin</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api.adduser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a user to the matrix server.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.api_handler.Api.deluser">
+<code class="sig-name descname">deluser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api.deluser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a user to the matrix server.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.api_handler.Api.send">
+<code class="sig-name descname">send</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">params</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>dict<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">payload</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>dict<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">method</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'GET'</span></em>, <em class="sig-param"><span class="n">api_version</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2</span></em>, <em class="sig-param"><span class="n">json_payload</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api.send" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.api_handler.Api.user">
+<code class="sig-name descname">user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api.user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a user to the matrix server.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.api_handler.Api.users">
+<code class="sig-name descname">users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">from_user</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">show_guests</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api.users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a user to the matrix server.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.application">
+<span id="application-application-py"></span><h2><strong>Application</strong> - application.py<a class="headerlink" href="#module-matrixctl.application" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="matrixctl.application.main">
+<code class="sig-prename descclassname">matrixctl.application.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.application.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.config_handler">
+<span id="config-handler-config-handler-py"></span><h2><strong>Config Handler</strong> - config_handler.py<a class="headerlink" href="#module-matrixctl.config_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="matrixctl.config_handler.Config">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.config_handler.</code><code class="sig-name descname">Config</code><a class="headerlink" href="#matrixctl.config_handler.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="matrixctl.config_handler.Config.FILE_PATH">
+<code class="sig-name descname">FILE_PATH</code><em class="property">: Tuple[pathlib.Path]</em><em class="property"> = (PosixPath('/etc/matrixctl/config'), PosixPath('//home/michael/.config/matrixctl/config'))</em><a class="headerlink" href="#matrixctl.config_handler.Config.FILE_PATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.config_handler.Config.ansible_path">
+<em class="property">property </em><code class="sig-name descname">ansible_path</code><a class="headerlink" href="#matrixctl.config_handler.Config.ansible_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.config_handler.Config.api_domain">
+<em class="property">property </em><code class="sig-name descname">api_domain</code><a class="headerlink" href="#matrixctl.config_handler.Config.api_domain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.config_handler.Config.api_token">
+<em class="property">property </em><code class="sig-name descname">api_token</code><a class="headerlink" href="#matrixctl.config_handler.Config.api_token" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.config_handler.Config.server_cfg">
+<em class="property">property </em><code class="sig-name descname">server_cfg</code><a class="headerlink" href="#matrixctl.config_handler.Config.server_cfg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.config_handler.Config.server_play">
+<em class="property">property </em><code class="sig-name descname">server_play</code><a class="headerlink" href="#matrixctl.config_handler.Config.server_play" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.config_handler.Config.server_tags">
+<em class="property">property </em><code class="sig-name descname">server_tags</code><a class="headerlink" href="#matrixctl.config_handler.Config.server_tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt id="matrixctl.config_handler.ConfigFileError">
+<em class="property">exception </em><code class="sig-prename descclassname">matrixctl.config_handler.</code><code class="sig-name descname">ConfigFileError</code><a class="headerlink" href="#matrixctl.config_handler.ConfigFileError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.config_handler.error_if_not_available">
+<code class="sig-prename descclassname">matrixctl.config_handler.</code><code class="sig-name descname">error_if_not_available</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.config_handler.error_if_not_available" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper, that checks, if the configuration is available and returns
+it. If the information is not available. it throws an error.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.config_handler.none_if_not_available">
+<code class="sig-prename descclassname">matrixctl.config_handler.</code><code class="sig-name descname">none_if_not_available</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.config_handler.none_if_not_available" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper, that checks, if the configuration is available and returns
+it. If the information is not available. it returns None.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.git_handler">
+<span id="git-handler-git-handler-py"></span><h2><strong>Git Handler</strong> - git_handler.py<a class="headerlink" href="#module-matrixctl.git_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="matrixctl.git_handler.git_pull">
+<code class="sig-prename descclassname">matrixctl.git_handler.</code><code class="sig-name descname">git_pull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cnf</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.git_handler.git_pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.housekeeping">
+<span id="housekeeping-housekeeping-py"></span><h2><strong>Housekeeping</strong> - housekeeping.py<a class="headerlink" href="#module-matrixctl.housekeeping" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="matrixctl.housekeeping.check">
+<code class="sig-prename descclassname">matrixctl.housekeeping.</code><code class="sig-name descname">check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">__</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.housekeeping.check" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.housekeeping.maintainance">
+<code class="sig-prename descclassname">matrixctl.housekeeping.</code><code class="sig-name descname">maintainance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">__</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.housekeeping.maintainance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.housekeeping.restart">
+<code class="sig-prename descclassname">matrixctl.housekeeping.</code><code class="sig-name descname">restart</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">__</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.housekeeping.restart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.provisioning">
+<span id="provisioning-provisioning-py"></span><h2><strong>Provisioning</strong> - provisioning.py<a class="headerlink" href="#module-matrixctl.provisioning" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="matrixctl.provisioning.deploy">
+<code class="sig-prename descclassname">matrixctl.provisioning.</code><code class="sig-name descname">deploy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">__</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.provisioning.deploy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.ssh_handler">
+<span id="ssh-handler-ssh-handler-py"></span><h2><strong>SSH Handler</strong> - ssh_handler.py<a class="headerlink" href="#module-matrixctl.ssh_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="matrixctl.ssh_handler.SSHResponse">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.ssh_handler.</code><code class="sig-name descname">SSHResponse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stdin</span></em>, <em class="sig-param"><span class="n">stdout</span></em>, <em class="sig-param"><span class="n">stderr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.SSHResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt id="matrixctl.ssh_handler.SSHResponse.stderr">
+<code class="sig-name descname">stderr</code><a class="headerlink" href="#matrixctl.ssh_handler.SSHResponse.stderr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="matrixctl.ssh_handler.SSHResponse.stdin">
+<code class="sig-name descname">stdin</code><a class="headerlink" href="#matrixctl.ssh_handler.SSHResponse.stdin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="matrixctl.ssh_handler.SSHResponse.stdout">
+<code class="sig-name descname">stdout</code><a class="headerlink" href="#matrixctl.ssh_handler.SSHResponse.stdout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="matrixctl.ssh_handler.Ssh">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.ssh_handler.</code><code class="sig-name descname">Ssh</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cfg</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em>, <em class="sig-param"><span class="n">address</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.Ssh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="matrixctl.ssh_handler.Ssh.JID_EXT">
+<code class="sig-name descname">JID_EXT</code><em class="property">: str</em><em class="property"> = 'matrix-jitsi-web'</em><a class="headerlink" href="#matrixctl.ssh_handler.Ssh.JID_EXT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.ssh_handler.Ssh.adduser">
+<code class="sig-name descname">adduser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">password</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.Ssh.adduser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a user to the jitsi server.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.ssh_handler.Ssh.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.Ssh.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects to the SSH server</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.ssh_handler.Ssh.deluser">
+<code class="sig-name descname">deluser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.Ssh.deluser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a user from the jitsi server.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.ssh_handler.Ssh.run_cmd">
+<code class="sig-name descname">run_cmd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cmd</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.Ssh.run_cmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.updating">
+<span id="updating-updating-py"></span><h2><strong>Updating</strong> - updating.py<a class="headerlink" href="#module-matrixctl.updating" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="matrixctl.updating.update">
+<code class="sig-prename descclassname">matrixctl.updating.</code><code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">cnf</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#matrixctl.config_handler.Config" title="matrixctl.config_handler.Config">matrixctl.config_handler.Config</a></span></em>, <em class="sig-param"><span class="n">___</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.updating.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="getting_started/ssh_pubkey.html" class="btn btn-neutral float-left" title="SSH Public Key" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Sasser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

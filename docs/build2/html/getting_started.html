@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting Started &mdash; MatrixCtl 0.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Technical Documentation" href="matrixctl.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MatrixCtl
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-synapse-instance">The Synapse instance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-access-token">The Access Token</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matrixctl.html">Technical Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MatrixCtl</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Getting Started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>To use all features of MatrixCtl you need can do a few steps to make them
+compatible.</p>
+<div class="section" id="the-synapse-instance">
+<h2>The Synapse instance<a class="headerlink" href="#the-synapse-instance" title="Permalink to this headline">¶</a></h2>
+<p>If you want to update your <a class="reference external" href="https://github.com/matrix-org/synapse">Synapse</a>
+instance with MatrixCtl you need to deploy them with a specific
+<a class="reference external" href="https://www.ansible.com/">Ansible</a> playbook.</p>
+<p>The
+<a class="reference external" href="https://github.com/spantaleev/matrix-docker-ansible-deploy">spantaleev/matrix-docker-ansible-deploy</a>
+project made it quite simple. To start, follow the
+<a class="reference external" href="https://github.com/spantaleev/matrix-docker-ansible-deploy/blob/master/docs/README.md">link here</a>.
+This ansible playbook
+is well documented and helps beginners, to get a fast and powerful synapse
+instance with a bunch of optional “plugins” running in no time.</p>
+</div>
+<div class="section" id="the-access-token">
+<h2>The Access Token<a class="headerlink" href="#the-access-token" title="Permalink to this headline">¶</a></h2>
+<p>To use the API of Synapse you need a access token of an administrator.
+To get an access token, you need an user account.
+MatrixCtl helps you to register one. Just run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> matrixctl adduser --ansible --admin myusername
+<span class="go">Password:</span>
+<span class="go">Password (again):</span>
+<span class="go">Username: myusername</span>
+<span class="go">Password: \*\*HIDDEN\*\*</span>
+<span class="go">Admin:    yes</span>
+<span class="go">Is everything ok? [y/n]y</span>
+
+<span class="go">PLAY [Set up a Matrix server] *********************************************************************************</span>
+<span class="go">[...]</span>
+
+<span class="go">PLAY RECAP ****************************************************************************************************</span>
+<span class="go">matrix.michaelsasser.org   : ok=24   changed=0    unreachable=0    failed=0    skipped=34   rescued=0    ignored=0</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you don’t enter a password and press [ENTER] twice, a password
+will be generated for you. If you are satisfied with it, enter [y].</p>
+</div>
+<p>Now you have created your user with the user name “myusername”. The argument
+<code class="docutils literal notranslate"><span class="pre">--admin</span></code> makes sure, that you create an administrator account instead of an
+user account. The <code class="docutils literal notranslate"><span class="pre">--ansible</span></code> argument is needed, because you currently have
+no access to the admin API. After all that steps you don’t need the
+<code class="docutils literal notranslate"><span class="pre">--ansible</span></code> anymore.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can use this user account as your personal main user account.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have alredy created an admin user account ignore this step
+and continue below.</p>
+</div>
+<p>Now Open <code class="docutils literal notranslate"><span class="pre">https://riot.yourdomain.tld</span></code> to login.</p>
+<div class="align-center figure" id="id1">
+<img alt="login screen image" src="_images/loginscreen.png" />
+<p class="caption"><span class="caption-text">The Riot loginscreen</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>Click on “Sign In” and enter your credentials. In this example, we used
+“myusername” for the user and the entered password to login.</p>
+<div class="align-center figure" id="id2">
+<img alt="login screen login image" src="_images/loginscreen_login.png" />
+<p class="caption"><span class="caption-text">Entering credentials</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>After you are logged in, click on your user name in the top right corner. A
+small window will pop up. Click on <code class="docutils literal notranslate"><span class="pre">Settings</span></code>.</p>
+<div class="align-center figure" id="id3">
+<img alt="click on settings image" src="_images/click_on_settings.png" />
+<p class="caption"><span class="caption-text">Click on “Settings”</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>A bigger window with your user settings will pop up. Click on <code class="docutils literal notranslate"><span class="pre">Help</span> <span class="pre">&amp;</span> <span class="pre">About</span></code>
+on the left side of that window. If you scroll down on the right
+hand side of this window, you will find the <code class="docutils literal notranslate"><span class="pre">Advanced</span></code> section.
+In the Advanced section you find <code class="docutils literal notranslate"><span class="pre">Access</span> <span class="pre">Token:</span> <span class="pre">&lt;click</span> <span class="pre">to</span> <span class="pre">reveal&gt;</span></code>.</p>
+<div class="align-center figure" id="id4">
+<img alt="click on reveal access token image" src="_images/reveal_access_token.png" />
+<p class="caption"><span class="caption-text">Click on “&lt;click to reveal&gt;”</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>Now click on <code class="docutils literal notranslate"><span class="pre">&lt;click</span> <span class="pre">to</span> <span class="pre">reveal&gt;</span></code>.</p>
+<div class="align-center figure" id="id5">
+<img alt="the revealed access token image" src="_images/revealed_access_token.png" />
+<p class="caption"><span class="caption-text">The revealed access token</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<p>This is your access token. It is already highlighted for you. Just copy it into
+the config file into the <code class="docutils literal notranslate"><span class="pre">[API]</span></code> section:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="p">...</span>
+<span class="k">[API]</span>
+<span class="n">Domain</span><span class="o">=</span><span class="n">yourdomain</span><span class="p">.</span><span class="n">tld</span>
+<span class="n">Token</span><span class="o">=</span><span class="s">&quot;MDAxZmxvY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzMGNpZCB1c2VyX2lkID0gQG15dXNlcm5hbWU6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSA3WkB1KkdyY3JTRG1CI3Z0CjAwMmZzaWduYXR1cmUgJblnYOAEQJVeHaMgwnMsAagpZBc8CIC6Dwwy027tfJAK&quot;</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Never ever, ever give this token to anyone else. If you have other
+administrators on that server, they should use their own token.
+With this token you can login and do anything on that matrix
+instance in <strong>your name</strong>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="matrixctl.html" class="btn btn-neutral float-right" title="Technical Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Sasser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

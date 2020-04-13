@@ -17,8 +17,7 @@ classifiers = [
     "Natural Language :: English",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.8",
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
-]
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -56,8 +55,7 @@ matrixctl = "matrixctl.application:main"
 line-length = 79
 include = '\.pyi?$'
 # exclude __init__.py because of ordered importing
-exclude = '''
-/(
+exclude = '''/(
     \.eggs
   | \.git
   | \.github
@@ -65,9 +63,7 @@ exclude = '''
   | \.venv
   | _build
   | build
-  | dist
-)
-'''
+  | dist)'''
 
 [tool.isort]
 line_length = 79
