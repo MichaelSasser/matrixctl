@@ -5,14 +5,18 @@ description = "Controls a synapse oci-container instance via ansible"
 license = "GPL-3.0+"
 readme = "README.md"
 repository = "https://github.com/MichaelSasser/matrixctl"
-homepage = "https://github.com/MichaelSasser/matrixctl"
-documentation = "https://github.com/MichaelSasser/matrixctl"
+homepage = "https://michaelsasser.github.io/matrixctl/index.html"
+documentation = "https://michaelsasser.github.io/matrixctl/index.html"
 keywords = ['Matrix', 'Synapse', 'Docker', 'OCI-Container']
 authors = ["Michael Sasser <Michael@MichaelSasser.org>"]
 # Look here for all Classifiers:
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
 classifiers = [
     "Development Status :: 3 - Alpha",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Developers",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Communications",
     "Environment :: Console",
     "Natural Language :: English",
     "Programming Language :: Python :: 3 :: Only",
