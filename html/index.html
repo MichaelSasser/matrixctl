@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MatrixCtl documentation &mdash; MatrixCtl 0.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> MatrixCtl
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixctl.html">Contributer Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">MatrixCtl</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>MatrixCtl documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="matrixctl-documentation">
+<h1>MatrixCtl documentation<a class="headerlink" href="#matrixctl-documentation" title="Permalink to this headline">¶</a></h1>
+<p>MatrixCtl is a python program to control, manage, provision and deploy our
+matrix homeserver. I had a bunch of shell scripts doing that. Two weeks
+after using them I couldn’t remember the order in which I have to use the
+arguments or which arguments where needed. It was a pain. So I decided I hack
+something together fast.</p>
+<p>It’s not the most elegant piece of software I wrote, but it should do the
+trick. I will continue to port the rest of the scripts and add new
+features.</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#instalation-with-pip">Instalation with pip</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/config_file.html">Config File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/synapse_playbook.html">Synapse Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/access_token.html">Access Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/ssh_pubkey.html">SSH Public Key</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="matrixctl.html">Contributer Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.account"><strong>Account</strong> - account.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.ansible_handler"><strong>Ansible Handler</strong> - ansible_handler.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.api_handler"><strong>API Handler</strong> - api_handler.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.application"><strong>Application</strong> - application.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.config_handler"><strong>Config Handler</strong> - config_handler.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.git_handler"><strong>Git Handler</strong> - git_handler.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.housekeeping"><strong>Housekeeping</strong> - housekeeping.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.provisioning"><strong>Provisioning</strong> - provisioning.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.ssh_handler"><strong>SSH Handler</strong> - ssh_handler.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.updating"><strong>Updating</strong> - updating.py</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="branching-model">
+<h2>Branching Model<a class="headerlink" href="#branching-model" title="Permalink to this headline">¶</a></h2>
+<p>This repository uses the
+<a class="reference external" href="https://danielkummer.github.io/git-flow-cheatsheet/index.html">git-flow</a>
+branching model by <a class="reference external" href="https://nvie.com/about/">Vincent Driessen</a>.
+It has two branches with infinite lifetime:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/tree/master">master</a></p></li>
+<li><p><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/tree/develop">develop</a></p></li>
+</ul>
+<p>The master branch gets updated on every release. The develop branch is the
+merging branch.</p>
+</div>
+<div class="section" id="command-line-tool">
+<h2>Command line tool<a class="headerlink" href="#command-line-tool" title="Permalink to this headline">¶</a></h2>
+<p>MatrixCtl as a pure commandline tool. You can use it as package, if you like,
+but breaking changes may introduced, even in a minor change.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: matrixctl [-h] [--version] [-d]
+              {adduser,deluser,adduser-jitsi,deluser-jitsi,users,user,update,deploy,start,restart,maintainance,check}
+              ...
+
+positional arguments:
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,users,user,update,deploy,start,restart,maintainance,check}
+    adduser             Add a new matrix user
+    deluser             Deletes a user
+    adduser-jitsi       Add a new jitsi user
+    deluser-jitsi       Deletes a jitsi user
+    users               Lists users
+    user                Get information about a specific user
+    update              Updates the ansible repo
+    deploy              Provision and deploy
+    start               Starts all OCI containers
+    restart             Restarts all OCI containers (alias for start)
+    maintainance        Run maintainance tasks
+    check               Checks the OCI containers
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program&#39;s version number and exit
+  -d, --debug           Enables debugging mode.
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration-file">
+<h2>Configuration File<a class="headerlink" href="#configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>To use this program you need to have this config file in
+<code class="docutils literal notranslate"><span class="pre">/etc/matrixctl/config</span></code> or in <code class="docutils literal notranslate"><span class="pre">~/.config/matrixctl/config</span></code>.</p>
+<div class="highlight-toml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[ANSIBLE]</span>
+<span class="c1"># The absolute path to the fully configured matrix-docker-ansible-deploy</span>
+<span class="c1"># playbook from https://github.com/spantaleev/matrix-docker-ansible-deploy.</span>
+<span class="c1">#</span>
+<span class="c1">#MatrixDockerAnsibleDeployPath=&quot;/absolut/path/to/matrix-docker-ansible-deploy&quot;</span>
+
+<span class="k">[SERVER]</span>
+<span class="c1"># If you have your own playbook, to provision your matrix server, you can</span>
+<span class="c1"># fill out this section. MatrixCtl will run this before the</span>
+<span class="c1">#</span>
+<span class="c1"># matrix-docker-ansible-deploy playbook.</span>
+
+<span class="c1"># If you have a special &quot;ansible.cfg&quot; for your playbook, fill in the absolute</span>
+<span class="c1"># path to it.</span>
+<span class="c1">#</span>
+<span class="c1"># AnsibleCfg=&quot;/absolute/path/to/ansible.cfg&quot;</span>
+
+<span class="c1"># Fill in the absolute path to your &quot;site.yml&quot;</span>
+<span class="c1">#</span>
+<span class="c1"># AnsiblePlaybook=&quot;/absolute/path/to/site.yml&quot;</span>
+
+<span class="c1"># If you use tags to provision or configure your matrix host, you can add them</span>
+<span class="c1"># here. Use a comma separated string without spaces.</span>
+<span class="c1">#</span>
+<span class="c1"># AnsibleTags=&quot;MyTag,MyOtherTag&quot;</span>
+
+<span class="k">[API]</span>
+<span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
+<span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
+<span class="c1"># provision your Server without this section. You also can cerate a user with</span>
+<span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
+<span class="c1"># that.</span>
+
+<span class="c1"># Your domain should be something like &quot;michaelsasser.org&quot; without the</span>
+<span class="c1"># &quot;matrix.&quot; in the front. MatrixCtl will add that, if needed. An IP-Address</span>
+<span class="c1"># is not enough.</span>
+<span class="c1">#</span>
+<span class="c1"># Domain=&quot;domain.tld&quot;</span>
+
+<span class="c1"># To use the API you need to have an administrator account. Enter your Token</span>
+<span class="c1"># here. If you use the riot client you will find it your user settings (click</span>
+<span class="c1"># on your username on the upper left corner on your browser) in the</span>
+<span class="c1"># &quot;Help &amp; About&quot; tab. If you scroll down click next to &quot;Access-Token:&quot; on</span>
+<span class="c1"># &quot;&lt;click to reveal&gt;&quot;. It will be marked for you. Copy it in here.</span>
+<span class="c1">#</span>
+<span class="c1"># Token=&quot;MySuperLongMatrixToken&quot;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="semantic-versioning">
+<h2>Semantic Versioning<a class="headerlink" href="#semantic-versioning" title="Permalink to this headline">¶</a></h2>
+<p><strong>After release “1.0.0”</strong> this repository will use
+<a class="reference external" href="https://semver.org/">SemVer</a> for its release
+cycle.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Before release “1.0.0”</strong> it uses “0.y.z” as recommanded by SemVer.
+This means that breaking changes result in a version change at “y”
+position (e.g. “0.1.0” -&gt; “0.2.0”). Non breaking changes result in
+a “z” change (e.g. “0.1.1” -&gt; “0.1.2”).</p>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<p>Copyright © 2020 Michael Sasser
+&lt;<a class="reference external" href="mailto:Info&#37;&#52;&#48;MichaelSasser">Info<span>&#64;</span>MichaelSasser<span>&#46;</span>org</a>&gt;. Released under
+the GPLv3 license.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Sasser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
