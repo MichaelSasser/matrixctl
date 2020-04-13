@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import subprocess
+from logging import debug
 from typing import Iterable, List
 from .config_handler import Config
 
@@ -60,6 +61,8 @@ def ansible_synapse(arguments: Iterable[str], cfg: Config) -> None:
         f"{str(cfg.ansible_path)}/setup.yml",
     ]
     cmd += list(arguments)
+    debug(f"ansible_synapse: {cmd=}")
+    debug(f"ansible_synapse assembled: {' '.join(cmd)}")
 
     # Run command
     subprocess.run(cmd, check=True)

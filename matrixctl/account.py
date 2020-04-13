@@ -30,7 +30,7 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-SPECIAL = "!\"§$%&/()=?.,;:_-#'+*~{}[]`´°^@<>|\\"
+SPECIAL = "!§$%&/()=?.,;:_-#+*~{}[]°^@<>|\\"
 ALPHABET = string.ascii_letters + string.digits + SPECIAL
 
 
@@ -100,10 +100,12 @@ def adduser(arg, cfg: Config, adminapi):
         arg.passwd = None
 
     if arg.ansible:
+        arg.admin = "yes" if arg.admin else "no"
         ansible_synapse(
             [
-                f"--extra-vars='username={arg.user} password={arg.passwd} admin={arg.admin}'",
                 "--tags=register-user",
+                "--extra-vars",
+                f'{{"username":"{arg.user}","password":"{arg.passwd}","admin":"{arg.admin}"}}',
             ],
             cfg,
         )
@@ -257,11 +259,6 @@ def user(arg, cfg: Config, adminapi):
         else:
             print("\nThreepid:")
         print(tabulate(table, tablefmt="psql",))
-
-    # print("-----------------")
-    # pprint(user_tables[0])
-    # print("-----------------")
-    # pprint(user_tables[1])
 
 
 # vim: set ft=python :
