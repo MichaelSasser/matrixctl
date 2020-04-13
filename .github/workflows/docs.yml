@@ -19,7 +19,7 @@ name: github pages
 on:
   push:
     branches:
-      - feature/gh-pages
+      - master
 
 jobs:
   deploy:
@@ -39,7 +39,7 @@ jobs:
         with:
           version: 1.0.5
 
-      - name: Build project
+      - name: Install Project Dependencies
         run: poetry install -E docs
 
       - name: Make docs
@@ -50,4 +50,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/build/
+          publish_dir: ./docs/build/html/
