@@ -12,18 +12,12 @@
 #
 import os
 import sys
+from pkg_resources import get_distribution
+
 import sphinx_rtd_theme
 
-try:
-    from pkg_resources import get_distribution
 
-    __version__ = get_distribution("matrixctl").version
-except Exception:
-    import configparser
-
-    cfg = configparser.ConfigParser()
-    cfg.read("../../pyproject.toml")
-    __version__ = cfg["tool.poetry"]["version"]
+__version__ = get_distribution("matrixctl").version
 
 # sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath("../"))
