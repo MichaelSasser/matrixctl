@@ -24,7 +24,6 @@ import argcomplete
 
 from matrixctl import __version__
 from .config_handler import Config
-from .api_handler import Api
 from .housekeeping import maintainance, restart, check
 from .updating import update
 from .account import (
@@ -169,7 +168,7 @@ def main():
     ##########################################################################
     # Parsing
     argcomplete.autocomplete(parser)
-    args = parser.parse_args()
+    args: argparse.Namespace = parser.parse_args()
 
     coloredlogs.DEFAULT_LOG_FORMAT = (
         "%(asctime)s - %(levelname)s - %(message)s"
@@ -178,7 +177,6 @@ def main():
     coloredlogs.install()
 
     config = Config()
-    api = Api(config)
 
     debug(f"{args=}")
 
@@ -191,11 +189,11 @@ def main():
             " This is perfectly normal and not a bug. If you want the help "
             'in debug mode, use the "--help" attribute.'
         )
-        args.func(args, config, api)
+        args.func(args, config)
         sys.exit()
 
     try:
-        args.func(args, config, api)
+        args.func(args, config)
     except AttributeError:
         parser.print_help()
 

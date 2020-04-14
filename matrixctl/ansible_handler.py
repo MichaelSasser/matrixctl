@@ -15,50 +15,91 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
+import sys
 import subprocess
-from logging import debug
-from typing import Iterable, List
-from .config_handler import Config
+from logging import debug, error
+from pathlib import Path
+from typing import Iterable, List, Optional
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def ansible_server(cfg: Config) -> None:
-    if cfg.server_play is not None:
+def ansible_server(
+    server_playbook: str,
+    server_tags: Optional[str] = None,
+    server_config: Optional[str] = None,
+) -> None:
+    """This function runs your own playbook, if it is configured in the
+    the MatrixCtl config file in section ``[SERVER]``.
 
-        # Add ENV variable
+    This is useful, if you proision the server with your own Ansible
+    playbook.
 
-        if cfg.server_cfg is not None:
-            os.environ["ANSIBLE_CONFIG"] = cfg.server_cfg
+    The output of the ``ansible-playbook`` program is using both ``stdout``
+    and ``stderr``. For the user is no visual difference if this function
+    executes the program (ansible-playbook) or if the user executes the
+    program manuelly.
 
-        # Build command
-        cmd: List[str] = [
-            "ansible-playbook",
-            cfg.server_play,
-        ]
+    :param server_playbook:  The path to the playbook
+    :param server_config:    The path to the ansible.cfg (optional, default:
+                             ``None``)
+    :param server_tags:      Additional tags (optional, default: ``None``)
+    :return:                 None
+    """
 
-        if cfg.server_tags is not None:
-            cmd.append(f"--tags={cfg.server_tags}")
+    # Add ENV variable
 
-        # Run command
-        subprocess.run(cmd, check=True)
+    if server_config is not None:
+        os.environ["ANSIBLE_CONFIG"] = server_config
 
-        # Delete ENV variable
+    # Build command
+    cmd: List[str] = [
+        "ansible-playbook",
+        server_playbook,
+    ]
 
-        if cfg.server_cfg is not None:
-            del os.environ["ANSIBLE_CONFIG"]
+    if server_tags is not None:
+        cmd.append(f"--tags={server_tags}")
+
+    # Run command
+    subprocess.run(cmd, check=True)
+
+    # Delete ENV variable
+
+    if server_config is not None:
+        del os.environ["ANSIBLE_CONFIG"]
 
 
-def ansible_synapse(arguments: Iterable[str], cfg: Config) -> None:
+def ansible_synapse(arguments: Iterable[str], ansible_path: Path) -> None:
+    """This function runs the ``spantaleev/matrix-docker-ansible-deploy``
+    playbook, if it is configured in the the MatrixCtl config file in section
+    ``[ANSIBLE]``.
+
+    The output of the ``ansible-playbook`` program is using both ``stdout``
+    and ``stderr``. For the user is no visual difference if this function
+    executes the program (ansible-playbook) or if the user executes the
+    program manuelly.
+
+    :param ansible_path:  The path to the playbook
+    :return:                 None
+    """
     assert isinstance(arguments, (list, tuple))
+
+    if ansible_path is None:
+        error(
+            "To be able to use this function, you need to have "
+            "the spantaleev/matrix-docker-ansible-deploy playbook "
+            "configured in your MatrixCtl config file"
+        )
+        sys.exit(1)
 
     # Build Command
     cmd: List[str] = [
         "ansible-playbook",
         "-i",
-        f"{str(cfg.ansible_path)}/inventory/hosts",
-        f"{str(cfg.ansible_path)}/setup.yml",
+        f"{str(ansible_path)}/inventory/hosts",
+        f"{str(ansible_path)}/setup.yml",
     ]
     cmd += list(arguments)
     debug(f"ansible_synapse: {cmd=}")

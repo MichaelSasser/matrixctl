@@ -21,8 +21,8 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def update(_, cnf: Config, ___):
-    git_pull(cnf)
+def update(_, cnf: Config):
+    git_pull(cnf.ansible_path)
 
 
 # vim: set ft=python :

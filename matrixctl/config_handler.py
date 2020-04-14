@@ -23,13 +23,10 @@ from pathlib import Path
 from logging import debug, fatal
 
 from matrixctl import HOME
+from .errors import ConfigFileError
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
-
-
-class ConfigFileError(Exception):
-    pass
 
 
 def error_if_not_available(method):
@@ -146,12 +143,12 @@ class Config:
         return Path(self.config_ansible["MatrixDockerAnsibleDeployPath"])
 
     @property
-    @error_if_not_available
+    @none_if_not_available
     def api_token(self) -> str:
         return self.config_api["Token"]
 
     @property
-    @error_if_not_available
+    @none_if_not_available
     def api_domain(self) -> str:
         return self.config_api["Domain"]
 

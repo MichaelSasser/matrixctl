@@ -2,7 +2,7 @@
 category = "main"
 description = "A configurable sidebar-enabled Sphinx theme"
 name = "alabaster"
-optional = false
+optional = true
 python-versions = "*"
 version = "0.7.12"
 
@@ -76,7 +76,7 @@ pycodestyle = ">=2.5.0"
 category = "main"
 description = "Internationalization utilities"
 name = "babel"
-optional = false
+optional = true
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2.8.0"
 
@@ -199,7 +199,7 @@ test = ["pytest (>=3.6.0,<3.9.0 || >3.9.0,<3.9.1 || >3.9.1,<3.9.2 || >3.9.2)", "
 category = "main"
 description = "Docutils -- Python Documentation Utilities"
 name = "docutils"
-optional = false
+optional = true
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.16"
 
@@ -278,7 +278,7 @@ version = "2.9"
 category = "main"
 description = "Getting image size from png/jpeg/jpeg2000/gif file"
 name = "imagesize"
-optional = false
+optional = true
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.2.0"
 
@@ -314,9 +314,9 @@ testing = ["colorama (0.4.1)", "docopt", "pytest (>=3.9.0,<5.0.0)"]
 category = "main"
 description = "A very fast and expressive template engine."
 name = "jinja2"
-optional = false
+optional = true
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "2.11.1"
+version = "2.11.2"
 
 [package.dependencies]
 MarkupSafe = ">=0.23"
@@ -336,7 +336,7 @@ version = "1.4.3"
 category = "main"
 description = "Safely add untrusted strings to HTML/XML markup."
 name = "markupsafe"
-optional = false
+optional = true
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
 version = "1.1.1"
 
@@ -436,7 +436,7 @@ description = "A Python Parser"
 name = "parso"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "0.6.2"
+version = "0.7.0"
 
 [package.extras]
 testing = ["docopt", "pytest (>=3.0.7)"]
@@ -507,7 +507,7 @@ version = "2.1.1"
 category = "main"
 description = "Pygments is a syntax highlighting package written in Python."
 name = "pygments"
-optional = false
+optional = true
 python-versions = ">=3.5"
 version = "2.6.1"
 
@@ -677,7 +677,7 @@ yapf = ["yapf"]
 category = "main"
 description = "World timezone definitions, modern and historical"
 name = "pytz"
-optional = false
+optional = true
 python-versions = "*"
 version = "2019.3"
 
@@ -746,7 +746,7 @@ version = "2.0.0"
 category = "main"
 description = "Python documentation generator"
 name = "sphinx"
-optional = false
+optional = true
 python-versions = ">=3.5"
 version = "3.0.1"
 
@@ -804,7 +804,7 @@ sphinx = "*"
 category = "main"
 description = "sphinxcontrib-applehelp is a sphinx extension which outputs Apple help books"
 name = "sphinxcontrib-applehelp"
-optional = false
+optional = true
 python-versions = ">=3.5"
 version = "1.0.2"
 
@@ -816,7 +816,7 @@ test = ["pytest"]
 category = "main"
 description = "sphinxcontrib-devhelp is a sphinx extension which outputs Devhelp document."
 name = "sphinxcontrib-devhelp"
-optional = false
+optional = true
 python-versions = ">=3.5"
 version = "1.0.2"
 
@@ -828,7 +828,7 @@ test = ["pytest"]
 category = "main"
 description = "sphinxcontrib-htmlhelp is a sphinx extension which renders HTML help files"
 name = "sphinxcontrib-htmlhelp"
-optional = false
+optional = true
 python-versions = ">=3.5"
 version = "1.0.3"
 
@@ -840,7 +840,7 @@ test = ["pytest", "html5lib"]
 category = "main"
 description = "A sphinx extension which renders display math in HTML via JavaScript"
 name = "sphinxcontrib-jsmath"
-optional = false
+optional = true
 python-versions = ">=3.5"
 version = "1.0.1"
 
@@ -851,7 +851,7 @@ test = ["pytest", "flake8", "mypy"]
 category = "main"
 description = "Sphinx extension to include program output"
 name = "sphinxcontrib-programoutput"
-optional = false
+optional = true
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
 version = "0.16"
 
@@ -862,7 +862,7 @@ Sphinx = ">=1.7.0"
 category = "main"
 description = "sphinxcontrib-qthelp is a sphinx extension which outputs QtHelp document."
 name = "sphinxcontrib-qthelp"
-optional = false
+optional = true
 python-versions = ">=3.5"
 version = "1.0.3"
 
@@ -874,7 +874,7 @@ test = ["pytest"]
 category = "main"
 description = "sphinxcontrib-serializinghtml is a sphinx extension which outputs \"serialized\" HTML files (json and pickle)."
 name = "sphinxcontrib-serializinghtml"
-optional = false
+optional = true
 python-versions = ">=3.5"
 version = "1.1.4"
 
@@ -975,7 +975,7 @@ version = "0.29.0"
 docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "sphinxcontrib-programoutput"]
 
 [metadata]
-content-hash = "c4d64d4f6462404fa03f9faeebba9e00faf763d3dec6f0bf29761790077cae47"
+content-hash = "ad9eba2c80cb492014b6e6612831dcd12bf5aee87dacf2979568443bd23c4115"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1170,8 +1170,8 @@ jedi = [
     {file = "jedi-0.15.2.tar.gz", hash = "sha256:e909527104a903606dd63bea6e8e888833f0ef087057829b89a18364a856f807"},
 ]
 jinja2 = [
-    {file = "Jinja2-2.11.1-py2.py3-none-any.whl", hash = "sha256:b0eaf100007721b5c16c1fc1eecb87409464edc10469ddc9a22a27a99123be49"},
-    {file = "Jinja2-2.11.1.tar.gz", hash = "sha256:93187ffbc7808079673ef52771baa950426fd664d3aad1d0fa3e95644360e250"},
+    {file = "Jinja2-2.11.2-py2.py3-none-any.whl", hash = "sha256:f0a4641d3cf955324a89c04f3d94663aa4d638abe8f733ecd3582848e1c37035"},
+    {file = "Jinja2-2.11.2.tar.gz", hash = "sha256:89aab215427ef59c34ad58735269eb58b1a5808103067f7bb9d5836c651b3bb0"},
 ]
 lazy-object-proxy = [
     {file = "lazy-object-proxy-1.4.3.tar.gz", hash = "sha256:f3900e8a5de27447acbf900b4750b0ddfd7ec1ea7fbaf11dfa911141bc522af0"},
@@ -1291,8 +1291,8 @@ paramiko = [
     {file = "paramiko-2.7.1.tar.gz", hash = "sha256:920492895db8013f6cc0179293147f830b8c7b21fdfc839b6bad760c27459d9f"},
 ]
 parso = [
-    {file = "parso-0.6.2-py2.py3-none-any.whl", hash = "sha256:8515fc12cfca6ee3aa59138741fc5624d62340c97e401c74875769948d4f2995"},
-    {file = "parso-0.6.2.tar.gz", hash = "sha256:0c5659e0c6eba20636f99a04f469798dca8da279645ce5c387315b2c23912157"},
+    {file = "parso-0.7.0-py2.py3-none-any.whl", hash = "sha256:158c140fc04112dc45bca311633ae5033c2c2a7b732fa33d0955bad8152a8dd0"},
+    {file = "parso-0.7.0.tar.gz", hash = "sha256:908e9fae2144a076d72ae4e25539143d40b8e3eafbaeae03c1bfe226f4cdf12c"},
 ]
 pathspec = [
     {file = "pathspec-0.8.0-py2.py3-none-any.whl", hash = "sha256:7d91249d21749788d07a2d0f94147accd8f845507400749ea19c1ec9054a12b0"},

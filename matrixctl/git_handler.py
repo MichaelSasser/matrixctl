@@ -20,15 +20,13 @@ from logging import debug
 
 import git
 
-from .config_handler import Config
-
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def git_pull(cnf: Config):
+def git_pull(path):
     # Get the last pulled datetime
-    repo = git.Repo(cnf.ansible_path)
+    repo = git.Repo(path)
 
     assert not repo.bare
     heads = repo.heads
@@ -39,7 +37,7 @@ def git_pull(cnf: Config):
     debug(f"Git: last update: {last}")
 
     # Pull request and "log" since last pulled
-    g = git.cmd.Git(cnf.ansible_path)
+    g = git.cmd.Git(path)
     g.pull()
     print(
         g.log(

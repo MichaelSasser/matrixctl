@@ -14,32 +14,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from logging import debug
-from .ansible_handler import ansible_synapse
-
-__author__: str = "Michael Sasser"
-__email__: str = "Michael@MichaelSasser.org"
 
 
-def maintainance(_, cfg):
-    debug("maintainance")
-
-    ansible_synapse(
-        ["--tags=run-postgres-synapse-janitor,run-postgres-vacuum,start"],
-        cfg.ansible_path,
-    )
-
-
-def restart(_, cfg):
-    debug("restart")
-
-    ansible_synapse(["--tags=start"], cfg.ansible_path)
-
-
-def check(_, cfg):
-    debug("check")
-
-    ansible_synapse(["--tags=check"], cfg.ansible_path)
+class ConfigFileError(Exception):
+    pass
 
 
 # vim: set ft=python :
