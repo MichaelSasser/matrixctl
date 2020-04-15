@@ -1,0 +1,105 @@
+#!/usr/bin/env python
+# matrixctl
+# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from argparse import Namespace
+from .password_helpers import ask_password, gen_password, ask_question
+from .ansible_handler import ansible_synapse
+from .config_handler import Config
+from .api_handler import Api
+
+__author__: str = "Michael Sasser"
+__email__: str = "Michael@MichaelSasser.org"
+
+
+def subparser_adduser(subparsers):
+    adduser_parser = subparsers.add_parser(
+        "adduser", help="Add a new matrix user"
+    )
+    adduser_parser.add_argument("user", help="The Username of the new user")
+    adduser_parser.add_argument(
+        "-p",
+        "--passwd",
+        help="The password of the new user. (If you don't enter a password, "
+        "you will be asked later.)",
+    )
+    adduser_parser.add_argument(
+        "-a", "--admin", action="store_true", help="Create as admin user"
+    )
+    adduser_parser.add_argument(
+        "--ansible", action="store_true", help="Use ansible insted of the api"
+    )
+    adduser_parser.set_defaults(func=adduser)
+
+
+def adduser(arg: Namespace, cfg: Config) -> None:
+    """Adds a User to the synapse instance. It runs ``ask_password()``
+    first. If ``ask_password()`` returns ``None`` it generates a password
+    with ``gen_password()``. Then it gives the user a overview of the
+    username, password and if the new user should be generated as admin
+    (if you added the ``--admin`` argument). Next, it asks a question,
+    if the entered values are correct with the ``ask_question`` function.
+
+    If the ``ask_question`` function returns True, it continues. If not, it
+    starts from the beginning.
+
+    Depending on the ``--ansible`` switch it runs the ``adduser`` command
+    via ansible or the API
+
+    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
+    :param cfg:       The ``Config`` class
+    :return:          None
+    """
+
+    with Api(cfg.api_domain, cfg.api_token) as api:
+        while True:
+            passwd_generated: bool = False
+
+            if arg.passwd is None:
+                arg.passwd = ask_password()
+
+            if arg.passwd == "":
+                arg.passwd = gen_password()
+                passwd_generated = True
+
+            print(f"Username: {arg.user}")
+
+            if passwd_generated:
+                print(f"Password (generated): {arg.passwd}")
+            else:
+                print(f"Password: **HIDDEN**")
+            print(f"Admin:    {'yes' if arg.admin else 'no'}")
+
+            answer = ask_question()
+
+            if answer:
+                break
+            arg.passwd = None
+
+        if arg.ansible:
+            arg.admin = "yes" if arg.admin else "no"
+            ansible_synapse(
+                [
+                    "--tags=register-user",
+                    "--extra-vars",
+                    f'{{"username":"{arg.user}","password":"{arg.passwd}","admin":"{arg.admin}"}}',
+                ],
+                cfg.ansible_path,
+            )
+        else:
+            api.adduser(arg.user, arg.passwd, arg.admin)
+
+
+# vim: set ft=python :

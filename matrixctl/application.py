@@ -24,17 +24,15 @@ import argcomplete
 
 from matrixctl import __version__
 from .config_handler import Config
+from .adduser import subparser_adduser
+from .deluser import subparser_deluser
+from .adduser_jitsi import subparser_adduser_jitsi
+from .deluser_jitsi import subparser_deluser_jitsi
+from .users import subparser_users
+from .user import subparser_user
 from .housekeeping import maintainance, restart, check
-from .updating import update
-from .account import (
-    adduser,
-    deluser,
-    users,
-    adduser_jitsi,
-    deluser_jitsi,
-    user,
-)
 from .provisioning import deploy
+from .updating import update
 
 
 __author__: str = "Michael Sasser"
@@ -52,76 +50,12 @@ def main():
     )
     subparsers = parser.add_subparsers()
 
-    ##########################################################################
-    # adduser
-    adduser_parser = subparsers.add_parser(
-        "adduser", help="Add a new matrix user"
-    )
-    adduser_parser.add_argument("user", help="The Username of the new user")
-    adduser_parser.add_argument(
-        "-p",
-        "--passwd",
-        help="The password of the new user. (If you don't enter a password, "
-        "you will be asked later.)",
-    )
-    adduser_parser.add_argument(
-        "-a", "--admin", action="store_true", help="Create as admin user"
-    )
-    adduser_parser.add_argument(
-        "--ansible", action="store_true", help="Use ansible insted of the api"
-    )
-    adduser_parser.set_defaults(func=adduser)
-
-    ##########################################################################
-    # deluser
-    deluser_parser = subparsers.add_parser("deluser", help="Deletes a user")
-    deluser_parser.add_argument("user", help="The username to delete")
-    deluser_parser.set_defaults(func=deluser)
-
-    ##########################################################################
-    # adduser-jitsi
-    adduser_jitsi_parser = subparsers.add_parser(
-        "adduser-jitsi", help="Add a new jitsi user"
-    )
-    adduser_jitsi_parser.add_argument(
-        "user", help="The Username of the new jitsi user"
-    )
-    adduser_jitsi_parser.add_argument(
-        "-p",
-        "--passwd",
-        help="The password of the new jitsi user. (If you don't enter a "
-        "password, you will be asked later.)",
-    )
-    adduser_jitsi_parser.set_defaults(func=adduser_jitsi)
-
-    ##########################################################################
-    # deluser-jitsi
-    deluser_jitsi_parser = subparsers.add_parser(
-        "deluser-jitsi", help="Deletes a jitsi user"
-    )
-    deluser_jitsi_parser.add_argument(
-        "user", help="The jitsi username to delete"
-    )
-    deluser_jitsi_parser.set_defaults(func=deluser_jitsi)
-
-    ##########################################################################
-    # users
-    users_parser = subparsers.add_parser("users", help="Lists users")
-    users_parser.add_argument(
-        "-g", "--guests", action="store_true", help="Shows the users"
-    )
-    users_parser.add_argument(
-        "-b", "--no-bots", action="store_true", help="Hide bots"
-    )
-    users_parser.set_defaults(func=users)
-
-    ##########################################################################
-    # user
-    user_parser = subparsers.add_parser(
-        "user", help="Get information about a specific user"
-    )
-    user_parser.add_argument("user", help="The username of the user")
-    user_parser.set_defaults(func=user)
+    subparser_adduser(subparsers)
+    subparser_deluser(subparsers)
+    subparser_adduser_jitsi(subparsers)
+    subparser_deluser_jitsi(subparsers)
+    subparser_users(subparsers)
+    subparser_user(subparsers)
 
     ##########################################################################
     # update
