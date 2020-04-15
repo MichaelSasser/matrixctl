@@ -21,25 +21,16 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def maintainance(_, cfg):
-    debug("maintainance")
-
-    ansible_synapse(
-        ["--tags=run-postgres-synapse-janitor,run-postgres-vacuum,start"],
-        cfg.ansible_path,
+def subparser_check(subparsers):
+    check_parser = subparsers.add_parser(
+        "check", help="Checks the OCI containers"
     )
+    check_parser.set_defaults(func=check)
 
 
-def restart(_, cfg):
-    debug("restart")
-
-    ansible_synapse(["--tags=start"], cfg.ansible_path)
-
-
-def check(_, cfg):
+def check(_, cfg, __):
     debug("check")
-
-    ansible_synapse(["--tags=check"], cfg.ansible_path)
+    ansible_synapse(["--tags=check"], cfg)
 
 
 # vim: set ft=python :

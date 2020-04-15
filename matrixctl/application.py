@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# PYTHON_ARGCOMPLETE_OK
 # matrixctl
 # Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
 #
@@ -14,7 +15,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# PYTHON_ARGCOMPLETE_OK
 import sys
 import argparse
 from logging import debug, warning
@@ -24,15 +24,19 @@ import argcomplete
 
 from matrixctl import __version__
 from .config_handler import Config
+
+# Subparsers
 from .adduser import subparser_adduser
 from .deluser import subparser_deluser
 from .adduser_jitsi import subparser_adduser_jitsi
 from .deluser_jitsi import subparser_deluser_jitsi
 from .users import subparser_users
 from .user import subparser_user
-from .housekeeping import maintainance, restart, check
-from .provisioning import deploy
-from .updating import update
+from .update import subparser_update
+from .deploy import subparser_deploy
+from .start import subparser_start, subparser_restart
+from .maintainance import subparser_maintainance
+from .check import subparser_check
 
 
 __author__: str = "Michael Sasser"
@@ -41,7 +45,7 @@ __email__: str = "Michael@MichaelSasser.org"
 # API: https://github.com/matrix-org/synapse/blob/master/docs/admin_api/user_admin_api.rst
 
 
-def main():
+def setup_parser() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--version", action="version", version=__version__)
@@ -50,65 +54,47 @@ def main():
     )
     subparsers = parser.add_subparsers()
 
-    subparser_adduser(subparsers)
-    subparser_deluser(subparsers)
-    subparser_adduser_jitsi(subparsers)
-    subparser_deluser_jitsi(subparsers)
-    subparser_users(subparsers)
-    subparser_user(subparsers)
-
-    ##########################################################################
-    # update
-    update_parser = subparsers.add_parser(
-        "update", help="Updates the ansible repo"
+    # Subparsers
+    subparsers_tuple = (
+        subparser_adduser,
+        subparser_deluser,
+        subparser_adduser_jitsi,
+        subparser_deluser_jitsi,
+        subparser_users,
+        subparser_user,
+        subparser_update,
+        subparser_deploy,
+        subparser_start,
+        subparser_restart,  # alias for start
+        subparser_maintainance,
+        subparser_check,
     )
-    update_parser.set_defaults(func=update)
 
-    ##########################################################################
-    # deploy
-    deploy_parser = subparsers.add_parser(
-        "deploy", help="Provision and deploy"
-    )
-    deploy_parser.set_defaults(func=deploy)
+    for subparser in subparsers_tuple:
+        subparser(subparsers)
 
-    ##########################################################################
-    # start
-    start_parser = subparsers.add_parser(
-        "start", help="Starts all OCI containers"
-    )
-    start_parser.set_defaults(func=restart)  # Keep it "restart"
+    return parser
 
-    ##########################################################################
-    # restart
-    restart_parser = subparsers.add_parser(
-        "restart", help="Restarts all OCI containers (alias for start)"
-    )
-    restart_parser.set_defaults(func=restart)
 
-    ##########################################################################
-    # maintainance
-    maintainance_parser = subparsers.add_parser(
-        "maintainance", help="Run maintainance tasks"
-    )
-    maintainance_parser.set_defaults(func=maintainance)
+def setup_autocomplete(parser):
+    argcomplete.autocomplete(parser)  # Add autocomplete for Bash, Zsh, ...
 
-    ##########################################################################
-    # check
-    check_parser = subparsers.add_parser(
-        "check", help="Checks the OCI containers"
-    )
-    check_parser.set_defaults(func=check)
 
-    ##########################################################################
-    # Parsing
-    argcomplete.autocomplete(parser)
-    args: argparse.Namespace = parser.parse_args()
-
+def setup_logging(debug_mode):
     coloredlogs.DEFAULT_LOG_FORMAT = (
         "%(asctime)s - %(levelname)s - %(message)s"
     )
-    coloredlogs.DEFAULT_LOG_LEVEL = 0 if args.debug else 21
+    coloredlogs.DEFAULT_LOG_LEVEL = 0 if debug_mode else 21
     coloredlogs.install()
+
+
+def main():
+    parser = setup_parser()
+    setup_autocomplete(parser)
+
+    args: argparse.Namespace = parser.parse_args()
+
+    setup_logging(args.debug)
 
     config = Config()
 
