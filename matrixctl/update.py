@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from .config_handler import Config
-from .git_handler import git_pull
+from .handlers.git import Git
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -29,7 +29,8 @@ def subparser_update(subparsers):
 
 
 def update(_, cnf: Config):
-    git_pull(cnf.ansible_path)
+    with Git(cnf.ansible_path) as git:
+        git.pull()
 
 
 # vim: set ft=python :

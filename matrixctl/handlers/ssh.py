@@ -44,20 +44,6 @@ class SSH:
         """Connects to the SSH server"""
         self.client.connect(self.address)
 
-    def __enter__(self):
-        """Connects to the SSH server with the "with" command"""
-
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        """Closes the connection to the SSH after the namespace of the
-        "with" command ends."""
-        self.client.close()
-
-    def __del__(self):
-        """Clos the connection to the SSH"""
-        self.client.close()
-
     @staticmethod
     def __str_from(f: ChannelFile) -> Optional[str]:
         try:
@@ -75,6 +61,20 @@ class SSH:
         debug(f'SSH Response: "{response}"')
 
         return response
+
+    def __enter__(self):
+        """Connects to the SSH server with the "with" command"""
+
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Closes the connection to the SSH after the namespace of the
+        "with" command ends."""
+        self.client.close()
+
+    def __del__(self):
+        """Clos the connection to the SSH"""
+        self.client.close()
 
 
 # vim: set ft=python :
