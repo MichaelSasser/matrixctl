@@ -15,21 +15,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from argparse import Namespace
+
 from .config_handler import Config
-from .ssh_handler import Ssh
+from .handlers.ssh import SSH
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+JID_EXT: str = "matrix-jitsi-web"
+
+
 def subparser_deluser_jitsi(subparsers):
-    deluser_jitsi_parser = subparsers.add_parser(
+    parser = subparsers.add_parser(
         "deluser-jitsi", help="Deletes a jitsi user"
     )
-    deluser_jitsi_parser.add_argument(
-        "user", help="The jitsi username to delete"
-    )
-    deluser_jitsi_parser.set_defaults(func=deluser_jitsi)
+    parser.add_argument("user", help="The jitsi username to delete")
+    parser.set_defaults(func=deluser_jitsi)
 
 
 def deluser_jitsi(arg: Namespace, cfg: Config) -> None:
@@ -40,8 +42,14 @@ def deluser_jitsi(arg: Namespace, cfg: Config) -> None:
     :param cfg:       The ``Config`` class
     :return:          None
     """
-    with Ssh(cfg) as ssh:
-        ssh.deluser(arg.user)
+    with SSH(cfg) as ssh:
+        cmd: str = (
+            "sudo docker exec matrix-jitsi-prosody prosodyctl "
+            "--config /config/prosody.cfg.lua deluser "
+            f'"{arg.user}@{JID_EXT}"'
+        )
+
+        ssh.run_cmd(cmd)
 
 
 # vim: set ft=python :

@@ -14,9 +14,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from logging import error
 from argparse import Namespace
-from .config_handler import Config
-from .api_handler import Api
+
+from .handlers.config import Config
+from .handlers.api import API
+from .errors import InternalResponseError
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -36,8 +39,14 @@ def deluser(arg: Namespace, cfg: Config) -> None:
     :param _:         Not used (The ``Config`` class)
     :return:          None
     """
-    with Api(cfg.api_domain, cfg.api_token) as api:
-        api.deluser(arg.user)
+    with API(cfg.api_domain, cfg.api_token) as api:
+        try:
+            api.url.path = f"deactivate/@{arg.user}:{cfg.api_domain}"
+            api.url.api_version = "v1"
+            api.method = "POST"
+            api.request({"erase": True})
+        except InternalResponseError:
+            error("The user was not deleted.")
 
 
 # vim: set ft=python :

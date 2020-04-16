@@ -14,17 +14,38 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# import configparser
+import datetime
+from logging import debug
 
-# flake8: noqa
-# pylint: disable:undefined-variable
+import git
 
-from pathlib import Path
-from pkg_resources import get_distribution
+__author__: str = "Michael Sasser"
+__email__: str = "Michael@MichaelSasser.org"
 
 
-__version__ = get_distribution("matrixctl").version
+def git_pull(path):
+    # Get the last pulled datetime
+    repo = git.Repo(path)
 
-HOME: str = str(Path.home())
+    assert not repo.bare
+    heads = repo.heads
+    master = heads.master
+
+    log = master.log()
+    last = datetime.datetime.fromtimestamp(log[-1].time[0])
+    debug(f"Git: last update: {last}")
+
+    # Pull request and "log" since last pulled
+    g = git.cmd.Git(path)
+    g.pull()
+    print(
+        g.log(
+            f"--since={str(last)}",
+            # f"--since={str(last.date())}",
+            "--pretty=%as |%<(15) %an | %s",
+        )
+    )
 
 
 # vim: set ft=python :

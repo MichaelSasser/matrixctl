@@ -14,34 +14,36 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from logging import error
 from argparse import Namespace
+
+from .handlers.config import Config
+from .handlers.ansible import Ansible
+from .handlers.api import API
+
 from .password_helpers import ask_password, gen_password, ask_question
-from .ansible_handler import ansible_synapse
-from .config_handler import Config
-from .api_handler import Api
+from .errors import InternalResponseError
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
 def subparser_adduser(subparsers):
-    adduser_parser = subparsers.add_parser(
-        "adduser", help="Add a new matrix user"
-    )
-    adduser_parser.add_argument("user", help="The Username of the new user")
-    adduser_parser.add_argument(
+    parser = subparsers.add_parser("adduser", help="Add a new matrix user")
+    parser.add_argument("user", help="The Username of the new user")
+    parser.add_argument(
         "-p",
         "--passwd",
         help="The password of the new user. (If you don't enter a password, "
         "you will be asked later.)",
     )
-    adduser_parser.add_argument(
+    parser.add_argument(
         "-a", "--admin", action="store_true", help="Create as admin user"
     )
-    adduser_parser.add_argument(
+    parser.add_argument(
         "--ansible", action="store_true", help="Use ansible insted of the api"
     )
-    adduser_parser.set_defaults(func=adduser)
+    parser.set_defaults(func=adduser)
 
 
 def adduser(arg: Namespace, cfg: Config) -> None:
@@ -63,7 +65,10 @@ def adduser(arg: Namespace, cfg: Config) -> None:
     :return:          None
     """
 
-    with Api(cfg.api_domain, cfg.api_token) as api:
+    with API(cfg.api_domain, cfg.api_token) as api, Ansible(
+        cfg.ansible_path
+    ) as ansible:
+
         while True:
             passwd_generated: bool = False
 
@@ -90,16 +95,20 @@ def adduser(arg: Namespace, cfg: Config) -> None:
 
         if arg.ansible:
             arg.admin = "yes" if arg.admin else "no"
-            ansible_synapse(
-                [
-                    "--tags=register-user",
-                    "--extra-vars",
-                    f'{{"username":"{arg.user}","password":"{arg.passwd}","admin":"{arg.admin}"}}',
-                ],
-                cfg.ansible_path,
-            )
+            ansible.tags = tuple("register-user")
+            ansible.extra_vars = {
+                "username": arg.user,
+                "password": arg.passwd,
+                "admin": arg.admin,
+            }
+            ansible.run_playbook()
         else:
-            api.adduser(arg.user, arg.passwd, arg.admin)
+            try:
+                api.url.path = f"users/@{arg.user}:{cfg.api_domain}"
+                api.method = "PUT"
+                api.request({"password": arg.passwd, "admin": arg.admin})
+            except InternalResponseError:
+                error("The User was not added.")
 
 
 # vim: set ft=python :

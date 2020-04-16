@@ -15,22 +15,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from logging import debug
-from .ansible_handler import ansible_synapse
+
+from .handlers.ansible import Ansible
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
 def subparser_check(subparsers):
-    check_parser = subparsers.add_parser(
-        "check", help="Checks the OCI containers"
-    )
-    check_parser.set_defaults(func=check)
+    parser = subparsers.add_parser("check", help="Checks the OCI containers")
+    parser.set_defaults(func=check)
 
 
-def check(_, cfg, __):
+def check(_, cfg):
     debug("check")
-    ansible_synapse(["--tags=check"], cfg)
+    with Ansible(cfg.ansible_path) as ansible:
+        ansible.tags = ("check",)
+        ansible.run_playbook()
 
 
 # vim: set ft=python :

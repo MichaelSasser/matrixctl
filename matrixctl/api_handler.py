@@ -167,13 +167,13 @@ class Api:
         api_version: int = 2,
         json_payload: bool = True,
     ) -> requests.Response:
-        """Sends a request to the synapse api with the help of the 
+        """Sends a request to the synapse api with the help of the
         ``requests`` module.
 
         :param path:          The path of the request
         :param params:        Params of the request
         :param payload:       The payload of the request
-        :param method:        The response method: ``GET``, ``POST``, 
+        :param method:        The response method: ``GET``, ``POST``,
                               ``PUT``, ``DELETE`` of the request
         :param api_version:   The version of the api of the request
         :param json_payload:  ``True`` if the request and the response should
