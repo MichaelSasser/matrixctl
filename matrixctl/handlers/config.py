@@ -14,13 +14,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import sys
-import functools
 import configparser
-
-from typing import Tuple
+import functools
+import sys
+from logging import debug
+from logging import fatal
 from pathlib import Path
-from logging import debug, fatal
+from typing import Tuple
 
 from matrixctl import HOME
 from matrixctl.errors import ConfigFileError

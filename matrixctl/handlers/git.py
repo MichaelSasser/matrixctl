@@ -16,11 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # import configparser
 import datetime
-from typing import Optional, List
-from logging import info, debug
+from logging import debug
+from logging import info
 from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
+from typing import List
+from typing import Optional
 
 import git
 from tabulate import tabulate

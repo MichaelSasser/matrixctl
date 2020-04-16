@@ -15,8 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
-from logging import debug, error
-from .ansible_handler import ansible_synapse, ansible_server
+from logging import debug
+from logging import error
+
+from .ansible_handler import ansible_server
+from .ansible_handler import ansible_synapse
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

@@ -14,12 +14,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from logging import error
 from argparse import Namespace
+from logging import error
 
-from .handlers.config import Config
-from .handlers.api import API
 from .errors import InternalResponseError
+from .handlers.api import API
+from .handlers.config import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

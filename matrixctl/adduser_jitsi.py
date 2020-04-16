@@ -15,9 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from argparse import Namespace
-from .handlers.ssh import SSH
-from .password_helpers import ask_password, gen_password, ask_question
+
 from .config_handler import Config
+from .handlers.ssh import SSH
+from .password_helpers import ask_password
+from .password_helpers import ask_question
+from .password_helpers import gen_password
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

@@ -15,9 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from argparse import Namespace
+
 from tabulate import tabulate
-from .config_handler import Config
+
 from .api_handler import Api
+from .config_handler import Config
 from .typing import JsonDict
 
 __author__: str = "Michael Sasser"

@@ -14,14 +14,16 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import sys
 import json
-from logging import debug, error, fatal
+import sys
+from logging import debug
+from logging import error
+from logging import fatal
 from typing import Optional
-from .typing import JsonDict
 
 import requests
 
+from .typing import JsonDict
 from matrixctl import __version__
 
 __author__: str = "Michael Sasser"

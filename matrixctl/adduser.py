@@ -14,15 +14,16 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from logging import error
 from argparse import Namespace
+from logging import error
 
-from .handlers.config import Config
+from .errors import InternalResponseError
 from .handlers.ansible import Ansible
 from .handlers.api import API
-
-from .password_helpers import ask_password, gen_password, ask_question
-from .errors import InternalResponseError
+from .handlers.config import Config
+from .password_helpers import ask_password
+from .password_helpers import ask_question
+from .password_helpers import gen_password
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

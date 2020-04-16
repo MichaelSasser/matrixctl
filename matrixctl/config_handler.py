@@ -14,16 +14,16 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import sys
 import configparser
 import functools
-
-from typing import Tuple
+import sys
+from logging import debug
+from logging import fatal
 from pathlib import Path
-from logging import debug, fatal
+from typing import Tuple
 
-from matrixctl import HOME
 from .errors import ConfigFileError
+from matrixctl import HOME
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

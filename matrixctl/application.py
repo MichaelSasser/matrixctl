@@ -15,28 +15,30 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import sys
 import argparse
-from logging import debug, warning
+import sys
+from logging import debug
+from logging import warning
 
-import coloredlogs
 import argcomplete
+import coloredlogs
 
-from matrixctl import __version__
+from .adduser import subparser_adduser
+from .adduser_jitsi import subparser_adduser_jitsi
+from .check import subparser_check
 from .config_handler import Config
+from .deluser import subparser_deluser
+from .deluser_jitsi import subparser_deluser_jitsi
+from .deploy import subparser_deploy
+from .maintainance import subparser_maintainance
+from .start import subparser_restart
+from .start import subparser_start
+from .update import subparser_update
+from .user import subparser_user
+from .users import subparser_users
+from matrixctl import __version__
 
 # Subparsers
-from .adduser import subparser_adduser
-from .deluser import subparser_deluser
-from .adduser_jitsi import subparser_adduser_jitsi
-from .deluser_jitsi import subparser_deluser_jitsi
-from .users import subparser_users
-from .user import subparser_user
-from .update import subparser_update
-from .deploy import subparser_deploy
-from .start import subparser_start, subparser_restart
-from .maintainance import subparser_maintainance
-from .check import subparser_check
 
 
 __author__: str = "Michael Sasser"

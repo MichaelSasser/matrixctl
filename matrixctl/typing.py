@@ -14,7 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from typing import Dict, Any
+from typing import Any
+from typing import Dict
 
 JsonDict = Dict[str, Any]
 

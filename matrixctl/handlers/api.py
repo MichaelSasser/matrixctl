@@ -15,8 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import json
-from typing import Tuple, Iterable
 from logging import debug
+from typing import Iterable
+from typing import Tuple
 from urllib.parse import urlparse
 
 import requests

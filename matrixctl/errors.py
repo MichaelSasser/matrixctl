@@ -14,8 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from typing import Any
 from sys import version_info
+from typing import Any
+
 from pkg_resources import get_distribution
 
 

@@ -15,11 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
-import sys
 import subprocess
-from logging import debug, error
+import sys
+from logging import debug
+from logging import error
 from pathlib import Path
-from typing import Iterable, List, Optional
+from typing import Iterable
+from typing import List
+from typing import Optional
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

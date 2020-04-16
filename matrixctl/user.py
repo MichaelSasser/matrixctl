@@ -14,14 +14,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import sys
 import datetime
-from typing import Optional, List, Tuple, Any
+import sys
 from argparse import Namespace
-from logging import debug, error
+from logging import debug
+from logging import error
+from typing import Any
+from typing import List
+from typing import Optional
+from typing import Tuple
+
 from tabulate import tabulate
-from .config_handler import Config
+
 from .api_handler import Api
+from .config_handler import Config
 from .typing import JsonDict
 
 __author__: str = "Michael Sasser"

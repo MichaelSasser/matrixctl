@@ -14,13 +14,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import json
 import os
 import subprocess
-import json
-
-from typing import Iterable, List, Optional
 from logging import debug
 from pathlib import Path
+from typing import Iterable
+from typing import List
+from typing import Optional
 
 from matrixctl.typing import JsonDict
 

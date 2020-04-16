@@ -15,8 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
-from typing import NamedTuple, Optional
-from logging import debug, error
+from logging import debug
+from logging import error
+from typing import NamedTuple
+from typing import Optional
 
 from paramiko import SSHClient
 from paramiko.channel import ChannelFile
