@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 import getpass
 import secrets
 import string
@@ -28,7 +30,9 @@ ALPHABET = string.ascii_letters + string.digits + SPECIAL
 
 
 def ask_password() -> Optional[str]:
-    """Ask the user to create a password. The user will be asked twice, after
+    """Ask the user to create a password.
+
+    The user will be asked twice, after
     that, the function compares the two entered passwords. If they are the
     same, the function will return the password.
 
@@ -54,7 +58,9 @@ def gen_password(
     min_special: int = 1,
     max_special: int = 3,
 ) -> str:
-    """This function generates a password. It uses lower- and uppercase
+    """Generate a password.
+
+    It uses lower- and uppercase
     characters, digits and some special characters, you can find in the
     ``SPECIAL`` variable in this file.
 
@@ -95,9 +101,9 @@ def gen_password(
 
 
 def ask_question(question: str = "Is everything correct?") -> bool:
-    """This function asks the user for a simple yes/no a question and returns
-    the answer as ``bool``:
+    """Asks the user a simple yes/no a question.
 
+    The answer will be returned as ``bool``.
     - ``True``: if the user answered ``y`` / ``j`` (j for the German yes: Ja)
     - ``False``: if the user answers ``n``
 

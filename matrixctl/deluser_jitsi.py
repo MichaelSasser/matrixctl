@@ -14,9 +14,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 from argparse import Namespace
 
-from .config_handler import Config
+from .handlers.config import Config
 from .handlers.ssh import SSH
 
 __author__: str = "Michael Sasser"
@@ -35,14 +37,15 @@ def subparser_deluser_jitsi(subparsers):
 
 
 def deluser_jitsi(arg: Namespace, cfg: Config) -> None:
-    """This function deletes a user from the jitsi instance.
+    """Delete a user from the jitsi instance.
+
     It uses the ``Ssh`` class from the ``ssh_handler``.
 
     :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
     :param cfg:       The ``Config`` class
     :return:          None
     """
-    with SSH(cfg) as ssh:
+    with SSH(cfg.api_domain) as ssh:
         cmd: str = (
             "sudo docker exec matrix-jitsi-prosody prosodyctl "
             "--config /config/prosody.cfg.lua deluser "

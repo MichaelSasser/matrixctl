@@ -16,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # flake8: noqa
 # pylint: disable:undefined-variable
+from __future__ import annotations
+
 from pathlib import Path
 
 from pkg_resources import get_distribution

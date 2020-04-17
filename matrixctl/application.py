@@ -15,6 +15,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 import argparse
 import sys
 from logging import debug
@@ -26,10 +28,10 @@ import coloredlogs
 from .adduser import subparser_adduser
 from .adduser_jitsi import subparser_adduser_jitsi
 from .check import subparser_check
-from .config_handler import Config
 from .deluser import subparser_deluser
 from .deluser_jitsi import subparser_deluser_jitsi
 from .deploy import subparser_deploy
+from .handlers.config import Config
 from .maintainance import subparser_maintainance
 from .start import subparser_restart
 from .start import subparser_start
@@ -44,10 +46,11 @@ from matrixctl import __version__
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
-# API: https://github.com/matrix-org/synapse/blob/master/docs/admin_api/user_admin_api.rst
+# API: https://github.com/matrix-org/synapse/blob/master/docs/admin_api/
+#              user_admin_api.rst
 
 
-def setup_parser() -> argparse.Namespace:
+def setup_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--version", action="version", version=__version__)

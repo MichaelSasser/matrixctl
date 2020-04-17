@@ -14,9 +14,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 from logging import debug
 
-from .ansible_handler import ansible_synapse
+from .handlers.ansible import Ansible
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -39,7 +41,9 @@ def subparser_restart(subparsers):
 def start(_, cfg):
     debug("start")
 
-    ansible_synapse(["--tags=start"], cfg.ansible_path)
+    with Ansible(cfg.synapse_path) as ansible:
+        ansible.tags = ("start",)
+        ansible.run_playbook()
 
 
 # vim: set ft=python :

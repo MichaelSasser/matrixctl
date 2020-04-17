@@ -14,12 +14,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
+import sys
 from argparse import Namespace
+from logging import fatal
 
 from tabulate import tabulate
 
-from .api_handler import Api
-from .config_handler import Config
+from .errors import InternalResponseError
+from .handlers.api import API
+from .handlers.config import Config
 from .typing import JsonDict
 
 __author__: str = "Michael Sasser"
@@ -38,7 +43,9 @@ def subparser_users(subparsers):
 
 
 def users(arg: Namespace, cfg: Config) -> None:
-    """This function generates and prints a table of matrix user accounts.
+    """Print a table of the matrix users.
+
+    This function generates and prints a table of matrix user accounts.
     The table can be modified with:
 
     - the ``--guests`` switch: ``args.guests`` is True, else ``False``
@@ -73,14 +80,23 @@ def users(arg: Namespace, cfg: Config) -> None:
     :param cfg:       The ``Config`` class
     :return:          None
     """
+    len_domain = len(cfg.api_domain) + 1  # 1 for :
+    from_user: int = 0
+    users_list: list = []
 
-    with Api(cfg.api_domain, cfg.api_token) as api:
-        len_domain = len(cfg.api_domain) + 1  # 1 for :
-        from_user: int = 0
-        users_list: list = []
+    # ToDo: API bool
+    with API(cfg.api_domain, cfg.api_token) as api:
+        api.url.path = "users"
+        api.params = {"guests": "true" if arg.guests else "false"}
 
         while True:
-            lst: JsonDict = api.users(from_user, show_guests=arg.guests)
+
+            api.params = {"from": from_user}  # from must be in the loop
+            try:
+                lst: JsonDict = api.request().json()
+            except InternalResponseError:
+                fatal("Could not get the user table.")
+                sys.exit(1)
 
             users_list += lst["users"]
             try:

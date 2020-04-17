@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 import configparser
 import functools
 import sys
@@ -29,28 +31,10 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def error_if_not_available(method):
-    """A wrapper, that checks, if the configuration is available and returns
-    it. If the information is not available. it throws an error.
-    """
-
-    @functools.wraps(method)
-    def wrapper_error_if_not_available(*args, **kwargs):
-        try:
-            return method(*args, **kwargs)
-        except (KeyError, TypeError):
-            fatal(
-                f"Please check your config file: "
-                f"{str(method.__name__).split('_')[0].upper()} "
-                f"({str(method.__name__).split('_')[1]} entry)"
-            )
-            sys.exit(1)
-
-    return wrapper_error_if_not_available
-
-
 def none_if_not_available(method):
-    """A wrapper, that checks, if the configuration is available and returns
+    """Let methods return ``None`` if the information is not available.
+
+    The wrapper checks, if the configuration is available and returns
     it. If the information is not available. it returns None.
     """
 
@@ -66,10 +50,11 @@ def none_if_not_available(method):
     return wrapper_none_if_not_available
 
 
+# ToDo: with Config...:   config["Ansible"]["Path"]
 # ToDo: Is the token length always the same? should be. If yes: check token
 # length to prevent copy error.
 class Config:
-    FILE_PATH: Tuple[Path] = (
+    FILE_PATH: Tuple[Path, Path] = (
         Path("/etc/matrixctl/config"),
         Path(f"/{HOME}/.config/matrixctl/config"),
     )
@@ -139,31 +124,26 @@ class Config:
             sys.exit(1)
 
     @property
-    def ansible_path(self) -> Path:
-        return Path(self.config_ansible["MatrixDockerAnsibleDeployPath"])
+    def synapse_path(self) -> Path:
+        return Path(self.config_ansible["Path"])
 
     @property
-    @none_if_not_available
     def api_token(self) -> str:
         return self.config_api["Token"]
 
     @property
-    @none_if_not_available
     def api_domain(self) -> str:
         return self.config_api["Domain"]
 
     @property
-    @none_if_not_available
     def server_cfg(self) -> str:
         return self.config_server["AnsibleCfg"]
 
     @property
-    @none_if_not_available
-    def server_play(self) -> str:
-        return self.config_server["AnsiblePlaybook"]
+    def my_playbook(self) -> Path:
+        return Path(self.config_server["Path"])
 
     @property
-    @none_if_not_available
     def server_tags(self) -> str:
         return self.config_server["AnsibleTags"]
 

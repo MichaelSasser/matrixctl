@@ -14,9 +14,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 import json
 from logging import debug
-from typing import Iterable
 from typing import Tuple
 from urllib.parse import urlparse
 
@@ -48,36 +49,36 @@ class UrlBuilder:
         self.__api_version: str = "v2"
         self.__path: str = ""
 
-    def scheme(self, scheme: str) -> None:
+    def _scheme(self, scheme: str) -> None:
         assert isinstance(scheme, str)
         self.__scheme = scheme
 
-    def domain(self, domain: str) -> None:
+    def _domain(self, domain: str) -> None:
         assert isinstance(domain, str)
         self.__domain = domain
 
-    def subdomain(self, subdomain: str) -> None:
+    def _subdomain(self, subdomain: str) -> None:
         assert isinstance(subdomain, str)
         self.__subdomain = subdomain
 
-    def api_path(self, api_path: str) -> None:
+    def _api_path(self, api_path: str) -> None:
         assert isinstance(api_path, str)
         self.__api_path = api_path
 
-    def api_version(self, api_version: str) -> None:
+    def _api_version(self, api_version: str) -> None:
         assert isinstance(api_version, str)
         self.__api_version = api_version
 
-    def path(self, path: str) -> None:
+    def _path(self, path: str) -> None:
         assert isinstance(path, str)
         self.__path = path
 
-    scheme = property(fset=scheme)
-    domain = property(fset=domain)
-    subdomain = property(fset=subdomain)
-    api_path = property(fset=api_path)
-    api_version = property(fset=api_version)
-    path = property(fset=path)
+    scheme = property(fset=_scheme)
+    domain = property(fset=_domain)
+    subdomain = property(fset=_subdomain)
+    api_path = property(fset=_api_path)
+    api_version = property(fset=_api_version)
+    path = property(fset=_path)
 
     def build(self):
         # Url Generation
@@ -97,9 +98,8 @@ class UrlBuilder:
 
 
 class API:
-    """Handles the connection to the Representational State Transfer (REST)
-    API of synapse and communication.
-    """
+
+    """Handle the REST API connection of synapse."""
 
     __slots__ = (
         "token",
@@ -111,11 +111,23 @@ class API:
         "__request",
     )
 
+    # (*range(200, 208), 226)
+    RESPONSE_OK: Tuple[int, ...] = (
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        226,
+    )
+
     def __init__(
         self, api_domain: str, api_token: str, json_format: bool = True
     ) -> None:
-        """Initializes the Api class and checks, if the parameter
-        are there.
+        """Initialize the Api class and checks, if the parameter are there.
 
         :param api_domain:  The API domain (e.g. "domain.tld")
         :param api_token:   The access token of an admin
@@ -127,11 +139,10 @@ class API:
         assert isinstance(json_format, bool)
 
         self.token: str = api_token
-        self.domain: str = api_domain
         self.json_format: bool = json_format
 
         self.url: UrlBuilder = UrlBuilder(api_domain)
-        self.__success_codes: Tuple[int] = (*range(200, 208), 226)
+        self.__success_codes: Tuple[int, ...] = self.__class__.RESPONSE_OK
 
         self.session = requests.Session()
 
@@ -146,16 +157,16 @@ class API:
             },
         }
 
-    def method(self, method):
+    def _method(self, method):
         method = method.upper()
         assert method in {"GET", "POST", "PUT", "DELETE"}
         self.__request["method"] = method
 
-    def params(self, params: dict):
+    def _params(self, params: dict):
         assert isinstance(params, dict)
         self.__request["params"] = params
 
-    def headers(self, headers: dict):
+    def _headers(self, headers: dict):
         assert isinstance(headers, dict)
 
         if self.json_format:
@@ -163,18 +174,17 @@ class API:
 
         self.__request["headers"].update(headers)
 
-    def success_codes(self, codes: Iterable[int]):
-        assert isinstance(codes, Iterable)
+    def _success_codes(self, codes: Tuple[int]):
+        assert isinstance(codes, tuple)
         self.__success_codes = codes
 
-    method = property(fset=method)
-    params = property(fset=params)
-    headers = property(fset=headers)
-    success_codes = property(fset=success_codes)
+    method = property(fset=_method)
+    params = property(fset=_params)
+    headers = property(fset=_headers)
+    success_codes = property(fset=_success_codes)
 
     def request(self, data: dict = None) -> requests.Response:
-        """Sends a request to the synapse api with the help of the
-        ``requests`` module.
+        """Send a request to the synapse API.
 
         :param path:           The path of the request
         :param params:         Params of the request
@@ -207,65 +217,19 @@ class API:
 
         return response
 
-    # def users(self, from_user: int = 0, show_guests: bool = False) -> JsonDict:
-    #     """Gets a list of users and optional guests from the matrix instance.
-    #     This method can download only 100 entries at once. To download another
-    #     100 entries (99..199) you need to set the ``from_user`` argument to
-    #     100.
-    #
-    #     **Example**
-    #
-    #     >>> api = Api(domain, tokenr)
-    #     >>> api.users(0)
-    #     # Users 0..99
-    #     >>> api.users(100)
-    #     # Users 100..199
-    #     >>> api.users(200)
-    #     # Users 200..299
-    #
-    #     :param from_user:    The number of the user to begin with.
-    #                          (default: 0)
-    #     :param show_guests:  ``True`` to show guests, ``False`` to don't
-    #                          (default: ``False``)
-    #     :return:             A json dict with the requestet users
-    #     """
-    #     path = f"/users"
-    #     params = {
-    #         "from": from_user,
-    #         "guests": "true" if show_guests else "false",
-    #     }
-    #     response = self.request(path, method="GET", params=params)
-    #
-    #     if response.status_code not in (201, 200):
-    #         error("The request was not successful.")
-    #
-    #     return response.json()
-    #
-    # def user(self, user: str) -> JsonDict:
-    #     """Get detailed information about a user.
-    #
-    #     :param user:  The username
-    #     :return:      A json dict of the requestes user
-    #     """
-    #     path = f"/users/{user}"
-    #     response = self.request(path, method="GET")
-    #
-    #     if response.status_code not in (201, 200):
-    #         error("The request was not successful.")
-    #
-    #     return response.json()
-
     def __enter__(self):
-        """Makes it possible to be called with the ``with`` statement.
-        This is currently not really needed, but unifis the way handlers are
+        """Use the class with the ``with`` statement`` statement.
+
+        This is currently not really needed, but unifies the way handlers are
         used.
         """
 
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Makes it possible to be called with the ``with`` statement.
-        This is currently not really needed, but unifis the way handlers are
+        """Use the class with the ``with`` statement`` statement.
+
+        This is currently not really needed, but unifies the way handlers are
         used.
         """
 

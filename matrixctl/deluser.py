@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 from argparse import Namespace
 from logging import error
 
@@ -32,7 +34,8 @@ def subparser_deluser(subparsers):
 
 
 def deluser(arg: Namespace, cfg: Config) -> None:
-    """This function deletes a user from the matrix instance.
+    """Delete a user from the the matrix instance.
+
     It uses the synapse admin API.
 
     :param arg:       The ``Namespace`` object of argparse's ``arse_args()``

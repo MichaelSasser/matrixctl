@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 from logging import debug
 
 from .handlers.ansible import Ansible
@@ -29,7 +31,7 @@ def subparser_check(subparsers):
 
 def check(_, cfg):
     debug("check")
-    with Ansible(cfg.ansible_path) as ansible:
+    with Ansible(cfg.synapse_path) as ansible:
         ansible.tags = ("check",)
         ansible.run_playbook()
 

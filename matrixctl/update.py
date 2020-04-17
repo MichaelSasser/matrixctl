@@ -14,7 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from .config_handler import Config
+from __future__ import annotations
+
+from .handlers.config import Config
 from .handlers.git import Git
 
 __author__: str = "Michael Sasser"
@@ -29,7 +31,7 @@ def subparser_update(subparsers):
 
 
 def update(_, cnf: Config):
-    with Git(cnf.ansible_path) as git:
+    with Git(cnf.synapse_path) as git:
         git.pull()
 
 

@@ -14,9 +14,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 from argparse import Namespace
 
-from .config_handler import Config
+from .handlers.config import Config
 from .handlers.ssh import SSH
 from .password_helpers import ask_password
 from .password_helpers import ask_question
@@ -44,7 +46,9 @@ def subparser_adduser_jitsi(subparsers):
 
 
 def adduser_jitsi(arg: Namespace, cfg: Config) -> None:
-    """Adds a User to the jitsi instance. It runs ``ask_password()``
+    """Add a User to the jitsi instance.
+
+    It runs ``ask_password()``
     first. If ``ask_password()`` returns ``None`` it generates a password
     with ``gen_password()``. Then it gives the user a overview of the
     username, password and if the new user should be generated as admin
@@ -77,7 +81,7 @@ def adduser_jitsi(arg: Namespace, cfg: Config) -> None:
             if passwd_generated:
                 print(f"Password (generated): {arg.passwd}")
             else:
-                print(f"Password: **HIDDEN**")
+                print("Password: **HIDDEN**")
 
             answer = ask_question()
 

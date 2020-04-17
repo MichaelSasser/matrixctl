@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 import json
 import os
 import subprocess
@@ -42,26 +44,25 @@ class Ansible:
             "inventory": str(self.playbook_path / "inventory/hosts"),
         }
 
-    def inventory_path(self, path):
+    def _inventory_path(self, path):
         assert isinstance(path, Path)
-        self.__cmd["inventory"]: str = str(path)
+        self.__cmd["inventory"] = str(path)
 
-    def tags(self, tags: Iterable[str]):
+    def _tags(self, tags: Iterable[str]):
         assert isinstance(tags, Iterable)
-        self.__cmd["tags"]: str = ",".join(tags)  # e.g. tag1,tag2,...,tagn
+        self.__cmd["tags"] = ",".join(tags)  # e.g. tag1,tag2,...,tagn
 
-    def extra_vars(self, extra_vars: JsonDict):
-        assert isinstance(extra_vars, JsonDict)
-        self.__cmd["extra_vars"]: str = json.dumps(extra_vars)
+    def _extra_vars(self, extra_vars: JsonDict):
+        self.__cmd["extra_vars"] = json.dumps(extra_vars)
 
-    def ansible_cfg_path(self, path):
+    def _ansible_cfg_path(self, path):
         assert isinstance(path, str)
         self.__ansible_cfg_path = path
 
-    inventory_path = property(fset=inventory_path)
-    tags = property(fset=tags)
-    extra_vars = property(fset=extra_vars)
-    ansible_cfg_tags = property(fset=ansible_cfg_path)
+    inventory_path = property(fset=_inventory_path)
+    tags = property(fset=_tags)
+    extra_vars = property(fset=_extra_vars)
+    ansible_cfg_tags = property(fset=_ansible_cfg_path)
 
     def run_playbook(self) -> None:
         # Build the command
@@ -174,16 +175,18 @@ class Ansible:
     #     subprocess.run(cmd, check=True)
 
     def __enter__(self):
-        """Makes it possible to be called with the ``with`` statement.
-        This is currently not really needed, but unifis the way handlers are
+        """Use the class with the ``with`` statement`` statement.
+
+        This is currently not really needed, but unifies the way handlers are
         used.
         """
 
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Makes it possible to be called with the ``with`` statement.
-        This is currently not really needed, but unifis the way handlers are
+        """Use the class with the ``with`` statement`` statement.
+
+        This is currently not really needed, but unifies the way handlers are
         used.
         """
 

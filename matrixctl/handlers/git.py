@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # import configparser
+from __future__ import annotations
+
 import datetime
 from logging import debug
 from logging import info
@@ -85,7 +87,7 @@ class Git:
             break_long_words=True,
         )
 
-        log: List[str] = [
+        log: List[List[str]] = [
             line.split("\t") for line in self.git.log(cmd).split("\n")
         ]
 
@@ -115,16 +117,18 @@ class Git:
         self.log(since)
 
     def __enter__(self):
-        """Makes it possible to be called with the ``with`` statement.
-        This is currently not really needed, but unifis the way handlers are
+        """Use the class with the ``with`` statement`` statement.
+
+        This is currently not really needed, but unifies the way handlers are
         used.
         """
 
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        """Makes it possible to be called with the ``with`` statement.
-        This is currently not really needed, but unifis the way handlers are
+        """Use the class with the ``with`` statement`` statement.
+
+        This is currently not really needed, but unifies the way handlers are
         used.
         """
 

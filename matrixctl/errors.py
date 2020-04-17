@@ -14,48 +14,62 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 from sys import version_info
-from typing import Any
 
 from pkg_resources import get_distribution
 
 
 class Error(Exception):
-    """Base class for exceptions in this module."""
+    BUGMSG: str = (
+        "If you discover this message, please try updating "
+        "MatrixCtl. If you see this message again, we would "
+        "be glad, if you would run the same command again in debug-mode "
+        '(matrixctl -d [...]) and hand in a "Bug report" at '
+        "https://github.com/MichaelSasser/matrixctl/issues "
+        "with the complete output.\n\n"
+        f"Python version: {version_info.major}.{version_info.minor}."
+        f"{version_info.micro} {version_info.releaselevel}\n"
+        f"MatrixCtl version: {get_distribution('matrixctl').version} \n"
+    )
+
+    def __init__(
+        self, *args, **kwargs
+    ):  # pylint: disable=keyword-arg-before-vararg
+        """Use this error like a normal error in your day-to-day programming.
+
+        This is a commandline application. Therefor no user should ever see an
+        error (except in debug-mode). This error informs the user that,
+        getting a traceback is a bug in this application. It gives the person
+        instructions, how to hand in a bug report, to contain them asap.
+        """
+        msg: str = self.__class__.BUGMSG
+
+        # make args mutable
+        mut_args: list = list(args)
+
+        # modify args, to fit in msg at the front and args[0] if available
+        # after msg
+
+        if mut_args:
+            msg += "\nFor developers: " + str(args[0])
+        try:
+            mut_args[0] = msg
+        except IndexError:
+            mut_args.append(msg)
+
+        # make args immutable
+        args = tuple(mut_args)
+
+        super().__init__(*args, **kwargs)
 
 
 class ConfigFileError(Error):
     pass
 
 
-class BaseBugError(Error):
-    BUGMSG: str = (
-        "If you discover this message, please try updating "
-        "MatricCtl. If you see this message again, we would "
-        "be glad, if you would run the same command again in debug-mode "
-        '(matrixctl -d [...]) and hand in a "Bug report" at '
-        "https://github.com/MichaelSasser/matrixctl/issues "
-        "with the complete output.\n"
-        f"Python version: {version_info.major}.{version_info.minor}."
-        f"{version_info.micro} {version_info.releaselevel}\n"
-        f"ds2000 version: {get_distribution('matrixctl').version} \n"
-    )
-
-    def __init__(
-        self, message: Any = None, *args, **kwargs
-    ):  # pylint: disable=keyword-arg-before-vararg
-        """Raised when an operation attempts a state, due to duck typing,
-        that's not allowed and should be fixed asap.
-        """
-        msg = self.__class__.BUGMSG
-
-        if message:
-            msg += "\nFor developers: " + str(message)
-
-        super().__init__(msg, *args, **kwargs)
-
-
-class InternalResponseError(BaseBugError):
+class InternalResponseError(Error):
     pass
 
 

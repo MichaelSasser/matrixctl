@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 from argparse import Namespace
 from logging import error
 
@@ -48,12 +50,14 @@ def subparser_adduser(subparsers):
 
 
 def adduser(arg: Namespace, cfg: Config) -> None:
-    """Adds a User to the synapse instance. It runs ``ask_password()``
-    first. If ``ask_password()`` returns ``None`` it generates a password
-    with ``gen_password()``. Then it gives the user a overview of the
-    username, password and if the new user should be generated as admin
-    (if you added the ``--admin`` argument). Next, it asks a question,
-    if the entered values are correct with the ``ask_question`` function.
+    """Add a User to the synapse instance.
+
+    It runs ``ask_password()`` first. If ``ask_password()`` returns ``None``
+    it generates a password with ``gen_password()``. Then it gives the user
+    a overview of the username, password and if the new user should be
+    generated as admin (if you added the ``--admin`` argument). Next, it asks
+    a question, if the entered values are correct with the ``ask_question``
+    function.
 
     If the ``ask_question`` function returns True, it continues. If not, it
     starts from the beginning.
@@ -67,7 +71,7 @@ def adduser(arg: Namespace, cfg: Config) -> None:
     """
 
     with API(cfg.api_domain, cfg.api_token) as api, Ansible(
-        cfg.ansible_path
+        cfg.synapse_path
     ) as ansible:
 
         while True:
@@ -85,7 +89,7 @@ def adduser(arg: Namespace, cfg: Config) -> None:
             if passwd_generated:
                 print(f"Password (generated): {arg.passwd}")
             else:
-                print(f"Password: **HIDDEN**")
+                print("Password: **HIDDEN**")
             print(f"Admin:    {'yes' if arg.admin else 'no'}")
 
             answer = ask_question()

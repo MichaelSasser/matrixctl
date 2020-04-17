@@ -14,12 +14,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 import sys
 from logging import debug
 from logging import error
 
-from .ansible_handler import ansible_server
-from .ansible_handler import ansible_synapse
+from .handlers.ansible import Ansible
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -33,9 +34,9 @@ def subparser_deploy(subparsers):
 
 
 def deploy(_, cfg):
-    debug(f"deploy")
+    debug("deploy")
 
-    if cfg.server_play is None and cfg.ansible_path is None:
+    if cfg.my_playbook is None and cfg.synapse_path is None:
         error(
             "To be able to use the deploy feature, you need to have "
             "At least your own Ansible playbook configuration in the "
@@ -45,11 +46,18 @@ def deploy(_, cfg):
         )
         sys.exit(1)
 
-    if cfg.server_play is not None:
-        ansible_server(cfg.server_play, cfg.server_cfg, cfg.server_tags)
+    if cfg.my_playbook is not None:
 
-    if cfg.ansible_path is not None:
-        ansible_synapse(["--tags=setup-all"], cfg.ansible_path)
+        print(cfg.my_playbook, type(cfg.my_playbook))
+        with Ansible(cfg.my_playbook) as ansible:
+            ansible.tags = (cfg.server_tags,)  # ToDo: make list
+            ansible.ansible_cfg_path = cfg.server_cfg
+            ansible.run_playbook()
+
+    if cfg.synapse_path is not None:
+        with Ansible(cfg.synapse_path) as ansible:
+            ansible.tags = ("setup-all",)
+            ansible.run_playbook()
 
 
 # vim: set ft=python :

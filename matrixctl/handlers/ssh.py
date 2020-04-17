@@ -14,6 +14,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import annotations
+
 from logging import debug
 from typing import NamedTuple
 from typing import Optional
@@ -35,14 +37,14 @@ class SSHResponse(NamedTuple):
 class SSH:
     __slots__ = ("address", "client")
 
-    def __init__(self, address: str = None):
+    def __init__(self, address: str):
         self.address: str = address
         self.client: SSHClient = SSHClient()
         self.client.load_system_host_keys()
         self.__connect()
 
     def __connect(self):
-        """Connects to the SSH server"""
+        """Connect to the SSH server."""
         self.client.connect(self.address)
 
     @staticmethod
@@ -64,17 +66,16 @@ class SSH:
         return response
 
     def __enter__(self):
-        """Connects to the SSH server with the "with" command"""
+        """Connect to the SSH server with the "with" statement."""
 
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Closes the connection to the SSH after the namespace of the
-        "with" command ends."""
+        """Close the SSH connection."""
         self.client.close()
 
     def __del__(self):
-        """Clos the connection to the SSH"""
+        """Close the connection to the SSH."""
         self.client.close()
 
 
