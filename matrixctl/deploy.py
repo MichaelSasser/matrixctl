@@ -17,8 +17,7 @@
 from __future__ import annotations
 
 import sys
-from logging import debug
-from logging import error
+from logging import debug, error
 
 from .handlers.ansible import Ansible
 

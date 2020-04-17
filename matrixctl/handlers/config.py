@@ -19,8 +19,7 @@ from __future__ import annotations
 import configparser
 import functools
 import sys
-from logging import debug
-from logging import fatal
+from logging import debug, fatal
 from pathlib import Path
 from typing import Tuple
 

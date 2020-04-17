@@ -21,9 +21,7 @@ import os
 import subprocess
 from logging import debug
 from pathlib import Path
-from typing import Iterable
-from typing import List
-from typing import Optional
+from typing import Iterable, List, Optional
 
 from matrixctl.typing import JsonDict
 

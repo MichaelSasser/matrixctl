@@ -19,13 +19,8 @@ from __future__ import annotations
 import datetime
 import sys
 from argparse import Namespace
-from logging import debug
-from logging import error
-from logging import fatal
-from typing import Any
-from typing import List
-from typing import Optional
-from typing import Tuple
+from logging import debug, error, fatal
+from typing import Any, List, Optional, Tuple
 
 from tabulate import tabulate
 

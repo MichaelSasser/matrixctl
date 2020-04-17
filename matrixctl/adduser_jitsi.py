@@ -20,9 +20,7 @@ from argparse import Namespace
 
 from .handlers.config import Config
 from .handlers.ssh import SSH
-from .password_helpers import ask_password
-from .password_helpers import ask_question
-from .password_helpers import gen_password
+from .password_helpers import ask_password, ask_question, gen_password
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

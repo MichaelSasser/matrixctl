@@ -18,13 +18,11 @@
 from __future__ import annotations
 
 import datetime
-from logging import debug
-from logging import info
+from logging import debug, info
 from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
-from typing import List
-from typing import Optional
+from typing import List, Optional
 
 import git
 from tabulate import tabulate

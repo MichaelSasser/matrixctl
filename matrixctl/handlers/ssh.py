@@ -17,12 +17,10 @@
 from __future__ import annotations
 
 from logging import debug
-from typing import NamedTuple
-from typing import Optional
+from typing import NamedTuple, Optional
 
 from paramiko import SSHClient
 from paramiko.channel import ChannelFile
-
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

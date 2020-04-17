@@ -19,11 +19,11 @@ from __future__ import annotations
 
 import argparse
 import sys
-from logging import debug
-from logging import warning
+from logging import debug, warning
 
 import argcomplete
 import coloredlogs
+from matrixctl import __version__
 
 from .adduser import subparser_adduser
 from .adduser_jitsi import subparser_adduser_jitsi
@@ -33,12 +33,10 @@ from .deluser_jitsi import subparser_deluser_jitsi
 from .deploy import subparser_deploy
 from .handlers.config import Config
 from .maintainance import subparser_maintainance
-from .start import subparser_restart
-from .start import subparser_start
+from .start import subparser_restart, subparser_start
 from .update import subparser_update
 from .user import subparser_user
 from .users import subparser_users
-from matrixctl import __version__
 
 # Subparsers
 

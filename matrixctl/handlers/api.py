@@ -22,10 +22,8 @@ from typing import Tuple
 from urllib.parse import urlparse
 
 import requests
-
 from matrixctl import __version__
 from matrixctl.errors import InternalResponseError
-
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
