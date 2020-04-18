@@ -16,24 +16,31 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
+from argparse import ArgumentParser, Namespace
+from argparse import _SubParsersAction as SubParsersAction
 from logging import debug
 
 from .handlers.ansible import Ansible
+from .handlers.config import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_check(subparsers):
-    parser = subparsers.add_parser("check", help="Checks the OCI containers")
+def subparser_check(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
+        "check", help="Checks the OCI containers"
+    )
     parser.set_defaults(func=check)
 
 
-def check(_, cfg):
+def check(_: Namespace, cfg: Config) -> int:
     debug("check")
     with Ansible(cfg.synapse_path) as ansible:
         ansible.tags = ("check",)
         ansible.run_playbook()
+
+    return 0
 
 
 # vim: set ft=python :

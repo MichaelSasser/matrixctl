@@ -17,22 +17,25 @@
 from __future__ import annotations
 
 import sys
+from argparse import ArgumentParser, Namespace
+from argparse import _SubParsersAction as SubParsersAction
 from logging import debug, error
 
 from .handlers.ansible import Ansible
+from .handlers.config import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_deploy(subparsers):
-    deploy_parser = subparsers.add_parser(
+def subparser_deploy(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
         "deploy", help="Provision and deploy"
     )
-    deploy_parser.set_defaults(func=deploy)
+    parser.set_defaults(func=deploy)
 
 
-def deploy(_, cfg):
+def deploy(_: Namespace, cfg: Config) -> int:
     debug("deploy")
 
     if cfg.my_playbook is None and cfg.synapse_path is None:
@@ -57,6 +60,8 @@ def deploy(_, cfg):
         with Ansible(cfg.synapse_path) as ansible:
             ansible.tags = ("setup-all",)
             ansible.run_playbook()
+
+    return 0
 
 
 # vim: set ft=python :

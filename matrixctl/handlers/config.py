@@ -1,4 +1,6 @@
-#!/usr/bin/env python
+# ############################ DEPRICATED ##################################
+# This module needs to be rewritten!
+#
 # matrixctl
 # Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
 #
@@ -17,7 +19,6 @@
 from __future__ import annotations
 
 import configparser
-import functools
 import sys
 from logging import debug, fatal
 from pathlib import Path
@@ -26,27 +27,29 @@ from typing import Tuple
 from matrixctl import HOME
 from matrixctl.errors import ConfigFileError
 
+# import functools
+
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def none_if_not_available(method):
-    """Let methods return ``None`` if the information is not available.
-
-    The wrapper checks, if the configuration is available and returns
-    it. If the information is not available. it returns None.
-    """
-
-    @functools.wraps(method)
-    def wrapper_none_if_not_available(*args, **kwargs):
-        try:
-            return method(*args, **kwargs)
-        except (KeyError, TypeError):
-            debug(f"Config entry not available for: {method.__name__}")
-
-            return None
-
-    return wrapper_none_if_not_available
+# def none_if_not_available(method):
+#     """Let methods return ``None`` if the information is not available.
+#
+#     The wrapper checks, if the configuration is available and returns
+#     it. If the information is not available. it returns None.
+#     """
+#
+#     @functools.wraps(method)
+#     def wrapper_none_if_not_available(*args, **kwargs):
+#         try:
+#             return method(*args, **kwargs)
+#         except (KeyError, TypeError):
+#             debug(f"Config entry not available for: {method.__name__}")
+#
+#             return None
+#
+#     return wrapper_none_if_not_available
 
 
 # ToDo: with Config...:   config["Ansible"]["Path"]
@@ -58,7 +61,7 @@ class Config:
         Path(f"/{HOME}/.config/matrixctl/config"),
     )
 
-    def __init__(self):
+    def __init__(self) -> None:
         debug("Loading Config file(s)")
 
         self.__check_path(self.__class__.FILE_PATH)
@@ -87,15 +90,15 @@ class Config:
         try:
             self.config_api = self.config["API"]
         except KeyError:
-            self.config_api = None
+            self.config_api = None  # type: ignore
 
         # [SERVER]
         try:
             self.config_server = self.config["SERVER"]
         except KeyError:
-            self.config_server = None
+            self.config_server = None  # type: ignore
 
-    def __debug_output(self):
+    def __debug_output(self) -> None:
         for section in self.config.sections():
             debug(f"[{section}]")
 
@@ -108,7 +111,7 @@ class Config:
             debug("  ┴")
 
     @staticmethod
-    def __check_path(file_path):
+    def __check_path(file_path: Tuple[Path, Path]) -> None:
         path_exists: bool = False
 
         for p in file_path:

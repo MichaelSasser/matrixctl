@@ -54,10 +54,8 @@ vulture = "^1.4"
 mypy = "^0.770"
 python-language-server = {version = "^0.31.9", extras = ["all"]}
 black = { version = "*", allow-prereleases = true }
-isort = "^4.3.21"
+isort = {version = "^4.3.21", extras = ["pyproject"]}
 flake8-bugbear = "^20.1.4"
-toml = "^0.10.0"
-tomlkit = "^0.6.0"
 
 [tool.poetry.scripts]
 matrixctl = "matrixctl.application:main"

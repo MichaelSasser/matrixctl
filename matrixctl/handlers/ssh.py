@@ -17,7 +17,8 @@
 from __future__ import annotations
 
 from logging import debug
-from typing import NamedTuple, Optional
+from types import TracebackType
+from typing import NamedTuple, Optional, Type
 
 from paramiko import SSHClient
 from paramiko.channel import ChannelFile
@@ -41,21 +42,21 @@ class SSH:
         self.client.load_system_host_keys()
         self.__connect()
 
-    def __connect(self):
+    def __connect(self) -> None:
         """Connect to the SSH server."""
         self.client.connect(self.address)
 
     @staticmethod
     def __str_from(f: ChannelFile) -> Optional[str]:
         try:
-            return f.read().decode("utf-8").strip()
+            return str(f.read().decode("utf-8").strip())
         except OSError:
             return None
 
-    def run_cmd(self, cmd: str):
+    def run_cmd(self, cmd: str) -> SSHResponse:
         debug(f'SSH Command: "{cmd}"')
 
-        response = SSHResponse(
+        response: SSHResponse = SSHResponse(
             *[self.__str_from(s) for s in self.client.exec_command(cmd)]
         )
 
@@ -63,16 +64,21 @@ class SSH:
 
         return response
 
-    def __enter__(self):
+    def __enter__(self) -> SSH:
         """Connect to the SSH server with the "with" statement."""
 
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_val: Optional[BaseException],
+        exc_tb: Optional[TracebackType],
+    ) -> None:
         """Close the SSH connection."""
         self.client.close()
 
-    def __del__(self):
+    def __del__(self) -> None:
         """Close the connection to the SSH."""
         self.client.close()
 

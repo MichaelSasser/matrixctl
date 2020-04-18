@@ -18,7 +18,8 @@ from __future__ import annotations
 
 import json
 from logging import debug
-from typing import Tuple
+from types import TracebackType
+from typing import Dict, Optional, Tuple, Type, Union
 from urllib.parse import urlparse
 
 import requests
@@ -78,7 +79,7 @@ class UrlBuilder:
     api_version = property(fset=_api_version)
     path = property(fset=_path)
 
-    def build(self):
+    def build(self) -> str:
         # Url Generation
         url: str = (
             f"{self.__scheme}://"
@@ -107,6 +108,9 @@ class API:
         "__success_codes",
         "session",
         "__request",
+        "__method",
+        "__params",
+        "__headers",
     )
 
     # (*range(200, 208), 226)
@@ -144,35 +148,31 @@ class API:
 
         self.session = requests.Session()
 
-        self.__request: dict = {
-            "method": "GET",
-            "url": None,
-            "params": None,
-            "data": None,
-            "headers": {
-                "User-Agent": f"matrixctl{__version__}",
-                "Authorization": f"Bearer {self.token}",
-            },
+        self.__method: str = "GET"
+        self.__params: Dict[str, str] = {}
+        self.__headers: Dict[str, str] = {
+            "User-Agent": f"matrixctl{__version__}",
+            "Authorization": f"Bearer {self.token}",
         }
 
-    def _method(self, method):
+    def _method(self, method: str) -> None:
         method = method.upper()
         assert method in {"GET", "POST", "PUT", "DELETE"}
-        self.__request["method"] = method
+        self.__method = method
 
-    def _params(self, params: dict):
+    def _params(self, params: Dict[str, str]) -> None:
         assert isinstance(params, dict)
-        self.__request["params"] = params
+        self.__params.update(params)
 
-    def _headers(self, headers: dict):
+    def _headers(self, headers: Dict[str, str]) -> None:
         assert isinstance(headers, dict)
 
         if self.json_format:
-            self.__request["headers"]["Content-Type"] = "application/json"
+            self.__headers["Content-Type"] = "application/json"
 
-        self.__request["headers"].update(headers)
+        self.__headers.update(headers)
 
-    def _success_codes(self, codes: Tuple[int]):
+    def _success_codes(self, codes: Tuple[int]) -> None:
         assert isinstance(codes, tuple)
         self.__success_codes = codes
 
@@ -181,7 +181,9 @@ class API:
     headers = property(fset=_headers)
     success_codes = property(fset=_success_codes)
 
-    def request(self, data: dict = None) -> requests.Response:
+    def request(
+        self, data: Union[str, None, Dict[str, str]] = None
+    ) -> requests.Response:
         """Send a request to the synapse API.
 
         :param path:           The path of the request
@@ -197,16 +199,18 @@ class API:
         :return:               Returns the response
         """
 
-        # Data Preparation
+        url: str = self.url.build()
 
         if self.json_format and data is not None:
-            self.__request["data"] = json.dumps(data)
-        # Todo: data is not none and json_format == False
-        self.__request["url"] = self.url.build()
+            data = json.dumps(data)
 
-        debug(f"Request: {self.__request}")
-
-        response = self.session.request(**self.__request)
+        response = self.session.request(
+            method=self.__method,
+            data=data,
+            url=url,
+            params=self.__params,
+            headers=self.__headers,
+        )
 
         debug(f"{response.json()=}")
 
@@ -215,7 +219,7 @@ class API:
 
         return response
 
-    def __enter__(self):
+    def __enter__(self) -> API:
         """Use the class with the ``with`` statement`` statement.
 
         This is currently not really needed, but unifies the way handlers are
@@ -224,7 +228,12 @@ class API:
 
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_val: Optional[BaseException],
+        exc_tb: Optional[TracebackType],
+    ) -> None:
         """Use the class with the ``with`` statement`` statement.
 
         This is currently not really needed, but unifies the way handlers are

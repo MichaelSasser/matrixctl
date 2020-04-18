@@ -16,28 +16,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import ArgumentParser, Namespace
-from argparse import _SubParsersAction as SubParsersAction
-
-from .handlers.config import Config
-from .handlers.git import Git
+from typing import Any, Union
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_update(subparsers: SubParsersAction) -> None:
-    parser: ArgumentParser = subparsers.add_parser(
-        "update", help="Updates the ansible repo"
-    )
-    parser.set_defaults(func=update)
+def human_readable_bool(b: Union[Any]) -> str:
+    if isinstance(b, str):
+        b = int(b)
 
+    if isinstance(b, int):
+        b = bool(b)
 
-def update(_: Namespace, cnf: Config) -> int:
-    with Git(cnf.synapse_path) as git:
-        git.pull()
-
-    return 0
+    return "Yes" if b else "No"
 
 
 # vim: set ft=python :

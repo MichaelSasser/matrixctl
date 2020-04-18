@@ -16,7 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
+from argparse import _SubParsersAction as SubParsersAction
 from logging import error
 
 from .errors import InternalResponseError
@@ -29,8 +30,10 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_adduser(subparsers):
-    parser = subparsers.add_parser("adduser", help="Add a new matrix user")
+def subparser_adduser(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
+        "adduser", help="Add a new matrix user"
+    )
     parser.add_argument("user", help="The Username of the new user")
     parser.add_argument(
         "-p",
@@ -47,7 +50,7 @@ def subparser_adduser(subparsers):
     parser.set_defaults(func=adduser)
 
 
-def adduser(arg: Namespace, cfg: Config) -> None:
+def adduser(arg: Namespace, cfg: Config) -> int:
     """Add a User to the synapse instance.
 
     It runs ``ask_password()`` first. If ``ask_password()`` returns ``None``
@@ -112,6 +115,8 @@ def adduser(arg: Namespace, cfg: Config) -> None:
                 api.request({"password": arg.passwd, "admin": arg.admin})
             except InternalResponseError:
                 error("The User was not added.")
+
+    return 0
 
 
 # vim: set ft=python :

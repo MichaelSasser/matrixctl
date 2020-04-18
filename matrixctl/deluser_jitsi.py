@@ -16,7 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
+from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.config import Config
 from .handlers.ssh import SSH
@@ -28,15 +29,15 @@ __email__: str = "Michael@MichaelSasser.org"
 JID_EXT: str = "matrix-jitsi-web"
 
 
-def subparser_deluser_jitsi(subparsers):
-    parser = subparsers.add_parser(
+def subparser_deluser_jitsi(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
         "deluser-jitsi", help="Deletes a jitsi user"
     )
     parser.add_argument("user", help="The jitsi username to delete")
     parser.set_defaults(func=deluser_jitsi)
 
 
-def deluser_jitsi(arg: Namespace, cfg: Config) -> None:
+def deluser_jitsi(arg: Namespace, cfg: Config) -> int:
     """Delete a user from the jitsi instance.
 
     It uses the ``Ssh`` class from the ``ssh_handler``.
@@ -53,6 +54,8 @@ def deluser_jitsi(arg: Namespace, cfg: Config) -> None:
         )
 
         ssh.run_cmd(cmd)
+
+    return 0
 
 
 # vim: set ft=python :

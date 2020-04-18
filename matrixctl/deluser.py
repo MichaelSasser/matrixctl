@@ -16,7 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
+from argparse import _SubParsersAction as SubParsersAction
 from logging import error
 
 from .errors import InternalResponseError
@@ -27,13 +28,15 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_deluser(subparsers):
-    deluser_parser = subparsers.add_parser("deluser", help="Deletes a user")
-    deluser_parser.add_argument("user", help="The username to delete")
-    deluser_parser.set_defaults(func=deluser)
+def subparser_deluser(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
+        "deluser", help="Deletes a user"
+    )
+    parser.add_argument("user", help="The username to delete")
+    parser.set_defaults(func=deluser)
 
 
-def deluser(arg: Namespace, cfg: Config) -> None:
+def deluser(arg: Namespace, cfg: Config) -> int:
     """Delete a user from the the matrix instance.
 
     It uses the synapse admin API.
@@ -47,9 +50,11 @@ def deluser(arg: Namespace, cfg: Config) -> None:
             api.url.path = f"deactivate/@{arg.user}:{cfg.api_domain}"
             api.url.api_version = "v1"
             api.method = "POST"
-            api.request({"erase": True})
+            api.request({"erase": "true"})
         except InternalResponseError:
             error("The user was not deleted.")
+
+    return 0
 
 
 # vim: set ft=python :

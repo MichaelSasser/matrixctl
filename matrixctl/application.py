@@ -18,8 +18,9 @@
 from __future__ import annotations
 
 import argparse
-import sys
+from argparse import _SubParsersAction
 from logging import debug, warning
+from typing import Callable, List
 
 import argcomplete
 import coloredlogs
@@ -55,10 +56,10 @@ def setup_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "-d", "--debug", action="store_true", help="Enables debugging mode."
     )
-    subparsers = parser.add_subparsers()
+    subparsers: _SubParsersAction = parser.add_subparsers()
 
     # Subparsers
-    subparsers_tuple = (
+    subparsers_tuple: List[Callable[[_SubParsersAction], None]] = [
         subparser_adduser,
         subparser_deluser,
         subparser_adduser_jitsi,
@@ -71,7 +72,7 @@ def setup_parser() -> argparse.ArgumentParser:
         subparser_restart,  # alias for start
         subparser_maintainance,
         subparser_check,
-    )
+    ]
 
     for subparser in subparsers_tuple:
         subparser(subparsers)
@@ -79,11 +80,11 @@ def setup_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def setup_autocomplete(parser):
+def setup_autocomplete(parser: argparse.ArgumentParser) -> None:
     argcomplete.autocomplete(parser)  # Add autocomplete for Bash, Zsh, ...
 
 
-def setup_logging(debug_mode):
+def setup_logging(debug_mode: bool) -> None:
     coloredlogs.DEFAULT_LOG_FORMAT = (
         "%(asctime)s - %(levelname)s - %(message)s"
     )
@@ -91,7 +92,7 @@ def setup_logging(debug_mode):
     coloredlogs.install()
 
 
-def main():
+def main() -> int:
     parser = setup_parser()
     setup_autocomplete(parser)
 
@@ -112,13 +113,15 @@ def main():
             " This is perfectly normal and not a bug. If you want the help "
             'in debug mode, use the "--help" attribute.'
         )
-        args.func(args, config)
-        sys.exit()
+
+        return int(args.func(args, config))
 
     try:
-        args.func(args, config)
+        return int(args.func(args, config))
     except AttributeError:
         parser.print_help()
+
+        return 1
 
 
 # vim: set ft=python :

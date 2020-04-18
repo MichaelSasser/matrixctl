@@ -120,3 +120,22 @@ repos:
     rev: v0.770
     hooks:
       - id: mypy
+        args:
+          - "--python-version=3.8"
+          - "--platform=linux"
+          - "--ignore-missing-imports"
+          # - "--disallow-untyped-calls"
+          # - "--disallow-untyped-defs"
+          # - "--disallow-incomplete-defs"
+          # - "--check-untyped-defs"
+          # - "--disallow-untyped-decorators"
+          # - "--no-implicit-optional"
+          # - "--warn-redundant-casts"
+          # - "--warn-unused-ignores"
+          # - "--warn-return-any"
+          # - "--warn-unreachable"
+          # - "--no-implicit-reexport"
+          - "--strict-equality"
+          - "--strict"
+          # - "--pretty"
+          - "--show-traceback"

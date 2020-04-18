@@ -22,7 +22,8 @@ from logging import debug, info
 from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
-from typing import List, Optional
+from types import TracebackType
+from typing import List, Optional, Type
 
 import git
 from tabulate import tabulate
@@ -32,7 +33,7 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 class Git:
-    def __init__(self, path) -> None:
+    def __init__(self, path: Path) -> None:
         self.path: Path = path
 
         self.repo = git.Repo(self.path)
@@ -48,7 +49,7 @@ class Git:
 
         return datetime.datetime.fromtimestamp(log[-1].time[0])
 
-    def log(self, since: Optional[datetime.datetime] = None):
+    def log(self, since: Optional[datetime.datetime] = None) -> None:
         cmd = ["--pretty=%as\t%an\t%s"]
 
         if since:
@@ -106,7 +107,7 @@ class Git:
             )
         )
 
-    def pull(self):
+    def pull(self) -> None:
         # Get the last pulled datetime
         since = self.datetime_last_pulled_commit
 
@@ -114,7 +115,7 @@ class Git:
 
         self.log(since)
 
-    def __enter__(self):
+    def __enter__(self) -> Git:
         """Use the class with the ``with`` statement`` statement.
 
         This is currently not really needed, but unifies the way handlers are
@@ -123,7 +124,12 @@ class Git:
 
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_val: Optional[BaseException],
+        exc_tb: Optional[TracebackType],
+    ) -> None:
         """Use the class with the ``with`` statement`` statement.
 
         This is currently not really needed, but unifies the way handlers are

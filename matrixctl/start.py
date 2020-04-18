@@ -16,34 +16,39 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
+from argparse import ArgumentParser, Namespace
+from argparse import _SubParsersAction as SubParsersAction
 from logging import debug
 
 from .handlers.ansible import Ansible
+from .handlers.config import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_start(subparsers):
-    start_parser = subparsers.add_parser(
+def subparser_start(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
         "start", help="Starts all OCI containers"
     )
-    start_parser.set_defaults(func=start)
+    parser.set_defaults(func=start)
 
 
-def subparser_restart(subparsers):
-    restart_parser = subparsers.add_parser(
+def subparser_restart(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
         "restart", help="Restarts all OCI containers (alias for start)"
     )
-    restart_parser.set_defaults(func=start)  # Keep it "start"
+    parser.set_defaults(func=start)  # Keep it "start"
 
 
-def start(_, cfg):
+def start(_: Namespace, cfg: Config) -> int:
     debug("start")
 
     with Ansible(cfg.synapse_path) as ansible:
         ansible.tags = ("start",)
         ansible.run_playbook()
+
+    return 0
 
 
 # vim: set ft=python :

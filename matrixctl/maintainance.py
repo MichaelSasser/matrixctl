@@ -16,22 +16,25 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
+from argparse import ArgumentParser, Namespace
+from argparse import _SubParsersAction as SubParsersAction
 from logging import debug
 
 from .handlers.ansible import Ansible
+from .handlers.config import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_maintainance(subparsers):
-    maintainance_parser = subparsers.add_parser(
+def subparser_maintainance(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
         "maintainance", help="Run maintainance tasks"
     )
-    maintainance_parser.set_defaults(func=maintainance)
+    parser.set_defaults(func=maintainance)
 
 
-def maintainance(_, cfg):
+def maintainance(_: Namespace, cfg: Config) -> int:
     debug("maintainance")
 
     with Ansible(cfg.synapse_path) as ansible:
@@ -41,6 +44,8 @@ def maintainance(_, cfg):
             "start",
         )
         ansible.run_playbook()
+
+    return 0
 
 
 # vim: set ft=python :

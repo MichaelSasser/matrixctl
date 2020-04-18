@@ -16,33 +16,35 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-import sys
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
+from argparse import _SubParsersAction as SubParsersAction
 from logging import fatal
+from typing import List, Tuple
 
 from tabulate import tabulate
 
 from .errors import InternalResponseError
 from .handlers.api import API
 from .handlers.config import Config
+from .print_helpers import human_readable_bool
 from .typing import JsonDict
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_users(subparsers):
-    users_parser = subparsers.add_parser("users", help="Lists users")
-    users_parser.add_argument(
+def subparser_users(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser("users", help="Lists users")
+    parser.add_argument(
         "-g", "--guests", action="store_true", help="Shows the users"
     )
-    users_parser.add_argument(
+    parser.add_argument(
         "-b", "--no-bots", action="store_true", help="Hide bots"
     )
-    users_parser.set_defaults(func=users)
+    parser.set_defaults(func=users)
 
 
-def users(arg: Namespace, cfg: Config) -> None:
+def users(arg: Namespace, cfg: Config) -> int:
     """Print a table of the matrix users.
 
     This function generates and prints a table of matrix user accounts.
@@ -82,7 +84,7 @@ def users(arg: Namespace, cfg: Config) -> None:
     """
     len_domain = len(cfg.api_domain) + 1  # 1 for :
     from_user: int = 0
-    users_list: list = []
+    users_list: List[JsonDict] = []
 
     # ToDo: API bool
     with API(cfg.api_domain, cfg.api_token) as api:
@@ -96,7 +98,8 @@ def users(arg: Namespace, cfg: Config) -> None:
                 lst: JsonDict = api.request().json()
             except InternalResponseError:
                 fatal("Could not get the user table.")
-                sys.exit(1)
+
+                return 1
 
             users_list += lst["users"]
             try:
@@ -104,14 +107,14 @@ def users(arg: Namespace, cfg: Config) -> None:
             except KeyError:
                 break
 
-        user_list: list = []
+        user_list: List[Tuple[str, str, str, str]] = []
 
         for user in users_list:
             name = user["name"][1:-len_domain]
             no_passwd_hash: bool = user["password_hash"] == ""
-            deactivated: bool = bool(int(user["deactivated"]))
-            admin: bool = bool(int(user["admin"]))
-            guest: bool = bool(int(user["is_guest"]))
+            deactivated: str = human_readable_bool(user["deactivated"])
+            admin: str = human_readable_bool(user["admin"])
+            guest: str = human_readable_bool(user["is_guest"])
 
             # if no_bots and any([name.startswith(bot) for bot in BOTS]):
             #     continue
@@ -127,6 +130,8 @@ def users(arg: Namespace, cfg: Config) -> None:
                 tablefmt="psql",
             )
         )
+
+    return 0
 
 
 # vim: set ft=python :

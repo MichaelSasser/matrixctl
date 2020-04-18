@@ -18,49 +18,56 @@ from __future__ import annotations
 
 import datetime
 import sys
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
+from argparse import _SubParsersAction as SubParsersAction
 from logging import debug, error, fatal
-from typing import Any, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 from tabulate import tabulate
 
 from .errors import InternalResponseError
 from .handlers.api import API
 from .handlers.config import Config
+from .print_helpers import human_readable_bool
 from .typing import JsonDict
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_user(subparsers):
-    user_parser = subparsers.add_parser(
+def subparser_user(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
         "user", help="Get information about a specific user"
     )
-    user_parser.add_argument("user", help="The username of the user")
-    user_parser.set_defaults(func=user)
+    parser.add_argument("user", help="The username of the user")
+    parser.set_defaults(func=user)
 
 
-def make_human_readable(k, user_dict, len_domain):
+def make_human_readable(
+    k: str, user_dict: Dict[str, str], len_domain: int
+) -> Tuple[str, str]:
 
     key: Optional[str] = None
+    value: Union[str]
 
     if k == "name":
-        value = user_dict[k][1:-len_domain]
+        value = str(user_dict[k][1:-len_domain])
     elif k == "is_guest":
-        value = bool(int(user_dict[k]))
+        value = human_readable_bool(user_dict[k])
         key = "Guest"
     elif k in ("admin", "deactivated"):
-        value = bool(int(user_dict[k]))
+        value = human_readable_bool(user_dict[k])
     elif k.endswith("_ts"):
-        value = str(datetime.datetime.fromtimestamp(user_dict[k]))  # UTC?
+        value = str(
+            datetime.datetime.fromtimestamp(float(user_dict[k]))
+        )  # UTC?
     elif k.endswith("_at"):
         value = str(
-            datetime.datetime.fromtimestamp(user_dict[k] / 1000.0)
+            datetime.datetime.fromtimestamp(float(user_dict[k]) / 1000.0)
         )  # UTC?
 
     else:
-        value: str = user_dict[k]
+        value = user_dict[k]
 
     if key is None:
         key = k.replace("_", " ").title()
@@ -69,8 +76,8 @@ def make_human_readable(k, user_dict, len_domain):
 
 
 def generate_user_tables(
-    user_dict: dict, len_domain: int
-) -> List[List[Tuple[Any]]]:
+    user_dict: Dict[str, Any], len_domain: int
+) -> List[List[Tuple[str, str]]]:
     """Generate a main user table and threepid user tables.
 
     The function gnerates first a main user table and then for every threepid
@@ -86,7 +93,7 @@ def generate_user_tables(
                         [main], threepids_0, ... ,threepids_n]
     """
 
-    table: List[List[Tuple[Any]]] = [[]]
+    table: List[List[Tuple[str, str]]] = [[]]
 
     for k in user_dict:
         if k == "errcode":
@@ -95,7 +102,7 @@ def generate_user_tables(
 
         if k == "threepids":
             for tk in user_dict[k]:
-                ret: List[List[Tuple[Any]]] = generate_user_tables(
+                ret: List[List[Tuple[str, str]]] = generate_user_tables(
                     tk, len_domain
                 )
                 table.append(ret[0])
@@ -107,7 +114,7 @@ def generate_user_tables(
     return table
 
 
-def user(arg: Namespace, cfg: Config) -> None:
+def user(arg: Namespace, cfg: Config) -> int:
     """List information about an registered user.
 
     It uses the admin API to get a python dictionary with the information.
@@ -167,7 +174,8 @@ def user(arg: Namespace, cfg: Config) -> None:
             user_dict: JsonDict = api.request().json()
         except InternalResponseError:
             fatal("Could not receive the user information")
-            sys.exit(1)
+
+            return 1
 
         len_domain = len(cfg.api_domain) + 1  # 1 for :
         user_tables = generate_user_tables(user_dict, len_domain)
@@ -181,6 +189,8 @@ def user(arg: Namespace, cfg: Config) -> None:
             else:
                 print("\nThreepid:")
             print(tabulate(table, tablefmt="psql",))
+
+    return 0
 
 
 # vim: set ft=python :

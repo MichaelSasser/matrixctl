@@ -16,7 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import Namespace
+from argparse import ArgumentParser, Namespace
+from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.config import Config
 from .handlers.ssh import SSH
@@ -29,8 +30,8 @@ __email__: str = "Michael@MichaelSasser.org"
 JID_EXT: str = "matrix-jitsi-web"
 
 
-def subparser_adduser_jitsi(subparsers):
-    parser = subparsers.add_parser(
+def subparser_adduser_jitsi(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
         "adduser-jitsi", help="Add a new jitsi user"
     )
     parser.add_argument("user", help="The Username of the new jitsi user")
@@ -43,7 +44,7 @@ def subparser_adduser_jitsi(subparsers):
     parser.set_defaults(func=adduser_jitsi)
 
 
-def adduser_jitsi(arg: Namespace, cfg: Config) -> None:
+def adduser_jitsi(arg: Namespace, cfg: Config) -> int:
     """Add a User to the jitsi instance.
 
     It runs ``ask_password()``
@@ -94,6 +95,8 @@ def adduser_jitsi(arg: Namespace, cfg: Config) -> None:
         )
 
         ssh.run_cmd(cmd)
+
+        return 0
         # res: SSHResponese = ssh.run_cmd(cmd)
 
         # ToDo:

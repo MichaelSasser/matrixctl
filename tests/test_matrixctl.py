@@ -5,7 +5,7 @@ import re
 from matrixctl import __version__
 
 
-def test_version():
+def test_version() -> None:
     """Test, if the version matches SemVer.
 
     The regular expression is form:

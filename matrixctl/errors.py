@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 from sys import version_info
+from typing import Optional
 
 from pkg_resources import get_distribution
 
@@ -35,8 +36,8 @@ class Error(Exception):
     )
 
     def __init__(
-        self, *args, **kwargs
-    ):  # pylint: disable=keyword-arg-before-vararg
+        self, message: Optional[str] = None
+    ) -> None:  # pylint: disable=keyword-arg-before-vararg
         """Use this error like a normal error in your day-to-day programming.
 
         This is a commandline application. Therefor no user should ever see an
@@ -46,23 +47,10 @@ class Error(Exception):
         """
         msg: str = self.__class__.BUGMSG
 
-        # make args mutable
-        mut_args: list = list(args)
+        if message:
+            msg += "\nFor developers: " + message
 
-        # modify args, to fit in msg at the front and args[0] if available
-        # after msg
-
-        if mut_args:
-            msg += "\nFor developers: " + str(args[0])
-        try:
-            mut_args[0] = msg
-        except IndexError:
-            mut_args.append(msg)
-
-        # make args immutable
-        args = tuple(mut_args)
-
-        super().__init__(*args, **kwargs)
+        super().__init__(msg)
 
 
 class ConfigFileError(Error):
