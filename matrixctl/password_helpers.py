@@ -19,7 +19,9 @@ from __future__ import annotations
 import getpass
 import secrets
 import string
+
 from typing import Optional
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

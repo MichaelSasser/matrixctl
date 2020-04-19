@@ -16,13 +16,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
+from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from logging import error
 
 from .errors import InternalResponseError
 from .handlers.api import API
-from .handlers.config import Config
+from .handlers.toml import TOML
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -36,7 +38,7 @@ def subparser_deluser(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=deluser)
 
 
-def deluser(arg: Namespace, cfg: Config) -> int:
+def deluser(arg: Namespace) -> int:
     """Delete a user from the the matrix instance.
 
     It uses the synapse admin API.
@@ -45,16 +47,19 @@ def deluser(arg: Namespace, cfg: Config) -> int:
     :param _:         Not used (The ``Config`` class)
     :return:          None
     """
-    with API(cfg.api_domain, cfg.api_token) as api:
-        try:
-            api.url.path = f"deactivate/@{arg.user}:{cfg.api_domain}"
-            api.url.api_version = "v1"
-            api.method = "POST"
-            api.request({"erase": "true"})
-        except InternalResponseError:
-            error("The user was not deleted.")
+    with TOML() as toml:
+        with API(toml["API"]["Domain"], toml["API"]["Token"]) as api:
+            try:
+                api.url.path = (
+                    f"deactivate/@{arg.user}:{toml['API']['Domain']}"
+                )
+                api.url.api_version = "v1"
+                api.method = "POST"
+                api.request({"erase": True})
+            except InternalResponseError:
+                error("The user was not deleted.")
 
-    return 0
+        return 0
 
 
 # vim: set ft=python :

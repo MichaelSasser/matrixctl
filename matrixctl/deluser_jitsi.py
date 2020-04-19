@@ -16,11 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
+from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .handlers.config import Config
 from .handlers.ssh import SSH
+from .handlers.toml import TOML
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -37,7 +39,7 @@ def subparser_deluser_jitsi(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=deluser_jitsi)
 
 
-def deluser_jitsi(arg: Namespace, cfg: Config) -> int:
+def deluser_jitsi(arg: Namespace) -> int:
     """Delete a user from the jitsi instance.
 
     It uses the ``Ssh`` class from the ``ssh_handler``.
@@ -46,16 +48,17 @@ def deluser_jitsi(arg: Namespace, cfg: Config) -> int:
     :param cfg:       The ``Config`` class
     :return:          None
     """
-    with SSH(cfg.api_domain) as ssh:
-        cmd: str = (
-            "sudo docker exec matrix-jitsi-prosody prosodyctl "
-            "--config /config/prosody.cfg.lua deluser "
-            f'"{arg.user}@{JID_EXT}"'
-        )
+    with TOML() as toml:
+        with SSH(toml["API"]["Domain"]) as ssh:
+            cmd: str = (
+                "sudo docker exec matrix-jitsi-prosody prosodyctl "
+                "--config /config/prosody.cfg.lua deluser "
+                f'"{arg.user}@{JID_EXT}"'
+            )
 
-        ssh.run_cmd(cmd)
+            ssh.run_cmd(cmd)
 
-    return 0
+        return 0
 
 
 # vim: set ft=python :

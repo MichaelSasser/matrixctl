@@ -16,18 +16,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
+from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from logging import fatal
-from typing import List, Tuple
+from typing import List
+from typing import Tuple
 
 from tabulate import tabulate
 
 from .errors import InternalResponseError
 from .handlers.api import API
-from .handlers.config import Config
+from .handlers.toml import TOML
 from .print_helpers import human_readable_bool
 from .typing import JsonDict
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -44,7 +47,7 @@ def subparser_users(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=users)
 
 
-def users(arg: Namespace, cfg: Config) -> int:
+def users(arg: Namespace) -> int:
     """Print a table of the matrix users.
 
     This function generates and prints a table of matrix user accounts.
@@ -79,57 +82,57 @@ def users(arg: Namespace, cfg: Config) -> int:
        +----------------+---------------+------------+------------+
 
     :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :param cfg:       The ``Config`` class
     :return:          None
     """
-    len_domain = len(cfg.api_domain) + 1  # 1 for :
-    from_user: int = 0
-    users_list: List[JsonDict] = []
+    with TOML() as toml:
+        len_domain = len(toml["API"]["Domain"]) + 1  # 1 for :
+        from_user: int = 0
+        users_list: List[JsonDict] = []
 
-    # ToDo: API bool
-    with API(cfg.api_domain, cfg.api_token) as api:
-        api.url.path = "users"
-        api.params = {"guests": "true" if arg.guests else "false"}
+        # ToDo: API bool
+        with API(toml["API"]["Domain"], toml["API"]["Token"]) as api:
+            api.url.path = "users"
+            api.params = {"guests": "true" if arg.guests else "false"}
 
-        while True:
+            while True:
 
-            api.params = {"from": from_user}  # from must be in the loop
-            try:
-                lst: JsonDict = api.request().json()
-            except InternalResponseError:
-                fatal("Could not get the user table.")
+                api.params = {"from": from_user}  # from must be in the loop
+                try:
+                    lst: JsonDict = api.request().json()
+                except InternalResponseError:
+                    fatal("Could not get the user table.")
 
-                return 1
+                    return 1
 
-            users_list += lst["users"]
-            try:
-                from_user = lst["next_token"]
-            except KeyError:
-                break
+                users_list += lst["users"]
+                try:
+                    from_user = lst["next_token"]
+                except KeyError:
+                    break
 
-        user_list: List[Tuple[str, str, str, str]] = []
+            user_list: List[Tuple[str, str, str, str]] = []
 
-        for user in users_list:
-            name = user["name"][1:-len_domain]
-            no_passwd_hash: bool = user["password_hash"] == ""
-            deactivated: str = human_readable_bool(user["deactivated"])
-            admin: str = human_readable_bool(user["admin"])
-            guest: str = human_readable_bool(user["is_guest"])
+            for user in users_list:
+                name = user["name"][1:-len_domain]
+                no_passwd_hash: bool = user["password_hash"] == ""
+                deactivated: str = human_readable_bool(user["deactivated"])
+                admin: str = human_readable_bool(user["admin"])
+                guest: str = human_readable_bool(user["is_guest"])
 
-            # if no_bots and any([name.startswith(bot) for bot in BOTS]):
-            #     continue
+                # if no_bots and any([name.startswith(bot) for bot in BOTS]):
+                #     continue
 
-            if arg.no_bots and no_passwd_hash:
-                continue
+                if arg.no_bots and no_passwd_hash:
+                    continue
 
-            user_list.append((name, deactivated, admin, guest,))
-        print(
-            tabulate(
-                user_list,
-                headers=("Name", "Deactivated", "Is Admin", "Is Guest"),
-                tablefmt="psql",
+                user_list.append((name, deactivated, admin, guest,))
+            print(
+                tabulate(
+                    user_list,
+                    headers=("Name", "Deactivated", "Is Admin", "Is Guest"),
+                    tablefmt="psql",
+                )
             )
-        )
 
     return 0
 

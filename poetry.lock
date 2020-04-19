@@ -692,7 +692,7 @@ description = "Python Language Server for the Language Server Protocol"
 name = "python-language-server"
 optional = false
 python-versions = "*"
-version = "0.31.9"
+version = "0.31.10"
 
 [package.dependencies]
 jedi = ">=0.14.1,<0.16"
@@ -722,7 +722,7 @@ version = ">=2.0.0"
 
 [package.dependencies.pyflakes]
 optional = true
-version = ">=1.6.0"
+version = ">=1.6.0,<2.2.0"
 
 [package.dependencies.pylint]
 optional = true
@@ -737,13 +737,13 @@ optional = true
 version = "*"
 
 [package.extras]
-all = ["autopep8", "flake8", "mccabe", "pycodestyle", "pydocstyle (>=2.0.0)", "pyflakes (>=1.6.0)", "pylint", "rope (>=0.10.5)", "yapf"]
+all = ["autopep8", "flake8", "mccabe", "pycodestyle", "pydocstyle (>=2.0.0)", "pyflakes (>=1.6.0,<2.2.0)", "pylint", "rope (>=0.10.5)", "yapf"]
 autopep8 = ["autopep8"]
 flake8 = ["flake8"]
 mccabe = ["mccabe"]
 pycodestyle = ["pycodestyle"]
 pydocstyle = ["pydocstyle (>=2.0.0)"]
-pyflakes = ["pyflakes (>=1.6.0)"]
+pyflakes = ["pyflakes (>=1.6.0,<2.2.0)"]
 pylint = ["pylint"]
 rope = ["rope (>0.10.5)"]
 test = ["versioneer", "pylint", "pytest", "mock", "pytest-cov", "coverage", "numpy", "pandas", "matplotlib", "pyqt5"]
@@ -978,7 +978,7 @@ version = "0.8.7"
 widechars = ["wcwidth"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Python Library for Tom's Obvious, Minimal Language"
 name = "toml"
 optional = false
@@ -1077,7 +1077,7 @@ version = "0.29.0"
 docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "sphinxcontrib-programoutput"]
 
 [metadata]
-content-hash = "49c28b8884a0309c165a25939c2c3e56b0337822113be6dc7aeec68364f70747"
+content-hash = "bfcdfbe9bc8f870dd102973a399a45b4e2b2efed830891089af460a4610c336d"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -1502,8 +1502,8 @@ python-jsonrpc-server = [
     {file = "python_jsonrpc_server-0.3.4-py3-none-any.whl", hash = "sha256:1f85f75f37f923149cc0aa078474b6df55b708e82ed819ca8846a65d7d0ada7f"},
 ]
 python-language-server = [
-    {file = "python-language-server-0.31.9.tar.gz", hash = "sha256:b11b4991f488a235086c5fea86799ee9e4dc52a6316fa186d6d0e0c99e654292"},
-    {file = "python_language_server-0.31.9-py3-none-any.whl", hash = "sha256:5c6963706c6d5ac19f11a86efacd897659e0959db3ac0fc991dd9297a37d27cb"},
+    {file = "python-language-server-0.31.10.tar.gz", hash = "sha256:6c96567158377a0c725625ef6e24e7b655dcfab95080b463023b6680d1766d4f"},
+    {file = "python_language_server-0.31.10-py3-none-any.whl", hash = "sha256:20a24b4793b804b81c72fe076bd269f2db8cb81f91579c4892602ab02f1a3d62"},
 ]
 pytz = [
     {file = "pytz-2019.3-py2.py3-none-any.whl", hash = "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"},

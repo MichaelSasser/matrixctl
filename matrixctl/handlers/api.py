@@ -17,14 +17,22 @@
 from __future__ import annotations
 
 import json
+
 from logging import debug
 from types import TracebackType
-from typing import Dict, Optional, Tuple, Type, Union
+from typing import Any
+from typing import Dict
+from typing import Optional
+from typing import Tuple
+from typing import Type
+from typing import Union
 from urllib.parse import urlparse
 
 import requests
+
 from matrixctl import __version__
 from matrixctl.errors import InternalResponseError
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -127,7 +135,7 @@ class API:
     )
 
     def __init__(
-        self, api_domain: str, api_token: str, json_format: bool = True
+        self, domain: str, token: str, json_format: bool = True
     ) -> None:
         """Initialize the Api class and checks, if the parameter are there.
 
@@ -136,14 +144,14 @@ class API:
         :return:            ``None``
         """
 
-        assert isinstance(api_domain, str)
-        assert isinstance(api_token, str)
+        assert isinstance(domain, str)
+        assert isinstance(token, str)
         assert isinstance(json_format, bool)
 
-        self.token: str = api_token
+        self.token: str = token
         self.json_format: bool = json_format
 
-        self.url: UrlBuilder = UrlBuilder(api_domain)
+        self.url: UrlBuilder = UrlBuilder(domain)
         self.__success_codes: Tuple[int, ...] = self.__class__.RESPONSE_OK
 
         self.session = requests.Session()
@@ -182,7 +190,7 @@ class API:
     success_codes = property(fset=_success_codes)
 
     def request(
-        self, data: Union[str, None, Dict[str, str]] = None
+        self, data: Union[str, None, Dict[str, Any]] = None
     ) -> requests.Response:
         """Send a request to the synapse API.
 

@@ -18,24 +18,30 @@
 from __future__ import annotations
 
 import datetime
-from logging import debug, info
+
+from logging import debug
+from logging import info
 from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
 from types import TracebackType
-from typing import List, Optional, Type
+from typing import List
+from typing import Optional
+from typing import Type
+from typing import Union
 
 import git
+
 from tabulate import tabulate
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
 class Git:
-    def __init__(self, path: Path) -> None:
-        self.path: Path = path
-
+    def __init__(self, path: Union[Path, str]) -> None:
+        self.path: Path = Path(path)
         self.repo = git.Repo(self.path)
         assert not self.repo.bare
 

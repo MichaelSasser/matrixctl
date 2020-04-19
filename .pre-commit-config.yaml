@@ -93,6 +93,7 @@ repos:
     rev: 4.3.21-2
     hooks:
       - id: isort
+        additional_dependencies: [toml]
 
   # format: black
   - repo: https://github.com/ambv/black

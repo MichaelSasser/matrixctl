@@ -16,15 +16,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
+from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from logging import error
 
 from .errors import InternalResponseError
 from .handlers.ansible import Ansible
 from .handlers.api import API
-from .handlers.config import Config
-from .password_helpers import ask_password, ask_question, gen_password
+from .handlers.toml import TOML
+from .password_helpers import ask_password
+from .password_helpers import ask_question
+from .password_helpers import gen_password
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -50,7 +54,7 @@ def subparser_adduser(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=adduser)
 
 
-def adduser(arg: Namespace, cfg: Config) -> int:
+def adduser(arg: Namespace) -> int:
     """Add a User to the synapse instance.
 
     It runs ``ask_password()`` first. If ``ask_password()`` returns ``None``
@@ -67,56 +71,56 @@ def adduser(arg: Namespace, cfg: Config) -> int:
     via ansible or the API
 
     :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :param cfg:       The ``Config`` class
     :return:          None
     """
 
-    with API(cfg.api_domain, cfg.api_token) as api, Ansible(
-        cfg.synapse_path
-    ) as ansible:
+    with TOML() as toml:
+        with API(toml["API"]["Domain"], toml["API"]["Token"]) as api, Ansible(
+            toml["SYNAPSE"]["Path"]
+        ) as ansible:
 
-        while True:
-            passwd_generated: bool = False
+            while True:
+                passwd_generated: bool = False
 
-            if arg.passwd is None:
-                arg.passwd = ask_password()
+                if arg.passwd is None:
+                    arg.passwd = ask_password()
 
-            if arg.passwd == "":
-                arg.passwd = gen_password()
-                passwd_generated = True
+                if arg.passwd == "":
+                    arg.passwd = gen_password()
+                    passwd_generated = True
 
-            print(f"Username: {arg.user}")
+                print(f"Username: {arg.user}")
 
-            if passwd_generated:
-                print(f"Password (generated): {arg.passwd}")
+                if passwd_generated:
+                    print(f"Password (generated): {arg.passwd}")
+                else:
+                    print("Password: **HIDDEN**")
+                print(f"Admin:    {'yes' if arg.admin else 'no'}")
+
+                answer = ask_question()
+
+                if answer:
+                    break
+                arg.passwd = None
+
+            if arg.ansible:
+                arg.admin = "yes" if arg.admin else "no"
+                ansible.tags = ("register-user",)
+                ansible.extra_vars = {
+                    "username": arg.user,
+                    "password": arg.passwd,
+                    "admin": arg.admin,
+                }
+                ansible.run_playbook()
             else:
-                print("Password: **HIDDEN**")
-            print(f"Admin:    {'yes' if arg.admin else 'no'}")
+                try:
+                    api.url.path = f"users/@{arg.user}:{toml['API']['Domain']}"
+                    api.method = "PUT"
+                    api.request({"password": arg.passwd, "admin": arg.admin})
+                except InternalResponseError:
+                    error("The User was not added.")
 
-            answer = ask_question()
-
-            if answer:
-                break
-            arg.passwd = None
-
-        if arg.ansible:
-            arg.admin = "yes" if arg.admin else "no"
-            ansible.tags = tuple("register-user")
-            ansible.extra_vars = {
-                "username": arg.user,
-                "password": arg.passwd,
-                "admin": arg.admin,
-            }
-            ansible.run_playbook()
-        else:
-            try:
-                api.url.path = f"users/@{arg.user}:{cfg.api_domain}"
-                api.method = "PUT"
-                api.request({"password": arg.passwd, "admin": arg.admin})
-            except InternalResponseError:
-                error("The User was not added.")
-
-    return 0
+        return 0
 
 
 # vim: set ft=python :

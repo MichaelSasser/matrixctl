@@ -22,6 +22,7 @@ from pathlib import Path
 
 from pkg_resources import get_distribution
 
+
 __version__ = get_distribution("matrixctl").version
 
 HOME: str = str(Path.home())

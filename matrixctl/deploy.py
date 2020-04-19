@@ -17,12 +17,16 @@
 from __future__ import annotations
 
 import sys
-from argparse import ArgumentParser, Namespace
+
+from argparse import ArgumentParser
+from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import debug, error
+from logging import debug
+from logging import error
 
 from .handlers.ansible import Ansible
-from .handlers.config import Config
+from .handlers.toml import TOML
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -35,33 +39,31 @@ def subparser_deploy(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=deploy)
 
 
-def deploy(_: Namespace, cfg: Config) -> int:
+def deploy(_: Namespace) -> int:
     debug("deploy")
+    with TOML() as toml:
+        if toml["ANSIBLE"]["Path"] is None and toml["SYNAPSE"]["Path"] is None:
+            error(
+                "To be able to use the deploy feature, you need to have "
+                "At least your own Ansible playbook configuration in the "
+                "MatrixCtl config file or the "
+                "spantaleev/matrix-docker-ansible-deploy "
+                "playbook"
+            )
+            sys.exit(1)
 
-    if cfg.my_playbook is None and cfg.synapse_path is None:
-        error(
-            "To be able to use the deploy feature, you need to have "
-            "At least your own Ansible playbook configuration in the "
-            "MatrixCtl config file or the "
-            "spantaleev/matrix-docker-ansible-deploy "
-            "playbook"
-        )
-        sys.exit(1)
+        if toml["ANSIBLE"]["Path"] is not None:
+            with Ansible(toml["ANSIBLE"]["Path"]) as ansible:
+                ansible.tags = toml["ANSIBLE"]["DeployTags"]  # ToDo: make list
+                ansible.ansible_cfg_path = toml["ANSIBLE"]["Cfg"]
+                ansible.run_playbook()
 
-    if cfg.my_playbook is not None:
+        if toml["SYNAPSE"]["Path"] is not None:
+            with Ansible(toml["SYNAPSE"]["Path"]) as ansible:
+                ansible.tags = ("setup-all",)
+                ansible.run_playbook()
 
-        print(cfg.my_playbook, type(cfg.my_playbook))
-        with Ansible(cfg.my_playbook) as ansible:
-            ansible.tags = (cfg.server_tags,)  # ToDo: make list
-            ansible.ansible_cfg_path = cfg.server_cfg
-            ansible.run_playbook()
-
-    if cfg.synapse_path is not None:
-        with Ansible(cfg.synapse_path) as ansible:
-            ansible.tags = ("setup-all",)
-            ansible.run_playbook()
-
-    return 0
+        return 0
 
 
 # vim: set ft=python :

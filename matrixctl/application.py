@@ -18,12 +18,16 @@
 from __future__ import annotations
 
 import argparse
+
 from argparse import _SubParsersAction
-from logging import debug, warning
-from typing import Callable, List
+from logging import debug
+from logging import warning
+from typing import Callable
+from typing import List
 
 import argcomplete
 import coloredlogs
+
 from matrixctl import __version__
 
 from .adduser import subparser_adduser
@@ -32,12 +36,13 @@ from .check import subparser_check
 from .deluser import subparser_deluser
 from .deluser_jitsi import subparser_deluser_jitsi
 from .deploy import subparser_deploy
-from .handlers.config import Config
 from .maintainance import subparser_maintainance
-from .start import subparser_restart, subparser_start
+from .start import subparser_restart
+from .start import subparser_start
 from .update import subparser_update
 from .user import subparser_user
 from .users import subparser_users
+
 
 # Subparsers
 
@@ -100,8 +105,6 @@ def main() -> int:
 
     setup_logging(args.debug)
 
-    config = Config()
-
     debug(f"{args=}")
 
     if args.debug:
@@ -114,10 +117,10 @@ def main() -> int:
             'in debug mode, use the "--help" attribute.'
         )
 
-        return int(args.func(args, config))
+        return int(args.func(args))
 
     try:
-        return int(args.func(args, config))
+        return int(args.func(args))
     except AttributeError:
         parser.print_help()
 

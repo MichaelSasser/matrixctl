@@ -16,12 +16,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
+from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from logging import debug
 
 from .handlers.ansible import Ansible
-from .handlers.config import Config
+from .handlers.toml import TOML
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -34,13 +36,14 @@ def subparser_check(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=check)
 
 
-def check(_: Namespace, cfg: Config) -> int:
+def check(_: Namespace) -> int:
     debug("check")
-    with Ansible(cfg.synapse_path) as ansible:
-        ansible.tags = ("check",)
-        ansible.run_playbook()
+    with TOML() as toml:
+        with Ansible(toml["SYNAPSE"]["Path"]) as ansible:
+            ansible.tags = ("check",)
+            ansible.run_playbook()
 
-    return 0
+        return 0
 
 
 # vim: set ft=python :

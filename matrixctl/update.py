@@ -16,11 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
+from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .handlers.config import Config
 from .handlers.git import Git
+from .handlers.toml import TOML
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -33,9 +35,10 @@ def subparser_update(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=update)
 
 
-def update(_: Namespace, cnf: Config) -> int:
-    with Git(cnf.synapse_path) as git:
-        git.pull()
+def update(_: Namespace) -> int:
+    with TOML() as toml:
+        with Git(toml["SYNAPSE"]["Path"]) as git:
+            git.pull()
 
     return 0
 

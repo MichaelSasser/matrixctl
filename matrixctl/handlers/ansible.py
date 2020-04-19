@@ -19,28 +19,37 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+
 from logging import debug
 from pathlib import Path
 from types import TracebackType
-from typing import Dict, Iterable, List, Optional, Type
+from typing import Dict
+from typing import Iterable
+from typing import List
+from typing import Optional
+from typing import Type
+from typing import Union
 
 from matrixctl.typing import JsonDict
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+# ToDO: __slots__
 class Ansible:
     def __init__(
-        self, playbook_path: Path, playbook: str = "setup.yml"
+        self, path: Union[Path, str], playbook: str = "setup.yml"
     ) -> None:
-        assert isinstance(playbook_path, Path)
+        self.path: Path = Path(path)
+
         assert isinstance(playbook, str)
-        self.playbook_path: Path = playbook_path
+
         self.playbook: str = playbook
         self.__ansible_cfg_path: Optional[str] = None
         self.__cmd: Dict[str, str] = {  # Defaults are already in here
-            "inventory": str(self.playbook_path / "inventory/hosts"),
+            "inventory": str(self.path / "inventory/hosts"),
         }
 
     def _inventory_path(self, path: Path) -> None:
@@ -52,7 +61,7 @@ class Ansible:
         self.__cmd["tags"] = ",".join(tags)  # e.g. tag1,tag2,...,tagn
 
     def _extra_vars(self, extra_vars: JsonDict) -> None:
-        self.__cmd["extra_vars"] = json.dumps(extra_vars)
+        self.__cmd["extra-vars"] = json.dumps(extra_vars).replace(" ", "")
 
     def _ansible_cfg_path(self, path: Path) -> None:
         assert isinstance(path, str)
@@ -70,7 +79,7 @@ class Ansible:
         for k in self.__cmd:
             cmd.append(f"--{k}={self.__cmd[k]}")
 
-        cmd.append(str(self.playbook_path / self.playbook))
+        cmd.append(str(self.path / self.playbook))
 
         # Debug output of the command
         debug(f"Ansible command:           {cmd}")
@@ -88,90 +97,6 @@ class Ansible:
 
         if self.__ansible_cfg_path is not None:
             del os.environ["ANSIBLE_CONFIG"]
-
-    # def run_server_playbook(
-    #     self,
-    #     playbook_path: str,
-    #     tags: Optional[str] = None,
-    #     ansible_cfg_path: Optional[str] = None,
-    # ) -> None:
-    #     """This function runs your own playbook, if it is configured in the
-    #     the MatrixCtl config file in section ``[SERVER]``.
-    #
-    #     This is useful, if you proision the server with your own Ansible
-    #     playbook.
-    #
-    #     The output of the ``ansible-playbook`` program is using both
-    #     ``stdout``
-    #     and ``stderr``. For the user is no visual difference if this function
-    #     executes the program (ansible-playbook) or if the user executes the
-    #     program manuelly.
-    #
-    #     :param playbook_path:  The path to the playbook
-    #     :param server_cfg_path:    The path to the ansible.cfg (optional,
-    #                              default: ``None``)
-    #     :param tags:      Additional tags (optional, default: ``None``)
-    #     :return:                 None
-    #     """
-    #
-    #     # Add ENV variable
-    #
-    #     if ansible_cfg_path is not None:
-    #         os.environ["ANSIBLE_CONFIG"] = ansible_cfg_path
-    #
-    #     # Build command
-    #     cmd: List[str] = ["ansible-playbook"]
-    #
-    #     if tags is not None:
-    #         cmd.append(f"--tags={tags}")
-    #
-    #     cmd.append(playbook_path)
-    #
-    #     # Run command
-    #     subprocess.run(cmd, check=True)
-    #
-    #     # Delete ENV variable
-    #
-    #     if ansible_cfg_path is not None:
-    #         del os.environ["ANSIBLE_CONFIG"]
-    #
-    # def run_synapse_playbook(
-    #     self, playbook_path: Path, arguments: Iterable[str]
-    # ) -> None:
-    #     """This function runs the ``spantaleev/matrix-docker-ansible-deploy``
-    #     playbook, if it is configured in the the MatrixCtl config file in
-    #     section ``[ANSIBLE]``.
-    #
-    #     The output of the ``ansible-playbook`` program is using both
-    #     ``stdout``
-    #     and ``stderr``. For the user is no visual difference if this function
-    #     executes the program (ansible-playbook) or if the user executes the
-    #     program manuelly.
-    #
-    #     :param ansible_path:  The path to the playbook
-    #     :return:                 None
-    #     """
-    #     assert isinstance(arguments, (list, tuple))
-    #
-    #     if playbook_path is None:
-    #         error(
-    #             "To be able to use this function, you need to have "
-    #             "the spantaleev/matrix-docker-ansible-deploy playbook "
-    #             "configured in your MatrixCtl config file"
-    #         )
-    #         sys.exit(1)
-    #
-    #     # Build Command
-    #     cmd: List[str] = [
-    #         "ansible-playbook",
-    #         "--inventory",
-    #         f"{str(playbook_path)}/inventory/hosts",
-    #         f"{str(playbook_path)}/setup.yml",
-    #     ]
-    #     cmd += list(arguments)
-    #
-    #     # Run command
-    #     subprocess.run(cmd, check=True)
 
     def __enter__(self) -> Ansible:
         """Use the class with the ``with`` statement`` statement.

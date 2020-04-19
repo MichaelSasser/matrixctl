@@ -18,10 +18,13 @@ from __future__ import annotations
 
 from logging import debug
 from types import TracebackType
-from typing import NamedTuple, Optional, Type
+from typing import NamedTuple
+from typing import Optional
+from typing import Type
 
 from paramiko import SSHClient
 from paramiko.channel import ChannelFile
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"

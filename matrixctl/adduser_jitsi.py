@@ -16,12 +16,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
+from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .handlers.config import Config
 from .handlers.ssh import SSH
-from .password_helpers import ask_password, ask_question, gen_password
+from .handlers.toml import TOML
+from .password_helpers import ask_password
+from .password_helpers import ask_question
+from .password_helpers import gen_password
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -44,7 +48,7 @@ def subparser_adduser_jitsi(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=adduser_jitsi)
 
 
-def adduser_jitsi(arg: Namespace, cfg: Config) -> int:
+def adduser_jitsi(arg: Namespace) -> int:
     """Add a User to the jitsi instance.
 
     It runs ``ask_password()``
@@ -60,55 +64,43 @@ def adduser_jitsi(arg: Namespace, cfg: Config) -> int:
     It runs the ``adduser`` method of the ``Ssh`` class.
 
     :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :param cfg:       The ``Config`` class
     :return:          None
     """
 
-    with SSH(cfg.api_domain) as ssh:
-        while True:
-            passwd_generated: bool = False
+    with TOML() as toml:
+        with SSH(toml["API"]["Domain"]) as ssh:
+            while True:
+                passwd_generated: bool = False
 
-            if arg.passwd is None:
-                arg.passwd = ask_password()
+                if arg.passwd is None:
+                    arg.passwd = ask_password()
 
-            if arg.passwd == "":
-                arg.passwd = gen_password()
-                passwd_generated = True
+                if arg.passwd == "":
+                    arg.passwd = gen_password()
+                    passwd_generated = True
 
-            print(f"Username: {arg.user}")
+                print(f"Username: {arg.user}")
 
-            if passwd_generated:
-                print(f"Password (generated): {arg.passwd}")
-            else:
-                print("Password: **HIDDEN**")
+                if passwd_generated:
+                    print(f"Password (generated): {arg.passwd}")
+                else:
+                    print("Password: **HIDDEN**")
 
-            answer = ask_question()
+                answer = ask_question()
 
-            if answer:
-                break
-            arg.passwd = None
+                if answer:
+                    break
+                arg.passwd = None
 
-        cmd: str = (
-            "sudo docker exec matrix-jitsi-prosody prosodyctl "
-            f"--config /config/prosody.cfg.lua register"
-            f'"{arg.user} {JID_EXT} "{arg.password}"'
-        )
+            cmd: str = (
+                "sudo docker exec matrix-jitsi-prosody prosodyctl "
+                f"--config /config/prosody.cfg.lua register"
+                f'"{arg.user} {JID_EXT} "{arg.password}"'
+            )
 
-        ssh.run_cmd(cmd)
+            ssh.run_cmd(cmd)
 
-        return 0
-        # res: SSHResponese = ssh.run_cmd(cmd)
-
-        # ToDo:
-        # if res.stderr.startswith("???"):
-        #     error(
-        #         "BUG: It's likely that you had previously installed Jitsi "
-        #         "without auth/guest support. Please look into the "
-        #         "configuring-playbook-jitsi.md in "
-        #         "matrix-docker-ansible-deploy/docs. Read the paragraph "
-        #         "about rebuilding your Jitsi installation."
-        #     )
-        #     sys.exit(1)
+            return 0
 
 
 # vim: set ft=python :

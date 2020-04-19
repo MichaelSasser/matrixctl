@@ -16,12 +16,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
+from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from logging import debug
 
 from .handlers.ansible import Ansible
-from .handlers.config import Config
+from .handlers.toml import TOML
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -34,16 +36,17 @@ def subparser_maintainance(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=maintainance)
 
 
-def maintainance(_: Namespace, cfg: Config) -> int:
+def maintainance(_: Namespace) -> int:
     debug("maintainance")
 
-    with Ansible(cfg.synapse_path) as ansible:
-        ansible.tags = (
-            "run-postgres-synapse-janitor",
-            "run-postgres-vacuum",
-            "start",
-        )
-        ansible.run_playbook()
+    with TOML() as toml:
+        with Ansible(toml["SYNAPSE"]["Path"]) as ansible:
+            ansible.tags = (
+                "run-postgres-synapse-janitor",
+                "run-postgres-vacuum",
+                "start",
+            )
+            ansible.run_playbook()
 
     return 0
 

@@ -18,18 +18,28 @@ from __future__ import annotations
 
 import datetime
 import sys
-from argparse import ArgumentParser, Namespace
+
+from argparse import ArgumentParser
+from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import debug, error, fatal
-from typing import Any, Dict, List, Optional, Tuple, Union
+from logging import debug
+from logging import error
+from logging import fatal
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Tuple
+from typing import Union
 
 from tabulate import tabulate
 
 from .errors import InternalResponseError
 from .handlers.api import API
-from .handlers.config import Config
+from .handlers.toml import TOML
 from .print_helpers import human_readable_bool
 from .typing import JsonDict
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -114,7 +124,7 @@ def generate_user_tables(
     return table
 
 
-def user(arg: Namespace, cfg: Config) -> int:
+def user(arg: Namespace) -> int:
     """List information about an registered user.
 
     It uses the admin API to get a python dictionary with the information.
@@ -167,28 +177,29 @@ def user(arg: Namespace, cfg: Config) -> int:
     :return:          None
     """
 
-    with API(cfg.api_domain, cfg.api_token) as api:
-        api.url.path = f"users/@{arg.user}:{cfg.api_domain}"
+    with TOML() as toml:
+        with API(toml["API"]["Domain"], toml["API"]["Token"]) as api:
+            api.url.path = f'users/@{arg.user}:{toml["API"]["Domain"]}'
 
-        try:
-            user_dict: JsonDict = api.request().json()
-        except InternalResponseError:
-            fatal("Could not receive the user information")
+            try:
+                user_dict: JsonDict = api.request().json()
+            except InternalResponseError:
+                fatal("Could not receive the user information")
 
-            return 1
+                return 1
 
-        len_domain = len(cfg.api_domain) + 1  # 1 for :
-        user_tables = generate_user_tables(user_dict, len_domain)
+            len_domain = len(toml["API"]["Domain"]) + 1  # 1 for :
+            user_tables = generate_user_tables(user_dict, len_domain)
 
-        debug(f"User: {user_tables=}")
+            debug(f"User: {user_tables=}")
 
-        for num, table in enumerate(user_tables):
+            for num, table in enumerate(user_tables):
 
-            if num < 1:
-                print("User:")
-            else:
-                print("\nThreepid:")
-            print(tabulate(table, tablefmt="psql",))
+                if num < 1:
+                    print("User:")
+                else:
+                    print("\nThreepid:")
+                print(tabulate(table, tablefmt="psql",))
 
     return 0
 
