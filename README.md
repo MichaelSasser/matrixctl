@@ -9,16 +9,8 @@
 # MatrixCtl
 
 MatrixCtl is a python program to control, manage, provision and deploy our
-matrix homeserver. I had a bunch of shell scripts doing that. Two weeks
-after using them I couldn't remember the order in which I have to use the
-arguments or which arguments where needed. It was a pain. So I decided I hack
-something together fast.
-
-It is not the most elegant piece of software I wrote, but it should do the
-trick. I will continue to port the rest of the scripts and add a few new
-features.
-
-Maybe it is also useful for someone else.
+matrix homeserver. Instead of remembering tons of commands or having a bunch
+of shell scripts MatrixCtl does many things for you.
 
 ## Branching Model
 
@@ -36,7 +28,7 @@ merging branch.
 ## Command line tool
 
 MatrixCtl as a pure commandline tool. You can use it as package, if you like,
-but breaking changes may be introduced, even in a minor change.
+but breaking changes may be introduced, even in a minor version shift.
 
 ```
 # matrixctl
@@ -69,30 +61,33 @@ To use this program you need to have this config file in
 "/etc/matrixctl/config" or in "~/.config/matrixctl/config".
 
 ```toml
-[ANSIBLE]
+[SYNAPSE]
 # The absolute path to the fully configured matrix-docker-ansible-deploy
 # playbook from https://github.com/spantaleev/matrix-docker-ansible-deploy.
+#
+# Path="/absolut/path/to/matrix-docker-ansible-deploy"
 
-MatrixDockerAnsibleDeployPath="/absolut/path/to/matrix-docker-ansible-deploy"
-
-[SERVER]
+[ANSIBLE]
 # If you have your own playbook, to provision your matrix server, you can
-# fill out this section. MatrixCtl will run this before the
-# matrix-docker-ansible-deploy playbook.
+# fill out this section. MatrixCtl will run this before the synapse playbook.
+
+# The absolute path to your playbook
+#
+# Path = "/absolute/path/to/your/playbook"
 
 # If you have a special "ansible.cfg" for your playbook, fill in the absolute
 # path to it.
+#
+# Cfg="/absolute/path/to/ansible.cfg"
 
-# AnsibleCfg="/absolute/path/to/ansible.cfg"
-
-# Fill in the absolute path to your "site.yml"
-
-# AnsiblePlaybook="/absolute/path/to/site.yml"
+# Fill in the absolute path to your Playbook (e.g. "site.yml")
+#
+# Playbook ="setup.yml"
 
 # If you use tags to provision or configure your matrix host, you can add them
-# here. Use a comma separated string without spaces.
-
-# AnsibleTags="MyTag,MyOtherTag"
+# here.
+#
+# Tags = ["MyTag", "MyOtherTag"]
 
 [API]
 # If your matrix server is deployed, you may want to fill out the API section.
@@ -104,7 +99,7 @@ MatrixDockerAnsibleDeployPath="/absolut/path/to/matrix-docker-ansible-deploy"
 # Your domain should be something like "michaelsasser.org" without the
 # "matrix." in the front. MatrixCtl will add that, if needed. An IP-Address
 # is not enough.
-
+#
 # Domain="domain.tld"
 
 # To use the API you need to have an administrator account. Enter your Token
@@ -112,20 +107,27 @@ MatrixDockerAnsibleDeployPath="/absolut/path/to/matrix-docker-ansible-deploy"
 # on your username on the upper left corner on your browser) in the
 # "Help & About" tab. If you scroll down click next to "Access-Token:" on
 # "<click to reveal>". It will be marked for you. Copy it in here.
+#
+# Token="MySuperLongMatrixToken"
 
-# Token="MyMatrixToken"
+[SSH]
+# Here you can add your SSH configuration.
+#
+# Address = "matrix.domain.tld"
+
+# The default port is 22
+#
+# Port = 22
+
+# The default username is your current login name.
+#
+# User = "myusername"
 ```
 
 ## Semantic Versioning
 
-**After release "1.0.0"** this repository will use
-[SemVer](https://semver.org/) for its release
+This repository will uses [SemVer](https://semver.org/) for its release
 cycle.
-
-**Before release "1.0.0"** it uses "0.y.z".
-This means, if breaking changes are introduced, it results in a "y" version
-change (e.g. "0.1.0" -> "0.2.0"). "z" changes, like new features or patches
-are bumping the last significant digit (e.g. "0.1.1" -> "0.1.2").
 
 ## License
 Copyright &copy; 2020 Michael Sasser <Info@MichaelSasser.org>. Released under
