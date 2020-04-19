@@ -68,7 +68,12 @@ def adduser_jitsi(arg: Namespace) -> int:
     """
 
     with TOML() as toml:
-        with SSH(toml["API"]["Domain"]) as ssh:
+        address = (
+            toml["SSH"]["Address"]
+            if toml["SSH"]["Address"]
+            else f"matrix.{toml['API']['Domain']}"
+        )
+        with SSH(address, toml["SSH"]["User"], toml["SSH"]["Port"]) as ssh:
             while True:
                 passwd_generated: bool = False
 
@@ -94,8 +99,8 @@ def adduser_jitsi(arg: Namespace) -> int:
 
             cmd: str = (
                 "sudo docker exec matrix-jitsi-prosody prosodyctl "
-                f"--config /config/prosody.cfg.lua register"
-                f'"{arg.user} {JID_EXT} "{arg.password}"'
+                f"--config /config/prosody.cfg.lua register "
+                f'"{arg.user}" {JID_EXT} "{arg.passwd}"'
             )
 
             ssh.run_cmd(cmd)

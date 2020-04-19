@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import annotations
 
+from getpass import getuser
 from logging import debug
 from types import TracebackType
 from typing import NamedTuple
@@ -37,17 +38,25 @@ class SSHResponse(NamedTuple):
 
 
 class SSH:
-    __slots__ = ("address", "client")
+    __slots__ = ("address", "__client", "user", "port")
 
-    def __init__(self, address: str):
+    def __init__(
+        self, address: str, user: Optional[str] = None, port: int = 22
+    ) -> None:
         self.address: str = address
-        self.client: SSHClient = SSHClient()
-        self.client.load_system_host_keys()
+        self.port: int = port
+        self.user: str = getuser() if user is None else user
+        self.__client: SSHClient = SSHClient()
+        self.__client.load_system_host_keys()
         self.__connect()
 
     def __connect(self) -> None:
         """Connect to the SSH server."""
-        self.client.connect(self.address)
+        self.__client.connect(self.address, self.port, self.user)
+
+    def __disconnect(self) -> None:
+        """Disconnect from the SSH server."""
+        self.__client.close()
 
     @staticmethod
     def __str_from(f: ChannelFile) -> Optional[str]:
@@ -60,7 +69,7 @@ class SSH:
         debug(f'SSH Command: "{cmd}"')
 
         response: SSHResponse = SSHResponse(
-            *[self.__str_from(s) for s in self.client.exec_command(cmd)]
+            *[self.__str_from(s) for s in self.__client.exec_command(cmd)]
         )
 
         debug(f'SSH Response: "{response}"')
@@ -79,11 +88,11 @@ class SSH:
         exc_tb: Optional[TracebackType],
     ) -> None:
         """Close the SSH connection."""
-        self.client.close()
+        self.__disconnect()
 
     def __del__(self) -> None:
         """Close the connection to the SSH."""
-        self.client.close()
+        self.__disconnect()
 
 
 # vim: set ft=python :
