@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contributer Documentation &mdash; MatrixCtl 0.2.2 documentation</title>
+  <title>Contributer Documentation &mdash; MatrixCtl 0.3.0 documentation</title>
   
 
   
@@ -84,16 +84,42 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contributer Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.account"><strong>Account</strong> - account.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.ansible_handler"><strong>Ansible Handler</strong> - ansible_handler.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.api_handler"><strong>API Handler</strong> - api_handler.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.application"><strong>Application</strong> - application.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.config_handler"><strong>Config Handler</strong> - config_handler.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.git_handler"><strong>Git Handler</strong> - git_handler.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.housekeeping"><strong>Housekeeping</strong> - housekeeping.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.provisioning"><strong>Provisioning</strong> - provisioning.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.ssh_handler"><strong>SSH Handler</strong> - ssh_handler.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-matrixctl.updating"><strong>Updating</strong> - updating.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#subcommands">Subcommands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.adduser"><strong>adduser</strong> - adduser.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.deluser"><strong>deluser</strong> - deluser.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.adduser_jitsi"><strong>adduser-jitsi</strong> - adduser_jitsi.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.deluser_jitsi"><strong>deluser-jitsi</strong> - deluser_jitsi.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.check"><strong>check</strong> - check.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.deploy"><strong>deploy</strong> - deploy.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.maintainance"><strong>maintainance</strong> - maintainance.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.start"><strong>start</strong> - start.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.update"><strong>update</strong> - update.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.user"><strong>user</strong> - user.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.users"><strong>users</strong> - users.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#helpers">Helpers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.print_helpers"><strong>Print</strong> - print_helpers.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.password_helpers"><strong>Password</strong> - password_helpers.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#typing-and-errors">Typing and Errors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.typing"><strong>Typing</strong> - typing.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.errors"><strong>Errors</strong> - errors.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-application">The Application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.application"><strong>Application</strong> - application.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#handlers">Handlers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.handlers.toml"><strong>TOML</strong> - handlers/toml.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.handlers.api"><strong>API</strong> - handlers/api.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.handlers.ansible"><strong>Ansible</strong> - handlers/ansible.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.handlers.git"><strong>Git</strong> - handlers/git.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.handlers.ssh"><strong>SSH</strong> - handlers/ssh.py</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -162,348 +188,984 @@
             
   <div class="section" id="contributer-documentation">
 <h1>Contributer Documentation<a class="headerlink" href="#contributer-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-matrixctl.account">
-<span id="account-account-py"></span><h2><strong>Account</strong> - account.py<a class="headerlink" href="#module-matrixctl.account" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="subcommands">
+<h2>Subcommands<a class="headerlink" href="#subcommands" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-matrixctl.adduser">
+<span id="adduser-adduser-py"></span><h3><strong>adduser</strong> - adduser.py<a class="headerlink" href="#module-matrixctl.adduser" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
-<dt id="matrixctl.account.adduser">
-<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">adduser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">adminapi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.adduser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a User to the synapse instance</p>
+<dt id="matrixctl.adduser.adduser">
+<code class="sig-prename descclassname">matrixctl.adduser.</code><code class="sig-name descname">adduser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.adduser.adduser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a User to the synapse instance.</p>
+<p>It runs <code class="docutils literal notranslate"><span class="pre">ask_password()</span></code> first. If <code class="docutils literal notranslate"><span class="pre">ask_password()</span></code> returns <code class="docutils literal notranslate"><span class="pre">None</span></code>
+it generates a password with <code class="docutils literal notranslate"><span class="pre">gen_password()</span></code>. Then it gives the user
+a overview of the username, password and if the new user should be
+generated as admin (if you added the <code class="docutils literal notranslate"><span class="pre">--admin</span></code> argument). Next, it asks
+a question, if the entered values are correct with the <code class="docutils literal notranslate"><span class="pre">ask_question</span></code>
+function.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">ask_question</span></code> function returns True, it continues. If not, it
+starts from the beginning.</p>
+<p>Depending on the <code class="docutils literal notranslate"><span class="pre">--ansible</span></code> switch it runs the <code class="docutils literal notranslate"><span class="pre">adduser</span></code> command
+via ansible or the API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Namespace</span></code>) – The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">arse_args()</span></code></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="matrixctl.account.adduser_jitsi">
-<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">adduser_jitsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.adduser_jitsi" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a User to the synapse instance</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="matrixctl.account.ask_password">
-<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">ask_password</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.ask_password" title="Permalink to this definition">¶</a></dt>
+<dt id="matrixctl.adduser.subparser_adduser">
+<code class="sig-prename descclassname">matrixctl.adduser.</code><code class="sig-name descname">subparser_adduser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.adduser.subparser_adduser" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.deluser">
+<span id="deluser-deluser-py"></span><h3><strong>deluser</strong> - deluser.py<a class="headerlink" href="#module-matrixctl.deluser" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.deluser.deluser">
+<code class="sig-prename descclassname">matrixctl.deluser.</code><code class="sig-name descname">deluser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deluser.deluser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a user from the the matrix instance.</p>
+<p>It uses the synapse admin API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Namespace</span></code>) – The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">arse_args()</span></code></p></li>
+<li><p><strong>_</strong> – Not used (The <code class="docutils literal notranslate"><span class="pre">Config</span></code> class)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.deluser.subparser_deluser">
+<code class="sig-prename descclassname">matrixctl.deluser.</code><code class="sig-name descname">subparser_deluser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deluser.subparser_deluser" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.adduser_jitsi">
+<span id="adduser-jitsi-adduser-jitsi-py"></span><h3><strong>adduser-jitsi</strong> - adduser_jitsi.py<a class="headerlink" href="#module-matrixctl.adduser_jitsi" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.adduser_jitsi.adduser_jitsi">
+<code class="sig-prename descclassname">matrixctl.adduser_jitsi.</code><code class="sig-name descname">adduser_jitsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.adduser_jitsi.adduser_jitsi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a User to the jitsi instance.</p>
+<p>It runs <code class="docutils literal notranslate"><span class="pre">ask_password()</span></code>
+first. If <code class="docutils literal notranslate"><span class="pre">ask_password()</span></code> returns <code class="docutils literal notranslate"><span class="pre">None</span></code> it generates a password
+with <code class="docutils literal notranslate"><span class="pre">gen_password()</span></code>. Then it gives the user a overview of the
+username, password and if the new user should be generated as admin
+(if you added the <code class="docutils literal notranslate"><span class="pre">--admin</span></code> argument). Next, it asks a question,
+if the entered values are correct with the <code class="docutils literal notranslate"><span class="pre">ask_question</span></code> function.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">ask_question</span></code> function returns True, it continues. If not, it
+starts from the beginning.</p>
+<p>It runs the <code class="docutils literal notranslate"><span class="pre">adduser</span></code> method of the <code class="docutils literal notranslate"><span class="pre">Ssh</span></code> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Namespace</span></code>) – The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">arse_args()</span></code></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.adduser_jitsi.subparser_adduser_jitsi">
+<code class="sig-prename descclassname">matrixctl.adduser_jitsi.</code><code class="sig-name descname">subparser_adduser_jitsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.adduser_jitsi.subparser_adduser_jitsi" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.deluser_jitsi">
+<span id="deluser-jitsi-deluser-jitsi-py"></span><h3><strong>deluser-jitsi</strong> - deluser_jitsi.py<a class="headerlink" href="#module-matrixctl.deluser_jitsi" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.deluser_jitsi.deluser_jitsi">
+<code class="sig-prename descclassname">matrixctl.deluser_jitsi.</code><code class="sig-name descname">deluser_jitsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deluser_jitsi.deluser_jitsi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a user from the jitsi instance.</p>
+<p>It uses the <code class="docutils literal notranslate"><span class="pre">Ssh</span></code> class from the <code class="docutils literal notranslate"><span class="pre">ssh_handler</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Namespace</span></code>) – The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">arse_args()</span></code></p></li>
+<li><p><strong>cfg</strong> – The <code class="docutils literal notranslate"><span class="pre">Config</span></code> class</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.deluser_jitsi.subparser_deluser_jitsi">
+<code class="sig-prename descclassname">matrixctl.deluser_jitsi.</code><code class="sig-name descname">subparser_deluser_jitsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deluser_jitsi.subparser_deluser_jitsi" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.check">
+<span id="check-check-py"></span><h3><strong>check</strong> - check.py<a class="headerlink" href="#module-matrixctl.check" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.check.check">
+<code class="sig-prename descclassname">matrixctl.check.</code><code class="sig-name descname">check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.check.check" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.check.subparser_check">
+<code class="sig-prename descclassname">matrixctl.check.</code><code class="sig-name descname">subparser_check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.check.subparser_check" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.deploy">
+<span id="deploy-deploy-py"></span><h3><strong>deploy</strong> - deploy.py<a class="headerlink" href="#module-matrixctl.deploy" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.deploy.deploy">
+<code class="sig-prename descclassname">matrixctl.deploy.</code><code class="sig-name descname">deploy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deploy.deploy" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.deploy.subparser_deploy">
+<code class="sig-prename descclassname">matrixctl.deploy.</code><code class="sig-name descname">subparser_deploy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deploy.subparser_deploy" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.maintainance">
+<span id="maintainance-maintainance-py"></span><h3><strong>maintainance</strong> - maintainance.py<a class="headerlink" href="#module-matrixctl.maintainance" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.maintainance.maintainance">
+<code class="sig-prename descclassname">matrixctl.maintainance.</code><code class="sig-name descname">maintainance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.maintainance.maintainance" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.maintainance.subparser_maintainance">
+<code class="sig-prename descclassname">matrixctl.maintainance.</code><code class="sig-name descname">subparser_maintainance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.maintainance.subparser_maintainance" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.start">
+<span id="start-start-py"></span><h3><strong>start</strong> - start.py<a class="headerlink" href="#module-matrixctl.start" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.start.start">
+<code class="sig-prename descclassname">matrixctl.start.</code><code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.start.start" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.start.subparser_restart">
+<code class="sig-prename descclassname">matrixctl.start.</code><code class="sig-name descname">subparser_restart</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.start.subparser_restart" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.start.subparser_start">
+<code class="sig-prename descclassname">matrixctl.start.</code><code class="sig-name descname">subparser_start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.start.subparser_start" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.update">
+<span id="update-update-py"></span><h3><strong>update</strong> - update.py<a class="headerlink" href="#module-matrixctl.update" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.update.subparser_update">
+<code class="sig-prename descclassname">matrixctl.update.</code><code class="sig-name descname">subparser_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.update.subparser_update" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.update.update">
+<code class="sig-prename descclassname">matrixctl.update.</code><code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.update.update" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.user">
+<span id="user-user-py"></span><h3><strong>user</strong> - user.py<a class="headerlink" href="#module-matrixctl.user" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.user.generate_user_tables">
+<code class="sig-prename descclassname">matrixctl.user.</code><code class="sig-name descname">generate_user_tables</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_dict</span></em>, <em class="sig-param"><span class="n">len_domain</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.user.generate_user_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a main user table and threepid user tables.</p>
+<p>The function gnerates first a main user table and then for every threepid
+a additional table from a <code class="docutils literal notranslate"><span class="pre">user_dict</span></code>.
+It renames and makes the output human readable.</p>
+<p>This function is a recursive function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_dict</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – A JSON string which was converted to a Python
+dictionary.</p></li>
+<li><p><strong>len_domain</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The length in characters of the domain.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The generated lists in this format:
+[main], threepids_0, … ,threepids_n]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.user.make_human_readable">
+<code class="sig-prename descclassname">matrixctl.user.</code><code class="sig-name descname">make_human_readable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">k</span></em>, <em class="sig-param"><span class="n">user_dict</span></em>, <em class="sig-param"><span class="n">len_domain</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.user.make_human_readable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.user.subparser_user">
+<code class="sig-prename descclassname">matrixctl.user.</code><code class="sig-name descname">subparser_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.user.subparser_user" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.user.user">
+<code class="sig-prename descclassname">matrixctl.user.</code><code class="sig-name descname">user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.user.user" title="Permalink to this definition">¶</a></dt>
+<dd><p>List information about an registered user.</p>
+<p>It uses the admin API to get a python dictionary with the information.
+The <code class="docutils literal notranslate"><span class="pre">generate_user_tables</span></code> function makes the information human readable.
+The Python package <code class="docutils literal notranslate"><span class="pre">tabulate</span></code> renders the table as shown below, if
+everything works well.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> matrixctl user dwight
+<span class="go">User:</span>
+<span class="go">+----------------------------+--------------------------------------+</span>
+<span class="go">| Name                       | dwight                               |</span>
+<span class="go">| Password Hash              | $2b$12$9DUNderm1ffL1NincPap3RC       |</span>
+<span class="go">|                            | ompaNY1725.slOUghAvEnu5cranT0n       |</span>
+<span class="go">| Guest                      | False                                |</span>
+<span class="go">| Admin                      | True                                 |</span>
+<span class="go">| Consent Version            |                                      |</span>
+<span class="go">| Consent Server Notice Sent |                                      |</span>
+<span class="go">| Appservice Id              |                                      |</span>
+<span class="go">| Creation Ts                | 2020-04-14 13:04:21                  |</span>
+<span class="go">| User Type                  |                                      |</span>
+<span class="go">| Deactivated                | False                                |</span>
+<span class="go">| Displayname                | Dwight Schrute                       |</span>
+<span class="go">| Avatar Url                 | mxc://dunder-mifflin.com/sCr4        |</span>
+<span class="go">|                            | nt0nsr4ng13rW45Cr33d                 |</span>
+<span class="go">+----------------------------+--------------------------------------+</span>
+
+<span class="go">Threepid:</span>
+<span class="go">+--------------+-----------------------------------+</span>
+<span class="go">| Medium       | email                             |</span>
+<span class="go">| Address      | dwight_schrute@dunder-mifflin.com |</span>
+<span class="go">| Validated At | 2020-04-14 15:30:21.123000        |</span>
+<span class="go">| Added At     | 2020-04-14 15:29:19.100000        |</span>
+<span class="go">+--------------+-----------------------------------+</span>
+</pre></div>
+</div>
+<p>If the user does not exist, the return looks like:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> matrixctl user mose
+<span class="go">2020-04-14 13:58:13 - ERROR - The request was not successful.</span>
+<span class="go">2020-04-14 13:58:13 - ERROR - There is no user with that username.</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Namespace</span></code>) – The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">arse_args()</span></code></p></li>
+<li><p><strong>cfg</strong> – The <code class="docutils literal notranslate"><span class="pre">Config</span></code> class</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.users">
+<span id="users-users-py"></span><h3><strong>users</strong> - users.py<a class="headerlink" href="#module-matrixctl.users" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.users.subparser_users">
+<code class="sig-prename descclassname">matrixctl.users.</code><code class="sig-name descname">subparser_users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.users.subparser_users" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.users.users">
+<code class="sig-prename descclassname">matrixctl.users.</code><code class="sig-name descname">users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.users.users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a table of the matrix users.</p>
+<p>This function generates and prints a table of matrix user accounts.
+The table can be modified with:</p>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">--guests</span></code> switch: <code class="docutils literal notranslate"><span class="pre">args.guests</span></code> is True, else <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">--no-bots</span></code> switch: <code class="docutils literal notranslate"><span class="pre">args.no_bots</span></code> is True, else <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+</ul>
+<p>If you don’t want any bots in the table use the <code class="docutils literal notranslate"><span class="pre">--no-bots</span></code> switch.
+If you want guests in the table use the <code class="docutils literal notranslate"><span class="pre">--guests</span></code> switch.</p>
+<p><strong>Example</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> matrixctl users --no-bots
+<span class="go">+----------------+---------------+------------+------------+</span>
+<span class="go">| Name           | Deactivated   | Is Admin   | Is Guest   |</span>
+<span class="go">|----------------+---------------+------------+------------|</span>
+<span class="go">| dunder_mifflin | False         | True       | False      |</span>
+<span class="go">| dwight         | False         | True       | False      |</span>
+<span class="go">| pam            | False         | False      | False      |</span>
+<span class="go">| jim            | False         | False      | False      |</span>
+<span class="go">| creed          | False         | False      | False      |</span>
+<span class="go">| stanley        | False         | False      | False      |</span>
+<span class="go">| kevin          | False         | False      | False      |</span>
+<span class="go">| angela         | False         | False      | False      |</span>
+<span class="go">| phyllis        | False         | False      | False      |</span>
+<span class="go">| tobi           | False         | False      | False      |</span>
+<span class="go">| michael        | False         | True       | False      |</span>
+<span class="go">| andy           | False         | False      | False      |</span>
+<span class="go">+----------------+---------------+------------+------------+</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Namespace</span></code>) – The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">arse_args()</span></code></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="helpers">
+<h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-matrixctl.print_helpers">
+<span id="print-print-helpers-py"></span><h3><strong>Print</strong> - print_helpers.py<a class="headerlink" href="#module-matrixctl.print_helpers" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.print_helpers.human_readable_bool">
+<code class="sig-prename descclassname">matrixctl.print_helpers.</code><code class="sig-name descname">human_readable_bool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">b</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.print_helpers.human_readable_bool" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.password_helpers">
+<span id="password-password-helpers-py"></span><h3><strong>Password</strong> - password_helpers.py<a class="headerlink" href="#module-matrixctl.password_helpers" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.password_helpers.ask_password">
+<code class="sig-prename descclassname">matrixctl.password_helpers.</code><code class="sig-name descname">ask_password</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.password_helpers.ask_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask the user to create a password.</p>
+<p>The user will be asked twice, after
+that, the function compares the two entered passwords. If they are the
+same, the function will return the password.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the user presses enter twice, without entering a password,
+the function will return <code class="docutils literal notranslate"><span class="pre">None</span></code>. This is by-design.</p>
+</div>
+<dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="matrixctl.account.ask_question">
-<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">ask_question</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">question</span><span class="o">=</span><span class="default_value">'Is everything ok?'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.ask_question" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>True</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns the user entered password or <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="matrixctl.account.deluser">
-<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">deluser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">adminapi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.deluser" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="matrixctl.account.deluser_jitsi">
-<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">deluser_jitsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.deluser_jitsi" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="matrixctl.account.gen_password">
-<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">gen_password</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.gen_password" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="matrixctl.account.generate_user_tables">
-<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">generate_user_tables</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_dict</span></em>, <em class="sig-param"><span class="n">len_domain</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.generate_user_tables" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a main user table and a additional table for every threepids
-This function is recursive.</p>
+<dt id="matrixctl.password_helpers.ask_question">
+<code class="sig-prename descclassname">matrixctl.password_helpers.</code><code class="sig-name descname">ask_question</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">question</span><span class="o">=</span><span class="default_value">'Is everything correct?'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.password_helpers.ask_question" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asks the user a simple yes/no a question.</p>
+<p>The answer will be returned as <code class="docutils literal notranslate"><span class="pre">bool</span></code>.
+- <code class="docutils literal notranslate"><span class="pre">True</span></code>: if the user answered <code class="docutils literal notranslate"><span class="pre">y</span></code> / <code class="docutils literal notranslate"><span class="pre">j</span></code> (j for the German yes: Ja)
+- <code class="docutils literal notranslate"><span class="pre">False</span></code>: if the user answers <code class="docutils literal notranslate"><span class="pre">n</span></code></p>
+<p>If the user answerd with an invalid answer (not <code class="docutils literal notranslate"><span class="pre">y</span></code> / <code class="docutils literal notranslate"><span class="pre">j</span></code> / <code class="docutils literal notranslate"><span class="pre">n</span></code>)
+the function asks again.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]]</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>question</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The yes/no question the user should be asked</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the answer was <code class="docutils literal notranslate"><span class="pre">y</span></code> / <code class="docutils literal notranslate"><span class="pre">j</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>
+if the answer was <code class="docutils literal notranslate"><span class="pre">n</span></code></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt id="matrixctl.account.user">
-<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">adminapi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.user" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="matrixctl.account.users">
-<code class="sig-prename descclassname">matrixctl.account.</code><code class="sig-name descname">users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">adminapi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.account.users" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</div>
-<div class="section" id="module-matrixctl.ansible_handler">
-<span id="ansible-handler-ansible-handler-py"></span><h2><strong>Ansible Handler</strong> - ansible_handler.py<a class="headerlink" href="#module-matrixctl.ansible_handler" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="matrixctl.ansible_handler.ansible_server">
-<code class="sig-prename descclassname">matrixctl.ansible_handler.</code><code class="sig-name descname">ansible_server</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cfg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ansible_handler.ansible_server" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dt id="matrixctl.password_helpers.gen_password">
+<code class="sig-prename descclassname">matrixctl.password_helpers.</code><code class="sig-name descname">gen_password</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">length</span><span class="o">=</span><span class="default_value">16</span></em>, <em class="sig-param"><span class="n">min_digits</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">min_special</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">max_special</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.password_helpers.gen_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a password.</p>
+<p>It uses lower- and uppercase
+characters, digits and some special characters, you can find in the
+<code class="docutils literal notranslate"><span class="pre">SPECIAL</span></code> variable in this file.</p>
+<p>It uses at least:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">min_digits</span></code> digits</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_special</span></code> special characters</p></li>
+</ul>
+<p>It uses maximal:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">max_special</span></code> special characters</p></li>
+</ul>
+<p>The rest are lower- and uppercase characters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The desired length of the password to generate</p></li>
+<li><p><strong>min_digits</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The desired minimum of digits of the password</p></li>
+<li><p><strong>min_special</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The desired minimum of special characters of the
+password</p></li>
+<li><p><strong>max_special</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The desired maximum of special characters of the
+password</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>It returns the generated password</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="matrixctl.ansible_handler.ansible_synapse">
-<code class="sig-prename descclassname">matrixctl.ansible_handler.</code><code class="sig-name descname">ansible_synapse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arguments</span></em>, <em class="sig-param"><span class="n">cfg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ansible_handler.ansible_synapse" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
-<div class="section" id="module-matrixctl.api_handler">
-<span id="api-handler-api-handler-py"></span><h2><strong>API Handler</strong> - api_handler.py<a class="headerlink" href="#module-matrixctl.api_handler" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt id="matrixctl.api_handler.Api">
-<em class="property">class </em><code class="sig-prename descclassname">matrixctl.api_handler.</code><code class="sig-name descname">Api</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="matrixctl.api_handler.Api.adduser">
-<code class="sig-name descname">adduser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">admin</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api.adduser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a user to the matrix server.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.api_handler.Api.deluser">
-<code class="sig-name descname">deluser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api.deluser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a user to the matrix server.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.api_handler.Api.send">
-<code class="sig-name descname">send</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">params</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">payload</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'GET'</span></em>, <em class="sig-param"><span class="n">api_version</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">json_payload</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api.send" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.api_handler.Api.user">
-<code class="sig-name descname">user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api.user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a user to the matrix server.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.api_handler.Api.users">
-<code class="sig-name descname">users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">from_user</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">show_guests</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.api_handler.Api.users" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a user to the matrix server.</p>
-</dd></dl>
-
-</dd></dl>
-
 </div>
-<div class="section" id="module-matrixctl.application">
-<span id="application-application-py"></span><h2><strong>Application</strong> - application.py<a class="headerlink" href="#module-matrixctl.application" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="matrixctl.application.main">
-<code class="sig-prename descclassname">matrixctl.application.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.application.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="typing-and-errors">
+<h2>Typing and Errors<a class="headerlink" href="#typing-and-errors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-matrixctl.typing">
+<span id="typing-typing-py"></span><h3><strong>Typing</strong> - typing.py<a class="headerlink" href="#module-matrixctl.typing" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="module-matrixctl.config_handler">
-<span id="config-handler-config-handler-py"></span><h2><strong>Config Handler</strong> - config_handler.py<a class="headerlink" href="#module-matrixctl.config_handler" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt id="matrixctl.config_handler.Config">
-<em class="property">class </em><code class="sig-prename descclassname">matrixctl.config_handler.</code><code class="sig-name descname">Config</code><a class="headerlink" href="#matrixctl.config_handler.Config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<div class="section" id="module-matrixctl.errors">
+<span id="errors-errors-py"></span><h3><strong>Errors</strong> - errors.py<a class="headerlink" href="#module-matrixctl.errors" title="Permalink to this headline">¶</a></h3>
+<dl class="py exception">
+<dt id="matrixctl.errors.ConfigFileError">
+<em class="property">exception </em><code class="sig-prename descclassname">matrixctl.errors.</code><code class="sig-name descname">ConfigFileError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.errors.ConfigFileError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matrixctl.errors.Error" title="matrixctl.errors.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">matrixctl.errors.Error</span></code></a></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="matrixctl.errors.Error">
+<em class="property">exception </em><code class="sig-prename descclassname">matrixctl.errors.</code><code class="sig-name descname">Error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.errors.Error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <dl class="py attribute">
-<dt id="matrixctl.config_handler.Config.FILE_PATH">
-<code class="sig-name descname">FILE_PATH</code><em class="property">: Tuple[pathlib.Path]</em><em class="property"> = (PosixPath('/etc/matrixctl/config'), PosixPath('//home/runner/.config/matrixctl/config'))</em><a class="headerlink" href="#matrixctl.config_handler.Config.FILE_PATH" title="Permalink to this definition">¶</a></dt>
+<dt id="matrixctl.errors.Error.BUGMSG">
+<code class="sig-name descname">BUGMSG</code><em class="property">: str</em><em class="property"> = 'If you discover this message, please try updating MatrixCtl. If you see this message again, we would be glad, if you would run the same command again in debug-mode (matrixctl -d [...]) and hand in a &quot;Bug report&quot; at https://github.com/MichaelSasser/matrixctl/issues with the complete output.\n\nPython version: 3.8.2 final\nMatrixCtl version: 0.3.0 \n'</em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.config_handler.Config.ansible_path">
-<em class="property">property </em><code class="sig-name descname">ansible_path</code><a class="headerlink" href="#matrixctl.config_handler.Config.ansible_path" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.config_handler.Config.api_domain">
-<em class="property">property </em><code class="sig-name descname">api_domain</code><a class="headerlink" href="#matrixctl.config_handler.Config.api_domain" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.config_handler.Config.api_token">
-<em class="property">property </em><code class="sig-name descname">api_token</code><a class="headerlink" href="#matrixctl.config_handler.Config.api_token" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.config_handler.Config.server_cfg">
-<em class="property">property </em><code class="sig-name descname">server_cfg</code><a class="headerlink" href="#matrixctl.config_handler.Config.server_cfg" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.config_handler.Config.server_play">
-<em class="property">property </em><code class="sig-name descname">server_play</code><a class="headerlink" href="#matrixctl.config_handler.Config.server_play" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.config_handler.Config.server_tags">
-<em class="property">property </em><code class="sig-name descname">server_tags</code><a class="headerlink" href="#matrixctl.config_handler.Config.server_tags" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-</dd></dl>
 
 </dd></dl>
 
 <dl class="py exception">
-<dt id="matrixctl.config_handler.ConfigFileError">
-<em class="property">exception </em><code class="sig-prename descclassname">matrixctl.config_handler.</code><code class="sig-name descname">ConfigFileError</code><a class="headerlink" href="#matrixctl.config_handler.ConfigFileError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="matrixctl.config_handler.error_if_not_available">
-<code class="sig-prename descclassname">matrixctl.config_handler.</code><code class="sig-name descname">error_if_not_available</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.config_handler.error_if_not_available" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper, that checks, if the configuration is available and returns
-it. If the information is not available. it throws an error.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="matrixctl.config_handler.none_if_not_available">
-<code class="sig-prename descclassname">matrixctl.config_handler.</code><code class="sig-name descname">none_if_not_available</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.config_handler.none_if_not_available" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper, that checks, if the configuration is available and returns
-it. If the information is not available. it returns None.</p>
+<dt id="matrixctl.errors.InternalResponseError">
+<em class="property">exception </em><code class="sig-prename descclassname">matrixctl.errors.</code><code class="sig-name descname">InternalResponseError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.errors.InternalResponseError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matrixctl.errors.Error" title="matrixctl.errors.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">matrixctl.errors.Error</span></code></a></p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-matrixctl.git_handler">
-<span id="git-handler-git-handler-py"></span><h2><strong>Git Handler</strong> - git_handler.py<a class="headerlink" href="#module-matrixctl.git_handler" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="the-application">
+<h2>The Application<a class="headerlink" href="#the-application" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-matrixctl.application">
+<span id="application-application-py"></span><h3><strong>Application</strong> - application.py<a class="headerlink" href="#module-matrixctl.application" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
-<dt id="matrixctl.git_handler.git_pull">
-<code class="sig-prename descclassname">matrixctl.git_handler.</code><code class="sig-name descname">git_pull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cnf</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.git_handler.git_pull" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="matrixctl.application.main">
+<code class="sig-prename descclassname">matrixctl.application.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.application.main" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.application.setup_autocomplete">
+<code class="sig-prename descclassname">matrixctl.application.</code><code class="sig-name descname">setup_autocomplete</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.application.setup_autocomplete" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.application.setup_logging">
+<code class="sig-prename descclassname">matrixctl.application.</code><code class="sig-name descname">setup_logging</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">debug_mode</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.application.setup_logging" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.application.setup_parser">
+<code class="sig-prename descclassname">matrixctl.application.</code><code class="sig-name descname">setup_parser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.application.setup_parser" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
-<div class="section" id="module-matrixctl.housekeeping">
-<span id="housekeeping-housekeeping-py"></span><h2><strong>Housekeeping</strong> - housekeeping.py<a class="headerlink" href="#module-matrixctl.housekeeping" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="matrixctl.housekeeping.check">
-<code class="sig-prename descclassname">matrixctl.housekeeping.</code><code class="sig-name descname">check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">__</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.housekeeping.check" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="matrixctl.housekeeping.maintainance">
-<code class="sig-prename descclassname">matrixctl.housekeeping.</code><code class="sig-name descname">maintainance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">__</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.housekeeping.maintainance" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="matrixctl.housekeeping.restart">
-<code class="sig-prename descclassname">matrixctl.housekeeping.</code><code class="sig-name descname">restart</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">__</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.housekeeping.restart" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
-<div class="section" id="module-matrixctl.provisioning">
-<span id="provisioning-provisioning-py"></span><h2><strong>Provisioning</strong> - provisioning.py<a class="headerlink" href="#module-matrixctl.provisioning" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="matrixctl.provisioning.deploy">
-<code class="sig-prename descclassname">matrixctl.provisioning.</code><code class="sig-name descname">deploy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">__</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.provisioning.deploy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</div>
-<div class="section" id="module-matrixctl.ssh_handler">
-<span id="ssh-handler-ssh-handler-py"></span><h2><strong>SSH Handler</strong> - ssh_handler.py<a class="headerlink" href="#module-matrixctl.ssh_handler" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="handlers">
+<h2>Handlers<a class="headerlink" href="#handlers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-matrixctl.handlers.toml">
+<span id="toml-handlers-toml-py"></span><h3><strong>TOML</strong> - handlers/toml.py<a class="headerlink" href="#module-matrixctl.handlers.toml" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
-<dt id="matrixctl.ssh_handler.SSHResponse">
-<em class="property">class </em><code class="sig-prename descclassname">matrixctl.ssh_handler.</code><code class="sig-name descname">SSHResponse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stdin</span></em>, <em class="sig-param"><span class="n">stdout</span></em>, <em class="sig-param"><span class="n">stderr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.SSHResponse" title="Permalink to this definition">¶</a></dt>
+<dt id="matrixctl.handlers.toml.TOML">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.handlers.toml.</code><code class="sig-name descname">TOML</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.toml.TOML" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="matrixctl.handlers.toml.TOML.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.toml.TOML.copy" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.toml.TOML.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">keys</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.toml.TOML.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a value from a config entry safely.</p>
+<p>This is the only way, the config is asked for a value from an entry.
+The other methods are used for non MatrixCtl TOML files.</p>
+<p><strong>Usage</strong></p>
+<p>Pass in a list or tuple with strings describing the path in the
+<code class="docutils literal notranslate"><span class="pre">self.__toml</span></code> dictionary.
+Let’s say, you are looking for the synapse path:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;SYNAPSE&quot;</span><span class="p">,</span> <span class="s2">&quot;Path&quot;</span><span class="p">))</span>
+<span class="go">&#39;/home/dwight/SomRandomDirectory/synapse&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keys</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, …]]) – A string or tuple describing the values you are looking
+for.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The value of the entry you described.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.toml.TOML.has_key">
+<code class="sig-name descname">has_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.toml.TOML.has_key" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.toml.TOML.items">
+<code class="sig-name descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.toml.TOML.items" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemsView</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.toml.TOML.keys">
+<code class="sig-name descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.toml.TOML.keys" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">KeysView</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.toml.TOML.values">
+<code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.toml.TOML.values" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ValuesView</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.handlers.api">
+<span id="api-handlers-api-py"></span><h3><strong>API</strong> - handlers/api.py<a class="headerlink" href="#module-matrixctl.handlers.api" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="matrixctl.handlers.api.API">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.handlers.api.</code><code class="sig-name descname">API</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">domain</span></em>, <em class="sig-param"><span class="n">token</span></em>, <em class="sig-param"><span class="n">json_format</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.api.API" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handle the REST API connection of synapse.</p>
+<dl class="py attribute">
+<dt id="matrixctl.handlers.api.API.RESPONSE_OK">
+<code class="sig-name descname">RESPONSE_OK</code><em class="property">: Tuple[int, ...]</em><em class="property"> = (200, 201, 202, 203, 204, 205, 206, 207, 226)</em><a class="headerlink" href="#matrixctl.handlers.api.API.RESPONSE_OK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="matrixctl.handlers.api.API.domain">
+<code class="sig-name descname">domain</code><a class="headerlink" href="#matrixctl.handlers.api.API.domain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.API.headers">
+<em class="property">property </em><code class="sig-name descname">headers</code><a class="headerlink" href="#matrixctl.handlers.api.API.headers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="matrixctl.handlers.api.API.json_format">
+<code class="sig-name descname">json_format</code><a class="headerlink" href="#matrixctl.handlers.api.API.json_format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.API.method">
+<em class="property">property </em><code class="sig-name descname">method</code><a class="headerlink" href="#matrixctl.handlers.api.API.method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.API.params">
+<em class="property">property </em><code class="sig-name descname">params</code><a class="headerlink" href="#matrixctl.handlers.api.API.params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.API.request">
+<code class="sig-name descname">request</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.api.API.request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a request to the synapse API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – The path of the request</p></li>
+<li><p><strong>params</strong> – Params of the request</p></li>
+<li><p><strong>payload</strong> – The payload of the request</p></li>
+<li><p><strong>method</strong> – The response method: <code class="docutils literal notranslate"><span class="pre">GET</span></code>, <code class="docutils literal notranslate"><span class="pre">POST</span></code>,
+<code class="docutils literal notranslate"><span class="pre">PUT</span></code>, <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> of the request</p></li>
+<li><p><strong>api_version</strong> – The version of the api of the request</p></li>
+<li><p><strong>success_codes</strong> – A tuple with success return code of a requests
+response</p></li>
+<li><p><strong>json_payload</strong> – <code class="docutils literal notranslate"><span class="pre">True</span></code> if the request and the response should
+be in the json format.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Returns the response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="matrixctl.handlers.api.API.session">
+<code class="sig-name descname">session</code><a class="headerlink" href="#matrixctl.handlers.api.API.session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.API.success_codes">
+<em class="property">property </em><code class="sig-name descname">success_codes</code><a class="headerlink" href="#matrixctl.handlers.api.API.success_codes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="matrixctl.handlers.api.API.token">
+<code class="sig-name descname">token</code><a class="headerlink" href="#matrixctl.handlers.api.API.token" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="matrixctl.handlers.api.API.url">
+<code class="sig-name descname">url</code><a class="headerlink" href="#matrixctl.handlers.api.API.url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="matrixctl.handlers.api.UrlBuilder">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.handlers.api.</code><code class="sig-name descname">UrlBuilder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">default_domain</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="matrixctl.handlers.api.UrlBuilder.api_path">
+<em class="property">property </em><code class="sig-name descname">api_path</code><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.api_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.UrlBuilder.api_version">
+<em class="property">property </em><code class="sig-name descname">api_version</code><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.api_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.UrlBuilder.build">
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.build" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.UrlBuilder.domain">
+<em class="property">property </em><code class="sig-name descname">domain</code><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.domain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.UrlBuilder.path">
+<em class="property">property </em><code class="sig-name descname">path</code><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.UrlBuilder.scheme">
+<em class="property">property </em><code class="sig-name descname">scheme</code><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.scheme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.api.UrlBuilder.subdomain">
+<em class="property">property </em><code class="sig-name descname">subdomain</code><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.subdomain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.handlers.ansible">
+<span id="ansible-handlers-ansible-py"></span><h3><strong>Ansible</strong> - handlers/ansible.py<a class="headerlink" href="#module-matrixctl.handlers.ansible" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="matrixctl.handlers.ansible.Ansible">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.handlers.ansible.</code><code class="sig-name descname">Ansible</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">playbook</span><span class="o">=</span><span class="default_value">'setup.yml'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="matrixctl.handlers.ansible.Ansible.ansible_cfg_path">
+<em class="property">property </em><code class="sig-name descname">ansible_cfg_path</code><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible.ansible_cfg_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.ansible.Ansible.extra_vars">
+<em class="property">property </em><code class="sig-name descname">extra_vars</code><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible.extra_vars" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.ansible.Ansible.inventory_path">
+<em class="property">property </em><code class="sig-name descname">inventory_path</code><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible.inventory_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.ansible.Ansible.run_playbook">
+<code class="sig-name descname">run_playbook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible.run_playbook" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.ansible.Ansible.tags">
+<em class="property">property </em><code class="sig-name descname">tags</code><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible.tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.handlers.git">
+<span id="git-handlers-git-py"></span><h3><strong>Git</strong> - handlers/git.py<a class="headerlink" href="#module-matrixctl.handlers.git" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="matrixctl.handlers.git.Git">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.handlers.git.</code><code class="sig-name descname">Git</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.git.Git" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="matrixctl.handlers.git.Git.datetime_last_pulled_commit">
+<em class="property">property </em><code class="sig-name descname">datetime_last_pulled_commit</code><a class="headerlink" href="#matrixctl.handlers.git.Git.datetime_last_pulled_commit" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.git.Git.log">
+<code class="sig-name descname">log</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">since</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.git.Git.log" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.git.Git.pull">
+<code class="sig-name descname">pull</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.git.Git.pull" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.handlers.ssh">
+<span id="ssh-handlers-ssh-py"></span><h3><strong>SSH</strong> - handlers/ssh.py<a class="headerlink" href="#module-matrixctl.handlers.ssh" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="matrixctl.handlers.ssh.SSH">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.handlers.ssh.</code><code class="sig-name descname">SSH</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">address</span></em>, <em class="sig-param"><span class="n">user</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">port</span><span class="o">=</span><span class="default_value">22</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.ssh.SSH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="matrixctl.handlers.ssh.SSH.address">
+<code class="sig-name descname">address</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="matrixctl.handlers.ssh.SSH.port">
+<code class="sig-name descname">port</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.port" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="matrixctl.handlers.ssh.SSH.run_cmd">
+<code class="sig-name descname">run_cmd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cmd</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.run_cmd" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#matrixctl.handlers.ssh.SSHResponse" title="matrixctl.handlers.ssh.SSHResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">SSHResponse</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="matrixctl.handlers.ssh.SSH.user">
+<code class="sig-name descname">user</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="matrixctl.handlers.ssh.SSHResponse">
+<em class="property">class </em><code class="sig-prename descclassname">matrixctl.handlers.ssh.</code><code class="sig-name descname">SSHResponse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stdin</span></em>, <em class="sig-param"><span class="n">stdout</span></em>, <em class="sig-param"><span class="n">stderr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
 <dl class="py attribute">
-<dt id="matrixctl.ssh_handler.SSHResponse.stderr">
-<code class="sig-name descname">stderr</code><a class="headerlink" href="#matrixctl.ssh_handler.SSHResponse.stderr" title="Permalink to this definition">¶</a></dt>
+<dt id="matrixctl.handlers.ssh.SSHResponse.stderr">
+<code class="sig-name descname">stderr</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stderr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="matrixctl.ssh_handler.SSHResponse.stdin">
-<code class="sig-name descname">stdin</code><a class="headerlink" href="#matrixctl.ssh_handler.SSHResponse.stdin" title="Permalink to this definition">¶</a></dt>
+<dt id="matrixctl.handlers.ssh.SSHResponse.stdin">
+<code class="sig-name descname">stdin</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stdin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="matrixctl.ssh_handler.SSHResponse.stdout">
-<code class="sig-name descname">stdout</code><a class="headerlink" href="#matrixctl.ssh_handler.SSHResponse.stdout" title="Permalink to this definition">¶</a></dt>
+<dt id="matrixctl.handlers.ssh.SSHResponse.stdout">
+<code class="sig-name descname">stdout</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stdout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="py class">
-<dt id="matrixctl.ssh_handler.Ssh">
-<em class="property">class </em><code class="sig-prename descclassname">matrixctl.ssh_handler.</code><code class="sig-name descname">Ssh</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cfg</span></em>, <em class="sig-param"><span class="n">address</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.Ssh" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py attribute">
-<dt id="matrixctl.ssh_handler.Ssh.JID_EXT">
-<code class="sig-name descname">JID_EXT</code><em class="property">: str</em><em class="property"> = 'matrix-jitsi-web'</em><a class="headerlink" href="#matrixctl.ssh_handler.Ssh.JID_EXT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.ssh_handler.Ssh.adduser">
-<code class="sig-name descname">adduser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">password</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.Ssh.adduser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a user to the jitsi server.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.ssh_handler.Ssh.connect">
-<code class="sig-name descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.Ssh.connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Connects to the SSH server</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.ssh_handler.Ssh.deluser">
-<code class="sig-name descname">deluser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.Ssh.deluser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete a user from the jitsi server.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.ssh_handler.Ssh.run_cmd">
-<code class="sig-name descname">run_cmd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cmd</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.ssh_handler.Ssh.run_cmd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 </div>
-<div class="section" id="module-matrixctl.updating">
-<span id="updating-updating-py"></span><h2><strong>Updating</strong> - updating.py<a class="headerlink" href="#module-matrixctl.updating" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="matrixctl.updating.update">
-<code class="sig-prename descclassname">matrixctl.updating.</code><code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">cnf</span></em>, <em class="sig-param"><span class="n">___</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.updating.update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 </div>
 

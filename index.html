@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MatrixCtl documentation &mdash; MatrixCtl 0.2.2 documentation</title>
+  <title>MatrixCtl documentation &mdash; MatrixCtl 0.3.0 documentation</title>
   
 
   
@@ -174,16 +174,11 @@ features.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="matrixctl.html">Contributer Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.account"><strong>Account</strong> - account.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.ansible_handler"><strong>Ansible Handler</strong> - ansible_handler.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.api_handler"><strong>API Handler</strong> - api_handler.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.application"><strong>Application</strong> - application.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.config_handler"><strong>Config Handler</strong> - config_handler.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.git_handler"><strong>Git Handler</strong> - git_handler.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.housekeeping"><strong>Housekeeping</strong> - housekeeping.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.provisioning"><strong>Provisioning</strong> - provisioning.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.ssh_handler"><strong>SSH Handler</strong> - ssh_handler.py</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#module-matrixctl.updating"><strong>Updating</strong> - updating.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#subcommands">Subcommands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#helpers">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#typing-and-errors">Typing and Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#the-application">The Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrixctl.html#handlers">Handlers</a></li>
 </ul>
 </li>
 </ul>
@@ -280,31 +275,48 @@ optional arguments:
 43
 44
 45
-46</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[ANSIBLE]</span>
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[SYNAPSE]</span>
 <span class="c1"># The absolute path to the fully configured matrix-docker-ansible-deploy</span>
 <span class="c1"># playbook from https://github.com/spantaleev/matrix-docker-ansible-deploy.</span>
 <span class="c1">#</span>
-<span class="c1">#MatrixDockerAnsibleDeployPath=&quot;/absolut/path/to/matrix-docker-ansible-deploy&quot;</span>
+<span class="c1"># Path=&quot;/absolut/path/to/matrix-docker-ansible-deploy&quot;</span>
 
-<span class="k">[SERVER]</span>
+<span class="k">[ANSIBLE]</span>
 <span class="c1"># If you have your own playbook, to provision your matrix server, you can</span>
-<span class="c1"># fill out this section. MatrixCtl will run this before the</span>
+<span class="c1"># fill out this section. MatrixCtl will run this before the synapse playbook.</span>
+
+<span class="c1"># The absolute path to your playbook</span>
 <span class="c1">#</span>
-<span class="c1"># matrix-docker-ansible-deploy playbook.</span>
+<span class="c1"># Path = &quot;/absolute/path/to/your/playbook&quot;</span>
 
 <span class="c1"># If you have a special &quot;ansible.cfg&quot; for your playbook, fill in the absolute</span>
 <span class="c1"># path to it.</span>
 <span class="c1">#</span>
-<span class="c1"># AnsibleCfg=&quot;/absolute/path/to/ansible.cfg&quot;</span>
+<span class="c1"># Cfg=&quot;/absolute/path/to/ansible.cfg&quot;</span>
 
-<span class="c1"># Fill in the absolute path to your &quot;site.yml&quot;</span>
+<span class="c1"># Fill in the absolute path to your Playbook (e.g. &quot;site.yml&quot;)</span>
 <span class="c1">#</span>
-<span class="c1"># AnsiblePlaybook=&quot;/absolute/path/to/site.yml&quot;</span>
+<span class="c1"># Playbook =&quot;setup.yml&quot;</span>
 
 <span class="c1"># If you use tags to provision or configure your matrix host, you can add them</span>
-<span class="c1"># here. Use a comma separated string without spaces.</span>
+<span class="c1"># here.</span>
 <span class="c1">#</span>
-<span class="c1"># AnsibleTags=&quot;MyTag,MyOtherTag&quot;</span>
+<span class="c1"># Tags = [&quot;MyTag&quot;, &quot;MyOtherTag&quot;]</span>
 
 <span class="k">[API]</span>
 <span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
@@ -326,6 +338,19 @@ optional arguments:
 <span class="c1"># &quot;&lt;click to reveal&gt;&quot;. It will be marked for you. Copy it in here.</span>
 <span class="c1">#</span>
 <span class="c1"># Token=&quot;MySuperLongMatrixToken&quot;</span>
+
+<span class="k">[SSH]</span>
+<span class="c1"># Here you can add your SSH configuration.</span>
+<span class="c1">#</span>
+<span class="c1"># Address = &quot;matrix.domain.tld&quot;</span>
+
+<span class="c1"># The default port is 22</span>
+<span class="c1">#</span>
+<span class="c1"># Port = 22</span>
+
+<span class="c1"># The default username is your current login name.</span>
+<span class="c1">#</span>
+<span class="c1"># User = &quot;myusername&quot;</span>
 </pre></div>
 </td></tr></table></div>
 </div>
