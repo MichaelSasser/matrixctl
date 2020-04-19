@@ -14,18 +14,36 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# flake8: noqa
-# pylint: disable:undefined-variable
 from __future__ import annotations
 
-from pathlib import Path
+from argparse import ArgumentParser
+from argparse import Namespace
+from argparse import _SubParsersAction as SubParsersAction
+from logging import debug
 
-from pkg_resources import get_distribution
+from .handlers.ansible import Ansible
+from .handlers.toml import TOML
 
 
-__version__ = get_distribution("matrixctl").version
+__author__: str = "Michael Sasser"
+__email__: str = "Michael@MichaelSasser.org"
 
-HOME: str = str(Path.home())
+
+def subparser_check(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
+        "check", help="Checks the OCI containers"
+    )
+    parser.set_defaults(func=check)
+
+
+def check(_: Namespace) -> int:
+    debug("check")
+    with TOML() as toml:
+        with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
+            ansible.tags = ("check",)
+            ansible.run_playbook()
+
+        return 0
 
 
 # vim: set ft=python :

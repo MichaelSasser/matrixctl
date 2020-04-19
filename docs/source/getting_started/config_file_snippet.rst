@@ -1,31 +1,33 @@
 .. code-block:: toml
    :linenos:
 
-   [ANSIBLE]
+   [SYNAPSE]
    # The absolute path to the fully configured matrix-docker-ansible-deploy
    # playbook from https://github.com/spantaleev/matrix-docker-ansible-deploy.
    #
-   #MatrixDockerAnsibleDeployPath="/absolut/path/to/matrix-docker-ansible-deploy"
+   # Path="/absolut/path/to/matrix-docker-ansible-deploy"
 
-   [SERVER]
+   [ANSIBLE]
    # If you have your own playbook, to provision your matrix server, you can
-   # fill out this section. MatrixCtl will run this before the
+   # fill out this section. MatrixCtl will run this before the synapse playbook.
+
+   # The absolute path to your playbook
    #
-   # matrix-docker-ansible-deploy playbook.
+   # Path = "/absolute/path/to/your/playbook"
 
    # If you have a special "ansible.cfg" for your playbook, fill in the absolute
    # path to it.
    #
-   # AnsibleCfg="/absolute/path/to/ansible.cfg"
+   # Cfg="/absolute/path/to/ansible.cfg"
 
-   # Fill in the absolute path to your "site.yml"
+   # Fill in the absolute path to your Playbook (e.g. "site.yml")
    #
-   # AnsiblePlaybook="/absolute/path/to/site.yml"
+   # Playbook ="setup.yml"
 
    # If you use tags to provision or configure your matrix host, you can add them
-   # here. Use a comma separated string without spaces.
+   # here.
    #
-   # AnsibleTags="MyTag,MyOtherTag"
+   # Tags = ["MyTag", "MyOtherTag"]
 
    [API]
    # If your matrix server is deployed, you may want to fill out the API section.
@@ -47,3 +49,16 @@
    # "<click to reveal>". It will be marked for you. Copy it in here.
    #
    # Token="MySuperLongMatrixToken"
+
+   [SSH]
+   # Here you can add your SSH configuration.
+   #
+   # Address = "matrix.domain.tld"
+
+   # The default port is 22
+   #
+   # Port = 22
+
+   # The default username is your current login name.
+   #
+   # User = "myusername"
