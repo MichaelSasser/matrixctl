@@ -14,40 +14,24 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# import configparser
-import datetime
-from logging import debug
+from __future__ import annotations
 
-import git
+from typing import Any
+from typing import Union
 
-from .config_handler import Config
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def git_pull(cnf: Config):
-    # Get the last pulled datetime
-    repo = git.Repo(cnf.ansible_path)
+def human_readable_bool(b: Union[Any]) -> str:
+    if isinstance(b, str):
+        b = int(b)
 
-    assert not repo.bare
-    heads = repo.heads
-    master = heads.master
+    if isinstance(b, int):
+        b = bool(b)
 
-    log = master.log()
-    last = datetime.datetime.fromtimestamp(log[-1].time[0])
-    debug(f"Git: last update: {last}")
-
-    # Pull request and "log" since last pulled
-    g = git.cmd.Git(cnf.ansible_path)
-    g.pull()
-    print(
-        g.log(
-            f"--since={str(last)}",
-            # f"--since={str(last.date())}",
-            "--pretty=%as |%<(15) %an | %s",
-        )
-    )
+    return "Yes" if b else "No"
 
 
 # vim: set ft=python :

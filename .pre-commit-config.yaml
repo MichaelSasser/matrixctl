@@ -1,0 +1,123 @@
+---
+minimum_pre_commit_version: 1.21.0
+# default_language_version:
+#   python: python3.8
+repos:
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+
+  # pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.5.0
+    hooks:
+      # Prevent giant files from being committed.
+      - id: check-added-large-files
+      # Simply check whether files parse as valid python.
+      - id: check-ast
+      # Require literal syntax when initializing empty or zero Python builtin
+      # types.
+      - id: check-builtin-literals
+      # Forbid files which have a UTF-8 byte-order marker
+      - id: check-byte-order-marker
+      # Check for files with names that would conflict on a case-insensitive
+      # filesystem like MacOS HFS+ or Windows FAT.
+      - id: check-case-conflict
+      # Checks for a common error of placing code before the docstring.
+      - id: check-docstring-first
+      # check-executables-have-shebangs
+      - id: check-executables-have-shebangs
+      # Attempts to load all json files to verify syntax.
+      # - id: check-json
+      # Check for files that contain merge conflict strings.
+      - id: check-merge-conflict
+      # Checks for symlinks which do not point to anything.
+      # - id: check-symlinks
+      # Attempts to load all TOML files to verify syntax.
+      - id: check-toml
+      # Ensures that links to vcs websites are permalinks.
+      - id: check-vcs-permalinks
+      # Attempts to load all xml files to verify syntax.
+      # - id: check-xml
+      # Attempts to load all yaml files to verify syntax.
+      - id: check-yaml
+      # Check for debugger imports and breakpoint() calls in python source.
+      - id: debug-statements
+      # Checks for the existence of AWS secrets, set up with the AWS CLI.
+      # - id: detect-aws-credentials
+      # Checks for the existence of private keys.
+      - id: detect-private-key
+      # This hook replaces double quoted strings with single quoted strings.
+      # - id: double-quote-string-fixer (KEEP DISABLED)
+      # Makes sure files end in a newline and only a newline.
+      - id: end-of-file-fixer
+      # Removes "# -*- coding: utf-8 -*-" on the top of python files.
+      - id: fix-encoding-pragma
+        args: ["--remove"]
+      # Sort the lines in specified files (defaults to alphabetical).
+      # - id: file-contents-sorter (KEEP DISABLED)
+      # Replaces or checks mixed line ending to LF.
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      # Assert that files in tests/ match test*.py.
+      - id: name-tests-test
+        args: ["--django"]
+      # Protect specific branches from direct checkins.
+      - id: no-commit-to-branch
+        args:
+          - "-b master"
+          - "-p release/v.*"
+      # Checks that all your JSON files are pretty.
+      # - id: pretty-format-json
+      #   args: ["--autofix"]
+      # Sorts entries in requirements.txt and removes incorrect entry
+      # - id: requirements-txt-fixer  (KEEP DISABLED)
+      # Sorts simple YAML files which consist only of top-level keys,
+      # preserving comments and blocks.
+      # - id: sort-simple-yaml  (KEEP DISABLED)
+      # Trims trailing whitespace.
+      - id: trailing-whitespace
+      # - id: flake8
+      #   additional_dependencies: ["flake8-bugbear"]
+      # reorder imports
+      # - repo: https://github.com/asottile/reorder_python_imports
+      #   rev: v2.2.0
+      #   hooks:
+      #     - id: reorder-python-imports
+      #       additional_dependencies: [toml]
+      #       exclude: ^.*/?setup\.py$
+
+  # isort
+  - repo: https://github.com/timothycrosley/isort
+    rev: 4.3.21-2
+    hooks:
+      - id: isort
+        additional_dependencies: [toml]
+
+  # format: black
+  - repo: https://github.com/ambv/black
+    rev: 19.10b0
+    hooks:
+      - id: black
+
+  # flake8
+  - repo: https://gitlab.com/pycqa/flake8
+    # wait for 3.8
+    rev: master
+    hooks:
+      - id: flake8
+        additional_dependencies: ["flake8-bugbear"]
+
+  # check docstrings
+  - repo: https://github.com/PyCQA/pydocstyle
+    rev: 5.0.2
+    hooks:
+      - id: pydocstyle
+        args: ["--ignore=D10,D21,D202"]
+
+  # static type checking with mypy
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.770
+    hooks:
+      - id: mypy

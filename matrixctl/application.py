@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# PYTHON_ARGCOMPLETE_OK
 # matrixctl
 # Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
 #
@@ -14,171 +15,95 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# PYTHON_ARGCOMPLETE_OK
-import sys
-import argparse
-from logging import debug, warning
+from __future__ import annotations
 
-import coloredlogs
+import argparse
+
+from argparse import _SubParsersAction
+from logging import debug
+from logging import warning
+from typing import Callable
+from typing import List
+
 import argcomplete
+import coloredlogs
 
 from matrixctl import __version__
-from .config_handler import Config
-from .api_handler import Api
-from .housekeeping import maintainance, restart, check
-from .updating import update
-from .account import (
-    adduser,
-    deluser,
-    users,
-    adduser_jitsi,
-    deluser_jitsi,
-    user,
-)
-from .provisioning import deploy
+
+from .adduser import subparser_adduser
+from .adduser_jitsi import subparser_adduser_jitsi
+from .check import subparser_check
+from .deluser import subparser_deluser
+from .deluser_jitsi import subparser_deluser_jitsi
+from .deploy import subparser_deploy
+from .maintainance import subparser_maintainance
+from .start import subparser_restart
+from .start import subparser_start
+from .update import subparser_update
+from .user import subparser_user
+from .users import subparser_users
+
+
+# Subparsers
 
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
-# API: https://github.com/matrix-org/synapse/blob/master/docs/admin_api/user_admin_api.rst
+# API: https://github.com/matrix-org/synapse/blob/master/docs/admin_api/
+#              user_admin_api.rst
 
 
-def main():
+def setup_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument(
         "-d", "--debug", action="store_true", help="Enables debugging mode."
     )
-    subparsers = parser.add_subparsers()
+    subparsers: _SubParsersAction = parser.add_subparsers()
 
-    ##########################################################################
-    # adduser
-    adduser_parser = subparsers.add_parser(
-        "adduser", help="Add a new matrix user"
-    )
-    adduser_parser.add_argument("user", help="The Username of the new user")
-    adduser_parser.add_argument(
-        "-p",
-        "--passwd",
-        help="The password of the new user. (If you don't enter a password, "
-        "you will be asked later.)",
-    )
-    adduser_parser.add_argument(
-        "-a", "--admin", action="store_true", help="Create as admin user"
-    )
-    adduser_parser.add_argument(
-        "--ansible", action="store_true", help="Use ansible insted of the api"
-    )
-    adduser_parser.set_defaults(func=adduser)
+    # Subparsers
+    subparsers_tuple: List[Callable[[_SubParsersAction], None]] = [
+        subparser_adduser,
+        subparser_deluser,
+        subparser_adduser_jitsi,
+        subparser_deluser_jitsi,
+        subparser_users,
+        subparser_user,
+        subparser_update,
+        subparser_deploy,
+        subparser_start,
+        subparser_restart,  # alias for start
+        subparser_maintainance,
+        subparser_check,
+    ]
 
-    ##########################################################################
-    # deluser
-    deluser_parser = subparsers.add_parser("deluser", help="Deletes a user")
-    deluser_parser.add_argument("user", help="The username to delete")
-    deluser_parser.set_defaults(func=deluser)
+    for subparser in subparsers_tuple:
+        subparser(subparsers)
 
-    ##########################################################################
-    # adduser-jitsi
-    adduser_jitsi_parser = subparsers.add_parser(
-        "adduser-jitsi", help="Add a new jitsi user"
-    )
-    adduser_jitsi_parser.add_argument(
-        "user", help="The Username of the new jitsi user"
-    )
-    adduser_jitsi_parser.add_argument(
-        "-p",
-        "--passwd",
-        help="The password of the new jitsi user. (If you don't enter a "
-        "password, you will be asked later.)",
-    )
-    adduser_jitsi_parser.set_defaults(func=adduser_jitsi)
+    return parser
 
-    ##########################################################################
-    # deluser-jitsi
-    deluser_jitsi_parser = subparsers.add_parser(
-        "deluser-jitsi", help="Deletes a jitsi user"
-    )
-    deluser_jitsi_parser.add_argument(
-        "user", help="The jitsi username to delete"
-    )
-    deluser_jitsi_parser.set_defaults(func=deluser_jitsi)
 
-    ##########################################################################
-    # users
-    users_parser = subparsers.add_parser("users", help="Lists users")
-    users_parser.add_argument(
-        "-g", "--guests", action="store_true", help="Shows the users"
-    )
-    users_parser.add_argument(
-        "-b", "--no-bots", action="store_true", help="Hide bots"
-    )
-    users_parser.set_defaults(func=users)
+def setup_autocomplete(parser: argparse.ArgumentParser) -> None:
+    argcomplete.autocomplete(parser)  # Add autocomplete for Bash, Zsh, ...
 
-    ##########################################################################
-    # user
-    user_parser = subparsers.add_parser(
-        "user", help="Get information about a specific user"
-    )
-    user_parser.add_argument("user", help="The username of the user")
-    user_parser.set_defaults(func=user)
 
-    ##########################################################################
-    # update
-    update_parser = subparsers.add_parser(
-        "update", help="Updates the ansible repo"
-    )
-    update_parser.set_defaults(func=update)
-
-    ##########################################################################
-    # deploy
-    deploy_parser = subparsers.add_parser(
-        "deploy", help="Provision and deploy"
-    )
-    deploy_parser.set_defaults(func=deploy)
-
-    ##########################################################################
-    # start
-    start_parser = subparsers.add_parser(
-        "start", help="Starts all OCI containers"
-    )
-    start_parser.set_defaults(func=restart)  # Keep it "restart"
-
-    ##########################################################################
-    # restart
-    restart_parser = subparsers.add_parser(
-        "restart", help="Restarts all OCI containers (alias for start)"
-    )
-    restart_parser.set_defaults(func=restart)
-
-    ##########################################################################
-    # maintainance
-    maintainance_parser = subparsers.add_parser(
-        "maintainance", help="Run maintainance tasks"
-    )
-    maintainance_parser.set_defaults(func=maintainance)
-
-    ##########################################################################
-    # check
-    check_parser = subparsers.add_parser(
-        "check", help="Checks the OCI containers"
-    )
-    check_parser.set_defaults(func=check)
-
-    ##########################################################################
-    # Parsing
-    argcomplete.autocomplete(parser)
-    args = parser.parse_args()
-
+def setup_logging(debug_mode: bool) -> None:
     coloredlogs.DEFAULT_LOG_FORMAT = (
         "%(asctime)s - %(levelname)s - %(message)s"
     )
-    coloredlogs.DEFAULT_LOG_LEVEL = 0 if args.debug else 21
+    coloredlogs.DEFAULT_LOG_LEVEL = 0 if debug_mode else 21
     coloredlogs.install()
 
-    config = Config()
-    api = Api(config)
+
+def main() -> int:
+    parser = setup_parser()
+    setup_autocomplete(parser)
+
+    args: argparse.Namespace = parser.parse_args()
+
+    setup_logging(args.debug)
 
     debug(f"{args=}")
 
@@ -191,13 +116,15 @@ def main():
             " This is perfectly normal and not a bug. If you want the help "
             'in debug mode, use the "--help" attribute.'
         )
-        args.func(args, config, api)
-        sys.exit()
+
+        return int(args.func(args))
 
     try:
-        args.func(args, config, api)
+        return int(args.func(args))
     except AttributeError:
         parser.print_help()
+
+        return 1
 
 
 # vim: set ft=python :

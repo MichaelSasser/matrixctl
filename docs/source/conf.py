@@ -3,18 +3,19 @@
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
-
 # -- Path setup --------------------------------------------------------------
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
 import sys
-from pkg_resources import get_distribution
+
+from typing import List
 
 import sphinx_rtd_theme
+
+from pkg_resources import get_distribution
 
 
 __version__ = get_distribution("matrixctl").version
@@ -52,7 +53,7 @@ templates_path = ["_templates"]
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns: List[str] = []
 
 
 # -- Options for HTML output -------------------------------------------------

@@ -14,18 +14,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from logging import debug
-from .ansible_handler import ansible_synapse, ansible_server
+from __future__ import annotations
 
-__author__: str = "Michael Sasser"
-__email__: str = "Michael@MichaelSasser.org"
+from typing import Any
+from typing import Dict
 
 
-def deploy(_, cfg, __):
-    debug(f"deploy")
-
-    ansible_server(cfg)
-    ansible_synapse(["--tags=setup-all"], cfg)
-
+JsonDict = Dict[str, Any]
 
 # vim: set ft=python :

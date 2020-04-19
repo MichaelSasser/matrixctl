@@ -14,28 +14,33 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from logging import debug
-from .ansible_handler import ansible_synapse
+from __future__ import annotations
+
+from argparse import ArgumentParser
+from argparse import Namespace
+from argparse import _SubParsersAction as SubParsersAction
+
+from .handlers.git import Git
+from .handlers.toml import TOML
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def maintainance(_, cfg, __):
-    debug("maintainance")
-    ansible_synapse(
-        ["--tags=run-postgres-synapse-janitor,run-postgres-vacuum,start"], cfg
+def subparser_update(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
+        "update", help="Updates the ansible repo"
     )
+    parser.set_defaults(func=update)
 
 
-def restart(_, cfg, __):
-    debug("restart")
-    ansible_synapse(["--tags=start"], cfg)
+def update(_: Namespace) -> int:
+    with TOML() as toml:
+        with Git(toml.get(("SYNAPSE", "Path"))) as git:
+            git.pull()
 
-
-def check(_, cfg, __):
-    debug("check")
-    ansible_synapse(["--tags=check"], cfg)
+    return 0
 
 
 # vim: set ft=python :

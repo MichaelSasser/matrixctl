@@ -32,7 +32,7 @@ It is used for:
 - ``matrixctl update`` (optional)
 
 The ``[API]`` section is used to communicate with the synapse api directly.
-This is faster and has more additional functionality then the 
+This is faster and has more additional functionality then the
 `matrix-docker-ansible-deploy <https://github.com/spantaleev/matrix-docker-ansible-deploy>`_
 playbook. To get startet, follow the :ref:`Access Token` guide.
 It is used for:

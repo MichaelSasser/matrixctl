@@ -14,15 +14,41 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from .config_handler import Config
-from .git_handler import git_pull
+from __future__ import annotations
+
+from argparse import ArgumentParser
+from argparse import Namespace
+from argparse import _SubParsersAction as SubParsersAction
+from logging import debug
+
+from .handlers.ansible import Ansible
+from .handlers.toml import TOML
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def update(_, cnf: Config, ___):
-    git_pull(cnf)
+def subparser_maintainance(subparsers: SubParsersAction) -> None:
+    parser: ArgumentParser = subparsers.add_parser(
+        "maintainance", help="Run maintainance tasks"
+    )
+    parser.set_defaults(func=maintainance)
+
+
+def maintainance(_: Namespace) -> int:
+    debug("maintainance")
+
+    with TOML() as toml:
+        with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
+            ansible.tags = (
+                "run-postgres-synapse-janitor",
+                "run-postgres-vacuum",
+                "start",
+            )
+            ansible.run_playbook()
+
+    return 0
 
 
 # vim: set ft=python :
