@@ -42,7 +42,10 @@ def subparser_deploy(subparsers: SubParsersAction) -> None:
 def deploy(_: Namespace) -> int:
     debug("deploy")
     with TOML() as toml:
-        if toml["ANSIBLE"]["Path"] is None and toml["SYNAPSE"]["Path"] is None:
+        if (
+            toml.get(("ANSIBLE", "Path")) is None
+            and toml.get(("SYNAPSE", "Path")) is None
+        ):
             error(
                 "To be able to use the deploy feature, you need to have "
                 "At least your own Ansible playbook configuration in the "
@@ -52,14 +55,14 @@ def deploy(_: Namespace) -> int:
             )
             sys.exit(1)
 
-        if toml["ANSIBLE"]["Path"] is not None:
-            with Ansible(toml["ANSIBLE"]["Path"]) as ansible:
-                ansible.tags = toml["ANSIBLE"]["DeployTags"]  # ToDo: make list
-                ansible.ansible_cfg_path = toml["ANSIBLE"]["Cfg"]
+        if toml.get(("ANSIBLE", "Path")) is not None:
+            with Ansible(toml.get(("ANSIBLE", "Path"))) as ansible:
+                ansible.tags = toml.get(("ANSIBLE", "DeployTags"))
+                ansible.ansible_cfg_path = toml.get(("ANSIBLE", "Cfg"))
                 ansible.run_playbook()
 
-        if toml["SYNAPSE"]["Path"] is not None:
-            with Ansible(toml["SYNAPSE"]["Path"]) as ansible:
+        if toml.get(("SYNAPSE", "Path")) is not None:
+            with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
                 ansible.tags = ("setup-all",)
                 ansible.run_playbook()
 

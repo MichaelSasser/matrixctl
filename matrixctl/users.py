@@ -85,12 +85,14 @@ def users(arg: Namespace) -> int:
     :return:          None
     """
     with TOML() as toml:
-        len_domain = len(toml["API"]["Domain"]) + 1  # 1 for :
+        len_domain = len(toml.get(("API", "Domain"))) + 1  # 1 for :
         from_user: int = 0
         users_list: List[JsonDict] = []
 
         # ToDo: API bool
-        with API(toml["API"]["Domain"], toml["API"]["Token"]) as api:
+        with API(
+            toml.get(("API", "Domain")), toml.get(("API", "Token"))
+        ) as api:
             api.url.path = "users"
             api.params = {"guests": "true" if arg.guests else "false"}
 

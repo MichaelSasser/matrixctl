@@ -39,7 +39,7 @@ def subparser_check(subparsers: SubParsersAction) -> None:
 def check(_: Namespace) -> int:
     debug("check")
     with TOML() as toml:
-        with Ansible(toml["SYNAPSE"]["Path"]) as ansible:
+        with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
             ansible.tags = ("check",)
             ansible.run_playbook()
 

@@ -19,6 +19,7 @@ from __future__ import annotations
 import sys
 import warnings
 
+from copy import deepcopy
 from logging import debug
 from logging import error
 from pathlib import Path
@@ -30,7 +31,9 @@ from typing import Iterator
 from typing import KeysView
 from typing import List
 from typing import Optional
+from typing import Tuple
 from typing import Type
+from typing import Union
 from typing import ValuesView
 
 import toml
@@ -61,8 +64,12 @@ class TOML:
             warnings.simplefilter("ignore")
             try:
                 # toml.load is a MutableMapping
-                self.__toml: Dict[str, Any] = dict(
-                    toml.load(default_config if self.__default else str(path))
+                self.__toml: Dict[str, Any] = deepcopy(
+                    dict(
+                        toml.load(
+                            default_config if self.__default else str(path)
+                        )
+                    )
                 )
             except FileNotFoundError:
                 error(
@@ -92,6 +99,46 @@ class TOML:
                 else:
                     debug(f"  ├─  {entry} := {self.__toml[key][entry]}")
             debug("  ┴")
+
+    def get(self, keys: Union[List[str], Tuple[str, ...]]) -> Any:
+        """Get a value from a config entry safely.
+
+        This is the only way, the config is asked for a value from an entry.
+        The other methods are used for non MatrixCtl TOML files.
+
+        **Usage**
+
+        Pass in a list or tuple with strings describing the path in the
+        ``self.__toml`` dictionary.
+        Let's say, you are looking for the synapse path:
+
+        >>> toml.get(("SYNAPSE", "Path"))
+        '/home/dwight/SomRandomDirectory/synapse'
+
+        :param keys:  A string or tuple describing the values you are looking
+                      for.
+        :return:      The value of the entry you described.
+        """
+        toml_walker: Union[Dict[str, Any], Any] = self.__toml
+
+        try:
+            for key in keys:
+                toml_walker = toml_walker.__getitem__(key)
+        except KeyError:
+            error(
+                "Please check your config file. For this operation your "
+                f'config file needs to have the entry "{keys[-1]}" '
+                f'In the section "[{keys[0]}]".'
+            )
+            sys.exit(1)
+
+        if not isinstance(toml_walker, dict):
+            return toml_walker
+        raise ConfigFileError(
+            "The key you asked for seems not correct. "
+            "Please make sure you ask for an single entry, "
+            "not a entire section."
+        )
 
     def has_key(self, key: str) -> bool:
         return key in self.__toml

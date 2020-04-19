@@ -40,7 +40,7 @@ def maintainance(_: Namespace) -> int:
     debug("maintainance")
 
     with TOML() as toml:
-        with Ansible(toml["SYNAPSE"]["Path"]) as ansible:
+        with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
             ansible.tags = (
                 "run-postgres-synapse-janitor",
                 "run-postgres-vacuum",

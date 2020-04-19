@@ -50,11 +50,13 @@ def deluser_jitsi(arg: Namespace) -> int:
     """
     with TOML() as toml:
         address = (
-            toml["SSH"]["Address"]
-            if toml["SSH"]["Address"]
-            else f"matrix.{toml['API']['Domain']}"
+            toml.get(("SSH", "Address"))
+            if toml.get(("SSH", "Address"))
+            else f"matrix.{toml.get(('API','Domain'))}"
         )
-        with SSH(address, toml["SSH"]["User"], toml["SSH"]["Port"]) as ssh:
+        with SSH(
+            address, toml.get(("SSH", "User")), toml.get(("SSH", "Port"))
+        ) as ssh:
             cmd: str = (
                 "sudo docker exec matrix-jitsi-prosody prosodyctl "
                 "--config /config/prosody.cfg.lua deluser "

@@ -75,9 +75,9 @@ def adduser(arg: Namespace) -> int:
     """
 
     with TOML() as toml:
-        with API(toml["API"]["Domain"], toml["API"]["Token"]) as api, Ansible(
-            toml["SYNAPSE"]["Path"]
-        ) as ansible:
+        with API(
+            toml.get(("API", "Domain")), toml.get(("API", "Token"))
+        ) as api, Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
 
             while True:
                 passwd_generated: bool = False
@@ -114,7 +114,9 @@ def adduser(arg: Namespace) -> int:
                 ansible.run_playbook()
             else:
                 try:
-                    api.url.path = f"users/@{arg.user}:{toml['API']['Domain']}"
+                    api.url.path = (
+                        f"users/@{arg.user}:{toml.get(('API','Domain'))}"
+                    )
                     api.method = "PUT"
                     api.request({"password": arg.passwd, "admin": arg.admin})
                 except InternalResponseError:

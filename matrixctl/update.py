@@ -37,7 +37,7 @@ def subparser_update(subparsers: SubParsersAction) -> None:
 
 def update(_: Namespace) -> int:
     with TOML() as toml:
-        with Git(toml["SYNAPSE"]["Path"]) as git:
+        with Git(toml.get(("SYNAPSE", "Path"))) as git:
             git.pull()
 
     return 0

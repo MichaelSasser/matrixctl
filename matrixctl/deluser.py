@@ -48,10 +48,12 @@ def deluser(arg: Namespace) -> int:
     :return:          None
     """
     with TOML() as toml:
-        with API(toml["API"]["Domain"], toml["API"]["Token"]) as api:
+        with API(
+            toml.get(("API", "Domain")), toml.get(("API", "Token"))
+        ) as api:
             try:
                 api.url.path = (
-                    f"deactivate/@{arg.user}:{toml['API']['Domain']}"
+                    f"deactivate/@{arg.user}:{toml.get(('API','Domain'))}"
                 )
                 api.url.api_version = "v1"
                 api.method = "POST"

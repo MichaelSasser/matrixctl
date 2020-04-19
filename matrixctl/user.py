@@ -178,8 +178,10 @@ def user(arg: Namespace) -> int:
     """
 
     with TOML() as toml:
-        with API(toml["API"]["Domain"], toml["API"]["Token"]) as api:
-            api.url.path = f'users/@{arg.user}:{toml["API"]["Domain"]}'
+        with API(
+            toml.get(("API", "Domain")), toml.get(("API", "Token"))
+        ) as api:
+            api.url.path = f'users/@{arg.user}:{toml.get(("API","Domain"))}'
 
             try:
                 user_dict: JsonDict = api.request().json()
@@ -188,7 +190,7 @@ def user(arg: Namespace) -> int:
 
                 return 1
 
-            len_domain = len(toml["API"]["Domain"]) + 1  # 1 for :
+            len_domain = len(toml.get(("API", "Domain"))) + 1  # 1 for :
             user_tables = generate_user_tables(user_dict, len_domain)
 
             debug(f"User: {user_tables=}")
