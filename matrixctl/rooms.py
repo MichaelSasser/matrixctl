@@ -79,8 +79,8 @@ def rooms(arg: Namespace) -> int:
             api.url.path = "rooms"
             api.url.api_version = "v1"
 
-            if arg.max > 0:
-                api.params = {"limit": arg.max}
+            if arg.number > 0:
+                api.params = {"limit": arg.number}
 
             if arg.filter:
                 api.params = {"search_term": arg.filter}
