@@ -13,8 +13,6 @@ import sys
 
 from typing import List
 
-import sphinx_rtd_theme
-
 from pkg_resources import get_distribution
 
 
