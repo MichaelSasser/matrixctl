@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MatrixCtl documentation &mdash; MatrixCtl 0.3.0 documentation</title>
+  <title>MatrixCtl documentation &mdash; MatrixCtl 0.3.1 documentation</title>
   
 
   
@@ -201,17 +201,18 @@ merging branch.</p>
 <p>MatrixCtl as a pure commandline tool. You can use it as package, if you like,
 but breaking changes may introduced, even in a minor change.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: matrixctl [-h] [--version] [-d]
-              {adduser,deluser,adduser-jitsi,deluser-jitsi,users,user,update,deploy,start,restart,maintainance,check}
+              {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,update,deploy,start,restart,maintainance,check}
               ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,users,user,update,deploy,start,restart,maintainance,check}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,update,deploy,start,restart,maintainance,check}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
     deluser-jitsi       Deletes a jitsi user
-    users               Lists users
     user                Get information about a specific user
+    users               Lists users
+    rooms               List rooms
     update              Updates the ansible repo
     deploy              Provision and deploy
     start               Starts all OCI containers

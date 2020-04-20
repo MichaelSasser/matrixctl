@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contributer Documentation &mdash; MatrixCtl 0.3.0 documentation</title>
+  <title>Contributer Documentation &mdash; MatrixCtl 0.3.1 documentation</title>
   
 
   
@@ -96,6 +96,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.update"><strong>update</strong> - update.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.user"><strong>user</strong> - user.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.users"><strong>users</strong> - users.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.rooms"><strong>rooms</strong> - rooms.py</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#helpers">Helpers</a><ul>
@@ -627,6 +628,46 @@ If you want guests in the table use the <code class="docutils literal notranslat
 </dd></dl>
 
 </div>
+<div class="section" id="module-matrixctl.rooms">
+<span id="rooms-rooms-py"></span><h3><strong>rooms</strong> - rooms.py<a class="headerlink" href="#module-matrixctl.rooms" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.rooms.print_rooms_table">
+<code class="sig-prename descclassname">matrixctl.rooms.</code><code class="sig-name descname">print_rooms_table</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rooms_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.rooms.print_rooms_table" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.rooms.rooms">
+<code class="sig-prename descclassname">matrixctl.rooms.</code><code class="sig-name descname">rooms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.rooms.rooms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a table of the matrix rooms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Namespace</span></code>) – The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">arse_args()</span></code></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.rooms.subparser_rooms">
+<code class="sig-prename descclassname">matrixctl.rooms.</code><code class="sig-name descname">subparser_rooms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.rooms.subparser_rooms" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 </div>
 <div class="section" id="helpers">
 <h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
@@ -748,7 +789,7 @@ password</p></li>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <dl class="py attribute">
 <dt id="matrixctl.errors.Error.BUGMSG">
-<code class="sig-name descname">BUGMSG</code><em class="property">: str</em><em class="property"> = 'If you discover this message, please try updating MatrixCtl. If you see this message again, we would be glad, if you would run the same command again in debug-mode (matrixctl -d [...]) and hand in a &quot;Bug report&quot; at https://github.com/MichaelSasser/matrixctl/issues with the complete output.\n\nPython version: 3.8.2 final\nMatrixCtl version: 0.3.0 \n'</em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">BUGMSG</code><em class="property">: str</em><em class="property"> = 'If you discover this message, please try updating MatrixCtl. If you see this message again, we would be glad, if you would run the same command again in debug-mode (matrixctl -d [...]) and hand in a &quot;Bug report&quot; at https://github.com/MichaelSasser/matrixctl/issues with the complete output.\n\nPython version: 3.8.2 final\nMatrixCtl version: 0.3.1 \n'</em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
