@@ -37,6 +37,7 @@ from .deluser import subparser_deluser
 from .deluser_jitsi import subparser_deluser_jitsi
 from .deploy import subparser_deploy
 from .maintainance import subparser_maintainance
+from .rooms import subparser_rooms
 from .start import subparser_restart
 from .start import subparser_start
 from .update import subparser_update
@@ -69,8 +70,9 @@ def setup_parser() -> argparse.ArgumentParser:
         subparser_deluser,
         subparser_adduser_jitsi,
         subparser_deluser_jitsi,
-        subparser_users,
         subparser_user,
+        subparser_users,
+        subparser_rooms,
         subparser_update,
         subparser_deploy,
         subparser_start,

@@ -1,0 +1,32 @@
+name: Python CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install Poetry
+        uses: dschep/install-poetry-action@v1.3
+        with:
+          version: 1.0.5
+
+      - name: Install Project Dependencies
+        run: poetry install -E docs
+
+      - name: Run pre-commit
+        run: poetry run pre-commit run --all-files
+
+      - name: Sphinx Build
+        working-directory: ./docs
+        run: make html
+
+      - name: Test with pytest
+        run: poetry run pytest

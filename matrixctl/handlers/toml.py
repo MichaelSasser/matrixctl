@@ -74,7 +74,8 @@ class TOML:
             except FileNotFoundError:
                 error(
                     "To use this program you need to have a config file in"
-                    '/etc/matrixctl/config" or in "~/.config/matrixctl/config".'
+                    '/etc/matrixctl/config" or in '
+                    '"~/.config/matrixctl/config".'
                 )
                 sys.exit(1)
             except TypeError:

@@ -95,6 +95,13 @@ Subcommands
    :undoc-members:
    :show-inheritance:
 
+**rooms** - rooms.py
+--------------------
+
+.. automodule:: matrixctl.rooms
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Helpers
 =======
