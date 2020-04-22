@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MatrixCtl documentation &mdash; MatrixCtl 0.3.2 documentation</title>
+  <title>MatrixCtl documentation &mdash; MatrixCtl 0.4.0 documentation</title>
   
 
   
@@ -201,11 +201,11 @@ merging branch.</p>
 <p>MatrixCtl as a pure commandline tool. You can use it as package, if you like,
 but breaking changes may introduced, even in a minor change.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: matrixctl [-h] [--version] [-d]
-              {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,update,deploy,start,restart,maintainance,check}
+              {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,deploy,start,restart,maintainance,check,version}
               ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,update,deploy,start,restart,maintainance,check}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,deploy,start,restart,maintainance,check,version}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
@@ -213,12 +213,14 @@ positional arguments:
     user                Get information about a specific user
     users               Lists users
     rooms               List rooms
+    delroom             Deletes an empty room from the database
     update              Updates the ansible repo
     deploy              Provision and deploy
     start               Starts all OCI containers
     restart             Restarts all OCI containers (alias for start)
     maintainance        Run maintainance tasks
     check               Checks the OCI containers
+    version             Get the version of the Synapse instance
 
 optional arguments:
   -h, --help            show this help message and exit
