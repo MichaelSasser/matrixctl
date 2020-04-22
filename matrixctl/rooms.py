@@ -39,7 +39,7 @@ def subparser_rooms(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser("rooms", help="List rooms")
     parser.add_argument(
         "-s",
-        "--order_by_size",
+        "--order-by-size",
         action="store_true",
         help="Order the rooms by size instead of alphabetical",
     )

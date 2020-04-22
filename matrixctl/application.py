@@ -33,6 +33,7 @@ from matrixctl import __version__
 from .adduser import subparser_adduser
 from .adduser_jitsi import subparser_adduser_jitsi
 from .check import subparser_check
+from .delroom import subparser_delroom
 from .deluser import subparser_deluser
 from .deluser_jitsi import subparser_deluser_jitsi
 from .deploy import subparser_deploy
@@ -43,6 +44,7 @@ from .start import subparser_start
 from .update import subparser_update
 from .user import subparser_user
 from .users import subparser_users
+from .version import subparser_version
 
 
 # Subparsers
@@ -73,12 +75,14 @@ def setup_parser() -> argparse.ArgumentParser:
         subparser_user,
         subparser_users,
         subparser_rooms,
+        subparser_delroom,
         subparser_update,
         subparser_deploy,
         subparser_start,
         subparser_restart,  # alias for start
         subparser_maintainance,
         subparser_check,
+        subparser_version,
     ]
 
     for subparser in subparsers_tuple:

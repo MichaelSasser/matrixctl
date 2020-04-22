@@ -32,12 +32,12 @@ but breaking changes may be introduced, even in a minor version shift.
 
 ```
 # matrixctl
-usage: matrixctl.py [-h] [--version] [-d]
-              {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,update,deploy,start,restart,maintainance,check}
+usage: matrixctl [-h] [--version] [-d]
+              {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,deploy,start,restart,maintainance,check,version}
               ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,update,deploy,start,restart,maintainance,check}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,deploy,start,restart,maintainance,check,version}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
@@ -45,12 +45,14 @@ positional arguments:
     user                Get information about a specific user
     users               Lists users
     rooms               List rooms
+    delroom             Deletes an empty room from the database
     update              Updates the ansible repo
     deploy              Provision and deploy
     start               Starts all OCI containers
     restart             Restarts all OCI containers (alias for start)
     maintainance        Run maintainance tasks
     check               Checks the OCI containers
+    version             Get the version of the Synapse instance
 
 optional arguments:
   -h, --help            show this help message and exit
