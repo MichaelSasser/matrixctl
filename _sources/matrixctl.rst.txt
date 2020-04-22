@@ -103,6 +103,14 @@ Subcommands
    :undoc-members:
    :show-inheritance:
 
+**delroom** - delroom.py
+------------------------
+
+.. automodule:: matrixctl.delroom
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Helpers
 =======
 

@@ -97,6 +97,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.user"><strong>user</strong> - user.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.users"><strong>users</strong> - users.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.rooms"><strong>rooms</strong> - rooms.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-matrixctl.delroom"><strong>delroom</strong> - delroom.py</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#helpers">Helpers</a><ul>
@@ -660,6 +661,36 @@ If you want guests in the table use the <code class="docutils literal notranslat
 <dl class="py function">
 <dt id="matrixctl.rooms.subparser_rooms">
 <code class="sig-prename descclassname">matrixctl.rooms.</code><code class="sig-name descname">subparser_rooms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.rooms.subparser_rooms" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-matrixctl.delroom">
+<span id="delroom-delroom-py"></span><h3><strong>delroom</strong> - delroom.py<a class="headerlink" href="#module-matrixctl.delroom" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="matrixctl.delroom.delroom">
+<code class="sig-prename descclassname">matrixctl.delroom.</code><code class="sig-name descname">delroom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.delroom.delroom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an empty room from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Namespace</span></code>) – The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">arse_args()</span></code></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="matrixctl.delroom.subparser_delroom">
+<code class="sig-prename descclassname">matrixctl.delroom.</code><code class="sig-name descname">subparser_delroom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.delroom.subparser_delroom" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
