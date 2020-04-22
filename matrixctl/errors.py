@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 from sys import version_info
+from typing import Any
 from typing import Optional
 
 from pkg_resources import get_distribution
@@ -36,7 +37,7 @@ class Error(Exception):
     )
 
     def __init__(
-        self, message: Optional[str] = None
+        self, message: Optional[str] = None, payload: Any = None
     ) -> None:  # pylint: disable=keyword-arg-before-vararg
         """Use this error like a normal error in your day-to-day programming.
 
@@ -45,6 +46,7 @@ class Error(Exception):
         getting a traceback is a bug in this application. It gives the person
         instructions, how to hand in a bug report, to contain them asap.
         """
+        self.payload: Any = payload
         msg: str = self.__class__.BUGMSG
 
         if message:

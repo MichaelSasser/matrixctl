@@ -206,11 +206,22 @@ class API:
                                be in the json format.
         :return:               Returns the response
         """
+        debug("Started API request.")
 
         url: str = self.url.build()
 
         if self.json_format and data is not None:
             data = json.dumps(data)
+
+        debug_headers = self.__headers.copy()
+        # len("Bearer ") = 7
+        debug_headers[
+            "Authorization"
+        ] = f"HIDDEN (Length={len(self.__headers['Authorization'])-7})"
+        debug(f"Method: {self.__method}")
+        debug(f"Headers: {debug_headers}")
+        debug(f"Params: {self.__params}")
+        debug(f"Data: {data}")
 
         response = self.session.request(
             method=self.__method,
@@ -223,7 +234,7 @@ class API:
         debug(f"{response.json()=}")
 
         if response.status_code not in self.__success_codes:
-            raise InternalResponseError()
+            raise InternalResponseError(payload=response)
 
         return response
 
