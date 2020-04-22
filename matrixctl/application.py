@@ -43,6 +43,7 @@ from .start import subparser_start
 from .update import subparser_update
 from .user import subparser_user
 from .users import subparser_users
+from .version import subparser_version
 
 
 # Subparsers
@@ -79,6 +80,7 @@ def setup_parser() -> argparse.ArgumentParser:
         subparser_restart,  # alias for start
         subparser_maintainance,
         subparser_check,
+        subparser_version,
     ]
 
     for subparser in subparsers_tuple:
