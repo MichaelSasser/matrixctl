@@ -29,20 +29,19 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_maintainance(subparsers: SubParsersAction) -> None:
+def subparser_maintenance(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
-        "maintainance", help="Run maintainance tasks"
+        "maintenance", help="Run maintenance tasks"
     )
-    parser.set_defaults(func=maintainance)
+    parser.set_defaults(func=maintenance)
 
 
-def maintainance(_: Namespace) -> int:
-    debug("maintainance")
+def maintenance(_: Namespace) -> int:
+    debug("maintenance")
 
     with TOML() as toml:
         with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
             ansible.tags = (
-                "run-postgres-synapse-janitor",
                 "run-postgres-vacuum",
                 "start",
             )
