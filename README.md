@@ -131,7 +131,7 @@ To use this program you need to have this config file in
 
 ## Semantic Versioning
 
-This repository will uses [SemVer](https://semver.org/) for its release
+This repository uses [SemVer](https://semver.org/) for its release
 cycle.
 
 ## License
