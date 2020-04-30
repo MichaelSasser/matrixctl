@@ -55,10 +55,10 @@ Subcommands
    :undoc-members:
    :show-inheritance:
 
-**maintainance** - maintainance.py
+**maintenance** - maintenance.py
 ----------------------------------
 
-.. automodule:: matrixctl.maintainance
+.. automodule:: matrixctl.maintenance
    :members:
    :undoc-members:
    :show-inheritance:

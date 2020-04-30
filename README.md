@@ -33,11 +33,11 @@ but breaking changes may be introduced, even in a minor version shift.
 ```
 # matrixctl
 usage: matrixctl [-h] [--version] [-d]
-              {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,deploy,start,restart,maintainance,check,version}
+              {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,deploy,start,restart,maintenance,check,version}
               ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,deploy,start,restart,maintainance,check,version}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,deploy,start,restart,maintenance,check,version}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
@@ -50,7 +50,7 @@ positional arguments:
     deploy              Provision and deploy
     start               Starts all OCI containers
     restart             Restarts all OCI containers (alias for start)
-    maintainance        Run maintainance tasks
+    maintenance         Run maintenance tasks
     check               Checks the OCI containers
     version             Get the version of the Synapse instance
 
@@ -131,7 +131,7 @@ To use this program you need to have this config file in
 
 ## Semantic Versioning
 
-This repository will uses [SemVer](https://semver.org/) for its release
+This repository uses [SemVer](https://semver.org/) for its release
 cycle.
 
 ## License
