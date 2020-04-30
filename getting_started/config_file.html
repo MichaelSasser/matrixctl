@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Config File &mdash; MatrixCtl 0.4.0 documentation</title>
+  <title>Config File &mdash; MatrixCtl 0.5.0 documentation</title>
   
 
   
@@ -161,15 +161,16 @@
 <h1>Config File<a class="headerlink" href="#config-file" title="Permalink to this headline">¶</a></h1>
 <p>To use this program you need to have this config file in
 <code class="docutils literal notranslate"><span class="pre">/etc/matrixctl/config</span></code> or in <code class="docutils literal notranslate"><span class="pre">~/.config/matrixctl/config</span></code>.</p>
-<p>This config file contains three sections:</p>
+<p>This config file contains four sections:</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[SYNAPSE]</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">[ANSIBLE]</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">[SERVER]</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">[API]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[SSH]</span></code></p></li>
 </ul>
-<p>In the <code class="docutils literal notranslate"><span class="pre">[ANSIBLE]</span></code> section fill in the absolute path to your fully configured
-<a class="reference external" href="https://github.com/spantaleev/matrix-docker-ansible-deploy">matrix-docker-ansible-deploy</a>
-playbook. To get startet, follow the <a class="reference internal" href="synapse_playbook.html#synapse-playbook"><span class="std std-ref">Synapse Playbook</span></a> guide.
+<p>In the <code class="docutils literal notranslate"><span class="pre">[SYNAPSE]</span></code> section fill in the absolute path to your fully configured
+<a class="reference external" href="https://github.com/spantaleev/matrix-docker-ansible-deploy">Synapse</a>
+playbook. To get started, follow the <a class="reference internal" href="synapse_playbook.html#synapse-playbook"><span class="std std-ref">Synapse Playbook</span></a> guide.
 You need this section, if you want to:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">adduser</span> <span class="pre">--ansible</span></code></p></li>
@@ -177,27 +178,33 @@ You need this section, if you want to:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">deploy</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">start</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">restart</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">maintainance</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">maintenance</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">check</span></code></p></li>
 </ul>
-<p>With the <code class="docutils literal notranslate"><span class="pre">[SERVER]</span></code> section you can add your own playbook, if you like.
+<p>With the <code class="docutils literal notranslate"><span class="pre">[ANSIBLE]</span></code> section you can add your own playbook, if you like.
 It will run on <code class="docutils literal notranslate"><span class="pre">update</span></code> before  the
-<a class="reference external" href="https://github.com/spantaleev/matrix-docker-ansible-deploy">matrix-docker-ansible-deploy</a>
+<a class="reference external" href="https://github.com/spantaleev/matrix-docker-ansible-deploy">Synapse</a>
 playbook.
 It is used for:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">update</span></code> (optional)</p></li>
 </ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">[API]</span></code> section is used to communicate with the synapse api directly.
+<p>The <code class="docutils literal notranslate"><span class="pre">[API]</span></code> section is used to communicate with the synapse API directly.
 This is faster and has more additional functionality then the
-<a class="reference external" href="https://github.com/spantaleev/matrix-docker-ansible-deploy">matrix-docker-ansible-deploy</a>
-playbook. To get startet, follow the <a class="reference internal" href="access_token.html#access-token"><span class="std std-ref">Access Token</span></a> guide.
+<a class="reference external" href="https://github.com/spantaleev/matrix-docker-ansible-deploy">Synapse</a>
+playbook. To get started, follow the <a class="reference internal" href="access_token.html#access-token"><span class="std std-ref">Access Token</span></a> guide.
 It is used for:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">adduser</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">deluser</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">users</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">user</span></code></p></li>
+</ul>
+<p>With the <code class="docutils literal notranslate"><span class="pre">[SSH]</span></code> section you can use additional functionality, if you like.
+It is used for:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">adduser-jisi</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">deluser-jisi</span></code></p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
