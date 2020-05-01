@@ -52,6 +52,12 @@ optional arguments:
 
 MatrixCtl is written in Python. The installation is straight forward. Just run ``pip install matrixctl``. MatrixCtl will be installd from the [Python Package Index (PyPi)](https://pypi.org/project/matrixctl/).
 
+You will find more information in the documentation.
+
+## Documentation
+
+There is a [documentation](https://michaelsasser.github.io/matrixctl/index.html) waiting for you, showing you how everything works and howto setup matrixctl
+
 ## Configuration File
 
 To use this program you need to have this config file in
@@ -120,10 +126,6 @@ To use this program you need to have this config file in
 #
 # User = "myusername"
 ```
-
-## Documentation
-
-There is a [documentation](https://michaelsasser.github.io/matrixctl/index.html) waiting for you, showing you how everything works and howto setup matrixctl
 
 ## Chat
 
