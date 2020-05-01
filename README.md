@@ -4,6 +4,7 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/michaelsasser/matrixctl?style=flat-square)
 ![GitHub Release Date](https://img.shields.io/github/release-date/michaelsasser/matrixctl?style=flat-square)
 ![PyPI - Status](https://img.shields.io/pypi/status/matrixctl?style=flat-square)
+![Matrix](https://img.shields.io/matrix/matrixctl:michaelsasser.org?server_fqdn=matrix.org&style=flat-square)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/michaelsasser/matrixctl?style=flat-square)
 
 # MatrixCtl
@@ -128,6 +129,10 @@ To use this program you need to have this config file in
 #
 # User = "myusername"
 ```
+
+## Chat
+
+If you have any thoughts or questions, you can join the project channel ``#matrixctl:michaelsasser.org``.
 
 ## Semantic Versioning
 
