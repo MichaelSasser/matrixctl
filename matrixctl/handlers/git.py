@@ -18,8 +18,10 @@
 from __future__ import annotations
 
 import datetime
+import sys
 
 from logging import debug
+from logging import error
 from logging import info
 from pathlib import Path
 from shutil import get_terminal_size
@@ -117,7 +119,14 @@ class Git:
         # Get the last pulled datetime
         since = self.datetime_last_pulled_commit
 
-        self.git.pull()
+        try:
+            self.git.pull()
+        except git.GitCommandError:
+            error(
+                "MatrixCtl was not able to connect to the synapse playbook "
+                "on GitHub. Are you connected to the internet?"
+            )
+            sys.exit(1)
 
         self.log(since)
 
