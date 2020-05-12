@@ -39,10 +39,16 @@ __email__: str = "Michael@MichaelSasser.org"
 def subparser_users(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser("users", help="Lists users")
     parser.add_argument(
-        "-g", "--guests", action="store_true", help="Shows the users"
+        "-g", "--with-guests", action="store_true", help="Shows guests"
     )
     parser.add_argument(
-        "-b", "--no-bots", action="store_true", help="Hide bots"
+        "-b", "--with-bots", action="store_true", help="Shows bots"
+    )
+    parser.add_argument(
+        "-d",
+        "--with-deactivated",
+        action="store_true",
+        help="Shows deactivated accounts",
     )
     parser.set_defaults(func=users)
 
@@ -94,7 +100,10 @@ def users(arg: Namespace) -> int:
             toml.get(("API", "Domain")), toml.get(("API", "Token"))
         ) as api:
             api.url.path = "users"
-            api.params = {"guests": "true" if arg.guests else "false"}
+            api.params = {"guests": "true" if arg.with_guests else "false"}
+            api.params = {
+                "deactivated": "true" if arg.with_deactivated else "false"
+            }
 
             while True:
 
@@ -107,6 +116,7 @@ def users(arg: Namespace) -> int:
                     return 1
 
                 users_list += lst["users"]
+
                 try:
                     from_user = lst["next_token"]
                 except KeyError:
@@ -124,7 +134,7 @@ def users(arg: Namespace) -> int:
                 # if no_bots and any([name.startswith(bot) for bot in BOTS]):
                 #     continue
 
-                if arg.no_bots and no_passwd_hash:
+                if not arg.with_bots and no_passwd_hash:
                     continue
 
                 user_list.append((name, deactivated, admin, guest,))
