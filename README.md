@@ -4,6 +4,7 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/michaelsasser/matrixctl?style=flat-square)
 ![GitHub Release Date](https://img.shields.io/github/release-date/michaelsasser/matrixctl?style=flat-square)
 ![PyPI - Status](https://img.shields.io/pypi/status/matrixctl?style=flat-square)
+![Matrix](https://img.shields.io/matrix/matrixctl:michaelsasser.org?server_fqdn=matrix.org&style=flat-square)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/michaelsasser/matrixctl?style=flat-square)
 
 # MatrixCtl
@@ -11,19 +12,6 @@
 MatrixCtl is a python program to control, manage, provision and deploy our
 matrix homeserver. Instead of remembering tons of commands or having a bunch
 of shell scripts MatrixCtl does many things for you.
-
-## Branching Model
-
-This repository uses the
-[git-flow](https://danielkummer.github.io/git-flow-cheatsheet/index.html)
-branching model by [Vincent Driessen](https://nvie.com/about/).
-It has two branches with infinite lifetime:
-
-* [master](https://github.com/MichaelSasser/matrixctl/tree/master)
-* [develop](https://github.com/MichaelSasser/matrixctl/tree/develop)
-
-The master branch gets updated on every release. The develop branch is the
-merging branch.
 
 ## Command line tool
 
@@ -59,6 +47,16 @@ optional arguments:
   --version             show program's version number and exit
   -d, --debug           Enables debugging mode.
 ```
+
+## Installation
+
+MatrixCtl is written in Python. The installation is straight forward. Just run ``pip install matrixctl``. MatrixCtl will be installd from the [Python Package Index (PyPi)](https://pypi.org/project/matrixctl/).
+
+You will find more information in the documentation.
+
+## Documentation
+
+There is a [documentation](https://michaelsasser.github.io/matrixctl/index.html) waiting for you, showing you how everything works and howto setup matrixctl
 
 ## Configuration File
 
@@ -129,10 +127,27 @@ To use this program you need to have this config file in
 # User = "myusername"
 ```
 
+## Chat
+
+If you have any thoughts or questions, you can join the project channel ``#matrixctl:michaelsasser.org``.
+
 ## Semantic Versioning
 
 This repository uses [SemVer](https://semver.org/) for its release
 cycle.
+
+## Branching Model
+
+This repository uses the
+[git-flow](https://danielkummer.github.io/git-flow-cheatsheet/index.html)
+branching model by [Vincent Driessen](https://nvie.com/about/).
+It has two branches with infinite lifetime:
+
+* [master](https://github.com/MichaelSasser/matrixctl/tree/master)
+* [develop](https://github.com/MichaelSasser/matrixctl/tree/develop)
+
+The master branch gets updated on every release. The develop branch is the
+merging branch.
 
 ## License
 Copyright &copy; 2020 Michael Sasser <Info@MichaelSasser.org>. Released under
