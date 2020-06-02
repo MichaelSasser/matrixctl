@@ -17,7 +17,9 @@
 from __future__ import annotations
 
 import json
+import sys
 
+from logging import critical
 from logging import debug
 from types import TracebackType
 from typing import Any
@@ -234,6 +236,19 @@ class API:
         debug(f"{response.json()=}")
 
         if response.status_code not in self.__success_codes:
+            debug(f"{response.status_code=}")
+            try:
+                if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
+                    critical(
+                        "The server rejected your access-token. "
+                        "Please make sure, your access-token is correct "
+                        "and up-to-date. Your access-token will change every "
+                        "time, you log out."
+                    )
+                    sys.exit(1)
+            except Exception:  # pylint: disable=broad-except
+                pass
+
             raise InternalResponseError(payload=response)
 
         return response
