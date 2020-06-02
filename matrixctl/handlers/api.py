@@ -17,7 +17,9 @@
 from __future__ import annotations
 
 import json
+import sys
 
+from logging import critical
 from logging import debug
 from types import TracebackType
 from typing import Any
@@ -36,6 +38,14 @@ from matrixctl.errors import InternalResponseError
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+def check_type(var: Any, var_name: str, var_type: Any = str) -> None:
+    if not isinstance(var, var_type):
+        raise TypeError(
+            f"{var_name} needs to be of type {var_type}, you have entered "
+            f"{type(var)}."
+        )
 
 
 class UrlBuilder:
@@ -57,27 +67,27 @@ class UrlBuilder:
         self.__path: str = ""
 
     def _scheme(self, scheme: str) -> None:
-        assert isinstance(scheme, str)
+        check_type(scheme, "scheme")
         self.__scheme = scheme
 
     def _domain(self, domain: str) -> None:
-        assert isinstance(domain, str)
+        check_type(domain, "domain")
         self.__domain = domain
 
     def _subdomain(self, subdomain: str) -> None:
-        assert isinstance(subdomain, str)
+        check_type(subdomain, "subdomain")
         self.__subdomain = subdomain
 
     def _api_path(self, api_path: str) -> None:
-        assert isinstance(api_path, str)
+        check_type(api_path, "api_path")
         self.__api_path = api_path
 
     def _api_version(self, api_version: str) -> None:
-        assert isinstance(api_version, str)
+        check_type(api_version, "api_version")
         self.__api_version = api_version
 
     def _path(self, path: str) -> None:
-        assert isinstance(path, str)
+        check_type(path, "path")
         self.__path = path
 
     scheme = property(fset=_scheme)
@@ -144,9 +154,9 @@ class API:
         :return:            ``None``
         """
 
-        assert isinstance(domain, str)
-        assert isinstance(token, str)
-        assert isinstance(json_format, bool)
+        check_type(domain, "domain")
+        check_type(token, "token")
+        check_type(json_format, "json_format", bool)
 
         self.token: str = token
         self.json_format: bool = json_format
@@ -165,15 +175,19 @@ class API:
 
     def _method(self, method: str) -> None:
         method = method.upper()
-        assert method in {"GET", "POST", "PUT", "DELETE"}
+        if method not in {"GET", "POST", "PUT", "DELETE"}:
+            raise ValueError(
+                'method needs to be one of {"GET", "POST", "PUT", "DELETE"}, '
+                f"you have entered {type(method)}."
+            )
         self.__method = method
 
     def _params(self, params: Dict[str, str]) -> None:
-        assert isinstance(params, dict)
+        check_type(params, "params", dict)
         self.__params.update(params)
 
     def _headers(self, headers: Dict[str, str]) -> None:
-        assert isinstance(headers, dict)
+        check_type(headers, "headers", dict)
 
         if self.json_format:
             self.__headers["Content-Type"] = "application/json"
@@ -181,7 +195,7 @@ class API:
         self.__headers.update(headers)
 
     def _success_codes(self, codes: Tuple[int]) -> None:
-        assert isinstance(codes, tuple)
+        check_type(codes, "codes", dict)
         self.__success_codes = codes
 
     method = property(fset=_method)
@@ -234,6 +248,19 @@ class API:
         debug(f"{response.json()=}")
 
         if response.status_code not in self.__success_codes:
+            debug(f"{response.status_code=}")
+            try:
+                if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
+                    critical(
+                        "The server rejected your access-token. "
+                        "Please make sure, your access-token is correct "
+                        "and up-to-date. Your access-token will change every "
+                        "time, you log out."
+                    )
+                    sys.exit(1)
+            except Exception:  # pylint: disable=broad-except
+                pass
+
             raise InternalResponseError(payload=response)
 
         return response

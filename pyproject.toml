@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.6.0"
+version = "0.6.1"
 description = "Controls a synapse oci-container instance via ansible"
 license = "GPL-3.0+"
 readme = "README.md"
@@ -44,16 +44,16 @@ docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "sphinxcontrib
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.2.0"
 pytest = "^5"
-# flake8 = "^3.7"
-flake8 = { git = "https://gitlab.com/pycqa/flake8", branch = "master" }
+flake8 = "^3.8.2"
+# flake8 = { git = "https://gitlab.com/pycqa/flake8", branch = "master" }
 neovim = "^0.3.1"
 pydocstyle = "^5.0"
 pylint = "^2.4"
-pycodestyle = "^2.5"
-yapf = "^0.29.0"
+pycodestyle = "^2.6"
+yapf = "^0.30.0"
 vulture = "^1.4"
 mypy = "^0.770"
-python-language-server = {version = "^0.31.9", extras = ["all"]}
+python-language-server = {version = "^0.33.0", extras = ["all"]}
 black = { version = "*", allow-prereleases = true }
 isort = {version = "^4.3.21", extras = ["pyproject"]}
 flake8-bugbear = "^20.1.4"
