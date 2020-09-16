@@ -101,7 +101,11 @@ class TOML:
                     debug(f"  ├─  {entry} := {self.__toml[key][entry]}")
             debug("  ┴")
 
-    def get(self, keys: Union[List[str], Tuple[str, ...]]) -> Any:
+    def get(
+        self,
+        keys: Union[List[str], Tuple[str, ...]],
+        none_on_error: bool = False,
+    ) -> Any:
         """Get a value from a config entry safely.
 
         This is the only way, the config is asked for a value from an entry.
@@ -126,6 +130,8 @@ class TOML:
             for key in keys:
                 toml_walker = toml_walker.__getitem__(key)
         except KeyError:
+            if none_on_error:
+                return None
             error(
                 "Please check your config file. For this operation your "
                 f'config file needs to have the entry "{keys[-1]}" '
@@ -136,7 +142,7 @@ class TOML:
         if not isinstance(toml_walker, dict):
             return toml_walker
         raise ConfigFileError(
-            "The key you asked for seems not correct. "
+            "The key you have asked for seems to be incorrect. "
             "Please make sure you ask for an single entry, "
             "not a entire section."
         )
