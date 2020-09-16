@@ -43,8 +43,8 @@ def deploy(_: Namespace) -> int:
     debug("deploy")
     with TOML() as toml:
         if (
-            toml.get(("ANSIBLE", "Path")) is None
-            and toml.get(("SYNAPSE", "Path")) is None
+            toml.get(("ANSIBLE", "Path"), True) is None
+            and toml.get(("SYNAPSE", "Path"), True) is None
         ):
             error(
                 "To be able to use the deploy feature, you need to have "
@@ -55,13 +55,13 @@ def deploy(_: Namespace) -> int:
             )
             sys.exit(1)
 
-        if toml.get(("ANSIBLE", "Path")) is not None:
+        if toml.get(("ANSIBLE", "Path"), True) is not None:
             with Ansible(toml.get(("ANSIBLE", "Path"))) as ansible:
                 ansible.tags = toml.get(("ANSIBLE", "DeployTags"))
                 ansible.ansible_cfg_path = toml.get(("ANSIBLE", "Cfg"))
                 ansible.run_playbook()
 
-        if toml.get(("SYNAPSE", "Path")) is not None:
+        if toml.get(("SYNAPSE", "Path"), True) is not None:
             with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
                 ansible.tags = ("setup-all",)
                 ansible.run_playbook()
