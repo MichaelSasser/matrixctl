@@ -36,10 +36,22 @@ def subparser_deploy(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "deploy", help="Provision and deploy"
     )
+    parser.add_argument(
+        "-s",
+        "--synapse",
+        action="store_true",
+        help="Deploy only the synapse playbook",
+    )
+    parser.add_argument(
+        "-a",
+        "--ansible",
+        action="store_true",
+        help="Deploy only your own playbook",
+    )
     parser.set_defaults(func=deploy)
 
 
-def deploy(_: Namespace) -> int:
+def deploy(arg: Namespace) -> int:
     debug("deploy")
     with TOML() as toml:
         if (
@@ -55,13 +67,13 @@ def deploy(_: Namespace) -> int:
             )
             sys.exit(1)
 
-        if toml.get(("ANSIBLE", "Path"), True) is not None:
+        if (toml.get(("ANSIBLE", "Path"), True) is not None) and arg.ansible:
             with Ansible(toml.get(("ANSIBLE", "Path"))) as ansible:
                 ansible.tags = toml.get(("ANSIBLE", "DeployTags"))
                 ansible.ansible_cfg_path = toml.get(("ANSIBLE", "Cfg"))
                 ansible.run_playbook()
 
-        if toml.get(("SYNAPSE", "Path"), True) is not None:
+        if (toml.get(("SYNAPSE", "Path"), True) is not None) and arg.synapse:
             with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
                 ansible.tags = ("setup-all",)
                 ansible.run_playbook()
