@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contributer Documentation &mdash; MatrixCtl 0.6.1 documentation</title>
+  <title>Contributer Documentation &mdash; MatrixCtl 0.6.2 documentation</title>
   
 
   
@@ -820,7 +820,7 @@ password</p></li>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <dl class="py attribute">
 <dt id="matrixctl.errors.Error.BUGMSG">
-<code class="sig-name descname">BUGMSG</code><em class="property">: str</em><em class="property"> = 'If you discover this message, please try updating MatrixCtl. If you see this message again, we would be glad, if you would run the same command again in debug-mode (matrixctl -d [...]) and hand in a &quot;Bug report&quot; at https://github.com/MichaelSasser/matrixctl/issues with the complete output.\n\nPython version: 3.8.3 final\nMatrixCtl version: 0.6.1 \n'</em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">BUGMSG</code><em class="property">: str</em><em class="property"> = 'If you discover this message, please try updating MatrixCtl. If you see this message again, we would be glad, if you would run the same command again in debug-mode (matrixctl -d [...]) and hand in a &quot;Bug report&quot; at https://github.com/MichaelSasser/matrixctl/issues with the complete output.\n\nPython version: 3.8.5 final\nMatrixCtl version: 0.6.2 \n'</em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -899,7 +899,7 @@ password</p></li>
 
 <dl class="py method">
 <dt id="matrixctl.handlers.toml.TOML.get">
-<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">keys</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.toml.TOML.get" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">keys</span></em>, <em class="sig-param"><span class="n">none_on_error</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.toml.TOML.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a value from a config entry safely.</p>
 <p>This is the only way, the config is asked for a value from an entry.
 The other methods are used for non MatrixCtl TOML files.</p>
