@@ -59,8 +59,9 @@ def users(arg: Namespace) -> int:
     This function generates and prints a table of matrix user accounts.
     The table can be modified.
 
-    If you want guests in the table use the ``--with-guests`` switch.
-    If you want deactivated user in the table use the ``--with-deactivated`` switch.
+    * If you want guests in the table use the ``--with-guests`` switch.
+    * If you want deactivated user in the table use the ``--with-deactivated``
+      switch.
 
     **Example**
 
