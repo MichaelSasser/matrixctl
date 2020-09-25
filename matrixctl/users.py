@@ -39,10 +39,10 @@ __email__: str = "Michael@MichaelSasser.org"
 def subparser_users(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser("users", help="Lists users")
     parser.add_argument(
-        "-g", "--with-guests", action="store_true", help="Shows guests"
+        "-a", "--all", action="store_true", help="Shows all users"
     )
     parser.add_argument(
-        "-b", "--with-bots", action="store_true", help="Shows bots"
+        "-g", "--with-guests", action="store_true", help="Shows guests"
     )
     parser.add_argument(
         "-d",
@@ -57,19 +57,16 @@ def users(arg: Namespace) -> int:
     """Print a table of the matrix users.
 
     This function generates and prints a table of matrix user accounts.
-    The table can be modified with:
+    The table can be modified.
 
-    - the ``--guests`` switch: ``args.guests`` is True, else ``False``
-    - the ``--no-bots`` switch: ``args.no_bots`` is True, else ``False``
-
-    If you don't want any bots in the table use the ``--no-bots`` switch.
-    If you want guests in the table use the ``--guests`` switch.
+    If you want guests in the table use the ``--with-guests`` switch.
+    If you want deactivated user in the table use the ``--with-deactivated`` switch.
 
     **Example**
 
     .. code-block:: console
 
-       $ matrixctl users --no-bots
+       $ matrixctl users
        +----------------+---------------+------------+------------+
        | Name           | Deactivated   | Is Admin   | Is Guest   |
        |----------------+---------------+------------+------------|
@@ -100,9 +97,13 @@ def users(arg: Namespace) -> int:
             toml.get(("API", "Domain")), toml.get(("API", "Token"))
         ) as api:
             api.url.path = "users"
-            api.params = {"guests": "true" if arg.with_guests else "false"}
             api.params = {
-                "deactivated": "true" if arg.with_deactivated else "false"
+                "guests": "true" if arg.with_guests or arg.all else "false"
+            }
+            api.params = {
+                "deactivated": "true"
+                if arg.with_deactivated or arg.all
+                else "false"
             }
 
             while True:
@@ -126,16 +127,9 @@ def users(arg: Namespace) -> int:
 
             for user in users_list:
                 name = user["name"][1:-len_domain]
-                no_passwd_hash: bool = user["password_hash"] == ""
                 deactivated: str = human_readable_bool(user["deactivated"])
                 admin: str = human_readable_bool(user["admin"])
                 guest: str = human_readable_bool(user["is_guest"])
-
-                # if no_bots and any([name.startswith(bot) for bot in BOTS]):
-                #     continue
-
-                if not arg.with_bots and no_passwd_hash:
-                    continue
 
                 user_list.append((name, deactivated, admin, guest,))
             print(
