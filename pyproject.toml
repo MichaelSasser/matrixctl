@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.6.3"
+version = "0.7.0"
 description = "Controls a synapse oci-container instance via ansible"
 license = "GPL-3.0+"
 readme = "README.md"
@@ -26,36 +26,36 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-requests = "^2.23.0"
-GitPython = "^3.1.0"
+requests = "^2.24.0"
+GitPython = "^3.1.8"
 coloredlogs = "^14.0"
-argcomplete = "^1.11.1"
+argcomplete = "^1.12.0"
 tabulate = "^0.8.7"
-paramiko = "^2.7.1"
-sphinx = { version = "^3.0", optional = true }
-sphinx_rtd_theme = { version = "^0.4.3", optional = true  }
-sphinx-autodoc-typehints = { version = "^1.10", optional = true }
+paramiko = "^2.7.2"
+sphinx = { version = "^3.2.1", optional = true }
+sphinx_rtd_theme = { version = "^0.5.0", optional = true  }
+sphinx-autodoc-typehints = { version = "^1.11.0", optional = true }
 sphinxcontrib-programoutput = { version = "^0.16", optional = true }
-toml = "^0.10.0"
+toml = "^0.10.1"
 
 [tool.poetry.extras]
 docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "sphinxcontrib-programoutput"]
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^2.2.0"
-pytest = "^5"
-flake8 = "^3.8.2"
+pre-commit = "^2.7.1"
+pytest = "^6.0.2"
+flake8 = "^3.8.3"
 # flake8 = { git = "https://gitlab.com/pycqa/flake8", branch = "master" }
 neovim = "^0.3.1"
-pydocstyle = "^5.0"
-pylint = "^2.4"
+pydocstyle = "^5.1.1"
+pylint = "^2.6"
 pycodestyle = "^2.6"
 yapf = "^0.30.0"
-vulture = "^1.4"
-mypy = "^0.770"
-python-language-server = {version = "^0.33.0", extras = ["all"]}
+vulture = "^2.1"
+mypy = "^0.782"
+python-language-server = {version = "^0.35.1", extras = ["all"]}
 black = { version = "*", allow-prereleases = true }
-isort = {version = "^4.3.21", extras = ["pyproject"]}
+isort = {version = "^5.5.3", extras = ["pyproject"]}
 flake8-bugbear = "^20.1.4"
 
 [tool.poetry.scripts]

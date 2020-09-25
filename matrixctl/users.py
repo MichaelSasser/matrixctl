@@ -132,7 +132,14 @@ def users(arg: Namespace) -> int:
                 admin: str = human_readable_bool(user["admin"])
                 guest: str = human_readable_bool(user["is_guest"])
 
-                user_list.append((name, deactivated, admin, guest,))
+                user_list.append(
+                    (
+                        name,
+                        deactivated,
+                        admin,
+                        guest,
+                    )
+                )
             print(
                 tabulate(
                     user_list,

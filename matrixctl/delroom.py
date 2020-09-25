@@ -35,7 +35,9 @@ def subparser_delroom(subparsers: SubParsersAction) -> None:
         "delroom", help="Deletes an empty room from the database"
     )
     parser.add_argument(
-        "RoomID", type=str, help="The Room-ID",
+        "RoomID",
+        type=str,
+        help="The Room-ID",
     )
     parser.set_defaults(func=delroom)
 

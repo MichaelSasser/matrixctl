@@ -1,5 +1,5 @@
 ---
-minimum_pre_commit_version: 1.21.0
+minimum_pre_commit_version: 2.6.0
 # default_language_version:
 #   python: python3.8
 repos:
@@ -10,7 +10,7 @@ repos:
 
   # pre-commit-hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.5.0
+    rev: v3.2.0
     hooks:
       # Prevent giant files from being committed.
       - id: check-added-large-files
@@ -90,33 +90,33 @@ repos:
 
   # isort
   - repo: https://github.com/timothycrosley/isort
-    rev: 4.3.21-2
+    rev: 5.5.3
     hooks:
       - id: isort
         additional_dependencies: [toml]
 
   # format: black
   - repo: https://github.com/ambv/black
-    rev: 19.10b0
+    rev: 20.8b1
     hooks:
       - id: black
 
   # flake8
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.2
+    rev: 3.8.3
     hooks:
       - id: flake8
         additional_dependencies: ["flake8-bugbear"]
 
   # check docstrings
   - repo: https://github.com/PyCQA/pydocstyle
-    rev: 5.0.2
+    rev: 5.1.1
     hooks:
       - id: pydocstyle
         args: ["--ignore=D10,D21,D202"]
 
   # static type checking with mypy
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.770
+    rev: v0.782
     hooks:
       - id: mypy
