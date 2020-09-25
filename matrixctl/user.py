@@ -201,7 +201,12 @@ def user(arg: Namespace) -> int:
                     print("User:")
                 else:
                     print("\nThreepid:")
-                print(tabulate(table, tablefmt="psql",))
+                print(
+                    tabulate(
+                        table,
+                        tablefmt="psql",
+                    )
+                )
 
     return 0
 

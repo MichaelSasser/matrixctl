@@ -121,7 +121,14 @@ def print_rooms_table(rooms_list: List[JsonDict]) -> None:
         alias: str = room["canonical_alias"]
         room_id: str = room["room_id"]
 
-        room_list.append((name, members, alias, room_id,))
+        room_list.append(
+            (
+                name,
+                members,
+                alias,
+                room_id,
+            )
+        )
     print(
         tabulate(
             room_list,
