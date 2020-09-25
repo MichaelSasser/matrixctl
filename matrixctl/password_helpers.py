@@ -118,7 +118,11 @@ def ask_question(question: str = "Is everything correct?") -> bool:
     """
     question += " [y/n]"
 
-    while (answer := input(question).lower()) not in ("y", "j", "n",):  # noqa
+    while (answer := input(question).lower()) not in (
+        "y",
+        "j",
+        "n",
+    ):  # noqa
         pass
 
     return answer in ("y", "j")
