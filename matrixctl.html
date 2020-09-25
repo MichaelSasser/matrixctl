@@ -1,15 +1,18 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contributer Documentation &mdash; MatrixCtl 0.6.3 documentation</title>
+  <title>Contributer Documentation &mdash; MatrixCtl 0.7.0 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
 
   
   
@@ -17,7 +20,9 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -29,10 +34,6 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="SSH Public Key" href="getting_started/ssh_pubkey.html" /> 
@@ -49,7 +50,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> MatrixCtl
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MatrixCtl
           
 
           
@@ -72,6 +73,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -129,6 +131,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -167,7 +170,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Contributer Documentation</li>
     
@@ -367,7 +370,21 @@ starts from the beginning.</p>
 <dl class="py function">
 <dt id="matrixctl.deploy.deploy">
 <code class="sig-prename descclassname">matrixctl.deploy.</code><code class="sig-name descname">deploy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deploy.deploy" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Deploy the ansible playbook.</p>
+<p><strong>Contol logic</strong></p>
+<p>a = ta  (TOML Ansible)
+b = ts  (TOML SYNAPSE)
+A = arg.ansible
+B = arg.synapse</p>
+<p>Empirical:
+Ansible = a/A/B + aA
+Synapse = b/A/B + bB
+Error = /a/b + /aA + /bB</p>
+<p>Optimized (factored SOP):</p>
+<p>Ansible = a(/A/B + A)
+Synapse = b(/A/B + B)
+Error = /b(B + /a) + /aA</p>
+<dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
 </dd>
@@ -588,15 +605,14 @@ everything works well.</p>
 <code class="sig-prename descclassname">matrixctl.users.</code><code class="sig-name descname">users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.users.users" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print a table of the matrix users.</p>
 <p>This function generates and prints a table of matrix user accounts.
-The table can be modified with:</p>
+The table can be modified.</p>
 <ul class="simple">
-<li><p>the <code class="docutils literal notranslate"><span class="pre">--guests</span></code> switch: <code class="docutils literal notranslate"><span class="pre">args.guests</span></code> is True, else <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
-<li><p>the <code class="docutils literal notranslate"><span class="pre">--no-bots</span></code> switch: <code class="docutils literal notranslate"><span class="pre">args.no_bots</span></code> is True, else <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p>If you want guests in the table use the <code class="docutils literal notranslate"><span class="pre">--with-guests</span></code> switch.</p></li>
+<li><p>If you want deactivated user in the table use the <code class="docutils literal notranslate"><span class="pre">--with-deactivated</span></code>
+switch.</p></li>
 </ul>
-<p>If you don’t want any bots in the table use the <code class="docutils literal notranslate"><span class="pre">--no-bots</span></code> switch.
-If you want guests in the table use the <code class="docutils literal notranslate"><span class="pre">--guests</span></code> switch.</p>
 <p><strong>Example</strong></p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> matrixctl users --no-bots
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> matrixctl users
 <span class="go">+----------------+---------------+------------+------------+</span>
 <span class="go">| Name           | Deactivated   | Is Admin   | Is Guest   |</span>
 <span class="go">|----------------+---------------+------------+------------|</span>
@@ -820,7 +836,7 @@ password</p></li>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <dl class="py attribute">
 <dt id="matrixctl.errors.Error.BUGMSG">
-<code class="sig-name descname">BUGMSG</code><em class="property">: str</em><em class="property"> = 'If you discover this message, please try updating MatrixCtl. If you see this message again, we would be glad, if you would run the same command again in debug-mode (matrixctl -d [...]) and hand in a &quot;Bug report&quot; at https://github.com/MichaelSasser/matrixctl/issues with the complete output.\n\nPython version: 3.8.5 final\nMatrixCtl version: 0.6.3 \n'</em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">BUGMSG</code><em class="property">: str</em><em class="property"> = 'If you discover this message, please try updating MatrixCtl. If you see this message again, we would be glad, if you would run the same command again in debug-mode (matrixctl -d [...]) and hand in a &quot;Bug report&quot; at https://github.com/MichaelSasser/matrixctl/issues with the complete output.\n\nPython version: 3.8.5 final\nMatrixCtl version: 0.7.0 \n'</em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -977,7 +993,7 @@ for.</p>
 <p>Handle the REST API connection of synapse.</p>
 <dl class="py attribute">
 <dt id="matrixctl.handlers.api.API.RESPONSE_OK">
-<code class="sig-name descname">RESPONSE_OK</code><em class="property">: Tuple[int, ...]</em><em class="property"> = (200, 201, 202, 203, 204, 205, 206, 207, 226)</em><a class="headerlink" href="#matrixctl.handlers.api.API.RESPONSE_OK" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RESPONSE_OK</code><em class="property">: Tuple<span class="p">[</span>int<span class="p">, </span><span class="p">…</span><span class="p">]</span></em><em class="property"> = (200, 201, 202, 203, 204, 205, 206, 207, 226)</em><a class="headerlink" href="#matrixctl.handlers.api.API.RESPONSE_OK" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -992,7 +1008,7 @@ for.</p>
 
 <dl class="py attribute">
 <dt id="matrixctl.handlers.api.API.json_format">
-<code class="sig-name descname">json_format</code><a class="headerlink" href="#matrixctl.handlers.api.API.json_format" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">json_format</code><em class="property">: bool</em><a class="headerlink" href="#matrixctl.handlers.api.API.json_format" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1045,12 +1061,12 @@ be in the json format.</p></li>
 
 <dl class="py attribute">
 <dt id="matrixctl.handlers.api.API.token">
-<code class="sig-name descname">token</code><a class="headerlink" href="#matrixctl.handlers.api.API.token" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">token</code><em class="property">: str</em><a class="headerlink" href="#matrixctl.handlers.api.API.token" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="matrixctl.handlers.api.API.url">
-<code class="sig-name descname">url</code><a class="headerlink" href="#matrixctl.handlers.api.API.url" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">url</code><em class="property">: <a class="reference internal" href="#matrixctl.handlers.api.UrlBuilder" title="matrixctl.handlers.api.UrlBuilder">UrlBuilder</a></em><a class="headerlink" href="#matrixctl.handlers.api.API.url" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1198,12 +1214,12 @@ be in the json format.</p></li>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt id="matrixctl.handlers.ssh.SSH.address">
-<code class="sig-name descname">address</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.address" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">address</code><em class="property">: str</em><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.address" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="matrixctl.handlers.ssh.SSH.port">
-<code class="sig-name descname">port</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.port" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">port</code><em class="property">: int</em><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.port" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1218,7 +1234,7 @@ be in the json format.</p></li>
 
 <dl class="py attribute">
 <dt id="matrixctl.handlers.ssh.SSH.user">
-<code class="sig-name descname">user</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">user</code><em class="property">: str</em><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.user" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1229,19 +1245,19 @@ be in the json format.</p></li>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
 <dl class="py attribute">
 <dt id="matrixctl.handlers.ssh.SSHResponse.stderr">
-<code class="sig-name descname">stderr</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stderr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stderr</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stderr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="matrixctl.handlers.ssh.SSHResponse.stdin">
-<code class="sig-name descname">stdin</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stdin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stdin</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stdin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="matrixctl.handlers.ssh.SSHResponse.stdout">
-<code class="sig-name descname">stdout</code><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stdout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stdout</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stdout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
@@ -1269,11 +1285,19 @@ be in the json format.</p></li>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2020, Michael Sasser
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1284,7 +1308,6 @@ be in the json format.</p></li>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
