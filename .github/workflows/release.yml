@@ -32,14 +32,25 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
+
       - name: Install Poetry
-        uses: dschep/install-poetry-action@v1.3
+        uses: snok/install-poetry@v1.1.1
         with:
-          version: 1.0.5
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
       - name: Build project
         run: poetry build
+
       - name: pypi-publish
-        uses: pypa/gh-action-pypi-publish@v1.1.0
+        uses: pypa/gh-action-pypi-publish@v1.4.1
         with:
           # PyPI user
           # user: # optional, default is __token__
@@ -49,8 +60,10 @@ jobs:
           # repository_url: # optional
           # The target directory for distribution
           # packages_dir: # optional, default is dist
+
       - name: Zip project
         run: zip --junk-paths matrixctl.zip  dist/* README.md LICENSE.txt
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -59,8 +72,9 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+          draft: true
+          prerelease: true
+
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
