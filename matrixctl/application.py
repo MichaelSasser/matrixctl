@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# PYTHON_ARGCOMPLETE_OK
 # matrixctl
 # Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
 #
@@ -25,7 +24,6 @@ from logging import warning
 from typing import Callable
 from typing import List
 
-import argcomplete
 import coloredlogs
 
 from matrixctl import __version__
@@ -91,10 +89,6 @@ def setup_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def setup_autocomplete(parser: argparse.ArgumentParser) -> None:
-    argcomplete.autocomplete(parser)  # Add autocomplete for Bash, Zsh, ...
-
-
 def setup_logging(debug_mode: bool) -> None:
     coloredlogs.DEFAULT_LOG_FORMAT = (
         "%(asctime)s - %(levelname)s - %(message)s"
@@ -105,7 +99,6 @@ def setup_logging(debug_mode: bool) -> None:
 
 def main() -> int:
     parser = setup_parser()
-    setup_autocomplete(parser)
 
     args: argparse.Namespace = parser.parse_args()
 

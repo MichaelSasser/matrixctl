@@ -243,12 +243,33 @@ class API:
             url=url,
             params=self.__params,
             headers=self.__headers,
+            allow_redirects=False,
         )
+
+        if response.status_code == 302:
+            critical(
+                "The api request resulted in an redirect (302). "
+                "This indicates, that the API might have changed, or your "
+                "playbook is misconfigured.\n"
+                "Please make sure your installation of matrixctl is "
+                "up-to-date and your vars.yml contains:\n\n"
+                "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
+                '_domain: ""'
+            )
+            sys.exit(1)
+        if response.status_code == 404:
+            critical(
+                "You need to make sure, that your vars.yml contains the "
+                "following excessive long line:\n\n"
+                "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
+                "location_synapse_admin_api_enabled: true"
+            )
+            sys.exit(1)
 
         debug(f"{response.json()=}")
 
+        debug(f"{response.status_code=}")
         if response.status_code not in self.__success_codes:
-            debug(f"{response.status_code=}")
             try:
                 if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
                     critical(

@@ -105,6 +105,15 @@ If you don't have a config file head over to the :ref:`Config File` chapter.
    ...
 
 
+.. note:: To be able to use the admin API, you need to have
+          ``matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to_domain: ""``
+          and
+          ``matrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_admin_api_enabled: true``
+          in your ``vars.yml file. This will stop the playbook from setting
+          up a redirect ``matrix.yourdomain.tld`` to
+          ``element.yourdomain.tld``
+
+
 .. warning:: Never ever, ever give this token to anyone else. If you have other
              administrators on that server, they should use their own token.
              With this token you can login and do anything on that matrix

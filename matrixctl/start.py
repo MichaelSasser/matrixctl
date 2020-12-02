@@ -21,7 +21,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from logging import debug
 
-from .handlers.ansible import Ansible
+from .handlers.ansible import ansible_run
 from .handlers.toml import TOML
 
 
@@ -47,10 +47,7 @@ def start(_: Namespace) -> int:
     debug("start")
 
     with TOML() as toml:
-        with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
-            ansible.tags = ("start",)
-            ansible.run_playbook()
-
+        ansible_run(toml.get(("ANSIBLE", "Playbook")), tags="start")
         return 0
 
 

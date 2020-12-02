@@ -21,7 +21,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from logging import debug
 
-from .handlers.ansible import Ansible
+from .handlers.ansible import ansible_run
 from .handlers.toml import TOML
 
 
@@ -40,12 +40,10 @@ def maintenance(_: Namespace) -> int:
     debug("maintenance")
 
     with TOML() as toml:
-        with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
-            ansible.tags = (
-                "run-postgres-vacuum",
-                "start",
-            )
-            ansible.run_playbook()
+        ansible_run(
+            playbook=toml.get(("ANSIBLE", "Playbook")),
+            tags="run-postgres-vacuum,start",
+        )
 
     return 0
 
