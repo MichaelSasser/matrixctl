@@ -66,8 +66,14 @@ To use this program you need to have this config file in
 Check out the documentation for more information.
 
 ```toml
-[SYNAPSE]
+[ANSIBLE]
 # The absolute path to your playbook
+#
+# Playbook="/absolut/path/to/the/playbook"
+
+[SYNAPSE]
+# The absolute path to the synapse playbook.
+# This is only used for updating the playbook.
 #
 # Playbook="/absolut/path/to/the/playbook"
 
