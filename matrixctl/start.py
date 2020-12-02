@@ -47,7 +47,7 @@ def start(_: Namespace) -> int:
     debug("start")
 
     with TOML() as toml:
-        ansible_run(toml.get(("SYNAPSE", "Path")), tags=("start",))
+        ansible_run(toml.get(("ANSIBLE", "Playbook")), tags="start")
         return 0
 
 

@@ -106,7 +106,7 @@ def adduser(arg: Namespace) -> int:
             if arg.ansible:
                 ansible_run(
                     playbook=toml.get(("ANSIBLE", "Playbook")),
-                    tags=("register-user",),
+                    tags="register-user",
                     extra_vars={
                         "username": arg.user,
                         "password": arg.passwd,

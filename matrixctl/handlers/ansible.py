@@ -20,9 +20,9 @@ from logging import debug
 from pathlib import Path
 from typing import Dict
 from typing import Optional
-from typing import Tuple
 
-import ansible_runner
+from ansible_runner.interface import Runner
+from ansible_runner.runner_config import RunnerConfig
 
 
 __author__: str = "Michael Sasser"
@@ -32,14 +32,19 @@ __email__: str = "Michael@MichaelSasser.org"
 # ToDo: Make async to get debug output while running
 def ansible_run(
     playbook: Path,
-    tags: Optional[Tuple[str, ...]] = None,
+    tags: Optional[str] = None,
     extra_vars: Optional[Dict[str, str]] = None,
 ) -> None:
-    runner = ansible_runner.run(
+    runner_config: RunnerConfig = RunnerConfig(
+        private_data_dir="/tmp",
         playbook=playbook,
         tags=tags,
         extravars=extra_vars,
     )
+    runner_config.prepare()
+
+    runner: Runner = Runner(config=runner_config)
+    runner.run()
 
     # debugging output
     debug("Runner status")

@@ -42,10 +42,7 @@ def maintenance(_: Namespace) -> int:
     with TOML() as toml:
         ansible_run(
             playbook=toml.get(("ANSIBLE", "Playbook")),
-            tags=(
-                "run-postgres-vacuum",
-                "start",
-            ),
+            tags="run-postgres-vacuum,start",
         )
 
     return 0

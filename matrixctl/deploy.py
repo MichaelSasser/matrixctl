@@ -42,7 +42,7 @@ def deploy(_: Namespace) -> int:
     with TOML() as toml:
         ansible_run(
             playbook=toml.get(("ANSIBLE", "Playbook")),
-            tags=("setup-all",),
+            tags="setup-all",
         )
 
         return 0
