@@ -68,6 +68,7 @@ class SSH:
     def run_cmd(self, cmd: str) -> SSHResponse:
         debug(f'SSH Command: "{cmd}"')
 
+        # skipcq: BAN-B601
         response: SSHResponse = SSHResponse(
             *[self.__str_from(s) for s in self.__client.exec_command(cmd)]
         )
