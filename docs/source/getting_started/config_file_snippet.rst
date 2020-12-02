@@ -6,6 +6,12 @@
    #
    # Playbook = "/absolute/path/to/your/playbook"
 
+   [SYNAPSE]
+   # The absolute path to the synapse playbook.
+   # This is only used for updating the playbook.
+   #
+   # Playbook="/absolut/path/to/the/playbook"
+
    [API]
    # If your matrix server is deployed, you may want to fill out the API section.
    # It enables matrixctl to run more and faster commands. You can deploy and

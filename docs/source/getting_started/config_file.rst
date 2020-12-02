@@ -6,6 +6,7 @@ To use this program you need to have this config file in
 
 This config file contains four sections:
 
+- ``[ANSIBLE]``
 - ``[SYNAPSE]``
 - ``[API]``
 - ``[SSH]``
@@ -16,7 +17,6 @@ To get started, follow the :ref:`Synapse Playbook` guide.
 You need this section, if you want to:
 
 - ``matrixctl adduser --ansible``
-- ``matrixctl update``
 - ``matrixctl deploy``
 - ``matrixctl start``
 - ``matrixctl restart``
@@ -27,6 +27,12 @@ You need this section, if you want to:
           contains ``import_playbook`` lines like:
           ``- import_playbook: /PathTo/matrix-docker-ansible-deploy/setup.yml``
           and configure it as playbook in the matrixctl config file.
+
+The ``[SYNAPSE]`` section is used for update (``git pull``) the synapse
+playbook
+You need this section, if you want to:
+
+- ``matrixctl update``
 
 The ``[API]`` section is used to communicate with the synapse API directly.
 This is faster and has more additional functionality then the
