@@ -166,6 +166,7 @@
 <code class="docutils literal notranslate"><span class="pre">/etc/matrixctl/config</span></code> or in <code class="docutils literal notranslate"><span class="pre">~/.config/matrixctl/config</span></code>.</p>
 <p>This config file contains four sections:</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[ANSIBLE]</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">[SYNAPSE]</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">[API]</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">[SSH]</span></code></p></li>
@@ -176,7 +177,6 @@ To get started, follow the <a class="reference internal" href="synapse_playbook.
 You need this section, if you want to:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">adduser</span> <span class="pre">--ansible</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">update</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">deploy</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">start</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">restart</span></code></p></li>
@@ -190,6 +190,12 @@ contains <code class="docutils literal notranslate"><span class="pre">import_pla
 <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">import_playbook:</span> <span class="pre">/PathTo/matrix-docker-ansible-deploy/setup.yml</span></code>
 and configure it as playbook in the matrixctl config file.</p>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">[SYNAPSE]</span></code> section is used for update (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>) the synapse
+playbook
+You need this section, if you want to:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">update</span></code></p></li>
+</ul>
 <p>The <code class="docutils literal notranslate"><span class="pre">[API]</span></code> section is used to communicate with the synapse API directly.
 This is faster and has more additional functionality then the
 <a class="reference external" href="https://github.com/spantaleev/matrix-docker-ansible-deploy">Synapse</a>
@@ -254,10 +260,22 @@ to read or edit your config file. I contains sensitive data.</p>
 35
 36
 37
-38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[ANSIBLE]</span>
+38
+39
+40
+41
+42
+43
+44</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[ANSIBLE]</span>
 <span class="c1"># The absolute path to your playbook</span>
 <span class="c1">#</span>
 <span class="c1"># Playbook = &quot;/absolute/path/to/your/playbook&quot;</span>
+
+<span class="k">[SYNAPSE]</span>
+<span class="c1"># The absolute path to the synapse playbook.</span>
+<span class="c1"># This is only used for updating the playbook.</span>
+<span class="c1">#</span>
+<span class="c1"># Playbook=&quot;/absolut/path/to/the/playbook&quot;</span>
 
 <span class="k">[API]</span>
 <span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
