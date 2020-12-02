@@ -22,7 +22,7 @@ from argparse import _SubParsersAction as SubParsersAction
 from logging import error
 
 from .errors import InternalResponseError
-from .handlers.ansible import Ansible
+from .handlers.ansible import ansible_run
 from .handlers.api import API
 from .handlers.toml import TOML
 from .password_helpers import ask_password
@@ -77,7 +77,7 @@ def adduser(arg: Namespace) -> int:
     with TOML() as toml:
         with API(
             toml.get(("API", "Domain")), toml.get(("API", "Token"))
-        ) as api, Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
+        ) as api:
 
             while True:
                 passwd_generated: bool = False
@@ -104,14 +104,15 @@ def adduser(arg: Namespace) -> int:
                 arg.passwd = None
 
             if arg.ansible:
-                arg.admin = "yes" if arg.admin else "no"
-                ansible.tags = ("register-user",)
-                ansible.extra_vars = {
-                    "username": arg.user,
-                    "password": arg.passwd,
-                    "admin": arg.admin,
-                }
-                ansible.run_playbook()
+                ansible_run(
+                    playbook=toml.get(("ANSIBLE", "Playbook")),
+                    tags=("register-user",),
+                    extra_vars={
+                        "username": arg.user,
+                        "password": arg.passwd,
+                        "admin": "yes" if arg.admin else "no",
+                    },
+                )
             else:
                 try:
                     api.url.path = (

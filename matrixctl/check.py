@@ -21,7 +21,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from logging import debug
 
-from .handlers.ansible import Ansible
+from .handlers.ansible import ansible_run
 from .handlers.toml import TOML
 
 
@@ -39,9 +39,9 @@ def subparser_check(subparsers: SubParsersAction) -> None:
 def check(_: Namespace) -> int:
     debug("check")
     with TOML() as toml:
-        with Ansible(toml.get(("SYNAPSE", "Path"))) as ansible:
-            ansible.tags = ("check",)
-            ansible.run_playbook()
+        ansible_run(
+            playbook=toml.get(("ANSIBLE", "Playbook")), tags=("check",)
+        )
 
         return 0
 
