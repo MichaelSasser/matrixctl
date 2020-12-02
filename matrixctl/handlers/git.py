@@ -20,6 +20,7 @@ from __future__ import annotations
 import datetime
 import sys
 
+from logging import critical
 from logging import debug
 from logging import error
 from logging import info
@@ -45,7 +46,13 @@ class Git:
     def __init__(self, path: Union[Path, str]) -> None:
         self.path: Path = Path(path)
         self.repo = git.Repo(self.path)
-        assert not self.repo.bare
+
+        if self.repo.bare:
+            critical(
+                "Please make sure you entered the correct repository "
+                "in [SYNAPSE] -> Playbook."
+            )
+            sys.exit(1)
 
         self.git = git.cmd.Git(self.path)
         self.heads = self.repo.heads
