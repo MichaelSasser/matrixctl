@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; MatrixCtl 0.7.0 documentation</title>
+  <title>&lt;no title&gt; &mdash; MatrixCtl 0.8.0 documentation</title>
   
 
   
@@ -187,56 +187,10 @@
 35
 36
 37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[SYNAPSE]</span>
-<span class="c1"># The absolute path to the fully configured matrix-docker-ansible-deploy</span>
-<span class="c1"># playbook from https://github.com/spantaleev/matrix-docker-ansible-deploy.</span>
-<span class="c1">#</span>
-<span class="c1"># Path=&quot;/absolut/path/to/matrix-docker-ansible-deploy&quot;</span>
-
-<span class="k">[ANSIBLE]</span>
-<span class="c1"># If you have your own playbook, to provision your matrix server, you can</span>
-<span class="c1"># fill out this section. MatrixCtl will run this before the synapse playbook.</span>
-
+38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[ANSIBLE]</span>
 <span class="c1"># The absolute path to your playbook</span>
 <span class="c1">#</span>
-<span class="c1"># Path = &quot;/absolute/path/to/your/playbook&quot;</span>
-
-<span class="c1"># If you have a special &quot;ansible.cfg&quot; for your playbook, fill in the absolute</span>
-<span class="c1"># path to it.</span>
-<span class="c1">#</span>
-<span class="c1"># Cfg=&quot;/absolute/path/to/ansible.cfg&quot;</span>
-
-<span class="c1"># Fill in the absolute path to your Playbook (e.g. &quot;site.yml&quot;)</span>
-<span class="c1">#</span>
-<span class="c1"># Playbook =&quot;setup.yml&quot;</span>
-
-<span class="c1"># If you use tags to provision or configure your matrix host, you can add them</span>
-<span class="c1"># here.</span>
-<span class="c1">#</span>
-<span class="c1"># Tags = [&quot;MyTag&quot;, &quot;MyOtherTag&quot;]</span>
+<span class="c1"># Playbook = &quot;/absolute/path/to/your/playbook&quot;</span>
 
 <span class="k">[API]</span>
 <span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>

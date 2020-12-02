@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contributer Documentation &mdash; MatrixCtl 0.7.0 documentation</title>
+  <title>Contributer Documentation &mdash; MatrixCtl 0.8.0 documentation</title>
   
 
   
@@ -229,7 +229,7 @@ via ansible or the API</p>
 <code class="sig-prename descclassname">matrixctl.adduser.</code><code class="sig-name descname">subparser_adduser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.adduser.subparser_adduser" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -263,7 +263,7 @@ via ansible or the API</p>
 <code class="sig-prename descclassname">matrixctl.deluser.</code><code class="sig-name descname">subparser_deluser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deluser.subparser_deluser" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -302,7 +302,7 @@ starts from the beginning.</p>
 <code class="sig-prename descclassname">matrixctl.adduser_jitsi.</code><code class="sig-name descname">subparser_adduser_jitsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.adduser_jitsi.subparser_adduser_jitsi" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -336,7 +336,7 @@ starts from the beginning.</p>
 <code class="sig-prename descclassname">matrixctl.deluser_jitsi.</code><code class="sig-name descname">subparser_deluser_jitsi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deluser_jitsi.subparser_deluser_jitsi" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -359,7 +359,7 @@ starts from the beginning.</p>
 <code class="sig-prename descclassname">matrixctl.check.</code><code class="sig-name descname">subparser_check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.check.subparser_check" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -369,21 +369,8 @@ starts from the beginning.</p>
 <span id="deploy-deploy-py"></span><h3><strong>deploy</strong> - deploy.py<a class="headerlink" href="#module-matrixctl.deploy" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
 <dt id="matrixctl.deploy.deploy">
-<code class="sig-prename descclassname">matrixctl.deploy.</code><code class="sig-name descname">deploy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arg</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deploy.deploy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">matrixctl.deploy.</code><code class="sig-name descname">deploy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deploy.deploy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deploy the ansible playbook.</p>
-<p><strong>Contol logic</strong></p>
-<p>a = ta  (TOML Ansible)
-b = ts  (TOML SYNAPSE)
-A = arg.ansible
-B = arg.synapse</p>
-<p>Empirical:
-Ansible = a/A/B + aA
-Synapse = b/A/B + bB
-Error = /a/b + /aA + /bB</p>
-<p>Optimized (factored SOP):</p>
-<p>Ansible = a(/A/B + A)
-Synapse = b(/A/B + B)
-Error = /b(B + /a) + /aA</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
@@ -396,7 +383,7 @@ Error = /b(B + /a) + /aA</p>
 <code class="sig-prename descclassname">matrixctl.deploy.</code><code class="sig-name descname">subparser_deploy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.deploy.subparser_deploy" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -419,7 +406,7 @@ Error = /b(B + /a) + /aA</p>
 <code class="sig-prename descclassname">matrixctl.maintenance.</code><code class="sig-name descname">subparser_maintenance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.maintenance.subparser_maintenance" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -442,7 +429,7 @@ Error = /b(B + /a) + /aA</p>
 <code class="sig-prename descclassname">matrixctl.start.</code><code class="sig-name descname">subparser_restart</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.start.subparser_restart" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -452,7 +439,7 @@ Error = /b(B + /a) + /aA</p>
 <code class="sig-prename descclassname">matrixctl.start.</code><code class="sig-name descname">subparser_start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.start.subparser_start" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -465,7 +452,7 @@ Error = /b(B + /a) + /aA</p>
 <code class="sig-prename descclassname">matrixctl.update.</code><code class="sig-name descname">subparser_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.update.subparser_update" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -524,7 +511,7 @@ dictionary.</p></li>
 <code class="sig-prename descclassname">matrixctl.user.</code><code class="sig-name descname">subparser_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.user.subparser_user" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -595,7 +582,7 @@ everything works well.</p>
 <code class="sig-prename descclassname">matrixctl.users.</code><code class="sig-name descname">subparser_users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.users.subparser_users" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -652,7 +639,7 @@ switch.</p></li>
 <code class="sig-prename descclassname">matrixctl.rooms.</code><code class="sig-name descname">print_rooms_table</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rooms_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.rooms.print_rooms_table" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -679,7 +666,7 @@ switch.</p></li>
 <code class="sig-prename descclassname">matrixctl.rooms.</code><code class="sig-name descname">subparser_rooms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.rooms.subparser_rooms" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -709,7 +696,7 @@ switch.</p></li>
 <code class="sig-prename descclassname">matrixctl.delroom.</code><code class="sig-name descname">subparser_delroom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subparsers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.delroom.subparser_delroom" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -836,7 +823,7 @@ password</p></li>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <dl class="py attribute">
 <dt id="matrixctl.errors.Error.BUGMSG">
-<code class="sig-name descname">BUGMSG</code><em class="property">: str</em><em class="property"> = 'If you discover this message, please try updating MatrixCtl. If you see this message again, we would be glad, if you would run the same command again in debug-mode (matrixctl -d [...]) and hand in a &quot;Bug report&quot; at https://github.com/MichaelSasser/matrixctl/issues with the complete output.\n\nPython version: 3.8.5 final\nMatrixCtl version: 0.7.0 \n'</em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">BUGMSG</code><em class="property">: str</em><em class="property"> = 'If you discover this message, please try updating MatrixCtl. If you see this message again, we would be glad, if you would run the same command again in debug-mode (matrixctl -d [...]) and hand in a &quot;Bug report&quot; at https://github.com/MichaelSasser/matrixctl/issues with the complete output.\n\nPython version: 3.8.6 final\nMatrixCtl version: 0.8.0 \n'</em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -864,21 +851,11 @@ password</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="matrixctl.application.setup_autocomplete">
-<code class="sig-prename descclassname">matrixctl.application.</code><code class="sig-name descname">setup_autocomplete</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.application.setup_autocomplete" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt id="matrixctl.application.setup_logging">
 <code class="sig-prename descclassname">matrixctl.application.</code><code class="sig-name descname">setup_logging</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">debug_mode</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.application.setup_logging" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1122,7 +1099,7 @@ be in the json format.</p></li>
 <code class="sig-prename descclassname">matrixctl.handlers.api.</code><code class="sig-name descname">check_type</code><span class="sig-paren">(</span><em class="sig-param">var</em>, <em class="sig-param">var_name</em>, <em class="sig-param">var_type=&lt;class 'str'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.api.check_type" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1130,40 +1107,14 @@ be in the json format.</p></li>
 </div>
 <div class="section" id="module-matrixctl.handlers.ansible">
 <span id="ansible-handlers-ansible-py"></span><h3><strong>Ansible</strong> - handlers/ansible.py<a class="headerlink" href="#module-matrixctl.handlers.ansible" title="Permalink to this headline">¶</a></h3>
-<dl class="py class">
-<dt id="matrixctl.handlers.ansible.Ansible">
-<em class="property">class </em><code class="sig-prename descclassname">matrixctl.handlers.ansible.</code><code class="sig-name descname">Ansible</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">playbook</span><span class="o">=</span><span class="default_value">'setup.yml'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="matrixctl.handlers.ansible.Ansible.ansible_cfg_path">
-<em class="property">property </em><code class="sig-name descname">ansible_cfg_path</code><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible.ansible_cfg_path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.handlers.ansible.Ansible.extra_vars">
-<em class="property">property </em><code class="sig-name descname">extra_vars</code><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible.extra_vars" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.handlers.ansible.Ansible.inventory_path">
-<em class="property">property </em><code class="sig-name descname">inventory_path</code><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible.inventory_path" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.handlers.ansible.Ansible.run_playbook">
-<code class="sig-name descname">run_playbook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible.run_playbook" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt id="matrixctl.handlers.ansible.ansible_run">
+<code class="sig-prename descclassname">matrixctl.handlers.ansible.</code><code class="sig-name descname">ansible_run</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">playbook</span></em>, <em class="sig-param"><span class="n">tags</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extra_vars</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.ansible.ansible_run" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.handlers.ansible.Ansible.tags">
-<em class="property">property </em><code class="sig-name descname">tags</code><a class="headerlink" href="#matrixctl.handlers.ansible.Ansible.tags" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 </div>
@@ -1188,7 +1139,7 @@ be in the json format.</p></li>
 <code class="sig-name descname">log</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">since</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.git.Git.log" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1198,7 +1149,7 @@ be in the json format.</p></li>
 <code class="sig-name descname">pull</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#matrixctl.handlers.git.Git.pull" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>

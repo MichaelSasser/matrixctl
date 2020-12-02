@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Access Token &mdash; MatrixCtl 0.7.0 documentation</title>
+  <title>Access Token &mdash; MatrixCtl 0.8.0 documentation</title>
   
 
   
@@ -245,6 +245,16 @@ If you don’t have a config file head over to the <a class="reference internal"
 <span class="n">Token</span><span class="o">=</span><span class="s">&quot;MDAxZmxvY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzMGNpZCB1c2VyX2lkID0gQG15dXNlcm5hbWU6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSA3WkB1KkdyY3JTRG1CI3Z0CjAwMmZzaWduYXR1cmUgJblnYOAEQJVeHaMgwnMsAagpZBc8CIC6Dwwy027tfJAK&quot;</span>
 <span class="p">...</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To be able to use the admin API, you need to have
+<code class="docutils literal notranslate"><span class="pre">matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to_domain:</span> <span class="pre">&quot;&quot;</span></code>
+and
+<code class="docutils literal notranslate"><span class="pre">matrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_admin_api_enabled:</span> <span class="pre">true</span></code>
+in your <code class="docutils literal notranslate"><span class="pre">vars.yml</span> <span class="pre">file.</span> <span class="pre">This</span> <span class="pre">will</span> <span class="pre">stop</span> <span class="pre">the</span> <span class="pre">playbook</span> <span class="pre">from</span> <span class="pre">setting</span>
+<span class="pre">up</span> <span class="pre">a</span> <span class="pre">redirect</span> <span class="pre">``matrix.yourdomain.tld</span></code> to
+<code class="docutils literal notranslate"><span class="pre">element.yourdomain.tld</span></code></p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
