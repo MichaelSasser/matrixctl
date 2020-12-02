@@ -36,7 +36,7 @@ def subparser_deploy(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=deploy)
 
 
-def deploy(arg: Namespace) -> int:
+def deploy(_: Namespace) -> int:
     """Deploy the ansible playbook."""
     debug("deploy")
     with TOML() as toml:
