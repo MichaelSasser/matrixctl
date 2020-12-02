@@ -63,34 +63,13 @@ There is a [documentation](https://michaelsasser.github.io/matrixctl/index.html)
 To use this program you need to have this config file in
 "/etc/matrixctl/config" or in "~/.config/matrixctl/config".
 
+Check out the documentation for more information.
+
 ```toml
 [SYNAPSE]
-# The absolute path to the fully configured matrix-docker-ansible-deploy
-# playbook from https://github.com/spantaleev/matrix-docker-ansible-deploy.
-#
-# Path="/absolut/path/to/matrix-docker-ansible-deploy"
-
-[ANSIBLE]
-# If you have your own playbook, to provision your matrix server, you can
-# fill out this section. MatrixCtl will run this before the synapse playbook.
-
 # The absolute path to your playbook
 #
-# Path = "/absolute/path/to/your/playbook"
-
-# If you have a special "ansible.cfg" for your playbook, fill in the absolute
-# path to it.
-#
-# Cfg="/absolute/path/to/ansible.cfg"
-
-# Fill in the absolute path to your Playbook (e.g. "site.yml")
-#
-# Playbook ="setup.yml"
-
-# If you use tags to provision or configure your matrix host, you can add them
-# here.
-#
-# Tags = ["MyTag", "MyOtherTag"]
+# Playbook="/absolut/path/to/the/playbook"
 
 [API]
 # If your matrix server is deployed, you may want to fill out the API section.

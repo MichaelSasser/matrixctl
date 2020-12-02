@@ -7,13 +7,12 @@ To use this program you need to have this config file in
 This config file contains four sections:
 
 - ``[SYNAPSE]``
-- ``[ANSIBLE]``
 - ``[API]``
 - ``[SSH]``
 
-In the ``[SYNAPSE]`` section fill in the absolute path to your fully configured
-`Synapse <https://github.com/spantaleev/matrix-docker-ansible-deploy>`_
-playbook. To get started, follow the :ref:`Synapse Playbook` guide.
+In the ``[ANSIBLE]`` section fill in the absolute path to your fully configured
+Playbook. Make sure ansible is configured correctly on your system.
+To get started, follow the :ref:`Synapse Playbook` guide.
 You need this section, if you want to:
 
 - ``matrixctl adduser --ansible``
@@ -24,13 +23,10 @@ You need this section, if you want to:
 - ``matrixctl maintenance``
 - ``matrixctl check``
 
-With the ``[ANSIBLE]`` section you can add your own playbook, if you like.
-It will run on ``update`` before  the
-`Synapse <https://github.com/spantaleev/matrix-docker-ansible-deploy>`_
-playbook.
-It is used for:
-
-- ``matrixctl update`` (optional)
+.. note:: If you want to run (multible) playbooks you can create a file which
+          contains ``import_playbook`` lines like:
+          ``- import_playbook: /PathTo/matrix-docker-ansible-deploy/setup.yml``
+          and configure it as playbook in the matrixctl config file.
 
 The ``[API]`` section is used to communicate with the synapse API directly.
 This is faster and has more additional functionality then the

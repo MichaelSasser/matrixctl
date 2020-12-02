@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.7.0"
+version = "0.8.0"
 description = "Controls a synapse oci-container instance via ansible"
 license = "GPL-3.0+"
 readme = "README.md"
