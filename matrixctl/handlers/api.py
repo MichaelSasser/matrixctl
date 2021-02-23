@@ -204,7 +204,7 @@ class API:
     success_codes = property(fset=_success_codes)
 
     def request(
-        self, data: Union[str, None, Dict[str, Any]] = None
+        self, data: Union[bytes, str, None, Dict[str, Any]] = None
     ) -> requests.Response:
         """Send a request to the synapse API.
 
@@ -232,10 +232,10 @@ class API:
         debug_headers[
             "Authorization"
         ] = f"HIDDEN (Length={len(self.__headers['Authorization'])-7})"
-        debug(f"Method: {self.__method}")
-        debug(f"Headers: {debug_headers}")
-        debug(f"Params: {self.__params}")
-        debug(f"Data: {data}")
+        debug("Method:", self.__method)
+        debug("Headers:", debug_headers)
+        debug("Params:", self.__params)
+        debug("Data:", data)
 
         response = self.session.request(
             method=self.__method,
