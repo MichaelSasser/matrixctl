@@ -37,9 +37,11 @@ from .deluser_jitsi import subparser_deluser_jitsi
 from .deploy import subparser_deploy
 from .maintenance import subparser_maintenance
 from .rooms import subparser_rooms
+from .server_notice import subparser_server_notice
 from .start import subparser_restart
 from .start import subparser_start
 from .update import subparser_update
+from .upload import subparser_upload
 from .user import subparser_user
 from .users import subparser_users
 from .version import subparser_version
@@ -75,7 +77,9 @@ def setup_parser() -> argparse.ArgumentParser:
         subparser_rooms,
         subparser_delroom,
         subparser_update,
+        subparser_upload,
         subparser_deploy,
+        subparser_server_notice,
         subparser_start,
         subparser_restart,  # alias for start
         subparser_maintenance,
