@@ -122,7 +122,7 @@ def ask_question(question: str = "Is everything correct?") -> bool:
         "y",
         "j",
         "n",
-    ):  # noqa
+    ):
         pass
 
     return answer in ("y", "j")

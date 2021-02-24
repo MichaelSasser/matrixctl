@@ -59,9 +59,7 @@ def server_notice(arg: Namespace) -> int:
     toml: TOML = TOML()
     api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
     request = {
-        "user_id": (
-            f"@{arg.username}:" f"{toml.get('API', 'Domain')}"
-        ),
+        "user_id": (f"@{arg.username}:" f"{toml.get('API', 'Domain')}"),
         "content": {
             "msgtype": "m.text",
             "body": arg.message,
