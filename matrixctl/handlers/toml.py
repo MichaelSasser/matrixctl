@@ -39,27 +39,35 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 class TOML:
+
+    DEFAULT_PATHS: List[Path] = [
+        Path("/etc/matrixctl/config"),
+        Path.home() / ".config/matrixctl/config",
+    ]
+    __slots__ = ("__toml",)
+
     def __init__(self, path: Optional[Path] = None) -> None:
         debug("Loading Config file(s)")
 
+        paths: List[Path] = []
         if path is None:
-            self.__default: bool = True
+            paths += self.__class__.DEFAULT_PATHS
 
-        default_config: List[str] = [
-            "/etc/matrixctl/config",
-            str(Path.home() / ".config/matrixctl/config"),
-        ]
+        self.__toml: Dict[str, Any] = self.__open(paths)
+
+        self.__debug_output()
+
+    @staticmethod
+    def __open(paths: List[Path]) -> Dict[str, Any]:
+        """Open a TOML file and suppress warnings of the toml module."""
+        config_files: List[str] = [str(path) for path in paths]
+
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             try:
                 # toml.load is a MutableMapping
-                self.__toml: Dict[str, Any] = deepcopy(
-                    dict(
-                        toml.load(
-                            default_config if self.__default else str(path)
-                        )
-                    )
-                )
+                # Only lists, tuples are not supported.
+                return deepcopy(dict(toml.load(config_files)))
             except FileNotFoundError:
                 error(
                     "To use this program you need to have a config file in"
@@ -76,9 +84,8 @@ class TOML:
                 )
                 sys.exit(1)
 
-        self.__debug_output()
-
     def __debug_output(self) -> None:
+        """Create a debug output for the TOML file."""
         for key in self.__toml:
             debug(f"[{key}]")
 
@@ -90,23 +97,15 @@ class TOML:
                     debug(f"  ├─  {entry} := {self.__toml[key][entry]}")
             debug("  ┴")
 
-    def get(
-        self,
-        *keys: str,
-        none_on_error: bool = False,
-    ) -> Any:
+    def get(self, *keys: str) -> Any:
         """Get a value from a config entry safely.
-
-        This is the only way, the config is asked for a value from an entry.
-        The other methods are used for non MatrixCtl TOML files.
 
         **Usage**
 
-        Pass in a list or tuple with strings describing the path in the
-        ``self.__toml`` dictionary.
+        Pass strings, describing the path in the ``self.__toml`` dictionary.
         Let's say, you are looking for the synapse path:
 
-        >>> toml.get(("SYNAPSE", "Path"))
+        >>> toml.get("SYNAPSE", "Path")
         '/home/dwight/SomRandomDirectory/synapse'
 
         :param keys:  A string or tuple describing the values you are looking
@@ -119,8 +118,6 @@ class TOML:
             for key in keys:
                 toml_walker = toml_walker.__getitem__(key)
         except KeyError:
-            if none_on_error:
-                return None
             error(
                 "Please check your config file. For this operation your "
                 f'config file needs to have the entry "{keys[-1]}" '
