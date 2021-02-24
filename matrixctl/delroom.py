@@ -48,32 +48,30 @@ def delroom(arg: Namespace) -> int:
     :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
     :return:          None
     """
-    with TOML() as toml:
-        with API(
-            toml.get(("API", "Domain")), toml.get(("API", "Token"))
-        ) as api:
-            api.method = "POST"
-            api.url.path = "purge_room"
-            api.url.api_version = "v1"
+    toml: TOML = TOML()
+    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    api.method = "POST"
+    api.url.path = "purge_room"
+    api.url.api_version = "v1"
 
+    try:
+        api.request({"room_id": arg.RoomID}).json()
+    except InternalResponseError as e:
+        if "json" in dir(e.payload):
             try:
-                api.request({"room_id": arg.RoomID}).json()
-            except InternalResponseError as e:
-                if "json" in dir(e.payload):
-                    try:
-                        if e.payload.json()["errcode"] in (
-                            "M_NOT_FOUND",
-                            "M_UNKNOWN",
-                        ):
-                            error(f"{e.payload.json()['error']}")
+                if e.payload.json()["errcode"] in (
+                    "M_NOT_FOUND",
+                    "M_UNKNOWN",
+                ):
+                    error(f"{e.payload.json()['error']}")
 
-                            return 1
-                    except KeyError:
-                        pass  # log the fallback error
+                    return 1
+            except KeyError:
+                pass  # log the fallback error
 
-                error("Could not delete room")
+        error("Could not delete room")
 
-                return 1
+        return 1
 
     return 0
 

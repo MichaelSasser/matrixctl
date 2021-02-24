@@ -69,43 +69,41 @@ def rooms(arg: Namespace) -> int:
     :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
     :return:          None
     """
-    with TOML() as toml:
-        from_room: int = 0
-        rooms_list: List[JsonDict] = []
+    toml: TOML = TOML()
+    from_room: int = 0
+    rooms_list: List[JsonDict] = []
 
-        with API(
-            toml.get(("API", "Domain")), toml.get(("API", "Token"))
-        ) as api:
-            api.url.path = "rooms"
-            api.url.api_version = "v1"
+    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    api.url.path = "rooms"
+    api.url.api_version = "v1"
 
-            if arg.number > 0:
-                api.params = {"limit": arg.number}
+    if arg.number > 0:
+        api.params = {"limit": arg.number}
 
-            if arg.filter:
-                api.params = {"search_term": arg.filter}
+    if arg.filter:
+        api.params = {"search_term": arg.filter}
 
-            if arg.reverse:
-                api.params = {"dir": "b"}
+    if arg.reverse:
+        api.params = {"dir": "b"}
 
-            if arg.order_by_size:
-                api.params = {"order_by": "size"}
+    if arg.order_by_size:
+        api.params = {"order_by": "size"}
 
-            while True:
+    while True:
 
-                api.params = {"from": from_room}  # from must be in the loop
-                try:
-                    lst: JsonDict = api.request().json()
-                except InternalResponseError:
-                    fatal("Could not get the room table.")
+        api.params = {"from": from_room}  # from must be in the loop
+        try:
+            lst: JsonDict = api.request().json()
+        except InternalResponseError:
+            fatal("Could not get the room table.")
 
-                    return 1
+            return 1
 
-                rooms_list += lst["rooms"]
-                try:
-                    from_room = lst["next_token"]
-                except KeyError:
-                    break
+        rooms_list += lst["rooms"]
+        try:
+            from_room = lst["next_token"]
+        except KeyError:
+            break
     print_rooms_table(rooms_list)
 
     return 0

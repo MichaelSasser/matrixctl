@@ -23,18 +23,11 @@ from copy import deepcopy
 from logging import debug
 from logging import error
 from pathlib import Path
-from types import TracebackType
 from typing import Any
 from typing import Dict
-from typing import ItemsView
-from typing import Iterator
-from typing import KeysView
 from typing import List
 from typing import Optional
-from typing import Tuple
-from typing import Type
 from typing import Union
-from typing import ValuesView
 
 import toml
 
@@ -56,10 +49,6 @@ class TOML:
             "/etc/matrixctl/config",
             str(Path.home() / ".config/matrixctl/config"),
         ]
-        # self.__check_paths(self.__class__.FILE_PATH)
-
-        # with warnings.catch_warnings():
-        #     captureWarnings(True)
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             try:
@@ -78,8 +67,8 @@ class TOML:
                     '"~/.config/matrixctl/config".'
                 )
                 sys.exit(1)
-            except TypeError:
-                raise ConfigFileError()
+            except TypeError as e:
+                raise ConfigFileError from e
             except toml.TomlDecodeError:
                 error(
                     "Please check your config file. MatrixCtl was not able "
@@ -103,7 +92,7 @@ class TOML:
 
     def get(
         self,
-        keys: Union[List[str], Tuple[str, ...]],
+        *keys: str,
         none_on_error: bool = False,
     ) -> Any:
         """Get a value from a config entry safely.
@@ -146,56 +135,6 @@ class TOML:
             "Please make sure you ask for an single entry, "
             "not a entire section."
         )
-
-    def has_key(self, key: str) -> bool:
-        return key in self.__toml
-
-    def keys(self) -> KeysView[str]:
-        return self.__toml.keys()
-
-    def values(self) -> ValuesView[Any]:
-        return self.__toml.values()
-
-    def items(self) -> ItemsView[str, Any]:
-        return self.__toml.items()
-
-    def copy(self) -> Dict[str, str]:
-        return self.__toml.copy()
-
-    def __getitem__(self, key: str) -> Any:
-        return self.__toml[key]
-
-    def __len__(self) -> int:
-        return len(self.__toml)
-
-    def __contains__(self, item: str) -> bool:
-        return item in self.__toml
-
-    def __iter__(self) -> Iterator[str]:
-        return iter(self.__toml)
-
-    def __enter__(self) -> TOML:
-        """Use the class with the ``with`` statement`` statement.
-
-        This is currently not really needed, but unifies the way handlers are
-        used.
-        """
-
-        return self
-
-    def __exit__(
-        self,
-        exc_type: Optional[Type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[TracebackType],
-    ) -> None:
-        """Use the class with the ``with`` statement`` statement.
-
-        This is currently not really needed, but unifies the way handlers are
-        used.
-        """
-
-        return
 
     def __repr__(self) -> str:
         return repr(self.__toml)

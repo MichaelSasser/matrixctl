@@ -46,9 +46,9 @@ def subparser_restart(subparsers: SubParsersAction) -> None:
 def start(_: Namespace) -> int:
     debug("start")
 
-    with TOML() as toml:
-        ansible_run(toml.get(("ANSIBLE", "Playbook")), tags="start")
-        return 0
+    toml: TOML = TOML()
+    ansible_run(toml.get("ANSIBLE", "Playbook"), tags="start")
+    return 0
 
 
 # vim: set ft=python :

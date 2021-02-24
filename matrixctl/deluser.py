@@ -47,21 +47,17 @@ def deluser(arg: Namespace) -> int:
     :param _:         Not used (The ``Config`` class)
     :return:          None
     """
-    with TOML() as toml:
-        with API(
-            toml.get(("API", "Domain")), toml.get(("API", "Token"))
-        ) as api:
-            try:
-                api.url.path = (
-                    f"deactivate/@{arg.user}:{toml.get(('API','Domain'))}"
-                )
-                api.url.api_version = "v1"
-                api.method = "POST"
-                api.request({"erase": True})
-            except InternalResponseError:
-                error("The user was not deleted.")
+    toml: TOML = TOML()
+    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    try:
+        api.url.path = f"deactivate/@{arg.user}:{toml.get('API','Domain')}"
+        api.url.api_version = "v1"
+        api.method = "POST"
+        api.request({"erase": True})
+    except InternalResponseError:
+        error("The user was not deleted.")
 
-        return 0
+    return 0
 
 
 # vim: set ft=python :

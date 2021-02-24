@@ -46,24 +46,22 @@ def version(_: Namespace) -> int:
     :param _:  The ``Namespace`` object of argparse's ``arse_args()``
     :return:   None
     """
-    with TOML() as toml:
-        with API(
-            toml.get(("API", "Domain")), toml.get(("API", "Token"))
-        ) as api:
-            api.url.path = "server_version"
-            api.url.api_version = "v1"
-            try:
-                response: JsonDict = api.request().json()
-            except InternalResponseError:
-                fatal("Could not get the server sersion.")
+    toml: TOML = TOML()
+    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    api.url.path = "server_version"
+    api.url.api_version = "v1"
+    try:
+        response: JsonDict = api.request().json()
+    except InternalResponseError:
+        fatal("Could not get the server sersion.")
 
-                return 1
-            debug(f"{response=}")
-            try:
-                print(f"Server Version: {response['server_version']}")
-                print(f"Python Version: {response['python_version']}")
-            except KeyError:
-                error("MatrixCtl was not able to read the server version.")
+        return 1
+    debug(f"{response=}")
+    try:
+        print(f"Server Version: {response['server_version']}")
+        print(f"Python Version: {response['python_version']}")
+    except KeyError:
+        error("MatrixCtl was not able to read the server version.")
 
     return 0
 

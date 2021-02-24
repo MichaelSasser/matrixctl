@@ -39,13 +39,13 @@ def subparser_deploy(subparsers: SubParsersAction) -> None:
 def deploy(_: Namespace) -> int:
     """Deploy the ansible playbook."""
     debug("deploy")
-    with TOML() as toml:
-        ansible_run(
-            playbook=toml.get(("ANSIBLE", "Playbook")),
-            tags="setup-all",
-        )
+    toml: TOML = TOML()
+    ansible_run(
+        playbook=toml.get("ANSIBLE", "Playbook"),
+        tags="setup-all",
+    )
 
-        return 0
+    return 0
 
 
 # vim: set ft=python :

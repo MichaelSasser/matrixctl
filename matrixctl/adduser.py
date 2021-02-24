@@ -74,56 +74,52 @@ def adduser(arg: Namespace) -> int:
     :return:          None
     """
 
-    with TOML() as toml:
-        with API(
-            toml.get(("API", "Domain")), toml.get(("API", "Token"))
-        ) as api:
+    toml: TOML = TOML()
+    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
 
-            while True:
-                passwd_generated: bool = False
+    while True:
+        passwd_generated: bool = False
 
-                if arg.passwd is None:
-                    arg.passwd = ask_password()
+        if arg.passwd is None:
+            arg.passwd = ask_password()
 
-                if arg.passwd == "":
-                    arg.passwd = gen_password()
-                    passwd_generated = True
+        if arg.passwd == "":
+            arg.passwd = gen_password()
+            passwd_generated = True
 
-                print(f"Username: {arg.user}")
+        print(f"Username: {arg.user}")
 
-                if passwd_generated:
-                    print(f"Password (generated): {arg.passwd}")
-                else:
-                    print("Password: **HIDDEN**")
-                print(f"Admin:    {'yes' if arg.admin else 'no'}")
+        if passwd_generated:
+            print(f"Password (generated): {arg.passwd}")
+        else:
+            print("Password: **HIDDEN**")
+        print(f"Admin:    {'yes' if arg.admin else 'no'}")
 
-                answer = ask_question()
+        answer = ask_question()
 
-                if answer:
-                    break
-                arg.passwd = None
+        if answer:
+            break
+        arg.passwd = None
 
-            if arg.ansible:
-                ansible_run(
-                    playbook=toml.get(("ANSIBLE", "Playbook")),
-                    tags="register-user",
-                    extra_vars={
-                        "username": arg.user,
-                        "password": arg.passwd,
-                        "admin": "yes" if arg.admin else "no",
-                    },
-                )
-            else:
-                try:
-                    api.url.path = (
-                        f"users/@{arg.user}:{toml.get(('API','Domain'))}"
-                    )
-                    api.method = "PUT"
-                    api.request({"password": arg.passwd, "admin": arg.admin})
-                except InternalResponseError:
-                    error("The User was not added.")
+    if arg.ansible:
+        ansible_run(
+            playbook=toml.get("ANSIBLE", "Playbook"),
+            tags="register-user",
+            extra_vars={
+                "username": arg.user,
+                "password": arg.passwd,
+                "admin": "yes" if arg.admin else "no",
+            },
+        )
+    else:
+        try:
+            api.url.path = f"users/@{arg.user}:{toml.get('API','Domain')}"
+            api.method = "PUT"
+            api.request({"password": arg.passwd, "admin": arg.admin})
+        except InternalResponseError:
+            error("The User was not added.")
 
-        return 0
+    return 0
 
 
 # vim: set ft=python :
