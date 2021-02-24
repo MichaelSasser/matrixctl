@@ -23,18 +23,11 @@ from copy import deepcopy
 from logging import debug
 from logging import error
 from pathlib import Path
-from types import TracebackType
 from typing import Any
 from typing import Dict
-from typing import ItemsView
-from typing import Iterator
-from typing import KeysView
 from typing import List
 from typing import Optional
-from typing import Tuple
-from typing import Type
 from typing import Union
-from typing import ValuesView
 
 import toml
 
@@ -46,31 +39,35 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 class TOML:
+
+    DEFAULT_PATHS: List[Path] = [
+        Path("/etc/matrixctl/config"),
+        Path.home() / ".config/matrixctl/config",
+    ]
+    __slots__ = ("__toml",)
+
     def __init__(self, path: Optional[Path] = None) -> None:
         debug("Loading Config file(s)")
 
+        paths: List[Path] = []
         if path is None:
-            self.__default: bool = True
+            paths += self.__class__.DEFAULT_PATHS
 
-        default_config: List[str] = [
-            "/etc/matrixctl/config",
-            str(Path.home() / ".config/matrixctl/config"),
-        ]
-        # self.__check_paths(self.__class__.FILE_PATH)
+        self.__toml: Dict[str, Any] = self.__open(paths)
 
-        # with warnings.catch_warnings():
-        #     captureWarnings(True)
+        self.__debug_output()
+
+    @staticmethod
+    def __open(paths: List[Path]) -> Dict[str, Any]:
+        """Open a TOML file and suppress warnings of the toml module."""
+        config_files: List[str] = [str(path) for path in paths]
+
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             try:
                 # toml.load is a MutableMapping
-                self.__toml: Dict[str, Any] = deepcopy(
-                    dict(
-                        toml.load(
-                            default_config if self.__default else str(path)
-                        )
-                    )
-                )
+                # Only lists, tuples are not supported.
+                return deepcopy(dict(toml.load(config_files)))
             except FileNotFoundError:
                 error(
                     "To use this program you need to have a config file in"
@@ -78,8 +75,8 @@ class TOML:
                     '"~/.config/matrixctl/config".'
                 )
                 sys.exit(1)
-            except TypeError:
-                raise ConfigFileError()
+            except TypeError as e:
+                raise ConfigFileError from e
             except toml.TomlDecodeError:
                 error(
                     "Please check your config file. MatrixCtl was not able "
@@ -87,9 +84,8 @@ class TOML:
                 )
                 sys.exit(1)
 
-        self.__debug_output()
-
     def __debug_output(self) -> None:
+        """Create a debug output for the TOML file."""
         for key in self.__toml:
             debug(f"[{key}]")
 
@@ -101,23 +97,15 @@ class TOML:
                     debug(f"  ├─  {entry} := {self.__toml[key][entry]}")
             debug("  ┴")
 
-    def get(
-        self,
-        keys: Union[List[str], Tuple[str, ...]],
-        none_on_error: bool = False,
-    ) -> Any:
+    def get(self, *keys: str) -> Any:
         """Get a value from a config entry safely.
-
-        This is the only way, the config is asked for a value from an entry.
-        The other methods are used for non MatrixCtl TOML files.
 
         **Usage**
 
-        Pass in a list or tuple with strings describing the path in the
-        ``self.__toml`` dictionary.
+        Pass strings, describing the path in the ``self.__toml`` dictionary.
         Let's say, you are looking for the synapse path:
 
-        >>> toml.get(("SYNAPSE", "Path"))
+        >>> toml.get("SYNAPSE", "Path")
         '/home/dwight/SomRandomDirectory/synapse'
 
         :param keys:  A string or tuple describing the values you are looking
@@ -130,8 +118,6 @@ class TOML:
             for key in keys:
                 toml_walker = toml_walker.__getitem__(key)
         except KeyError:
-            if none_on_error:
-                return None
             error(
                 "Please check your config file. For this operation your "
                 f'config file needs to have the entry "{keys[-1]}" '
@@ -146,56 +132,6 @@ class TOML:
             "Please make sure you ask for an single entry, "
             "not a entire section."
         )
-
-    def has_key(self, key: str) -> bool:
-        return key in self.__toml
-
-    def keys(self) -> KeysView[str]:
-        return self.__toml.keys()
-
-    def values(self) -> ValuesView[Any]:
-        return self.__toml.values()
-
-    def items(self) -> ItemsView[str, Any]:
-        return self.__toml.items()
-
-    def copy(self) -> Dict[str, str]:
-        return self.__toml.copy()
-
-    def __getitem__(self, key: str) -> Any:
-        return self.__toml[key]
-
-    def __len__(self) -> int:
-        return len(self.__toml)
-
-    def __contains__(self, item: str) -> bool:
-        return item in self.__toml
-
-    def __iter__(self) -> Iterator[str]:
-        return iter(self.__toml)
-
-    def __enter__(self) -> TOML:
-        """Use the class with the ``with`` statement`` statement.
-
-        This is currently not really needed, but unifies the way handlers are
-        used.
-        """
-
-        return self
-
-    def __exit__(
-        self,
-        exc_type: Optional[Type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[TracebackType],
-    ) -> None:
-        """Use the class with the ``with`` statement`` statement.
-
-        This is currently not really needed, but unifies the way handlers are
-        used.
-        """
-
-        return
 
     def __repr__(self) -> str:
         return repr(self.__toml)

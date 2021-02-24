@@ -88,65 +88,59 @@ def users(arg: Namespace) -> int:
     :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
     :return:          None
     """
-    with TOML() as toml:
-        len_domain = len(toml.get(("API", "Domain"))) + 1  # 1 for :
-        from_user: int = 0
-        users_list: List[JsonDict] = []
+    toml: TOML = TOML()
+    len_domain = len(toml.get("API", "Domain")) + 1  # 1 for :
+    from_user: int = 0
+    users_list: List[JsonDict] = []
 
-        # ToDo: API bool
-        with API(
-            toml.get(("API", "Domain")), toml.get(("API", "Token"))
-        ) as api:
-            api.url.path = "users"
-            api.params = {
-                "guests": "true" if arg.with_guests or arg.all else "false"
-            }
-            api.params = {
-                "deactivated": "true"
-                if arg.with_deactivated or arg.all
-                else "false"
-            }
+    # ToDo: API bool
+    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    api.url.path = "users"
+    api.params = {"guests": "true" if arg.with_guests or arg.all else "false"}
+    api.params = {
+        "deactivated": "true" if arg.with_deactivated or arg.all else "false"
+    }
 
-            while True:
+    while True:
 
-                api.params = {"from": from_user}  # from must be in the loop
-                try:
-                    lst: JsonDict = api.request().json()
-                except InternalResponseError:
-                    fatal("Could not get the user table.")
+        api.params = {"from": from_user}  # from must be in the loop
+        try:
+            lst: JsonDict = api.request().json()
+        except InternalResponseError:
+            fatal("Could not get the user table.")
 
-                    return 1
+            return 1
 
-                users_list += lst["users"]
+        users_list += lst["users"]
 
-                try:
-                    from_user = lst["next_token"]
-                except KeyError:
-                    break
+        try:
+            from_user = lst["next_token"]
+        except KeyError:
+            break
 
-            user_list: List[Tuple[str, str, str, str]] = []
+    user_list: List[Tuple[str, str, str, str]] = []
 
-            for user in users_list:
-                name = user["name"][1:-len_domain]
-                deactivated: str = human_readable_bool(user["deactivated"])
-                admin: str = human_readable_bool(user["admin"])
-                guest: str = human_readable_bool(user["is_guest"])
+    for user in users_list:
+        name = user["name"][1:-len_domain]
+        deactivated: str = human_readable_bool(user["deactivated"])
+        admin: str = human_readable_bool(user["admin"])
+        guest: str = human_readable_bool(user["is_guest"])
 
-                user_list.append(
-                    (
-                        name,
-                        deactivated,
-                        admin,
-                        guest,
-                    )
-                )
-            print(
-                tabulate(
-                    user_list,
-                    headers=("Name", "Deactivated", "Is Admin", "Is Guest"),
-                    tablefmt="psql",
-                )
+        user_list.append(
+            (
+                name,
+                deactivated,
+                admin,
+                guest,
             )
+        )
+    print(
+        tabulate(
+            user_list,
+            headers=("Name", "Deactivated", "Is Admin", "Is Guest"),
+            tablefmt="psql",
+        )
+    )
 
     return 0
 

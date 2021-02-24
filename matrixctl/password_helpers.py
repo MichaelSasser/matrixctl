@@ -20,6 +20,7 @@ import getpass
 import secrets
 import string
 
+from logging import warn
 from typing import Optional
 
 
@@ -122,8 +123,8 @@ def ask_question(question: str = "Is everything correct?") -> bool:
         "y",
         "j",
         "n",
-    ):  # noqa
-        pass
+    ):
+        warn("User entered [y/n] pattern did not match")
 
     return answer in ("y", "j")
 

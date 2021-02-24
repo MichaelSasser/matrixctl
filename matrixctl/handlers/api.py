@@ -21,12 +21,9 @@ import sys
 
 from logging import critical
 from logging import debug
-from types import TracebackType
 from typing import Any
 from typing import Dict
-from typing import Optional
 from typing import Tuple
-from typing import Type
 from typing import Union
 from urllib.parse import urlparse
 
@@ -285,29 +282,6 @@ class API:
             raise InternalResponseError(payload=response)
 
         return response
-
-    def __enter__(self) -> API:
-        """Use the class with the ``with`` statement`` statement.
-
-        This is currently not really needed, but unifies the way handlers are
-        used.
-        """
-
-        return self
-
-    def __exit__(
-        self,
-        exc_type: Optional[Type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[TracebackType],
-    ) -> None:
-        """Use the class with the ``with`` statement`` statement.
-
-        This is currently not really needed, but unifies the way handlers are
-        used.
-        """
-
-        return
 
 
 # vim: set ft=python :

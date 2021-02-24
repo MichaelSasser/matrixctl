@@ -39,11 +39,11 @@ def subparser_maintenance(subparsers: SubParsersAction) -> None:
 def maintenance(_: Namespace) -> int:
     debug("maintenance")
 
-    with TOML() as toml:
-        ansible_run(
-            playbook=toml.get(("ANSIBLE", "Playbook")),
-            tags="run-postgres-vacuum,start",
-        )
+    toml: TOML = TOML()
+    ansible_run(
+        playbook=toml.get("ANSIBLE", "Playbook"),
+        tags="run-postgres-vacuum,start",
+    )
 
     return 0
 

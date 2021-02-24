@@ -67,47 +67,45 @@ def adduser_jitsi(arg: Namespace) -> int:
     :return:          None
     """
 
-    with TOML() as toml:
-        address = (
-            toml.get(("SSH", "Address"))
-            if toml.get(("SSH", "Address"))
-            else f"matrix.{toml.get(('API', 'Domain'))}"
+    toml: TOML = TOML()
+    address = (
+        toml.get("SSH", "Address")
+        if toml.get("SSH", "Address")
+        else f"matrix.{toml.get('API', 'Domain')}"
+    )
+    with SSH(address, toml.get("SSH", "User"), toml.get("SSH", "Port")) as ssh:
+        while True:
+            passwd_generated: bool = False
+
+            if arg.passwd is None:
+                arg.passwd = ask_password()
+
+            if arg.passwd == "":
+                arg.passwd = gen_password()
+                passwd_generated = True
+
+            print(f"Username: {arg.user}")
+
+            if passwd_generated:
+                print(f"Password (generated): {arg.passwd}")
+            else:
+                print("Password: **HIDDEN**")
+
+            answer = ask_question()
+
+            if answer:
+                break
+            arg.passwd = None
+
+        cmd: str = (
+            "sudo docker exec matrix-jitsi-prosody prosodyctl "
+            f"--config /config/prosody.cfg.lua register "
+            f'"{arg.user}" {JID_EXT} "{arg.passwd}"'
         )
-        with SSH(
-            address, toml.get(("SSH", "User")), toml.get(("SSH", "Port"))
-        ) as ssh:
-            while True:
-                passwd_generated: bool = False
 
-                if arg.passwd is None:
-                    arg.passwd = ask_password()
+        ssh.run_cmd(cmd)
 
-                if arg.passwd == "":
-                    arg.passwd = gen_password()
-                    passwd_generated = True
-
-                print(f"Username: {arg.user}")
-
-                if passwd_generated:
-                    print(f"Password (generated): {arg.passwd}")
-                else:
-                    print("Password: **HIDDEN**")
-
-                answer = ask_question()
-
-                if answer:
-                    break
-                arg.passwd = None
-
-            cmd: str = (
-                "sudo docker exec matrix-jitsi-prosody prosodyctl "
-                f"--config /config/prosody.cfg.lua register "
-                f'"{arg.user}" {JID_EXT} "{arg.passwd}"'
-            )
-
-            ssh.run_cmd(cmd)
-
-            return 0
+        return 0
 
 
 # vim: set ft=python :

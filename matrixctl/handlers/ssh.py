@@ -53,10 +53,12 @@ class SSH:
     def __connect(self) -> None:
         """Connect to the SSH server."""
         self.__client.connect(self.address, self.port, self.user)
+        debug("SSH connected")
 
     def __disconnect(self) -> None:
         """Disconnect from the SSH server."""
         self.__client.close()
+        debug("SSH disconnected")
 
     @staticmethod
     def __str_from(f: ChannelFile) -> Optional[str]:
@@ -89,6 +91,7 @@ class SSH:
         exc_tb: Optional[TracebackType],
     ) -> None:
         """Close the SSH connection."""
+        debug(f"SSH __exit__: {exc_type=}, {exc_val=}, {exc_tb=}")
         self.__disconnect()
 
     def __del__(self) -> None:

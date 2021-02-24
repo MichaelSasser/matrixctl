@@ -56,29 +56,25 @@ def server_notice(arg: Namespace) -> int:
     :param _:         Not used (The ``Config`` class)
     :return:          None
     """
-    with TOML() as toml:
-        with API(
-            toml.get(("API", "Domain")), toml.get(("API", "Token"))
-        ) as api:
-            request = {
-                "user_id": (
-                    f"@{arg.username}:" f"{toml.get(('API', 'Domain'))}"
-                ),
-                "content": {
-                    "msgtype": "m.text",
-                    "body": arg.message,
-                },
-            }
+    toml: TOML = TOML()
+    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    request = {
+        "user_id": (f"@{arg.username}:" f"{toml.get('API', 'Domain')}"),
+        "content": {
+            "msgtype": "m.text",
+            "body": arg.message,
+        },
+    }
 
-            try:
-                api.url.path = "send_server_notice"
-                api.url.api_version = "v1"
-                api.method = "POST"
-                api.request(request)
-            except InternalResponseError:
-                error("The server notice was not sent.")
+    try:
+        api.url.path = "send_server_notice"
+        api.url.api_version = "v1"
+        api.method = "POST"
+        api.request(request)
+    except InternalResponseError:
+        error("The server notice was not sent.")
 
-        return 0
+    return 0
 
 
 # vim: set ft=python :

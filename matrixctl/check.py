@@ -38,10 +38,10 @@ def subparser_check(subparsers: SubParsersAction) -> None:
 
 def check(_: Namespace) -> int:
     debug("check")
-    with TOML() as toml:
-        ansible_run(playbook=toml.get(("ANSIBLE", "Playbook")), tags="check")
 
-        return 0
+    toml: TOML = TOML()
+    ansible_run(playbook=toml.get("ANSIBLE", "Playbook"), tags="check")
+    return 0
 
 
 # vim: set ft=python :
