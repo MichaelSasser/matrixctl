@@ -89,24 +89,22 @@
 <span class="sd">    :param cfg:       The ``Config`` class</span>
 <span class="sd">    :return:          None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">TOML</span><span class="p">()</span> <span class="k">as</span> <span class="n">toml</span><span class="p">:</span>
-        <span class="n">address</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;SSH&quot;</span><span class="p">,</span> <span class="s2">&quot;Address&quot;</span><span class="p">))</span>
-            <span class="k">if</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;SSH&quot;</span><span class="p">,</span> <span class="s2">&quot;Address&quot;</span><span class="p">))</span>
-            <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;matrix.</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s1">&#39;API&#39;</span><span class="p">,</span><span class="s1">&#39;Domain&#39;</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SSH&quot;</span><span class="p">,</span> <span class="s2">&quot;Address&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SSH&quot;</span><span class="p">,</span> <span class="s2">&quot;Address&quot;</span><span class="p">)</span>
+        <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;matrix.</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;API&#39;</span><span class="p">,</span><span class="s1">&#39;Domain&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="n">SSH</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SSH&quot;</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SSH&quot;</span><span class="p">,</span> <span class="s2">&quot;Port&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">ssh</span><span class="p">:</span>
+        <span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;sudo docker exec matrix-jitsi-prosody prosodyctl &quot;</span>
+            <span class="s2">&quot;--config /config/prosody.cfg.lua deluser &quot;</span>
+            <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s1">@</span><span class="si">{</span><span class="n">JID_EXT</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
         <span class="p">)</span>
-        <span class="k">with</span> <span class="n">SSH</span><span class="p">(</span>
-            <span class="n">address</span><span class="p">,</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;SSH&quot;</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">)),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;SSH&quot;</span><span class="p">,</span> <span class="s2">&quot;Port&quot;</span><span class="p">))</span>
-        <span class="p">)</span> <span class="k">as</span> <span class="n">ssh</span><span class="p">:</span>
-            <span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="s2">&quot;sudo docker exec matrix-jitsi-prosody prosodyctl &quot;</span>
-                <span class="s2">&quot;--config /config/prosody.cfg.lua deluser &quot;</span>
-                <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s1">@</span><span class="si">{</span><span class="n">JID_EXT</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
-            <span class="p">)</span>
 
-            <span class="n">ssh</span><span class="o">.</span><span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">ssh</span><span class="o">.</span><span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="mi">0</span></div>
+    <span class="k">return</span> <span class="mi">0</span></div>
 
 
 <span class="c1"># vim: set ft=python :</span>

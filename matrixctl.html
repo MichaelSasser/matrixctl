@@ -812,61 +812,30 @@ password</p></li>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#matrixctl.handlers.toml.TOML.get" title="matrixctl.handlers.toml.TOML.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code></a>(keys[, none_on_error])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#matrixctl.handlers.toml.TOML.get" title="matrixctl.handlers.toml.TOML.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code></a>(*keys)</p></td>
 <td><p>Get a value from a config entry safely.</p></td>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 52%" />
-<col style="width: 48%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><strong>copy</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><strong>has_key</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><strong>items</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><strong>keys</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><strong>values</strong></p></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<dl class="py method">
-<dt id="matrixctl.handlers.toml.TOML.copy">
-<code class="sig-name descname"><span class="pre">copy</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/toml.html#TOML.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.toml.TOML.copy" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py attribute">
+<dt id="matrixctl.handlers.toml.TOML.DEFAULT_PATHS">
+<code class="sig-name descname"><span class="pre">DEFAULT_PATHS</span></code><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">[PosixPath('/etc/matrixctl/config'),</span> <span class="pre">PosixPath('/home/runner/.config/matrixctl/config')]</span></em><a class="headerlink" href="#matrixctl.handlers.toml.TOML.DEFAULT_PATHS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="matrixctl.handlers.toml.TOML.get">
-<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">none_on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/toml.html#TOML.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.toml.TOML.get" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/toml.html#TOML.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.toml.TOML.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a value from a config entry safely.</p>
-<p>This is the only way, the config is asked for a value from an entry.
-The other methods are used for non MatrixCtl TOML files.</p>
 <p><strong>Usage</strong></p>
-<p>Pass in a list or tuple with strings describing the path in the
-<code class="docutils literal notranslate"><span class="pre">self.__toml</span></code> dictionary.
+<p>Pass strings, describing the path in the <code class="docutils literal notranslate"><span class="pre">self.__toml</span></code> dictionary.
 Let’s say, you are looking for the synapse path:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;SYNAPSE&quot;</span><span class="p">,</span> <span class="s2">&quot;Path&quot;</span><span class="p">))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SYNAPSE&quot;</span><span class="p">,</span> <span class="s2">&quot;Path&quot;</span><span class="p">)</span>
 <span class="go">&#39;/home/dwight/SomRandomDirectory/synapse&#39;</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>keys</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, …]]) – A string or tuple describing the values you are looking
+<dd class="field-odd"><p><strong>keys</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – A string or tuple describing the values you are looking
 for.</p>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -874,46 +843,6 @@ for.</p>
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The value of the entry you described.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.handlers.toml.TOML.has_key">
-<code class="sig-name descname"><span class="pre">has_key</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/toml.html#TOML.has_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.toml.TOML.has_key" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.handlers.toml.TOML.items">
-<code class="sig-name descname"><span class="pre">items</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/toml.html#TOML.items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.toml.TOML.items" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemsView</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.handlers.toml.TOML.keys">
-<code class="sig-name descname"><span class="pre">keys</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/toml.html#TOML.keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.toml.TOML.keys" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">KeysView</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="matrixctl.handlers.toml.TOML.values">
-<code class="sig-name descname"><span class="pre">values</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/toml.html#TOML.values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.toml.TOML.values" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ValuesView</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
 </dd>
 </dl>
 </dd></dl>

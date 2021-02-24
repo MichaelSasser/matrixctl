@@ -64,18 +64,11 @@
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">debug</span>
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">error</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">TracebackType</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ItemsView</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">KeysView</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ValuesView</span>
 
 <span class="kn">import</span> <span class="nn">toml</span>
 
@@ -87,31 +80,35 @@
 
 
 <div class="viewcode-block" id="TOML"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.toml.TOML">[docs]</a><span class="k">class</span> <span class="nc">TOML</span><span class="p">:</span>
+
+    <span class="n">DEFAULT_PATHS</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/etc/matrixctl/config&quot;</span><span class="p">),</span>
+        <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.config/matrixctl/config&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;__toml&quot;</span><span class="p">,)</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Loading Config file(s)&quot;</span><span class="p">)</span>
 
+        <span class="n">paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__default</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">paths</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">DEFAULT_PATHS</span>
 
-        <span class="n">default_config</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s2">&quot;/etc/matrixctl/config&quot;</span><span class="p">,</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.config/matrixctl/config&quot;</span><span class="p">),</span>
-        <span class="p">]</span>
-        <span class="c1"># self.__check_paths(self.__class__.FILE_PATH)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__open</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
 
-        <span class="c1"># with warnings.catch_warnings():</span>
-        <span class="c1">#     captureWarnings(True)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__debug_output</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">__open</span><span class="p">(</span><span class="n">paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Open a TOML file and suppress warnings of the toml module.&quot;&quot;&quot;</span>
+        <span class="n">config_files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+
         <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="c1"># toml.load is a MutableMapping</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span>
-                    <span class="nb">dict</span><span class="p">(</span>
-                        <span class="n">toml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-                            <span class="n">default_config</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-                        <span class="p">)</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
+                <span class="c1"># Only lists, tuples are not supported.</span>
+                <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config_files</span><span class="p">)))</span>
             <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
                 <span class="n">error</span><span class="p">(</span>
                     <span class="s2">&quot;To use this program you need to have a config file in&quot;</span>
@@ -119,8 +116,8 @@
                     <span class="s1">&#39;&quot;~/.config/matrixctl/config&quot;.&#39;</span>
                 <span class="p">)</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ConfigFileError</span> <span class="kn">from</span> <span class="nn">e</span>
             <span class="k">except</span> <span class="n">toml</span><span class="o">.</span><span class="n">TomlDecodeError</span><span class="p">:</span>
                 <span class="n">error</span><span class="p">(</span>
                     <span class="s2">&quot;Please check your config file. MatrixCtl was not able &quot;</span>
@@ -128,9 +125,8 @@
                 <span class="p">)</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">__debug_output</span><span class="p">()</span>
-
     <span class="k">def</span> <span class="nf">__debug_output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Create a debug output for the TOML file.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="p">:</span>
             <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
 
@@ -142,23 +138,15 @@
                     <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ├─  </span><span class="si">{</span><span class="n">entry</span><span class="si">}</span><span class="s2"> := </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">entry</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  ┴&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TOML.get"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.toml.TOML.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">keys</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]],</span>
-        <span class="n">none_on_error</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<div class="viewcode-block" id="TOML.get"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.toml.TOML.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Get a value from a config entry safely.</span>
-
-<span class="sd">        This is the only way, the config is asked for a value from an entry.</span>
-<span class="sd">        The other methods are used for non MatrixCtl TOML files.</span>
 
 <span class="sd">        **Usage**</span>
 
-<span class="sd">        Pass in a list or tuple with strings describing the path in the</span>
-<span class="sd">        ``self.__toml`` dictionary.</span>
+<span class="sd">        Pass strings, describing the path in the ``self.__toml`` dictionary.</span>
 <span class="sd">        Let&#39;s say, you are looking for the synapse path:</span>
 
-<span class="sd">        &gt;&gt;&gt; toml.get((&quot;SYNAPSE&quot;, &quot;Path&quot;))</span>
+<span class="sd">        &gt;&gt;&gt; toml.get(&quot;SYNAPSE&quot;, &quot;Path&quot;)</span>
 <span class="sd">        &#39;/home/dwight/SomRandomDirectory/synapse&#39;</span>
 
 <span class="sd">        :param keys:  A string or tuple describing the values you are looking</span>
@@ -171,8 +159,6 @@
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
                 <span class="n">toml_walker</span> <span class="o">=</span> <span class="n">toml_walker</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">none_on_error</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">None</span>
             <span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;Please check your config file. For this operation your &quot;</span>
                 <span class="sa">f</span><span class="s1">&#39;config file needs to have the entry &quot;</span><span class="si">{</span><span class="n">keys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&quot; &#39;</span>
@@ -187,56 +173,6 @@
             <span class="s2">&quot;Please make sure you ask for an single entry, &quot;</span>
             <span class="s2">&quot;not a entire section.&quot;</span>
         <span class="p">)</span></div>
-
-<div class="viewcode-block" id="TOML.has_key"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.toml.TOML.has_key">[docs]</a>    <span class="k">def</span> <span class="nf">has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span></div>
-
-<div class="viewcode-block" id="TOML.keys"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.toml.TOML.keys">[docs]</a>    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KeysView</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="TOML.values"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.toml.TOML.values">[docs]</a>    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ValuesView</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="TOML.items"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.toml.TOML.items">[docs]</a>    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemsView</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="TOML.copy"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.toml.TOML.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span>
-
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TOML</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Use the class with the ``with`` statement`` statement.</span>
-
-<span class="sd">        This is currently not really needed, but unifies the way handlers are</span>
-<span class="sd">        used.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">exc_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">]],</span>
-        <span class="n">exc_val</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">],</span>
-        <span class="n">exc_tb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TracebackType</span><span class="p">],</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Use the class with the ``with`` statement`` statement.</span>
-
-<span class="sd">        This is currently not really needed, but unifies the way handlers are</span>
-<span class="sd">        used.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="p">)</span>

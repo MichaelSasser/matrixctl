@@ -94,10 +94,12 @@
     <span class="k">def</span> <span class="nf">__connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Connect to the SSH server.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;SSH connected&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Disconnect from the SSH server.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;SSH disconnected&quot;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">__str_from</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">ChannelFile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
@@ -130,6 +132,7 @@
         <span class="n">exc_tb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TracebackType</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Close the SSH connection.&quot;&quot;&quot;</span>
+        <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SSH __exit__: </span><span class="si">{</span><span class="n">exc_type</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">exc_val</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">exc_tb</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__disconnect</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

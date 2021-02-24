@@ -87,9 +87,9 @@
 <div class="viewcode-block" id="start"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.start.start">[docs]</a><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
 
-    <span class="k">with</span> <span class="n">TOML</span><span class="p">()</span> <span class="k">as</span> <span class="n">toml</span><span class="p">:</span>
-        <span class="n">ansible_run</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;ANSIBLE&quot;</span><span class="p">,</span> <span class="s2">&quot;Playbook&quot;</span><span class="p">)),</span> <span class="n">tags</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="mi">0</span></div>
+    <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
+    <span class="n">ansible_run</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ANSIBLE&quot;</span><span class="p">,</span> <span class="s2">&quot;Playbook&quot;</span><span class="p">),</span> <span class="n">tags</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
 
 
 <span class="c1"># vim: set ft=python :</span>

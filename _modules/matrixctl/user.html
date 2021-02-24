@@ -218,36 +218,34 @@
 <span class="sd">    :return:          None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">with</span> <span class="n">TOML</span><span class="p">()</span> <span class="k">as</span> <span class="n">toml</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">API</span><span class="p">(</span>
-            <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">)),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
-        <span class="p">)</span> <span class="k">as</span> <span class="n">api</span><span class="p">:</span>
-            <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;users/@</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span><span class="s2">&quot;Domain&quot;</span><span class="p">))</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
+    <span class="n">api</span><span class="p">:</span> <span class="n">API</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;users/@</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span><span class="s2">&quot;Domain&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
 
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">user_dict</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-            <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
-                <span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Could not receive the user information&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">user_dict</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
+        <span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Could not receive the user information&quot;</span><span class="p">)</span>
 
-                <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="mi">1</span>
 
-            <span class="n">len_domain</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">)))</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 1 for :</span>
-            <span class="n">user_tables</span> <span class="o">=</span> <span class="n">generate_user_tables</span><span class="p">(</span><span class="n">user_dict</span><span class="p">,</span> <span class="n">len_domain</span><span class="p">)</span>
+    <span class="n">len_domain</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 1 for :</span>
+    <span class="n">user_tables</span> <span class="o">=</span> <span class="n">generate_user_tables</span><span class="p">(</span><span class="n">user_dict</span><span class="p">,</span> <span class="n">len_domain</span><span class="p">)</span>
 
-            <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User: </span><span class="si">{</span><span class="n">user_tables</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User: </span><span class="si">{</span><span class="n">user_tables</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-            <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">table</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">user_tables</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">table</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">user_tables</span><span class="p">):</span>
 
-                <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User:&quot;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Threepid:&quot;</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span>
-                    <span class="n">tabulate</span><span class="p">(</span>
-                        <span class="n">table</span><span class="p">,</span>
-                        <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;psql&quot;</span><span class="p">,</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
+        <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User:&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Threepid:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="n">tabulate</span><span class="p">(</span>
+                <span class="n">table</span><span class="p">,</span>
+                <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;psql&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="k">return</span> <span class="mi">0</span></div>
 

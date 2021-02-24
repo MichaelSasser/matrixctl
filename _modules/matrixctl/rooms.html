@@ -110,43 +110,41 @@
 <span class="sd">    :param arg:       The ``Namespace`` object of argparse&#39;s ``arse_args()``</span>
 <span class="sd">    :return:          None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">TOML</span><span class="p">()</span> <span class="k">as</span> <span class="n">toml</span><span class="p">:</span>
-        <span class="n">from_room</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">rooms_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">JsonDict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
+    <span class="n">from_room</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">rooms_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">JsonDict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">with</span> <span class="n">API</span><span class="p">(</span>
-            <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">)),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
-        <span class="p">)</span> <span class="k">as</span> <span class="n">api</span><span class="p">:</span>
-            <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;rooms&quot;</span>
-            <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;v1&quot;</span>
+    <span class="n">api</span><span class="p">:</span> <span class="n">API</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;rooms&quot;</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;v1&quot;</span>
 
-            <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">number</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">number</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">number</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">number</span><span class="p">}</span>
 
-            <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">filter</span><span class="p">:</span>
-                <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;search_term&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">filter</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">filter</span><span class="p">:</span>
+        <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;search_term&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">filter</span><span class="p">}</span>
 
-            <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">reverse</span><span class="p">:</span>
-                <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dir&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">reverse</span><span class="p">:</span>
+        <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dir&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">}</span>
 
-            <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">order_by_size</span><span class="p">:</span>
-                <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;order_by&quot;</span><span class="p">:</span> <span class="s2">&quot;size&quot;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">order_by_size</span><span class="p">:</span>
+        <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;order_by&quot;</span><span class="p">:</span> <span class="s2">&quot;size&quot;</span><span class="p">}</span>
 
-            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
 
-                <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="n">from_room</span><span class="p">}</span>  <span class="c1"># from must be in the loop</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">lst</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-                <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
-                    <span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Could not get the room table.&quot;</span><span class="p">)</span>
+        <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="n">from_room</span><span class="p">}</span>  <span class="c1"># from must be in the loop</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">lst</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
+            <span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Could not get the room table.&quot;</span><span class="p">)</span>
 
-                    <span class="k">return</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="mi">1</span>
 
-                <span class="n">rooms_list</span> <span class="o">+=</span> <span class="n">lst</span><span class="p">[</span><span class="s2">&quot;rooms&quot;</span><span class="p">]</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">from_room</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="s2">&quot;next_token&quot;</span><span class="p">]</span>
-                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                    <span class="k">break</span>
+        <span class="n">rooms_list</span> <span class="o">+=</span> <span class="n">lst</span><span class="p">[</span><span class="s2">&quot;rooms&quot;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">from_room</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="s2">&quot;next_token&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">break</span>
     <span class="n">print_rooms_table</span><span class="p">(</span><span class="n">rooms_list</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="mi">0</span></div>

@@ -115,56 +115,52 @@
 <span class="sd">    :return:          None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">with</span> <span class="n">TOML</span><span class="p">()</span> <span class="k">as</span> <span class="n">toml</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">API</span><span class="p">(</span>
-            <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">)),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
-        <span class="p">)</span> <span class="k">as</span> <span class="n">api</span><span class="p">:</span>
+    <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
+    <span class="n">api</span><span class="p">:</span> <span class="n">API</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
 
-            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="n">passwd_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">passwd_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
-                <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span> <span class="o">=</span> <span class="n">ask_password</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span> <span class="o">=</span> <span class="n">ask_password</span><span class="p">()</span>
 
-                <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                    <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span> <span class="o">=</span> <span class="n">gen_password</span><span class="p">()</span>
-                    <span class="n">passwd_generated</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span> <span class="o">=</span> <span class="n">gen_password</span><span class="p">()</span>
+            <span class="n">passwd_generated</span> <span class="o">=</span> <span class="kc">True</span>
 
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Username: </span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Username: </span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="n">passwd_generated</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Password (generated): </span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">passwd</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Password: **HIDDEN**&quot;</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Admin:    </span><span class="si">{</span><span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">admin</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">passwd_generated</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Password (generated): </span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">passwd</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Password: **HIDDEN**&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Admin:    </span><span class="si">{</span><span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">admin</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-                <span class="n">answer</span> <span class="o">=</span> <span class="n">ask_question</span><span class="p">()</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="n">ask_question</span><span class="p">()</span>
 
-                <span class="k">if</span> <span class="n">answer</span><span class="p">:</span>
-                    <span class="k">break</span>
-                <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">answer</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span> <span class="o">=</span> <span class="kc">None</span>
 
-            <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">ansible</span><span class="p">:</span>
-                <span class="n">ansible_run</span><span class="p">(</span>
-                    <span class="n">playbook</span><span class="o">=</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;ANSIBLE&quot;</span><span class="p">,</span> <span class="s2">&quot;Playbook&quot;</span><span class="p">)),</span>
-                    <span class="n">tags</span><span class="o">=</span><span class="s2">&quot;register-user&quot;</span><span class="p">,</span>
-                    <span class="n">extra_vars</span><span class="o">=</span><span class="p">{</span>
-                        <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
-                        <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span><span class="p">,</span>
-                        <span class="s2">&quot;admin&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">admin</span> <span class="k">else</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span>
-                    <span class="p">},</span>
-                <span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;users/@</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s1">&#39;API&#39;</span><span class="p">,</span><span class="s1">&#39;Domain&#39;</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
-                    <span class="p">)</span>
-                    <span class="n">api</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;PUT&quot;</span>
-                    <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">({</span><span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">admin</span><span class="p">})</span>
-                <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
-                    <span class="n">error</span><span class="p">(</span><span class="s2">&quot;The User was not added.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">ansible</span><span class="p">:</span>
+        <span class="n">ansible_run</span><span class="p">(</span>
+            <span class="n">playbook</span><span class="o">=</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ANSIBLE&quot;</span><span class="p">,</span> <span class="s2">&quot;Playbook&quot;</span><span class="p">),</span>
+            <span class="n">tags</span><span class="o">=</span><span class="s2">&quot;register-user&quot;</span><span class="p">,</span>
+            <span class="n">extra_vars</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span><span class="p">,</span>
+                <span class="s2">&quot;admin&quot;</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">admin</span> <span class="k">else</span> <span class="s2">&quot;no&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;users/@</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;API&#39;</span><span class="p">,</span><span class="s1">&#39;Domain&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">api</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;PUT&quot;</span>
+            <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">({</span><span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">passwd</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">admin</span><span class="p">})</span>
+        <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
+            <span class="n">error</span><span class="p">(</span><span class="s2">&quot;The User was not added.&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="mi">0</span></div>
+    <span class="k">return</span> <span class="mi">0</span></div>
 
 
 <span class="c1"># vim: set ft=python :</span>

@@ -129,65 +129,59 @@
 <span class="sd">    :param arg:       The ``Namespace`` object of argparse&#39;s ``arse_args()``</span>
 <span class="sd">    :return:          None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">TOML</span><span class="p">()</span> <span class="k">as</span> <span class="n">toml</span><span class="p">:</span>
-        <span class="n">len_domain</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">)))</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 1 for :</span>
-        <span class="n">from_user</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">users_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">JsonDict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
+    <span class="n">len_domain</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 1 for :</span>
+    <span class="n">from_user</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">users_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">JsonDict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="c1"># ToDo: API bool</span>
-        <span class="k">with</span> <span class="n">API</span><span class="p">(</span>
-            <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">)),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
-        <span class="p">)</span> <span class="k">as</span> <span class="n">api</span><span class="p">:</span>
-            <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
-            <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;guests&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">with_guests</span> <span class="ow">or</span> <span class="n">arg</span><span class="o">.</span><span class="n">all</span> <span class="k">else</span> <span class="s2">&quot;false&quot;</span>
-            <span class="p">}</span>
-            <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;deactivated&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span>
-                <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">with_deactivated</span> <span class="ow">or</span> <span class="n">arg</span><span class="o">.</span><span class="n">all</span>
-                <span class="k">else</span> <span class="s2">&quot;false&quot;</span>
-            <span class="p">}</span>
+    <span class="c1"># ToDo: API bool</span>
+    <span class="n">api</span><span class="p">:</span> <span class="n">API</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;guests&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">with_guests</span> <span class="ow">or</span> <span class="n">arg</span><span class="o">.</span><span class="n">all</span> <span class="k">else</span> <span class="s2">&quot;false&quot;</span><span class="p">}</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;deactivated&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">with_deactivated</span> <span class="ow">or</span> <span class="n">arg</span><span class="o">.</span><span class="n">all</span> <span class="k">else</span> <span class="s2">&quot;false&quot;</span>
+    <span class="p">}</span>
 
-            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
 
-                <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="n">from_user</span><span class="p">}</span>  <span class="c1"># from must be in the loop</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">lst</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-                <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
-                    <span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Could not get the user table.&quot;</span><span class="p">)</span>
+        <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="n">from_user</span><span class="p">}</span>  <span class="c1"># from must be in the loop</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">lst</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
+            <span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Could not get the user table.&quot;</span><span class="p">)</span>
 
-                    <span class="k">return</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="mi">1</span>
 
-                <span class="n">users_list</span> <span class="o">+=</span> <span class="n">lst</span><span class="p">[</span><span class="s2">&quot;users&quot;</span><span class="p">]</span>
+        <span class="n">users_list</span> <span class="o">+=</span> <span class="n">lst</span><span class="p">[</span><span class="s2">&quot;users&quot;</span><span class="p">]</span>
 
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">from_user</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="s2">&quot;next_token&quot;</span><span class="p">]</span>
-                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                    <span class="k">break</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">from_user</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="s2">&quot;next_token&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">break</span>
 
-            <span class="n">user_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">user_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
 
-            <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users_list</span><span class="p">:</span>
-                <span class="n">name</span> <span class="o">=</span> <span class="n">user</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="n">len_domain</span><span class="p">]</span>
-                <span class="n">deactivated</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">human_readable_bool</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;deactivated&quot;</span><span class="p">])</span>
-                <span class="n">admin</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">human_readable_bool</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;admin&quot;</span><span class="p">])</span>
-                <span class="n">guest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">human_readable_bool</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;is_guest&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users_list</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">user</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="n">len_domain</span><span class="p">]</span>
+        <span class="n">deactivated</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">human_readable_bool</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;deactivated&quot;</span><span class="p">])</span>
+        <span class="n">admin</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">human_readable_bool</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;admin&quot;</span><span class="p">])</span>
+        <span class="n">guest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">human_readable_bool</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;is_guest&quot;</span><span class="p">])</span>
 
-                <span class="n">user_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="p">(</span>
-                        <span class="n">name</span><span class="p">,</span>
-                        <span class="n">deactivated</span><span class="p">,</span>
-                        <span class="n">admin</span><span class="p">,</span>
-                        <span class="n">guest</span><span class="p">,</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="n">tabulate</span><span class="p">(</span>
-                    <span class="n">user_list</span><span class="p">,</span>
-                    <span class="n">headers</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Deactivated&quot;</span><span class="p">,</span> <span class="s2">&quot;Is Admin&quot;</span><span class="p">,</span> <span class="s2">&quot;Is Guest&quot;</span><span class="p">),</span>
-                    <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;psql&quot;</span><span class="p">,</span>
-                <span class="p">)</span>
+        <span class="n">user_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">name</span><span class="p">,</span>
+                <span class="n">deactivated</span><span class="p">,</span>
+                <span class="n">admin</span><span class="p">,</span>
+                <span class="n">guest</span><span class="p">,</span>
             <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">tabulate</span><span class="p">(</span>
+            <span class="n">user_list</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Deactivated&quot;</span><span class="p">,</span> <span class="s2">&quot;Is Admin&quot;</span><span class="p">,</span> <span class="s2">&quot;Is Guest&quot;</span><span class="p">),</span>
+            <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;psql&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
 
     <span class="k">return</span> <span class="mi">0</span></div>
 
