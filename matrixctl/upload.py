@@ -63,27 +63,25 @@ def upload(arg: Namespace) -> int:
         print("No such file found. Please check your filepath.")
         return 1
 
-    with TOML() as toml:
-        with API(
-            toml.get(("API", "Domain")), toml.get(("API", "Token"))
-        ) as api:
-            try:
-                api.url.api_path = "_matrix/media"
-                api.url.path = "upload/"
-                api.url.api_version = "r0"
-                api.method = "POST"
-                api.json_format = False
-                api.headers = {"Content-Type": file_type}
-                response: JsonDict = api.request(file).json()
-            except InternalResponseError:
-                error("The file was not uploaded.")
-                return 1
+    toml: TOML = TOML()
+    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    try:
+        api.url.api_path = "_matrix/media"
+        api.url.path = "upload/"
+        api.url.api_version = "r0"
+        api.method = "POST"
+        api.json_format = False
+        api.headers = {"Content-Type": file_type}
+        response: JsonDict = api.request(file).json()
+    except InternalResponseError:
+        error("The file was not uploaded.")
+        return 1
     try:
         print("Content URI: ", response["content_uri"])
-    except KeyError:
+    except KeyError as e:
         raise InternalResponseError(
             "Upload was successful, but no content_uri was found.", response
-        )
+        ) from e
     return 0
 
 

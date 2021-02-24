@@ -177,36 +177,34 @@ def user(arg: Namespace) -> int:
     :return:          None
     """
 
-    with TOML() as toml:
-        with API(
-            toml.get(("API", "Domain")), toml.get(("API", "Token"))
-        ) as api:
-            api.url.path = f'users/@{arg.user}:{toml.get(("API","Domain"))}'
+    toml: TOML = TOML()
+    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    api.url.path = f'users/@{arg.user}:{toml.get("API","Domain")}'
 
-            try:
-                user_dict: JsonDict = api.request().json()
-            except InternalResponseError:
-                fatal("Could not receive the user information")
+    try:
+        user_dict: JsonDict = api.request().json()
+    except InternalResponseError:
+        fatal("Could not receive the user information")
 
-                return 1
+        return 1
 
-            len_domain = len(toml.get(("API", "Domain"))) + 1  # 1 for :
-            user_tables = generate_user_tables(user_dict, len_domain)
+    len_domain = len(toml.get("API", "Domain")) + 1  # 1 for :
+    user_tables = generate_user_tables(user_dict, len_domain)
 
-            debug(f"User: {user_tables=}")
+    debug(f"User: {user_tables=}")
 
-            for num, table in enumerate(user_tables):
+    for num, table in enumerate(user_tables):
 
-                if num < 1:
-                    print("User:")
-                else:
-                    print("\nThreepid:")
-                print(
-                    tabulate(
-                        table,
-                        tablefmt="psql",
-                    )
-                )
+        if num < 1:
+            print("User:")
+        else:
+            print("\nThreepid:")
+        print(
+            tabulate(
+                table,
+                tablefmt="psql",
+            )
+        )
 
     return 0
 

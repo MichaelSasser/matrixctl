@@ -27,10 +27,8 @@ from logging import info
 from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
-from types import TracebackType
 from typing import List
 from typing import Optional
-from typing import Type
 from typing import Union
 
 import git
@@ -136,29 +134,6 @@ class Git:
             sys.exit(1)
 
         self.log(since)
-
-    def __enter__(self) -> Git:
-        """Use the class with the ``with`` statement`` statement.
-
-        This is currently not really needed, but unifies the way handlers are
-        used.
-        """
-
-        return self
-
-    def __exit__(
-        self,
-        exc_type: Optional[Type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[TracebackType],
-    ) -> None:
-        """Use the class with the ``with`` statement`` statement.
-
-        This is currently not really needed, but unifies the way handlers are
-        used.
-        """
-
-        return
 
 
 # vim: set ft=python :

@@ -46,7 +46,7 @@ def ansible_run(
     runner: Runner = Runner(config=runner_config)
     runner.run()
 
-    # debugging output
+    # debug output
     debug("Runner status")
     debug(f"{runner.status}: {runner.rc}")
     for host_event in runner.events:

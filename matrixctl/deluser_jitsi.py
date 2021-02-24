@@ -48,24 +48,22 @@ def deluser_jitsi(arg: Namespace) -> int:
     :param cfg:       The ``Config`` class
     :return:          None
     """
-    with TOML() as toml:
-        address = (
-            toml.get(("SSH", "Address"))
-            if toml.get(("SSH", "Address"))
-            else f"matrix.{toml.get(('API','Domain'))}"
+    toml: TOML = TOML()
+    address = (
+        toml.get("SSH", "Address")
+        if toml.get("SSH", "Address")
+        else f"matrix.{toml.get('API','Domain')}"
+    )
+    with SSH(address, toml.get("SSH", "User"), toml.get("SSH", "Port")) as ssh:
+        cmd: str = (
+            "sudo docker exec matrix-jitsi-prosody prosodyctl "
+            "--config /config/prosody.cfg.lua deluser "
+            f'"{arg.user}@{JID_EXT}"'
         )
-        with SSH(
-            address, toml.get(("SSH", "User")), toml.get(("SSH", "Port"))
-        ) as ssh:
-            cmd: str = (
-                "sudo docker exec matrix-jitsi-prosody prosodyctl "
-                "--config /config/prosody.cfg.lua deluser "
-                f'"{arg.user}@{JID_EXT}"'
-            )
 
-            ssh.run_cmd(cmd)
+        ssh.run_cmd(cmd)
 
-        return 0
+    return 0
 
 
 # vim: set ft=python :
