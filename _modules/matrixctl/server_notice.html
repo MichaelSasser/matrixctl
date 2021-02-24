@@ -75,6 +75,13 @@
     <span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;server-notice&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Send a server notice&quot;</span>
     <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;username&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;The user which will receive the server-notice.&quot;</span>
+            <span class="s2">&quot;(e.g. for &#39;@Michael@MichaelSasser.org&#39; use &#39;michael&#39;)&quot;</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The message&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">server_notice</span><span class="p">)</span></div>
 
@@ -96,8 +103,7 @@
         <span class="p">)</span> <span class="k">as</span> <span class="n">api</span><span class="p">:</span>
             <span class="n">request</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s1">&#39;API&#39;</span><span class="p">,</span> <span class="s1">&#39;Username&#39;</span><span class="p">))</span><span class="si">}</span><span class="s2">:&quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s1">&#39;API&#39;</span><span class="p">,</span> <span class="s1">&#39;Domain&#39;</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s2">:&quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s1">&#39;API&#39;</span><span class="p">,</span> <span class="s1">&#39;Domain&#39;</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="p">),</span>
                 <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="p">{</span>
                     <span class="s2">&quot;msgtype&quot;</span><span class="p">:</span> <span class="s2">&quot;m.text&quot;</span><span class="p">,</span>
