@@ -21,11 +21,11 @@ but breaking changes may be introduced, even in a minor version shift.
 ```
 # matrixctl
 usage: matrixctl [-h] [--version] [-d]
-              {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,deploy,start,restart,maintenance,check,version}
+                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
               ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,deploy,start,restart,maintenance,check,version}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
@@ -35,7 +35,9 @@ positional arguments:
     rooms               List rooms
     delroom             Deletes an empty room from the database
     update              Updates the ansible repo
+    upload              Upload a file.
     deploy              Provision and deploy
+    server-notice       Send a server notice
     start               Starts all OCI containers
     restart             Restarts all OCI containers (alias for start)
     maintenance         Run maintenance tasks
@@ -75,7 +77,7 @@ Check out the documentation for more information.
 # The absolute path to the synapse playbook.
 # This is only used for updating the playbook.
 #
-# Playbook="/absolut/path/to/the/playbook"
+# Playbook = "/absolut/path/to/the/playbook"
 
 [API]
 # If your matrix server is deployed, you may want to fill out the API section.
@@ -88,15 +90,22 @@ Check out the documentation for more information.
 # "matrix." in the front. MatrixCtl will add that, if needed. An IP-Address
 # is not enough.
 #
-# Domain="domain.tld"
+# Domain = "domain.tld"
+
+# To use the server-notice feature, you need to have a contact username set.
+# If your user is "@michael:MichaelSasser.org" you set "michael" as username.
+# Keep in mind, you need to enable the server-notice feature on your
+# homeserver first.
+#
+# Username = "MyMatrixUserName"
 
 # To use the API you need to have an administrator account. Enter your Token
-# here. If you use the riot client you will find it your user settings (click
+# here. If you use the element client you will find it your user settings (click
 # on your username on the upper left corner on your browser) in the
 # "Help & About" tab. If you scroll down click next to "Access-Token:" on
 # "<click to reveal>". It will be marked for you. Copy it in here.
 #
-# Token="MySuperLongMatrixToken"
+# Token= " MySuperLongMatrixToken"
 
 [SSH]
 # Here you can add your SSH configuration.
@@ -109,7 +118,7 @@ Check out the documentation for more information.
 
 # The default username is your current login name.
 #
-# User = "myusername"
+# User = "MyUserSystemAccountName"
 ```
 
 ## Chat
