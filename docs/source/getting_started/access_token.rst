@@ -37,14 +37,14 @@ no access to the admin API. After all that steps you don't need the
 .. note:: If you have alredy created an admin user account ignore this step
           and continue below.
 
-Now Open ``https://riot.yourdomain.tld`` to login.
+Now Open ``https://element.yourdomain.tld`` to login.
 
 .. figure:: img/loginscreen.png
     :align: center
     :alt: login screen image
     :figclass: align-center
 
-    The Riot loginscreen
+    The Element loginscreen
 
 Click on "Sign In" and enter your credentials. In this example, we used
 "myusername" for the user and the entered password to login.

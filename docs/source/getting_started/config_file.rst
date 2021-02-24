@@ -44,6 +44,8 @@ It is used for:
 - ``matrixctl deluser``
 - ``matrixctl users``
 - ``matrixctl user``
+- ``matrixctl upload``
+- ``matrixctl server-notice``
 
 With the ``[SSH]`` section you can use additional functionality, if you like.
 It is used for:

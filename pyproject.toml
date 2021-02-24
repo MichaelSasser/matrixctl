@@ -2,13 +2,14 @@
 name = "matrixctl"
 version = "0.8.1"
 description = "Controls a synapse oci-container instance via ansible"
-license = "GPL-3.0+"
+license = "GPL-3.0-or-later"
 readme = "README.md"
 repository = "https://github.com/MichaelSasser/matrixctl"
 homepage = "https://michaelsasser.github.io/matrixctl/index.html"
 documentation = "https://michaelsasser.github.io/matrixctl/index.html"
 keywords = ['Matrix', 'Synapse', 'Docker', 'OCI-Container']
 authors = ["Michael Sasser <Michael@MichaelSasser.org>"]
+maintainers = ["Michael Sasser <Michael@MichaelSasser.org>"]
 # Look here for all Classifiers:
 # https://pypi.python.org/pypi?%3Aaction=list_classifiers
 classifiers = [
@@ -21,41 +22,41 @@ classifiers = [
     "Natural Language :: English",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"
 ]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-requests = "^2.25.0"
-GitPython = "^3.1.11"
-coloredlogs = "^14.0"
-tabulate = "^0.8.7"
+requests = "^2.25.1"
+GitPython = "^3.1.13"
+coloredlogs = "^15.0"
+tabulate = "^0.8.9"
 paramiko = "^2.7.2"
-sphinx = { version = "^3.3.1", optional = true }
-sphinx_rtd_theme = { version = "^0.5.0", optional = true  }
+toml = "^0.10.2"
+ansible-runner = "^1.4.7"
+sphinx = { version = "^3.5.1", optional = true }
 sphinx-autodoc-typehints = { version = "^1.11.1", optional = true }
 sphinxcontrib-programoutput = { version = "^0.16", optional = true }
-toml = "^0.10.2"
-ansible-runner = "^1.4.6"
+numpydoc = { version = "^1.1.0", optional = true }
 
 [tool.poetry.extras]
-docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "sphinxcontrib-programoutput"]
+docs = ["sphinx", "sphinx-autodoc-typehints", "numpydoc", "sphinxcontrib-programoutput"]
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^2.9.2"
-pytest = "^6.1.2"
+pre-commit = "^2.10.1"
+pytest = "^6.2.2"
 flake8 = "^3.8.4"
-# flake8 = { git = "https://gitlab.com/pycqa/flake8", branch = "master" }
 neovim = "^0.3.1"
 pydocstyle = "^5.1.1"
-pylint = "^2.6"
-pycodestyle = "^2.6"
+pylint = "^2.6.1"
+pycodestyle = "^2.6.0"
 yapf = "^0.30.0"
-vulture = "^2.1"
-mypy = "^0.790"
-python-language-server = {version = "^0.36.1", extras = ["all"]}
+vulture = "^2.3"
+mypy = "^0.800.0"
+python-language-server = {version = "^0.36.2", extras = ["all"]}
 black = { version = "^20.8b1", allow-prereleases = true }
-isort = {version = "^5.6.4", extras = ["pyproject"]}
+isort = {version = "^5.7.0", extras = ["pyproject"]}
 flake8-bugbear = "^20.11.1"
 
 [tool.poetry.scripts]
@@ -114,6 +115,12 @@ max-line-length = 79
 ignore = "E501"
 select = "C,E,F,W,B,B901"
 
+[tool.vulture]
+make_whitelist = true
+min_confidence = 80
+paths = ["matrixctl"]
+sort_by_size = true
+
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

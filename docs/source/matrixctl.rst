@@ -7,106 +7,122 @@ Subcommands
 ===========
 
 
-**adduser** - adduser.py
-------------------------
+adduser
+-------
 
 .. automodule:: matrixctl.adduser
    :members:
    :undoc-members:
    :show-inheritance:
 
-**deluser** - deluser.py
-------------------------
+deluser
+-------
 
 .. automodule:: matrixctl.deluser
    :members:
    :undoc-members:
    :show-inheritance:
 
-**adduser-jitsi** - adduser_jitsi.py
-------------------------------------
+adduser-jitsi
+-------------
 
 .. automodule:: matrixctl.adduser_jitsi
    :members:
    :undoc-members:
    :show-inheritance:
 
-**deluser-jitsi** - deluser_jitsi.py
-------------------------------------
+deluser-jitsi
+-------------
 
 .. automodule:: matrixctl.deluser_jitsi
    :members:
    :undoc-members:
    :show-inheritance:
 
-**check** - check.py
---------------------
+check
+-----
 
 .. automodule:: matrixctl.check
    :members:
    :undoc-members:
    :show-inheritance:
 
-**deploy** - deploy.py
-----------------------
+deploy
+------
 
 .. automodule:: matrixctl.deploy
    :members:
    :undoc-members:
    :show-inheritance:
 
-**maintenance** - maintenance.py
-----------------------------------
+maintenance
+-----------
 
 .. automodule:: matrixctl.maintenance
    :members:
    :undoc-members:
    :show-inheritance:
 
-**start** - start.py
---------------------
+start
+-----
 
 .. automodule:: matrixctl.start
    :members:
    :undoc-members:
    :show-inheritance:
 
-**update** - update.py
-----------------------
+update
+------
 
 .. automodule:: matrixctl.update
    :members:
    :undoc-members:
    :show-inheritance:
 
-**user** - user.py
-------------------
+user
+----
 
 .. automodule:: matrixctl.user
    :members:
    :undoc-members:
    :show-inheritance:
 
-**users** - users.py
---------------------
+user
+----
 
 .. automodule:: matrixctl.users
    :members:
    :undoc-members:
    :show-inheritance:
 
-**rooms** - rooms.py
---------------------
+rooms
+-----
 
 .. automodule:: matrixctl.rooms
    :members:
    :undoc-members:
    :show-inheritance:
 
-**delroom** - delroom.py
-------------------------
+delroom
+-------
 
 .. automodule:: matrixctl.delroom
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+upload
+------
+
+.. automodule:: matrixctl.upload
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+server-notice
+-------------
+
+.. automodule:: matrixctl.server_notice
    :members:
    :undoc-members:
    :show-inheritance:
@@ -115,16 +131,16 @@ Helpers
 =======
 
 
-**Print** - print_helpers.py
-----------------------------
+Print
+-----
 
 .. automodule:: matrixctl.print_helpers
    :members:
    :undoc-members:
    :show-inheritance:
 
-**Password** - password_helpers.py
-----------------------------------
+Password
+--------
 
 .. automodule:: matrixctl.password_helpers
    :members:
@@ -136,16 +152,16 @@ Typing and Errors
 =================
 
 
-**Typing** - typing.py
-----------------------
+Typing
+------
 
 .. automodule:: matrixctl.typing
    :members:
    :undoc-members:
    :show-inheritance:
 
-**Errors** - errors.py
-----------------------
+Errors
+------
 
 .. automodule:: matrixctl.errors
    :members:
@@ -157,8 +173,8 @@ The Application
 ===============
 
 
-**Application** - application.py
---------------------------------
+Application
+-----------
 
 .. automodule:: matrixctl.application
    :members:
@@ -169,40 +185,40 @@ The Application
 Handlers
 ========
 
-**TOML** - handlers/toml.py
----------------------------
+TOML
+----
 
 .. automodule:: matrixctl.handlers.toml
    :members:
    :undoc-members:
    :show-inheritance:
 
-**API** - handlers/api.py
--------------------------
+API
+---
 
 .. automodule:: matrixctl.handlers.api
    :members:
    :undoc-members:
    :show-inheritance:
 
-**Ansible** - handlers/ansible.py
----------------------------------
+Ansible
+-------
 
 .. automodule:: matrixctl.handlers.ansible
    :members:
    :undoc-members:
    :show-inheritance:
 
-**Git** - handlers/git.py
--------------------------
+Git
+---
 
 .. automodule:: matrixctl.handlers.git
    :members:
    :undoc-members:
    :show-inheritance:
 
-**SSH** - handlers/ssh.py
--------------------------
+SSH
+---
 
 .. automodule:: matrixctl.handlers.ssh
    :members:
