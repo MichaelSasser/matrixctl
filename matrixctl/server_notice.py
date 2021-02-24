@@ -34,6 +34,13 @@ def subparser_server_notice(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "server-notice", help="Send a server notice"
     )
+    parser.add_argument(
+        "username",
+        help=(
+            "The user which will receive the server-notice."
+            "(e.g. for '@Michael@MichaelSasser.org' use 'michael')"
+        ),
+    )
     parser.add_argument("message", help="The message")
     parser.set_defaults(func=server_notice)
 
@@ -53,7 +60,7 @@ def server_notice(arg: Namespace) -> int:
     api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
     request = {
         "user_id": (
-            f"@{toml.get('API', 'Username')}:" f"{toml.get('API', 'Domain')}"
+            f"@{arg.username}:" f"{toml.get('API', 'Domain')}"
         ),
         "content": {
             "msgtype": "m.text",
