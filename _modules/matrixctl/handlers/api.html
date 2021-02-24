@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>matrixctl.handlers.api &#8212; MatrixCtl 0.8.2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">matrixctl.handlers.api</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for matrixctl.handlers.api</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># matrixctl</span>
+<span class="c1"># Copyright (c) 2020  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">critical</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">debug</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">TracebackType</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">matrixctl</span> <span class="kn">import</span> <span class="n">__version__</span>
+<span class="kn">from</span> <span class="nn">matrixctl.errors</span> <span class="kn">import</span> <span class="n">InternalResponseError</span>
+
+
+<span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
+<span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael@MichaelSasser.org&quot;</span>
+
+
+<div class="viewcode-block" id="check_type"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.api.check_type">[docs]</a><span class="k">def</span> <span class="nf">check_type</span><span class="p">(</span><span class="n">var</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">var_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">var_type</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">var_type</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s2"> needs to be of type </span><span class="si">{</span><span class="n">var_type</span><span class="si">}</span><span class="s2">, you have entered &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">var</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UrlBuilder"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.api.UrlBuilder">[docs]</a><span class="k">class</span> <span class="nc">UrlBuilder</span><span class="p">:</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;__scheme&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;__subdomain&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;__domain&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;__api_path&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;__api_version&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;__path&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;https&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__subdomain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;matrix&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">default_domain</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__api_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;_synapse/admin&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__api_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;v2&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_scheme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">scheme</span><span class="p">,</span> <span class="s2">&quot;scheme&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__scheme</span> <span class="o">=</span> <span class="n">scheme</span>
+
+    <span class="k">def</span> <span class="nf">_domain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__domain</span> <span class="o">=</span> <span class="n">domain</span>
+
+    <span class="k">def</span> <span class="nf">_subdomain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subdomain</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">subdomain</span><span class="p">,</span> <span class="s2">&quot;subdomain&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__subdomain</span> <span class="o">=</span> <span class="n">subdomain</span>
+
+    <span class="k">def</span> <span class="nf">_api_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">api_path</span><span class="p">,</span> <span class="s2">&quot;api_path&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__api_path</span> <span class="o">=</span> <span class="n">api_path</span>
+
+    <span class="k">def</span> <span class="nf">_api_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">api_version</span><span class="p">,</span> <span class="s2">&quot;api_version&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__api_version</span> <span class="o">=</span> <span class="n">api_version</span>
+
+    <span class="k">def</span> <span class="nf">_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__path</span> <span class="o">=</span> <span class="n">path</span>
+
+    <span class="n">scheme</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fset</span><span class="o">=</span><span class="n">_scheme</span><span class="p">)</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fset</span><span class="o">=</span><span class="n">_domain</span><span class="p">)</span>
+    <span class="n">subdomain</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fset</span><span class="o">=</span><span class="n">_subdomain</span><span class="p">)</span>
+    <span class="n">api_path</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fset</span><span class="o">=</span><span class="n">_api_path</span><span class="p">)</span>
+    <span class="n">api_version</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fset</span><span class="o">=</span><span class="n">_api_version</span><span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fset</span><span class="o">=</span><span class="n">_path</span><span class="p">)</span>
+
+<div class="viewcode-block" id="UrlBuilder.build"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.api.UrlBuilder.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="c1"># Url Generation</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__scheme</span><span class="si">}</span><span class="s2">://&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__subdomain</span><span class="si">}{</span><span class="s1">&#39;.&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__subdomain</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__domain</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__api_path</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__api_version</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;url (unparsed): </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span>
+        <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;url   (parsed): </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">url</span></div></div>
+
+
+<div class="viewcode-block" id="API"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.api.API">[docs]</a><span class="k">class</span> <span class="nc">API</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Handle the REST API connection of synapse.&quot;&quot;&quot;</span>
+
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;token&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;domain&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;json_format&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;url&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;__success_codes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;session&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;__request&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;__method&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;__params&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;__headers&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># (*range(200, 208), 226)</span>
+    <span class="n">RESPONSE_OK</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">200</span><span class="p">,</span>
+        <span class="mi">201</span><span class="p">,</span>
+        <span class="mi">202</span><span class="p">,</span>
+        <span class="mi">203</span><span class="p">,</span>
+        <span class="mi">204</span><span class="p">,</span>
+        <span class="mi">205</span><span class="p">,</span>
+        <span class="mi">206</span><span class="p">,</span>
+        <span class="mi">207</span><span class="p">,</span>
+        <span class="mi">226</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">json_format</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the Api class and checks, if the parameter are there.</span>
+
+<span class="sd">        :param api_domain:  The API domain (e.g. &quot;domain.tld&quot;)</span>
+<span class="sd">        :param api_token:   The access token of an admin</span>
+<span class="sd">        :return:            ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">check_type</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">)</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s2">&quot;token&quot;</span><span class="p">)</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">json_format</span><span class="p">,</span> <span class="s2">&quot;json_format&quot;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">json_format</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">json_format</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">:</span> <span class="n">UrlBuilder</span> <span class="o">=</span> <span class="n">UrlBuilder</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__success_codes</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">RESPONSE_OK</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;GET&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;User-Agent&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;matrixctl</span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;PUT&quot;</span><span class="p">,</span> <span class="s2">&quot;DELETE&quot;</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;method needs to be one of {&quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;}, &#39;</span>
+                <span class="sa">f</span><span class="s2">&quot;you have entered </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">method</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__method</span> <span class="o">=</span> <span class="n">method</span>
+
+    <span class="k">def</span> <span class="nf">_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="s2">&quot;params&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="s2">&quot;headers&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">json_format</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__headers</span><span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;application/json&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_success_codes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codes</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">check_type</span><span class="p">(</span><span class="n">codes</span><span class="p">,</span> <span class="s2">&quot;codes&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__success_codes</span> <span class="o">=</span> <span class="n">codes</span>
+
+    <span class="n">method</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fset</span><span class="o">=</span><span class="n">_method</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fset</span><span class="o">=</span><span class="n">_params</span><span class="p">)</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fset</span><span class="o">=</span><span class="n">_headers</span><span class="p">)</span>
+    <span class="n">success_codes</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fset</span><span class="o">=</span><span class="n">_success_codes</span><span class="p">)</span>
+
+<div class="viewcode-block" id="API.request"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.api.API.request">[docs]</a>    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Send a request to the synapse API.</span>
+
+<span class="sd">        :param path:           The path of the request</span>
+<span class="sd">        :param params:         Params of the request</span>
+<span class="sd">        :param payload:        The payload of the request</span>
+<span class="sd">        :param method:         The response method: ``GET``, ``POST``,</span>
+<span class="sd">                               ``PUT``, ``DELETE`` of the request</span>
+<span class="sd">        :param api_version:    The version of the api of the request</span>
+<span class="sd">        :param success_codes:  A tuple with success return code of a requests</span>
+<span class="sd">                               response</span>
+<span class="sd">        :param json_payload:   ``True`` if the request and the response should</span>
+<span class="sd">                               be in the json format.</span>
+<span class="sd">        :return:               Returns the response</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Started API request.&quot;</span><span class="p">)</span>
+
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">json_format</span> <span class="ow">and</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">debug_headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__headers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># len(&quot;Bearer &quot;) = 7</span>
+        <span class="n">debug_headers</span><span class="p">[</span>
+            <span class="s2">&quot;Authorization&quot;</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;HIDDEN (Length=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__headers</span><span class="p">[</span><span class="s1">&#39;Authorization&#39;</span><span class="p">])</span><span class="o">-</span><span class="mi">7</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Method:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__method</span><span class="p">)</span>
+        <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Headers:&quot;</span><span class="p">,</span> <span class="n">debug_headers</span><span class="p">)</span>
+        <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Params:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">)</span>
+        <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Data:&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__method</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__params</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__headers</span><span class="p">,</span>
+            <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">302</span><span class="p">:</span>
+            <span class="n">critical</span><span class="p">(</span>
+                <span class="s2">&quot;The api request resulted in an redirect (302). &quot;</span>
+                <span class="s2">&quot;This indicates, that the API might have changed, or your &quot;</span>
+                <span class="s2">&quot;playbook is misconfigured.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;Please make sure your installation of matrixctl is &quot;</span>
+                <span class="s2">&quot;up-to-date and your vars.yml contains:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to&quot;</span>
+                <span class="s1">&#39;_domain: &quot;&quot;&#39;</span>
+            <span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+            <span class="n">critical</span><span class="p">(</span>
+                <span class="s2">&quot;You need to make sure, that your vars.yml contains the &quot;</span>
+                <span class="s2">&quot;following excessive long line:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;matrix_nginx_proxy_proxy_matrix_client_api_forwarded_&quot;</span>
+                <span class="s2">&quot;location_synapse_admin_api_enabled: true&quot;</span>
+            <span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__success_codes</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;errcode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;M_UNKNOWN_TOKEN&quot;</span><span class="p">:</span>
+                    <span class="n">critical</span><span class="p">(</span>
+                        <span class="s2">&quot;The server rejected your access-token. &quot;</span>
+                        <span class="s2">&quot;Please make sure, your access-token is correct &quot;</span>
+                        <span class="s2">&quot;and up-to-date. Your access-token will change every &quot;</span>
+                        <span class="s2">&quot;time, you log out.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-except</span>
+                <span class="k">pass</span>
+
+            <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response</span></div>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">API</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Use the class with the ``with`` statement`` statement.</span>
+
+<span class="sd">        This is currently not really needed, but unifies the way handlers are</span>
+<span class="sd">        used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">exc_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">]],</span>
+        <span class="n">exc_val</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">],</span>
+        <span class="n">exc_tb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TracebackType</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Use the class with the ``with`` statement`` statement.</span>
+
+<span class="sd">        This is currently not really needed, but unifies the way handlers are</span>
+<span class="sd">        used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span></div>
+
+
+<span class="c1"># vim: set ft=python :</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">matrixctl.handlers.api</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Michael Sasser.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.1.
+    </div>
+  </body>
+</html>

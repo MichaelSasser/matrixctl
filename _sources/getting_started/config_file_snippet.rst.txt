@@ -25,6 +25,13 @@
    #
    # Domain="domain.tld"
 
+   # To use the server-notice feature, you need to have a contact username set.
+   # If your user is "@michael:MichaelSasser.org" you set "michael" as username.
+   # Keep in mind, you need to enable the server-notice feature on your
+   # homeserver first.
+   #
+   # Username = "MyMatrixUserName"
+
    # To use the API you need to have an administrator account. Enter your Token
    # here. If you use the riot client you will find it your user settings (click
    # on your username on the upper left corner on your browser) in the
