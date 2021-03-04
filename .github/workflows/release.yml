@@ -50,7 +50,7 @@ jobs:
         run: poetry build
 
       - name: pypi-publish
-        uses: pypa/gh-action-pypi-publish@v1.4.1
+        uses: pypa/gh-action-pypi-publish@v1.4.2
         with:
           # PyPI user
           # user: # optional, default is __token__
