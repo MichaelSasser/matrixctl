@@ -49,7 +49,7 @@ pytest = "^6.2.2"
 flake8 = "^3.8.4"
 neovim = "^0.3.1"
 pydocstyle = "^5.1.1"
-pylint = "^2.6.1"
+pylint = "^2.7.2"
 pycodestyle = "^2.6.0"
 yapf = "^0.30.0"
 vulture = "^2.3"
@@ -57,7 +57,7 @@ mypy = "^0.812"
 python-language-server = {version = "^0.36.2", extras = ["all"]}
 black = { version = "^20.8b1", allow-prereleases = true }
 isort = {version = "^5.7.0", extras = ["pyproject"]}
-flake8-bugbear = "^20.11.1"
+flake8-bugbear = "^21.3.1"
 
 [tool.poetry.scripts]
 matrixctl = "matrixctl.application:main"
