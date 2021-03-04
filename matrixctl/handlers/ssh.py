@@ -67,12 +67,15 @@ class SSH:
         except OSError:
             return None
 
-    def run_cmd(self, cmd: str) -> SSHResponse:
+    def run_cmd(self, cmd: str, tty: bool = False) -> SSHResponse:
         debug(f'SSH Command: "{cmd}"')
 
         response: SSHResponse = SSHResponse(
             # skipcq: BAN-B601
-            *[self.__str_from(s) for s in self.__client.exec_command(cmd)]
+            *[
+                self.__str_from(s)
+                for s in self.__client.exec_command(cmd, get_pty=tty)
+            ]
         )
 
         debug(f'SSH Response: "{response}"')
