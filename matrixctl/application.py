@@ -95,7 +95,8 @@ def setup_parser() -> argparse.ArgumentParser:
 
 def setup_logging(debug_mode: bool) -> None:
     coloredlogs.DEFAULT_LOG_FORMAT = (
-        "%(asctime)s - %(levelname)s - %(message)s"
+        "%(asctime)s [%(module)s:%(lineno)d (%(funcName)s)] - %(levelname)s "
+        "- %(message)s"
     )
     coloredlogs.DEFAULT_LOG_LEVEL = 0 if debug_mode else 21
     coloredlogs.install()
