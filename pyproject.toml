@@ -56,7 +56,7 @@ vulture = "^2.3"
 mypy = "^0.812"
 python-language-server = {version = "^0.36.2", extras = ["all"]}
 black = { version = "^20.8b1", allow-prereleases = true }
-isort = {version = "^5.7.0", extras = ["pyproject"]}
+isort = {version = "^5.8.0", extras = ["pyproject"]}
 flake8-bugbear = "^21.3.2"
 
 [tool.poetry.scripts]
