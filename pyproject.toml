@@ -57,7 +57,7 @@ mypy = "^0.812"
 python-language-server = {version = "^0.36.2", extras = ["all"]}
 black = { version = "^20.8b1", allow-prereleases = true }
 isort = {version = "^5.8.0", extras = ["pyproject"]}
-flake8-bugbear = "^21.3.2"
+flake8-bugbear = "^21.4.3"
 
 [tool.poetry.scripts]
 matrixctl = "matrixctl.application:main"
