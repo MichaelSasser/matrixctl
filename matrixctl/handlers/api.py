@@ -358,8 +358,6 @@ class API:
             Returns the response
 
         """
-        debug("Started API request.")
-
         url: str = self.url.build()
 
         if self.json_format and data is not None:
@@ -369,11 +367,12 @@ class API:
         # len("Bearer ") = 7
         debug_headers[
             "Authorization"
-        ] = f"HIDDEN (Length={len(self.__headers['Authorization'])-7})"
-        debug("Method:", self.__method)
-        debug("Headers:", debug_headers)
-        debug("Params:", self.__params)
-        debug("Data:", data)
+        ] = f"HIDDEN (Length={len(self.__headers['Authorization']) - 7})"
+        debug(f"Method: {self.__method}")
+        debug(f"Headers: {debug_headers}")
+        debug(f"Params: {self.__params}")
+        if not isinstance(data, bytes):  # TODO: Bytes debug
+            debug(f"Data: {data}")
 
         response = self.session.request(
             method=self.__method,
