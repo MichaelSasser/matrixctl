@@ -128,10 +128,11 @@ package_dir = "matrixctl"
 filename = "CHANGELOG.rst"
 issue_format = "`#{issue} <https://github.com/MichaelSasser/matrixctl/issues/{issue}>`_"
 directory = "news/"
-name = "matrixctl"
-title_format = "MatrixCtl {version} ({project_date})"
+name = "MatrixCtl"
+title_format = "{name} {version} ({project_date})"
+start_string = ".. towncrier release notes start"
 all_bullets = true  # make all fragments bullet points
-wrap = false  # Wrap text to 79 characters
+wrap = true  # Wrap text to 79 characters
 template = "news/templates/default.rst"
 
   [[tool.towncrier.type]]
@@ -167,7 +168,7 @@ template = "news/templates/default.rst"
   [[tool.towncrier.type]]
   directory = "misc"
   name = "Miscellaneous"
-  showcontent = false
+  showcontent = true
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]

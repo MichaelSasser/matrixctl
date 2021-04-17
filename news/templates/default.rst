@@ -1,20 +1,43 @@
-{% for section in sections %} {% set underline = "-" %} {% if section %} {{section}} {{ underline * section|length }}{% set underline = "~" %}
+{% if top_line %}
+{{ top_line }}
+{{ top_underline * ((top_line)|length)}}
+{% elif versiondata.name %}
+{{ versiondata.name }} {{ versiondata.version }} ({{ versiondata.date }})
+{{ top_underline * ((versiondata.name + versiondata.version + versiondata.date)|length + 4)}}
+{% else %}
+{{ versiondata.version }} ({{ versiondata.date }})
+{{ top_underline * ((versiondata.version + versiondata.date)|length + 3)}}
+{% endif %}
+{% for section, _ in sections.items() %}
+{% set underline = underlines[0] %}{% if section %}{{section}}
+{{ underline * section|length }}{% set underline = underlines[1] %}
 
-{% endif %} {% if sections[section] %} {% for category, val in definitions.items() if category in sections[section] and category != 'trivial' %}
+{% endif %}
 
+{% if sections[section] %}
+{% for category, val in definitions.items() if category in sections[section]%}
 {{ definitions[category]['name'] }}
 {{ underline * definitions[category]['name']|length }}
 
-{% if definitions[category]['showcontent'] %} {% for text, values in sections[section][category]|dictsort(by='value') %} - {{ text }}{% if category != 'vendor' and category != 'process' %} ({{ values|sort|join(', ') }}){% endif %}
+{% if definitions[category]['showcontent'] %}
+{% for text, values in sections[section][category].items() %}
+- {{ text }} ({{ values|join(', ') }})
+{% endfor %}
 
-{% endfor %} {% else %} - {{ sections[section][category]['']|sort|join(', ') }}
+{% else %}
+- {{ sections[section][category]['']|join(', ') }}
 
-{% endif %} {% if sections[section][category]|length == 0 %}
-
+{% endif %}
+{% if sections[section][category]|length == 0 %}
 No significant changes.
 
-{% else %} {% endif %} {% endfor %} {% else %}
+{% else %}
+{% endif %}
 
+{% endfor %}
+{% else %}
 No significant changes.
 
-{% endif %} {% endfor %}
+
+{% endif %}
+{% endfor %}
