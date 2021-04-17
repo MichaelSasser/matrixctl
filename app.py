@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 
-from matrixctl.application import main
+from matrixctl.__main__ import main
 
 
 if __name__ == "__main__":
