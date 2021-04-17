@@ -54,7 +54,10 @@ pycodestyle = "^2.6.0"
 yapf = "^0.31.0"
 vulture = "^2.3"
 mypy = "^0.812"
+coverage = "^5.5"
+interrogate = "^1.3.2"
 towncrier = "^21.3.0"
+tox = "^3.23.0"
 python-language-server = {version = "^0.36.2", extras = ["all"]}
 black = { version = "^20.8b1", allow-prereleases = true }
 isort = {version = "^5.8.0", extras = ["pyproject"]}
@@ -116,6 +119,23 @@ max-line-length = 79
 ignore = "E501"
 select = "C,E,F,W,B,B901"
 
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = true
+ignore-magic = true
+# ignore-semiprivate = false
+# ignore-private = false
+# ignore-property-decorators = false
+# ignore-module = false
+fail-under = 20  # TODO
+exclude = ["setup.py", "docs", "build"]
+# ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
+verbose = 1
+# quiet = false
+# whitelist-regex = []
+# color = true
+
+
 [tool.vulture]
 make_whitelist = true
 min_confidence = 80
@@ -173,3 +193,82 @@ template = "news/templates/default.rst"
 [build-system]
 requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.tox]
+legacy_tox_ini = """
+[pytest]
+
+addopts = -ra
+testpaths = tests
+xfail_strict = true
+filterwarnings =
+    once::Warning
+    ignore:::pympler[.*]
+
+
+# Keep docs in sync with docs env and .readthedocs.yml.
+# [gh-actions]
+# python =
+#     3.9: py39, precommit, changelog, docs
+# # 3.10: py310
+
+
+[tox]
+envlist = precommit,py39,docs,changelog,
+# py310,
+isolated_build = True
+
+
+[testenv]
+allowlist_externals = poetry
+# Prevent random setuptools/pip breakages like
+# https://github.com/pypa/setuptools/issues/1042 from breaking our builds.
+setenv =
+    VIRTUALENV_NO_DOWNLOAD=1
+extras = {env:TOX_AP_TEST_EXTRAS:tests}
+commands = poetry run pytest {posargs}
+
+
+[testenv:py39]
+allowlist_externals = poetry
+# Python 3.6+ has a number of compile-time warnings on invalid string escapes.
+# PYTHONWARNINGS=d and --no-compile below make them visible during the Tox run.
+basepython = python3.9
+install_command = pip install --no-compile {opts} {packages}
+setenv =
+    PYTHONWARNINGS=d
+extras = {env:TOX_AP_TEST_EXTRAS:tests}
+commands = poetry run coverage run -m pytest {posargs}
+
+
+[testenv:precommit]
+allowlist_externals = poetry
+basepython = python3.9
+skip_install = true
+deps =
+    pre-commit
+passenv = HOMEPATH  # needed on Windows
+commands =
+    poetry run pre-commit run --all-files
+
+
+[testenv:docs]
+allowlist_externals = poetry
+# Keep basepython in sync with gh-actions and .readthedocs.yml.
+basepython = python3.9
+# extras = docs, func
+# currently disable -n
+commands =
+    poetry run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html
+    poetry run sphinx-build -T -W -b doctest -d {envtmpdir}/doctrees docs/source docs/build/html
+    poetry run python -m doctest README.md
+
+
+[testenv:changelog]
+allowlist_externals = poetry
+basepython = python3.9
+# deps = towncrier
+skip_install = true
+commands = poetry run towncrier --draft
+"""
