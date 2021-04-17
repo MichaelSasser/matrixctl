@@ -14,6 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module as entrypoint for the application."""
+
 from __future__ import annotations
 
 import argparse
@@ -27,24 +30,23 @@ from typing import List
 import coloredlogs
 
 from matrixctl import __version__
-
-from .adduser import subparser_adduser
-from .adduser_jitsi import subparser_adduser_jitsi
-from .check import subparser_check
-from .delroom import subparser_delroom
-from .deluser import subparser_deluser
-from .deluser_jitsi import subparser_deluser_jitsi
-from .deploy import subparser_deploy
-from .maintenance import subparser_maintenance
-from .rooms import subparser_rooms
-from .server_notice import subparser_server_notice
-from .start import subparser_restart
-from .start import subparser_start
-from .update import subparser_update
-from .upload import subparser_upload
-from .user import subparser_user
-from .users import subparser_users
-from .version import subparser_version
+from matrixctl.adduser import subparser_adduser
+from matrixctl.adduser_jitsi import subparser_adduser_jitsi
+from matrixctl.check import subparser_check
+from matrixctl.delroom import subparser_delroom
+from matrixctl.deluser import subparser_deluser
+from matrixctl.deluser_jitsi import subparser_deluser_jitsi
+from matrixctl.deploy import subparser_deploy
+from matrixctl.maintenance import subparser_maintenance
+from matrixctl.rooms import subparser_rooms
+from matrixctl.server_notice import subparser_server_notice
+from matrixctl.start import subparser_restart
+from matrixctl.start import subparser_start
+from matrixctl.update import subparser_update
+from matrixctl.upload import subparser_upload
+from matrixctl.user import subparser_user
+from matrixctl.users import subparser_users
+from matrixctl.version import subparser_version
 
 
 # Subparsers
@@ -58,6 +60,18 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 def setup_parser() -> argparse.ArgumentParser:
+    """Use this class to initialize the parser and the subparsers.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    parser : argparse.ArgumentParser
+        The parser object, which can be used to parse the arguments.
+
+    """
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--version", action="version", version=__version__)
@@ -94,14 +108,40 @@ def setup_parser() -> argparse.ArgumentParser:
 
 
 def setup_logging(debug_mode: bool) -> None:
+    """Use this function to setup logging for the application.
+
+    Parameters
+    ----------
+    debug_mode : bool
+        ``True`` sets the log level to ``DEBUG``, ``False`` sets the log level
+        to ``INFO``.
+
+    Returns
+    -------
+    None
+
+    """
     coloredlogs.DEFAULT_LOG_FORMAT = (
-        "%(asctime)s - %(levelname)s - %(message)s"
+        "%(asctime)s [%(module)s:%(lineno)d (%(funcName)s)] - %(levelname)s "
+        "- %(message)s"
     )
     coloredlogs.DEFAULT_LOG_LEVEL = 0 if debug_mode else 21
     coloredlogs.install()
 
 
 def main() -> int:
+    """Use the ``main`` function as entrypoint to run the application.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
+    """
     parser = setup_parser()
 
     args: argparse.Namespace = parser.parse_args()
@@ -129,5 +169,10 @@ def main() -> int:
 
         return 1
 
+
+if __name__ == "__main__":
+    import sys
+
+    sys.exit(main())
 
 # vim: set ft=python :

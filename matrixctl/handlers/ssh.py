@@ -14,6 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Run and evaluate commands on the host machine of your synapse server."""
+
 from __future__ import annotations
 
 from getpass import getuser
@@ -32,12 +35,18 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 class SSHResponse(NamedTuple):
+
+    """Store the response of a SSH command as response."""
+
     stdin: Optional[str]
     stdout: Optional[str]
     stderr: Optional[str]
 
 
 class SSH:
+
+    """Run and evaluate commands on the host machine of your synapse server."""
+
     __slots__ = ("address", "__client", "user", "port")
 
     def __init__(
@@ -51,23 +60,69 @@ class SSH:
         self.__connect()
 
     def __connect(self) -> None:
-        """Connect to the SSH server."""
+        """Connect to the SSH server.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         self.__client.connect(self.address, self.port, self.user)
         debug("SSH connected")
 
     def __disconnect(self) -> None:
-        """Disconnect from the SSH server."""
+        """Disconnect from the SSH server.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         self.__client.close()
         debug("SSH disconnected")
 
     @staticmethod
-    def __str_from(f: ChannelFile) -> Optional[str]:
+    def __str_from(f: ChannelFile) -> str | None:
+        """Convert a ChannelFile to str.
+
+        Parameters
+        ----------
+        f : paramiko.channel.ChannelFile
+            ``stdin``, ``stdout`` or ``stderr`` as ChannelFile.
+
+        Returns
+        -------
+        response_str : str, optional
+            ``stdin``, ``stdout`` or ``stderr`` as str.
+
+        """
         try:
             return str(f.read().decode("utf-8").strip())
         except OSError:
             return None
 
     def run_cmd(self, cmd: str) -> SSHResponse:
+        """Run a command on the host machine and receive a response.
+
+        Parameters
+        ----------
+        cmd : str
+            The command to run.
+
+        Returns
+        -------
+        response : matrixctl.handlers.ssh.SSHResponse
+            Receive ``stdin``, ``stdout`` and ``stderr`` as response.
+
+        """
         debug(f'SSH Command: "{cmd}"')
 
         response: SSHResponse = SSHResponse(
@@ -80,7 +135,18 @@ class SSH:
         return response
 
     def __enter__(self) -> SSH:
-        """Connect to the SSH server with the "with" statement."""
+        """Connect to the SSH server with the "with" statement.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        ssh_instance : matrixctl.handlers.ssh.SSH
+            The object itself.
+
+        """
 
         return self
 
@@ -90,12 +156,37 @@ class SSH:
         exc_val: Optional[BaseException],
         exc_tb: Optional[TracebackType],
     ) -> None:
-        """Close the SSH connection."""
+        """Close the SSH connection.
+
+        Parameters
+        ----------
+        exc_type : types.Type [BaseException], optional
+            (Unused)
+        exc_val : BaseException, optional
+            (Unused)
+        exc_tb : types.TracebackType, optional
+            (Unused)
+
+        Returns
+        -------
+        None
+
+        """
         debug(f"SSH __exit__: {exc_type=}, {exc_val=}, {exc_tb=}")
         self.__disconnect()
 
     def __del__(self) -> None:
-        """Close the connection to the SSH."""
+        """Close the connection to the SSH.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         self.__disconnect()
 
 

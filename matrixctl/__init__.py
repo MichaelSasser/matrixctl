@@ -16,14 +16,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # flake8: noqa
 # pylint: disable:undefined-variable
+
+"""Use MatrixCtl to control, manage, provision and deploy your homeserver. """
+
 from __future__ import annotations
 
+from importlib.metadata import version
 from pathlib import Path
 
-from pkg_resources import get_distribution
 
-
-__version__ = get_distribution("matrixctl").version
+__author__: str = "Michael Sasser"
+__email__: str = "Michael@MichaelSasser.org"
+__version__: str = version("matrixctl")
 
 HOME: str = str(Path.home())
 

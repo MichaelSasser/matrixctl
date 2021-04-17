@@ -87,8 +87,8 @@ user
    :undoc-members:
    :show-inheritance:
 
-user
-----
+users
+-----
 
 .. automodule:: matrixctl.users
    :members:
@@ -176,7 +176,7 @@ The Application
 Application
 -----------
 
-.. automodule:: matrixctl.application
+.. automodule:: matrixctl.__main__
    :members:
    :undoc-members:
    :show-inheritance:

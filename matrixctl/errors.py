@@ -14,16 +14,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use the exceptions of this module for the application."""
+
 from __future__ import annotations
 
 from sys import version_info
 from typing import Any
-from typing import Optional
 
 from pkg_resources import get_distribution
 
 
 class Error(Exception):
+
+    """Use this exception class as base error for the project."""
+
     BUGMSG: str = (
         "If you discover this message, please try updating "
         "MatrixCtl. If you see this message again, we would "
@@ -37,14 +42,26 @@ class Error(Exception):
     )
 
     def __init__(
-        self, message: Optional[str] = None, payload: Any = None
+        self, message: str | None = None, payload: Any = None
     ) -> None:  # pylint: disable=keyword-arg-before-vararg
         """Use this error like a normal error in your day-to-day programming.
 
         This is a commandline application. Therefor no user should ever see an
-        error (except in debug-mode). This error informs the user that,
+        exception (except in debug-mode). This error informs the user that,
         getting a traceback is a bug in this application. It gives the person
         instructions, how to hand in a bug report, to contain them asap.
+
+        Parameters
+        ----------
+        message : str or None, default=None
+            A message for a contributor, which tells about what went wrong.
+        payload : any
+            A payload to add additional objects.
+
+        Returns
+        -------
+        None
+
         """
         self.payload: Any = payload
         msg: str = self.__class__.BUGMSG
@@ -56,11 +73,13 @@ class Error(Exception):
 
 
 class ConfigFileError(Error):
-    pass
+
+    """Use this exception class for everything related to the config file."""
 
 
-class InternalResponseError(Error):
-    pass
+class InternalResponseError(Error):  # TODO: rename
+
+    """Use this exception class for everything else."""
 
 
 # vim: set ft=python :

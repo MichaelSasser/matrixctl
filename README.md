@@ -137,5 +137,5 @@ The master branch gets updated on every release. The develop branch is the
 merging branch.
 
 ## License
-Copyright &copy; 2020 Michael Sasser <Info@MichaelSasser.org>. Released under
-the GPLv3 license.
+Copyright &copy; 2020-2001 Michael Sasser <Info@MichaelSasser.org>.
+Released under the GPLv3 license.

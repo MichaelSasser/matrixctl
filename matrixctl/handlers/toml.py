@@ -14,6 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Read and parse the configuration file with this module."""
+
 from __future__ import annotations
 
 import sys
@@ -40,6 +43,8 @@ __email__: str = "Michael@MichaelSasser.org"
 
 class TOML:
 
+    """Use the TOML class to read and parse the configuration file(s)."""
+
     DEFAULT_PATHS: List[Path] = [
         Path("/etc/matrixctl/config"),
         Path.home() / ".config/matrixctl/config",
@@ -58,9 +63,22 @@ class TOML:
         self.__debug_output()
 
     @staticmethod
-    def __open(paths: List[Path]) -> Dict[str, Any]:
-        """Open a TOML file and suppress warnings of the toml module."""
-        config_files: List[str] = [str(path) for path in paths]
+    def __open(paths: list[Path]) -> dict[str, Any]:
+        """Open a TOML file and suppress warnings of the toml module.
+
+        Parameters
+        ----------
+        paths : list of pathlib.Path
+            A list of paths to check for the configuration files (toml) to
+            combine into one config, which can be used by MatrixCtl.
+
+        Returns
+        -------
+        toml : dict [str, any]
+            The toml file structure represented as dict.
+
+        """
+        config_files: list[str] = [str(path) for path in paths]
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -85,7 +103,17 @@ class TOML:
                 sys.exit(1)
 
     def __debug_output(self) -> None:
-        """Create a debug output for the TOML file."""
+        """Create a debug output for the TOML file.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         for key in self.__toml:
             debug(f"[{key}]")
 
@@ -97,6 +125,7 @@ class TOML:
                     debug(f"  ├─  {entry} := {self.__toml[key][entry]}")
             debug("  ┴")
 
+    # TODO: doctest + fixture
     def get(self, *keys: str) -> Any:
         """Get a value from a config entry safely.
 
@@ -105,12 +134,27 @@ class TOML:
         Pass strings, describing the path in the ``self.__toml`` dictionary.
         Let's say, you are looking for the synapse path:
 
-        >>> toml.get("SYNAPSE", "Path")
-        '/home/dwight/SomRandomDirectory/synapse'
+        Examples
+        --------
+        .. code-block:: python
 
-        :param keys:  A string or tuple describing the values you are looking
-                      for.
-        :return:      The value of the entry you described.
+           from matrixctl.handlers.toml import TOML
+
+           toml: TOML = TOML()
+           port: int = toml.get("SSH", "Port")
+           print(port)
+           # Output: 22
+
+        Parameters
+        ----------
+        *keys : str
+            A tuple of strings describing the values you are looking for.
+
+        Returns
+        -------
+        answer : any
+            The value of the entry you described.
+
         """
         toml_walker: Union[Dict[str, Any], Any] = self.__toml
 

@@ -14,6 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``upload`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
 
 from argparse import ArgumentParser
@@ -35,6 +38,18 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 def subparser_upload(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl upload`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
         "upload", help="Upload a file."
     )
@@ -45,11 +60,16 @@ def subparser_upload(subparsers: SubParsersAction) -> None:
 def upload(arg: Namespace) -> int:
     """Upload a file or image to the matix instance.
 
-    It uses the synapse admin API.
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``.
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :param _:         Not used (The ``Config`` class)
-    :return:          None
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
     file_path: Path = Path(arg.file).absolute()
     debug(f"upload: {file_path=}")

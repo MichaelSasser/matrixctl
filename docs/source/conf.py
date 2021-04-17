@@ -7,28 +7,31 @@
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#
+
+"""Use this module to generate the documentation with ``sphinx``."""
+
 import os
 import sys
 
+from datetime import date
 from typing import List
 
 from pkg_resources import get_distribution
 
 
-__version__ = get_distribution("matrixctl").version
+__version__: str = get_distribution("matrixctl").version
 
-# sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath("../"))
 sys.path.insert(0, os.path.abspath("../.."))
 
 # -- Project information -----------------------------------------------------
 
 project: str = "MatrixCtl"
-copyright: str = "2021, Michael Sasser"
 author: str = "Michael Sasser"
+project_copyright: str = f"{date.today().year}, {author}"
 
 # The full version, including alpha/beta/rc tags
+version: str = __version__
 release: str = __version__
 
 
@@ -50,6 +53,19 @@ extensions: List[str] = [
     "sphinx.ext.inheritance_diagram",
 ]
 
+source_encoding: str = "utf-8"
+
+# true: will complain about missing docstrings
+nitpicky: bool = False
+# true: figures, tables ,code-blocks are auto numbered if they have a caption.
+numfig: bool = True
+
+
+numpydoc_show_class_members: bool = False
+# generate autosummary even if no references
+autosummary_generate: bool = True
+autosummary_imported_members: bool = True
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path: List[str] = ["_templates"]
 
@@ -57,7 +73,6 @@ templates_path: List[str] = ["_templates"]
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns: List[str] = []
-
 
 # -- Options for HTML output -------------------------------------------------
 

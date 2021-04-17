@@ -14,6 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Get access to the API of your homeserver."""
+
 from __future__ import annotations
 
 import json
@@ -24,7 +27,6 @@ from logging import debug
 from typing import Any
 from typing import Dict
 from typing import Tuple
-from typing import Union
 from urllib.parse import urlparse
 
 import requests
@@ -38,6 +40,7 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 def check_type(var: Any, var_name: str, var_type: Any = str) -> None:
+    """Check the type of an variable in an simplified and unified way."""
     if not isinstance(var, var_type):
         raise TypeError(
             f"{var_name} needs to be of type {var_type}, you have entered "
@@ -46,6 +49,9 @@ def check_type(var: Any, var_name: str, var_type: Any = str) -> None:
 
 
 class UrlBuilder:
+
+    """Build the URL for an API request."""
+
     __slots__ = (
         "__scheme",
         "__subdomain",
@@ -64,26 +70,98 @@ class UrlBuilder:
         self.__path: str = ""
 
     def _scheme(self, scheme: str) -> None:
+        """Set the scheme.
+
+        Parameters
+        ----------
+        scheme : str
+            The scheme.
+
+        Returns
+        -------
+        None
+
+        """
         check_type(scheme, "scheme")
         self.__scheme = scheme
 
     def _domain(self, domain: str) -> None:
+        """Set the domain.
+
+        Parameters
+        ----------
+        domain : str
+            The domain.
+
+        Returns
+        -------
+        None
+
+        """
         check_type(domain, "domain")
         self.__domain = domain
 
     def _subdomain(self, subdomain: str) -> None:
+        """Set the sub-domain.
+
+        Parameters
+        ----------
+        subdomain : str
+            The sub-domain.
+
+        Returns
+        -------
+        None
+
+        """
         check_type(subdomain, "subdomain")
         self.__subdomain = subdomain
 
     def _api_path(self, api_path: str) -> None:
+        """Set the API path.
+
+        Parameters
+        ----------
+        api_path : str
+            The API path.
+
+        Returns
+        -------
+        None
+
+        """
         check_type(api_path, "api_path")
         self.__api_path = api_path
 
     def _api_version(self, api_version: str) -> None:
+        """Set the API version.
+
+        Parameters
+        ----------
+        api_version : str
+            The API version.
+
+        Returns
+        -------
+        None
+
+        """
         check_type(api_version, "api_version")
         self.__api_version = api_version
 
     def _path(self, path: str) -> None:
+        """Set the path.
+
+        Parameters
+        ----------
+        path : str
+            The path.
+
+        Returns
+        -------
+        None
+
+        """
         check_type(path, "path")
         self.__path = path
 
@@ -95,6 +173,18 @@ class UrlBuilder:
     path = property(fset=_path)
 
     def build(self) -> str:
+        """Build the URL.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        url : str
+            The URL.
+
+        """
         # Url Generation
         url: str = (
             f"{self.__scheme}://"
@@ -171,6 +261,22 @@ class API:
         }
 
     def _method(self, method: str) -> None:
+        """Set the request method.
+
+        Parameters
+        ----------
+        method : str
+            Set the method. Possible methods are:
+            - ``"GET"``
+            - ``"POST"``
+            - ``"PUT"``
+            - ``"DELETE"``
+
+        Returns
+        -------
+        None
+
+        """
         method = method.upper()
         if method not in {"GET", "POST", "PUT", "DELETE"}:
             raise ValueError(
@@ -179,11 +285,35 @@ class API:
             )
         self.__method = method
 
-    def _params(self, params: Dict[str, str]) -> None:
+    def _params(self, params: dict[str, str]) -> None:
+        """Set the params.
+
+        Parameters
+        ----------
+        params : dict [str, str]
+            Set the params with a dict.
+
+        Returns
+        -------
+        None
+
+        """
         check_type(params, "params", dict)
         self.__params.update(params)
 
-    def _headers(self, headers: Dict[str, str]) -> None:
+    def _headers(self, headers: dict[str, str]) -> None:
+        """Set the headers.
+
+        Parameters
+        ----------
+        headers : dict [str, str]
+            Set the headers with a dict.
+
+        Returns
+        -------
+        None
+
+        """
         check_type(headers, "headers", dict)
 
         if self.json_format:
@@ -191,7 +321,19 @@ class API:
 
         self.__headers.update(headers)
 
-    def _success_codes(self, codes: Tuple[int]) -> None:
+    def _success_codes(self, codes: tuple[int]) -> None:
+        """Set the success code(s).
+
+        Parameters
+        ----------
+        codes : tuple of str
+            Set the success code(s) as tuple of strings.
+
+        Returns
+        -------
+        None
+
+        """
         check_type(codes, "codes", dict)
         self.__success_codes = codes
 
@@ -201,24 +343,21 @@ class API:
     success_codes = property(fset=_success_codes)
 
     def request(
-        self, data: Union[bytes, str, None, Dict[str, Any]] = None
+        self, data: bytes | str | None | dict[str, Any] = None
     ) -> requests.Response:
-        """Send a request to the synapse API.
+        """Send an request to the synapse API and receive a response.
 
-        :param path:           The path of the request
-        :param params:         Params of the request
-        :param payload:        The payload of the request
-        :param method:         The response method: ``GET``, ``POST``,
-                               ``PUT``, ``DELETE`` of the request
-        :param api_version:    The version of the api of the request
-        :param success_codes:  A tuple with success return code of a requests
-                               response
-        :param json_payload:   ``True`` if the request and the response should
-                               be in the json format.
-        :return:               Returns the response
+        Parameters
+        ----------
+        data : bytes or str or dict [str, Any], optional, default=None
+            The payload of the request.
+
+        Returns
+        -------
+        response : requests.Response
+            Returns the response
+
         """
-        debug("Started API request.")
-
         url: str = self.url.build()
 
         if self.json_format and data is not None:
@@ -228,11 +367,12 @@ class API:
         # len("Bearer ") = 7
         debug_headers[
             "Authorization"
-        ] = f"HIDDEN (Length={len(self.__headers['Authorization'])-7})"
-        debug("Method:", self.__method)
-        debug("Headers:", debug_headers)
-        debug("Params:", self.__params)
-        debug("Data:", data)
+        ] = f"HIDDEN (Length={len(self.__headers['Authorization']) - 7})"
+        debug(f"Method: {self.__method}")
+        debug(f"Headers: {debug_headers}")
+        debug(f"Params: {self.__params}")
+        if not isinstance(data, bytes):  # TODO: Bytes debug
+            debug(f"Data: {data}")
 
         response = self.session.request(
             method=self.__method,

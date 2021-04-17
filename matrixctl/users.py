@@ -14,6 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``users`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
 
 from argparse import ArgumentParser
@@ -37,6 +40,18 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 def subparser_users(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl users`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser("users", help="Lists users")
     parser.add_argument(
         "-a", "--all", action="store_true", help="Shows all users"
@@ -59,12 +74,12 @@ def users(arg: Namespace) -> int:
     This function generates and prints a table of matrix user accounts.
     The table can be modified.
 
-    * If you want guests in the table use the ``--with-guests`` switch.
-    * If you want deactivated user in the table use the ``--with-deactivated``
+    - If you want guests in the table use the ``--with-guests`` switch.
+    - If you want deactivated user in the table use the ``--with-deactivated``
       switch.
 
-    **Example**
-
+    Examples
+    --------
     .. code-block:: console
 
        $ matrixctl users
@@ -85,8 +100,16 @@ def users(arg: Namespace) -> int:
        | andy           | False         | False      | False      |
        +----------------+---------------+------------+------------+
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :return:          None
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``.
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
     toml: TOML = TOML()
     len_domain = len(toml.get("API", "Domain")) + 1  # 1 for :
