@@ -97,7 +97,7 @@ class TOML:
                     debug(f"  ├─  {entry} := {self.__toml[key][entry]}")
             debug("  ┴")
 
-    # TODO: doctest fixture
+    # TODO: doctest + fixture
     def get(self, *keys: str) -> Any:
         """Get a value from a config entry safely.
 
@@ -106,10 +106,14 @@ class TOML:
         Pass strings, describing the path in the ``self.__toml`` dictionary.
         Let's say, you are looking for the synapse path:
 
-        >>> from matrixctl.handlers.toml import TOML
-        >>> toml: TOML = TOML()
-        >>> toml.get("SSH", "Port")
-        22
+        .. code-block:: python
+
+           from matrixctl.handlers.toml import TOML
+
+           toml: TOML = TOML()
+           port: int = toml.get("SSH", "Port")
+           print(port)
+           # Output: 22
 
         :param keys:  A string or tuple describing the values you are looking
                       for.
