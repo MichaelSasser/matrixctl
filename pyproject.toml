@@ -249,7 +249,7 @@ deps =
     pre-commit
 passenv = HOMEPATH  # needed on Windows
 commands =
-    poetry run pre-commit run --all-files
+    poetry run pre-commit run --all-files --show-diff-on-failure
 
 
 [testenv:docs]
