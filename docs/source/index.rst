@@ -10,6 +10,7 @@ MatrixCtl documentation
    installation
    getting_started/index
    matrixctl
+   changelog
 
 Branching Model
 ^^^^^^^^^^^^^^^
