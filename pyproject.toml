@@ -54,6 +54,7 @@ pycodestyle = "^2.6.0"
 yapf = "^0.31.0"
 vulture = "^2.3"
 mypy = "^0.812"
+towncrier = "^21.3.0"
 python-language-server = {version = "^0.36.2", extras = ["all"]}
 black = { version = "^20.8b1", allow-prereleases = true }
 isort = {version = "^5.8.0", extras = ["pyproject"]}
@@ -120,6 +121,53 @@ make_whitelist = true
 min_confidence = 80
 paths = ["matrixctl"]
 sort_by_size = true
+
+[tool.towncrier]
+package = "matrixctl"
+package_dir = "matrixctl"
+filename = "CHANGELOG.rst"
+issue_format = "`#{issue} <https://github.com/MichaelSasser/matrixctl/issues/{issue}>`_"
+directory = "news/"
+name = "matrixctl"
+title_format = "MatrixCtl {version} ({project_date})"
+all_bullets = true  # make all fragments bullet points
+wrap = false  # Wrap text to 79 characters
+template = "news/templates/default.rst"
+
+  [[tool.towncrier.type]]
+  directory = "feature"
+  name = "Features & Improvements"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "bugfix"
+  name = "Bugfixes"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "doc"
+  name = "Improved Documentation"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "removal"
+  name = "Removals and Deprecations"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "breaking"
+  name = "Behavior & Breaking Changes"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "trivial"
+  name = "Trivial Changes"
+  showcontent = false
+
+  [[tool.towncrier.type]]
+  directory = "misc"
+  name = "Miscellaneous"
+  showcontent = false
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]
