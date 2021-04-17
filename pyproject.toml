@@ -60,7 +60,7 @@ isort = {version = "^5.8.0", extras = ["pyproject"]}
 flake8-bugbear = "^21.4.3"
 
 [tool.poetry.scripts]
-matrixctl = "matrixctl.application:main"
+matrixctl = "matrixctl.__main__:main"
 
 [tool.black]
 line-length = 79
@@ -122,5 +122,5 @@ paths = ["matrixctl"]
 sort_by_size = true
 
 [build-system]
-requires = ["poetry>=1.0.0"]
+requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

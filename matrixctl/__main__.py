@@ -27,24 +27,23 @@ from typing import List
 import coloredlogs
 
 from matrixctl import __version__
-
-from .adduser import subparser_adduser
-from .adduser_jitsi import subparser_adduser_jitsi
-from .check import subparser_check
-from .delroom import subparser_delroom
-from .deluser import subparser_deluser
-from .deluser_jitsi import subparser_deluser_jitsi
-from .deploy import subparser_deploy
-from .maintenance import subparser_maintenance
-from .rooms import subparser_rooms
-from .server_notice import subparser_server_notice
-from .start import subparser_restart
-from .start import subparser_start
-from .update import subparser_update
-from .upload import subparser_upload
-from .user import subparser_user
-from .users import subparser_users
-from .version import subparser_version
+from matrixctl.adduser import subparser_adduser
+from matrixctl.adduser_jitsi import subparser_adduser_jitsi
+from matrixctl.check import subparser_check
+from matrixctl.delroom import subparser_delroom
+from matrixctl.deluser import subparser_deluser
+from matrixctl.deluser_jitsi import subparser_deluser_jitsi
+from matrixctl.deploy import subparser_deploy
+from matrixctl.maintenance import subparser_maintenance
+from matrixctl.rooms import subparser_rooms
+from matrixctl.server_notice import subparser_server_notice
+from matrixctl.start import subparser_restart
+from matrixctl.start import subparser_start
+from matrixctl.update import subparser_update
+from matrixctl.upload import subparser_upload
+from matrixctl.user import subparser_user
+from matrixctl.users import subparser_users
+from matrixctl.version import subparser_version
 
 
 # Subparsers
@@ -130,5 +129,10 @@ def main() -> int:
 
         return 1
 
+
+if __name__ == "__main__":
+    import sys
+
+    sys.exit(main())
 
 # vim: set ft=python :
