@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.handlers.toml &#8212; MatrixCtl 0.8.2 documentation</title>
+    <title>matrixctl.handlers.toml &#8212; MatrixCtl 0.8.6 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.handlers.toml</a></li> 
       </ul>
@@ -55,6 +55,9 @@
 <span class="c1">#</span>
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Read and parse the configuration file with this module.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -81,6 +84,8 @@
 
 <div class="viewcode-block" id="TOML"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.toml.TOML">[docs]</a><span class="k">class</span> <span class="nc">TOML</span><span class="p">:</span>
 
+    <span class="sd">&quot;&quot;&quot;Use the TOML class to read and parse the configuration file(s).&quot;&quot;&quot;</span>
+
     <span class="n">DEFAULT_PATHS</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/etc/matrixctl/config&quot;</span><span class="p">),</span>
         <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.config/matrixctl/config&quot;</span><span class="p">,</span>
@@ -99,9 +104,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__debug_output</span><span class="p">()</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">__open</span><span class="p">(</span><span class="n">paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Open a TOML file and suppress warnings of the toml module.&quot;&quot;&quot;</span>
-        <span class="n">config_files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">__open</span><span class="p">(</span><span class="n">paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Open a TOML file and suppress warnings of the toml module.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        paths : list of pathlib.Path</span>
+<span class="sd">            A list of paths to check for the configuration files (toml) to</span>
+<span class="sd">            combine into one config, which can be used by MatrixCtl.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        toml : dict [str, any]</span>
+<span class="sd">            The toml file structure represented as dict.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config_files</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
 
         <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
@@ -126,7 +144,17 @@
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__debug_output</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create a debug output for the TOML file.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Create a debug output for the TOML file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="p">:</span>
             <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
 
@@ -138,6 +166,7 @@
                     <span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ├─  </span><span class="si">{</span><span class="n">entry</span><span class="si">}</span><span class="s2"> := </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__toml</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">entry</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  ┴&quot;</span><span class="p">)</span>
 
+    <span class="c1"># TODO: doctest + fixture</span>
 <div class="viewcode-block" id="TOML.get"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.toml.TOML.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Get a value from a config entry safely.</span>
 
@@ -146,12 +175,27 @@
 <span class="sd">        Pass strings, describing the path in the ``self.__toml`` dictionary.</span>
 <span class="sd">        Let&#39;s say, you are looking for the synapse path:</span>
 
-<span class="sd">        &gt;&gt;&gt; toml.get(&quot;SYNAPSE&quot;, &quot;Path&quot;)</span>
-<span class="sd">        &#39;/home/dwight/SomRandomDirectory/synapse&#39;</span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        .. code-block:: python</span>
 
-<span class="sd">        :param keys:  A string or tuple describing the values you are looking</span>
-<span class="sd">                      for.</span>
-<span class="sd">        :return:      The value of the entry you described.</span>
+<span class="sd">           from matrixctl.handlers.toml import TOML</span>
+
+<span class="sd">           toml: TOML = TOML()</span>
+<span class="sd">           port: int = toml.get(&quot;SSH&quot;, &quot;Port&quot;)</span>
+<span class="sd">           print(port)</span>
+<span class="sd">           # Output: 22</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        *keys : str</span>
+<span class="sd">            A tuple of strings describing the values you are looking for.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        answer : any</span>
+<span class="sd">            The value of the entry you described.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">toml_walker</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toml</span>
 
@@ -214,14 +258,14 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.handlers.toml</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Michael Sasser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
   </body>
 </html>

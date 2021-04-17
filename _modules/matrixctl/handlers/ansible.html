@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.handlers.ansible &#8212; MatrixCtl 0.8.2 documentation</title>
+    <title>matrixctl.handlers.ansible &#8212; MatrixCtl 0.8.6 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.handlers.ansible</a></li> 
       </ul>
@@ -55,12 +55,13 @@
 <span class="c1">#</span>
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Run a ansible playbook with this module.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="n">debug</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">ansible_runner.interface</span> <span class="kn">import</span> <span class="n">Runner</span>
 <span class="kn">from</span> <span class="nn">ansible_runner.runner_config</span> <span class="kn">import</span> <span class="n">RunnerConfig</span>
@@ -73,9 +74,25 @@
 <span class="c1"># ToDo: Make async to get debug output while running</span>
 <div class="viewcode-block" id="ansible_run"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.ansible.ansible_run">[docs]</a><span class="k">def</span> <span class="nf">ansible_run</span><span class="p">(</span>
     <span class="n">playbook</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
-    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">extra_vars</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tags</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">extra_vars</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Run an ansible playbook.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    playbook : pathlib.Path</span>
+<span class="sd">        The path to the ansible Playbook</span>
+<span class="sd">    tags : str, optional</span>
+<span class="sd">        The tags to use</span>
+<span class="sd">    extra_vars : dict [str, str], optional</span>
+<span class="sd">        The extra_vars to use.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">runner_config</span><span class="p">:</span> <span class="n">RunnerConfig</span> <span class="o">=</span> <span class="n">RunnerConfig</span><span class="p">(</span>
         <span class="n">private_data_dir</span><span class="o">=</span><span class="s2">&quot;/tmp&quot;</span><span class="p">,</span>
         <span class="n">playbook</span><span class="o">=</span><span class="n">playbook</span><span class="p">,</span>
@@ -127,14 +144,14 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.handlers.ansible</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Michael Sasser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
   </body>
 </html>

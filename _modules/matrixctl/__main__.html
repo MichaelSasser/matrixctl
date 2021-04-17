@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.application &#8212; MatrixCtl 0.8.2 documentation</title>
+    <title>matrixctl.__main__ &#8212; MatrixCtl 0.8.6 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -27,9 +27,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">matrixctl.application</a></li> 
+        <li class="nav-item nav-item-this"><a href="">matrixctl.__main__</a></li> 
       </ul>
     </div>  
 
@@ -38,7 +38,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for matrixctl.application</h1><div class="highlight"><pre>
+  <h1>Source code for matrixctl.__main__</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># matrixctl</span>
 <span class="c1"># Copyright (c) 2020  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
@@ -55,6 +55,9 @@
 <span class="c1">#</span>
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Use this module as entrypoint for the application.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -68,24 +71,23 @@
 <span class="kn">import</span> <span class="nn">coloredlogs</span>
 
 <span class="kn">from</span> <span class="nn">matrixctl</span> <span class="kn">import</span> <span class="n">__version__</span>
-
-<span class="kn">from</span> <span class="nn">.adduser</span> <span class="kn">import</span> <span class="n">subparser_adduser</span>
-<span class="kn">from</span> <span class="nn">.adduser_jitsi</span> <span class="kn">import</span> <span class="n">subparser_adduser_jitsi</span>
-<span class="kn">from</span> <span class="nn">.check</span> <span class="kn">import</span> <span class="n">subparser_check</span>
-<span class="kn">from</span> <span class="nn">.delroom</span> <span class="kn">import</span> <span class="n">subparser_delroom</span>
-<span class="kn">from</span> <span class="nn">.deluser</span> <span class="kn">import</span> <span class="n">subparser_deluser</span>
-<span class="kn">from</span> <span class="nn">.deluser_jitsi</span> <span class="kn">import</span> <span class="n">subparser_deluser_jitsi</span>
-<span class="kn">from</span> <span class="nn">.deploy</span> <span class="kn">import</span> <span class="n">subparser_deploy</span>
-<span class="kn">from</span> <span class="nn">.maintenance</span> <span class="kn">import</span> <span class="n">subparser_maintenance</span>
-<span class="kn">from</span> <span class="nn">.rooms</span> <span class="kn">import</span> <span class="n">subparser_rooms</span>
-<span class="kn">from</span> <span class="nn">.server_notice</span> <span class="kn">import</span> <span class="n">subparser_server_notice</span>
-<span class="kn">from</span> <span class="nn">.start</span> <span class="kn">import</span> <span class="n">subparser_restart</span>
-<span class="kn">from</span> <span class="nn">.start</span> <span class="kn">import</span> <span class="n">subparser_start</span>
-<span class="kn">from</span> <span class="nn">.update</span> <span class="kn">import</span> <span class="n">subparser_update</span>
-<span class="kn">from</span> <span class="nn">.upload</span> <span class="kn">import</span> <span class="n">subparser_upload</span>
-<span class="kn">from</span> <span class="nn">.user</span> <span class="kn">import</span> <span class="n">subparser_user</span>
-<span class="kn">from</span> <span class="nn">.users</span> <span class="kn">import</span> <span class="n">subparser_users</span>
-<span class="kn">from</span> <span class="nn">.version</span> <span class="kn">import</span> <span class="n">subparser_version</span>
+<span class="kn">from</span> <span class="nn">matrixctl.adduser</span> <span class="kn">import</span> <span class="n">subparser_adduser</span>
+<span class="kn">from</span> <span class="nn">matrixctl.adduser_jitsi</span> <span class="kn">import</span> <span class="n">subparser_adduser_jitsi</span>
+<span class="kn">from</span> <span class="nn">matrixctl.check</span> <span class="kn">import</span> <span class="n">subparser_check</span>
+<span class="kn">from</span> <span class="nn">matrixctl.delroom</span> <span class="kn">import</span> <span class="n">subparser_delroom</span>
+<span class="kn">from</span> <span class="nn">matrixctl.deluser</span> <span class="kn">import</span> <span class="n">subparser_deluser</span>
+<span class="kn">from</span> <span class="nn">matrixctl.deluser_jitsi</span> <span class="kn">import</span> <span class="n">subparser_deluser_jitsi</span>
+<span class="kn">from</span> <span class="nn">matrixctl.deploy</span> <span class="kn">import</span> <span class="n">subparser_deploy</span>
+<span class="kn">from</span> <span class="nn">matrixctl.maintenance</span> <span class="kn">import</span> <span class="n">subparser_maintenance</span>
+<span class="kn">from</span> <span class="nn">matrixctl.rooms</span> <span class="kn">import</span> <span class="n">subparser_rooms</span>
+<span class="kn">from</span> <span class="nn">matrixctl.server_notice</span> <span class="kn">import</span> <span class="n">subparser_server_notice</span>
+<span class="kn">from</span> <span class="nn">matrixctl.start</span> <span class="kn">import</span> <span class="n">subparser_restart</span>
+<span class="kn">from</span> <span class="nn">matrixctl.start</span> <span class="kn">import</span> <span class="n">subparser_start</span>
+<span class="kn">from</span> <span class="nn">matrixctl.update</span> <span class="kn">import</span> <span class="n">subparser_update</span>
+<span class="kn">from</span> <span class="nn">matrixctl.upload</span> <span class="kn">import</span> <span class="n">subparser_upload</span>
+<span class="kn">from</span> <span class="nn">matrixctl.user</span> <span class="kn">import</span> <span class="n">subparser_user</span>
+<span class="kn">from</span> <span class="nn">matrixctl.users</span> <span class="kn">import</span> <span class="n">subparser_users</span>
+<span class="kn">from</span> <span class="nn">matrixctl.version</span> <span class="kn">import</span> <span class="n">subparser_version</span>
 
 
 <span class="c1"># Subparsers</span>
@@ -98,7 +100,19 @@
 <span class="c1">#              user_admin_api.rst</span>
 
 
-<div class="viewcode-block" id="setup_parser"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.application.setup_parser">[docs]</a><span class="k">def</span> <span class="nf">setup_parser</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">:</span>
+<div class="viewcode-block" id="setup_parser"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.__main__.setup_parser">[docs]</a><span class="k">def</span> <span class="nf">setup_parser</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Use this class to initialize the parser and the subparsers.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    parser : argparse.ArgumentParser</span>
+<span class="sd">        The parser object, which can be used to parse the arguments.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
@@ -134,15 +148,41 @@
     <span class="k">return</span> <span class="n">parser</span></div>
 
 
-<div class="viewcode-block" id="setup_logging"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.application.setup_logging">[docs]</a><span class="k">def</span> <span class="nf">setup_logging</span><span class="p">(</span><span class="n">debug_mode</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="setup_logging"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.__main__.setup_logging">[docs]</a><span class="k">def</span> <span class="nf">setup_logging</span><span class="p">(</span><span class="n">debug_mode</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Use this function to setup logging for the application.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    debug_mode : bool</span>
+<span class="sd">        ``True`` sets the log level to ``DEBUG``, ``False`` sets the log level</span>
+<span class="sd">        to ``INFO``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">coloredlogs</span><span class="o">.</span><span class="n">DEFAULT_LOG_FORMAT</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> [</span><span class="si">%(module)s</span><span class="s2">:</span><span class="si">%(lineno)d</span><span class="s2"> (</span><span class="si">%(funcName)s</span><span class="s2">)] - </span><span class="si">%(levelname)s</span><span class="s2"> &quot;</span>
+        <span class="s2">&quot;- </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
     <span class="p">)</span>
     <span class="n">coloredlogs</span><span class="o">.</span><span class="n">DEFAULT_LOG_LEVEL</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">debug_mode</span> <span class="k">else</span> <span class="mi">21</span>
     <span class="n">coloredlogs</span><span class="o">.</span><span class="n">install</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.application.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.__main__.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Use the ``main`` function as entrypoint to run the application.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    err_code : int</span>
+<span class="sd">        Non-zero value indicates error code, or zero on success.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">setup_parser</span><span class="p">()</span>
 
     <span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
@@ -170,6 +210,11 @@
 
         <span class="k">return</span> <span class="mi">1</span></div>
 
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 
 <span class="c1"># vim: set ft=python :</span>
 </pre></div>
@@ -203,14 +248,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">matrixctl.application</a></li> 
+        <li class="nav-item nav-item-this"><a href="">matrixctl.__main__</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Michael Sasser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
   </body>
 </html>

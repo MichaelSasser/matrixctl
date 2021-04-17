@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.users &#8212; MatrixCtl 0.8.2 documentation</title>
+    <title>matrixctl.users &#8212; MatrixCtl 0.8.6 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.users</a></li> 
       </ul>
@@ -55,6 +55,9 @@
 <span class="c1">#</span>
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Use this module to add the ``users`` subcommand to ``matrixctl``.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span>
@@ -78,6 +81,18 @@
 
 
 <div class="viewcode-block" id="subparser_users"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.users.subparser_users">[docs]</a><span class="k">def</span> <span class="nf">subparser_users</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">SubParsersAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Create a subparser for the ``matrixctl users`` command.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    subparsers : argparse._SubParsersAction</span>
+<span class="sd">        The object which is returned by ``parser.add_subparsers()``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Lists users&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;-a&quot;</span><span class="p">,</span> <span class="s2">&quot;--all&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Shows all users&quot;</span>
@@ -100,12 +115,12 @@
 <span class="sd">    This function generates and prints a table of matrix user accounts.</span>
 <span class="sd">    The table can be modified.</span>
 
-<span class="sd">    * If you want guests in the table use the ``--with-guests`` switch.</span>
-<span class="sd">    * If you want deactivated user in the table use the ``--with-deactivated``</span>
+<span class="sd">    - If you want guests in the table use the ``--with-guests`` switch.</span>
+<span class="sd">    - If you want deactivated user in the table use the ``--with-deactivated``</span>
 <span class="sd">      switch.</span>
 
-<span class="sd">    **Example**</span>
-
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    .. code-block:: console</span>
 
 <span class="sd">       $ matrixctl users</span>
@@ -126,8 +141,16 @@
 <span class="sd">       | andy           | False         | False      | False      |</span>
 <span class="sd">       +----------------+---------------+------------+------------+</span>
 
-<span class="sd">    :param arg:       The ``Namespace`` object of argparse&#39;s ``arse_args()``</span>
-<span class="sd">    :return:          None</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arg : argparse.Namespace</span>
+<span class="sd">        The ``Namespace`` object of argparse&#39;s ``parse_args()``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    err_code : int</span>
+<span class="sd">        Non-zero value indicates error code, or zero on success.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
     <span class="n">len_domain</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># 1 for :</span>
@@ -218,14 +241,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.users</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Michael Sasser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
   </body>
 </html>

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.handlers.git &#8212; MatrixCtl 0.8.2 documentation</title>
+    <title>matrixctl.handlers.git &#8212; MatrixCtl 0.8.6 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.handlers.git</a></li> 
       </ul>
@@ -55,7 +55,9 @@
 <span class="c1">#</span>
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="c1"># import configparser</span>
+
+<span class="sd">&quot;&quot;&quot;Update and manage the synapse playbook repository with this module.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">datetime</span>
@@ -69,7 +71,6 @@
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">get_terminal_size</span>
 <span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">TextWrapper</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">git</span>
@@ -82,6 +83,9 @@
 
 
 <div class="viewcode-block" id="Git"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.git.Git">[docs]</a><span class="k">class</span> <span class="nc">Git</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Update and manage a repository.&quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">git</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -99,11 +103,37 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">datetime_last_pulled_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Get the datetime the commit was pulled last from git.</span>
+
+<span class="sd">        This is used to determine which messages will be produced in the table.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        datetime : datetime.datetime</span>
+<span class="sd">            The datetime object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">log</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">log</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">log</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-<div class="viewcode-block" id="Git.log"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.git.Git.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">since</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Git.log"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.git.Git.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">since</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Print a table of date, user and commit message since the last pull.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        since : datetime.datetime, optional, default=None</span>
+<span class="sd">            The datetime the last commit was puled.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--pretty=</span><span class="si">%a</span><span class="s2">s</span><span class="se">\t</span><span class="si">%a</span><span class="s2">n</span><span class="se">\t</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">since</span><span class="p">:</span>
@@ -162,6 +192,17 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Git.pull"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.git.Git.pull">[docs]</a>    <span class="k">def</span> <span class="nf">pull</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Git pull the latest commits from GH.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the last pulled datetime</span>
         <span class="n">since</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">datetime_last_pulled_commit</span>
 
@@ -209,14 +250,14 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.handlers.git</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Michael Sasser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
   </body>
 </html>

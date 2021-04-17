@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.delroom &#8212; MatrixCtl 0.8.2 documentation</title>
+    <title>matrixctl.delroom &#8212; MatrixCtl 0.8.6 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.delroom</a></li> 
       </ul>
@@ -55,6 +55,9 @@
 <span class="c1">#</span>
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Use this module to add the ``delroom`` subcommand to ``matrixctl``.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span>
@@ -72,6 +75,19 @@
 
 
 <div class="viewcode-block" id="subparser_delroom"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.delroom.subparser_delroom">[docs]</a><span class="k">def</span> <span class="nf">subparser_delroom</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">SubParsersAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Create a subparser for the ``matrixctl delroom`` command.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    subparsers : argparse._SubParsersAction</span>
+<span class="sd">        The object which is returned by</span>
+<span class="sd">        ``parser.add_subparsers()``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;delroom&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Deletes an empty room from the database&quot;</span>
     <span class="p">)</span>
@@ -86,8 +102,16 @@
 <div class="viewcode-block" id="delroom"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.delroom.delroom">[docs]</a><span class="k">def</span> <span class="nf">delroom</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Delete an empty room from the database.</span>
 
-<span class="sd">    :param arg:       The ``Namespace`` object of argparse&#39;s ``arse_args()``</span>
-<span class="sd">    :return:          None</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arg : argparse.Namespace</span>
+<span class="sd">        The ``Namespace`` object of argparse&#39;s ``parse_args()``</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    err_code : int</span>
+<span class="sd">        Non-zero value indicates error code, or zero on success.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
     <span class="n">api</span><span class="p">:</span> <span class="n">API</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
@@ -149,14 +173,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.delroom</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Michael Sasser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
     </div>
   </body>
 </html>
