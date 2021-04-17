@@ -14,12 +14,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Run a ansible playbook with this module."""
+
 from __future__ import annotations
 
 from logging import debug
 from pathlib import Path
-from typing import Dict
-from typing import Optional
 
 from ansible_runner.interface import Runner
 from ansible_runner.runner_config import RunnerConfig
@@ -32,9 +33,25 @@ __email__: str = "Michael@MichaelSasser.org"
 # ToDo: Make async to get debug output while running
 def ansible_run(
     playbook: Path,
-    tags: Optional[str] = None,
-    extra_vars: Optional[Dict[str, str]] = None,
+    tags: str | None = None,
+    extra_vars: dict[str, str] | None = None,
 ) -> None:
+    """Run an ansible playbook.
+
+    Parameters
+    ----------
+    playbook : pathlib.Path
+        The path to the ansible Playbook
+    tags : str, optional
+        The tags to use
+    extra_vars : dict [str, str], optional
+        The extra_vars to use.
+
+    Returns
+    -------
+    None
+
+    """
     runner_config: RunnerConfig = RunnerConfig(
         private_data_dir="/tmp",
         playbook=playbook,

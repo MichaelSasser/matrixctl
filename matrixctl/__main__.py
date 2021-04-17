@@ -14,6 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module as entrypoint for the application."""
+
 from __future__ import annotations
 
 import argparse
@@ -57,6 +60,18 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 def setup_parser() -> argparse.ArgumentParser:
+    """Use this class to initialize the parser and the subparsers.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    parser : argparse.ArgumentParser
+        The parser object, which can be used to parse the arguments.
+
+    """
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--version", action="version", version=__version__)
@@ -93,6 +108,19 @@ def setup_parser() -> argparse.ArgumentParser:
 
 
 def setup_logging(debug_mode: bool) -> None:
+    """Use this function to setup logging for the application.
+
+    Parameters
+    ----------
+    debug_mode : bool
+        ``True`` sets the log level to ``DEBUG``, ``False`` sets the log level
+        to ``INFO``.
+
+    Returns
+    -------
+    None
+
+    """
     coloredlogs.DEFAULT_LOG_FORMAT = (
         "%(asctime)s [%(module)s:%(lineno)d (%(funcName)s)] - %(levelname)s "
         "- %(message)s"
@@ -102,6 +130,18 @@ def setup_logging(debug_mode: bool) -> None:
 
 
 def main() -> int:
+    """Use the ``main`` function as entrypoint to run the application.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
+    """
     parser = setup_parser()
 
     args: argparse.Namespace = parser.parse_args()

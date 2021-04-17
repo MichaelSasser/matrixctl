@@ -14,17 +14,34 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use the functions of this module as printing helpers."""
+
 from __future__ import annotations
 
 from typing import Any
-from typing import Union
 
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def human_readable_bool(b: Union[Any]) -> str:
+# TODO: Check if used and for what; type?; docs.
+def human_readable_bool(b: Any) -> str:
+    """Use this helper function to get a "yes" or "no" string from a "bool".
+
+    Parameters
+    ----------
+    b : any
+        The value to "convert".
+
+    Returns
+    -------
+    answer : str
+        ``"Yes"`` if expression is ``True``, or
+        ``"False"`` if expression is ``False``.
+
+    """
     if isinstance(b, str):
         b = int(b)
 

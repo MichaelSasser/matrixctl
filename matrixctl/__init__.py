@@ -16,6 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # flake8: noqa
 # pylint: disable:undefined-variable
+
+"""Use MatrixCtl to control, manage, provision and deploy your homeserver. """
+
 from __future__ import annotations
 
 from importlib.metadata import version

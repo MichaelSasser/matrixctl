@@ -14,6 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``adduser`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
 
 from argparse import ArgumentParser
@@ -35,6 +38,19 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 def subparser_adduser(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl adduser`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by
+        ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
         "adduser", help="Add a new matrix user"
     )
@@ -70,8 +86,16 @@ def adduser(arg: Namespace) -> int:
     Depending on the ``--ansible`` switch it runs the ``adduser`` command
     via ansible or the API
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :return:          None
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
 
     toml: TOML = TOML()

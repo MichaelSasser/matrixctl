@@ -14,6 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``check`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
 
 from argparse import ArgumentParser
@@ -30,13 +33,39 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 def subparser_check(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl check`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by
+        ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
-        "check", help="Checks the OCI containers"
+        "check", help="Checks the deployment with ansible"
     )
     parser.set_defaults(func=check)
 
 
 def check(_: Namespace) -> int:
+    """Check the deployment with andible.
+
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
+    """
     debug("check")
 
     toml: TOML = TOML()

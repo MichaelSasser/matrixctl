@@ -14,7 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# import configparser
+
+"""Update and manage the synapse playbook repository with this module."""
+
 from __future__ import annotations
 
 import datetime
@@ -28,7 +30,6 @@ from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
 from typing import List
-from typing import Optional
 from typing import Union
 
 import git
@@ -41,6 +42,9 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 class Git:
+
+    """Update and manage a repository."""
+
     def __init__(self, path: Union[Path, str]) -> None:
         self.path: Path = Path(path)
         self.repo = git.Repo(self.path)
@@ -58,11 +62,37 @@ class Git:
 
     @property
     def datetime_last_pulled_commit(self) -> datetime.datetime:
+        """Get the datetime the commit was pulled last from git.
+
+        This is used to determine which messages will be produced in the table.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        datetime : datetime.datetime
+            The datetime object.
+
+        """
         log = self.master.log()
 
         return datetime.datetime.fromtimestamp(log[-1].time[0])
 
-    def log(self, since: Optional[datetime.datetime] = None) -> None:
+    def log(self, since: datetime.datetime | None = None) -> None:
+        """Print a table of date, user and commit message since the last pull.
+
+        Parameters
+        ----------
+        since : datetime.datetime, optional, default=None
+            The datetime the last commit was puled.
+
+        Returns
+        -------
+        None
+
+        """
         cmd = ["--pretty=%as\t%an\t%s"]
 
         if since:
@@ -121,6 +151,17 @@ class Git:
         )
 
     def pull(self) -> None:
+        """Git pull the latest commits from GH.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         # Get the last pulled datetime
         since = self.datetime_last_pulled_commit
 
