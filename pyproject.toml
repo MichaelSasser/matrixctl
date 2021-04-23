@@ -165,7 +165,7 @@ template = "news/templates/default.rst"
   showcontent = true
 
   [[tool.towncrier.type]]
-  directory = "doc"
+  directory = "docs"
   name = "Improved Documentation"
   showcontent = true
 
