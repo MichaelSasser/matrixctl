@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; MatrixCtl 0.8.6 documentation</title>
+    <title>&lt;no title&gt; &#8212; MatrixCtl 0.9.0 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.9.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">&lt;no title&gt;</a></li> 
       </ul>
     </div>  
@@ -39,7 +39,35 @@
             
   <p>MatrixCtl as a pure commandline tool. You can use it as package, if you like,
 but breaking changes may introduced, even in a minor change.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/bin/sh: 1: ../../app.py: not found
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: matrixctl [-h] [--version] [-d]
+                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
+                 ...
+
+positional arguments:
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
+    adduser             Add a new matrix user
+    deluser             Deletes a user
+    adduser-jitsi       Add a new jitsi user
+    deluser-jitsi       Deletes a jitsi user
+    user                Get information about a specific user
+    users               Lists users
+    rooms               List rooms
+    delroom             Deletes an empty room from the database
+    update              Updates the ansible repo
+    upload              Upload a file.
+    deploy              Provision and deploy
+    server-notice       Send a server notice
+    start               Starts all OCI containers
+    stop                Stops all OCI containers
+    restart             Restarts all OCI containers (alias for start)
+    maintenance         Run maintenance tasks
+    check               Checks the deployment with ansible
+    version             Get the version of the Synapse instance
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program&#39;s version number and exit
+  -d, --debug           Enables debugging mode.
 </pre></div>
 </div>
 
@@ -80,7 +108,7 @@ but breaking changes may introduced, even in a minor change.</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.9.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">&lt;no title&gt;</a></li> 
       </ul>
     </div>

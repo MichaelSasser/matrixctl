@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Changelog &#8212; MatrixCtl 0.8.6 documentation</title>
+    <title>Changelog &#8212; MatrixCtl 0.9.0 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -31,7 +31,7 @@
         <li class="right" >
           <a href="matrixctl.html" title="Contributer Documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.9.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Changelog</a></li> 
       </ul>
     </div>  
@@ -46,10 +46,35 @@
 <p>This is the changelog of MatrixCtl. You can find the issue tracker on
 <a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues">GitHub</a>.</p>
 </div>
-<div class="section" id="matrixctl-0-8-6-2021-04-17">
-<h1>MatrixCtl 0.8.6 (2021-04-17)<a class="headerlink" href="#matrixctl-0-8-6-2021-04-17" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h1>0.9.0 (2021-04-23)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="behavior-breaking-changes">
+<h2>Behavior &amp; Breaking Changes<a class="headerlink" href="#behavior-breaking-changes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">shadow-banned</span></code> (needs synapse v1.28 or greater) and <code class="docutils literal notranslate"><span class="pre">displayname</span></code> to
+the table output of <code class="docutils literal notranslate"><span class="pre">`matrixctl</span> <span class="pre">users</span></code>. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/30">#30</a>)</p></li>
+</ul>
+</div>
 <div class="section" id="features-improvements">
 <h2>Features &amp; Improvements<a class="headerlink" href="#features-improvements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">stop</span></code> command to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>, which stops all OCI containers.
+(<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/74">#74</a>)</p></li>
+</ul>
+</div>
+<div class="section" id="improved-documentation">
+<h2>Improved Documentation<a class="headerlink" href="#improved-documentation" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fixed the commandline tool example in the docs. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/68">#68</a>)</p></li>
+<li><p>Removed the program name from every title of the changelog. We now only use
+the version number and the date. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/79">#79</a>)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id6">
+<h1>0.8.6 (2021-04-17)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id7">
+<h2>Features &amp; Improvements<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>The application now uses <code class="docutils literal notranslate"><span class="pre">__main__.py</span></code> instead of <code class="docutils literal notranslate"><span class="pre">application.py</span></code>.
 Developers are now able to use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">matrixctl</span></code> from the project root to
@@ -85,8 +110,14 @@ GitHub</a>. (<a class="reference external" href="https://github.com/MichaelSasse
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Changelog</a></li>
-<li><a class="reference internal" href="#matrixctl-0-8-6-2021-04-17">MatrixCtl 0.8.6 (2021-04-17)</a><ul>
+<li><a class="reference internal" href="#id1">0.9.0 (2021-04-23)</a><ul>
+<li><a class="reference internal" href="#behavior-breaking-changes">Behavior &amp; Breaking Changes</a></li>
 <li><a class="reference internal" href="#features-improvements">Features &amp; Improvements</a></li>
+<li><a class="reference internal" href="#improved-documentation">Improved Documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">0.8.6 (2021-04-17)</a><ul>
+<li><a class="reference internal" href="#id7">Features &amp; Improvements</a></li>
 <li><a class="reference internal" href="#bugfixes">Bugfixes</a></li>
 <li><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
 </ul>
@@ -129,7 +160,7 @@ GitHub</a>. (<a class="reference external" href="https://github.com/MichaelSasse
         <li class="right" >
           <a href="matrixctl.html" title="Contributer Documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.9.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Changelog</a></li> 
       </ul>
     </div>

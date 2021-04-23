@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.users &#8212; MatrixCtl 0.8.6 documentation</title>
+    <title>matrixctl.users &#8212; MatrixCtl 0.9.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.9.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.users</a></li> 
       </ul>
@@ -119,27 +119,33 @@
 <span class="sd">    - If you want deactivated user in the table use the ``--with-deactivated``</span>
 <span class="sd">      switch.</span>
 
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - Needs API version 2 (``synapse`` 1.28 or greater) to work.</span>
+<span class="sd">    - API version 1 is deprecated. If you encounter problems please upgrade</span>
+<span class="sd">      to the latest ``synapse`` release.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    .. code-block:: console</span>
 
 <span class="sd">       $ matrixctl users</span>
-<span class="sd">       +----------------+---------------+------------+------------+</span>
-<span class="sd">       | Name           | Deactivated   | Is Admin   | Is Guest   |</span>
-<span class="sd">       |----------------+---------------+------------+------------|</span>
-<span class="sd">       | dunder_mifflin | False         | True       | False      |</span>
-<span class="sd">       | dwight         | False         | True       | False      |</span>
-<span class="sd">       | pam            | False         | False      | False      |</span>
-<span class="sd">       | jim            | False         | False      | False      |</span>
-<span class="sd">       | creed          | False         | False      | False      |</span>
-<span class="sd">       | stanley        | False         | False      | False      |</span>
-<span class="sd">       | kevin          | False         | False      | False      |</span>
-<span class="sd">       | angela         | False         | False      | False      |</span>
-<span class="sd">       | phyllis        | False         | False      | False      |</span>
-<span class="sd">       | tobi           | False         | False      | False      |</span>
-<span class="sd">       | michael        | False         | True       | False      |</span>
-<span class="sd">       | andy           | False         | False      | False      |</span>
-<span class="sd">       +----------------+---------------+------------+------------+</span>
+<span class="sd">       +---------+-------------+---------------+-------+-------+--------------+</span>
+<span class="sd">       | Name    | Deactivated | Shadow-Banned | Admin | Guest | Display Name |</span>
+<span class="sd">       |---------+-------------+---------------+-------+-------|--------------+</span>
+<span class="sd">       | dwight  | No          | No            | Yes   | No    | Dwight       |</span>
+<span class="sd">       | pam     | No          | No            | No    | No    | Pam          |</span>
+<span class="sd">       | jim     | No          | No            | No    | No    | Jim          |</span>
+<span class="sd">       | creed   | No          | Yes           | No    | No    | Creed        |</span>
+<span class="sd">       | stanley | No          | No            | No    | No    | Stanley      |</span>
+<span class="sd">       | kevin   | No          | No            | No    | No    | Cookie       |</span>
+<span class="sd">       | angela  | No          | No            | No    | No    | Angela       |</span>
+<span class="sd">       | phyllis | No          | No            | No    | No    | Phyllis      |</span>
+<span class="sd">       | tobi    | No          | No            | No    | No    | TobiHR       |</span>
+<span class="sd">       | michael | No          | No            | Yes   | No    | Best Boss    |</span>
+<span class="sd">       | andy    | No          | No            | No    | No    | Andy         |</span>
+<span class="sd">       +---------+-------------+---------------+-------+-------+--------------+</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -159,6 +165,7 @@
 
     <span class="c1"># ToDo: API bool</span>
     <span class="n">api</span><span class="p">:</span> <span class="n">API</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;v2&quot;</span>
     <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
     <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;guests&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">with_guests</span> <span class="ow">or</span> <span class="n">arg</span><span class="o">.</span><span class="n">all</span> <span class="k">else</span> <span class="s2">&quot;false&quot;</span><span class="p">}</span>
     <span class="n">api</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
@@ -182,26 +189,37 @@
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">break</span>
 
-    <span class="n">user_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">user_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users_list</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">user</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="n">len_domain</span><span class="p">]</span>
         <span class="n">deactivated</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">human_readable_bool</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;deactivated&quot;</span><span class="p">])</span>
+        <span class="n">shadow_banned</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">human_readable_bool</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;shadow_banned&quot;</span><span class="p">])</span>
         <span class="n">admin</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">human_readable_bool</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;admin&quot;</span><span class="p">])</span>
         <span class="n">guest</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">human_readable_bool</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;is_guest&quot;</span><span class="p">])</span>
+        <span class="n">display_name</span> <span class="o">=</span> <span class="n">user</span><span class="p">[</span><span class="s2">&quot;displayname&quot;</span><span class="p">]</span>
 
         <span class="n">user_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
             <span class="p">(</span>
                 <span class="n">name</span><span class="p">,</span>
                 <span class="n">deactivated</span><span class="p">,</span>
+                <span class="n">shadow_banned</span><span class="p">,</span>
                 <span class="n">admin</span><span class="p">,</span>
                 <span class="n">guest</span><span class="p">,</span>
+                <span class="n">display_name</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span>
         <span class="n">tabulate</span><span class="p">(</span>
             <span class="n">user_list</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Deactivated&quot;</span><span class="p">,</span> <span class="s2">&quot;Is Admin&quot;</span><span class="p">,</span> <span class="s2">&quot;Is Guest&quot;</span><span class="p">),</span>
+            <span class="n">headers</span><span class="o">=</span><span class="p">(</span>
+                <span class="s2">&quot;Name&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Deactivated&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Shadow-Banned&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Admin&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Guest&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Display Name&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
             <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;psql&quot;</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="p">)</span>
@@ -241,7 +259,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.8.6 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.9.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.users</a></li> 
       </ul>

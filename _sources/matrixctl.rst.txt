@@ -71,6 +71,14 @@ start
    :undoc-members:
    :show-inheritance:
 
+stop
+----
+
+.. automodule:: matrixctl.stop
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 update
 ------
 
