@@ -2,8 +2,36 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 `GitHub <https://github.com/MichaelSasser/matrixctl/issues>`_.
 
 .. towncrier release notes start
-MatrixCtl 0.8.6 (2021-04-17)
-============================
+0.9.0 (2021-04-23)
+==================
+
+Behavior & Breaking Changes
+---------------------------
+
+- add ``shadow-banned`` (needs synapse v1.28 or greater) and ``displayname`` to
+  the table output of ```matrixctl users``. (`#30
+  <https://github.com/MichaelSasser/matrixctl/issues/30>`_)
+
+
+Features & Improvements
+-----------------------
+
+- Add the ``stop`` command to ``matrixctl``, which stops all OCI containers.
+  (`#74 <https://github.com/MichaelSasser/matrixctl/issues/74>`_)
+
+
+Improved Documentation
+----------------------
+
+- Fixed the commandline tool example in the docs. (`#68
+  <https://github.com/MichaelSasser/matrixctl/issues/68>`_)
+- Removed the program name from every title of the changelog. We now only use
+  the version number and the date. (`#79
+  <https://github.com/MichaelSasser/matrixctl/issues/79>`_)
+
+
+0.8.6 (2021-04-17)
+==================
 
 Features & Improvements
 -----------------------

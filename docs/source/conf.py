@@ -48,10 +48,23 @@ extensions: List[str] = [
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.viewcode",
     "numpydoc",
+    "sphinx.ext.intersphinx",
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
     "sphinx.ext.inheritance_diagram",
 ]
+
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    # "numpy": ("https://www.numpy.org/devdocs", None),
+    # "scipy": ("https://scipy.github.io/devdocs", None),
+    # "matplotlib": ("https://matplotlib.org", None),
+}
+intersphinx_timeout = 10
+
+# numpydoc_xref_aliases = {
+#     'LeaveOneOut': 'sklearn.model_selection.LeaveOneOut',
+# }
 
 source_encoding: str = "utf-8"
 
@@ -62,6 +75,15 @@ numfig: bool = True
 
 
 numpydoc_show_class_members: bool = False
+
+# Whether to create cross-references for the parameter types in the
+# Parameters, Other Parameters, Returns and Yields sections of the docstring.
+# False by default.
+numpydoc_xref_param_type: bool = True
+
+# Report warnings for all validation checks
+numpydoc_validation_checks = {"all"}
+
 # generate autosummary even if no references
 autosummary_generate: bool = True
 autosummary_imported_members: bool = True

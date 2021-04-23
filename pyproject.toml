@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.8.6"
+version = "0.9.0"
 description = "Controls a synapse oci-container instance via ansible"
 license = "GPL-3.0-or-later"
 readme = "README.md"
@@ -147,12 +147,18 @@ package_dir = "matrixctl"
 filename = "CHANGELOG.rst"
 issue_format = "`#{issue} <https://github.com/MichaelSasser/matrixctl/issues/{issue}>`_"
 directory = "news/"
-name = "MatrixCtl"
-title_format = "{name} {version} ({project_date})"
+top_line = false
+# name = "MatrixCtl"
+title_format = "{version} ({project_date})"  # {name}
 start_string = ".. towncrier release notes start"
 all_bullets = true  # make all fragments bullet points
 wrap = true  # Wrap text to 79 characters
 template = "news/templates/default.rst"
+
+  [[tool.towncrier.type]]
+  directory = "breaking"
+  name = "Behavior & Breaking Changes"
+  showcontent = true
 
   [[tool.towncrier.type]]
   directory = "feature"
@@ -165,18 +171,13 @@ template = "news/templates/default.rst"
   showcontent = true
 
   [[tool.towncrier.type]]
-  directory = "doc"
+  directory = "docs"
   name = "Improved Documentation"
   showcontent = true
 
   [[tool.towncrier.type]]
   directory = "removal"
   name = "Removals and Deprecations"
-  showcontent = true
-
-  [[tool.towncrier.type]]
-  directory = "breaking"
-  name = "Behavior & Breaking Changes"
   showcontent = true
 
   [[tool.towncrier.type]]
