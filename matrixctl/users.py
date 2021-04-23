@@ -78,27 +78,33 @@ def users(arg: Namespace) -> int:
     - If you want deactivated user in the table use the ``--with-deactivated``
       switch.
 
+
+    Notes
+    -----
+    - Needs API version 2 (``synapse`` 1.28 or greater) to work.
+    - API version 1 is deprecated. If you encounter problems please upgrade
+      to the latest ``synapse`` release.
+
     Examples
     --------
     .. code-block:: console
 
        $ matrixctl users
-       +----------------+---------------+------------+------------+
-       | Name           | Deactivated   | Is Admin   | Is Guest   |
-       |----------------+---------------+------------+------------|
-       | dunder_mifflin | False         | True       | False      |
-       | dwight         | False         | True       | False      |
-       | pam            | False         | False      | False      |
-       | jim            | False         | False      | False      |
-       | creed          | False         | False      | False      |
-       | stanley        | False         | False      | False      |
-       | kevin          | False         | False      | False      |
-       | angela         | False         | False      | False      |
-       | phyllis        | False         | False      | False      |
-       | tobi           | False         | False      | False      |
-       | michael        | False         | True       | False      |
-       | andy           | False         | False      | False      |
-       +----------------+---------------+------------+------------+
+       +---------+-------------+---------------+-------+-------+--------------+
+       | Name    | Deactivated | Shadow-Banned | Admin | Guest | Display Name |
+       |---------+-------------+---------------+-------+-------|--------------+
+       | dwight  | No          | No            | Yes   | No    | Dwight       |
+       | pam     | No          | No            | No    | No    | Pam          |
+       | jim     | No          | No            | No    | No    | Jim          |
+       | creed   | No          | Yes           | No    | No    | Creed        |
+       | stanley | No          | No            | No    | No    | Stanley      |
+       | kevin   | No          | No            | No    | No    | Cookie       |
+       | angela  | No          | No            | No    | No    | Angela       |
+       | phyllis | No          | No            | No    | No    | Phyllis      |
+       | tobi    | No          | No            | No    | No    | TobiHR       |
+       | michael | No          | No            | Yes   | No    | Best Boss    |
+       | andy    | No          | No            | No    | No    | Andy         |
+       +---------+-------------+---------------+-------+-------+--------------+
 
     Parameters
     ----------
@@ -118,6 +124,7 @@ def users(arg: Namespace) -> int:
 
     # ToDo: API bool
     api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    api.url.api_version = "v2"
     api.url.path = "users"
     api.params = {"guests": "true" if arg.with_guests or arg.all else "false"}
     api.params = {
@@ -141,26 +148,37 @@ def users(arg: Namespace) -> int:
         except KeyError:
             break
 
-    user_list: List[Tuple[str, str, str, str]] = []
+    user_list: List[Tuple[str, str, str, str, str, str]] = []
 
     for user in users_list:
         name = user["name"][1:-len_domain]
         deactivated: str = human_readable_bool(user["deactivated"])
+        shadow_banned: str = human_readable_bool(user["shadow_banned"])
         admin: str = human_readable_bool(user["admin"])
         guest: str = human_readable_bool(user["is_guest"])
+        display_name = user["displayname"]
 
         user_list.append(
             (
                 name,
                 deactivated,
+                shadow_banned,
                 admin,
                 guest,
+                display_name,
             )
         )
     print(
         tabulate(
             user_list,
-            headers=("Name", "Deactivated", "Is Admin", "Is Guest"),
+            headers=(
+                "Name",
+                "Deactivated",
+                "Shadow-Banned",
+                "Admin",
+                "Guest",
+                "Display Name",
+            ),
             tablefmt="psql",
         )
     )
