@@ -42,6 +42,7 @@ from matrixctl.rooms import subparser_rooms
 from matrixctl.server_notice import subparser_server_notice
 from matrixctl.start import subparser_restart
 from matrixctl.start import subparser_start
+from matrixctl.stop import subparser_stop
 from matrixctl.update import subparser_update
 from matrixctl.upload import subparser_upload
 from matrixctl.user import subparser_user
@@ -95,6 +96,7 @@ def setup_parser() -> argparse.ArgumentParser:
         subparser_deploy,
         subparser_server_notice,
         subparser_start,
+        subparser_stop,
         subparser_restart,  # alias for start
         subparser_maintenance,
         subparser_check,
