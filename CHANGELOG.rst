@@ -3,8 +3,8 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 
 .. towncrier release notes start
 
-MatrixCtl 0.8.6 (2021-04-17)
-============================
+0.8.6 (2021-04-17)
+==================
 
 Features & Improvements
 -----------------------
