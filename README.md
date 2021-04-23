@@ -117,7 +117,7 @@ Check out the documentation for more information.
 
 ## Chat
 
-If you have any thoughts or questions, you can join the project channel ``#matrixctl:michaelsasser.org``.
+If you have any thoughts or questions, you can join the project channel ``#matrixctl:matrix.org``.
 
 ## Semantic Versioning
 
