@@ -155,6 +155,11 @@ wrap = true  # Wrap text to 79 characters
 template = "news/templates/default.rst"
 
   [[tool.towncrier.type]]
+  directory = "breaking"
+  name = "Behavior & Breaking Changes"
+  showcontent = true
+
+  [[tool.towncrier.type]]
   directory = "feature"
   name = "Features & Improvements"
   showcontent = true
@@ -172,11 +177,6 @@ template = "news/templates/default.rst"
   [[tool.towncrier.type]]
   directory = "removal"
   name = "Removals and Deprecations"
-  showcontent = true
-
-  [[tool.towncrier.type]]
-  directory = "breaking"
-  name = "Behavior & Breaking Changes"
   showcontent = true
 
   [[tool.towncrier.type]]
