@@ -4,7 +4,7 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/michaelsasser/matrixctl?style=flat-square)
 ![GitHub Release Date](https://img.shields.io/github/release-date/michaelsasser/matrixctl?style=flat-square)
 ![PyPI - Status](https://img.shields.io/pypi/status/matrixctl?style=flat-square)
-![Matrix](https://img.shields.io/matrix/matrixctl:michaelsasser.org?server_fqdn=matrix.org&style=flat-square)
+![Matrix](https://img.shields.io/matrix/matrixctl:matrix.org?server_fqdn=matrix.org&style=flat-square)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/michaelsasser/matrixctl?style=flat-square)
 
 # MatrixCtl
