@@ -21,7 +21,7 @@ but breaking changes may be introduced, even in a minor version shift.
 ```
 # matrixctl
 usage: matrixctl [-h] [--version] [-d]
-                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
+                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
               ...
 
 positional arguments:
@@ -39,6 +39,7 @@ positional arguments:
     deploy              Provision and deploy
     server-notice       Send a server notice
     start               Starts all OCI containers
+    stop                Stops all OCI containers
     restart             Restarts all OCI containers (alias for start)
     maintenance         Run maintenance tasks
     check               Checks the OCI containers
