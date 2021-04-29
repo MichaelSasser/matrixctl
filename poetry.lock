@@ -104,7 +104,7 @@ typecheck = ["mypy"]
 
 [[package]]
 name = "black"
-version = "21.4b1"
+version = "21.4b2"
 description = "The uncompromising code formatter."
 category = "dev"
 optional = false
@@ -1191,7 +1191,7 @@ docs = ["sphinx", "sphinx-autodoc-typehints", "numpydoc", "sphinxcontrib-program
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "13ed54dc84934a2361f0f668a1fb84d84610cd7af9fa0071fe8efd4cf0075b55"
+content-hash = "dfafe0a63d8ccba0ac3ccb4f1d3fa137ac6d52c0709fd1b81928c9fd3aecd324"
 
 [metadata.files]
 alabaster = [
@@ -1236,8 +1236,8 @@ bcrypt = [
     {file = "bcrypt-3.2.0.tar.gz", hash = "sha256:5b93c1726e50a93a033c36e5ca7fdcd29a5c7395af50a6892f5d9e7c6cfbfb29"},
 ]
 black = [
-    {file = "black-21.4b1-py3-none-any.whl", hash = "sha256:c9601dc863779db2fb1bf18b345bbfa2bb868463123cde6a7eff44b59e4ef739"},
-    {file = "black-21.4b1.tar.gz", hash = "sha256:20d326de75d13be6290925a95c94a9f368aca2f71cb7b753a938a5ae20f34a37"},
+    {file = "black-21.4b2-py3-none-any.whl", hash = "sha256:bff7067d8bc25eb21dcfdbc8c72f2baafd9ec6de4663241a52fb904b304d391f"},
+    {file = "black-21.4b2.tar.gz", hash = "sha256:fc9bcf3b482b05c1f35f6a882c079dc01b9c7795827532f4cc43c0ec88067bbc"},
 ]
 certifi = [
     {file = "certifi-2020.12.5-py2.py3-none-any.whl", hash = "sha256:719a74fb9e33b9bd44cc7f3a8d94bc35e4049deebe19ba7d8e108280cfd59830"},
