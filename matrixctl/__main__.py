@@ -38,6 +38,7 @@ from matrixctl.deluser import subparser_deluser
 from matrixctl.deluser_jitsi import subparser_deluser_jitsi
 from matrixctl.deploy import subparser_deploy
 from matrixctl.maintenance import subparser_maintenance
+from matrixctl.purge_history import subparser_purge_history
 from matrixctl.rooms import subparser_rooms
 from matrixctl.server_notice import subparser_server_notice
 from matrixctl.start import subparser_restart
@@ -89,6 +90,7 @@ def setup_parser() -> argparse.ArgumentParser:
         subparser_deluser_jitsi,
         subparser_user,
         subparser_users,
+        subparser_purge_history,
         subparser_rooms,
         subparser_delroom,
         subparser_update,
