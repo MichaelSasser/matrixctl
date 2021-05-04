@@ -25,13 +25,14 @@ usage: matrixctl [-h] [--version] [-d]
               ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
     deluser-jitsi       Deletes a jitsi user
     user                Get information about a specific user
     users               Lists users
+    purge-history       Purge historic events from the DB
     rooms               List rooms
     delroom             Deletes an empty room from the database
     update              Updates the ansible repo
