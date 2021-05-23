@@ -373,7 +373,7 @@ python-versions = "*"
 
 [[package]]
 name = "interrogate"
-version = "1.3.2"
+version = "1.4.0"
 description = "Interrogate a codebase for docstring coverage."
 category = "dev"
 optional = false
@@ -388,8 +388,9 @@ tabulate = "*"
 toml = "*"
 
 [package.extras]
-dev = ["sphinx", "sphinx-autobuild", "pytest", "pytest-cov", "pytest-mock", "wheel", "pre-commit"]
+dev = ["cairosvg", "sphinx", "sphinx-autobuild", "pytest", "pytest-cov", "pytest-mock", "wheel", "pre-commit"]
 docs = ["sphinx", "sphinx-autobuild"]
+png = ["cairosvg"]
 tests = ["pytest", "pytest-cov", "pytest-mock"]
 
 [[package]]
@@ -1193,7 +1194,7 @@ docs = ["sphinx", "sphinx-autodoc-typehints", "numpydoc", "sphinxcontrib-program
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "714b64df4f8fdf3a26442c52adf32a60930446c750e0db2ee2b2d8a8b385ea10"
+content-hash = "6a98aa66359c0809fc10f84724c6afee47b3d9cba69ce6e1ccb499bd8e0615f3"
 
 [metadata.files]
 alabaster = [
@@ -1485,8 +1486,8 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 interrogate = [
-    {file = "interrogate-1.3.2-py3-none-any.whl", hash = "sha256:5b20256aadc748d951f5a337a6718d1d2ad889c8968ed6a69259b05a372df88e"},
-    {file = "interrogate-1.3.2.tar.gz", hash = "sha256:cb59baf93d6552824a4cd3a702e82d8e1c1cf6054b2c918c59a6e399a0851ab5"},
+    {file = "interrogate-1.4.0-py3-none-any.whl", hash = "sha256:306d44c8557352a64ded253ddec6bc5d2dc05a7b9bb68ca950be4357b399195e"},
+    {file = "interrogate-1.4.0.tar.gz", hash = "sha256:5fdef4704ee9afff5e7ef5649fc85df4d927853836ef6572776c480307fe4927"},
 ]
 isort = [
     {file = "isort-5.8.0-py3-none-any.whl", hash = "sha256:2bb1680aad211e3c9944dbce1d4ba09a989f04e238296c87fe2139faa26d655d"},
