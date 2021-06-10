@@ -111,7 +111,7 @@ def gen_password(
     """
 
     while True:
-        password = "".join(secrets.choice(ALPHABET) for i in range(length))
+        password = "".join(secrets.choice(ALPHABET) for _ in range(length))
 
         # pylint: disable=chained-comparison
 
