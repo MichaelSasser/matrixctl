@@ -19,12 +19,11 @@
 
 from __future__ import annotations
 
+import logging
 import sys
 import warnings
 
 from copy import deepcopy
-from logging import debug
-from logging import error
 from pathlib import Path
 from typing import Any
 from typing import Dict
@@ -41,6 +40,9 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 class TOML:
 
     """Use the TOML class to read and parse the configuration file(s)."""
@@ -52,7 +54,7 @@ class TOML:
     __slots__ = ("__toml",)
 
     def __init__(self, path: Optional[Path] = None) -> None:
-        debug("Loading Config file(s)")
+        logger.debug("Loading Config file(s)")
 
         paths: List[Path] = []
         if path is None:
@@ -87,7 +89,7 @@ class TOML:
                 # Only lists, tuples are not supported.
                 return deepcopy(dict(toml.load(config_files)))
             except FileNotFoundError:
-                error(
+                logger.error(
                     "To use this program you need to have a config file in"
                     '/etc/matrixctl/config" or in '
                     '"~/.config/matrixctl/config".'
@@ -96,7 +98,7 @@ class TOML:
             except TypeError as e:
                 raise ConfigFileError from e
             except toml.TomlDecodeError:
-                error(
+                logger.error(
                     "Please check your config file. MatrixCtl was not able "
                     "to read it."
                 )
@@ -115,15 +117,17 @@ class TOML:
 
         """
         for key in self.__toml:
-            debug(f"[{key}]")
+            logger.debug(f"[{key}]")
 
             for entry in self.__toml[key]:
                 if entry == "Token":
                     length = len(self.__toml[key][entry])
-                    debug(f"  ├─  {entry} := **HIDDEN (Length={length})**")
+                    logger.debug(
+                        f"  ├─  {entry} := **HIDDEN (Length={length})**"
+                    )
                 else:
-                    debug(f"  ├─  {entry} := {self.__toml[key][entry]}")
-            debug("  ┴")
+                    logger.debug(f"  ├─  {entry} := {self.__toml[key][entry]}")
+            logger.debug("  ┴")
 
     # TODO: doctest + fixture
     def get(self, *keys: str) -> Any:
@@ -162,7 +166,7 @@ class TOML:
             for key in keys:
                 toml_walker = toml_walker.__getitem__(key)
         except KeyError:
-            error(
+            logger.error(
                 "Please check your config file. For this operation your "
                 f'config file needs to have the entry "{keys[-1]}" '
                 f'In the section "[{keys[0]}]".'

@@ -19,10 +19,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import debug
 
 from .handlers.ansible import ansible_run
 from .handlers.toml import TOML
@@ -30,6 +31,9 @@ from .handlers.toml import TOML
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def subparser_check(subparsers: SubParsersAction) -> None:
@@ -66,7 +70,7 @@ def check(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    debug("check")
+    logger.debug("check")
 
     toml: TOML = TOML()
     ansible_run(playbook=toml.get("ANSIBLE", "Playbook"), tags="check")

@@ -20,10 +20,9 @@
 from __future__ import annotations
 
 import json
+import logging
 import sys
 
-from logging import critical
-from logging import debug
 from typing import Any
 from typing import Dict
 from typing import Tuple
@@ -37,6 +36,9 @@ from matrixctl.errors import InternalResponseError
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def check_type(var: Any, var_name: str, var_type: Any = str) -> None:
@@ -194,9 +196,9 @@ class UrlBuilder:
             f"/{self.__api_version}"
             f"/{self.__path}"
         )
-        debug(f"url (unparsed): {url}")
+        logger.debug(f"url (unparsed): {url}")
         url = urlparse(url).geturl()
-        debug(f"url   (parsed): {url}")
+        logger.debug(f"url   (parsed): {url}")
 
         return url
 
@@ -368,11 +370,11 @@ class API:
         debug_headers[
             "Authorization"
         ] = f"HIDDEN (Length={len(self.__headers['Authorization']) - 7})"
-        debug(f"Method: {self.__method}")
-        debug(f"Headers: {debug_headers}")
-        debug(f"Params: {self.__params}")
+        logger.debug(f"Method: {self.__method}")
+        logger.debug(f"Headers: {debug_headers}")
+        logger.debug(f"Params: {self.__params}")
         if not isinstance(data, bytes):  # TODO: Bytes debug
-            debug(f"Data: {data}")
+            logger.debug(f"Data: {data}")
 
         response = self.session.request(
             method=self.__method,
@@ -384,7 +386,7 @@ class API:
         )
 
         if response.status_code == 302:
-            critical(
+            logger.critical(
                 "The api request resulted in an redirect (302). "
                 "This indicates, that the API might have changed, or your "
                 "playbook is misconfigured.\n"
@@ -395,7 +397,7 @@ class API:
             )
             sys.exit(1)
         if response.status_code == 404:
-            critical(
+            logger.critical(
                 "You need to make sure, that your vars.yml contains the "
                 "following excessive long line:\n\n"
                 "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
@@ -403,13 +405,13 @@ class API:
             )
             sys.exit(1)
 
-        debug(f"{response.json()=}")
+        logger.debug(f"{response.json()=}")
 
-        debug(f"{response.status_code=}")
+        logger.debug(f"{response.status_code=}")
         if response.status_code not in self.__success_codes:
             try:
                 if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
-                    critical(
+                    logger.critical(
                         "The server rejected your access-token. "
                         "Please make sure, your access-token is correct "
                         "and up-to-date. Your access-token will change every "

@@ -19,8 +19,9 @@
 
 from __future__ import annotations
 
+import logging
+
 from getpass import getuser
-from logging import debug
 from types import TracebackType
 from typing import NamedTuple
 from typing import Optional
@@ -32,6 +33,9 @@ from paramiko.channel import ChannelFile
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 class SSHResponse(NamedTuple):
@@ -72,7 +76,7 @@ class SSH:
 
         """
         self.__client.connect(self.address, self.port, self.user)
-        debug("SSH connected")
+        logger.debug("SSH connected")
 
     def __disconnect(self) -> None:
         """Disconnect from the SSH server.
@@ -87,7 +91,7 @@ class SSH:
 
         """
         self.__client.close()
-        debug("SSH disconnected")
+        logger.debug("SSH disconnected")
 
     @staticmethod
     def __str_from(f: ChannelFile) -> str | None:
@@ -123,14 +127,14 @@ class SSH:
             Receive ``stdin``, ``stdout`` and ``stderr`` as response.
 
         """
-        debug(f'SSH Command: "{cmd}"')
+        logger.debug(f'SSH Command: "{cmd}"')
 
         response: SSHResponse = SSHResponse(
             # skipcq: BAN-B601
             *[self.__str_from(s) for s in self.__client.exec_command(cmd)]
         )
 
-        debug(f'SSH Response: "{response}"')
+        logger.debug(f'SSH Response: "{response}"')
 
         return response
 
@@ -172,7 +176,7 @@ class SSH:
         None
 
         """
-        debug(f"SSH __exit__: {exc_type=}, {exc_val=}, {exc_tb=}")
+        logger.debug(f"SSH __exit__: {exc_type=}, {exc_val=}, {exc_tb=}")
         self.__disconnect()
 
     def __del__(self) -> None:

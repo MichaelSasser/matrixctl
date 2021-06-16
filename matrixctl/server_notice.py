@@ -19,10 +19,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import error
 
 from .errors import InternalResponseError
 from .handlers.api import API
@@ -31,6 +32,9 @@ from .handlers.toml import TOML
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def subparser_server_notice(subparsers: SubParsersAction) -> None:
@@ -96,7 +100,7 @@ def server_notice(arg: Namespace) -> int:
         api.method = "POST"
         api.request(request)
     except InternalResponseError:
-        error("The server notice was not sent.")
+        logger.error("The server notice was not sent.")
 
     return 0
 

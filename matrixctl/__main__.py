@@ -20,10 +20,9 @@
 from __future__ import annotations
 
 import argparse
+import logging
 
 from argparse import _SubParsersAction
-from logging import debug
-from logging import warning
 from typing import Callable
 from typing import List
 
@@ -59,6 +58,9 @@ __email__: str = "Michael@MichaelSasser.org"
 
 # API: https://github.com/matrix-org/synapse/blob/master/docs/admin_api/
 #              user_admin_api.rst
+
+
+logger = logging.getLogger(__name__)
 
 
 def setup_parser() -> argparse.ArgumentParser:
@@ -125,12 +127,16 @@ def setup_logging(debug_mode: bool) -> None:
     None
 
     """
-    coloredlogs.DEFAULT_LOG_FORMAT = (
-        "%(asctime)s [%(module)s:%(lineno)d (%(funcName)s)] - %(levelname)s "
-        "- %(message)s"
+    # Default coloredlogs.DEFAULT_LOG_FORMAT:
+    # %(asctime)s %(hostname)s %(name)s[%(process)d] %(levelname)s %(message)s
+
+    coloredlogs.install(
+        level="DEBUG" if debug_mode else "INFO",
+        fmt=(
+            "%(asctime)s %(name)s:%(lineno)d [%(funcName)s] %(levelname)s "
+            "%(message)s"
+        ),
     )
-    coloredlogs.DEFAULT_LOG_LEVEL = 0 if debug_mode else 21
-    coloredlogs.install()
 
 
 def main() -> int:
@@ -152,11 +158,11 @@ def main() -> int:
 
     setup_logging(args.debug)
 
-    debug(f"{args=}")
+    logger.debug(f"{args=}")
 
     if args.debug:
-        debug("Disabing help on AttributeError")
-        warning(
+        logger.debug("Disabing help on AttributeError")
+        logger.warning(
             "In debugging mode help is disabled! If you don't use any "
             "attibutes, the program will throw a AttributeError like: "
             "\"AttributeError: 'Namespace' object has no attribute 'func\".'"

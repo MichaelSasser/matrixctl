@@ -19,11 +19,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import debug
-from logging import error
 from mimetypes import MimeTypes
 from pathlib import Path
 
@@ -35,6 +35,9 @@ from .typing import JsonDict
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def subparser_upload(subparsers: SubParsersAction) -> None:
@@ -72,10 +75,10 @@ def upload(arg: Namespace) -> int:
 
     """
     file_path: Path = Path(arg.file).absolute()
-    debug(f"upload: {file_path=}")
+    logger.debug(f"upload: {file_path=}")
     mime_types: MimeTypes = MimeTypes()
     file_type: str = str(mime_types.guess_type(file_path.name)[0])
-    debug(f"upload: {file_type=}")
+    logger.debug(f"upload: {file_type=}")
     try:
         with file_path.open("rb") as fp:
             file: bytes = fp.read()
@@ -94,7 +97,7 @@ def upload(arg: Namespace) -> int:
         api.headers = {"Content-Type": file_type}
         response: JsonDict = api.request(file).json()
     except InternalResponseError:
-        error("The file was not uploaded.")
+        logger.error("The file was not uploaded.")
         return 1
     try:
         print("Content URI: ", response["content_uri"])
