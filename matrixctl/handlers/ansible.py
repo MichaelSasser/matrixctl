@@ -20,6 +20,7 @@
 from __future__ import annotations
 
 import logging
+import tempfile
 
 from pathlib import Path
 
@@ -55,23 +56,31 @@ def ansible_run(
     None
 
     """
-    runner_config: RunnerConfig = RunnerConfig(
-        private_data_dir="/tmp",
-        playbook=playbook,
-        tags=tags,
-        extravars=extra_vars,
-    )
-    runner_config.prepare()
+    with tempfile.TemporaryDirectory() as temp_dir:
 
-    runner: Runner = Runner(config=runner_config)
-    runner.run()
+        logger.debug(
+            f'Created temporary directory "{temp_dir}" for the '
+            "ansible-runner. The temporary directory will be removed after "
+            "the ansible-runner succeeded or failed."
+        )
 
-    # debug output
-    logger.debug("Runner status")
-    logger.debug(f"{runner.status}: {runner.rc}")
-    for host_event in runner.events:
-        logger.debug(host_event["event"])
-    logger.debug(f"Final status: {runner.stats}")
+        runner_config: RunnerConfig = RunnerConfig(
+            private_data_dir=temp_dir,
+            playbook=playbook,
+            tags=tags,
+            extravars=extra_vars,
+        )
+        runner_config.prepare()
+
+        runner: Runner = Runner(config=runner_config)
+        runner.run()
+
+        # debug output
+        logger.debug("Runner status")
+        logger.debug(f"{runner.status}: {runner.rc}")
+        for host_event in runner.events:
+            logger.debug(host_event["event"])
+        logger.debug(f"Final status: {runner.stats}")
 
 
 # vim: set ft=python :
