@@ -85,6 +85,14 @@ exclude = '''
 )/
 '''
 
+[tool.mypy]
+python_version = 3.8
+platform = "linux"
+ignore_missing_imports = true
+strict_equality = true
+strict = true
+show_traceback = true
+
 
 [tool.isort]
 line_length = 79
