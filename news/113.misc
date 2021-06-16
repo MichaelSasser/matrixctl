@@ -1,0 +1,1 @@
+Moved ``mypy.ini`` into ``pyproject.toml``.
