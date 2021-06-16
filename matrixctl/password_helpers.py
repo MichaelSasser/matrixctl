@@ -35,17 +35,17 @@ SPECIAL = "!§$%&/()=?.,;:_-#+*~{}[]°^@<>|\\"
 ALPHABET = string.ascii_letters + string.digits + SPECIAL
 
 
-def ask_password() -> Optional[str]:
+def ask_password() -> str:
     """Ask the user to create a password.
 
-    The user will be asked twice, after
-    that, the function compares the two entered passwords. If they are the
-    same, the function will return the password.
+    The user will be asked twice for a password. After
+    that the function compares the two entered passwords. If they are the
+    same, even when they are empty, the function will return the password.
 
     Notes
     -----
-    If the user presses enter twice, without entering a password,
-    the function will return ``None``. This is by-design.
+    Keep in mind: When the user presses enter twice, without entering a
+    password, the function will return an empty `str`. **This is by-design**.
 
     Parameters
     ----------
@@ -53,20 +53,20 @@ def ask_password() -> Optional[str]:
 
     Returns
     -------
-    password : str, optional
-        The user entered password or ``None``, if the password does not match
-        twice.
+    password : str
+        The user entered password. The string might me empty!
 
     """
-    # ToDo: Check password (regex)
-    passwd: str = "a"
-    passwd2: str = "b"  # Something invalid: a==b is not True
+    passwd: Optional[str] = None
+    passwd2: Optional[str] = None
 
-    while passwd != passwd2:
+    while True:
         passwd = getpass.getpass()
         passwd2 = getpass.getpass("Password (again): ")
+        if passwd == passwd2:
+            break
 
-    return passwd if passwd == passwd2 else None
+    return passwd
 
 
 def gen_password(
