@@ -22,13 +22,12 @@ Use this module to add the ``purge-histoy`` subcommand to ``matrixctl``.
 
 from __future__ import annotations
 
+import logging
+
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from datetime import datetime
-from logging import debug
-from logging import fatal
-from logging import info
 from time import sleep
 from typing import Dict
 from typing import Optional
@@ -43,6 +42,9 @@ from .typing import JsonDict
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def subparser_purge_history(subparsers: SubParsersAction) -> None:
@@ -103,7 +105,7 @@ def check_point_in_time(
     """
     try:
         dt = datetime.fromtimestamp(float(event_or_timestamp) / 1000)
-        debug(f"Delete until {dt=}")
+        logger.debug(f"Delete until {dt=}")
         return {"purge_up_to_ts": int(event_or_timestamp)}
     except (OverflowError, OSError, ValueError):
         if event_or_timestamp.startswith("$"):
@@ -137,7 +139,7 @@ def handle_purge_status(toml: TOML, purge_id: str) -> int:
         try:
             response: JsonDict = api.request().json()
         except InternalResponseError:
-            fatal(
+            logger.critical(
                 "The purge history request was successful but the status "
                 "request failed. You just have to wait a bit."
                 "If that happens the next time, pleas hand in a bug report."
@@ -146,15 +148,17 @@ def handle_purge_status(toml: TOML, purge_id: str) -> int:
         # return response
 
         if response is not None:
-            debug(f"{response=}")
+            logger.debug(f"{response=}")
             if response["status"] == "complete":
                 print("Done...")
                 return 0
             if response["status"] == "failed":
-                fatal("The server returned, that the purge aproach failed.")
+                logger.critical(
+                    "The server returned, that the purge aproach failed."
+                )
                 break
             if response["status"] == "active":
-                info(
+                logger.info(
                     "The server is still purging historic message content. "
                     "Please wait..."
                 )
@@ -184,7 +188,7 @@ def purge_history(arg: Namespace) -> int:
 
     # check room_id (! = internal; # = local)
     if not (arg.room_id.startswith("!") or arg.room_id.startswith("#")):
-        fatal("The room_id is incorrect. Pleas check it again.")
+        logger.critical("The room_id is incorrect. Pleas check it again.")
         return 1
 
     # Delete local events; Q: Are you sure?
@@ -209,7 +213,7 @@ def purge_history(arg: Namespace) -> int:
         ] = check_point_in_time(arg.event_or_timestamp)
 
         if point_in_time is None:
-            fatal(
+            logger.critical(
                 "The event/timestamp does not seem to be correct. "
                 "Please check that argument again."
             )
@@ -234,13 +238,13 @@ def purge_history(arg: Namespace) -> int:
     try:
         response: JsonDict = api.request(request_body).json()
     except InternalResponseError:
-        fatal(
+        logger.critical(
             "Something went wrong with the request. Please check your data "
             "again."
         )
         return 1
 
-    debug(f"{response=}")
+    logger.debug(f"{response=}")
     return handle_purge_status(toml, response["purge_id"])
     ###################
     # while True:

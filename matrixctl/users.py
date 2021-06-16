@@ -19,10 +19,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import fatal
 from typing import List
 from typing import Tuple
 
@@ -37,6 +38,9 @@ from .typing import JsonDict
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def subparser_users(subparsers: SubParsersAction) -> None:
@@ -137,7 +141,7 @@ def users(arg: Namespace) -> int:
         try:
             lst: JsonDict = api.request().json()
         except InternalResponseError:
-            fatal("Could not get the user table.")
+            logger.critical("Could not get the user table.")
 
             return 1
 

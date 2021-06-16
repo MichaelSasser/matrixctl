@@ -19,7 +19,8 @@
 
 from __future__ import annotations
 
-from logging import debug
+import logging
+
 from pathlib import Path
 
 from ansible_runner.interface import Runner
@@ -28,6 +29,8 @@ from ansible_runner.runner_config import RunnerConfig
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+logger = logging.getLogger(__name__)
 
 
 # ToDo: Make async to get debug output while running
@@ -64,11 +67,11 @@ def ansible_run(
     runner.run()
 
     # debug output
-    debug("Runner status")
-    debug(f"{runner.status}: {runner.rc}")
+    logger.debug("Runner status")
+    logger.debug(f"{runner.status}: {runner.rc}")
     for host_event in runner.events:
-        debug(host_event["event"])
-    debug(f"Final status: {runner.stats}")
+        logger.debug(host_event["event"])
+    logger.debug(f"Final status: {runner.stats}")
 
 
 # vim: set ft=python :

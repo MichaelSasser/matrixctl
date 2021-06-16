@@ -20,11 +20,14 @@
 from __future__ import annotations
 
 import getpass
+import logging
 import secrets
 import string
 
-from logging import info
 from typing import Optional
+
+
+logger = logging.getLogger(__name__)
 
 
 __author__: str = "Michael Sasser"
@@ -154,7 +157,7 @@ def ask_question(question: str = "Is everything correct?") -> bool:
         "j",
         "n",
     ):
-        info("User entered [y/n] pattern did not match")
+        logger.info("User entered [y/n] pattern did not match")
 
     return answer in ("y", "j")
 

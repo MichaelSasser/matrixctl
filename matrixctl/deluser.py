@@ -19,10 +19,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import error
 
 from .errors import InternalResponseError
 from .handlers.api import API
@@ -31,6 +32,9 @@ from .handlers.toml import TOML
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def subparser_deluser(subparsers: SubParsersAction) -> None:
@@ -76,7 +80,7 @@ def deluser(arg: Namespace) -> int:
         api.method = "POST"
         api.request({"erase": True})
     except InternalResponseError:
-        error("The user was not deleted.")
+        logger.error("The user was not deleted.")
 
     return 0
 

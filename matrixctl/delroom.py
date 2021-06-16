@@ -19,10 +19,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import error
 
 from .errors import InternalResponseError
 from .handlers.api import API
@@ -31,6 +32,9 @@ from .handlers.toml import TOML
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def subparser_delroom(subparsers: SubParsersAction) -> None:
@@ -87,13 +91,13 @@ def delroom(arg: Namespace) -> int:
                     "M_NOT_FOUND",
                     "M_UNKNOWN",
                 ):
-                    error(f"{e.payload.json()['error']}")
+                    logger.error(f"{e.payload.json()['error']}")
 
                     return 1
             except KeyError:
                 pass  # log the fallback error
 
-        error("Could not delete room")
+        logger.error("Could not delete room")
 
         return 1
 

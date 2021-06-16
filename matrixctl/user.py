@@ -20,14 +20,12 @@
 from __future__ import annotations
 
 import datetime
+import logging
 import sys
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import debug
-from logging import error
-from logging import fatal
 from typing import Any
 
 from tabulate import tabulate
@@ -41,6 +39,9 @@ from .typing import JsonDict
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def subparser_user(subparsers: SubParsersAction) -> None:
@@ -150,7 +151,7 @@ def generate_user_tables(
 
     for k in user_dict:
         if k == "errcode":
-            error("There is no user with that username.")
+            logger.error("There is no user with that username.")
             sys.exit(1)
 
         if k == "threepids":
@@ -235,14 +236,14 @@ def user(arg: Namespace) -> int:
     try:
         user_dict: JsonDict = api.request().json()
     except InternalResponseError:
-        fatal("Could not receive the user information")
+        logger.critical("Could not receive the user information")
 
         return 1
 
     len_domain = len(toml.get("API", "Domain")) + 1  # 1 for :
     user_tables = generate_user_tables(user_dict, len_domain)
 
-    debug(f"User: {user_tables=}")
+    logger.debug(f"User: {user_tables=}")
 
     for num, table in enumerate(user_tables):
 

@@ -19,10 +19,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import error
 
 from .errors import InternalResponseError
 from .handlers.ansible import ansible_run
@@ -35,6 +36,9 @@ from .password_helpers import gen_password
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def subparser_adduser(subparsers: SubParsersAction) -> None:
@@ -141,7 +145,7 @@ def adduser(arg: Namespace) -> int:
             api.method = "PUT"
             api.request({"password": arg.passwd, "admin": arg.admin})
         except InternalResponseError:
-            error("The User was not added.")
+            logger.error("The User was not added.")
 
     return 0
 
