@@ -4,13 +4,14 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MatrixCtl documentation &#8212; MatrixCtl 0.9.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>MatrixCtl documentation &#8212; MatrixCtl 0.10.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -31,7 +32,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">MatrixCtl 0.9.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">MatrixCtl 0.10.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">MatrixCtl documentation</a></li> 
       </ul>
     </div>  
@@ -41,7 +42,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="matrixctl-documentation">
+  <section id="matrixctl-documentation">
 <h1>MatrixCtl documentation<a class="headerlink" href="#matrixctl-documentation" title="Permalink to this headline">¶</a></h1>
 <p>MatrixCtl is a python program to control, manage, provision and deploy our
 matrix homeserver. I had a bunch of shell scripts doing that. Two weeks
@@ -75,21 +76,31 @@ features.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html#id1">0.9.0 (2021-04-23)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#behavior-breaking-changes">Behavior &amp; Breaking Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id1">0.10.1 (2021-06-17)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#features-improvements">Features &amp; Improvements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id3">0.10.0 (2021-06-17)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#behavior-breaking-changes">Behavior &amp; Breaking Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">Features &amp; Improvements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id12">0.9.0 (2021-04-23)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id13">Behavior &amp; Breaking Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id15">Features &amp; Improvements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#improved-documentation">Improved Documentation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html#id6">0.8.6 (2021-04-17)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">Features &amp; Improvements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id19">0.8.6 (2021-04-17)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id20">Features &amp; Improvements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#bugfixes">Bugfixes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#miscellaneous">Miscellaneous</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id24">Miscellaneous</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="section" id="branching-model">
+<section id="branching-model">
 <h2>Branching Model<a class="headerlink" href="#branching-model" title="Permalink to this headline">¶</a></h2>
 <p>This repository uses the
 <a class="reference external" href="https://danielkummer.github.io/git-flow-cheatsheet/index.html">git-flow</a>
@@ -101,23 +112,24 @@ It has two branches with infinite lifetime:</p>
 </ul>
 <p>The master branch gets updated on every release. The develop branch is the
 merging branch.</p>
-</div>
-<div class="section" id="command-line-tool">
+</section>
+<section id="command-line-tool">
 <h2>Command line tool<a class="headerlink" href="#command-line-tool" title="Permalink to this headline">¶</a></h2>
 <p>MatrixCtl as a pure commandline tool. You can use it as package, if you like,
 but breaking changes may introduced, even in a minor change.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: matrixctl [-h] [--version] [-d]
-                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
+                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
                  ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
     deluser-jitsi       Deletes a jitsi user
     user                Get information about a specific user
     users               Lists users
+    purge-history       Purge historic events from the DB
     rooms               List rooms
     delroom             Deletes an empty room from the database
     update              Updates the ansible repo
@@ -137,102 +149,59 @@ optional arguments:
   -d, --debug           Enables debugging mode.
 </pre></div>
 </div>
-</div>
-<div class="section" id="configuration-file">
+</section>
+<section id="configuration-file">
 <h2>Configuration File<a class="headerlink" href="#configuration-file" title="Permalink to this headline">¶</a></h2>
 <p>To use this program you need to have this config file in
 <code class="docutils literal notranslate"><span class="pre">/etc/matrixctl/config</span></code> or in <code class="docutils literal notranslate"><span class="pre">~/.config/matrixctl/config</span></code>.</p>
-<div class="highlight-toml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[ANSIBLE]</span>
-<span class="c1"># The absolute path to your playbook</span>
-<span class="c1">#</span>
-<span class="c1"># Playbook = &quot;/absolute/path/to/your/playbook&quot;</span>
-
-<span class="k">[SYNAPSE]</span>
-<span class="c1"># The absolute path to the synapse playbook.</span>
-<span class="c1"># This is only used for updating the playbook.</span>
-<span class="c1">#</span>
-<span class="c1"># Playbook=&quot;/absolut/path/to/the/playbook&quot;</span>
-
-<span class="k">[API]</span>
-<span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
-<span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
-<span class="c1"># provision your Server without this section. You also can cerate a user with</span>
-<span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
-<span class="c1"># that.</span>
-
-<span class="c1"># Your domain should be something like &quot;michaelsasser.org&quot; without the</span>
-<span class="c1"># &quot;matrix.&quot; in the front. MatrixCtl will add that, if needed. An IP-Address</span>
-<span class="c1"># is not enough.</span>
-<span class="c1">#</span>
-<span class="c1"># Domain=&quot;domain.tld&quot;</span>
-
-<span class="c1"># To use the API you need to have an administrator account. Enter your Token</span>
-<span class="c1"># here. If you use the riot client you will find it your user settings (click</span>
-<span class="c1"># on your username on the upper left corner on your browser) in the</span>
-<span class="c1"># &quot;Help &amp; About&quot; tab. If you scroll down click next to &quot;Access-Token:&quot; on</span>
-<span class="c1"># &quot;&lt;click to reveal&gt;&quot;. It will be marked for you. Copy it in here.</span>
-<span class="c1">#</span>
-<span class="c1"># Token=&quot;MySuperLongMatrixToken&quot;</span>
-
-<span class="k">[SSH]</span>
-<span class="c1"># Here you can add your SSH configuration.</span>
-<span class="c1">#</span>
-<span class="c1"># Address = &quot;matrix.domain.tld&quot;</span>
-
-<span class="c1"># The default port is 22</span>
-<span class="c1">#</span>
-<span class="c1"># Port = 22</span>
-
-<span class="c1"># The default username is your current login name.</span>
-<span class="c1">#</span>
-<span class="c1"># User = &quot;myusername&quot;</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">[ANSIBLE]</span>
+<span class="linenos"> 2</span><span class="c1"># The absolute path to your playbook</span>
+<span class="linenos"> 3</span><span class="c1">#</span>
+<span class="linenos"> 4</span><span class="c1"># Playbook = &quot;/absolute/path/to/your/playbook&quot;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">[SYNAPSE]</span>
+<span class="linenos"> 7</span><span class="c1"># The absolute path to the synapse playbook.</span>
+<span class="linenos"> 8</span><span class="c1"># This is only used for updating the playbook.</span>
+<span class="linenos"> 9</span><span class="c1">#</span>
+<span class="linenos">10</span><span class="c1"># Playbook=&quot;/absolut/path/to/the/playbook&quot;</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="k">[API]</span>
+<span class="linenos">13</span><span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
+<span class="linenos">14</span><span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
+<span class="linenos">15</span><span class="c1"># provision your Server without this section. You also can cerate a user with</span>
+<span class="linenos">16</span><span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
+<span class="linenos">17</span><span class="c1"># that.</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="c1"># Your domain should be something like &quot;michaelsasser.org&quot; without the</span>
+<span class="linenos">20</span><span class="c1"># &quot;matrix.&quot; in the front. MatrixCtl will add that, if needed. An IP-Address</span>
+<span class="linenos">21</span><span class="c1"># is not enough.</span>
+<span class="linenos">22</span><span class="c1">#</span>
+<span class="linenos">23</span><span class="c1"># Domain=&quot;domain.tld&quot;</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="c1"># To use the API you need to have an administrator account. Enter your Token</span>
+<span class="linenos">26</span><span class="c1"># here. If you use the riot client you will find it your user settings (click</span>
+<span class="linenos">27</span><span class="c1"># on your username on the upper left corner on your browser) in the</span>
+<span class="linenos">28</span><span class="c1"># &quot;Help &amp; About&quot; tab. If you scroll down click next to &quot;Access-Token:&quot; on</span>
+<span class="linenos">29</span><span class="c1"># &quot;&lt;click to reveal&gt;&quot;. It will be marked for you. Copy it in here.</span>
+<span class="linenos">30</span><span class="c1">#</span>
+<span class="linenos">31</span><span class="c1"># Token=&quot;MySuperLongMatrixToken&quot;</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="k">[SSH]</span>
+<span class="linenos">34</span><span class="c1"># Here you can add your SSH configuration.</span>
+<span class="linenos">35</span><span class="c1">#</span>
+<span class="linenos">36</span><span class="c1"># Address = &quot;matrix.domain.tld&quot;</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="c1"># The default port is 22</span>
+<span class="linenos">39</span><span class="c1">#</span>
+<span class="linenos">40</span><span class="c1"># Port = 22</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span><span class="c1"># The default username is your current login name.</span>
+<span class="linenos">43</span><span class="c1">#</span>
+<span class="linenos">44</span><span class="c1"># User = &quot;myusername&quot;</span>
 </pre></div>
-</td></tr></table></div>
 </div>
-<div class="section" id="semantic-versioning">
+</section>
+<section id="semantic-versioning">
 <h2>Semantic Versioning<a class="headerlink" href="#semantic-versioning" title="Permalink to this headline">¶</a></h2>
 <p><strong>After release “1.0.0”</strong> this repository will use
 <a class="reference external" href="https://semver.org/">SemVer</a> for its release
@@ -244,22 +213,22 @@ This means that breaking changes result in a version change at “y”
 position (e.g. “0.1.0” -&gt; “0.2.0”). Non breaking changes result in
 a “z” change (e.g. “0.1.1” -&gt; “0.1.2”).</p>
 </div>
-</div>
-</div>
-<div class="section" id="indices-and-tables">
+</section>
+</section>
+<section id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-</div>
-<div class="section" id="license">
+</section>
+<section id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
 <p>Copyright © 2020 Michael Sasser
 &lt;<a class="reference external" href="mailto:Info&#37;&#52;&#48;MichaelSasser">Info<span>&#64;</span>MichaelSasser<span>&#46;</span>org</a>&gt;. Released under
 the GPLv3 license.</p>
-</div>
+</section>
 
 
             <div class="clearer"></div>
@@ -317,13 +286,13 @@ the GPLv3 license.</p>
         <li class="right" >
           <a href="installation.html" title="Installation"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">MatrixCtl 0.9.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">MatrixCtl 0.10.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">MatrixCtl documentation</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Michael Sasser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
     </div>
   </body>
 </html>

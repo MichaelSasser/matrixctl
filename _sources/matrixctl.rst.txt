@@ -111,6 +111,14 @@ rooms
    :undoc-members:
    :show-inheritance:
 
+purge-history
+-------------
+
+.. automodule:: matrixctl.purge_history
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 delroom
 -------
 

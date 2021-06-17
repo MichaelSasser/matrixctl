@@ -4,13 +4,14 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Config File &#8212; MatrixCtl 0.9.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Config File &#8212; MatrixCtl 0.10.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -35,7 +36,7 @@
         <li class="right" >
           <a href="index.html" title="Getting Started"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">MatrixCtl 0.9.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Getting Started</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Config File</a></li> 
       </ul>
@@ -46,7 +47,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="config-file">
+  <section id="config-file">
 <h1>Config File<a class="headerlink" href="#config-file" title="Permalink to this headline">¶</a></h1>
 <p>To use this program you need to have this config file in
 <code class="docutils literal notranslate"><span class="pre">/etc/matrixctl/config</span></code> or in <code class="docutils literal notranslate"><span class="pre">~/.config/matrixctl/config</span></code>.</p>
@@ -111,96 +112,53 @@ of the “Getting Started” section of this documentation.</p>
 <p>Make sure, that other accounts of your local machine are not able
 to read or edit your config file. I contains sensitive data.</p>
 </div>
-<div class="highlight-toml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[ANSIBLE]</span>
-<span class="c1"># The absolute path to your playbook</span>
-<span class="c1">#</span>
-<span class="c1"># Playbook = &quot;/absolute/path/to/your/playbook&quot;</span>
-
-<span class="k">[SYNAPSE]</span>
-<span class="c1"># The absolute path to the synapse playbook.</span>
-<span class="c1"># This is only used for updating the playbook.</span>
-<span class="c1">#</span>
-<span class="c1"># Playbook=&quot;/absolut/path/to/the/playbook&quot;</span>
-
-<span class="k">[API]</span>
-<span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
-<span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
-<span class="c1"># provision your Server without this section. You also can cerate a user with</span>
-<span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
-<span class="c1"># that.</span>
-
-<span class="c1"># Your domain should be something like &quot;michaelsasser.org&quot; without the</span>
-<span class="c1"># &quot;matrix.&quot; in the front. MatrixCtl will add that, if needed. An IP-Address</span>
-<span class="c1"># is not enough.</span>
-<span class="c1">#</span>
-<span class="c1"># Domain=&quot;domain.tld&quot;</span>
-
-<span class="c1"># To use the API you need to have an administrator account. Enter your Token</span>
-<span class="c1"># here. If you use the riot client you will find it your user settings (click</span>
-<span class="c1"># on your username on the upper left corner on your browser) in the</span>
-<span class="c1"># &quot;Help &amp; About&quot; tab. If you scroll down click next to &quot;Access-Token:&quot; on</span>
-<span class="c1"># &quot;&lt;click to reveal&gt;&quot;. It will be marked for you. Copy it in here.</span>
-<span class="c1">#</span>
-<span class="c1"># Token=&quot;MySuperLongMatrixToken&quot;</span>
-
-<span class="k">[SSH]</span>
-<span class="c1"># Here you can add your SSH configuration.</span>
-<span class="c1">#</span>
-<span class="c1"># Address = &quot;matrix.domain.tld&quot;</span>
-
-<span class="c1"># The default port is 22</span>
-<span class="c1">#</span>
-<span class="c1"># Port = 22</span>
-
-<span class="c1"># The default username is your current login name.</span>
-<span class="c1">#</span>
-<span class="c1"># User = &quot;myusername&quot;</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">[ANSIBLE]</span>
+<span class="linenos"> 2</span><span class="c1"># The absolute path to your playbook</span>
+<span class="linenos"> 3</span><span class="c1">#</span>
+<span class="linenos"> 4</span><span class="c1"># Playbook = &quot;/absolute/path/to/your/playbook&quot;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">[SYNAPSE]</span>
+<span class="linenos"> 7</span><span class="c1"># The absolute path to the synapse playbook.</span>
+<span class="linenos"> 8</span><span class="c1"># This is only used for updating the playbook.</span>
+<span class="linenos"> 9</span><span class="c1">#</span>
+<span class="linenos">10</span><span class="c1"># Playbook=&quot;/absolut/path/to/the/playbook&quot;</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="k">[API]</span>
+<span class="linenos">13</span><span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
+<span class="linenos">14</span><span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
+<span class="linenos">15</span><span class="c1"># provision your Server without this section. You also can cerate a user with</span>
+<span class="linenos">16</span><span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
+<span class="linenos">17</span><span class="c1"># that.</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="c1"># Your domain should be something like &quot;michaelsasser.org&quot; without the</span>
+<span class="linenos">20</span><span class="c1"># &quot;matrix.&quot; in the front. MatrixCtl will add that, if needed. An IP-Address</span>
+<span class="linenos">21</span><span class="c1"># is not enough.</span>
+<span class="linenos">22</span><span class="c1">#</span>
+<span class="linenos">23</span><span class="c1"># Domain=&quot;domain.tld&quot;</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="c1"># To use the API you need to have an administrator account. Enter your Token</span>
+<span class="linenos">26</span><span class="c1"># here. If you use the riot client you will find it your user settings (click</span>
+<span class="linenos">27</span><span class="c1"># on your username on the upper left corner on your browser) in the</span>
+<span class="linenos">28</span><span class="c1"># &quot;Help &amp; About&quot; tab. If you scroll down click next to &quot;Access-Token:&quot; on</span>
+<span class="linenos">29</span><span class="c1"># &quot;&lt;click to reveal&gt;&quot;. It will be marked for you. Copy it in here.</span>
+<span class="linenos">30</span><span class="c1">#</span>
+<span class="linenos">31</span><span class="c1"># Token=&quot;MySuperLongMatrixToken&quot;</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="k">[SSH]</span>
+<span class="linenos">34</span><span class="c1"># Here you can add your SSH configuration.</span>
+<span class="linenos">35</span><span class="c1">#</span>
+<span class="linenos">36</span><span class="c1"># Address = &quot;matrix.domain.tld&quot;</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="c1"># The default port is 22</span>
+<span class="linenos">39</span><span class="c1">#</span>
+<span class="linenos">40</span><span class="c1"># Port = 22</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span><span class="c1"># The default username is your current login name.</span>
+<span class="linenos">43</span><span class="c1">#</span>
+<span class="linenos">44</span><span class="c1"># User = &quot;myusername&quot;</span>
 </pre></div>
-</td></tr></table></div>
 </div>
+</section>
 
 
             <div class="clearer"></div>
@@ -251,14 +209,14 @@ to read or edit your config file. I contains sensitive data.</p>
         <li class="right" >
           <a href="index.html" title="Getting Started"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">MatrixCtl 0.9.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Getting Started</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Config File</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Michael Sasser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
     </div>
   </body>
 </html>

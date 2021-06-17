@@ -4,13 +4,14 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SSH Public Key &#8212; MatrixCtl 0.9.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>SSH Public Key &#8212; MatrixCtl 0.10.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -35,7 +36,7 @@
         <li class="right" >
           <a href="access_token.html" title="Access Token"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">MatrixCtl 0.9.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Getting Started</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">SSH Public Key</a></li> 
       </ul>
@@ -46,7 +47,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="ssh-public-key">
+  <section id="ssh-public-key">
 <h1>SSH Public Key<a class="headerlink" href="#ssh-public-key" title="Permalink to this headline">¶</a></h1>
 <p>To get easy access to the other matrix plugins (e.g. bridges) and other
 additional functionality, to communicate with the OCI containers, you need to
@@ -70,7 +71,7 @@ described in <a class="reference internal" href="config_file.html#config-file"><
 section. If you don’t want to write your own playbook, follow this
 guide.</p>
 </div>
-<div class="section" id="check-your-keypair">
+<section id="check-your-keypair">
 <h2>Check your keypair<a class="headerlink" href="#check-your-keypair" title="Permalink to this headline">¶</a></h2>
 <p>Check, if you alreadey have a key pair.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls -la ~/.ssh/id_*.pub
@@ -88,8 +89,8 @@ the section: <a class="reference internal" href="#generate-keypair"><span class=
 <span class="go">ls: cannot access &#39;/home/michael/.ssh/id_*.pub&#39;: No such file or directory</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="generate-keypair">
+</section>
+<section id="generate-keypair">
 <h2>Generate Keypair<a class="headerlink" href="#generate-keypair" title="Permalink to this headline">¶</a></h2>
 <p>To generate your keypair run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir ~/.ssh
@@ -170,15 +171,15 @@ the section: <a class="reference internal" href="#generate-keypair"><span class=
 <span class="gp gp-VirtualEnv">(4/4)</span> <span class="go">Cleaning up package cache...</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="copy-public-key">
+</section>
+<section id="copy-public-key">
 <h2>Copy Public Key<a class="headerlink" href="#copy-public-key" title="Permalink to this headline">¶</a></h2>
 <p>Now copy your public key to your Server:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ssh-copy-id -i ~/.ssh/id_rsa.pub user@matrix.domain.tld
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -239,14 +240,14 @@ the section: <a class="reference internal" href="#generate-keypair"><span class=
         <li class="right" >
           <a href="access_token.html" title="Access Token"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">MatrixCtl 0.9.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Getting Started</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">SSH Public Key</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Michael Sasser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
     </div>
   </body>
 </html>
