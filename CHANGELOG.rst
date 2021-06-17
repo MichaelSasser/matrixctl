@@ -8,7 +8,7 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 Features & Improvements
 -----------------------
 
-- Update typ hinting according to PEP 585. (`#123
+- Update type hinting according to PEP 585. (`#123
   <https://github.com/MichaelSasser/matrixctl/issues/123>`_)
 
 
