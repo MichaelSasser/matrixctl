@@ -2,6 +2,38 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 `GitHub <https://github.com/MichaelSasser/matrixctl/issues>`_.
 
 .. towncrier release notes start
+0.10.0 (2021-06-17)
+===================
+
+Behavior & Breaking Changes
+---------------------------
+
+- Drop support for Python 3.8 for tests and typing. (`#121
+  <https://github.com/MichaelSasser/matrixctl/issues/121>`_)
+
+
+Features & Improvements
+-----------------------
+
+- add ``purge-history`` to purge historic events from the DB (`#86
+  <https://github.com/MichaelSasser/matrixctl/issues/86>`_)
+- Modules are using ``logger`` instead of ``logging``. (`#117
+  <https://github.com/MichaelSasser/matrixctl/issues/117>`_)
+- Use secure, temporary directory for ansible_runner's private data. (`#119
+  <https://github.com/MichaelSasser/matrixctl/issues/119>`_)
+
+
+Miscellaneous
+-------------
+
+- Moved ``mypy.ini`` into ``pyproject.toml``. (`#113
+  <https://github.com/MichaelSasser/matrixctl/issues/113>`_)
+- Fix of false-positive ``CWE-798: Use of Hard-coded Credentials``. (`#115
+  <https://github.com/MichaelSasser/matrixctl/issues/115>`_)
+- Update ``pre-commit`` and dependencies. (`#121
+  <https://github.com/MichaelSasser/matrixctl/issues/121>`_)
+
+
 0.9.0 (2021-04-23)
 ==================
 
