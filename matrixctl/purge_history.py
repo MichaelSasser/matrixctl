@@ -29,9 +29,6 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from datetime import datetime
 from time import sleep
-from typing import Dict
-from typing import Optional
-from typing import Union
 
 from .errors import InternalResponseError
 from .handlers.api import API
@@ -89,7 +86,7 @@ def subparser_purge_history(subparsers: SubParsersAction) -> None:
 
 def check_point_in_time(
     event_or_timestamp: str,
-) -> Optional[Dict[str, Union[str, int]]]:
+) -> dict[str, str | int] | None:
     """Check the the type of the point in time and set the correct body.
 
     Parameters
@@ -182,7 +179,7 @@ def purge_history(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    request_body: Dict[str, Union[str, int]] = {}
+    request_body: dict[str, str | int] = {}
 
     # Sanitizing input
 
@@ -208,9 +205,9 @@ def purge_history(arg: Namespace) -> int:
         if not ask_question("Do you want to continue?"):
             return 0
     else:
-        point_in_time: Optional[
-            Dict[str, Union[str, int]]
-        ] = check_point_in_time(arg.event_or_timestamp)
+        point_in_time: dict[str, str | int] | None = check_point_in_time(
+            arg.event_or_timestamp
+        )
 
         if point_in_time is None:
             logger.critical(
@@ -248,7 +245,7 @@ def purge_history(arg: Namespace) -> int:
     return handle_purge_status(toml, response["purge_id"])
     ###################
     # while True:
-    #     status_response: Optional[JsonDict] = get_purge_status(
+    #     status_response: JsonDict | None = get_purge_status(
     #         toml, response["purge_id"]
     #     )
     #

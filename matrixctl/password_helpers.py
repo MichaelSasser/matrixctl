@@ -24,8 +24,6 @@ import logging
 import secrets
 import string
 
-from typing import Optional
-
 
 logger = logging.getLogger(__name__)
 
@@ -60,8 +58,8 @@ def ask_password() -> str:
         The user entered password. The string might me empty!
 
     """
-    passwd: Optional[str] = None
-    passwd2: Optional[str] = None
+    passwd: str | None = None
+    passwd2: str | None = None
 
     while True:
         passwd = getpass.getpass()

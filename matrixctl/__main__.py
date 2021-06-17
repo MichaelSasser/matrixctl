@@ -23,8 +23,7 @@ import argparse
 import logging
 
 from argparse import _SubParsersAction
-from typing import Callable
-from typing import List
+from collections.abc import Callable
 
 import coloredlogs
 
@@ -85,7 +84,7 @@ def setup_parser() -> argparse.ArgumentParser:
     subparsers: _SubParsersAction = parser.add_subparsers()
 
     # Subparsers
-    subparsers_tuple: List[Callable[[_SubParsersAction], None]] = [
+    subparsers_tuple: list[Callable[[_SubParsersAction], None]] = [
         subparser_adduser,
         subparser_deluser,
         subparser_adduser_jitsi,
