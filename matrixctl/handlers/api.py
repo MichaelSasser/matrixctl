@@ -24,8 +24,6 @@ import logging
 import sys
 
 from typing import Any
-from typing import Dict
-from typing import Tuple
 from urllib.parse import urlparse
 
 import requests
@@ -221,7 +219,7 @@ class API:
     )
 
     # (*range(200, 208), 226)
-    RESPONSE_OK: Tuple[int, ...] = (
+    RESPONSE_OK: tuple[int, ...] = (
         200,
         201,
         202,
@@ -251,13 +249,13 @@ class API:
         self.json_format: bool = json_format
 
         self.url: UrlBuilder = UrlBuilder(domain)
-        self.__success_codes: Tuple[int, ...] = self.__class__.RESPONSE_OK
+        self.__success_codes: tuple[int, ...] = self.__class__.RESPONSE_OK
 
         self.session = requests.Session()
 
         self.__method: str = "GET"
-        self.__params: Dict[str, str] = {}
-        self.__headers: Dict[str, str] = {
+        self.__params: dict[str, str] = {}
+        self.__headers: dict[str, str] = {
             "User-Agent": f"matrixctl{__version__}",
             "Authorization": f"Bearer {self.token}",
         }

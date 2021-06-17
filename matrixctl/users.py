@@ -24,8 +24,6 @@ import logging
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from typing import List
-from typing import Tuple
 
 from tabulate import tabulate
 
@@ -124,7 +122,7 @@ def users(arg: Namespace) -> int:
     toml: TOML = TOML()
     len_domain = len(toml.get("API", "Domain")) + 1  # 1 for :
     from_user: int = 0
-    users_list: List[JsonDict] = []
+    users_list: list[JsonDict] = []
 
     # ToDo: API bool
     api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
@@ -152,7 +150,7 @@ def users(arg: Namespace) -> int:
         except KeyError:
             break
 
-    user_list: List[Tuple[str, str, str, str, str, str]] = []
+    user_list: list[tuple[str, str, str, str, str, str]] = []
 
     for user in users_list:
         name = user["name"][1:-len_domain]
