@@ -26,10 +26,6 @@ import warnings
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
-from typing import Dict
-from typing import List
-from typing import Optional
-from typing import Union
 
 import toml
 
@@ -47,20 +43,20 @@ class TOML:
 
     """Use the TOML class to read and parse the configuration file(s)."""
 
-    DEFAULT_PATHS: List[Path] = [
+    DEFAULT_PATHS: list[Path] = [
         Path("/etc/matrixctl/config"),
         Path.home() / ".config/matrixctl/config",
     ]
     __slots__ = ("__toml",)
 
-    def __init__(self, path: Optional[Path] = None) -> None:
+    def __init__(self, path: Path | None = None) -> None:
         logger.debug("Loading Config file(s)")
 
-        paths: List[Path] = []
+        paths: list[Path] = []
         if path is None:
             paths += self.__class__.DEFAULT_PATHS
 
-        self.__toml: Dict[str, Any] = self.__open(paths)
+        self.__toml: dict[str, Any] = self.__open(paths)
 
         self.__debug_output()
 
@@ -160,7 +156,7 @@ class TOML:
             The value of the entry you described.
 
         """
-        toml_walker: Union[Dict[str, Any], Any] = self.__toml
+        toml_walker: dict[str, Any] | Any = self.__toml
 
         try:
             for key in keys:

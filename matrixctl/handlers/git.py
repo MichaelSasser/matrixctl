@@ -26,8 +26,6 @@ import sys
 from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
-from typing import List
-from typing import Union
 
 import git
 
@@ -45,7 +43,7 @@ class Git:
 
     """Update and manage a repository."""
 
-    def __init__(self, path: Union[Path, str]) -> None:
+    def __init__(self, path: Path | str) -> None:
         self.path: Path = Path(path)
         self.repo = git.Repo(self.path)
 
@@ -129,7 +127,7 @@ class Git:
             break_long_words=True,
         )
 
-        log: List[List[str]] = [
+        log: list[list[str]] = [
             line.split("\t") for line in self.git.log(cmd).split("\n")
         ]
 

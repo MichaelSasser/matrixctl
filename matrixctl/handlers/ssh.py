@@ -24,8 +24,6 @@ import logging
 from getpass import getuser
 from types import TracebackType
 from typing import NamedTuple
-from typing import Optional
-from typing import Type
 
 from paramiko import SSHClient
 from paramiko.channel import ChannelFile
@@ -42,9 +40,9 @@ class SSHResponse(NamedTuple):
 
     """Store the response of a SSH command as response."""
 
-    stdin: Optional[str]
-    stdout: Optional[str]
-    stderr: Optional[str]
+    stdin: str | None
+    stdout: str | None
+    stderr: str | None
 
 
 class SSH:
@@ -54,7 +52,7 @@ class SSH:
     __slots__ = ("address", "__client", "user", "port")
 
     def __init__(
-        self, address: str, user: Optional[str] = None, port: int = 22
+        self, address: str, user: str | None = None, port: int = 22
     ) -> None:
         self.address: str = address
         self.port: int = port
@@ -156,9 +154,9 @@ class SSH:
 
     def __exit__(
         self,
-        exc_type: Optional[Type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[TracebackType],
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
     ) -> None:
         """Close the SSH connection.
 

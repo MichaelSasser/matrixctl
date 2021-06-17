@@ -24,7 +24,6 @@ import logging
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from typing import List
 
 from tabulate import tabulate
 
@@ -97,7 +96,7 @@ def rooms(arg: Namespace) -> int:
     """
     toml: TOML = TOML()
     from_room: int = 0
-    rooms_list: List[JsonDict] = []
+    rooms_list: list[JsonDict] = []
 
     api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
     api.url.path = "rooms"
