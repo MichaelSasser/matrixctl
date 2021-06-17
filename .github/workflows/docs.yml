@@ -28,21 +28,21 @@ jobs:
       working-directory: ./docs
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
       - name: Set up Python 3.9
         uses: actions/setup-python@v2.2.2
         with:
           python-version: 3.9
 
       - name: Install Poetry
-        uses: snok/install-poetry@v1.1.4
+        uses: snok/install-poetry@v1.1.6
         with:
           virtualenvs-create: true
           virtualenvs-in-project: true
 
       - name: Load cached venv
         id: cached-poetry-dependencies
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v2.1.6
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}

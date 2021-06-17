@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.9.0"
+version = "0.10.0"
 description = "Controls a synapse oci-container instance via ansible"
 license = "GPL-3.0-or-later"
 readme = "README.md"
@@ -26,16 +26,16 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 requests = "^2.25.1"
-GitPython = "^3.1.13"
-coloredlogs = "^15.0"
+GitPython = "^3.1.14"
+coloredlogs = "^15.0.1"
 tabulate = "^0.8.9"
 paramiko = "^2.7.2"
 toml = "^0.10.2"
 ansible-runner = "^1.4.7"
-sphinx = { version = "^3.5.1", optional = true }
-sphinx-autodoc-typehints = { version = "^1.11.1", optional = true }
+sphinx = { version = ">=3.5.1,<5.0.0", optional = true }
+sphinx-autodoc-typehints = { version = "^1.12.0", optional = true }
 sphinxcontrib-programoutput = { version = ">=0.16,<0.18", optional = true }
 numpydoc = { version = "^1.1.0", optional = true }
 
@@ -43,24 +43,29 @@ numpydoc = { version = "^1.1.0", optional = true }
 docs = ["sphinx", "sphinx-autodoc-typehints", "numpydoc", "sphinxcontrib-programoutput"]
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^2.12.0"
-pytest = "^6.2.3"
-flake8 = "^3.8.4"
+pre-commit = "^2.13.0"
+pytest = "^6.2.4"
+flake8 = "^3.9.2"
 neovim = "^0.3.1"
-pydocstyle = "^6.0.0"
-pylint = "^2.7.4"
-pycodestyle = "^2.6.0"
+pydocstyle = "^6.1.1"
+pylint = "^2.8.3"
+pycodestyle = "^2.7.0"
 yapf = "^0.31.0"
 vulture = "^2.3"
-mypy = "^0.812"
+mypy = "^0.902"
 coverage = "^5.5"
-interrogate = "^1.3.2"
+interrogate = "^1.4.0"
 towncrier = "^21.3.0"
-tox = "^3.23.0"
-python-language-server = {version = "^0.36.2", extras = ["all"]}
-black = { version = "^20.8b1", allow-prereleases = true }
+tox = "^3.23.1"
+# python-language-server = {version = "^0.36.2", extras = ["all"]}
+black = { version = "^21.6b0", allow-prereleases = true }
 isort = {version = "^5.8.0", extras = ["pyproject"]}
 flake8-bugbear = "^21.4.3"
+types-pkg-resources = "^0.1.2"
+types-toml = "^0.1.2"
+types-requests = "^0.1.11"
+types-tabulate = "^0.1.0"
+types-paramiko = "^0.1.6"
 
 [tool.poetry.scripts]
 matrixctl = "matrixctl.__main__:main"
@@ -84,6 +89,14 @@ exclude = '''
   | tests/.*/setup.py
 )/
 '''
+
+[tool.mypy]
+python_version = 3.9
+platform = "linux"
+ignore_missing_imports = true
+strict_equality = true
+strict = true
+show_traceback = true
 
 
 [tool.isort]

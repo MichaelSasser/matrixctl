@@ -20,12 +20,9 @@
 from __future__ import annotations
 
 import datetime
+import logging
 import sys
 
-from logging import critical
-from logging import debug
-from logging import error
-from logging import info
 from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
@@ -41,6 +38,9 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 class Git:
 
     """Update and manage a repository."""
@@ -50,7 +50,7 @@ class Git:
         self.repo = git.Repo(self.path)
 
         if self.repo.bare:
-            critical(
+            logger.critical(
                 "Please make sure you entered the correct repository "
                 "in [SYNAPSE] -> Playbook."
             )
@@ -99,7 +99,7 @@ class Git:
             cmd.append(f"--since={str(since)}")
 
         terminal_size_x, _ = get_terminal_size()
-        debug(f"Terminal width = {terminal_size_x}")
+        logger.debug(f"Terminal width = {terminal_size_x}")
 
         ######################################################################
         #                          Terminal width                            #
@@ -134,7 +134,7 @@ class Git:
         ]
 
         if not log[0][0]:  # Nothing new
-            info("Everything is up-to-date.")
+            logger.info("Everything is up-to-date.")
 
             return
 
@@ -168,7 +168,7 @@ class Git:
         try:
             self.git.pull()
         except git.GitCommandError:
-            error(
+            logger.error(
                 "MatrixCtl was not able to connect to the synapse playbook "
                 "on GitHub. Are you connected to the internet?"
             )

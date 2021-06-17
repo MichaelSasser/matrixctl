@@ -19,12 +19,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import debug
-from logging import error
-from logging import fatal
 
 from .errors import InternalResponseError
 from .handlers.api import API
@@ -34,6 +33,9 @@ from .typing import JsonDict
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+logger = logging.getLogger(__name__)
 
 
 def subparser_version(subparsers: SubParsersAction) -> None:
@@ -77,15 +79,15 @@ def version(_: Namespace) -> int:
     try:
         response: JsonDict = api.request().json()
     except InternalResponseError:
-        fatal("Could not get the server sersion.")
+        logger.critical("Could not get the server sersion.")
 
         return 1
-    debug(f"{response=}")
+    logger.debug(f"{response=}")
     try:
         print(f"Server Version: {response['server_version']}")
         print(f"Python Version: {response['python_version']}")
     except KeyError:
-        error("MatrixCtl was not able to read the server version.")
+        logger.error("MatrixCtl was not able to read the server version.")
 
     return 0
 

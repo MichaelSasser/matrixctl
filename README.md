@@ -4,7 +4,7 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/michaelsasser/matrixctl?style=flat-square)
 ![GitHub Release Date](https://img.shields.io/github/release-date/michaelsasser/matrixctl?style=flat-square)
 ![PyPI - Status](https://img.shields.io/pypi/status/matrixctl?style=flat-square)
-![Matrix](https://img.shields.io/matrix/matrixctl:michaelsasser.org?server_fqdn=matrix.org&style=flat-square)
+![Matrix](https://img.shields.io/matrix/matrixctl:matrix.org?server_fqdn=matrix.org&style=flat-square)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/michaelsasser/matrixctl?style=flat-square)
 
 # MatrixCtl
@@ -25,13 +25,14 @@ usage: matrixctl [-h] [--version] [-d]
               ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
     deluser-jitsi       Deletes a jitsi user
     user                Get information about a specific user
     users               Lists users
+    purge-history       Purge historic events from the DB
     rooms               List rooms
     delroom             Deletes an empty room from the database
     update              Updates the ansible repo
@@ -117,7 +118,7 @@ Check out the documentation for more information.
 
 ## Chat
 
-If you have any thoughts or questions, you can join the project channel ``#matrixctl:michaelsasser.org``.
+If you have any thoughts or questions, you can join the project channel ``#matrixctl:matrix.org``.
 
 ## Semantic Versioning
 
