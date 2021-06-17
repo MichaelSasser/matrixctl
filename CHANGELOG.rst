@@ -2,6 +2,16 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 `GitHub <https://github.com/MichaelSasser/matrixctl/issues>`_.
 
 .. towncrier release notes start
+0.10.1 (2021-06-17)
+===================
+
+Features & Improvements
+-----------------------
+
+- Update typ hinting according to PEP 585. (`#123
+  <https://github.com/MichaelSasser/matrixctl/issues/123>`_)
+
+
 0.10.0 (2021-06-17)
 ===================
 
