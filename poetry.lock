@@ -1042,7 +1042,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-paramiko"
-version = "0.1.6"
+version = "0.1.7"
 description = "Typing stubs for paramiko"
 category = "dev"
 optional = false
@@ -1155,7 +1155,7 @@ docs = ["sphinx", "sphinx-autodoc-typehints", "numpydoc", "sphinxcontrib-program
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "803859224462df2bf440cfcf71e2b518f82e5106a11fc0f5a602c5063a32eafd"
+content-hash = "d3cd99fe17bd7a1fe86233f90426d8942f0a2315bb67d103b6f1c7c0f76ab8dc"
 
 [metadata.files]
 alabaster = [
@@ -1880,7 +1880,8 @@ types-ipaddress = [
     {file = "types_ipaddress-0.1.2-py2.py3-none-any.whl", hash = "sha256:1074af46f90b81ec2102999d49c557b63fe648df2baba407949f87e7140c7758"},
 ]
 types-paramiko = [
-    {file = "types_paramiko-0.1.6-py2.py3-none-any.whl", hash = "sha256:d6dd1aedbea7ed92f05bac751c50817ca5d5d85fbdebbaa34251df87ab67ed7c"},
+    {file = "types-paramiko-0.1.7.tar.gz", hash = "sha256:51ce59aea222c47d0590e2b8d8cefbc5aeb469d8bf6368e4f06ad3c61c932c72"},
+    {file = "types_paramiko-0.1.7-py2.py3-none-any.whl", hash = "sha256:9fb9f3a363c99ae735148a7ce3c28adbe8f87797ec3c8cce3103899acbdebfa8"},
 ]
 types-pkg-resources = [
     {file = "types_pkg_resources-0.1.2-py2.py3-none-any.whl", hash = "sha256:42d640500de564f1ccc21f918117afadf78039e4fa7f513c647ccf742d609aeb"},
