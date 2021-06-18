@@ -1053,7 +1053,7 @@ types-cryptography = "*"
 
 [[package]]
 name = "types-pkg-resources"
-version = "0.1.2"
+version = "0.1.3"
 description = "Typing stubs for pkg_resources"
 category = "dev"
 optional = false
@@ -1155,7 +1155,7 @@ docs = ["sphinx", "sphinx-autodoc-typehints", "numpydoc", "sphinxcontrib-program
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "04c92e82fa345c032ebd26979ac3b3fa9875fc9bc4bed15dcd751832d623097b"
+content-hash = "2c852032680de70670dceaf1ba189904557a80088bdd2074c7788438361ae85c"
 
 [metadata.files]
 alabaster = [
@@ -1884,7 +1884,8 @@ types-paramiko = [
     {file = "types_paramiko-0.1.7-py2.py3-none-any.whl", hash = "sha256:9fb9f3a363c99ae735148a7ce3c28adbe8f87797ec3c8cce3103899acbdebfa8"},
 ]
 types-pkg-resources = [
-    {file = "types_pkg_resources-0.1.2-py2.py3-none-any.whl", hash = "sha256:42d640500de564f1ccc21f918117afadf78039e4fa7f513c647ccf742d609aeb"},
+    {file = "types-pkg_resources-0.1.3.tar.gz", hash = "sha256:834a9b8d3dbea343562fd99d5d3359a726f6bf9d3733bccd2b4f3096fbab9dae"},
+    {file = "types_pkg_resources-0.1.3-py2.py3-none-any.whl", hash = "sha256:0cb9972cee992249f93fff1a491bf2dc3ce674e5a1926e27d4f0866f7d9b6d9c"},
 ]
 types-requests = [
     {file = "types-requests-0.1.12.tar.gz", hash = "sha256:08323ce2be816c4c107ef605e66369cb26dfda99d278dd502ee32bbf37f9a285"},
