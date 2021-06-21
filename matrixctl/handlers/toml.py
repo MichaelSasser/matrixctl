@@ -26,6 +26,7 @@ import warnings
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
+from typing import cast
 
 import toml
 
@@ -47,6 +48,7 @@ class TOML:
         Path("/etc/matrixctl/config"),
         Path.home() / ".config/matrixctl/config",
     ]
+    __instance: TOML | None = None
     __slots__ = ("__toml",)
 
     def __init__(self, path: Path | None = None) -> None:
@@ -59,6 +61,25 @@ class TOML:
         self.__toml: dict[str, Any] = self.__open(paths)
 
         self.__debug_output()
+
+    def __new__(cls) -> TOML:  # TODO: weakref
+        """Make TOML a Singelton.
+
+        Parameters
+        ----------
+        cls : matrixctl.handlers.TOML
+            New instance.
+
+        Returns
+        -------
+        toml_instance : TOML
+            A new or reused (Singelton) TOML instance.
+
+        """
+        if cls.__instance is None:
+            logger.debug("Creating new TOML instance.")
+            cls.__instance = cast(TOML, super().__new__(cls))
+        return cls.__instance
 
     @staticmethod
     def __open(paths: list[Path]) -> dict[str, Any]:
