@@ -84,6 +84,7 @@ def delroom(arg: Namespace) -> int:
         path="purge_room",
         method="POST",
         api_version="v1",
+        data={"room_id": arg.RoomID},
     )
 
     try:
