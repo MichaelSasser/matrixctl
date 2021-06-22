@@ -28,7 +28,8 @@ from argparse import _SubParsersAction as SubParsersAction
 from tabulate import tabulate
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .typing import JsonDict
 
@@ -98,27 +99,30 @@ def rooms(arg: Namespace) -> int:
     from_room: int = 0
     rooms_list: list[JsonDict] = []
 
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
-    api.url.path = "rooms"
-    api.url.api_version = "v1"
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path="rooms",
+        api_version="v1",
+    )
 
     if arg.number > 0:
-        api.params = {"limit": arg.number}
+        req.params["limit"] = arg.number
 
     if arg.filter:
-        api.params = {"search_term": arg.filter}
+        req.params["search_term"] = arg.filter
 
     if arg.reverse:
-        api.params = {"dir": "b"}
+        req.params["dir"] = "b"
 
     if arg.order_by_size:
-        api.params = {"order_by": "size"}
+        req.params["order_by"] = "size"
 
     while True:
 
-        api.params = {"from": from_room}  # from must be in the loop
+        req.params["from"] = from_room  # from must be in the loop
         try:
-            lst: JsonDict = api.request().json()
+            lst: JsonDict = request(req).json()
         except InternalResponseError:
             logger.critical("Could not get the room table.")
 
