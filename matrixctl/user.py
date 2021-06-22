@@ -31,7 +31,8 @@ from typing import Any
 from tabulate import tabulate
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .print_helpers import human_readable_bool
 from .typing import JsonDict
@@ -230,11 +231,15 @@ def user(arg: Namespace) -> int:
     """
 
     toml: TOML = TOML()
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
-    api.url.path = f'users/@{arg.user}:{toml.get("API","Domain")}'
+
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path=f'users/@{arg.user}:{toml.get("API","Domain")}',
+    )
 
     try:
-        user_dict: JsonDict = api.request().json()
+        user_dict: JsonDict = request(req).json()
     except InternalResponseError:
         logger.critical("Could not receive the user information")
 

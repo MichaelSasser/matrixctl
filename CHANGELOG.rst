@@ -2,6 +2,7 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 `GitHub <https://github.com/MichaelSasser/matrixctl/issues>`_.
 
 .. towncrier release notes start
+
 0.10.1 (2021-06-17)
 ===================
 
@@ -103,3 +104,4 @@ Miscellaneous
   GitHub
   <https://github.com/MichaelSasser/matrixctl/releases>`_. (`#61
   <https://github.com/MichaelSasser/matrixctl/issues/61>`_)
+

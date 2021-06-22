@@ -27,7 +27,8 @@ from argparse import _SubParsersAction as SubParsersAction
 
 from .errors import InternalResponseError
 from .handlers.ansible import ansible_run
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .password_helpers import ask_password
 from .password_helpers import ask_question
@@ -103,7 +104,6 @@ def adduser(arg: Namespace) -> int:
     """
 
     toml: TOML = TOML()
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
 
     while True:
         passwd_generated: bool = False
@@ -139,13 +139,19 @@ def adduser(arg: Namespace) -> int:
                 "admin": "yes" if arg.admin else "no",
             },
         )
-    else:
-        try:
-            api.url.path = f"users/@{arg.user}:{toml.get('API','Domain')}"
-            api.method = "PUT"
-            api.request({"password": arg.passwd, "admin": arg.admin})
-        except InternalResponseError:
-            logger.error("The User was not added.")
+        return 0
+
+    req: RequestBuilder = RequestBuilder(
+        domain=toml.get("API", "Domain"),
+        token=toml.get("API", "Token"),
+        path=f"users/@{arg.user}:{toml.get('API','Domain')}",
+        data={"password": arg.passwd, "admin": arg.admin},
+        method="PUT",
+    )
+    try:
+        request(req)
+    except InternalResponseError:
+        logger.error("The User was not added.")
 
     return 0
 

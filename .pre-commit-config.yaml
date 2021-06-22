@@ -54,6 +54,7 @@ repos:
       # - id: double-quote-string-fixer (KEEP DISABLED)
       # Makes sure files end in a newline and only a newline.
       - id: end-of-file-fixer
+        exclude: "^CHANGELOG.rst"
       # Removes "# -*- coding: utf-8 -*-" on the top of python files.
       - id: fix-encoding-pragma
         args: [ "--remove" ]
@@ -134,6 +135,8 @@ repos:
     hooks:
       - id: pydocstyle
         args: [ "--ignore=D10,D21,D202" ]
+        additional_dependencies:
+          - toml
 
   # static type checking with mypy
   - repo: https://github.com/pre-commit/mirrors-mypy
@@ -146,6 +149,7 @@ repos:
           - types-requests
           - types-tabulate
           - types-paramiko
+          - types-attrs
 
   - repo: https://github.com/econchick/interrogate
     rev: 1.4.0

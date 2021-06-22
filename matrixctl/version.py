@@ -26,7 +26,8 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .typing import JsonDict
 
@@ -73,11 +74,15 @@ def version(_: Namespace) -> int:
 
     """
     toml: TOML = TOML()
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
-    api.url.path = "server_version"
-    api.url.api_version = "v1"
+
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path="server_version",
+        api_version="v1",
+    )
     try:
-        response: JsonDict = api.request().json()
+        response: JsonDict = request(req).json()
     except InternalResponseError:
         logger.critical("Could not get the server sersion.")
 
