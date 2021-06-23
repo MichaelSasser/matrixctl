@@ -14,15 +14,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``deluser`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
+
+import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import error
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 
 
@@ -30,7 +35,23 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 def subparser_deluser(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl deluser`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by
+        ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
         "deluser", help="Deletes a user"
     )
@@ -41,21 +62,31 @@ def subparser_deluser(subparsers: SubParsersAction) -> None:
 def deluser(arg: Namespace) -> int:
     """Delete a user from the the matrix instance.
 
-    It uses the synapse admin API.
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :param _:         Not used (The ``Config`` class)
-    :return:          None
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
     toml: TOML = TOML()
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path=f"deactivate/@{arg.user}:{toml.get('API','Domain')}",
+        api_version="v1",
+        method="POST",
+        data={"erase": True},
+    )
     try:
-        api.url.path = f"deactivate/@{arg.user}:{toml.get('API','Domain')}"
-        api.url.api_version = "v1"
-        api.method = "POST"
-        api.request({"erase": True})
+        request(req)
     except InternalResponseError:
-        error("The user was not deleted.")
+        logger.error("The user was not deleted.")
 
     return 0
 

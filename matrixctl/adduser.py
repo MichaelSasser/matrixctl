@@ -14,16 +14,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``adduser`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
+
+import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import error
 
 from .errors import InternalResponseError
 from .handlers.ansible import ansible_run
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .password_helpers import ask_password
 from .password_helpers import ask_question
@@ -34,7 +39,23 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 def subparser_adduser(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl adduser`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by
+        ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
         "adduser", help="Add a new matrix user"
     )
@@ -70,12 +91,19 @@ def adduser(arg: Namespace) -> int:
     Depending on the ``--ansible`` switch it runs the ``adduser`` command
     via ansible or the API
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :return:          None
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
 
     toml: TOML = TOML()
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
 
     while True:
         passwd_generated: bool = False
@@ -111,13 +139,19 @@ def adduser(arg: Namespace) -> int:
                 "admin": "yes" if arg.admin else "no",
             },
         )
-    else:
-        try:
-            api.url.path = f"users/@{arg.user}:{toml.get('API','Domain')}"
-            api.method = "PUT"
-            api.request({"password": arg.passwd, "admin": arg.admin})
-        except InternalResponseError:
-            error("The User was not added.")
+        return 0
+
+    req: RequestBuilder = RequestBuilder(
+        domain=toml.get("API", "Domain"),
+        token=toml.get("API", "Token"),
+        path=f"users/@{arg.user}:{toml.get('API','Domain')}",
+        data={"password": arg.passwd, "admin": arg.admin},
+        method="PUT",
+    )
+    try:
+        request(req)
+    except InternalResponseError:
+        logger.error("The User was not added.")
 
     return 0
 

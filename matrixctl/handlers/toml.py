@@ -14,20 +14,19 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Read and parse the configuration file with this module."""
+
 from __future__ import annotations
 
+import logging
 import sys
 import warnings
 
 from copy import deepcopy
-from logging import debug
-from logging import error
 from pathlib import Path
 from typing import Any
-from typing import Dict
-from typing import List
-from typing import Optional
-from typing import Union
+from typing import cast
 
 import toml
 
@@ -38,29 +37,67 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 class TOML:
 
-    DEFAULT_PATHS: List[Path] = [
+    """Use the TOML class to read and parse the configuration file(s)."""
+
+    DEFAULT_PATHS: list[Path] = [
         Path("/etc/matrixctl/config"),
         Path.home() / ".config/matrixctl/config",
     ]
+    __instance: TOML | None = None
     __slots__ = ("__toml",)
 
-    def __init__(self, path: Optional[Path] = None) -> None:
-        debug("Loading Config file(s)")
+    def __init__(self, path: Path | None = None) -> None:
+        logger.debug("Loading Config file(s)")
 
-        paths: List[Path] = []
+        paths: list[Path] = []
         if path is None:
             paths += self.__class__.DEFAULT_PATHS
 
-        self.__toml: Dict[str, Any] = self.__open(paths)
+        self.__toml: dict[str, Any] = self.__open(paths)
 
         self.__debug_output()
 
+    def __new__(cls) -> TOML:  # TODO: weakref
+        """Make TOML a Singelton.
+
+        Parameters
+        ----------
+        cls : matrixctl.handlers.TOML
+            New instance.
+
+        Returns
+        -------
+        toml_instance : TOML
+            A new or reused (Singelton) TOML instance.
+
+        """
+        if cls.__instance is None:
+            logger.debug("Creating new TOML instance.")
+            cls.__instance = cast(TOML, super().__new__(cls))
+        return cls.__instance
+
     @staticmethod
-    def __open(paths: List[Path]) -> Dict[str, Any]:
-        """Open a TOML file and suppress warnings of the toml module."""
-        config_files: List[str] = [str(path) for path in paths]
+    def __open(paths: list[Path]) -> dict[str, Any]:
+        """Open a TOML file and suppress warnings of the toml module.
+
+        Parameters
+        ----------
+        paths : list of pathlib.Path
+            A list of paths to check for the configuration files (toml) to
+            combine into one config, which can be used by MatrixCtl.
+
+        Returns
+        -------
+        toml : dict [str, any]
+            The toml file structure represented as dict.
+
+        """
+        config_files: list[str] = [str(path) for path in paths]
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -69,7 +106,7 @@ class TOML:
                 # Only lists, tuples are not supported.
                 return deepcopy(dict(toml.load(config_files)))
             except FileNotFoundError:
-                error(
+                logger.error(
                     "To use this program you need to have a config file in"
                     '/etc/matrixctl/config" or in '
                     '"~/.config/matrixctl/config".'
@@ -78,25 +115,38 @@ class TOML:
             except TypeError as e:
                 raise ConfigFileError from e
             except toml.TomlDecodeError:
-                error(
+                logger.error(
                     "Please check your config file. MatrixCtl was not able "
                     "to read it."
                 )
                 sys.exit(1)
 
     def __debug_output(self) -> None:
-        """Create a debug output for the TOML file."""
+        """Create a debug output for the TOML file.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         for key in self.__toml:
-            debug(f"[{key}]")
+            logger.debug(f"[{key}]")
 
             for entry in self.__toml[key]:
                 if entry == "Token":
                     length = len(self.__toml[key][entry])
-                    debug(f"  ├─  {entry} := **HIDDEN (Length={length})**")
+                    logger.debug(
+                        f"  ├─  {entry} := **HIDDEN (Length={length})**"
+                    )
                 else:
-                    debug(f"  ├─  {entry} := {self.__toml[key][entry]}")
-            debug("  ┴")
+                    logger.debug(f"  ├─  {entry} := {self.__toml[key][entry]}")
+            logger.debug("  ┴")
 
+    # TODO: doctest + fixture
     def get(self, *keys: str) -> Any:
         """Get a value from a config entry safely.
 
@@ -105,20 +155,35 @@ class TOML:
         Pass strings, describing the path in the ``self.__toml`` dictionary.
         Let's say, you are looking for the synapse path:
 
-        >>> toml.get("SYNAPSE", "Path")
-        '/home/dwight/SomRandomDirectory/synapse'
+        Examples
+        --------
+        .. code-block:: python
 
-        :param keys:  A string or tuple describing the values you are looking
-                      for.
-        :return:      The value of the entry you described.
+           from matrixctl.handlers.toml import TOML
+
+           toml: TOML = TOML()
+           port: int = toml.get("SSH", "Port")
+           print(port)
+           # Output: 22
+
+        Parameters
+        ----------
+        *keys : str
+            A tuple of strings describing the values you are looking for.
+
+        Returns
+        -------
+        answer : any
+            The value of the entry you described.
+
         """
-        toml_walker: Union[Dict[str, Any], Any] = self.__toml
+        toml_walker: dict[str, Any] | Any = self.__toml
 
         try:
             for key in keys:
                 toml_walker = toml_walker.__getitem__(key)
         except KeyError:
-            error(
+            logger.error(
                 "Please check your config file. For this operation your "
                 f'config file needs to have the entry "{keys[-1]}" '
                 f'In the section "[{keys[0]}]".'

@@ -4,7 +4,7 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/michaelsasser/matrixctl?style=flat-square)
 ![GitHub Release Date](https://img.shields.io/github/release-date/michaelsasser/matrixctl?style=flat-square)
 ![PyPI - Status](https://img.shields.io/pypi/status/matrixctl?style=flat-square)
-![Matrix](https://img.shields.io/matrix/matrixctl:michaelsasser.org?server_fqdn=matrix.org&style=flat-square)
+![Matrix](https://img.shields.io/matrix/matrixctl:matrix.org?server_fqdn=matrix.org&style=flat-square)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/michaelsasser/matrixctl?style=flat-square)
 
 # MatrixCtl
@@ -21,17 +21,18 @@ but breaking changes may be introduced, even in a minor version shift.
 ```
 # matrixctl
 usage: matrixctl [-h] [--version] [-d]
-                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
+                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
               ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
     deluser-jitsi       Deletes a jitsi user
     user                Get information about a specific user
     users               Lists users
+    purge-history       Purge historic events from the DB
     rooms               List rooms
     delroom             Deletes an empty room from the database
     update              Updates the ansible repo
@@ -39,6 +40,7 @@ positional arguments:
     deploy              Provision and deploy
     server-notice       Send a server notice
     start               Starts all OCI containers
+    stop                Stops all OCI containers
     restart             Restarts all OCI containers (alias for start)
     maintenance         Run maintenance tasks
     check               Checks the OCI containers
@@ -116,7 +118,7 @@ Check out the documentation for more information.
 
 ## Chat
 
-If you have any thoughts or questions, you can join the project channel ``#matrixctl:michaelsasser.org``.
+If you have any thoughts or questions, you can join the project channel ``#matrixctl:matrix.org``.
 
 ## Semantic Versioning
 
@@ -137,5 +139,5 @@ The master branch gets updated on every release. The develop branch is the
 merging branch.
 
 ## License
-Copyright &copy; 2020 Michael Sasser <Info@MichaelSasser.org>. Released under
-the GPLv3 license.
+Copyright &copy; 2020-2001 Michael Sasser <Info@MichaelSasser.org>.
+Released under the GPLv3 license.

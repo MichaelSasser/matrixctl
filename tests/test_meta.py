@@ -14,6 +14,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Run "metatests" on matrixctl.
+
+Tests:
+
+- The version of the package should be comply with SemVer.
+"""
+
 from __future__ import annotations
 
 import re
@@ -24,9 +32,20 @@ from matrixctl import __version__
 def test_version() -> None:
     """Test, if the version matches SemVer.
 
-    The regular expression is from:
-    https://semver.org/#is-there-a-suggested-regular-expression-regex-to-
-            check-a-semver-string
+    Notes
+    -----
+    The regular expression is from `SemVer.org
+    <https://semver.org/spec/v2.0.0.html#is-there-a-suggested-regular-
+    expression-regex-to-check-a-semver-string>`_.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+
     """
     # Setup
     desired = re.compile(

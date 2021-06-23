@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.8.5"
+version = "0.10.1"
 description = "Controls a synapse oci-container instance via ansible"
 license = "GPL-3.0-or-later"
 readme = "README.md"
@@ -21,46 +21,56 @@ classifiers = [
     "Environment :: Console",
     "Natural Language :: English",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 requests = "^2.25.1"
-GitPython = "^3.1.13"
-coloredlogs = "^15.0"
+GitPython = "^3.1.14"
+coloredlogs = "^15.0.1"
 tabulate = "^0.8.9"
 paramiko = "^2.7.2"
 toml = "^0.10.2"
 ansible-runner = "^1.4.7"
-sphinx = { version = "^3.5.1", optional = true }
-sphinx-autodoc-typehints = { version = "^1.11.1", optional = true }
-sphinxcontrib-programoutput = { version = "^0.16", optional = true }
+attrs = "^21.2.0"
+sphinx = { version = ">=3.5.1,<5.0.0", optional = true }
+sphinx-autodoc-typehints = { version = "^1.12.0", optional = true }
+sphinxcontrib-programoutput = { version = ">=0.16,<0.18", optional = true }
 numpydoc = { version = "^1.1.0", optional = true }
 
 [tool.poetry.extras]
 docs = ["sphinx", "sphinx-autodoc-typehints", "numpydoc", "sphinxcontrib-programoutput"]
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^2.10.1"
-pytest = "^6.2.2"
-flake8 = "^3.8.4"
+pre-commit = "^2.13.0"
+pytest = "^6.2.4"
+flake8 = "^3.9.2"
 neovim = "^0.3.1"
-pydocstyle = "^5.1.1"
-pylint = "^2.6.1"
-pycodestyle = "^2.6.0"
-yapf = "^0.30.0"
+pydocstyle = "^6.1.1"
+pylint = "^2.8.3"
+pycodestyle = "^2.7.0"
+yapf = "^0.31.0"
 vulture = "^2.3"
-mypy = "^0.800.0"
-python-language-server = {version = "^0.36.2", extras = ["all"]}
-black = { version = "^20.8b1", allow-prereleases = true }
-isort = {version = "^5.7.0", extras = ["pyproject"]}
-flake8-bugbear = "^20.11.1"
+mypy = "^0.910"
+coverage = "^5.5"
+interrogate = "^1.4.0"
+towncrier = "^21.3.0"
+tox = "^3.23.1"
+# python-language-server = {version = "^0.36.2", extras = ["all"]}
+black = { version = "^21.6b0", allow-prereleases = true }
+isort = {version = "^5.9.1", extras = ["pyproject"]}
+flake8-bugbear = "^21.4.3"
+types-pkg-resources = "^0.1.3"
+types-toml = "^0.1.3"
+types-requests = "^2.25.0"
+types-tabulate = "^0.1.1"
+types-paramiko = "^0.1.7"
+types-attrs = "^19.1.0"
 
 [tool.poetry.scripts]
-matrixctl = "matrixctl.application:main"
+matrixctl = "matrixctl.__main__:main"
 
 [tool.black]
 line-length = 79
@@ -81,6 +91,14 @@ exclude = '''
   | tests/.*/setup.py
 )/
 '''
+
+[tool.mypy]
+python_version = 3.9
+platform = "linux"
+ignore_missing_imports = true
+strict_equality = true
+strict = true
+show_traceback = true
 
 
 [tool.isort]
@@ -106,6 +124,7 @@ known_third_party = [
     "sphinx_rtd_theme",
     "git",
     "toml",
+    "attr",
     "ansible_runner",
 ]
 
@@ -115,12 +134,157 @@ max-line-length = 79
 ignore = "E501"
 select = "C,E,F,W,B,B901"
 
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = true
+ignore-magic = true
+# ignore-semiprivate = false
+# ignore-private = false
+# ignore-property-decorators = false
+# ignore-module = false
+fail-under = 100
+exclude = ["setup.py", "docs", "build"]
+# ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
+verbose = 1
+# quiet = false
+# whitelist-regex = []
+# color = true
+
+
 [tool.vulture]
 make_whitelist = true
 min_confidence = 80
 paths = ["matrixctl"]
 sort_by_size = true
 
+[tool.towncrier]
+package = "matrixctl"
+package_dir = "matrixctl"
+filename = "CHANGELOG.rst"
+issue_format = "`#{issue} <https://github.com/MichaelSasser/matrixctl/issues/{issue}>`_"
+directory = "news/"
+top_line = false
+# name = "MatrixCtl"
+title_format = "{version} ({project_date})"  # {name}
+# start_string = ".. towncrier release notes start"
+all_bullets = true  # make all fragments bullet points
+wrap = true  # Wrap text to 79 characters
+template = "news/templates/default.rst"
+
+  [[tool.towncrier.type]]
+  directory = "breaking"
+  name = "Behavior & Breaking Changes"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "feature"
+  name = "Features & Improvements"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "bugfix"
+  name = "Bugfixes"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "docs"
+  name = "Improved Documentation"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "removal"
+  name = "Removals and Deprecations"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "trivial"
+  name = "Trivial Changes"
+  showcontent = false
+
+  [[tool.towncrier.type]]
+  directory = "misc"
+  name = "Miscellaneous"
+  showcontent = true
+
 [build-system]
-requires = ["poetry>=1.0.0"]
+requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.tox]
+legacy_tox_ini = """
+[pytest]
+
+addopts = -ra
+testpaths = tests
+xfail_strict = true
+filterwarnings =
+    once::Warning
+    ignore:::pympler[.*]
+
+
+# Keep docs in sync with docs env and .readthedocs.yml.
+# [gh-actions]
+# python =
+#     3.9: py39, precommit, changelog, docs
+# # 3.10: py310
+
+
+[tox]
+envlist = precommit,py39,docs,changelog,
+# py310,
+isolated_build = True
+
+
+[testenv]
+allowlist_externals = poetry
+# Prevent random setuptools/pip breakages like
+# https://github.com/pypa/setuptools/issues/1042 from breaking our builds.
+setenv =
+    VIRTUALENV_NO_DOWNLOAD=1
+extras = {env:TOX_AP_TEST_EXTRAS:tests}
+commands = poetry run pytest {posargs}
+
+
+[testenv:py39]
+allowlist_externals = poetry
+# Python 3.6+ has a number of compile-time warnings on invalid string escapes.
+# PYTHONWARNINGS=d and --no-compile below make them visible during the Tox run.
+basepython = python3.9
+install_command = pip install --no-compile {opts} {packages}
+setenv =
+    PYTHONWARNINGS=d
+extras = {env:TOX_AP_TEST_EXTRAS:tests}
+commands = poetry run coverage run -m pytest {posargs}
+
+
+[testenv:precommit]
+allowlist_externals = poetry
+basepython = python3.9
+skip_install = true
+deps =
+    pre-commit
+passenv = HOMEPATH  # needed on Windows
+commands =
+    poetry run pre-commit run --all-files --show-diff-on-failure
+
+
+[testenv:docs]
+allowlist_externals = poetry
+# Keep basepython in sync with gh-actions and .readthedocs.yml.
+basepython = python3.9
+# extras = docs, func
+# currently disable -n
+commands =
+    poetry run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html
+    poetry run sphinx-build -T -W -b doctest -d {envtmpdir}/doctrees docs/source docs/build/html
+    poetry run python -m doctest README.md
+
+
+[testenv:changelog]
+allowlist_externals = poetry
+basepython = python3.9
+# deps = towncrier
+skip_install = true
+commands = poetry run towncrier --draft
+"""

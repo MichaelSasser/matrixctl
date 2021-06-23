@@ -14,15 +14,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``serve-notice`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
+
+import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import error
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 
 
@@ -30,7 +35,22 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 def subparser_server_notice(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl server-notice`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
         "server-notice", help="Send a server notice"
     )
@@ -48,31 +68,43 @@ def subparser_server_notice(subparsers: SubParsersAction) -> None:
 def server_notice(arg: Namespace) -> int:
     """Send a server notice to a matrix instance.
 
-    It uses the synapse admin API.
-    Note that server notices must be enabled in homeserver.yaml before
-    this API can be used.
+    Notes
+    -----
+    - It uses the synapse admin API.
+    - Note that "server notices" must be enabled in homeserver.yaml before
+      this API can be used.
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :param _:         Not used (The ``Config`` class)
-    :return:          None
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``.
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
     toml: TOML = TOML()
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
-    request = {
-        "user_id": (f"@{arg.username}:" f"{toml.get('API', 'Domain')}"),
-        "content": {
-            "msgtype": "m.text",
-            "body": arg.message,
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path="send_server_notice",
+        method="POST",
+        api_version="v1",
+        data={
+            "user_id": (f"@{arg.username}:" f"{toml.get('API', 'Domain')}"),
+            "content": {
+                "msgtype": "m.text",
+                "body": arg.message,
+            },
         },
-    }
+    )
 
     try:
-        api.url.path = "send_server_notice"
-        api.url.api_version = "v1"
-        api.method = "POST"
-        api.request(request)
+        request(req)
     except InternalResponseError:
-        error("The server notice was not sent.")
+        logger.error("The server notice was not sent.")
 
     return 0
 

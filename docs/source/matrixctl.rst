@@ -71,6 +71,14 @@ start
    :undoc-members:
    :show-inheritance:
 
+stop
+----
+
+.. automodule:: matrixctl.stop
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 update
 ------
 
@@ -87,8 +95,8 @@ user
    :undoc-members:
    :show-inheritance:
 
-user
-----
+users
+-----
 
 .. automodule:: matrixctl.users
    :members:
@@ -99,6 +107,14 @@ rooms
 -----
 
 .. automodule:: matrixctl.rooms
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+purge-history
+-------------
+
+.. automodule:: matrixctl.purge_history
    :members:
    :undoc-members:
    :show-inheritance:
@@ -176,7 +192,7 @@ The Application
 Application
 -----------
 
-.. automodule:: matrixctl.application
+.. automodule:: matrixctl.__main__
    :members:
    :undoc-members:
    :show-inheritance:

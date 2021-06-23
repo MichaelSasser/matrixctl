@@ -14,28 +14,25 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``user`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
 
 import datetime
+import logging
 import sys
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import debug
-from logging import error
-from logging import fatal
 from typing import Any
-from typing import Dict
-from typing import List
-from typing import Optional
-from typing import Tuple
-from typing import Union
 
 from tabulate import tabulate
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .print_helpers import human_readable_bool
 from .typing import JsonDict
@@ -45,7 +42,22 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 def subparser_user(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl user`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
         "user", help="Get information about a specific user"
     )
@@ -54,11 +66,33 @@ def subparser_user(subparsers: SubParsersAction) -> None:
 
 
 def make_human_readable(
-    k: str, user_dict: Dict[str, str], len_domain: int
-) -> Tuple[str, str]:
+    k: str, user_dict: dict[str, str], len_domain: int
+) -> tuple[str, str]:
+    """Make a key/value pair of a ``user`` (line) human readable, by modifying.
 
-    key: Optional[str] = None
-    value: Union[str]
+    Notes
+    -----
+    This function is used as helper by ``matrixctl.user.generate_user_tables``.
+
+    Parameters
+    ----------
+    k : str
+        The key
+    user_dict : `dict` [`str`, `Any`]
+        The line as dict, a JSON string which was converted to a Python
+        dictionary. (This is not a ``Collections.UserDict``)
+    len_domain : int
+        The length in characters of the domain.
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
+    """
+
+    key: str | None = None
+    value: str
 
     if k == "name":
         value = str(user_dict[k][1:-len_domain])
@@ -85,34 +119,45 @@ def make_human_readable(
     return key, value
 
 
+# TODO: JSON Type?
 def generate_user_tables(
-    user_dict: Dict[str, Any], len_domain: int
-) -> List[List[Tuple[str, str]]]:
+    user_dict: dict[str, Any], len_domain: int
+) -> list[list[tuple[str, str]]]:
     """Generate a main user table and threepid user tables.
 
     The function gnerates first a main user table and then for every threepid
     a additional table from a ``user_dict``.
     It renames and makes the output human readable.
 
-    This function is a recursive function
+    Notes
+    -----
+    This function is a recursive function.
 
-    :param user_dict:   A JSON string which was converted to a Python
-                        dictionary.
-    :param len_domain:  The length in characters of the domain.
-    :return:            The generated lists in this format:
-                        [main], threepids_0, ... ,threepids_n]
+    Parameters
+    ----------
+    user_dict : `dict` [`str`, `Any`]
+        The line as dict, a JSON string which was converted to a Python
+        dictionary. (This is not a ``Collections.UserDict``)
+    len_domain : int
+        The length in characters of the domain.
+
+    Returns
+    -------
+    err_code : int
+        A list in the format: ``[[main], threepids_0, ... ,threepids_n]``
+
     """
 
-    table: List[List[Tuple[str, str]]] = [[]]
+    table: list[list[tuple[str, str]]] = [[]]
 
     for k in user_dict:
         if k == "errcode":
-            error("There is no user with that username.")
+            logger.error("There is no user with that username.")
             sys.exit(1)
 
         if k == "threepids":
             for tk in user_dict[k]:
-                ret: List[List[Tuple[str, str]]] = generate_user_tables(
+                ret: list[list[tuple[str, str]]] = generate_user_tables(
                     tk, len_domain
                 )
                 table.append(ret[0])
@@ -132,7 +177,8 @@ def user(arg: Namespace) -> int:
     The Python package ``tabulate`` renders the table as shown below, if
     everything works well.
 
-
+    Examples
+    --------
     .. code-block:: console
 
        $ matrixctl user dwight
@@ -172,26 +218,37 @@ def user(arg: Namespace) -> int:
        2020-04-14 13:58:13 - ERROR - The request was not successful.
        2020-04-14 13:58:13 - ERROR - There is no user with that username.
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :param cfg:       The ``Config`` class
-    :return:          None
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``.
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
 
     toml: TOML = TOML()
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
-    api.url.path = f'users/@{arg.user}:{toml.get("API","Domain")}'
+
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path=f'users/@{arg.user}:{toml.get("API","Domain")}',
+    )
 
     try:
-        user_dict: JsonDict = api.request().json()
+        user_dict: JsonDict = request(req).json()
     except InternalResponseError:
-        fatal("Could not receive the user information")
+        logger.critical("Could not receive the user information")
 
         return 1
 
     len_domain = len(toml.get("API", "Domain")) + 1  # 1 for :
     user_tables = generate_user_tables(user_dict, len_domain)
 
-    debug(f"User: {user_tables=}")
+    logger.debug(f"User: {user_tables=}")
 
     for num, table in enumerate(user_tables):
 

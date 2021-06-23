@@ -14,19 +14,22 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``rooms`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
+
+import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import fatal
-from typing import List
-from typing import Tuple
 
 from tabulate import tabulate
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .typing import JsonDict
 
@@ -35,7 +38,22 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 def subparser_rooms(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl rooms`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser("rooms", help="List rooms")
     parser.add_argument(
         "-s",
@@ -66,36 +84,47 @@ def subparser_rooms(subparsers: SubParsersAction) -> None:
 def rooms(arg: Namespace) -> int:
     """Generate a table of the matrix rooms.
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :return:          None
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``.
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
     toml: TOML = TOML()
     from_room: int = 0
-    rooms_list: List[JsonDict] = []
+    rooms_list: list[JsonDict] = []
 
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
-    api.url.path = "rooms"
-    api.url.api_version = "v1"
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path="rooms",
+        api_version="v1",
+    )
 
     if arg.number > 0:
-        api.params = {"limit": arg.number}
+        req.params["limit"] = arg.number
 
     if arg.filter:
-        api.params = {"search_term": arg.filter}
+        req.params["search_term"] = arg.filter
 
     if arg.reverse:
-        api.params = {"dir": "b"}
+        req.params["dir"] = "b"
 
     if arg.order_by_size:
-        api.params = {"order_by": "size"}
+        req.params["order_by"] = "size"
 
     while True:
 
-        api.params = {"from": from_room}  # from must be in the loop
+        req.params["from"] = from_room  # from must be in the loop
         try:
-            lst: JsonDict = api.request().json()
+            lst: JsonDict = request(req).json()
         except InternalResponseError:
-            fatal("Could not get the room table.")
+            logger.critical("Could not get the room table.")
 
             return 1
 
@@ -109,9 +138,21 @@ def rooms(arg: Namespace) -> int:
     return 0
 
 
-def print_rooms_table(rooms_list: List[JsonDict]) -> None:
+def print_rooms_table(rooms_list: list[JsonDict]) -> None:
+    """Use this function as helper to pint the room table.
 
-    room_list: List[Tuple[str, int, str, str]] = []
+    Parameters
+    ----------
+    rooms_list : list of matrixctl.tping.JsonDict
+        A list of rooms from the API.
+
+    Returns
+    -------
+    None
+
+    """
+
+    room_list: list[tuple[str, int, str, str]] = []
 
     for room in rooms_list:
         name = room["name"]

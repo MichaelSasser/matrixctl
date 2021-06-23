@@ -14,6 +14,10 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+"""Use this module to add the ``adduser-jitsi`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
 
 from argparse import ArgumentParser
@@ -35,6 +39,18 @@ JID_EXT: str = "matrix-jitsi-web"
 
 
 def subparser_adduser_jitsi(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl adduser-jitsi`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
         "adduser-jitsi", help="Add a new jitsi user"
     )
@@ -51,22 +67,27 @@ def subparser_adduser_jitsi(subparsers: SubParsersAction) -> None:
 def adduser_jitsi(arg: Namespace) -> int:
     """Add a User to the jitsi instance.
 
-    It runs ``ask_password()``
-    first. If ``ask_password()`` returns ``None`` it generates a password
-    with ``gen_password()``. Then it gives the user a overview of the
-    username, password and if the new user should be generated as admin
-    (if you added the ``--admin`` argument). Next, it asks a question,
-    if the entered values are correct with the ``ask_question`` function.
+    It runs ``ask_password()`` first. If ``ask_password()`` returns ``None``
+    it generates a password with ``gen_password()``. Then it gives the user
+    a overview of the username, password and if the new user should be
+    generated as admin (if you added the ``--admin`` argument). Next, it asks
+    a question, if the entered values are correct with the ``ask_question``
+    function.
 
     If the ``ask_question`` function returns True, it continues. If not, it
     starts from the beginning.
 
-    It runs the ``adduser`` method of the ``Ssh`` class.
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``.
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :return:          None
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
-
     toml: TOML = TOML()
     address = (
         toml.get("SSH", "Address")

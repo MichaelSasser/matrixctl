@@ -14,6 +14,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add a ``deluser-jitsi`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
 
 from argparse import ArgumentParser
@@ -32,6 +35,19 @@ JID_EXT: str = "matrix-jitsi-web"
 
 
 def subparser_deluser_jitsi(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl deluser-jitsi`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by
+        ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
         "deluser-jitsi", help="Deletes a jitsi user"
     )
@@ -44,9 +60,16 @@ def deluser_jitsi(arg: Namespace) -> int:
 
     It uses the ``Ssh`` class from the ``ssh_handler``.
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :param cfg:       The ``Config`` class
-    :return:          None
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
     toml: TOML = TOML()
     address = (

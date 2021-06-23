@@ -14,22 +14,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# import configparser
+
+"""Update and manage the synapse playbook repository with this module."""
+
 from __future__ import annotations
 
 import datetime
+import logging
 import sys
 
-from logging import critical
-from logging import debug
-from logging import error
-from logging import info
 from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
-from typing import List
-from typing import Optional
-from typing import Union
 
 import git
 
@@ -40,13 +36,19 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 class Git:
-    def __init__(self, path: Union[Path, str]) -> None:
+
+    """Update and manage a repository."""
+
+    def __init__(self, path: Path | str) -> None:
         self.path: Path = Path(path)
         self.repo = git.Repo(self.path)
 
         if self.repo.bare:
-            critical(
+            logger.critical(
                 "Please make sure you entered the correct repository "
                 "in [SYNAPSE] -> Playbook."
             )
@@ -58,18 +60,44 @@ class Git:
 
     @property
     def datetime_last_pulled_commit(self) -> datetime.datetime:
+        """Get the datetime the commit was pulled last from git.
+
+        This is used to determine which messages will be produced in the table.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        datetime : datetime.datetime
+            The datetime object.
+
+        """
         log = self.master.log()
 
         return datetime.datetime.fromtimestamp(log[-1].time[0])
 
-    def log(self, since: Optional[datetime.datetime] = None) -> None:
+    def log(self, since: datetime.datetime | None = None) -> None:
+        """Print a table of date, user and commit message since the last pull.
+
+        Parameters
+        ----------
+        since : datetime.datetime, optional, default=None
+            The datetime the last commit was puled.
+
+        Returns
+        -------
+        None
+
+        """
         cmd = ["--pretty=%as\t%an\t%s"]
 
         if since:
             cmd.append(f"--since={str(since)}")
 
         terminal_size_x, _ = get_terminal_size()
-        debug(f"Terminal width = {terminal_size_x}")
+        logger.debug(f"Terminal width = {terminal_size_x}")
 
         ######################################################################
         #                          Terminal width                            #
@@ -99,12 +127,12 @@ class Git:
             break_long_words=True,
         )
 
-        log: List[List[str]] = [
+        log: list[list[str]] = [
             line.split("\t") for line in self.git.log(cmd).split("\n")
         ]
 
         if not log[0][0]:  # Nothing new
-            info("Everything is up-to-date.")
+            logger.info("Everything is up-to-date.")
 
             return
 
@@ -121,13 +149,24 @@ class Git:
         )
 
     def pull(self) -> None:
+        """Git pull the latest commits from GH.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
         # Get the last pulled datetime
         since = self.datetime_last_pulled_commit
 
         try:
             self.git.pull()
         except git.GitCommandError:
-            error(
+            logger.error(
                 "MatrixCtl was not able to connect to the synapse playbook "
                 "on GitHub. Are you connected to the internet?"
             )

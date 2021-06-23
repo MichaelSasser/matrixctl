@@ -15,11 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add the ``maintenance`` subcommand to ``matrixctl``."""
+"""Use this module to add the ``stop`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
-
-import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
@@ -33,17 +31,13 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-logger = logging.getLogger(__name__)
-
-
-def subparser_maintenance(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl maintenance`` command.
+def subparser_stop(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl stop`` command.
 
     Parameters
     ----------
     subparsers : argparse._SubParsersAction
-        The object which is returned by
-        ``parser.add_subparsers()``.
+        The object which is returned by ``parser.add_subparsers()``.
 
     Returns
     -------
@@ -51,20 +45,18 @@ def subparser_maintenance(subparsers: SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "maintenance", help="Run maintenance tasks"
+        "stop", help="Stops all OCI containers"
     )
-    parser.set_defaults(func=maintenance)
+    parser.set_defaults(func=stop)
 
 
-def maintenance(_: Namespace) -> int:
-    """Run the maintenance procedure of the ansible playbook.
+def stop(_: Namespace) -> int:
+    """Stop the OCI containers.
 
     Parameters
     ----------
-    _ : argparse.Namespace
+    arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
-        (In this case unused, but necessary because of the structure of the
-        program).
 
     Returns
     -------
@@ -72,14 +64,8 @@ def maintenance(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    logger.debug("maintenance")
-
     toml: TOML = TOML()
-    ansible_run(
-        playbook=toml.get("ANSIBLE", "Playbook"),
-        tags="run-postgres-vacuum,start",
-    )
-
+    ansible_run(toml.get("ANSIBLE", "Playbook"), tags="stop")
     return 0
 
 

@@ -14,14 +14,18 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use the functions of this module as helpers for passwords."""
+
 from __future__ import annotations
 
 import getpass
+import logging
 import secrets
 import string
 
-from logging import warn
-from typing import Optional
+
+logger = logging.getLogger(__name__)
 
 
 __author__: str = "Michael Sasser"
@@ -32,27 +36,38 @@ SPECIAL = "!§$%&/()=?.,;:_-#+*~{}[]°^@<>|\\"
 ALPHABET = string.ascii_letters + string.digits + SPECIAL
 
 
-def ask_password() -> Optional[str]:
+def ask_password() -> str:
     """Ask the user to create a password.
 
-    The user will be asked twice, after
-    that, the function compares the two entered passwords. If they are the
-    same, the function will return the password.
+    The user will be asked twice for a password. After
+    that the function compares the two entered passwords. If they are the
+    same, even when they are empty, the function will return the password.
 
-    .. note:: If the user presses enter twice, without entering a password,
-              the function will return ``None``. This is by-design.
+    Notes
+    -----
+    Keep in mind: When the user presses enter twice, without entering a
+    password, the function will return an empty `str`. **This is by-design**.
 
-    :return: Returns the user entered password or ``None``
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    password : str
+        The user entered password. The string might me empty!
+
     """
-    # ToDo: Check password (regex)
-    passwd: str = "a"
-    passwd2: str = "b"  # Something invalid: a==b is not True
+    passwd: str | None = None
+    passwd2: str | None = None
 
-    while passwd != passwd2:
+    while True:
         passwd = getpass.getpass()
         passwd2 = getpass.getpass("Password (again): ")
+        if passwd == passwd2:
+            break
 
-    return passwd if passwd == passwd2 else None
+    return passwd
 
 
 def gen_password(
@@ -78,17 +93,26 @@ def gen_password(
 
     The rest are lower- and uppercase characters.
 
-    :param length:       The desired length of the password to generate
-    :param min_digits:   The desired minimum of digits of the password
-    :param min_special:  The desired minimum of special characters of the
-                         password
-    :param max_special:  The desired maximum of special characters of the
-                         password
-    :return:             It returns the generated password
+    Parameters
+    ----------
+    length : int, defautl=16
+        The desired length of the password to generate.
+    min_digits : int, default=3
+        The desired minimum of digits of the password.
+    min_special : int, default=1
+        The desired minimum of special characters of the password.
+    max_special : int, default=3
+        The desired maximum of special characters of the password.
+
+    Returns
+    -------
+    password : str
+        The generated password.
+
     """
 
     while True:
-        password = "".join(secrets.choice(ALPHABET) for i in range(length))
+        password = "".join(secrets.choice(ALPHABET) for _ in range(length))
 
         # pylint: disable=chained-comparison
 
@@ -106,16 +130,23 @@ def gen_password(
 def ask_question(question: str = "Is everything correct?") -> bool:
     """Asks the user a simple yes/no a question.
 
-    The answer will be returned as ``bool``.
-    - ``True``: if the user answered ``y`` / ``j`` (j for the German yes: Ja)
-    - ``False``: if the user answers ``n``
+    Notes
+    -----
+    - The user entered value is case-insensitive.
+    - If the user answered with an invalid answer (not ``y`` / ``j`` / ``n``)
+      the function asks again.
 
-    If the user answerd with an invalid answer (not ``y`` / ``j`` / ``n``)
-    the function asks again.
+    Parameters
+    ----------
+    question : str
+        The yes/no question the user should be asked
 
-    :param question:  The yes/no question the user should be asked
-    :return:          ``True`` if the answer was ``y`` / ``j`` and ``False``
-                      if the answer was ``n``
+    Returns
+    -------
+    answer : bool
+        ``True`` if the answer was ``y`` / ``j``, or
+        ``False`` if the answer was ``n``
+
     """
     question += " [y/n]"
 
@@ -124,7 +155,7 @@ def ask_question(question: str = "Is everything correct?") -> bool:
         "j",
         "n",
     ):
-        warn("User entered [y/n] pattern did not match")
+        logger.info("User entered [y/n] pattern did not match")
 
     return answer in ("y", "j")
 

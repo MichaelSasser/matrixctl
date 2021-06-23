@@ -14,38 +14,41 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module as entrypoint for the application."""
+
 from __future__ import annotations
 
 import argparse
+import logging
 
 from argparse import _SubParsersAction
-from logging import debug
-from logging import warning
-from typing import Callable
-from typing import List
+from collections.abc import Callable
 
 import coloredlogs
 
 from matrixctl import __version__
 
-from .adduser import subparser_adduser
-from .adduser_jitsi import subparser_adduser_jitsi
-from .check import subparser_check
-from .delroom import subparser_delroom
-from .deluser import subparser_deluser
-from .deluser_jitsi import subparser_deluser_jitsi
-from .deploy import subparser_deploy
+from matrixctl.adduser import subparser_adduser
+from matrixctl.adduser_jitsi import subparser_adduser_jitsi
+from matrixctl.check import subparser_check
+from matrixctl.delroom import subparser_delroom
+from matrixctl.deluser import subparser_deluser
+from matrixctl.deluser_jitsi import subparser_deluser_jitsi
+from matrixctl.deploy import subparser_deploy
 from .get_event import subparser_get_event
-from .maintenance import subparser_maintenance
-from .rooms import subparser_rooms
-from .server_notice import subparser_server_notice
-from .start import subparser_restart
-from .start import subparser_start
-from .update import subparser_update
-from .upload import subparser_upload
-from .user import subparser_user
-from .users import subparser_users
-from .version import subparser_version
+from matrixctl.maintenance import subparser_maintenance
+from matrixctl.purge_history import subparser_purge_history
+from matrixctl.rooms import subparser_rooms
+from matrixctl.server_notice import subparser_server_notice
+from matrixctl.start import subparser_restart
+from matrixctl.start import subparser_start
+from matrixctl.stop import subparser_stop
+from matrixctl.update import subparser_update
+from matrixctl.upload import subparser_upload
+from matrixctl.user import subparser_user
+from matrixctl.users import subparser_users
+from matrixctl.version import subparser_version
 
 
 # Subparsers
@@ -58,7 +61,22 @@ __email__: str = "Michael@MichaelSasser.org"
 #              user_admin_api.rst
 
 
+logger = logging.getLogger(__name__)
+
+
 def setup_parser() -> argparse.ArgumentParser:
+    """Use this class to initialize the parser and the subparsers.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    parser : argparse.ArgumentParser
+        The parser object, which can be used to parse the arguments.
+
+    """
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--version", action="version", version=__version__)
@@ -68,13 +86,14 @@ def setup_parser() -> argparse.ArgumentParser:
     subparsers: _SubParsersAction = parser.add_subparsers()
 
     # Subparsers
-    subparsers_tuple: List[Callable[[_SubParsersAction], None]] = [
+    subparsers_tuple: list[Callable[[_SubParsersAction], None]] = [
         subparser_adduser,
         subparser_deluser,
         subparser_adduser_jitsi,
         subparser_deluser_jitsi,
         subparser_user,
         subparser_users,
+        subparser_purge_history,
         subparser_rooms,
         subparser_delroom,
         subparser_update,
@@ -83,6 +102,7 @@ def setup_parser() -> argparse.ArgumentParser:
         subparser_server_notice,
         subparser_get_event,
         subparser_start,
+        subparser_stop,
         subparser_restart,  # alias for start
         subparser_maintenance,
         subparser_check,
@@ -96,25 +116,55 @@ def setup_parser() -> argparse.ArgumentParser:
 
 
 def setup_logging(debug_mode: bool) -> None:
-    coloredlogs.DEFAULT_LOG_FORMAT = (
-        "%(asctime)s - %(levelname)s - %(message)s"
+    """Use this function to setup logging for the application.
+
+    Parameters
+    ----------
+    debug_mode : bool
+        ``True`` sets the log level to ``DEBUG``, ``False`` sets the log level
+        to ``INFO``.
+
+    Returns
+    -------
+    None
+
+    """
+    # Default coloredlogs.DEFAULT_LOG_FORMAT:
+    # %(asctime)s %(hostname)s %(name)s[%(process)d] %(levelname)s %(message)s
+
+    coloredlogs.install(
+        level="DEBUG" if debug_mode else "INFO",
+        fmt=(
+            "%(asctime)s %(name)s:%(lineno)d [%(funcName)s] %(levelname)s "
+            "%(message)s"
+        ),
     )
-    coloredlogs.DEFAULT_LOG_LEVEL = 0 if debug_mode else 21
-    coloredlogs.install()
 
 
 def main() -> int:
+    """Use the ``main`` function as entrypoint to run the application.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
+    """
     parser = setup_parser()
 
     args: argparse.Namespace = parser.parse_args()
 
     setup_logging(args.debug)
 
-    debug(f"{args=}")
+    logger.debug(f"{args=}")
 
     if args.debug:
-        debug("Disabing help on AttributeError")
-        warning(
+        logger.debug("Disabing help on AttributeError")
+        logger.warning(
             "In debugging mode help is disabled! If you don't use any "
             "attibutes, the program will throw a AttributeError like: "
             "\"AttributeError: 'Namespace' object has no attribute 'func\".'"
@@ -131,5 +181,10 @@ def main() -> int:
 
         return 1
 
+
+if __name__ == "__main__":
+    import sys
+
+    sys.exit(main())
 
 # vim: set ft=python :

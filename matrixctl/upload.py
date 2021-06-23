@@ -14,18 +14,22 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``upload`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
+
+import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import debug
-from logging import error
 from mimetypes import MimeTypes
 from pathlib import Path
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .typing import JsonDict
 
@@ -34,7 +38,22 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 def subparser_upload(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl upload`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
         "upload", help="Upload a file."
     )
@@ -45,17 +64,22 @@ def subparser_upload(subparsers: SubParsersAction) -> None:
 def upload(arg: Namespace) -> int:
     """Upload a file or image to the matix instance.
 
-    It uses the synapse admin API.
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``.
 
-    :param arg:       The ``Namespace`` object of argparse's ``arse_args()``
-    :param _:         Not used (The ``Config`` class)
-    :return:          None
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
     """
     file_path: Path = Path(arg.file).absolute()
-    debug(f"upload: {file_path=}")
+    logger.debug(f"upload: {file_path=}")
     mime_types: MimeTypes = MimeTypes()
     file_type: str = str(mime_types.guess_type(file_path.name)[0])
-    debug(f"upload: {file_type=}")
+    logger.debug(f"upload: {file_type=}")
     try:
         with file_path.open("rb") as fp:
             file: bytes = fp.read()
@@ -64,17 +88,21 @@ def upload(arg: Namespace) -> int:
         return 1
 
     toml: TOML = TOML()
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path="upload/",
+        api_path="_matrix/media",
+        method="POST",
+        api_version="r0",
+        json=False,
+        headers={"Content-Type": file_type},
+        data=file,
+    )
     try:
-        api.url.api_path = "_matrix/media"
-        api.url.path = "upload/"
-        api.url.api_version = "r0"
-        api.method = "POST"
-        api.json_format = False
-        api.headers = {"Content-Type": file_type}
-        response: JsonDict = api.request(file).json()
+        response: JsonDict = request(req).json()
     except InternalResponseError:
-        error("The file was not uploaded.")
+        logger.error("The file was not uploaded.")
         return 1
     try:
         print("Content URI: ", response["content_uri"])

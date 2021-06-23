@@ -14,12 +14,16 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Use this module to add the ``check`` subcommand to ``matrixctl``."""
+
 from __future__ import annotations
+
+import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from logging import debug
 
 from .handlers.ansible import ansible_run
 from .handlers.toml import TOML
@@ -29,15 +33,44 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
+logger = logging.getLogger(__name__)
+
+
 def subparser_check(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl check`` command.
+
+    Parameters
+    ----------
+    subparsers : argparse._SubParsersAction
+        The object which is returned by
+        ``parser.add_subparsers()``.
+
+    Returns
+    -------
+    None
+
+    """
     parser: ArgumentParser = subparsers.add_parser(
-        "check", help="Checks the OCI containers"
+        "check", help="Checks the deployment with ansible"
     )
     parser.set_defaults(func=check)
 
 
 def check(_: Namespace) -> int:
-    debug("check")
+    """Check the deployment with andible.
+
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``
+
+    Returns
+    -------
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
+
+    """
+    logger.debug("check")
 
     toml: TOML = TOML()
     ansible_run(playbook=toml.get("ANSIBLE", "Playbook"), tags="check")
