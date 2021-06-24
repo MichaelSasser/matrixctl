@@ -108,11 +108,10 @@ def get_event(arg: Namespace) -> int:
     if not response.stderr:
         logger.debug(f"response: {response.stdout}")
         if response.stdout:
-            response_parsed: JsonDict = json.loads(
-                response.stdout[
-                    response.stdout.find("{") : response.stdout.rfind("}") + 1
-                ]
-            )
+            start: int = response.stdout.find("{")
+            stop: int = response.stdout.rfind("}") + 1
+
+            response_parsed: JsonDict = json.loads(response.stdout[start:stop])
             print(json.dumps(response_parsed, indent=4))
             return 0
         print("The response from the Database was empty.")
