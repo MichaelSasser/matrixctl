@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.10.1"
+version = "0.10.2"
 description = "Controls a synapse oci-container instance via ansible"
 license = "GPL-3.0-or-later"
 readme = "README.md"
@@ -165,9 +165,7 @@ filename = "CHANGELOG.rst"
 issue_format = "`#{issue} <https://github.com/MichaelSasser/matrixctl/issues/{issue}>`_"
 directory = "news/"
 top_line = false
-# name = "MatrixCtl"
 title_format = "{version} ({project_date})"  # {name}
-# start_string = ".. towncrier release notes start"
 all_bullets = true  # make all fragments bullet points
 wrap = true  # Wrap text to 79 characters
 template = "news/templates/default.rst"
