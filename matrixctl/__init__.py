@@ -21,13 +21,16 @@
 
 from __future__ import annotations
 
-from importlib.metadata import version
 from pathlib import Path
+
+from single_source import get_version
 
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
-__version__: str = version("matrixctl")
+__version__: str = (
+    get_version(__name__, Path(__file__).parent.parent) or "Unknown"
+)
 
 HOME: str = str(Path.home())
 
