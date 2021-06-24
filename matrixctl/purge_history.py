@@ -31,7 +31,8 @@ from datetime import datetime
 from time import sleep
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .password_helpers import ask_question
 from .typing import JsonDict
@@ -126,15 +127,18 @@ def handle_purge_status(toml: TOML, purge_id: str) -> int:
         The response as dict, containing the status.
 
     """
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
-    api.url.path = f"purge_history_status/{purge_id}"
-    api.url.api_version = "v1"
-    api.method = "GET"
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path=f"purge_history_status/{purge_id}",
+        method="GET",
+        api_version="v1",
+    )
 
     while True:
 
         try:
-            response: JsonDict = api.request().json()
+            response: JsonDict = request(req).json()
         except InternalResponseError:
             logger.critical(
                 "The purge history request was successful but the status "
@@ -227,13 +231,17 @@ def purge_history(arg: Namespace) -> int:
 
     toml: TOML = TOML()
 
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
-    api.url.path = f"purge_history/{arg.room_id}"
-    api.url.api_version = "v1"
-    api.method = "POST"
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path=f"purge_history/{arg.room_id}",
+        method="POST",
+        api_version="v1",
+        data=request_body,
+    )
 
     try:
-        response: JsonDict = api.request(request_body).json()
+        response: JsonDict = request(req).json()
     except InternalResponseError:
         logger.critical(
             "Something went wrong with the request. Please check your data "

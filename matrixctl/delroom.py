@@ -26,7 +26,8 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 
 
@@ -77,13 +78,17 @@ def delroom(arg: Namespace) -> int:
 
     """
     toml: TOML = TOML()
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
-    api.method = "POST"
-    api.url.path = "purge_room"
-    api.url.api_version = "v1"
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path="purge_room",
+        method="POST",
+        api_version="v1",
+        data={"room_id": arg.RoomID},
+    )
 
     try:
-        api.request({"room_id": arg.RoomID}).json()
+        request(req).json()
     except InternalResponseError as e:
         if "json" in dir(e.payload):
             try:

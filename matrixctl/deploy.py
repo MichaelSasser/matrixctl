@@ -53,10 +53,17 @@ def subparser_deploy(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "deploy", help="Provision and deploy"
     )
+
+    parser.add_argument(  # Done with tags / Does not use matrixctl.start !
+        "-s",
+        "--start",
+        action="store_true",
+        help="Start/Restart after the deployment",
+    )
     parser.set_defaults(func=deploy)
 
 
-def deploy(_: Namespace) -> int:
+def deploy(arg: Namespace) -> int:
     """Deploy the ansible playbook.
 
     Parameters
@@ -72,9 +79,10 @@ def deploy(_: Namespace) -> int:
     """
     logger.debug("deploy")
     toml: TOML = TOML()
+
     ansible_run(
         playbook=toml.get("ANSIBLE", "Playbook"),
-        tags="setup-all",
+        tags="setup-all,start" if arg.start else "setup-all",
     )
 
     return 0

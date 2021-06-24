@@ -35,6 +35,7 @@ from matrixctl.delroom import subparser_delroom
 from matrixctl.deluser import subparser_deluser
 from matrixctl.deluser_jitsi import subparser_deluser_jitsi
 from matrixctl.deploy import subparser_deploy
+from matrixctl.get_event import subparser_get_event
 from matrixctl.maintenance import subparser_maintenance
 from matrixctl.purge_history import subparser_purge_history
 from matrixctl.rooms import subparser_rooms
@@ -98,6 +99,7 @@ def setup_parser() -> argparse.ArgumentParser:
         subparser_upload,
         subparser_deploy,
         subparser_server_notice,
+        subparser_get_event,
         subparser_start,
         subparser_stop,
         subparser_restart,  # alias for start
@@ -130,7 +132,7 @@ def setup_logging(debug_mode: bool) -> None:
     # %(asctime)s %(hostname)s %(name)s[%(process)d] %(levelname)s %(message)s
 
     coloredlogs.install(
-        level="DEBUG" if debug_mode else "INFO",
+        level="DEBUG" if debug_mode else "WARNING",
         fmt=(
             "%(asctime)s %(name)s:%(lineno)d [%(funcName)s] %(levelname)s "
             "%(message)s"

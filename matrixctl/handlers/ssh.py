@@ -111,13 +111,15 @@ class SSH:
         except OSError:
             return None
 
-    def run_cmd(self, cmd: str) -> SSHResponse:
+    def run_cmd(self, cmd: str, tty: bool = False) -> SSHResponse:
         """Run a command on the host machine and receive a response.
 
         Parameters
         ----------
         cmd : str
             The command to run.
+        tty : bool
+            Request a pseudo-terminal from the server (default: ``False``)
 
         Returns
         -------
@@ -129,7 +131,10 @@ class SSH:
 
         response: SSHResponse = SSHResponse(
             # skipcq: BAN-B601
-            *[self.__str_from(s) for s in self.__client.exec_command(cmd)]
+            *[
+                self.__str_from(s)
+                for s in self.__client.exec_command(cmd, get_pty=tty)
+            ]
         )
 
         logger.debug(f'SSH Response: "{response}"')

@@ -2,6 +2,30 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 `GitHub <https://github.com/MichaelSasser/matrixctl/issues>`_.
 
 .. towncrier release notes start
+
+0.10.2 (2021-06-24)
+===================
+
+Features & Improvements
+-----------------------
+
+- Add start/restart switch to the deploy subcommand to start/restart the server
+  right after the deployment. (`#132
+  <https://github.com/MichaelSasser/matrixctl/issues/132>`_)
+- Added the new command ``get-event``, which gets an event by ``event_id`` from
+  the Database and prints it as JSON. (`#139
+  <https://github.com/MichaelSasser/matrixctl/issues/139>`_)
+
+
+Miscellaneous
+-------------
+
+- Rewritten API handler. (`#136
+  <https://github.com/MichaelSasser/matrixctl/issues/136>`_)
+- Fixed: Wrong version while developing in virtual environment. (`#141
+  <https://github.com/MichaelSasser/matrixctl/issues/141>`_)
+
+
 0.10.1 (2021-06-17)
 ===================
 
@@ -103,3 +127,4 @@ Miscellaneous
   GitHub
   <https://github.com/MichaelSasser/matrixctl/releases>`_. (`#61
   <https://github.com/MichaelSasser/matrixctl/issues/61>`_)
+

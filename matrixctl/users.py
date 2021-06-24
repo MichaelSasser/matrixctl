@@ -28,7 +28,8 @@ from argparse import _SubParsersAction as SubParsersAction
 from tabulate import tabulate
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .print_helpers import human_readable_bool
 from .typing import JsonDict
@@ -125,19 +126,24 @@ def users(arg: Namespace) -> int:
     users_list: list[JsonDict] = []
 
     # ToDo: API bool
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
-    api.url.api_version = "v2"
-    api.url.path = "users"
-    api.params = {"guests": "true" if arg.with_guests or arg.all else "false"}
-    api.params = {
-        "deactivated": "true" if arg.with_deactivated or arg.all else "false"
-    }
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path="users",
+        api_version="v2",
+        params={
+            "guests": "true" if arg.with_guests or arg.all else "false",
+            "deactivated": "true"
+            if arg.with_deactivated or arg.all
+            else "false",
+        },
+    )
 
     while True:
 
-        api.params = {"from": from_user}  # from must be in the loop
+        req.params["from"] = from_user  # from must be in the loop
         try:
-            lst: JsonDict = api.request().json()
+            lst: JsonDict = request(req).json()
         except InternalResponseError:
             logger.critical("Could not get the user table.")
 

@@ -53,6 +53,8 @@ extensions: list[str] = [
     "sphinx.ext.inheritance_diagram",
 ]
 
+suppress_warnings: list[str] = ["autosectionlabel.*"]
+
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     # "numpy": ("https://www.numpy.org/devdocs", None),

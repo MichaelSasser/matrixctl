@@ -28,7 +28,8 @@ from mimetypes import MimeTypes
 from pathlib import Path
 
 from .errors import InternalResponseError
-from .handlers.api import API
+from .handlers.api import RequestBuilder
+from .handlers.api import request
 from .handlers.toml import TOML
 from .typing import JsonDict
 
@@ -87,15 +88,19 @@ def upload(arg: Namespace) -> int:
         return 1
 
     toml: TOML = TOML()
-    api: API = API(toml.get("API", "Domain"), toml.get("API", "Token"))
+    req: RequestBuilder = RequestBuilder(
+        token=toml.get("API", "Token"),
+        domain=toml.get("API", "Domain"),
+        path="upload/",
+        api_path="_matrix/media",
+        method="POST",
+        api_version="r0",
+        json=False,
+        headers={"Content-Type": file_type},
+        data=file,
+    )
     try:
-        api.url.api_path = "_matrix/media"
-        api.url.path = "upload/"
-        api.url.api_version = "r0"
-        api.method = "POST"
-        api.json_format = False
-        api.headers = {"Content-Type": file_type}
-        response: JsonDict = api.request(file).json()
+        response: JsonDict = request(req).json()
     except InternalResponseError:
         logger.error("The file was not uploaded.")
         return 1
