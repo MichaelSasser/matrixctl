@@ -118,6 +118,8 @@ class SSH:
         ----------
         cmd : str
             The command to run.
+        tty : bool
+            Request a pseudo-terminal from the server (default: ``False``)
 
         Returns
         -------

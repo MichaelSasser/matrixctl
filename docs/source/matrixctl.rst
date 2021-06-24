@@ -143,6 +143,14 @@ server-notice
    :undoc-members:
    :show-inheritance:
 
+get-event
+---------
+
+.. automodule:: matrixctl.get_event
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Helpers
 =======
 
