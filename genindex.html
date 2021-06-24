@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; MatrixCtl 0.10.1 documentation</title>
+    <title>Index &#8212; MatrixCtl 0.10.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Index</a></li> 
       </ul>
     </div>  
@@ -72,11 +72,9 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API">API (class in matrixctl.handlers.api)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.api_path">api_path (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.UrlBuilder.api_path">api_path (matrixctl.handlers.api.UrlBuilder property)</a>
-</li>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.UrlBuilder.api_version">api_version (matrixctl.handlers.api.UrlBuilder property)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.api_version">api_version (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.password_helpers.ask_password">ask_password() (in module matrixctl.password_helpers)</a>
 </li>
@@ -91,10 +89,6 @@
       <li><a href="matrixctl.html#matrixctl.errors.Error.BUGMSG">BUGMSG (matrixctl.errors.Error attribute)</a>
 </li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.UrlBuilder.build">build() (matrixctl.handlers.api.UrlBuilder method)</a>
-</li>
-  </ul></td>
 </tr></table>
 
 <h2 id="C">C</h2>
@@ -102,11 +96,9 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="matrixctl.html#matrixctl.check.check">check() (in module matrixctl.check)</a>
 </li>
-      <li><a href="matrixctl.html#matrixctl.purge_history.check_point_in_time">check_point_in_time() (in module matrixctl.purge_history)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.check_type">check_type() (in module matrixctl.handlers.api)</a>
+      <li><a href="matrixctl.html#matrixctl.purge_history.check_point_in_time">check_point_in_time() (in module matrixctl.purge_history)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.errors.ConfigFileError">ConfigFileError</a>
 </li>
@@ -116,26 +108,24 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.data">data (matrixctl.handlers.api.RequestBuilder attribute)</a>
+</li>
       <li><a href="matrixctl.html#matrixctl.handlers.git.Git.datetime_last_pulled_commit">datetime_last_pulled_commit (matrixctl.handlers.git.Git property)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.handlers.toml.TOML.DEFAULT_PATHS">DEFAULT_PATHS (matrixctl.handlers.toml.TOML attribute)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.delroom.delroom">delroom() (in module matrixctl.delroom)</a>
 </li>
-      <li><a href="matrixctl.html#matrixctl.deluser.deluser">deluser() (in module matrixctl.deluser)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="matrixctl.html#matrixctl.deluser.deluser">deluser() (in module matrixctl.deluser)</a>
+</li>
       <li><a href="matrixctl.html#matrixctl.deluser_jitsi.deluser_jitsi">deluser_jitsi() (in module matrixctl.deluser_jitsi)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.deploy.deploy">deploy() (in module matrixctl.deploy)</a>
 </li>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.domain">domain (matrixctl.handlers.api.API attribute)</a>
-
-      <ul>
-        <li><a href="matrixctl.html#matrixctl.handlers.api.UrlBuilder.domain">(matrixctl.handlers.api.UrlBuilder property)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.domain">domain (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -158,6 +148,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="matrixctl.html#matrixctl.handlers.toml.TOML.get">get() (matrixctl.handlers.toml.TOML method)</a>
 </li>
+      <li><a href="matrixctl.html#matrixctl.get_event.get_event">get_event() (in module matrixctl.get_event)</a>
+</li>
       <li><a href="matrixctl.html#matrixctl.handlers.git.Git">Git (class in matrixctl.handlers.git)</a>
 </li>
   </ul></td>
@@ -168,9 +160,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="matrixctl.html#matrixctl.purge_history.handle_purge_status">handle_purge_status() (in module matrixctl.purge_history)</a>
 </li>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.headers">headers (matrixctl.handlers.api.RequestBuilder attribute)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.headers">headers (matrixctl.handlers.api.API property)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.headers_with_auth">headers_with_auth (matrixctl.handlers.api.RequestBuilder property)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.print_helpers.human_readable_bool">human_readable_bool() (in module matrixctl.print_helpers)</a>
 </li>
@@ -188,7 +182,7 @@
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.json_format">json_format (matrixctl.handlers.api.API attribute)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.json">json (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -271,6 +265,13 @@
 
       <ul>
         <li><a href="matrixctl.html#module-matrixctl.errors">module</a>
+</li>
+      </ul></li>
+      <li>
+    matrixctl.get_event
+
+      <ul>
+        <li><a href="matrixctl.html#module-matrixctl.get_event">module</a>
 </li>
       </ul></li>
       <li>
@@ -401,7 +402,7 @@
         <li><a href="matrixctl.html#module-matrixctl.users">module</a>
 </li>
       </ul></li>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.method">method (matrixctl.handlers.api.API property)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.method">method (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
       <li>
     module
@@ -424,6 +425,8 @@
         <li><a href="matrixctl.html#module-matrixctl.deploy">matrixctl.deploy</a>
 </li>
         <li><a href="matrixctl.html#module-matrixctl.errors">matrixctl.errors</a>
+</li>
+        <li><a href="matrixctl.html#module-matrixctl.get_event">matrixctl.get_event</a>
 </li>
         <li><a href="matrixctl.html#module-matrixctl.handlers.ansible">matrixctl.handlers.ansible</a>
 </li>
@@ -468,9 +471,9 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.params">params (matrixctl.handlers.api.API property)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.params">params (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.UrlBuilder.path">path (matrixctl.handlers.api.UrlBuilder property)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.path">path (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.errors.InternalResponseError.payload">payload (matrixctl.errors.InternalResponseError attribute)</a>
 </li>
@@ -490,9 +493,9 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.request">request() (matrixctl.handlers.api.API method)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.request">request() (in module matrixctl.handlers.api)</a>
 </li>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.RESPONSE_OK">RESPONSE_OK (matrixctl.handlers.api.API attribute)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder">RequestBuilder (class in matrixctl.handlers.api)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -506,11 +509,9 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.UrlBuilder.scheme">scheme (matrixctl.handlers.api.UrlBuilder property)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.scheme">scheme (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.server_notice.server_notice">server_notice() (in module matrixctl.server_notice)</a>
-</li>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.session">session (matrixctl.handlers.api.API attribute)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.__main__.setup_logging">setup_logging() (in module matrixctl.__main__)</a>
 </li>
@@ -530,7 +531,7 @@
 </li>
       <li><a href="matrixctl.html#matrixctl.stop.stop">stop() (in module matrixctl.stop)</a>
 </li>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.UrlBuilder.subdomain">subdomain (matrixctl.handlers.api.UrlBuilder property)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.subdomain">subdomain (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.adduser.subparser_adduser">subparser_adduser() (in module matrixctl.adduser)</a>
 </li>
@@ -538,15 +539,17 @@
 </li>
       <li><a href="matrixctl.html#matrixctl.check.subparser_check">subparser_check() (in module matrixctl.check)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="matrixctl.html#matrixctl.delroom.subparser_delroom">subparser_delroom() (in module matrixctl.delroom)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="matrixctl.html#matrixctl.deluser.subparser_deluser">subparser_deluser() (in module matrixctl.deluser)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.deluser_jitsi.subparser_deluser_jitsi">subparser_deluser_jitsi() (in module matrixctl.deluser_jitsi)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.deploy.subparser_deploy">subparser_deploy() (in module matrixctl.deploy)</a>
+</li>
+      <li><a href="matrixctl.html#matrixctl.get_event.subparser_get_event">subparser_get_event() (in module matrixctl.get_event)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.maintenance.subparser_maintenance">subparser_maintenance() (in module matrixctl.maintenance)</a>
 </li>
@@ -570,7 +573,7 @@
 </li>
       <li><a href="matrixctl.html#matrixctl.users.subparser_users">subparser_users() (in module matrixctl.users)</a>
 </li>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.success_codes">success_codes (matrixctl.handlers.api.API property)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.success_codes">success_codes (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -578,7 +581,7 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.token">token (matrixctl.handlers.api.API attribute)</a>
+      <li><a href="matrixctl.html#matrixctl.handlers.api.RequestBuilder.token">token (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -594,12 +597,8 @@
 </li>
       <li><a href="matrixctl.html#matrixctl.upload.upload">upload() (in module matrixctl.upload)</a>
 </li>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.API.url">url (matrixctl.handlers.api.API attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="matrixctl.html#matrixctl.handlers.api.UrlBuilder">UrlBuilder (class in matrixctl.handlers.api)</a>
-</li>
       <li><a href="matrixctl.html#matrixctl.handlers.ssh.SSH.user">user (matrixctl.handlers.ssh.SSH attribute)</a>
 </li>
       <li><a href="matrixctl.html#matrixctl.user.user">user() (in module matrixctl.user)</a>
@@ -640,7 +639,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Index</a></li> 
       </ul>
     </div>

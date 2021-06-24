@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Changelog &#8212; MatrixCtl 0.10.1 documentation</title>
+    <title>0.10.2 (2021-06-24) &#8212; MatrixCtl 0.10.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -32,8 +32,8 @@
         <li class="right" >
           <a href="matrixctl.html" title="Contributer Documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Changelog</a></li> 
+        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">0.10.2 (2021-06-24)</a></li> 
       </ul>
     </div>  
 
@@ -42,38 +42,54 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="changelog">
-<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
-<p>This is the changelog of MatrixCtl. You can find the issue tracker on
+  <p>This is the changelog of MatrixCtl. You can find the issue tracker on
 <a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues">GitHub</a>.</p>
-</section>
 <section id="id1">
-<h1>0.10.1 (2021-06-17)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>0.10.2 (2021-06-24)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <section id="features-improvements">
 <h2>Features &amp; Improvements<a class="headerlink" href="#features-improvements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add start/restart switch to the deploy subcommand to start/restart the server
+right after the deployment. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/132">#132</a>)</p></li>
+<li><p>Added the new command <code class="docutils literal notranslate"><span class="pre">get-event</span></code>, which gets an event by <code class="docutils literal notranslate"><span class="pre">event_id</span></code> from
+the Database and prints it as JSON. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/139">#139</a>)</p></li>
+</ul>
+</section>
+<section id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Rewritten API handler. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/136">#136</a>)</p></li>
+<li><p>Fixed: Wrong version while developing in virtual environment. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/141">#141</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h1>0.10.1 (2021-06-17)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h1>
+<section id="id7">
+<h2>Features &amp; Improvements<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Update type hinting according to PEP 585. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/123">#123</a>)</p></li>
 </ul>
 </section>
 </section>
-<section id="id3">
-<h1>0.10.0 (2021-06-17)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
+<section id="id9">
+<h1>0.10.0 (2021-06-17)<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h1>
 <section id="behavior-breaking-changes">
 <h2>Behavior &amp; Breaking Changes<a class="headerlink" href="#behavior-breaking-changes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Drop support for Python 3.8 for tests and typing. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/121">#121</a>)</p></li>
 </ul>
 </section>
-<section id="id5">
-<h2>Features &amp; Improvements<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<section id="id11">
+<h2>Features &amp; Improvements<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>add <code class="docutils literal notranslate"><span class="pre">purge-history</span></code> to purge historic events from the DB (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/86">#86</a>)</p></li>
 <li><p>Modules are using <code class="docutils literal notranslate"><span class="pre">logger</span></code> instead of <code class="docutils literal notranslate"><span class="pre">logging</span></code>. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/117">#117</a>)</p></li>
 <li><p>Use secure, temporary directory for ansible_runner’s private data. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/119">#119</a>)</p></li>
 </ul>
 </section>
-<section id="miscellaneous">
-<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<section id="id15">
+<h2>Miscellaneous<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Moved <code class="docutils literal notranslate"><span class="pre">mypy.ini</span></code> into <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/113">#113</a>)</p></li>
 <li><p>Fix of false-positive <code class="docutils literal notranslate"><span class="pre">CWE-798:</span> <span class="pre">Use</span> <span class="pre">of</span> <span class="pre">Hard-coded</span> <span class="pre">Credentials</span></code>. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/115">#115</a>)</p></li>
@@ -81,17 +97,17 @@
 </ul>
 </section>
 </section>
-<section id="id12">
-<h1>0.9.0 (2021-04-23)<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h1>
-<section id="id13">
-<h2>Behavior &amp; Breaking Changes<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<section id="id19">
+<h1>0.9.0 (2021-04-23)<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h1>
+<section id="id20">
+<h2>Behavior &amp; Breaking Changes<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>add <code class="docutils literal notranslate"><span class="pre">shadow-banned</span></code> (needs synapse v1.28 or greater) and <code class="docutils literal notranslate"><span class="pre">displayname</span></code> to
 the table output of <code class="docutils literal notranslate"><span class="pre">`matrixctl</span> <span class="pre">users</span></code>. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/30">#30</a>)</p></li>
 </ul>
 </section>
-<section id="id15">
-<h2>Features &amp; Improvements<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<section id="id22">
+<h2>Features &amp; Improvements<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Add the <code class="docutils literal notranslate"><span class="pre">stop</span></code> command to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>, which stops all OCI containers.
 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/74">#74</a>)</p></li>
@@ -106,10 +122,10 @@ the version number and the date. (<a class="reference external" href="https://gi
 </ul>
 </section>
 </section>
-<section id="id19">
-<h1>0.8.6 (2021-04-17)<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h1>
-<section id="id20">
-<h2>Features &amp; Improvements<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<section id="id26">
+<h1>0.8.6 (2021-04-17)<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h1>
+<section id="id27">
+<h2>Features &amp; Improvements<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>The application now uses <code class="docutils literal notranslate"><span class="pre">__main__.py</span></code> instead of <code class="docutils literal notranslate"><span class="pre">application.py</span></code>.
 Developers are now able to use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">matrixctl</span></code> from the project root to
@@ -124,8 +140,8 @@ pre-commit and run tests (<a class="reference external" href="https://github.com
 <li><p>Fix <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> when enabling debug mode and using the API. (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/45">#45</a>)</p></li>
 </ul>
 </section>
-<section id="id24">
-<h2>Miscellaneous<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<section id="id31">
+<h2>Miscellaneous<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">CHANGELOG.rst</span></code> to project root generated by <code class="docutils literal notranslate"><span class="pre">towncrier</span></code>.
 This is the first release using the new changelog generation procedure.
@@ -144,27 +160,31 @@ GitHub</a>. (<a class="reference external" href="https://github.com/MichaelSasse
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Changelog</a></li>
-<li><a class="reference internal" href="#id1">0.10.1 (2021-06-17)</a><ul>
+<li><a class="reference internal" href="#">0.10.2 (2021-06-24)</a><ul>
 <li><a class="reference internal" href="#features-improvements">Features &amp; Improvements</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#id3">0.10.0 (2021-06-17)</a><ul>
-<li><a class="reference internal" href="#behavior-breaking-changes">Behavior &amp; Breaking Changes</a></li>
-<li><a class="reference internal" href="#id5">Features &amp; Improvements</a></li>
 <li><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id12">0.9.0 (2021-04-23)</a><ul>
-<li><a class="reference internal" href="#id13">Behavior &amp; Breaking Changes</a></li>
-<li><a class="reference internal" href="#id15">Features &amp; Improvements</a></li>
+<li><a class="reference internal" href="#id6">0.10.1 (2021-06-17)</a><ul>
+<li><a class="reference internal" href="#id7">Features &amp; Improvements</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">0.10.0 (2021-06-17)</a><ul>
+<li><a class="reference internal" href="#behavior-breaking-changes">Behavior &amp; Breaking Changes</a></li>
+<li><a class="reference internal" href="#id11">Features &amp; Improvements</a></li>
+<li><a class="reference internal" href="#id15">Miscellaneous</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id19">0.9.0 (2021-04-23)</a><ul>
+<li><a class="reference internal" href="#id20">Behavior &amp; Breaking Changes</a></li>
+<li><a class="reference internal" href="#id22">Features &amp; Improvements</a></li>
 <li><a class="reference internal" href="#improved-documentation">Improved Documentation</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id19">0.8.6 (2021-04-17)</a><ul>
-<li><a class="reference internal" href="#id20">Features &amp; Improvements</a></li>
+<li><a class="reference internal" href="#id26">0.8.6 (2021-04-17)</a><ul>
+<li><a class="reference internal" href="#id27">Features &amp; Improvements</a></li>
 <li><a class="reference internal" href="#bugfixes">Bugfixes</a></li>
-<li><a class="reference internal" href="#id24">Miscellaneous</a></li>
+<li><a class="reference internal" href="#id31">Miscellaneous</a></li>
 </ul>
 </li>
 </ul>
@@ -205,8 +225,8 @@ GitHub</a>. (<a class="reference external" href="https://github.com/MichaelSasse
         <li class="right" >
           <a href="matrixctl.html" title="Contributer Documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Changelog</a></li> 
+        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">0.10.2 (2021-06-24)</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

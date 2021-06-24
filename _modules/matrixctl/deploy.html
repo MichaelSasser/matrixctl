@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.deploy &#8212; MatrixCtl 0.10.1 documentation</title>
+    <title>matrixctl.deploy &#8212; MatrixCtl 0.10.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.deploy</a></li> 
       </ul>
@@ -94,10 +94,17 @@
     <span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;deploy&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Provision and deploy&quot;</span>
     <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>  <span class="c1"># Done with tags / Does not use matrixctl.start !</span>
+        <span class="s2">&quot;-s&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--start&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start/Restart after the deployment&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">deploy</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="deploy"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.deploy.deploy">[docs]</a><span class="k">def</span> <span class="nf">deploy</span><span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="deploy"><a class="viewcode-back" href="../../matrixctl.html#matrixctl.deploy.deploy">[docs]</a><span class="k">def</span> <span class="nf">deploy</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Deploy the ansible playbook.</span>
 
 <span class="sd">    Parameters</span>
@@ -113,9 +120,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;deploy&quot;</span><span class="p">)</span>
     <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
+
     <span class="n">ansible_run</span><span class="p">(</span>
         <span class="n">playbook</span><span class="o">=</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ANSIBLE&quot;</span><span class="p">,</span> <span class="s2">&quot;Playbook&quot;</span><span class="p">),</span>
-        <span class="n">tags</span><span class="o">=</span><span class="s2">&quot;setup-all&quot;</span><span class="p">,</span>
+        <span class="n">tags</span><span class="o">=</span><span class="s2">&quot;setup-all,start&quot;</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">start</span> <span class="k">else</span> <span class="s2">&quot;setup-all&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="mi">0</span></div>
@@ -153,7 +161,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.deploy</a></li> 
       </ul>

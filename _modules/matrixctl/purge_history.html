@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.purge_history &#8212; MatrixCtl 0.10.1 documentation</title>
+    <title>matrixctl.purge_history &#8212; MatrixCtl 0.10.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.purge_history</a></li> 
       </ul>
@@ -72,7 +72,8 @@
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 
 <span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">InternalResponseError</span>
-<span class="kn">from</span> <span class="nn">.handlers.api</span> <span class="kn">import</span> <span class="n">API</span>
+<span class="kn">from</span> <span class="nn">.handlers.api</span> <span class="kn">import</span> <span class="n">RequestBuilder</span>
+<span class="kn">from</span> <span class="nn">.handlers.api</span> <span class="kn">import</span> <span class="n">request</span>
 <span class="kn">from</span> <span class="nn">.handlers.toml</span> <span class="kn">import</span> <span class="n">TOML</span>
 <span class="kn">from</span> <span class="nn">.password_helpers</span> <span class="kn">import</span> <span class="n">ask_question</span>
 <span class="kn">from</span> <span class="nn">.typing</span> <span class="kn">import</span> <span class="n">JsonDict</span>
@@ -167,15 +168,18 @@
 <span class="sd">        The response as dict, containing the status.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">api</span><span class="p">:</span> <span class="n">API</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
-    <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;purge_history_status/</span><span class="si">{</span><span class="n">purge_id</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;v1&quot;</span>
-    <span class="n">api</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;GET&quot;</span>
+    <span class="n">req</span><span class="p">:</span> <span class="n">RequestBuilder</span> <span class="o">=</span> <span class="n">RequestBuilder</span><span class="p">(</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">),</span>
+        <span class="n">domain</span><span class="o">=</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span>
+        <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;purge_history_status/</span><span class="si">{</span><span class="n">purge_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+        <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">response</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="n">response</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
                 <span class="s2">&quot;The purge history request was successful but the status &quot;</span>
@@ -268,13 +272,17 @@
 
     <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
 
-    <span class="n">api</span><span class="p">:</span> <span class="n">API</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
-    <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;purge_history/</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">room_id</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;v1&quot;</span>
-    <span class="n">api</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;POST&quot;</span>
+    <span class="n">req</span><span class="p">:</span> <span class="n">RequestBuilder</span> <span class="o">=</span> <span class="n">RequestBuilder</span><span class="p">(</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">),</span>
+        <span class="n">domain</span><span class="o">=</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span>
+        <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;purge_history/</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">room_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+        <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">response</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">request_body</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">response</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
             <span class="s2">&quot;Something went wrong with the request. Please check your data &quot;</span>
@@ -342,7 +350,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.purge_history</a></li> 
       </ul>

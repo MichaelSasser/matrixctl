@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.deluser &#8212; MatrixCtl 0.10.1 documentation</title>
+    <title>matrixctl.deluser &#8212; MatrixCtl 0.10.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.deluser</a></li> 
       </ul>
@@ -67,7 +67,8 @@
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">_SubParsersAction</span> <span class="k">as</span> <span class="n">SubParsersAction</span>
 
 <span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">InternalResponseError</span>
-<span class="kn">from</span> <span class="nn">.handlers.api</span> <span class="kn">import</span> <span class="n">API</span>
+<span class="kn">from</span> <span class="nn">.handlers.api</span> <span class="kn">import</span> <span class="n">RequestBuilder</span>
+<span class="kn">from</span> <span class="nn">.handlers.api</span> <span class="kn">import</span> <span class="n">request</span>
 <span class="kn">from</span> <span class="nn">.handlers.toml</span> <span class="kn">import</span> <span class="n">TOML</span>
 
 
@@ -114,12 +115,17 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">toml</span><span class="p">:</span> <span class="n">TOML</span> <span class="o">=</span> <span class="n">TOML</span><span class="p">()</span>
-    <span class="n">api</span><span class="p">:</span> <span class="n">API</span> <span class="o">=</span> <span class="n">API</span><span class="p">(</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span> <span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">))</span>
+
+    <span class="n">req</span><span class="p">:</span> <span class="n">RequestBuilder</span> <span class="o">=</span> <span class="n">RequestBuilder</span><span class="p">(</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Token&quot;</span><span class="p">),</span>
+        <span class="n">domain</span><span class="o">=</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Domain&quot;</span><span class="p">),</span>
+        <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;deactivate/@</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;API&#39;</span><span class="p">,</span><span class="s1">&#39;Domain&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;erase&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;deactivate/@</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">toml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;API&#39;</span><span class="p">,</span><span class="s1">&#39;Domain&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">api</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="s2">&quot;v1&quot;</span>
-        <span class="n">api</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;POST&quot;</span>
-        <span class="n">api</span><span class="o">.</span><span class="n">request</span><span class="p">({</span><span class="s2">&quot;erase&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+        <span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The user was not deleted.&quot;</span><span class="p">)</span>
 
@@ -158,7 +164,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.deluser</a></li> 
       </ul>

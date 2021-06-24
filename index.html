@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>MatrixCtl documentation &#8212; MatrixCtl 0.10.1 documentation</title>
+    <title>MatrixCtl documentation &#8212; MatrixCtl 0.10.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -32,7 +32,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">MatrixCtl 0.10.2 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">MatrixCtl documentation</a></li> 
       </ul>
     </div>  
@@ -75,27 +75,31 @@ features.</p>
 <li class="toctree-l2"><a class="reference internal" href="matrixctl.html#handlers">Handlers</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html#id1">0.10.1 (2021-06-17)</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">0.10.2 (2021-06-24)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#features-improvements">Features &amp; Improvements</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html#id3">0.10.0 (2021-06-17)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#behavior-breaking-changes">Behavior &amp; Breaking Changes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">Features &amp; Improvements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#miscellaneous">Miscellaneous</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html#id12">0.9.0 (2021-04-23)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id13">Behavior &amp; Breaking Changes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id15">Features &amp; Improvements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id6">0.10.1 (2021-06-17)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">Features &amp; Improvements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id9">0.10.0 (2021-06-17)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#behavior-breaking-changes">Behavior &amp; Breaking Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id11">Features &amp; Improvements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id15">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id19">0.9.0 (2021-04-23)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id20">Behavior &amp; Breaking Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id22">Features &amp; Improvements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#improved-documentation">Improved Documentation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html#id19">0.8.6 (2021-04-17)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id20">Features &amp; Improvements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id26">0.8.6 (2021-04-17)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id27">Features &amp; Improvements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#bugfixes">Bugfixes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id24">Miscellaneous</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id31">Miscellaneous</a></li>
 </ul>
 </li>
 </ul>
@@ -118,11 +122,11 @@ merging branch.</p>
 <p>MatrixCtl as a pure commandline tool. You can use it as package, if you like,
 but breaking changes may introduced, even in a minor change.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: matrixctl [-h] [--version] [-d]
-                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
+                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,get-event,start,stop,restart,maintenance,check,version}
                  ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,get-event,start,stop,restart,maintenance,check,version}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
@@ -136,6 +140,7 @@ positional arguments:
     upload              Upload a file.
     deploy              Provision and deploy
     server-notice       Send a server notice
+    get-event           get an event from the DB
     start               Starts all OCI containers
     stop                Stops all OCI containers
     restart             Restarts all OCI containers (alias for start)
@@ -286,7 +291,7 @@ the GPLv3 license.</p>
         <li class="right" >
           <a href="installation.html" title="Installation"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="#">MatrixCtl 0.10.2 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">MatrixCtl documentation</a></li> 
       </ul>
     </div>

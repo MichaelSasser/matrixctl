@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Contributer Documentation &#8212; MatrixCtl 0.10.1 documentation</title>
+    <title>Contributer Documentation &#8212; MatrixCtl 0.10.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -18,7 +18,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="next" title="0.10.2 (2021-06-24)" href="changelog.html" />
     <link rel="prev" title="SSH Public Key" href="getting_started/ssh_pubkey.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -31,12 +31,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="changelog.html" title="Changelog"
+          <a href="changelog.html" title="0.10.2 (2021-06-24)"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="getting_started/ssh_pubkey.html" title="SSH Public Key"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Contributer Documentation</a></li> 
       </ul>
     </div>  
@@ -353,7 +353,7 @@ starts from the beginning.</p>
 <p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">deploy</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.deploy.deploy">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.deploy.</span></span><span class="sig-name descname"><span class="pre">deploy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/deploy.html#deploy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.deploy.deploy" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.deploy.</span></span><span class="sig-name descname"><span class="pre">deploy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/deploy.html#deploy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.deploy.deploy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deploy the ansible playbook.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -1265,6 +1265,64 @@ this API can be used.</p></li>
 </dd></dl>
 
 </section>
+<section id="module-matrixctl.get_event">
+<span id="get-event"></span><h3>get-event<a class="headerlink" href="#module-matrixctl.get_event" title="Permalink to this headline">¶</a></h3>
+<p>Use this module to get an event from the Database.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.get_event.get_event">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.get_event.</span></span><span class="sig-name descname"><span class="pre">get_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/get_event.html#get_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.get_event.get_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an Event from the Server.</p>
+<p>It connects via paramiko to the server and runs the psql command provided
+by the synapse playbook to run a query on the Database.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.get_event.subparser_get_event">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.get_event.</span></span><span class="sig-name descname"><span class="pre">subparser_get_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/get_event.html#subparser_get_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.get_event.subparser_get_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">get-event</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by
+<code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </section>
 <section id="helpers">
 <h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
@@ -1436,7 +1494,7 @@ characters, digits and some special characters, you can find in the
 <p>Use this exception class as base error for the project.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.errors.Error.BUGMSG">
-<span class="sig-name descname"><span class="pre">BUGMSG</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">'If</span> <span class="pre">you</span> <span class="pre">discover</span> <span class="pre">this</span> <span class="pre">message,</span> <span class="pre">please</span> <span class="pre">try</span> <span class="pre">updating</span> <span class="pre">MatrixCtl.</span> <span class="pre">If</span> <span class="pre">you</span> <span class="pre">see</span> <span class="pre">this</span> <span class="pre">message</span> <span class="pre">again,</span> <span class="pre">we</span> <span class="pre">would</span> <span class="pre">be</span> <span class="pre">glad,</span> <span class="pre">if</span> <span class="pre">you</span> <span class="pre">would</span> <span class="pre">run</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">command</span> <span class="pre">again</span> <span class="pre">in</span> <span class="pre">debug-mode</span> <span class="pre">(matrixctl</span> <span class="pre">-d</span> <span class="pre">[...])</span> <span class="pre">and</span> <span class="pre">hand</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">&quot;Bug</span> <span class="pre">report&quot;</span> <span class="pre">at</span> <span class="pre">https://github.com/MichaelSasser/matrixctl/issues</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">complete</span> <span class="pre">output.\n\nPython</span> <span class="pre">version:</span> <span class="pre">3.9.5</span> <span class="pre">final\nMatrixCtl</span> <span class="pre">version:</span> <span class="pre">0.10.1</span> <span class="pre">\n'</span></em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">BUGMSG</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">'If</span> <span class="pre">you</span> <span class="pre">discover</span> <span class="pre">this</span> <span class="pre">message,</span> <span class="pre">please</span> <span class="pre">try</span> <span class="pre">updating</span> <span class="pre">MatrixCtl.</span> <span class="pre">If</span> <span class="pre">you</span> <span class="pre">see</span> <span class="pre">this</span> <span class="pre">message</span> <span class="pre">again,</span> <span class="pre">we</span> <span class="pre">would</span> <span class="pre">be</span> <span class="pre">glad,</span> <span class="pre">if</span> <span class="pre">you</span> <span class="pre">would</span> <span class="pre">run</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">command</span> <span class="pre">again</span> <span class="pre">in</span> <span class="pre">debug-mode</span> <span class="pre">(matrixctl</span> <span class="pre">-d</span> <span class="pre">[...])</span> <span class="pre">and</span> <span class="pre">hand</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">&quot;Bug</span> <span class="pre">report&quot;</span> <span class="pre">at</span> <span class="pre">https://github.com/MichaelSasser/matrixctl/issues</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">complete</span> <span class="pre">output.\n\nPython</span> <span class="pre">version:</span> <span class="pre">3.9.5</span> <span class="pre">final\nMatrixCtl</span> <span class="pre">version:</span> <span class="pre">0.10.2</span> <span class="pre">\n'</span></em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1550,7 +1608,7 @@ to <code class="docutils literal notranslate"><span class="pre">INFO</span></cod
 <p>Use the TOML class to read and parse the configuration file(s).</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.handlers.toml.TOML.DEFAULT_PATHS">
-<span class="sig-name descname"><span class="pre">DEFAULT_PATHS</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><span class="pre">list</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">[PosixPath('/etc/matrixctl/config'),</span> <span class="pre">PosixPath('/home/runner/.config/matrixctl/config')]</span></em><a class="headerlink" href="#matrixctl.handlers.toml.TOML.DEFAULT_PATHS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">DEFAULT_PATHS</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">[PosixPath('/etc/matrixctl/config'),</span> <span class="pre">PosixPath('/home/runner/.config/matrixctl/config')]</span></em><a class="headerlink" href="#matrixctl.handlers.toml.TOML.DEFAULT_PATHS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1598,101 +1656,39 @@ Let’s say, you are looking for the synapse path:</p>
 <span id="api"></span><h3>API<a class="headerlink" href="#module-matrixctl.handlers.api" title="Permalink to this headline">¶</a></h3>
 <p>Get access to the API of your homeserver.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">API</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/api.html#API"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.API" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Handle the REST API connection of synapse.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.RESPONSE_OK">
-<span class="sig-name descname"><span class="pre">RESPONSE_OK</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><span class="pre">tuple</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">(200,</span> <span class="pre">201,</span> <span class="pre">202,</span> <span class="pre">203,</span> <span class="pre">204,</span> <span class="pre">205,</span> <span class="pre">206,</span> <span class="pre">207,</span> <span class="pre">226)</span></em><a class="headerlink" href="#matrixctl.handlers.api.API.RESPONSE_OK" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.domain">
-<span class="sig-name descname"><span class="pre">domain</span></span><a class="headerlink" href="#matrixctl.handlers.api.API.domain" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.headers">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">headers</span></span><a class="headerlink" href="#matrixctl.handlers.api.API.headers" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.json_format">
-<span class="sig-name descname"><span class="pre">json_format</span></span><a class="headerlink" href="#matrixctl.handlers.api.API.json_format" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.method">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#matrixctl.handlers.api.API.method" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.params">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">params</span></span><a class="headerlink" href="#matrixctl.handlers.api.API.params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.request">
-<span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/api.html#API.request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.API.request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Send an request to the synapse API and receive a response.</p>
-<dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> [<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Any</span></code>], <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code>, default=None</span></dt><dd><p>The payload of the request.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>response</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">requests.Response</span></code></span></dt><dd><p>Returns the response</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.session">
-<span class="sig-name descname"><span class="pre">session</span></span><a class="headerlink" href="#matrixctl.handlers.api.API.session" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.success_codes">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">success_codes</span></span><a class="headerlink" href="#matrixctl.handlers.api.API.success_codes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.token">
-<span class="sig-name descname"><span class="pre">token</span></span><a class="headerlink" href="#matrixctl.handlers.api.API.token" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.API.url">
-<span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#matrixctl.handlers.api.API.url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.UrlBuilder">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">UrlBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_domain</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/api.html#UrlBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">RequestBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdomain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'matrix'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_synapse/admin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'v2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GET'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">success_codes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(200,</span> <span class="pre">201,</span> <span class="pre">202,</span> <span class="pre">203,</span> <span class="pre">204,</span> <span class="pre">205,</span> <span class="pre">206,</span> <span class="pre">207,</span> <span class="pre">226)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/api.html#RequestBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Build the URL for an API request.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.UrlBuilder.api_path">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">api_path</span></span><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.api_path" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.api_path">
+<span class="sig-name descname"><span class="pre">api_path</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.api_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.api_version">
+<span class="sig-name descname"><span class="pre">api_version</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.api_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.domain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.headers">
+<span class="sig-name descname"><span class="pre">headers</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.headers" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.UrlBuilder.api_version">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">api_version</span></span><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.api_version" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.UrlBuilder.build">
-<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/api.html#UrlBuilder.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.build" title="Permalink to this definition">¶</a></dt>
-<dd><p>Build the URL.</p>
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.headers_with_auth">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">headers_with_auth</span></span><em class="property"><span class="pre">:</span> <span class="pre">dict</span></em><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.headers_with_auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the headers with bearer token.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -1701,12 +1697,12 @@ Let’s say, you are looking for the synapse path:</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>url</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The URL.</p>
+<dt><strong>headers</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> [<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>]</span></dt><dd><p>Headers with auth. token.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]
 ..</p>
 </dd>
 </dl>
@@ -1714,35 +1710,70 @@ Let’s say, you are looking for the synapse path:</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.UrlBuilder.domain">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">domain</span></span><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.domain" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.json">
+<span class="sig-name descname"><span class="pre">json</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.json" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.UrlBuilder.path">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.path" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.method">
+<span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.method" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.UrlBuilder.scheme">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">scheme</span></span><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.scheme" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.params">
+<span class="sig-name descname"><span class="pre">params</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.params" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.UrlBuilder.subdomain">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">subdomain</span></span><a class="headerlink" href="#matrixctl.handlers.api.UrlBuilder.subdomain" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.path">
+<span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.scheme">
+<span class="sig-name descname"><span class="pre">scheme</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.scheme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.subdomain">
+<span class="sig-name descname"><span class="pre">subdomain</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.subdomain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.success_codes">
+<span class="sig-name descname"><span class="pre">success_codes</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.success_codes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.token">
+<span class="sig-name descname"><span class="pre">token</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.token" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="matrixctl.handlers.api.check_type">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">check_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">var</span></em>, <em class="sig-param"><span class="pre">var_name</span></em>, <em class="sig-param"><span class="pre">var_type=&lt;class</span> <span class="pre">'str'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/api.html#check_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.check_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check the type of an variable in an simplified and unified way.</p>
+<dt class="sig sig-object py" id="matrixctl.handlers.api.request">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/api.html#request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send an request to the synapse API and receive a response.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>req</strong><span class="classifier"><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></code></a></span></dt><dd><p>An instance of an RequestBuilder</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>response</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">requests.Response</span></code></span></dt><dd><p>Returns the response</p>
+</dd>
+</dl>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code>
+..</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -1875,12 +1906,14 @@ Let’s say, you are looking for the synapse path:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="matrixctl.handlers.ssh.SSH.run_cmd">
-<span class="sig-name descname"><span class="pre">run_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/ssh.html#SSH.run_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.run_cmd" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">run_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/matrixctl/handlers/ssh.html#SSH.run_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.run_cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run a command on the host machine and receive a response.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
 <dt><strong>cmd</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The command to run.</p>
+</dd>
+<dt><strong>tty</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.9)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>Request a pseudo-terminal from the server (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p>
 </dd>
 </dl>
 </dd>
@@ -1963,6 +1996,7 @@ Let’s say, you are looking for the synapse path:</p>
 <li><a class="reference internal" href="#module-matrixctl.delroom">delroom</a></li>
 <li><a class="reference internal" href="#module-matrixctl.upload">upload</a></li>
 <li><a class="reference internal" href="#module-matrixctl.server_notice">server-notice</a></li>
+<li><a class="reference internal" href="#module-matrixctl.get_event">get-event</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#helpers">Helpers</a><ul>
@@ -1996,7 +2030,7 @@ Let’s say, you are looking for the synapse path:</p>
                         title="previous chapter">SSH Public Key</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="changelog.html"
-                        title="next chapter">Changelog</a></p>
+                        title="next chapter">0.10.2 (2021-06-24)</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -2028,12 +2062,12 @@ Let’s say, you are looking for the synapse path:</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="changelog.html" title="Changelog"
+          <a href="changelog.html" title="0.10.2 (2021-06-24)"
              >next</a> |</li>
         <li class="right" >
           <a href="getting_started/ssh_pubkey.html" title="SSH Public Key"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Contributer Documentation</a></li> 
       </ul>
     </div>

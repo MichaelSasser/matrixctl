@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>matrixctl.handlers.ssh &#8212; MatrixCtl 0.10.1 documentation</title>
+    <title>matrixctl.handlers.ssh &#8212; MatrixCtl 0.10.2 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/classic.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
@@ -27,7 +27,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.handlers.ssh</a></li> 
       </ul>
@@ -152,13 +152,15 @@
         <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="SSH.run_cmd"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.ssh.SSH.run_cmd">[docs]</a>    <span class="k">def</span> <span class="nf">run_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SSHResponse</span><span class="p">:</span>
+<div class="viewcode-block" id="SSH.run_cmd"><a class="viewcode-back" href="../../../matrixctl.html#matrixctl.handlers.ssh.SSH.run_cmd">[docs]</a>    <span class="k">def</span> <span class="nf">run_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tty</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SSHResponse</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Run a command on the host machine and receive a response.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        cmd : str</span>
 <span class="sd">            The command to run.</span>
+<span class="sd">        tty : bool</span>
+<span class="sd">            Request a pseudo-terminal from the server (default: ``False``)</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -170,7 +172,10 @@
 
         <span class="n">response</span><span class="p">:</span> <span class="n">SSHResponse</span> <span class="o">=</span> <span class="n">SSHResponse</span><span class="p">(</span>
             <span class="c1"># skipcq: BAN-B601</span>
-            <span class="o">*</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__str_from</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__client</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)]</span>
+            <span class="o">*</span><span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__str_from</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__client</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">get_pty</span><span class="o">=</span><span class="n">tty</span><span class="p">)</span>
+            <span class="p">]</span>
         <span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;SSH Response: &quot;</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
@@ -265,7 +270,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.10.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">matrixctl.handlers.ssh</a></li> 
       </ul>
