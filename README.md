@@ -25,7 +25,7 @@ usage: matrixctl [-h] [--version] [-d]
               ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,start,restart,maintenance,check,version}
+  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,get-event,start,restart,maintenance,check,version}
     adduser             Add a new matrix user
     deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
@@ -39,6 +39,7 @@ positional arguments:
     upload              Upload a file.
     deploy              Provision and deploy
     server-notice       Send a server notice
+    get-event           get an event from the DB
     start               Starts all OCI containers
     stop                Stops all OCI containers
     restart             Restarts all OCI containers (alias for start)
