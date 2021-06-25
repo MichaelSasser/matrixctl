@@ -1,0 +1,1 @@
+The ``event_id`` of the command ``get-event`` now gets sanitized.
