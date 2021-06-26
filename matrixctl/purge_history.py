@@ -35,7 +35,7 @@ from .handlers.api import RequestBuilder
 from .handlers.api import request
 from .handlers.toml import TOML
 from .password_helpers import ask_question
-from .typing import JsonDict
+from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -123,7 +123,7 @@ def handle_purge_status(toml: TOML, purge_id: str) -> int:
 
     Returns
     -------
-    response: matrixctl.typing.JsonDict, optional
+    response: matrixctl.typehints.JsonDict, optional
         The response as dict, containing the status.
 
     """

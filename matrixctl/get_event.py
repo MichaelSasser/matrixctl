@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 
 from argparse import ArgumentParser
 from argparse import Namespace
@@ -30,7 +31,6 @@ from base64 import b64encode
 from .handlers.ssh import SSH
 from .handlers.ssh import SSHResponse
 from .handlers.toml import TOML
-from .typing import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -88,6 +88,15 @@ def get_event(arg: Namespace) -> int:
         else f"matrix.{toml.get('API', 'Domain')}"
     )
 
+    is_valid_event_id = re.match(r"^\$[0-9a-zA-Z.=_-]{1,255}$", arg.event_id)
+    if not is_valid_event_id:
+        logger.error(
+            "The given event_id has an invalid format. Please make sure you "
+            "use one with the correct format. "
+            "Example: $tjeDdqYAk9BDLAUcniGUy640e_D9TrWU2RmCksJQQEQ"
+        )
+        return 1
+
     # Workaround because of "$" through: paramiko - bash - psql
     event64 = b64encode(arg.event_id.encode("utf-8")).decode("utf-8")
 
@@ -110,10 +119,23 @@ def get_event(arg: Namespace) -> int:
         if response.stdout:
             start: int = response.stdout.find("{")
             stop: int = response.stdout.rfind("}") + 1
-
-            response_parsed: JsonDict = json.loads(response.stdout[start:stop])
-            print(json.dumps(response_parsed, indent=4))
-            return 0
+            logger.debug(f"{start=}, {stop=}")
+            if start == -1 and stop == 0:  # "empty" response
+                logger.error(
+                    "The event_id was not not in the Database. Please check "
+                    "if you entered the correct one. "
+                )
+                return 1
+            try:
+                print(
+                    json.dumps(
+                        json.loads(response.stdout[start:stop]), indent=4
+                    )
+                )
+                return 0
+            except json.decoder.JSONDecodeError:
+                logger.error("Unable to process the response data to JSON.")
+                return 1
         print("The response from the Database was empty.")
         return 0
     logger.error(f"response: {response.stderr}")
