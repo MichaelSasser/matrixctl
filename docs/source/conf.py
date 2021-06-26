@@ -28,7 +28,8 @@ from datetime import date
 from pathlib import Path
 from typing import List
 
-import sphinx_rtd_theme
+# pylint: disable=W0611
+import sphinx_rtd_theme  # noqa: F401
 
 from single_source import get_version
 
