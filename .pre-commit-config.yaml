@@ -164,9 +164,9 @@ repos:
     hooks:
       - id: vulture
 
-  # PEP 585 Upgrade (Type Hints)
-  - repo: https://github.com/sondrelg/pep585-upgrade
-    # Use the sha / tag you want to point at
-    rev: 'ab1595ee0aa8823dcda1f0bd95b2c194fcd5362b'
-    hooks:
-    - id: upgrade-type-hints
+  # # PEP 585 Upgrade (Type Hints)
+  # - repo: https://github.com/sondrelg/pep585-upgrade
+  #   # Use the sha / tag you want to point at
+  #   rev: 'ab1595ee0aa8823dcda1f0bd95b2c194fcd5362b'
+  #   hooks:
+  #   - id: upgrade-type-hints
