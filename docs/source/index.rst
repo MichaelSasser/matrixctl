@@ -5,11 +5,12 @@ MatrixCtl documentation
 
 .. toctree::
    :maxdepth: 2
+   :titlesonly:
    :caption: Contents:
 
    installation
    getting_started/index
-   matrixctl
+   contributer_documentation/index
    changelog
 
 Branching Model

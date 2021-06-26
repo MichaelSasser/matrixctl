@@ -265,7 +265,7 @@ Features & Improvements
 Bugfixes
 --------
 
--  SSH handler logs an error if unable to connect (`#7
+- SSH handler logs an error if unable to connect (`#7
   <https://github.com/MichaelSasser/matrixctl/issues/7>`_)
 
 
