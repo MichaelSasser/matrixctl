@@ -128,3 +128,339 @@ Miscellaneous
   <https://github.com/MichaelSasser/matrixctl/releases>`_. (`#61
   <https://github.com/MichaelSasser/matrixctl/issues/61>`_)
 
+
+0.8.5 (2021-02-24)
+==================
+
+Bugfixes
+--------
+
+- Add the new ``serve-notice`` feature.
+
+
+0.8.4 (2021-02-24)
+==================
+
+.. note:: This version of MatrixCtl has not been released.
+
+
+0.8.3 (2021-02-24)
+==================
+
+.. note:: This version of MatrixCtl has not been released.
+
+
+0.8.2 (2021-02-24)
+==================
+
+.. note:: This version of MatrixCtl has not been released.
+
+Features & Improvements
+-----------------------
+
+- feature ``upload`` which makes it possible to upload files and images. It returns the ``mxc://`` uri.
+- feature ``server-notice``.
+
+Miscellaneous
+-------------
+
+- Changed docs to classic python theme.
+
+
+0.8.1 (2020-12-02)
+==================
+
+Behavior & Breaking Changes
+---------------------------
+
+- The ``update`` command now uses config: ``[SYNAPSE]`` -> ``Playbook`` instead of ``[SYNAPSE]`` -> ``Path``
+
+Features & Improvements
+-----------------------
+
+- Add missing ``[SYNAPSE]`` (config file) documentation.
+
+
+0.8.0 (2020-12-02)
+==================
+
+Behavior & Breaking Changes
+---------------------------
+
+- The option to run multiple playbooks with matrixctl. The user should use - import_playbook: /PathTo/matrix-docker-ansible-deploy/setup.yml in an own playbook. (`#20
+  <https://github.com/MichaelSasser/matrixctl/issues/20>`_)(`#21
+  <https://github.com/MichaelSasser/matrixctl/issues/21>`_)
+
+Features & Improvements
+-----------------------
+
+- The ``ansible`` handler now uses ``ansible-runner`` instead of ``subprocess`` (`#20
+  <https://github.com/MichaelSasser/matrixctl/issues/20>`_)(`#21
+  <https://github.com/MichaelSasser/matrixctl/issues/21>`_)
+- The ``api`` handler now gives the user a hint, when the admin api is disabled.
+
+
+0.7.0 (2020-09-25)
+==================
+
+Behavior & Breaking Changes
+---------------------------
+
+- Removed the ``--with-bots``, "bots" are now shown by default (`#15
+  <https://github.com/MichaelSasser/matrixctl/issues/15>`_)
+
+Bugfixes
+--------
+
+- Fixed the deploy control logic (`#18
+  <https://github.com/MichaelSasser/matrixctl/issues/18>`_)
+
+
+0.6.3 (2020-09-17)
+==================
+
+Features & Improvements
+-----------------------
+
+- With the help of two args it is possible to deploy the two playbooks independently:
+  - ``-s``/``--synapse``: Only deploy the synapse playbook,
+  - ``-a``/``--ansible``: Only deploy your own playbook.
+
+
+0.6.2 (2020-09-16)
+==================
+
+Bugfixes
+--------
+
+- It is now possible to deploy, when only one of ``[ANSIBLE]`` or ``[SYNAPSE]`` are configured.
+
+
+0.6.1 (2020-06-02)
+==================
+
+Features & Improvements
+-----------------------
+
+- If the access-token has changed or is wrong, MatrixCtl now throws a specific error, which tells the user, what went wrong. (`#12
+  <https://github.com/MichaelSasser/matrixctl/issues/12>`_)
+- Replace the assertions from the API handler with proper ``TypeError``.
+
+
+0.6.0 (2020-05-12)
+==================
+
+Behavior & Breaking Changes
+---------------------------
+
+- Changed ``users --no-bots`` or ``users -b`` to ``users --with-bots`` or ``users -b``
+- Changed ``users --guests`` or ``users -g`` to ``users --with-guests`` or ``users -g``
+
+Features & Improvements
+-----------------------
+
+- ``users --with-deactivated`` or ``users -d`` (`#2
+  <https://github.com/MichaelSasser/matrixctl/issues/2>`_)
+
+Bugfixes
+--------
+
+-  SSH handler logs an error if unable to connect (`#7
+  <https://github.com/MichaelSasser/matrixctl/issues/7>`_)
+
+
+0.5.0 (2020-04-30)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+Behavior & Breaking Changes
+---------------------------
+
+- Fixed typo in the ``maintenance`` command.
+
+Removals & Deprecations
+-----------------------
+
+- Removed ``run-postgres-synapse-janitor`` from maintenance because it may destroy the DB (`#8
+  <https://github.com/MichaelSasser/matrixctl/issues/8>`_)(`#465 (spantaleev/matrix-docker-ansible-deploy)
+  <https://github.com/spantaleev/matrix-docker-ansible-deploy/issues/465>`_)
+
+
+0.4.0 (2020-04-22)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+Behavior & Breaking Changes
+---------------------------
+
+- ``rooms`` submodule: Changed argument ``--order_by_size`` to
+  ``--order-by-size``.
+
+Features & Improvements
+-----------------------
+
+- Add the ``version`` command.
+- Add the ``delroom`` command.
+- Add more debug output to the API handler (``params``, ``data``, ``method`` and censored
+  ``headers``)
+
+
+0.3.2 (2020-04-21)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+Features & Improvements
+-----------------------
+
+- Add the ``rooms`` command.
+
+
+0.3.1 (2020-04-21)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+.. note:: This version of MatrixCtl has not been released.
+
+
+0.3.0 (2020-04-20)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+.. note:: No significant changes to the Project.
+
+Project restructured.
+
+
+0.2.2 (2020-04-13)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+
+Features & Improvements
+-----------------------
+
+- Added docs to the Project (``gh-pages`` branch).
+
+Bugfixes
+--------
+
+- ``matixctl adduser --ansible``. MatrixCtl was not able to create a user with the ``--ansible`` argument.
+
+
+0.2.1 (2020-04-13)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+.. note:: This version of MatrixCtl has not been released.
+
+
+0.2.0 (2020-04-12)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+Behavior & Breaking Changes
+---------------------------
+
+- The command ``list-user`` has been renamed to ``users``.
+
+Features & Improvements
+-----------------------
+
+- Add the command ``user``.
+
+
+0.1.4 (2020-04-10)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+Features & Improvements
+-----------------------
+
+- Add the command ``start``.
+- Add the command ``restart`` (alias for ``start``).
+- Add the command ``check``.
+
+
+0.1.3 (2020-04-10)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+Features & Improvements
+-----------------------
+
+- Add the command ``adduser-jitsi``.
+- Add the command ``deluser-jitsi``.
+
+
+0.1.2 (2020-04-07)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+**First official release.**
+
+Features & Improvements
+-----------------------
+
+- Add the command ``list-users``.
+
+
+0.1.1 (2020-04-07)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+.. note:: No significant changes to the Project.
+
+
+Trivial Changes
+---------------
+
+- Fixed GitHub Wokflow.
+
+
+0.1.0 (2020-04-07)
+==================
+
+.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
+          **do not** use the ``maintenance`` command for any MatrixCtl version
+          below 0.5.0!
+
+.. note:: No significant changes to the Project.
+
+**Internal Release**
+
