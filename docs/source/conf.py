@@ -1,14 +1,23 @@
-# Configuration file for the Sphinx documentation builder.
+# matrixctl
+# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
 #
-# This file only contains a selection of the most common options. For a full
-# list see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
-# -- Path setup --------------------------------------------------------------
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """Use this module to generate the documentation with ``sphinx``."""
+
+# Configuration file for the Sphinx documentation builder.
+# !! This file needs to be compatible with Python 3.8 !!
 
 import os
 import sys
@@ -16,6 +25,8 @@ import sys
 from datetime import date
 from pathlib import Path
 from typing import List
+
+import sphinx_rtd_theme
 
 from single_source import get_version
 
@@ -55,6 +66,7 @@ extensions: List[str] = [
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
     "sphinx.ext.inheritance_diagram",
+    "sphinx_rtd_theme",
 ]
 
 suppress_warnings: List[str] = ["autosectionlabel.*"]
@@ -106,7 +118,7 @@ exclude_patterns: List[str] = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme: str = "classic"
+html_theme: str = "sphinx-rtd-theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
