@@ -272,9 +272,9 @@ Bugfixes
 0.5.0 (2020-04-30)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 Behavior & Breaking Changes
 ---------------------------
@@ -292,9 +292,9 @@ Removals & Deprecations
 0.4.0 (2020-04-22)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 Behavior & Breaking Changes
 ---------------------------
@@ -314,9 +314,9 @@ Features & Improvements
 0.3.2 (2020-04-21)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 Features & Improvements
 -----------------------
@@ -327,9 +327,9 @@ Features & Improvements
 0.3.1 (2020-04-21)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 .. note:: This version of MatrixCtl has not been released.
 
@@ -337,9 +337,9 @@ Features & Improvements
 0.3.0 (2020-04-20)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 .. note:: No significant changes to the Project.
 
@@ -349,10 +349,9 @@ Project restructured.
 0.2.2 (2020-04-13)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
-
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 Features & Improvements
 -----------------------
@@ -368,9 +367,9 @@ Bugfixes
 0.2.1 (2020-04-13)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 .. note:: This version of MatrixCtl has not been released.
 
@@ -378,9 +377,9 @@ Bugfixes
 0.2.0 (2020-04-12)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 Behavior & Breaking Changes
 ---------------------------
@@ -396,9 +395,9 @@ Features & Improvements
 0.1.4 (2020-04-10)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 Features & Improvements
 -----------------------
@@ -411,9 +410,9 @@ Features & Improvements
 0.1.3 (2020-04-10)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 Features & Improvements
 -----------------------
@@ -425,9 +424,9 @@ Features & Improvements
 0.1.2 (2020-04-07)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 **First official release.**
 
@@ -440,9 +439,10 @@ Features & Improvements
 0.1.1 (2020-04-07)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
+
 
 .. note:: No significant changes to the Project.
 
@@ -456,9 +456,9 @@ Trivial Changes
 0.1.0 (2020-04-07)
 ==================
 
-.. note:: Since the ``synapse-janitor`` is not safe to use anymore, please
-          **do not** use the ``maintenance`` command for any MatrixCtl version
-          below 0.5.0!
+.. warning:: Since the ``synapse-janitor`` is not safe to use anymore, please
+             **do not** use the ``maintenance`` command for any MatrixCtl
+             version below 0.5.0!
 
 .. note:: No significant changes to the Project.
 
