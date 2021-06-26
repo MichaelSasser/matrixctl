@@ -27,7 +27,7 @@ Contributer Documentation
 
    handlers
    helpers
-   typing_and_errors
+   type_hints_and_errors
    the_application
    subcommands
 

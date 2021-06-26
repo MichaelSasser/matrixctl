@@ -19,10 +19,10 @@ Typing and Errors
 *****************
 
 
-Typing
-------
+Type Hints
+----------
 
-.. automodule:: matrixctl.typing
+.. automodule:: matrixctl.typehints
    :members:
    :undoc-members:
    :show-inheritance:
