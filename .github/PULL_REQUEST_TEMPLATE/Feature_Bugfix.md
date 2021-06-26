@@ -9,16 +9,16 @@ Bug fixes and new features should include documentation and tests.
 
 fixes #
 
-### Affected handlers
+#### Affected Handlers
 <!-- Please provide affected handlers. -->
 
-### Description of change
+#### Description of Change
 <!-- Please provide a description of the change here. -->
 -
 -
 -
 
-##### Checklist
+#### Checklist
 <!-- Only the fields marked with (*) are Mandatory for bugfixes. -->
 
 - [ ] Have you documented your changes?
