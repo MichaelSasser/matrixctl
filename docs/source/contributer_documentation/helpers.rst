@@ -18,6 +18,7 @@
 Helpers
 *******
 
+Helpers or helper function are common functions used throughout the project.
 
 Print
 -----
