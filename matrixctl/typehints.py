@@ -20,11 +20,11 @@
 from __future__ import annotations
 
 from typing import Any
-from typing import NewType
+from typing import Dict
 
 
 # Needs to be old style until rtd usues Python 3.9
-JsonDict = NewType("JsonDict", dict[str, Any])
+JsonDict = Dict[str, Any]
 
 
 # vim: set ft=python :
