@@ -14,11 +14,14 @@ import os
 import sys
 
 from datetime import date
+from pathlib import Path
 
-from pkg_resources import get_distribution
+from single_source import get_version
 
 
-__version__: str = get_distribution("matrixctl").version
+__version__: str = (
+    get_version(__name__, Path(__file__).parent.parent) or "Unknown"
+)
 
 sys.path.insert(0, os.path.abspath("../"))
 sys.path.insert(0, os.path.abspath("../.."))
