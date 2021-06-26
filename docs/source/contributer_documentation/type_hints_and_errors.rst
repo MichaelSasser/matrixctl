@@ -15,9 +15,16 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Typing and Errors
-*****************
+Type Hints and Errors
+*********************
 
+MatrixCtl is strictly typed to avoid some bugs and help contributors in the
+future to easily identify what they are dealing with. They can be used by third
+party tools such as type checkers, IDEs, linters, etc.
+
+MatrixCtl specifies some additional errors. Those errors are informing the
+user that, getting a traceback is a bug in this application.
+They are giving the person instructions, how to hand in a bug report.
 
 Type Hints
 ----------

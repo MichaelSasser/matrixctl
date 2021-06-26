@@ -15,9 +15,11 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Subcommands
-***********
+Commands
+********
 
+Commands are the arguments listed below, e.g. ``adduser`` to create a new user
+on the homeserver or ``deploy`` to deploy the ansible playbook.
 
 adduser
 -------
