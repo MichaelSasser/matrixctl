@@ -3,6 +3,38 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 
 .. towncrier release notes start
 
+0.10.3 (2021-06-26)0.10.3 (2021-06-26)
+===================
+
+Features & Improvements
+-----------------------
+
+- The docks have moved back to (`https://matrixctl.readthedocs.io/
+  <https://matrixctl.readthedocs.io/>`_)`. (`#69
+  <https://github.com/MichaelSasser/matrixctl/issues/69>`_)
+
+
+Bugfixes
+--------
+
+- Make MatrixCtl compatible with Python 3.8. (`#146
+  <https://github.com/MichaelSasser/matrixctl/issues/146>`_)
+
+
+Improved Documentation
+----------------------
+
+- Add Contribution Guidlines (`#149
+  <https://github.com/MichaelSasser/matrixctl/issues/149>`_)
+
+
+Miscellaneous
+-------------
+
+- The ``event_id`` of the command ``get-event`` now gets sanitized. (`#143
+  <https://github.com/MichaelSasser/matrixctl/issues/143>`_)
+
+
 0.10.2 (2021-06-24)
 ===================
 
