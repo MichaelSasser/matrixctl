@@ -31,7 +31,7 @@ from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
 from .handlers.toml import TOML
-from .types import JsonDict
+from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -143,7 +143,7 @@ def print_rooms_table(rooms_list: list[JsonDict]) -> None:
 
     Parameters
     ----------
-    rooms_list : list of matrixctl.tpes.JsonDict
+    rooms_list : list of matrixctl.typehints.JsonDict
         A list of rooms from the API.
 
     Returns

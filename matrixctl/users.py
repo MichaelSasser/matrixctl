@@ -32,7 +32,7 @@ from .handlers.api import RequestBuilder
 from .handlers.api import request
 from .handlers.toml import TOML
 from .print_helpers import human_readable_bool
-from .types import JsonDict
+from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"

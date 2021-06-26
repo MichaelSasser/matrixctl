@@ -31,7 +31,7 @@ from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
 from .handlers.toml import TOML
-from .types import JsonDict
+from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
