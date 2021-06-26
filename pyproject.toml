@@ -193,7 +193,7 @@ template = "news/templates/default.rst"
 
   [[tool.towncrier.type]]
   directory = "removal"
-  name = "Removals and Deprecations"
+  name = "Removals & Deprecations"
   showcontent = true
 
   [[tool.towncrier.type]]
