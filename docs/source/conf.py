@@ -19,6 +19,8 @@
 # Configuration file for the Sphinx documentation builder.
 # !! This file needs to be compatible with Python 3.8 !!
 
+from __future__ import annotations
+
 import os
 import sys
 
