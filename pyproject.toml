@@ -102,6 +102,10 @@ strict_equality = true
 strict = true
 show_traceback = true
 
+[[tool.mypy.overrides]]
+module = "tests.matrixctl.handlers.*"
+allow_untyped_decorators = true  # pytest fixtures
+
 
 [tool.isort]
 line_length = 79
