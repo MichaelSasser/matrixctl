@@ -98,5 +98,16 @@ Add a feature
    commands
    application
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Tests:
+
+   tests_handlers
+
+.. helpers
+.. type_hints_and_errors
+.. commands
+.. application
+
 ..
    vim: set ft=rst :

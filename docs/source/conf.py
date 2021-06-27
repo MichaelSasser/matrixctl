@@ -28,10 +28,11 @@ from datetime import date
 from pathlib import Path
 from typing import List
 
-# pylint: disable=W0611
-import sphinx_rtd_theme  # noqa: F401
-
 from single_source import get_version
+
+
+# pylint: disable=W0611
+# import sphinx_rtd_theme  # noqa: F401
 
 
 __version__: str = (
@@ -61,6 +62,7 @@ extensions: List[str] = [
     "sphinx.ext.autodoc",
     "sphinx.ext.mathjax",
     "sphinx_autodoc_typehints",
+    "sphinx_rtd_theme",
     "sphinxcontrib.programoutput",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.viewcode",
@@ -69,7 +71,6 @@ extensions: List[str] = [
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
     "sphinx.ext.inheritance_diagram",
-    "sphinx_rtd_theme",
 ]
 
 suppress_warnings: List[str] = ["autosectionlabel.*"]
