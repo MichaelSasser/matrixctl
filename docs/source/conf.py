@@ -61,6 +61,7 @@ extensions: List[str] = [
     "sphinx.ext.autodoc",
     "sphinx.ext.mathjax",
     "sphinx_autodoc_typehints",
+    "sphinx_rtd_theme",
     "sphinxcontrib.programoutput",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.viewcode",
@@ -69,7 +70,6 @@ extensions: List[str] = [
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
     "sphinx.ext.inheritance_diagram",
-    "sphinx_rtd_theme",
 ]
 
 suppress_warnings: List[str] = ["autosectionlabel.*"]
