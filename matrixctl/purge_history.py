@@ -143,7 +143,7 @@ def handle_purge_status(toml: TOML, purge_id: str) -> int:
             logger.critical(
                 "The purge history request was successful but the status "
                 "request failed. You just have to wait a bit."
-                "If that happens the next time, pleas hand in a bug report."
+                "If that happens the next time, please hand in a bug report."
             )
             return 1
         # return response
@@ -242,7 +242,13 @@ def purge_history(arg: Namespace) -> int:
 
     try:
         response: JsonDict = request(req).json()
-    except InternalResponseError:
+    except InternalResponseError as e:
+        try:
+            if e.payload["errcode"] == "M_UNKNOWN":
+                logger.critical(e.payload["error"])
+                return 1
+        except KeyError:
+            pass
         logger.critical(
             "Something went wrong with the request. Please check your data "
             "again."
