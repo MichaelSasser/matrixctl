@@ -77,7 +77,7 @@ def maintenance(_: Namespace) -> int:
     toml: TOML = TOML()
     ansible_run(
         playbook=toml.get("ANSIBLE", "Playbook"),
-        tags="run-postgres-vacuum,start",
+        tags="run-postgres-vacuum,rust-synapse-compress-state,start",
     )
 
     return 0
