@@ -208,9 +208,7 @@ def user(arg: Namespace) -> int:
        | Added At     | 2020-04-14 15:29:19.100000        |
        +--------------+-----------------------------------+
 
-
     If the user does not exist, the return looks like:
-
 
     .. code-block:: console
 

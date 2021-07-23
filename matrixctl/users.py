@@ -81,7 +81,6 @@ def users(arg: Namespace) -> int:
     - If you want deactivated user in the table use the ``--with-deactivated``
       switch.
 
-
     Notes
     -----
     - Needs API version 2 (``synapse`` 1.28 or greater) to work.

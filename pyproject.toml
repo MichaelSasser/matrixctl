@@ -134,6 +134,9 @@ known_third_party = [
     "ansible_runner",
 ]
 
+[tool.pycln]
+all = true
+
 [tool.flake8]
 max-line-length = 79
 # max-complexity = 12
