@@ -39,7 +39,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-class Git:
+class VCS:
 
     """Update and manage a repository."""
 

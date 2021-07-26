@@ -21,7 +21,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .handlers.vcs import Git
+from .handlers.vcs import VCS
 
 
 if TYPE_CHECKING:
@@ -71,7 +71,7 @@ def update(_: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    git: Git = Git(yaml.get("synapse", "playbook"))
+    git: VCS = VCS(yaml.get("synapse", "playbook"))
     git.pull()
 
     return 0

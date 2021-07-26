@@ -125,6 +125,7 @@ def make_human_readable(
 
 
 # TODO: JSON Type?
+# TODO: Returns type wrong
 def generate_user_tables(
     user_dict: dict[str, Any], len_domain: int
 ) -> list[list[tuple[str, str]]]:

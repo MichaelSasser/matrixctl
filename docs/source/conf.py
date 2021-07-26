@@ -94,7 +94,7 @@ nitpicky: bool = False
 # true: figures, tables ,code-blocks are auto numbered if they have a caption.
 numfig: bool = True
 
-set_type_checking_flag = True  # sphinx-autodoc-typehints: set TYPE_CHECKING
+# set_type_checking_flag = True  # sphinx-autodoc-typehints: set TYPE_CHECKING
 
 numpydoc_show_class_members: bool = False
 
