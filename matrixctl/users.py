@@ -30,7 +30,7 @@ from tabulate import tabulate
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .print_helpers import human_readable_bool
 from .typehints import JsonDict
 
@@ -119,15 +119,15 @@ def users(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
-    len_domain = len(toml.get("API", "Domain")) + 1  # 1 for :
+    yaml: YAML = YAML()
+    len_domain = len(yaml.get("api", "domain")) + 1  # 1 for :
     from_user: int = 0
     users_list: list[JsonDict] = []
 
     # ToDo: API bool
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
         path="users",
         api_version="v2",
         params={

@@ -26,7 +26,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.ansible import ansible_run
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -74,9 +74,9 @@ def maintenance(_: Namespace) -> int:
     """
     logger.debug("maintenance")
 
-    toml: TOML = TOML()
+    yaml: YAML = YAML()
     ansible_run(
-        playbook=toml.get("ANSIBLE", "Playbook"),
+        playbook=yaml.get("ansible", "playbook"),
         tags="run-postgres-vacuum,start",
     )
 

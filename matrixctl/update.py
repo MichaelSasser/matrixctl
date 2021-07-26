@@ -24,7 +24,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.git import Git
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -64,8 +64,8 @@ def update(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
-    git: Git = Git(toml.get("SYNAPSE", "Playbook"))
+    yaml: YAML = YAML()
+    git: Git = Git(yaml.get("synapse", "playbook"))
     git.pull()
 
     return 0

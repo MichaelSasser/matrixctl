@@ -14,27 +14,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+---
+default:
+  ansible:
+    playbook: /path/to/ansible/playbook
+  synapse:
+    playbook: /path/to/synapse/playbook
+  api:
+    domain: example.com
+    username: johndoe
+    token: MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKEa4K
+  ssh:
+    address: matrix.example.com
+    port: 22
+    user: john
 
-[ANSIBLE]
-Playbook = "/path/to/ansible/playbook"
-
-[SYNAPSE]
-Playbook = "/path/to/synapse/playbook"
-
-[API]
-Domain = "example.com"
-Username = "johndoe"
-Token = """\
-        MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowM\
-        DEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3\
-        Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys\
-        1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3\
-        YrAKEa4K\
-"""
-
-[SSH]
-Address = "matrix.example.com"
-Port = 22
-User = "john"
-
-# vim: set ft=toml :
+# vim: set ft=yaml :

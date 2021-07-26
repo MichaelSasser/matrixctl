@@ -24,7 +24,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.ansible import ansible_run
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -64,8 +64,8 @@ def stop(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
-    ansible_run(toml.get("ANSIBLE", "Playbook"), tags="stop")
+    yaml: YAML = YAML()
+    ansible_run(yaml.get("ansible", "playbook"), tags="stop")
     return 0
 
 

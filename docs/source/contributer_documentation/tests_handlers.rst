@@ -30,10 +30,10 @@ Fixtures
    :undoc-members:
    :show-inheritance:
 
-TOML
+YAML
 ----
 
-.. automodule:: tests.matrixctl.handlers.test_toml
+.. automodule:: tests.matrixctl.handlers.test_yaml
    :members:
    :undoc-members:
    :show-inheritance:

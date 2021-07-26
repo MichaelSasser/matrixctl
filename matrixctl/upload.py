@@ -30,7 +30,7 @@ from pathlib import Path
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .typehints import JsonDict
 
 
@@ -87,10 +87,10 @@ def upload(arg: Namespace) -> int:
         print("No such file found. Please check your filepath.")
         return 1
 
-    toml: TOML = TOML()
+    yaml: YAML = YAML()
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
         path="upload/",
         api_path="_matrix/media",
         method="POST",

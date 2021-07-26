@@ -30,7 +30,7 @@ from base64 import b64encode
 
 from .handlers.ssh import SSH
 from .handlers.ssh import SSHResponse
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -81,11 +81,11 @@ def get_event(arg: Namespace) -> int:
 
     """
 
-    toml: TOML = TOML()
+    yaml: YAML = YAML()
     address = (
-        toml.get("SSH", "Address")
-        if toml.get("SSH", "Address")
-        else f"matrix.{toml.get('API', 'Domain')}"
+        yaml.get("SSH", "Address")
+        if yaml.get("SSH", "Address")
+        else f"matrix.{yaml.get('API', 'Domain')}"
     )
 
     is_valid_event_id = re.match(r"^\$[0-9a-zA-Z.=_-]{1,255}$", arg.event_id)
@@ -111,7 +111,7 @@ def get_event(arg: Namespace) -> int:
 
     logger.debug(f"command: {command}")
 
-    with SSH(address, toml.get("SSH", "User"), toml.get("SSH", "Port")) as ssh:
+    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
         response: SSHResponse = ssh.run_cmd(command, tty=True)
 
     if not response.stderr:

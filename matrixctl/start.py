@@ -26,7 +26,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.ansible import ansible_run
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -98,8 +98,8 @@ def start(_: Namespace) -> int:
     """
     logger.debug("start")
 
-    toml: TOML = TOML()
-    ansible_run(toml.get("ANSIBLE", "Playbook"), tags="start")
+    yaml: YAML = YAML()
+    ansible_run(yaml.get("ansible", "playbook"), tags="start")
     return 0
 
 

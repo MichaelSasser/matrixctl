@@ -28,7 +28,7 @@ from argparse import _SubParsersAction as SubParsersAction
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .typehints import JsonDict
 
 
@@ -73,11 +73,11 @@ def version(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
+    yaml: YAML = YAML()
 
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
         path="server_version",
         api_version="v1",
     )

@@ -33,7 +33,7 @@ from tabulate import tabulate
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .print_helpers import human_readable_bool
 from .typehints import JsonDict
 
@@ -228,12 +228,12 @@ def user(arg: Namespace) -> int:
 
     """
 
-    toml: TOML = TOML()
+    yaml: YAML = YAML()
 
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
-        path=f'users/@{arg.user}:{toml.get("API","Domain")}',
+        token=yaml.get("API", "Token"),
+        domain=yaml.get("API", "Domain"),
+        path=f'users/@{arg.user}:{yaml.get("api","domain")}',
     )
 
     try:
@@ -243,7 +243,7 @@ def user(arg: Namespace) -> int:
 
         return 1
 
-    len_domain = len(toml.get("API", "Domain")) + 1  # 1 for :
+    len_domain = len(yaml.get("api", "domain")) + 1  # 1 for :
     user_tables = generate_user_tables(user_dict, len_domain)
 
     logger.debug(f"User: {user_tables=}")

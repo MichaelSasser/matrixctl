@@ -28,7 +28,7 @@ from argparse import _SubParsersAction as SubParsersAction
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -85,15 +85,15 @@ def server_notice(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
+    yaml: YAML = YAML()
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
         path="send_server_notice",
         method="POST",
         api_version="v1",
         data={
-            "user_id": (f"@{arg.username}:" f"{toml.get('API', 'Domain')}"),
+            "user_id": (f"@{arg.username}:" f"{yaml.get('api', 'domain')}"),
             "content": {
                 "msgtype": "m.text",
                 "body": arg.message,

@@ -30,7 +30,7 @@ from tabulate import tabulate
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .typehints import JsonDict
 
 
@@ -95,13 +95,13 @@ def rooms(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
+    yaml: YAML = YAML()
     from_room: int = 0
     rooms_list: list[JsonDict] = []
 
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
         path="rooms",
         api_version="v1",
     )

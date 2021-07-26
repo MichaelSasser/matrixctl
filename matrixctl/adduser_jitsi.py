@@ -25,7 +25,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.ssh import SSH
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .password_helpers import ask_password
 from .password_helpers import ask_question
 from .password_helpers import gen_password
@@ -88,13 +88,13 @@ def adduser_jitsi(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
+    yaml: YAML = YAML()
     address = (
-        toml.get("SSH", "Address")
-        if toml.get("SSH", "Address")
-        else f"matrix.{toml.get('API', 'Domain')}"
+        yaml.get("ssh", "address")
+        if yaml.get("SSH", "Address")
+        else f"matrix.{yaml.get('api', 'domain')}"
     )
-    with SSH(address, toml.get("SSH", "User"), toml.get("SSH", "Port")) as ssh:
+    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
         while True:
             passwd_generated: bool = False
 

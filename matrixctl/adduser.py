@@ -29,7 +29,7 @@ from .errors import InternalResponseError
 from .handlers.ansible import ansible_run
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .password_helpers import ask_password
 from .password_helpers import ask_question
 from .password_helpers import gen_password
@@ -103,7 +103,7 @@ def adduser(arg: Namespace) -> int:
 
     """
 
-    toml: TOML = TOML()
+    yaml: YAML = YAML()
 
     while True:
         passwd_generated: bool = False
@@ -131,7 +131,7 @@ def adduser(arg: Namespace) -> int:
 
     if arg.ansible:
         ansible_run(
-            playbook=toml.get("ANSIBLE", "Playbook"),
+            playbook=yaml.get("ansible", "playbook"),
             tags="register-user",
             extra_vars={
                 "username": arg.user,
@@ -142,9 +142,9 @@ def adduser(arg: Namespace) -> int:
         return 0
 
     req: RequestBuilder = RequestBuilder(
-        domain=toml.get("API", "Domain"),
-        token=toml.get("API", "Token"),
-        path=f"users/@{arg.user}:{toml.get('API','Domain')}",
+        domain=yaml.get("api", "domain"),
+        token=yaml.get("api", "token"),
+        path=f"users/@{arg.user}:{yaml.get('api','domain')}",
         data={"password": arg.passwd, "admin": arg.admin},
         method="PUT",
     )
