@@ -24,18 +24,23 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
 from datetime import datetime
 from time import sleep
+from typing import TYPE_CHECKING
 
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.yaml import YAML
 from .password_helpers import ask_question
-from .typehints import JsonDict
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
+    from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -169,13 +174,15 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
     return 0
 
 
-def purge_history(arg: Namespace) -> int:
+def purge_history(arg: Namespace, yaml: YAML) -> int:
     """Purge historic message events from the Database.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -228,8 +235,6 @@ def purge_history(arg: Namespace) -> int:
     #     return 0
 
     # Worker
-
-    yaml: YAML = YAML()
 
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("api", "token"),

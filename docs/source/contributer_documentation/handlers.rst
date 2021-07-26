@@ -45,10 +45,10 @@ Ansible
    :undoc-members:
    :show-inheritance:
 
-Git
----
+Git (VCS)
+---------
 
-.. automodule:: matrixctl.handlers.git
+.. automodule:: matrixctl.handlers.vcs
    :members:
    :undoc-members:
    :show-inheritance:

@@ -23,19 +23,24 @@ import datetime
 import logging
 import sys
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
-from typing import Any
+from typing import TYPE_CHECKING
 
 from tabulate import tabulate
 
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.yaml import YAML
 from .print_helpers import human_readable_bool
-from .typehints import JsonDict
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+    from typing import Any
+
+    from .handlers.yaml import YAML
+    from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -169,7 +174,7 @@ def generate_user_tables(
     return table
 
 
-def user(arg: Namespace) -> int:
+def user(arg: Namespace, yaml: YAML) -> int:
     """List information about an registered user.
 
     It uses the admin API to get a python dictionary with the information.
@@ -220,6 +225,8 @@ def user(arg: Namespace) -> int:
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -227,9 +234,6 @@ def user(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-
-    yaml: YAML = YAML()
-
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("API", "Token"),
         domain=yaml.get("API", "Domain"),

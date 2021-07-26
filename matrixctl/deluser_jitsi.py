@@ -19,12 +19,17 @@
 
 from __future__ import annotations
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
+from typing import TYPE_CHECKING
 
 from .handlers.ssh import SSH
-from .handlers.yaml import YAML
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -55,7 +60,7 @@ def subparser_deluser_jitsi(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=deluser_jitsi)
 
 
-def deluser_jitsi(arg: Namespace) -> int:
+def deluser_jitsi(arg: Namespace, yaml: YAML) -> int:
     """Delete a user from the jitsi instance.
 
     It uses the ``Ssh`` class from the ``ssh_handler``.
@@ -64,6 +69,8 @@ def deluser_jitsi(arg: Namespace) -> int:
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -71,7 +78,6 @@ def deluser_jitsi(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    yaml: YAML = YAML()
     address = (
         yaml.get("ssh", "address")
         if yaml.get("ssh", "address")

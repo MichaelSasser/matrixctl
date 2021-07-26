@@ -21,17 +21,22 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
+from typing import TYPE_CHECKING
 
 from tabulate import tabulate
 
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.yaml import YAML
-from .typehints import JsonDict
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
+    from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -81,13 +86,15 @@ def subparser_rooms(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=rooms)
 
 
-def rooms(arg: Namespace) -> int:
+def rooms(arg: Namespace, yaml: YAML) -> int:
     """Generate a table of the matrix rooms.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -95,7 +102,6 @@ def rooms(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    yaml: YAML = YAML()
     from_room: int = 0
     rooms_list: list[JsonDict] = []
 

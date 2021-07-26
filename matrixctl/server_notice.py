@@ -21,14 +21,19 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
+from typing import TYPE_CHECKING
 
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.yaml import YAML
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -65,7 +70,7 @@ def subparser_server_notice(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=server_notice)
 
 
-def server_notice(arg: Namespace) -> int:
+def server_notice(arg: Namespace, yaml: YAML) -> int:
     """Send a server notice to a matrix instance.
 
     Notes
@@ -78,6 +83,8 @@ def server_notice(arg: Namespace) -> int:
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -85,7 +92,6 @@ def server_notice(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    yaml: YAML = YAML()
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("api", "token"),
         domain=yaml.get("api", "domain"),

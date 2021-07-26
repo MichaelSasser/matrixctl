@@ -23,14 +23,19 @@ import json
 import logging
 import re
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
 from base64 import b64encode
+from typing import TYPE_CHECKING
 
 from .handlers.ssh import SSH
-from .handlers.ssh import SSHResponse
-from .handlers.yaml import YAML
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.ssh import SSHResponse
+    from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -63,7 +68,7 @@ def subparser_get_event(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=get_event)
 
 
-def get_event(arg: Namespace) -> int:
+def get_event(arg: Namespace, yaml: YAML) -> int:
     """Get an Event from the Server.
 
     It connects via paramiko to the server and runs the psql command provided
@@ -73,6 +78,8 @@ def get_event(arg: Namespace) -> int:
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -81,7 +88,6 @@ def get_event(arg: Namespace) -> int:
 
     """
 
-    yaml: YAML = YAML()
     address = (
         yaml.get("SSH", "Address")
         if yaml.get("SSH", "Address")

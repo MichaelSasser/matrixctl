@@ -25,9 +25,7 @@ import sys
 
 from collections import ChainMap
 from pathlib import Path
-from typing import Any
-from typing import Generator
-from typing import Iterable
+from typing import TYPE_CHECKING
 from typing import cast
 
 from ruamel.yaml import YAML as RuamelYAML
@@ -35,8 +33,15 @@ from ruamel.yaml.error import YAMLError
 
 from matrixctl import __version__
 from matrixctl.errors import ConfigFileError
-from matrixctl.typehints import YAMLFullConfigType
-from matrixctl.typehints import YAMLServerConfigType
+from matrixctl.typehints import YAMLFullConfigType  # cast
+
+
+if TYPE_CHECKING:
+    from typing import Any
+    from typing import Generator
+    from typing import Iterable
+
+    from matrixctl.typehints import YAMLServerConfigType
 
 
 __author__: str = "Michael Sasser"

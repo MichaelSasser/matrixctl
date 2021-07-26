@@ -21,12 +21,17 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
+from typing import TYPE_CHECKING
 
 from .handlers.ansible import ansible_run
-from .handlers.yaml import YAML
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -56,13 +61,15 @@ def subparser_check(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=check)
 
 
-def check(_: Namespace) -> int:
+def check(_: Namespace, yaml: YAML) -> int:
     """Check the deployment with andible.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -72,7 +79,6 @@ def check(_: Namespace) -> int:
     """
     logger.debug("check")
 
-    yaml: YAML = YAML()
     ansible_run(playbook=yaml.get("ansible", "playbook"), tags="check")
     return 0
 

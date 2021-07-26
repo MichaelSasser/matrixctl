@@ -21,18 +21,23 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
+from typing import TYPE_CHECKING
 
 from .errors import InternalResponseError
 from .handlers.ansible import ansible_run
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.yaml import YAML
 from .password_helpers import ask_password
 from .password_helpers import ask_question
 from .password_helpers import gen_password
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -75,7 +80,7 @@ def subparser_adduser(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=adduser)
 
 
-def adduser(arg: Namespace) -> int:
+def adduser(arg: Namespace, yaml: YAML) -> int:
     """Add a User to the synapse instance.
 
     It runs ``ask_password()`` first. If ``ask_password()`` returns ``None``
@@ -94,7 +99,9 @@ def adduser(arg: Namespace) -> int:
     Parameters
     ----------
     arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``
+        The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -102,9 +109,6 @@ def adduser(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-
-    yaml: YAML = YAML()
-
     while True:
         passwd_generated: bool = False
 

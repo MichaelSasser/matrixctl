@@ -19,12 +19,17 @@
 
 from __future__ import annotations
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
+from typing import TYPE_CHECKING
 
-from .handlers.git import Git
-from .handlers.yaml import YAML
+from .handlers.vcs import Git
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -50,13 +55,15 @@ def subparser_update(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=update)
 
 
-def update(_: Namespace) -> int:
+def update(_: Namespace, yaml: YAML) -> int:
     """Update the synapse playbook with git.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -64,7 +71,6 @@ def update(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    yaml: YAML = YAML()
     git: Git = Git(yaml.get("synapse", "playbook"))
     git.pull()
 

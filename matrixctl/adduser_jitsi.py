@@ -20,16 +20,20 @@
 
 from __future__ import annotations
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
+from typing import TYPE_CHECKING
 
 from .handlers.ssh import SSH
-from .handlers.yaml import YAML
 from .password_helpers import ask_password
 from .password_helpers import ask_question
 from .password_helpers import gen_password
 
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
@@ -64,7 +68,7 @@ def subparser_adduser_jitsi(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=adduser_jitsi)
 
 
-def adduser_jitsi(arg: Namespace) -> int:
+def adduser_jitsi(arg: Namespace, yaml: YAML) -> int:
     """Add a User to the jitsi instance.
 
     It runs ``ask_password()`` first. If ``ask_password()`` returns ``None``
@@ -81,6 +85,8 @@ def adduser_jitsi(arg: Namespace) -> int:
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -88,7 +94,6 @@ def adduser_jitsi(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    yaml: YAML = YAML()
     address = (
         yaml.get("ssh", "address")
         if yaml.get("SSH", "Address")

@@ -21,18 +21,23 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
+from typing import TYPE_CHECKING
 
 from tabulate import tabulate
 
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.yaml import YAML
 from .print_helpers import human_readable_bool
-from .typehints import JsonDict
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
+    from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -71,7 +76,7 @@ def subparser_users(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=users)
 
 
-def users(arg: Namespace) -> int:
+def users(arg: Namespace, yaml: YAML) -> int:
     """Print a table of the matrix users.
 
     This function generates and prints a table of matrix user accounts.
@@ -112,6 +117,8 @@ def users(arg: Namespace) -> int:
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -119,7 +126,6 @@ def users(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    yaml: YAML = YAML()
     len_domain = len(yaml.get("api", "domain")) + 1  # 1 for :
     from_user: int = 0
     users_list: list[JsonDict] = []

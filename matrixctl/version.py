@@ -21,15 +21,20 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
+from typing import TYPE_CHECKING
 
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.yaml import YAML
-from .typehints import JsonDict
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
+    from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -58,7 +63,7 @@ def subparser_version(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=version)
 
 
-def version(_: Namespace) -> int:
+def version(_: Namespace, yaml: YAML) -> int:
     """Get the version of the Synapse instance.
 
     Parameters
@@ -66,6 +71,8 @@ def version(_: Namespace) -> int:
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
         (Unused in this function)
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -73,8 +80,6 @@ def version(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    yaml: YAML = YAML()
-
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("api", "token"),
         domain=yaml.get("api", "domain"),

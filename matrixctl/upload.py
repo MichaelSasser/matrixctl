@@ -21,17 +21,22 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
 from mimetypes import MimeTypes
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.yaml import YAML
-from .typehints import JsonDict
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
+    from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -61,13 +66,15 @@ def subparser_upload(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=upload)
 
 
-def upload(arg: Namespace) -> int:
+def upload(arg: Namespace, yaml: YAML) -> int:
     """Upload a file or image to the matix instance.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -87,7 +94,6 @@ def upload(arg: Namespace) -> int:
         print("No such file found. Please check your filepath.")
         return 1
 
-    yaml: YAML = YAML()
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("api", "token"),
         domain=yaml.get("api", "domain"),

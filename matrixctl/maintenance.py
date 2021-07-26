@@ -21,12 +21,17 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
-from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
+from typing import TYPE_CHECKING
 
 from .handlers.ansible import ansible_run
-from .handlers.yaml import YAML
+
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+    from argparse import Namespace
+    from argparse import _SubParsersAction as SubParsersAction
+
+    from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -56,7 +61,7 @@ def subparser_maintenance(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=maintenance)
 
 
-def maintenance(_: Namespace) -> int:
+def maintenance(_: Namespace, yaml: YAML) -> int:
     """Run the maintenance procedure of the ansible playbook.
 
     Parameters
@@ -65,6 +70,8 @@ def maintenance(_: Namespace) -> int:
         The ``Namespace`` object of argparse's ``parse_args()``.
         (In this case unused, but necessary because of the structure of the
         program).
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -72,9 +79,6 @@ def maintenance(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    logger.debug("maintenance")
-
-    yaml: YAML = YAML()
     ansible_run(
         playbook=yaml.get("ansible", "playbook"),
         tags="run-postgres-vacuum,start",
