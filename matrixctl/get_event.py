@@ -89,9 +89,9 @@ def get_event(arg: Namespace, yaml: YAML) -> int:
     """
 
     address = (
-        yaml.get("SSH", "Address")
-        if yaml.get("SSH", "Address")
-        else f"matrix.{yaml.get('API', 'Domain')}"
+        yaml.get("ssh", "address")
+        if yaml.get("ssh", "address")
+        else f"matrix.{yaml.get('api', 'domain')}"
     )
 
     is_valid_event_id = re.match(r"^\$[0-9a-zA-Z.=_-]{1,255}$", arg.event_id)
