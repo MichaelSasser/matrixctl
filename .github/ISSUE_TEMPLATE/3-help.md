@@ -1,5 +1,5 @@
 ---
-name: "⁉️ Need help with Node.js?"
+name: "⁉️ Need help with MatrixCtl?"
 about: Please use https://github.com/MichaelSasser/matrixctl/discussions
 
 ---
