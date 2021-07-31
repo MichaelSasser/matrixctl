@@ -25,7 +25,7 @@ formats: all
 
 build:
   image: testing
-  python: 3.9
+  # python: 3.9
 
 python:
   version: 3.9
