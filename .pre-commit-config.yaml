@@ -111,7 +111,7 @@ repos:
 
   # isort
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.9.2
+    rev: 5.9.3
     hooks:
       - id: isort
         additional_dependencies: [toml]
@@ -166,7 +166,7 @@ repos:
 
   # pyupgrade
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.21.2
+    rev: v2.23.1
     hooks:
       - id: pyupgrade
         exclude: docs/source/conf.py # Py3.8 needed by rtd
