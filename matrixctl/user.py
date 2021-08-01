@@ -33,7 +33,7 @@ from tabulate import tabulate
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .print_helpers import human_readable_bool
 from .typehints import JsonDict
 
@@ -120,6 +120,7 @@ def make_human_readable(
 
 
 # TODO: JSON Type?
+# TODO: Returns type wrong
 def generate_user_tables(
     user_dict: dict[str, Any], len_domain: int
 ) -> list[list[tuple[str, str]]]:
@@ -169,7 +170,7 @@ def generate_user_tables(
     return table
 
 
-def user(arg: Namespace) -> int:
+def user(arg: Namespace, yaml: YAML) -> int:
     """List information about an registered user.
 
     It uses the admin API to get a python dictionary with the information.
@@ -208,9 +209,7 @@ def user(arg: Namespace) -> int:
        | Added At     | 2020-04-14 15:29:19.100000        |
        +--------------+-----------------------------------+
 
-
     If the user does not exist, the return looks like:
-
 
     .. code-block:: console
 
@@ -222,6 +221,8 @@ def user(arg: Namespace) -> int:
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -229,13 +230,10 @@ def user(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-
-    toml: TOML = TOML()
-
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
-        path=f'users/@{arg.user}:{toml.get("API","Domain")}',
+        token=yaml.get("API", "Token"),
+        domain=yaml.get("API", "Domain"),
+        path=f'users/@{arg.user}:{yaml.get("api","domain")}',
     )
 
     try:
@@ -245,7 +243,7 @@ def user(arg: Namespace) -> int:
 
         return 1
 
-    len_domain = len(toml.get("API", "Domain")) + 1  # 1 for :
+    len_domain = len(yaml.get("api", "domain")) + 1  # 1 for :
     user_tables = generate_user_tables(user_dict, len_domain)
 
     logger.debug(f"User: {user_tables=}")

@@ -22,7 +22,7 @@ Application
 Application
 -----------
 
-.. automodule:: matrixctl.__main__
+.. automodule:: matrixctl
    :members:
    :undoc-members:
    :show-inheritance:

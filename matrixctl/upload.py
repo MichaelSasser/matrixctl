@@ -30,7 +30,7 @@ from pathlib import Path
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .typehints import JsonDict
 
 
@@ -61,13 +61,15 @@ def subparser_upload(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=upload)
 
 
-def upload(arg: Namespace) -> int:
+def upload(arg: Namespace, yaml: YAML) -> int:
     """Upload a file or image to the matix instance.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -87,10 +89,9 @@ def upload(arg: Namespace) -> int:
         print("No such file found. Please check your filepath.")
         return 1
 
-    toml: TOML = TOML()
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
         path="upload/",
         api_path="_matrix/media",
         method="POST",

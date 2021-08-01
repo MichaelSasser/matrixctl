@@ -28,7 +28,7 @@ from argparse import _SubParsersAction as SubParsersAction
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .typehints import JsonDict
 
 
@@ -58,7 +58,7 @@ def subparser_version(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=version)
 
 
-def version(_: Namespace) -> int:
+def version(_: Namespace, yaml: YAML) -> int:
     """Get the version of the Synapse instance.
 
     Parameters
@@ -66,6 +66,8 @@ def version(_: Namespace) -> int:
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
         (Unused in this function)
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -73,11 +75,9 @@ def version(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
-
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
         path="server_version",
         api_version="v1",
     )
