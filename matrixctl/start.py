@@ -26,7 +26,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.ansible import ansible_run
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -82,13 +82,15 @@ def subparser_restart(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=start)  # Keep it "start"
 
 
-def start(_: Namespace) -> int:
+def start(_: Namespace, yaml: YAML) -> int:
     """Start/Restart the OCI containers.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -96,10 +98,7 @@ def start(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    logger.debug("start")
-
-    toml: TOML = TOML()
-    ansible_run(toml.get("ANSIBLE", "Playbook"), tags="start")
+    ansible_run(yaml.get("ansible", "playbook"), tags="start")
     return 0
 
 

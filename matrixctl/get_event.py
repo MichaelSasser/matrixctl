@@ -30,7 +30,7 @@ from base64 import b64encode
 
 from .handlers.ssh import SSH
 from .handlers.ssh import SSHResponse
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -63,7 +63,7 @@ def subparser_get_event(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=get_event)
 
 
-def get_event(arg: Namespace) -> int:
+def get_event(arg: Namespace, yaml: YAML) -> int:
     """Get an Event from the Server.
 
     It connects via paramiko to the server and runs the psql command provided
@@ -73,6 +73,8 @@ def get_event(arg: Namespace) -> int:
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -81,11 +83,10 @@ def get_event(arg: Namespace) -> int:
 
     """
 
-    toml: TOML = TOML()
     address = (
-        toml.get("SSH", "Address")
-        if toml.get("SSH", "Address")
-        else f"matrix.{toml.get('API', 'Domain')}"
+        yaml.get("ssh", "address")
+        if yaml.get("ssh", "address")
+        else f"matrix.{yaml.get('api', 'domain')}"
     )
 
     is_valid_event_id = re.match(r"^\$[0-9a-zA-Z.=_-]{1,255}$", arg.event_id)
@@ -111,7 +112,7 @@ def get_event(arg: Namespace) -> int:
 
     logger.debug(f"command: {command}")
 
-    with SSH(address, toml.get("SSH", "User"), toml.get("SSH", "Port")) as ssh:
+    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
         response: SSHResponse = ssh.run_cmd(command, tty=True)
 
     if not response.stderr:

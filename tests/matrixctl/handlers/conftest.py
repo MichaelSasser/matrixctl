@@ -23,7 +23,7 @@ from pathlib import Path
 
 import pytest
 
-from matrixctl.handlers.toml import TOML
+from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -31,17 +31,17 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 @pytest.fixture(scope="session", autouse=True)
-def toml() -> TOML:
-    """Create a fixture for the TOML class."""
+def yaml() -> YAML:
+    """Create a fixture for the YAML class."""
     # Setup
-    toml_: TOML = TOML(Path("tests/matrixctl/handlers/configs/config.toml"))
+    yaml_: YAML = YAML({Path("tests/matrixctl/handlers/configs/config.yaml")})
 
     # Exercise - None
 
     # Verify - None
 
     # Cleanup -None
-    return toml_
+    return yaml_
 
 
 # vim: set ft=python :

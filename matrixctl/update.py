@@ -23,8 +23,8 @@ from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .handlers.git import Git
-from .handlers.toml import TOML
+from .handlers.vcs import VCS
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -50,13 +50,15 @@ def subparser_update(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=update)
 
 
-def update(_: Namespace) -> int:
+def update(_: Namespace, yaml: YAML) -> int:
     """Update the synapse playbook with git.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -64,8 +66,7 @@ def update(_: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
-    git: Git = Git(toml.get("SYNAPSE", "Playbook"))
+    git: VCS = VCS(yaml.get("synapse", "playbook"))
     git.pull()
 
     return 0

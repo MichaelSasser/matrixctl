@@ -30,7 +30,7 @@ from tabulate import tabulate
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .typehints import JsonDict
 
 
@@ -81,13 +81,15 @@ def subparser_rooms(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=rooms)
 
 
-def rooms(arg: Namespace) -> int:
+def rooms(arg: Namespace, yaml: YAML) -> int:
     """Generate a table of the matrix rooms.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -95,13 +97,12 @@ def rooms(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
     from_room: int = 0
     rooms_list: list[JsonDict] = []
 
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
         path="rooms",
         api_version="v1",
     )

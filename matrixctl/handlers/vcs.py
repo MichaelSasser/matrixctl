@@ -27,8 +27,9 @@ from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
 
-import git
-
+from git import GitCommandError
+from git import Repo
+from git.cmd import Git
 from tabulate import tabulate
 
 
@@ -39,13 +40,13 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-class Git:
+class VCS:
 
     """Update and manage a repository."""
 
     def __init__(self, path: Path | str) -> None:
         self.path: Path = Path(path)
-        self.repo = git.Repo(self.path)
+        self.repo: Repo = Repo(self.path)
 
         if self.repo.bare:
             logger.critical(
@@ -54,7 +55,7 @@ class Git:
             )
             sys.exit(1)
 
-        self.git = git.cmd.Git(self.path)
+        self.git: Git = Git(self.path)
         self.heads = self.repo.heads
         self.master = self.heads.master
 
@@ -165,7 +166,7 @@ class Git:
 
         try:
             self.git.pull()
-        except git.GitCommandError:
+        except GitCommandError:
             logger.error(
                 "MatrixCtl was not able to connect to the synapse playbook "
                 "on GitHub. Are you connected to the internet?"
