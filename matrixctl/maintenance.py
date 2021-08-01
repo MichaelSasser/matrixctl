@@ -76,7 +76,7 @@ def maintenance(_: Namespace, yaml: YAML) -> int:
     """
     ansible_run(
         playbook=yaml.get("ansible", "playbook"),
-        tags="run-postgres-vacuum,start",
+        tags="run-postgres-vacuum,rust-synapse-compress-state,start",
     )
 
     return 0
