@@ -23,12 +23,14 @@ Use this module to add the ``purge-histoy`` subcommand to ``matrixctl``.
 from __future__ import annotations
 
 import logging
+import sys
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 from datetime import datetime
 from time import sleep
+from typing import NoReturn
 
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
@@ -169,6 +171,61 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
     return 0
 
 
+def dialog_input(arg: Namespace) -> dict[str, str | int] | NoReturn:
+    """Ask questions and sanitize them.
+
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``.
+
+    Returns
+    -------
+    request_body : typing.Dict [str, str] or NoReturn
+        Non-zero value indicates error code, or zero on success.
+
+    """
+    request_body: dict[str, str | int] = {}
+
+    # Sanitizing input
+
+    # check room_id (! = internal; # = local)
+    if not (arg.room_id.startswith("!") or arg.room_id.startswith("#")):
+        logger.critical("The room_id is incorrect. Pleas check it again.")
+        sys.exit(1)
+
+    # Delete local events; Q: Are you sure?
+    if arg.local_events:
+        print(
+            "You are about to delete *local* message events from the "
+            "Database. As they may represent the only copies of this content "
+            "in existence, you need to conform this action."
+        )
+        if not ask_question("Do you want to continue?"):
+            sys.exit(0)
+        request_body["delete_local_events"] = True
+
+    # Delete all but the last message event; Q: Are you sure?
+    if arg.event_or_timestamp is None:
+        print("You are about to delete all mesage events except the last one.")
+        if not ask_question("Do you want to continue?"):
+            sys.exit(0)
+    else:
+        point_in_time: dict[str, str | int] | None = check_point_in_time(
+            arg.event_or_timestamp
+        )
+
+        if point_in_time is None:
+            logger.critical(
+                "The event/timestamp does not seem to be correct. "
+                "Please check that argument again."
+            )
+            sys.exit(1)
+        request_body = {**request_body, **point_in_time}
+
+    return request_body
+
+
 def purge_history(arg: Namespace, yaml: YAML) -> int:
     """Purge historic message events from the Database.
 
@@ -185,51 +242,7 @@ def purge_history(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    request_body: dict[str, str | int] = {}
-
-    # Sanitizing input
-
-    # check room_id (! = internal; # = local)
-    if not (arg.room_id.startswith("!") or arg.room_id.startswith("#")):
-        logger.critical("The room_id is incorrect. Pleas check it again.")
-        return 1
-
-    # Delete local events; Q: Are you sure?
-    if arg.local_events:
-        print(
-            "You are about to delete *local* message events from the "
-            "Database. As they may represent the only copies of this content "
-            "in existence, you need to conform this action."
-        )
-        if not ask_question("Do you want to continue?"):
-            return 0
-        request_body["delete_local_events"] = True
-
-    # Delete all but the last message event; Q: Are you sure?
-    if arg.event_or_timestamp is None:
-        print("You are about to delete all mesage events except the last one.")
-        if not ask_question("Do you want to continue?"):
-            return 0
-    else:
-        point_in_time: dict[str, str | int] | None = check_point_in_time(
-            arg.event_or_timestamp
-        )
-
-        if point_in_time is None:
-            logger.critical(
-                "The event/timestamp does not seem to be correct. "
-                "Please check that argument again."
-            )
-            return 1
-        request_body = {**request_body, **point_in_time}
-
-    # # Ask at least one time.
-    # if not ask_question(
-    #     "You are about to delete message events. Do you want to continue?"
-    # ):
-    #     return 0
-
-    # Worker
+    request_body: dict[str, str | int] = dialog_input(arg)
 
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("api", "token"),
