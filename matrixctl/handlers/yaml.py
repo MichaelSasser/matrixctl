@@ -154,6 +154,13 @@ class YAML:
             )
         except FileNotFoundError:
             logger.debug(f'The config file "{str(path)}" does not exist.')
+        except IsADirectoryError:
+            logger.error(
+                "The path to the configuration file you entered "
+                f'"{str(path)}" seems to be a directory and not a '
+                "configuration file. Make sure the path is correct."
+            )
+
         return {}
 
     @staticmethod
@@ -186,9 +193,22 @@ class YAML:
         configs: Generator[YAMLFullConfigType, None, None] = (
             YAML.read_from_file(yaml, path) for path in paths
         )
-        return dict(ChainMap(*(config for config in configs if config)))[
-            server or "default"
-        ]
+        try:
+            return dict(ChainMap(*(config for config in configs if config)))[
+                server or "default"
+            ]
+        except KeyError:
+            logger.error(
+                f'The server "{server}" does not exist in your config file.'
+            )
+            sys.exit(1)
+        except TypeError:
+            logger.error(
+                f'The Path(s) to the configuration file you entered "{paths}" '
+                "seems to have syntax paroblems. Make sure you use the "
+                "correct YAML syntax."
+            )
+            sys.exit(1)
 
     def __debug_output(self) -> None:
         """Create a debug output for the YAML file.

@@ -168,12 +168,12 @@ def main() -> int:
 
     args: argparse.Namespace = parser.parse_args()
 
-    # Should the config been read here and given as argument to the functions?
-    yaml: YAML = YAML(args.config, args.server)
-
     setup_logging(args.debug)
 
     logger.debug(f"{args=}")
+
+    # Should the config been read here and given as argument to the functions?
+    yaml: YAML = YAML((args.config,), args.server)
 
     if args.debug:
         logger.debug("Disabing help on AttributeError")
