@@ -26,7 +26,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.ansible import ansible_run
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -56,13 +56,15 @@ def subparser_check(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=check)
 
 
-def check(_: Namespace) -> int:
+def check(_: Namespace, yaml: YAML) -> int:
     """Check the deployment with andible.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -72,8 +74,7 @@ def check(_: Namespace) -> int:
     """
     logger.debug("check")
 
-    toml: TOML = TOML()
-    ansible_run(playbook=toml.get("ANSIBLE", "Playbook"), tags="check")
+    ansible_run(playbook=yaml.get("ansible", "playbook"), tags="check")
     return 0
 
 

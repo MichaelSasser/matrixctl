@@ -28,7 +28,7 @@ from argparse import _SubParsersAction as SubParsersAction
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -59,13 +59,15 @@ def subparser_deluser(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=deluser)
 
 
-def deluser(arg: Namespace) -> int:
+def deluser(arg: Namespace, yaml: YAML) -> int:
     """Delete a user from the the matrix instance.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -73,12 +75,10 @@ def deluser(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
-
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
-        path=f"deactivate/@{arg.user}:{toml.get('API','Domain')}",
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
+        path=f"deactivate/@{arg.user}:{yaml.get('api','domain')}",
         api_version="v1",
         method="POST",
         data={"erase": True},

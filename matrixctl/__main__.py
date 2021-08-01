@@ -36,6 +36,7 @@ from matrixctl.deluser import subparser_deluser
 from matrixctl.deluser_jitsi import subparser_deluser_jitsi
 from matrixctl.deploy import subparser_deploy
 from matrixctl.get_event import subparser_get_event
+from matrixctl.handlers.yaml import YAML
 from matrixctl.maintenance import subparser_maintenance
 from matrixctl.purge_history import subparser_purge_history
 from matrixctl.rooms import subparser_rooms
@@ -81,6 +82,16 @@ def setup_parser() -> argparse.ArgumentParser:
     parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument(
         "-d", "--debug", action="store_true", help="Enables debugging mode."
+    )
+    parser.add_argument(
+        "-s",
+        "--server",
+        help='Select the server. (default: "default")',
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        help="A path to an alternative config file.",
     )
     subparsers: _SubParsersAction = parser.add_subparsers()
 
@@ -161,6 +172,9 @@ def main() -> int:
 
     logger.debug(f"{args=}")
 
+    # Should the config been read here and given as argument to the functions?
+    yaml: YAML = YAML((args.config,), args.server)
+
     if args.debug:
         logger.debug("Disabing help on AttributeError")
         logger.warning(
@@ -171,10 +185,10 @@ def main() -> int:
             'in debug mode, use the "--help" attribute.'
         )
 
-        return int(args.func(args))
+        return int(args.func(args, yaml))
 
     try:
-        return int(args.func(args))
+        return int(args.func(args, yaml))
     except AttributeError:
         parser.print_help()
 

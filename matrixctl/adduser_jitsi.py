@@ -25,7 +25,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.ssh import SSH
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .password_helpers import ask_password
 from .password_helpers import ask_question
 from .password_helpers import gen_password
@@ -64,7 +64,7 @@ def subparser_adduser_jitsi(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=adduser_jitsi)
 
 
-def adduser_jitsi(arg: Namespace) -> int:
+def adduser_jitsi(arg: Namespace, yaml: YAML) -> int:
     """Add a User to the jitsi instance.
 
     It runs ``ask_password()`` first. If ``ask_password()`` returns ``None``
@@ -81,6 +81,8 @@ def adduser_jitsi(arg: Namespace) -> int:
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -88,13 +90,12 @@ def adduser_jitsi(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
     address = (
-        toml.get("SSH", "Address")
-        if toml.get("SSH", "Address")
-        else f"matrix.{toml.get('API', 'Domain')}"
+        yaml.get("ssh", "address")
+        if yaml.get("SSH", "Address")
+        else f"matrix.{yaml.get('api', 'domain')}"
     )
-    with SSH(address, toml.get("SSH", "User"), toml.get("SSH", "Port")) as ssh:
+    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
         while True:
             passwd_generated: bool = False
 

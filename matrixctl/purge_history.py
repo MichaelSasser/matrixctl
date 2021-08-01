@@ -33,7 +33,7 @@ from time import sleep
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 from .password_helpers import ask_question
 from .typehints import JsonDict
 
@@ -111,12 +111,12 @@ def check_point_in_time(
     return None
 
 
-def handle_purge_status(toml: TOML, purge_id: str) -> int:
+def handle_purge_status(yaml: YAML, purge_id: str) -> int:
     """Check the status pf the purge history request.
 
     Parameters
     ----------
-    toml : matrixctl.handlers.toml.TOML
+    yaml : matrixctl.handlers.yaml.YAML
         The configuration file handler.
     purge_id: str
         The purge id from a purge history request.
@@ -128,8 +128,8 @@ def handle_purge_status(toml: TOML, purge_id: str) -> int:
 
     """
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
         path=f"purge_history_status/{purge_id}",
         method="GET",
         api_version="v1",
@@ -169,13 +169,15 @@ def handle_purge_status(toml: TOML, purge_id: str) -> int:
     return 0
 
 
-def purge_history(arg: Namespace) -> int:
+def purge_history(arg: Namespace, yaml: YAML) -> int:
     """Purge historic message events from the Database.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -229,11 +231,9 @@ def purge_history(arg: Namespace) -> int:
 
     # Worker
 
-    toml: TOML = TOML()
-
     req: RequestBuilder = RequestBuilder(
-        token=toml.get("API", "Token"),
-        domain=toml.get("API", "Domain"),
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
         path=f"purge_history/{arg.room_id}",
         method="POST",
         api_version="v1",
@@ -250,11 +250,11 @@ def purge_history(arg: Namespace) -> int:
         return 1
 
     logger.debug(f"{response=}")
-    return handle_purge_status(toml, response["purge_id"])
+    return handle_purge_status(yaml, response["purge_id"])
     ###################
     # while True:
     #     status_response: JsonDict | None = get_purge_status(
-    #         toml, response["purge_id"]
+    #         yaml, response["purge_id"]
     #     )
     #
     #     if status_response is not None:

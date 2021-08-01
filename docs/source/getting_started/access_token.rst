@@ -88,20 +88,20 @@ Now click on ``<click to reveal>``.
     The revealed access token
 
 This is your access token. It is already highlighted for you. Just copy it into
-the config file into the ``[API]`` section.
+the config file into the ``api`` section.
 
 Copy The Token
 --------------
 
-Now you can copy the token into the ``[API]`` section of your config file.
+Now you can copy the token into the ``api`` section of your config file.
 If you don't have a config file head over to the :ref:`Config File` chapter.
 
-.. code-block:: toml
+.. code-block:: yaml
 
    ...
-   [API]
-   Domain=yourdomain.tld
-   Token="MDAxZmxvY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzMGNpZCB1c2VyX2lkID0gQG15dXNlcm5hbWU6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSA3WkB1KkdyY3JTRG1CI3Z0CjAwMmZzaWduYXR1cmUgJblnYOAEQJVeHaMgwnMsAagpZBc8CIC6Dwwy027tfJAK"
+   api.
+     domain: yourdomain.tld
+     token: MDAxZmxvY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzMGNpZCB1c2VyX2lkID0gQG15dXNlcm5hbWU6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSA3WkB1KkdyY3JTRG1CI3Z0CjAwMmZzaWduYXR1cmUgJblnYOAEQJVeHaMgwnMsAagpZBc8CIC6Dwwy027tfJAK
    ...
 
 

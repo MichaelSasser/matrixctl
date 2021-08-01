@@ -24,7 +24,7 @@ from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.ssh import SSH
-from .handlers.toml import TOML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -55,7 +55,7 @@ def subparser_deluser_jitsi(subparsers: SubParsersAction) -> None:
     parser.set_defaults(func=deluser_jitsi)
 
 
-def deluser_jitsi(arg: Namespace) -> int:
+def deluser_jitsi(arg: Namespace, yaml: YAML) -> int:
     """Delete a user from the jitsi instance.
 
     It uses the ``Ssh`` class from the ``ssh_handler``.
@@ -64,6 +64,8 @@ def deluser_jitsi(arg: Namespace) -> int:
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
@@ -71,13 +73,12 @@ def deluser_jitsi(arg: Namespace) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    toml: TOML = TOML()
     address = (
-        toml.get("SSH", "Address")
-        if toml.get("SSH", "Address")
-        else f"matrix.{toml.get('API','Domain')}"
+        yaml.get("ssh", "address")
+        if yaml.get("ssh", "address")
+        else f"matrix.{yaml.get('api','domain')}"
     )
-    with SSH(address, toml.get("SSH", "User"), toml.get("SSH", "Port")) as ssh:
+    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
         cmd: str = (
             "sudo docker exec matrix-jitsi-prosody prosodyctl "
             "--config /config/prosody.cfg.lua deluser "
