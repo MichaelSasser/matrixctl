@@ -1235,7 +1235,7 @@ docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "numpydoc", "s
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5bbc9548b1bd97354e37c1cf8d3ffbbe4c40b98362491cdb98c252c599933d9a"
+content-hash = "a0360f81f874de5e1cf49d013606760663b455d9a7c4afea7fb2b447213b286c"
 
 [metadata.files]
 alabaster = [

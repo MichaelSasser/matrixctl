@@ -23,19 +23,14 @@ import json
 import logging
 import re
 
+from argparse import ArgumentParser
+from argparse import Namespace
+from argparse import _SubParsersAction as SubParsersAction
 from base64 import b64encode
-from typing import TYPE_CHECKING
 
 from .handlers.ssh import SSH
-
-
-if TYPE_CHECKING:
-    from argparse import ArgumentParser
-    from argparse import Namespace
-    from argparse import _SubParsersAction as SubParsersAction
-
-    from .handlers.ssh import SSHResponse
-    from .handlers.yaml import YAML
+from .handlers.ssh import SSHResponse
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"

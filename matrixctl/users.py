@@ -21,23 +21,18 @@ from __future__ import annotations
 
 import logging
 
-from typing import TYPE_CHECKING
+from argparse import ArgumentParser
+from argparse import Namespace
+from argparse import _SubParsersAction as SubParsersAction
 
 from tabulate import tabulate
 
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
+from .handlers.yaml import YAML
 from .print_helpers import human_readable_bool
-
-
-if TYPE_CHECKING:
-    from argparse import ArgumentParser
-    from argparse import Namespace
-    from argparse import _SubParsersAction as SubParsersAction
-
-    from .handlers.yaml import YAML
-    from .typehints import JsonDict
+from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"

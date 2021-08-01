@@ -24,23 +24,18 @@ from __future__ import annotations
 
 import logging
 
+from argparse import ArgumentParser
+from argparse import Namespace
+from argparse import _SubParsersAction as SubParsersAction
 from datetime import datetime
 from time import sleep
-from typing import TYPE_CHECKING
 
 from .errors import InternalResponseError
 from .handlers.api import RequestBuilder
 from .handlers.api import request
+from .handlers.yaml import YAML
 from .password_helpers import ask_question
-
-
-if TYPE_CHECKING:
-    from argparse import ArgumentParser
-    from argparse import Namespace
-    from argparse import _SubParsersAction as SubParsersAction
-
-    from .handlers.yaml import YAML
-    from .typehints import JsonDict
+from .typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"

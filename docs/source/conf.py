@@ -93,7 +93,9 @@ nitpicky: bool = False
 # true: figures, tables ,code-blocks are auto numbered if they have a caption.
 numfig: bool = True
 
-# set_type_checking_flag = True  # sphinx-autodoc-typehints: set TYPE_CHECKING
+# This will not work for now and will generate a lot of warnings since
+# gitpython has a circular import somewhere when this option is enabled
+set_type_checking_flag = False  # sphinx-autodoc-typehints: set TYPE_CHECKING
 
 numpydoc_show_class_members: bool = False
 

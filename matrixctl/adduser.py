@@ -21,23 +21,18 @@ from __future__ import annotations
 
 import logging
 
-from typing import TYPE_CHECKING
+from argparse import ArgumentParser
+from argparse import Namespace
+from argparse import _SubParsersAction as SubParsersAction
 
 from .errors import InternalResponseError
 from .handlers.ansible import ansible_run
 from .handlers.api import RequestBuilder
 from .handlers.api import request
+from .handlers.yaml import YAML
 from .password_helpers import ask_password
 from .password_helpers import ask_question
 from .password_helpers import gen_password
-
-
-if TYPE_CHECKING:
-    from argparse import ArgumentParser
-    from argparse import Namespace
-    from argparse import _SubParsersAction as SubParsersAction
-
-    from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"

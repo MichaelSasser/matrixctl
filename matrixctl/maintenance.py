@@ -21,17 +21,12 @@ from __future__ import annotations
 
 import logging
 
-from typing import TYPE_CHECKING
+from argparse import ArgumentParser
+from argparse import Namespace
+from argparse import _SubParsersAction as SubParsersAction
 
 from .handlers.ansible import ansible_run
-
-
-if TYPE_CHECKING:
-    from argparse import ArgumentParser
-    from argparse import Namespace
-    from argparse import _SubParsersAction as SubParsersAction
-
-    from .handlers.yaml import YAML
+from .handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
