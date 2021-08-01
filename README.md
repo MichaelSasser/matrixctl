@@ -51,6 +51,10 @@ optional arguments:
   -h, --help            show this help message and exit
   --version             show program's version number and exit
   -d, --debug           Enables debugging mode.
+  -s SERVER, --server SERVER
+                        Select the server. (default: "default")
+  -c CONFIG, --config CONFIG
+                        A path to an alternative config file.
 ```
 
 ## Installation
