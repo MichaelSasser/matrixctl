@@ -25,8 +25,10 @@ from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .handlers.ansible import ansible_run
-from .handlers.yaml import YAML
+from argparse_addon_manager.addon_manager import AddonManager
+
+from matrixctl.handlers.ansible import ansible_run
+from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -36,6 +38,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
+@AddonManager.add_subparser
 def subparser_maintenance(subparsers: SubParsersAction) -> None:
     """Create a subparser for the ``matrixctl maintenance`` command.
 

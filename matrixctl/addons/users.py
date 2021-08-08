@@ -25,14 +25,15 @@ from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
+from argparse_addon_manager.addon_manager import AddonManager
 from tabulate import tabulate
 
-from .errors import InternalResponseError
-from .handlers.api import RequestBuilder
-from .handlers.api import request
-from .handlers.yaml import YAML
-from .print_helpers import human_readable_bool
-from .typehints import JsonDict
+from matrixctl.errors import InternalResponseError
+from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import request
+from matrixctl.handlers.yaml import YAML
+from matrixctl.print_helpers import human_readable_bool
+from matrixctl.typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -42,6 +43,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
+@AddonManager.add_subparser
 def subparser_users(subparsers: SubParsersAction) -> None:
     """Create a subparser for the ``matrixctl users`` command.
 

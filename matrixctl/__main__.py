@@ -22,33 +22,38 @@ from __future__ import annotations
 import argparse
 import logging
 
-from argparse import _SubParsersAction
-from collections.abc import Callable
+# from argparse import _SubParsersAction
+# from collections.abc import Callable
+from pathlib import Path
 
 import coloredlogs
 
+from argparse_addon_manager.addon_manager import AddonManager
+
 from matrixctl import __version__
-from matrixctl.adduser import subparser_adduser
-from matrixctl.adduser_jitsi import subparser_adduser_jitsi
-from matrixctl.check import subparser_check
-from matrixctl.delroom import subparser_delroom
-from matrixctl.deluser import subparser_deluser
-from matrixctl.deluser_jitsi import subparser_deluser_jitsi
-from matrixctl.deploy import subparser_deploy
-from matrixctl.get_event import subparser_get_event
 from matrixctl.handlers.yaml import YAML
-from matrixctl.maintenance import subparser_maintenance
-from matrixctl.purge_history import subparser_purge_history
-from matrixctl.rooms import subparser_rooms
-from matrixctl.server_notice import subparser_server_notice
-from matrixctl.start import subparser_restart
-from matrixctl.start import subparser_start
-from matrixctl.stop import subparser_stop
-from matrixctl.update import subparser_update
-from matrixctl.upload import subparser_upload
-from matrixctl.user import subparser_user
-from matrixctl.users import subparser_users
-from matrixctl.version import subparser_version
+
+
+# from matrixctl.adduser import subparser_adduser
+# from matrixctl.adduser_jitsi import subparser_adduser_jitsi
+# from matrixctl.check import subparser_check
+# from matrixctl.delroom import subparser_delroom
+# from matrixctl.deluser import subparser_deluser
+# from matrixctl.deluser_jitsi import subparser_deluser_jitsi
+# from matrixctl.deploy import subparser_deploy
+# from matrixctl.get_event import subparser_get_event
+# from matrixctl.maintenance import subparser_maintenance
+# from matrixctl.purge_history import subparser_purge_history
+# from matrixctl.rooms import subparser_rooms
+# from matrixctl.server_notice import subparser_server_notice
+# from matrixctl.start import subparser_restart
+# from matrixctl.start import subparser_start
+# from matrixctl.stop import subparser_stop
+# from matrixctl.update import subparser_update
+# from matrixctl.upload import subparser_upload
+# from matrixctl.user import subparser_user
+# from matrixctl.users import subparser_users
+# from matrixctl.version import subparser_version
 
 
 # Subparsers
@@ -93,34 +98,34 @@ def setup_parser() -> argparse.ArgumentParser:
         "--config",
         help="A path to an alternative config file.",
     )
-    subparsers: _SubParsersAction = parser.add_subparsers()
-
-    # Subparsers
-    subparsers_tuple: list[Callable[[_SubParsersAction], None]] = [
-        subparser_adduser,
-        subparser_deluser,
-        subparser_adduser_jitsi,
-        subparser_deluser_jitsi,
-        subparser_user,
-        subparser_users,
-        subparser_purge_history,
-        subparser_rooms,
-        subparser_delroom,
-        subparser_update,
-        subparser_upload,
-        subparser_deploy,
-        subparser_server_notice,
-        subparser_get_event,
-        subparser_start,
-        subparser_stop,
-        subparser_restart,  # alias for start
-        subparser_maintenance,
-        subparser_check,
-        subparser_version,
-    ]
-
-    for subparser in subparsers_tuple:
-        subparser(subparsers)
+    #     subparsers: _SubParsersAction = parser.add_subparsers()
+    #
+    #     # Subparsers
+    #     subparsers_tuple: list[Callable[[_SubParsersAction], None]] = [
+    #         subparser_adduser,
+    #         subparser_deluser,
+    #         subparser_adduser_jitsi,
+    #         subparser_deluser_jitsi,
+    #         subparser_user,
+    #         subparser_users,
+    #         subparser_purge_history,
+    #         subparser_rooms,
+    #         subparser_delroom,
+    #         subparser_update,
+    #         subparser_upload,
+    #         subparser_deploy,
+    #         subparser_server_notice,
+    #         subparser_get_event,
+    #         subparser_start,
+    #         subparser_stop,
+    #         subparser_restart,  # alias for start
+    #         subparser_maintenance,
+    #         subparser_check,
+    #         subparser_version,
+    #     ]
+    #
+    #     for subparser in subparsers_tuple:
+    #         subparser(subparsers)
 
     return parser
 
@@ -164,7 +169,14 @@ def main() -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    parser = setup_parser()
+    addon_module = "matrixctl.addons"
+    addon_dir: Path = Path(__file__).resolve().parent / "addons"
+
+    # Setup Addon Manager
+    addon_manager: AddonManager = AddonManager()
+    addon_manager.import_addons_from(str(addon_dir), addon_module)
+    parser: argparse.ArgumentParser = addon_manager.setup(setup_parser)
+    # parser = setup_parser()
 
     args: argparse.Namespace = parser.parse_args()
 

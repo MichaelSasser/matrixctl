@@ -15,37 +15,36 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add the ``version`` subcommand to ``matrixctl``."""
+"""Use this module to add a ``deluser-jitsi`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
-
-import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .errors import InternalResponseError
-from .handlers.api import RequestBuilder
-from .handlers.api import request
-from .handlers.yaml import YAML
-from .typehints import JsonDict
+from argparse_addon_manager.addon_manager import AddonManager
+
+from matrixctl.handlers.ssh import SSH
+from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-logger = logging.getLogger(__name__)
+JID_EXT: str = "matrix-jitsi-web"
 
 
-def subparser_version(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl version`` command.
+@AddonManager.add_subparser
+def subparser_deluser_jitsi(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl deluser-jitsi`` command.
 
     Parameters
     ----------
     subparsers : argparse._SubParsersAction
-        The object which is returned by ``parser.add_subparsers()``.
+        The object which is returned by
+        ``parser.add_subparsers()``.
 
     Returns
     -------
@@ -53,19 +52,21 @@ def subparser_version(subparsers: SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "version", help="Get the version of the Synapse instance"
+        "deluser-jitsi", help="Deletes a jitsi user"
     )
-    parser.set_defaults(func=version)
+    parser.add_argument("user", help="The jitsi username to delete")
+    parser.set_defaults(func=deluser_jitsi)
 
 
-def version(_: Namespace, yaml: YAML) -> int:
-    """Get the version of the Synapse instance.
+def deluser_jitsi(arg: Namespace, yaml: YAML) -> int:
+    """Delete a user from the jitsi instance.
+
+    It uses the ``Ssh`` class from the ``ssh_handler``.
 
     Parameters
     ----------
     arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``.
-        (Unused in this function)
+        The ``Namespace`` object of argparse's ``parse_args()``
     yaml : matrixctl.handlers.yaml.YAML
         The configuration file handler.
 
@@ -75,24 +76,19 @@ def version(_: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
-        path="server_version",
-        api_version="v1",
+    address = (
+        yaml.get("ssh", "address")
+        if yaml.get("ssh", "address")
+        else f"matrix.{yaml.get('api','domain')}"
     )
-    try:
-        response: JsonDict = request(req).json()
-    except InternalResponseError:
-        logger.critical("Could not get the server sersion.")
+    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
+        cmd: str = (
+            "sudo docker exec matrix-jitsi-prosody prosodyctl "
+            "--config /config/prosody.cfg.lua deluser "
+            f'"{arg.user}@{JID_EXT}"'
+        )
 
-        return 1
-    logger.debug(f"{response=}")
-    try:
-        print(f"Server Version: {response['server_version']}")
-        print(f"Python Version: {response['python_version']}")
-    except KeyError:
-        logger.error("MatrixCtl was not able to read the server version.")
+        ssh.run_cmd(cmd)
 
     return 0
 

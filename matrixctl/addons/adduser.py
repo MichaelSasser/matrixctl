@@ -25,14 +25,16 @@ from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .errors import InternalResponseError
-from .handlers.ansible import ansible_run
-from .handlers.api import RequestBuilder
-from .handlers.api import request
-from .handlers.yaml import YAML
-from .password_helpers import ask_password
-from .password_helpers import ask_question
-from .password_helpers import gen_password
+from argparse_addon_manager.addon_manager import AddonManager
+
+from matrixctl.errors import InternalResponseError
+from matrixctl.handlers.ansible import ansible_run
+from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import request
+from matrixctl.handlers.yaml import YAML
+from matrixctl.password_helpers import ask_password
+from matrixctl.password_helpers import ask_question
+from matrixctl.password_helpers import gen_password
 
 
 __author__: str = "Michael Sasser"
@@ -42,6 +44,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
+@AddonManager.add_subparser
 def subparser_adduser(subparsers: SubParsersAction) -> None:
     """Create a subparser for the ``matrixctl adduser`` command.
 

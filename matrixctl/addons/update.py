@@ -15,29 +15,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add the ``(re)start`` subcommand to ``matrixctl``."""
+"""Use this module to add the ``update`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
-
-import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .handlers.ansible import ansible_run
-from .handlers.yaml import YAML
+from argparse_addon_manager.addon_manager import AddonManager
+
+from matrixctl.handlers.vcs import VCS
+from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-logger = logging.getLogger(__name__)
-
-
-def subparser_start(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl start`` command.
+@AddonManager.add_subparser
+def subparser_update(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl update`` command.
 
     Parameters
     ----------
@@ -50,40 +48,13 @@ def subparser_start(subparsers: SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "start", help="Starts all OCI containers"
+        "update", help="Updates the ansible repo"
     )
-    parser.set_defaults(func=start)
+    parser.set_defaults(func=update)
 
 
-def subparser_restart(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl restart`` command.
-
-    Notes
-    -----
-    This is a alias for ``matrixctl start``
-
-    See Also
-    --------
-    matrixctl.start.subparser_start : Subparser for ``matrixctl start``.
-
-    Parameters
-    ----------
-    subparsers : argparse._SubParsersAction
-        The object which is returned by ``parser.add_subparsers()``.
-
-    Returns
-    -------
-    None
-
-    """
-    parser: ArgumentParser = subparsers.add_parser(
-        "restart", help="Restarts all OCI containers (alias for start)"
-    )
-    parser.set_defaults(func=start)  # Keep it "start"
-
-
-def start(_: Namespace, yaml: YAML) -> int:
-    """Start/Restart the OCI containers.
+def update(_: Namespace, yaml: YAML) -> int:
+    """Update the synapse playbook with git.
 
     Parameters
     ----------
@@ -98,7 +69,9 @@ def start(_: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    ansible_run(yaml.get("ansible", "playbook"), tags="start")
+    git: VCS = VCS(yaml.get("synapse", "playbook"))
+    git.pull()
+
     return 0
 
 

@@ -15,27 +15,32 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add a ``deluser-jitsi`` subcommand to ``matrixctl``."""
+"""Use this module to add the ``deploy`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
+
+import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .handlers.ssh import SSH
-from .handlers.yaml import YAML
+from argparse_addon_manager.addon_manager import AddonManager
+
+from matrixctl.handlers.ansible import ansible_run
+from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-JID_EXT: str = "matrix-jitsi-web"
+logger = logging.getLogger(__name__)
 
 
-def subparser_deluser_jitsi(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl deluser-jitsi`` command.
+@AddonManager.add_subparser
+def subparser_deploy(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl deploy`` command.
 
     Parameters
     ----------
@@ -49,16 +54,20 @@ def subparser_deluser_jitsi(subparsers: SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "deluser-jitsi", help="Deletes a jitsi user"
+        "deploy", help="Provision and deploy"
     )
-    parser.add_argument("user", help="The jitsi username to delete")
-    parser.set_defaults(func=deluser_jitsi)
+
+    parser.add_argument(  # Done with tags / Does not use matrixctl.start !
+        "-s",
+        "--start",
+        action="store_true",
+        help="Start/Restart after the deployment",
+    )
+    parser.set_defaults(func=deploy)
 
 
-def deluser_jitsi(arg: Namespace, yaml: YAML) -> int:
-    """Delete a user from the jitsi instance.
-
-    It uses the ``Ssh`` class from the ``ssh_handler``.
+def deploy(arg: Namespace, yaml: YAML) -> int:
+    """Deploy the ansible playbook.
 
     Parameters
     ----------
@@ -73,19 +82,10 @@ def deluser_jitsi(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    address = (
-        yaml.get("ssh", "address")
-        if yaml.get("ssh", "address")
-        else f"matrix.{yaml.get('api','domain')}"
+    ansible_run(
+        playbook=yaml.get("ansible", "playbook"),
+        tags="setup-all,start" if arg.start else "setup-all",
     )
-    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
-        cmd: str = (
-            "sudo docker exec matrix-jitsi-prosody prosodyctl "
-            "--config /config/prosody.cfg.lua deluser "
-            f'"{arg.user}@{JID_EXT}"'
-        )
-
-        ssh.run_cmd(cmd)
 
     return 0
 

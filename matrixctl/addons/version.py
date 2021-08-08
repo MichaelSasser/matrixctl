@@ -15,24 +15,35 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add the ``stop`` subcommand to ``matrixctl``."""
+"""Use this module to add the ``version`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
+
+import logging
 
 from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .handlers.ansible import ansible_run
-from .handlers.yaml import YAML
+from argparse_addon_manager.addon_manager import AddonManager
+
+from matrixctl.errors import InternalResponseError
+from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import request
+from matrixctl.handlers.yaml import YAML
+from matrixctl.typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def subparser_stop(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl stop`` command.
+logger = logging.getLogger(__name__)
+
+
+@AddonManager.add_subparser
+def subparser_version(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl version`` command.
 
     Parameters
     ----------
@@ -45,18 +56,19 @@ def subparser_stop(subparsers: SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "stop", help="Stops all OCI containers"
+        "version", help="Get the version of the Synapse instance"
     )
-    parser.set_defaults(func=stop)
+    parser.set_defaults(func=version)
 
 
-def stop(_: Namespace, yaml: YAML) -> int:
-    """Stop the OCI containers.
+def version(_: Namespace, yaml: YAML) -> int:
+    """Get the version of the Synapse instance.
 
     Parameters
     ----------
     arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
+        (Unused in this function)
     yaml : matrixctl.handlers.yaml.YAML
         The configuration file handler.
 
@@ -66,7 +78,25 @@ def stop(_: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    ansible_run(yaml.get("ansible", "playbook"), tags="stop")
+    req: RequestBuilder = RequestBuilder(
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
+        path="server_version",
+        api_version="v1",
+    )
+    try:
+        response: JsonDict = request(req).json()
+    except InternalResponseError:
+        logger.critical("Could not get the server sersion.")
+
+        return 1
+    logger.debug(f"{response=}")
+    try:
+        print(f"Server Version: {response['server_version']}")
+        print(f"Python Version: {response['python_version']}")
+    except KeyError:
+        logger.error("MatrixCtl was not able to read the server version.")
+
     return 0
 
 

@@ -32,12 +32,14 @@ from datetime import datetime
 from time import sleep
 from typing import NoReturn
 
-from .errors import InternalResponseError
-from .handlers.api import RequestBuilder
-from .handlers.api import request
-from .handlers.yaml import YAML
-from .password_helpers import ask_question
-from .typehints import JsonDict
+from argparse_addon_manager.addon_manager import AddonManager
+
+from matrixctl.errors import InternalResponseError
+from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import request
+from matrixctl.handlers.yaml import YAML
+from matrixctl.password_helpers import ask_question
+from matrixctl.typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -47,6 +49,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
+@AddonManager.add_subparser
 def subparser_purge_history(subparsers: SubParsersAction) -> None:
     """Create a subparser for the ``matrixctl purge-history`` command.
 

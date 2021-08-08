@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add the ``check`` subcommand to ``matrixctl``."""
+"""Use this module to add the ``deluser`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
 
@@ -25,8 +25,12 @@ from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .handlers.ansible import ansible_run
-from .handlers.yaml import YAML
+from argparse_addon_manager.addon_manager import AddonManager
+
+from matrixctl.errors import InternalResponseError
+from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import request
+from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -36,8 +40,9 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-def subparser_check(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl check`` command.
+@AddonManager.add_subparser
+def subparser_deluser(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl deluser`` command.
 
     Parameters
     ----------
@@ -51,13 +56,14 @@ def subparser_check(subparsers: SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "check", help="Checks the deployment with ansible"
+        "deluser", help="Deletes a user"
     )
-    parser.set_defaults(func=check)
+    parser.add_argument("user", help="The username to delete")
+    parser.set_defaults(func=deluser)
 
 
-def check(_: Namespace, yaml: YAML) -> int:
-    """Check the deployment with andible.
+def deluser(arg: Namespace, yaml: YAML) -> int:
+    """Delete a user from the the matrix instance.
 
     Parameters
     ----------
@@ -72,9 +78,19 @@ def check(_: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    logger.debug("check")
+    req: RequestBuilder = RequestBuilder(
+        token=yaml.get("api", "token"),
+        domain=yaml.get("api", "domain"),
+        path=f"deactivate/@{arg.user}:{yaml.get('api','domain')}",
+        api_version="v1",
+        method="POST",
+        data={"erase": True},
+    )
+    try:
+        request(req)
+    except InternalResponseError:
+        logger.error("The user was not deleted.")
 
-    ansible_run(playbook=yaml.get("ansible", "playbook"), tags="check")
     return 0
 
 

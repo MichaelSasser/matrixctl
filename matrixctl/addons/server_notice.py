@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add the ``delroom`` subcommand to ``matrixctl``."""
+"""Use this module to add the ``serve-notice`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
 
@@ -25,10 +25,12 @@ from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .errors import InternalResponseError
-from .handlers.api import RequestBuilder
-from .handlers.api import request
-from .handlers.yaml import YAML
+from argparse_addon_manager.addon_manager import AddonManager
+
+from matrixctl.errors import InternalResponseError
+from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import request
+from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -38,14 +40,14 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-def subparser_delroom(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl delroom`` command.
+@AddonManager.add_subparser
+def subparser_server_notice(subparsers: SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl server-notice`` command.
 
     Parameters
     ----------
     subparsers : argparse._SubParsersAction
-        The object which is returned by
-        ``parser.add_subparsers()``.
+        The object which is returned by ``parser.add_subparsers()``.
 
     Returns
     -------
@@ -53,23 +55,32 @@ def subparser_delroom(subparsers: SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "delroom", help="Deletes an empty room from the database"
+        "server-notice", help="Send a server notice"
     )
     parser.add_argument(
-        "RoomID",
-        type=str,
-        help="The Room-ID",
+        "username",
+        help=(
+            "The user which will receive the server-notice."
+            "(e.g. for '@Michael@MichaelSasser.org' use 'michael')"
+        ),
     )
-    parser.set_defaults(func=delroom)
+    parser.add_argument("message", help="The message")
+    parser.set_defaults(func=server_notice)
 
 
-def delroom(arg: Namespace, yaml: YAML) -> int:
-    """Delete an empty room from the database.
+def server_notice(arg: Namespace, yaml: YAML) -> int:
+    """Send a server notice to a matrix instance.
+
+    Notes
+    -----
+    - It uses the synapse admin API.
+    - Note that "server notices" must be enabled in homeserver.yaml before
+      this API can be used.
 
     Parameters
     ----------
     arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``
+        The ``Namespace`` object of argparse's ``parse_args()``.
     yaml : matrixctl.handlers.yaml.YAML
         The configuration file handler.
 
@@ -82,30 +93,22 @@ def delroom(arg: Namespace, yaml: YAML) -> int:
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("api", "token"),
         domain=yaml.get("api", "domain"),
-        path="purge_room",
+        path="send_server_notice",
         method="POST",
         api_version="v1",
-        data={"room_id": arg.RoomID},
+        data={
+            "user_id": (f"@{arg.username}:" f"{yaml.get('api', 'domain')}"),
+            "content": {
+                "msgtype": "m.text",
+                "body": arg.message,
+            },
+        },
     )
 
     try:
-        request(req).json()
-    except InternalResponseError as e:
-        if "json" in dir(e.payload):
-            try:
-                if e.payload.json()["errcode"] in (
-                    "M_NOT_FOUND",
-                    "M_UNKNOWN",
-                ):
-                    logger.error(f"{e.payload.json()['error']}")
-
-                    return 1
-            except KeyError:
-                pass  # log the fallback error
-
-        logger.error("Could not delete room")
-
-        return 1
+        request(req)
+    except InternalResponseError:
+        logger.error("The server notice was not sent.")
 
     return 0
 

@@ -24,11 +24,13 @@ from argparse import ArgumentParser
 from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
-from .handlers.ssh import SSH
-from .handlers.yaml import YAML
-from .password_helpers import ask_password
-from .password_helpers import ask_question
-from .password_helpers import gen_password
+from argparse_addon_manager.addon_manager import AddonManager
+
+from matrixctl.handlers.ssh import SSH
+from matrixctl.handlers.yaml import YAML
+from matrixctl.password_helpers import ask_password
+from matrixctl.password_helpers import ask_question
+from matrixctl.password_helpers import gen_password
 
 
 __author__: str = "Michael Sasser"
@@ -38,6 +40,7 @@ __email__: str = "Michael@MichaelSasser.org"
 JID_EXT: str = "matrix-jitsi-web"
 
 
+@AddonManager.add_subparser
 def subparser_adduser_jitsi(subparsers: SubParsersAction) -> None:
     """Create a subparser for the ``matrixctl adduser-jitsi`` command.
 

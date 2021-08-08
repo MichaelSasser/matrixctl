@@ -29,6 +29,8 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
+# TODO
+argparse_addon_manager = { path = "../argparse_addon_manager", develop = true }
 requests = "^2.25.1"
 GitPython = "^3.1.20"
 coloredlogs = "^15.0.1"
