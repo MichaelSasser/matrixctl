@@ -20,7 +20,7 @@
 from __future__ import annotations
 
 from argparse import ArgumentParser
-from argparse import _SubParsersAction as SubParsersAction
+from argparse import _SubParsersAction
 
 from argparse_addon_manager.addon_manager import AddonManager
 
@@ -30,7 +30,7 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 @AddonManager.add_subparser
-def subparser_stop(subparsers: SubParsersAction) -> None:
+def subparser_stop(subparsers: _SubParsersAction) -> None:
     """Create a subparser for the ``matrixctl stop`` command.
 
     Parameters

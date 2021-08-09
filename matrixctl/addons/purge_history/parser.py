@@ -22,10 +22,8 @@ Use this module to add the ``purge-histoy`` subcommand to ``matrixctl``.
 
 from __future__ import annotations
 
-import logging
-
 from argparse import ArgumentParser
-from argparse import _SubParsersAction as SubParsersAction
+from argparse import _SubParsersAction
 
 from argparse_addon_manager.addon_manager import AddonManager
 
@@ -34,11 +32,8 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-logger = logging.getLogger(__name__)
-
-
 @AddonManager.add_subparser
-def subparser_purge_history(subparsers: SubParsersAction) -> None:
+def subparser_purge_history(subparsers: _SubParsersAction) -> None:
     """Create a subparser for the ``matrixctl purge-history`` command.
 
     Parameters
