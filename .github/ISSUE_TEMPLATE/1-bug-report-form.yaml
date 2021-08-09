@@ -50,7 +50,7 @@ body:
       label: Relevant log output at debug level.
       placeholder: |
         You can enable debug output by adding a `-d` right after `matrixctl`.
-        For example `matrixctl -d adduser -a michael`
+        For example: `matrixctl -d adduser -a michael`
       render: shell
   - type: textarea
     id: screenshots
