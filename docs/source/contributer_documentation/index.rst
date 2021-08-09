@@ -85,8 +85,8 @@ Add a feature
 .. note:: If you have any questions feel free to ask in the issues, pull
           requests and discussions.
 
-.. note:: You often can use one if the :ref:`Commands` as template for a new
-          feature.
+.. note:: You often can use one of the :ref:`addons` as template for a new
+          addon.
 
 .. toctree::
    :maxdepth: 1
@@ -95,7 +95,7 @@ Add a feature
    handlers
    helpers
    type_hints_and_errors
-   commands
+   addons
    application
 
 .. toctree::

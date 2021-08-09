@@ -20,7 +20,7 @@ Handlers
 ********
 
 Handlers in MatrixCtl are used to handle the communication between the server
-and the :ref:`Commands` or to load config files.
+and the :ref:`Addons` or to load config files.
 
 Fixtures
 --------

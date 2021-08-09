@@ -20,6 +20,14 @@ Helpers
 
 Helpers or helper function are common functions used throughout the project.
 
+Addon Manager
+-------------
+
+.. automodule:: matrixctl.addon_manager
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Print
 -----
 
