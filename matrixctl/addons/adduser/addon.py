@@ -28,9 +28,7 @@ from matrixctl.handlers.ansible import ansible_run
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
-from matrixctl.password_helpers import ask_password
-from matrixctl.password_helpers import ask_question
-from matrixctl.password_helpers import gen_password
+from matrixctl.password_helpers import create_user
 
 
 __author__: str = "Michael Sasser"
@@ -69,29 +67,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    while True:
-        passwd_generated: bool = False
-
-        if arg.passwd is None:
-            arg.passwd = ask_password()
-
-        if arg.passwd == "":
-            arg.passwd = gen_password()
-            passwd_generated = True
-
-        print(f"Username: {arg.user}")
-
-        if passwd_generated:
-            print(f"Password (generated): {arg.passwd}")
-        else:
-            print("Password: **HIDDEN**")
-        print(f"Admin:    {'yes' if arg.admin else 'no'}")
-
-        answer = ask_question()
-
-        if answer:
-            break
-        arg.passwd = None
+    passwd: str = create_user(arg.user, arg.admin)
 
     if arg.ansible:
         ansible_run(
@@ -99,7 +75,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
             tags="register-user",
             extra_vars={
                 "username": arg.user,
-                "password": arg.passwd,
+                "password": passwd,
                 "admin": "yes" if arg.admin else "no",
             },
         )
@@ -109,7 +85,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         domain=yaml.get("api", "domain"),
         token=yaml.get("api", "token"),
         path=f"users/@{arg.user}:{yaml.get('api','domain')}",
-        data={"password": arg.passwd, "admin": arg.admin},
+        data={"password": passwd, "admin": arg.admin},
         method="PUT",
     )
     try:

@@ -24,9 +24,7 @@ from argparse import Namespace
 
 from matrixctl.handlers.ssh import SSH
 from matrixctl.handlers.yaml import YAML
-from matrixctl.password_helpers import ask_password
-from matrixctl.password_helpers import ask_question
-from matrixctl.password_helpers import gen_password
+from matrixctl.password_helpers import create_user
 
 
 __author__: str = "Michael Sasser"
@@ -38,16 +36,6 @@ JID_EXT: str = "matrix-jitsi-web"
 
 def addon(arg: Namespace, yaml: YAML) -> int:
     """Add a User to the jitsi instance.
-
-    It runs ``ask_password()`` first. If ``ask_password()`` returns ``None``
-    it generates a password with ``gen_password()``. Then it gives the user
-    a overview of the username, password and if the new user should be
-    generated as admin (if you added the ``--admin`` argument). Next, it asks
-    a question, if the entered values are correct with the ``ask_question``
-    function.
-
-    If the ``ask_question`` function returns True, it continues. If not, it
-    starts from the beginning.
 
     Parameters
     ----------
@@ -68,33 +56,13 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         else f"matrix.{yaml.get('api', 'domain')}"
     )
     with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
-        while True:
-            passwd_generated: bool = False
 
-            if arg.passwd is None:
-                arg.passwd = ask_password()
-
-            if arg.passwd == "":
-                arg.passwd = gen_password()
-                passwd_generated = True
-
-            print(f"Username: {arg.user}")
-
-            if passwd_generated:
-                print(f"Password (generated): {arg.passwd}")
-            else:
-                print("Password: **HIDDEN**")
-
-            answer = ask_question()
-
-            if answer:
-                break
-            arg.passwd = None
+        passwd: str = create_user(arg.user)
 
         cmd: str = (
             "sudo docker exec matrix-jitsi-prosody prosodyctl "
             f"--config /config/prosody.cfg.lua register "
-            f'"{arg.user}" {JID_EXT} "{arg.passwd}"'
+            f'"{arg.user}" {JID_EXT} "{passwd}"'
         )
 
         ssh.run_cmd(cmd)

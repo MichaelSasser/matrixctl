@@ -48,12 +48,6 @@ def subparser_adduser(subparsers: _SubParsersAction) -> None:
     )
     parser.add_argument("user", help="The Username of the new user")
     parser.add_argument(
-        "-p",
-        "--passwd",
-        help="The password of the new user. (If you don't enter a password, "
-        "you will be asked later.)",
-    )
-    parser.add_argument(
         "-a", "--admin", action="store_true", help="Create as admin user"
     )
     parser.add_argument(
