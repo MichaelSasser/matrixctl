@@ -145,7 +145,7 @@ def main() -> int:
         parser.print_help()
         return 1
 
-    print(f"{addon_module_import =}")
+    logger.debug(f"{addon_module_import =}")
     addon = import_module(addon_module_import)
 
     if args.debug:

@@ -21,7 +21,7 @@ from __future__ import annotations
 import argparse
 import logging
 
-from functools import wraps
+# from functools import wraps
 from importlib import import_module
 from pkgutil import iter_modules
 from typing import Callable
@@ -43,7 +43,32 @@ addons: list[SubParserType] = []
 
 def import_addons_from(
     addon_directory: str, addon_module: str, subparser_name: str
-):
+) -> None:
+    """Import addons in (global) addons.
+
+    Parameters
+    ----------
+    addon_directory : str
+        The absolute path as string to the addon directory.
+    addon_module : str
+        The import path (with dots ``.`` not slashes ``/``) to the addons
+        from project root e.g. "matrixctl.addons".
+    subparser_name : str
+        The name of the module the subparser is in.
+
+    ..Note:
+
+       The nothing will be imported, when the subparser is not in (global)
+       addons. To add the subparse to addons you need to decorate the subparsers
+       with ``matrixctl.addon_manager.subparser``
+
+
+    Returns
+    -------
+    none : None
+        The function always returnes ``None``.
+
+    """
     logger.debug(f"package dir set to {addon_directory}")
     logger.debug(f"addon_module set to {addon_module}")
     for (_, module_name, _) in iter_modules(
@@ -56,18 +81,51 @@ def import_addons_from(
 
 
 def subparser(func: SubParserType) -> SubParserType:
+    """Decorate subparsers with, to add them to (global) addons on import.
+
+    Parameters
+    ----------
+    func : matrixctl.addon_manager.SubParserType
+        A subparser.
+
+    ..Note:
+
+       The nothing will be imported, when the subparser is not in (global)
+       addons. To add the subparse to addons you need to decorate the subparsers
+       with ``matrixctl.addon_manager.subparser``
+
+
+    Returns
+    -------
+    decorated_func : matrixctl.addon_manager.SubParserType
+        The same subparser which was used as argument. (Without any changes)
+
+    """
     if func not in addons:
         addons.append(func)
 
-    # maybe return func?
-    @wraps(func)
-    def wrapper(parser: argparse._SubParsersAction) -> None:
-        func(parser)
-
-    return wrapper
+    # @wraps(func)
+    # def wrapper(parser: argparse._SubParsersAction) -> None:
+    #     func(parser)
+    #
+    # return wrapper
+    return func
 
 
 def setup(func: ParserSetupType) -> argparse.ArgumentParser:
+    """Add subparsers to the (main) parser.
+
+    Parameters
+    ----------
+    func : matrixctl.addon_manager.ParserSetupType
+        A callback to the main parser.
+
+    Returns
+    -------
+    parser : argparse.ArgumentParser
+        The parser which includes all subparsers.
+
+    """
 
     if len(addons) == 0:
         logger.error(
