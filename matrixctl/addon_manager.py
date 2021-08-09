@@ -34,6 +34,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 # Leave them here, as long as they are not needed elsewhere
+# skipcq: PYL-W0212
 SubParserType = Callable[[argparse._SubParsersAction], None]
 ParserSetupType = Callable[[], argparse.ArgumentParser]
 
@@ -42,7 +43,7 @@ addons: list[SubParserType] = []
 
 
 def import_addons_from(
-    addon_directory: str, addon_module: str, subparser_name: str
+    addon_directory: str, addon_module: str, parser_name: str
 ) -> None:
     """Import addons in (global) addons.
 
@@ -53,7 +54,7 @@ def import_addons_from(
     addon_module : str
         The import path (with dots ``.`` not slashes ``/``) to the addons
         from project root e.g. "matrixctl.addons".
-    subparser_name : str
+    parser_name : str
         The name of the module the subparser is in.
     ..Note:
         The nothing will be imported, when the subparser is not in (global)
@@ -71,9 +72,9 @@ def import_addons_from(
     for (_, module_name, _) in iter_modules(
         [addon_directory], f"{addon_module}."
     ):
-        subparser = f"{module_name}.{subparser_name}"
-        logger.debug(f"Found module: {subparser}")
-        module = import_module(subparser)
+        parser = f"{module_name}.{parser_name}"
+        logger.debug(f"Found module: {parser}")
+        module = import_module(parser)
         logger.debug(f"Imported: {module}")
 
 
@@ -130,6 +131,7 @@ def setup(func: ParserSetupType) -> argparse.ArgumentParser:
 
     parser: argparse.ArgumentParser = func()
     if len(addons) > 0:
+        # skipcq: PYL-W0212
         subparsers: argparse._SubParsersAction = parser.add_subparsers()
         for subparser in addons:
             subparser(subparsers)
