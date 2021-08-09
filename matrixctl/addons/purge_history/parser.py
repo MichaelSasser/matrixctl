@@ -25,14 +25,14 @@ from __future__ import annotations
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
-from argparse_addon_manager.addon_manager import AddonManager
+from matrixctl.addon_manager import subparser
 
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@AddonManager.add_subparser
+@subparser
 def subparser_purge_history(subparsers: _SubParsersAction) -> None:
     """Create a subparser for the ``matrixctl purge-history`` command.
 
