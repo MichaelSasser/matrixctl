@@ -103,8 +103,7 @@ def ask_password() -> str | NoReturn:
         passwd2 = getpass.getpass("Password (again): ")
         if passwd == passwd2:
             break
-        else:
-            print("The entered passwords do not match. Please try again!")
+        print("The entered passwords do not match. Please try again!")
 
     return passwd
 
