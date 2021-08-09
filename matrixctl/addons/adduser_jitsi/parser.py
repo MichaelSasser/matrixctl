@@ -48,12 +48,6 @@ def subparser_adduser_jitsi(subparsers: _SubParsersAction) -> None:
         "adduser-jitsi", help="Add a new jitsi user"
     )
     parser.add_argument("user", help="The Username of the new jitsi user")
-    parser.add_argument(
-        "-p",
-        "--passwd",
-        help="The password of the new jitsi user. (If you don't enter a "
-        "password, you will be asked later.)",
-    )
     parser.set_defaults(addon="adduser_jitsi")
 
 

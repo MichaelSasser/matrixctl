@@ -21,8 +21,6 @@ from __future__ import annotations
 
 import getpass
 import logging
-import secrets
-import string
 import sys
 
 from typing import NoReturn
@@ -35,8 +33,46 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-SPECIAL = "!§$%&/()=?.,;:_-#+*~{}[]°^@<>|\\"
-ALPHABET = string.ascii_letters + string.digits + SPECIAL
+def create_user(user: str, admin: bool | None = None) -> str | NoReturn:
+    """Ask the user to create a password.
+
+    The user will be asked twice for a password. After
+    that the function compares the two entered passwords. If they are the
+    same, and not empty, the function will ask the user if the data is correct
+    without disclosing the password.
+
+    Parameters
+    ----------
+    user : str
+        The username.
+    admin : bool or none, default is None
+        True, if the user will be an admin,
+        False, if the user will not have eleveted permissions.
+        None, if the admin permissions are not an criteria. The field will
+        be omitted in the data.
+
+    Returns
+    -------
+    password : str
+        The user entered password.
+
+    """
+    try:
+        passwd = ask_password()
+
+        print("-" * 52)
+        print("Please check, if the entered information is correct:")
+        print(f"  Username: {user}")
+        print("  Password: (REDACTED)")
+        if admin is not None:
+            print(f"  Admin:    {'yes' if admin else 'no'}")
+        print("-" * 52)
+
+        if ask_question():
+            return passwd
+        sys.exit(1)
+    except KeyboardInterrupt:
+        sys.exit(1)
 
 
 def ask_password() -> str | NoReturn:
@@ -44,12 +80,7 @@ def ask_password() -> str | NoReturn:
 
     The user will be asked twice for a password. After
     that the function compares the two entered passwords. If they are the
-    same, even when they are empty, the function will return the password.
-
-    Notes
-    -----
-    Keep in mind: When the user presses enter twice, without entering a
-    password, the function will return an empty `str`. **This is by-design**.
+    same, and not empty, the function will return the password.
 
     Parameters
     ----------
@@ -58,79 +89,23 @@ def ask_password() -> str | NoReturn:
     Returns
     -------
     password : str
-        The user entered password. The string might me empty!
+        The user entered password.
 
     """
     passwd: str | None = None
     passwd2: str | None = None
 
-    try:
-        while True:
-            passwd = getpass.getpass()
-            passwd2 = getpass.getpass("Password (again): ")
-            if passwd == passwd2:
-                break
-
-        return passwd
-    except KeyboardInterrupt:
-        sys.exit(1)
-
-
-def gen_password(
-    length: int = 16,
-    min_digits: int = 3,
-    min_special: int = 1,
-    max_special: int = 3,
-) -> str:
-    """Generate a password.
-
-    It uses lower- and uppercase
-    characters, digits and some special characters, you can find in the
-    ``SPECIAL`` variable in this file.
-
-    It uses at least:
-
-    - ``min_digits`` digits
-    - ``min_special`` special characters
-
-    It uses maximal:
-
-    - ``max_special`` special characters
-
-    The rest are lower- and uppercase characters.
-
-    Parameters
-    ----------
-    length : int, defautl=16
-        The desired length of the password to generate.
-    min_digits : int, default=3
-        The desired minimum of digits of the password.
-    min_special : int, default=1
-        The desired minimum of special characters of the password.
-    max_special : int, default=3
-        The desired maximum of special characters of the password.
-
-    Returns
-    -------
-    password : str
-        The generated password.
-
-    """
-
     while True:
-        password = "".join(secrets.choice(ALPHABET) for _ in range(length))
+        passwd = getpass.getpass()
+        if passwd == "":
+            print("The password must not be empty!")
+            continue
+        passwd2 = getpass.getpass("Password (again): ")
+        if passwd == passwd2:
+            break
+        print("The entered passwords do not match. Please try again!")
 
-        # pylint: disable=chained-comparison
-
-        if (
-            any(c.islower() for c in password)
-            and any(c.isupper() for c in password)
-            and sum(c.isdigit() for c in password) >= min_digits
-            and min_special
-            <= sum(c in SPECIAL for c in password)
-            <= max_special
-        ):
-            return password
+    return passwd
 
 
 def ask_question(question: str = "Is everything correct?") -> bool:
