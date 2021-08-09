@@ -85,7 +85,7 @@ Add a feature
 .. note:: If you have any questions feel free to ask in the issues, pull
           requests and discussions.
 
-.. note:: You often can use one of the :ref:`addons` as template for a new
+.. note:: You often can use one of the :ref:`Addons` as template for a new
           addon.
 
 .. toctree::

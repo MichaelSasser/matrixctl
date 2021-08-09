@@ -149,8 +149,8 @@ class YAML:
                 return cast(YAMLFullConfigType, yaml.load(stream))
         except YAMLError:
             logger.error(
-                f"Please check your config file {str(path)}. MatrixCtl was not "
-                "able to read it."
+                f"Please check your config file {str(path)}. MatrixCtl was "
+                "not able to read it."
             )
         except FileNotFoundError:
             logger.debug(f'The config file "{str(path)}" does not exist.')

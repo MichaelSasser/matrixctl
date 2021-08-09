@@ -137,8 +137,8 @@ def main() -> int:
     except AttributeError as e:
         if args.debug:
             logger.warning(
-                "The parser of the addon which has been called did not have an "
-                'arg "args.addon". If you did not enter an subcommand, '
+                "The parser of the addon which has been called did not have "
+                'an arg "args.addon". If you did not enter an subcommand, '
                 'e.g. "matrixctl -d" you can ignore this error.'
             )
             raise AttributeError(e) from e
