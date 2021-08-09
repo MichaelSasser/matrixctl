@@ -20,9 +20,11 @@
 from __future__ import annotations
 
 import getpass
+import sys
 import logging
 import secrets
 import string
+from typing import NoReturn
 
 
 logger = logging.getLogger(__name__)
@@ -36,7 +38,7 @@ SPECIAL = "!§$%&/()=?.,;:_-#+*~{}[]°^@<>|\\"
 ALPHABET = string.ascii_letters + string.digits + SPECIAL
 
 
-def ask_password() -> str:
+def ask_password() -> str | NoReturn:
     """Ask the user to create a password.
 
     The user will be asked twice for a password. After
@@ -61,13 +63,16 @@ def ask_password() -> str:
     passwd: str | None = None
     passwd2: str | None = None
 
-    while True:
-        passwd = getpass.getpass()
-        passwd2 = getpass.getpass("Password (again): ")
-        if passwd == passwd2:
-            break
+    try:
+        while True:
+            passwd = getpass.getpass()
+            passwd2 = getpass.getpass("Password (again): ")
+            if passwd == passwd2:
+                break
 
-    return passwd
+        return passwd
+    except KeyboardInterrupt:
+        sys.exit(1)
 
 
 def gen_password(

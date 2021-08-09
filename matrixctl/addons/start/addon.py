@@ -15,16 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add the ``version`` subcommand to ``matrixctl``."""
+"""Use this module to add the ``(re)start`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
-from argparse import _SubParsersAction as SubParsersAction
+from argparse import Namespace
 
-from argparse_addon_manager.addon_manager import AddonManager
+from matrixctl.handlers.ansible import ansible_run
+from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -34,24 +34,24 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-@AddonManager.add_subparser
-def subparser_version(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl version`` command.
+def addon(_: Namespace, yaml: YAML) -> int:
+    """Start/Restart the OCI containers.
 
     Parameters
     ----------
-    subparsers : argparse._SubParsersAction
-        The object which is returned by ``parser.add_subparsers()``.
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``.
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
-    None
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
 
     """
-    parser: ArgumentParser = subparsers.add_parser(
-        "version", help="Get the version of the Synapse instance"
-    )
-    parser.set_defaults(addon="version")
+    ansible_run(yaml.get("ansible", "playbook"), tags="start")
+    return 0
 
 
 # vim: set ft=python :

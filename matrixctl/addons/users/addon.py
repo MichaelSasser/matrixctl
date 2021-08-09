@@ -21,11 +21,8 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
 from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
 
-from argparse_addon_manager.addon_manager import AddonManager
 from tabulate import tabulate
 
 from matrixctl.errors import InternalResponseError
@@ -41,36 +38,6 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 logger = logging.getLogger(__name__)
-
-
-@AddonManager.add_subparser
-def subparser_users(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl users`` command.
-
-    Parameters
-    ----------
-    subparsers : argparse._SubParsersAction
-        The object which is returned by ``parser.add_subparsers()``.
-
-    Returns
-    -------
-    None
-
-    """
-    parser: ArgumentParser = subparsers.add_parser("users", help="Lists users")
-    parser.add_argument(
-        "-a", "--all", action="store_true", help="Shows all users"
-    )
-    parser.add_argument(
-        "-g", "--with-guests", action="store_true", help="Shows guests"
-    )
-    parser.add_argument(
-        "-d",
-        "--with-deactivated",
-        action="store_true",
-        help="Shows deactivated accounts",
-    )
-    parser.set_defaults(addon="users")
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:

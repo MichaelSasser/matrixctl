@@ -40,7 +40,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-def adduser(arg: Namespace, yaml: YAML) -> int:
+def addon(arg: Namespace, yaml: YAML) -> int:
     """Add a User to the synapse instance.
 
     It runs ``ask_password()`` first. If ``ask_password()`` returns ``None``

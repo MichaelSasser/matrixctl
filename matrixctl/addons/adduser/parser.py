@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2021  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -65,10 +64,8 @@ def subparser_adduser(subparsers: SubParsersAction) -> None:
     parser.add_argument(
         "--ansible", action="store_true", help="Use ansible insted of the api"
     )
-    # do this somewhere else
-    from .main import adduser
 
-    parser.set_defaults(func=adduser)
+    parser.set_defaults(addon="adduser")
 
 
 # vim: set ft=python :

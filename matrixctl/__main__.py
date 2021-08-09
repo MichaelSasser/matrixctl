@@ -25,6 +25,7 @@ import logging
 # from argparse import _SubParsersAction
 # from collections.abc import Callable
 from pathlib import Path
+from importlib import import_module
 
 import coloredlogs
 
@@ -189,8 +190,25 @@ def main() -> int:
         None if args.config is None else (args.config,), args.server
     )
 
+    # only import the selected addon
+    try:
+        addon_module_import = f"{addon_module}.{args.addon}.addon"
+    except AttributeError as e:
+        if args.debug:
+            logger.warning(
+                "The parser of the addon which has been called did not have an "
+                'arg "args.addon". If you did not enter an subcommand, '
+                'e.g. "matrixctl -d" you can ignore this error.'
+            )
+            raise AttributeError(e) from e
+        parser.print_help()
+        return 1
+
+    print(f"{addon_module_import =}")
+    addon = import_module(addon_module_import)
+
     if args.debug:
-        logger.debug("Disabing help on AttributeError")
+        logger.debug("Disabing help on AttributeError")  # may not be needed
         logger.warning(
             "In debugging mode help is disabled! If you don't use any "
             "attibutes, the program will throw a AttributeError like: "
@@ -199,10 +217,10 @@ def main() -> int:
             'in debug mode, use the "--help" attribute.'
         )
 
-        return int(args.func(args, yaml))
+        return int(addon.addon(args, yaml))
 
     try:
-        return int(args.func(args, yaml))
+        return int(addon.addon(args, yaml))
     except AttributeError:
         parser.print_help()
 

@@ -22,17 +22,9 @@ from __future__ import annotations
 import logging
 
 from argparse import ArgumentParser
-from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from argparse_addon_manager.addon_manager import AddonManager
-from tabulate import tabulate
-
-from matrixctl.errors import InternalResponseError
-from matrixctl.handlers.api import RequestBuilder
-from matrixctl.handlers.api import request
-from matrixctl.handlers.yaml import YAML
-from matrixctl.typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -80,104 +72,7 @@ def subparser_rooms(subparsers: SubParsersAction) -> None:
         default=None,
         help="Search for rooms with a specific search term (Case-Sensitive)",
     )
-    parser.set_defaults(func=rooms)
-
-
-def rooms(arg: Namespace, yaml: YAML) -> int:
-    """Generate a table of the matrix rooms.
-
-    Parameters
-    ----------
-    arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``.
-    yaml : matrixctl.handlers.yaml.YAML
-        The configuration file handler.
-
-    Returns
-    -------
-    err_code : int
-        Non-zero value indicates error code, or zero on success.
-
-    """
-    from_room: int = 0
-    rooms_list: list[JsonDict] = []
-
-    req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
-        path="rooms",
-        api_version="v1",
-    )
-
-    if arg.number > 0:
-        req.params["limit"] = arg.number
-
-    if arg.filter:
-        req.params["search_term"] = arg.filter
-
-    if arg.reverse:
-        req.params["dir"] = "b"
-
-    if arg.order_by_size:
-        req.params["order_by"] = "size"
-
-    while True:
-
-        req.params["from"] = from_room  # from must be in the loop
-        try:
-            lst: JsonDict = request(req).json()
-        except InternalResponseError:
-            logger.critical("Could not get the room table.")
-
-            return 1
-
-        rooms_list += lst["rooms"]
-        try:
-            from_room = lst["next_token"]
-        except KeyError:
-            break
-    print_rooms_table(rooms_list)
-
-    return 0
-
-
-def print_rooms_table(rooms_list: list[JsonDict]) -> None:
-    """Use this function as helper to pint the room table.
-
-    Parameters
-    ----------
-    rooms_list : list of matrixctl.typehints.JsonDict
-        A list of rooms from the API.
-
-    Returns
-    -------
-    None
-
-    """
-
-    room_list: list[tuple[str, int, str, str]] = []
-
-    for room in rooms_list:
-        name = room["name"]
-        members: int = room["joined_members"]
-        alias: str = room["canonical_alias"]
-        room_id: str = room["room_id"]
-
-        room_list.append(
-            (
-                name,
-                members,
-                alias,
-                room_id,
-            )
-        )
-    print(
-        tabulate(
-            room_list,
-            headers=("Name", "Members", "Alias", "Room ID"),
-            tablefmt="psql",
-        )
-    )
+    parser.set_defaults(addon="rooms")
 
 
 # vim: set ft=python :

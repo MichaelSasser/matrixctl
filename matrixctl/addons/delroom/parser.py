@@ -22,15 +22,9 @@ from __future__ import annotations
 import logging
 
 from argparse import ArgumentParser
-from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from argparse_addon_manager.addon_manager import AddonManager
-
-from matrixctl.errors import InternalResponseError
-from matrixctl.handlers.api import RequestBuilder
-from matrixctl.handlers.api import request
-from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -63,54 +57,7 @@ def subparser_delroom(subparsers: SubParsersAction) -> None:
         type=str,
         help="The Room-ID",
     )
-    parser.set_defaults(func=delroom)
-
-
-def delroom(arg: Namespace, yaml: YAML) -> int:
-    """Delete an empty room from the database.
-
-    Parameters
-    ----------
-    arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``
-    yaml : matrixctl.handlers.yaml.YAML
-        The configuration file handler.
-
-    Returns
-    -------
-    err_code : int
-        Non-zero value indicates error code, or zero on success.
-
-    """
-    req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
-        path="purge_room",
-        method="POST",
-        api_version="v1",
-        data={"room_id": arg.RoomID},
-    )
-
-    try:
-        request(req).json()
-    except InternalResponseError as e:
-        if "json" in dir(e.payload):
-            try:
-                if e.payload.json()["errcode"] in (
-                    "M_NOT_FOUND",
-                    "M_UNKNOWN",
-                ):
-                    logger.error(f"{e.payload.json()['error']}")
-
-                    return 1
-            except KeyError:
-                pass  # log the fallback error
-
-        logger.error("Could not delete room")
-
-        return 1
-
-    return 0
+    parser.set_defaults(addon="delroom")
 
 
 # vim: set ft=python :

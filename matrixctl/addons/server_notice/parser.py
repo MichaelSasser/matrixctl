@@ -22,15 +22,9 @@ from __future__ import annotations
 import logging
 
 from argparse import ArgumentParser
-from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from argparse_addon_manager.addon_manager import AddonManager
-
-from matrixctl.errors import InternalResponseError
-from matrixctl.handlers.api import RequestBuilder
-from matrixctl.handlers.api import request
-from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -65,52 +59,7 @@ def subparser_server_notice(subparsers: SubParsersAction) -> None:
         ),
     )
     parser.add_argument("message", help="The message")
-    parser.set_defaults(func=server_notice)
-
-
-def server_notice(arg: Namespace, yaml: YAML) -> int:
-    """Send a server notice to a matrix instance.
-
-    Notes
-    -----
-    - It uses the synapse admin API.
-    - Note that "server notices" must be enabled in homeserver.yaml before
-      this API can be used.
-
-    Parameters
-    ----------
-    arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``.
-    yaml : matrixctl.handlers.yaml.YAML
-        The configuration file handler.
-
-    Returns
-    -------
-    err_code : int
-        Non-zero value indicates error code, or zero on success.
-
-    """
-    req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
-        path="send_server_notice",
-        method="POST",
-        api_version="v1",
-        data={
-            "user_id": (f"@{arg.username}:" f"{yaml.get('api', 'domain')}"),
-            "content": {
-                "msgtype": "m.text",
-                "body": arg.message,
-            },
-        },
-    )
-
-    try:
-        request(req)
-    except InternalResponseError:
-        logger.error("The server notice was not sent.")
-
-    return 0
+    parser.set_defaults(addon="server_notice")
 
 
 # vim: set ft=python :

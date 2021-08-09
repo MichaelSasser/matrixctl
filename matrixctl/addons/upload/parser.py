@@ -22,18 +22,9 @@ from __future__ import annotations
 import logging
 
 from argparse import ArgumentParser
-from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
-from mimetypes import MimeTypes
-from pathlib import Path
 
 from argparse_addon_manager.addon_manager import AddonManager
-
-from matrixctl.errors import InternalResponseError
-from matrixctl.handlers.api import RequestBuilder
-from matrixctl.handlers.api import request
-from matrixctl.handlers.yaml import YAML
-from matrixctl.typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -60,60 +51,7 @@ def subparser_upload(subparsers: SubParsersAction) -> None:
         "upload", help="Upload a file."
     )
     parser.add_argument("file", help="The path to a file or image to upload")
-    parser.set_defaults(func=upload)
-
-
-def upload(arg: Namespace, yaml: YAML) -> int:
-    """Upload a file or image to the matix instance.
-
-    Parameters
-    ----------
-    arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``.
-    yaml : matrixctl.handlers.yaml.YAML
-        The configuration file handler.
-
-    Returns
-    -------
-    err_code : int
-        Non-zero value indicates error code, or zero on success.
-
-    """
-    file_path: Path = Path(arg.file).absolute()
-    logger.debug(f"upload: {file_path=}")
-    mime_types: MimeTypes = MimeTypes()
-    file_type: str = str(mime_types.guess_type(file_path.name)[0])
-    logger.debug(f"upload: {file_type=}")
-    try:
-        with file_path.open("rb") as fp:
-            file: bytes = fp.read()
-    except FileNotFoundError:
-        print("No such file found. Please check your filepath.")
-        return 1
-
-    req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
-        path="upload/",
-        api_path="_matrix/media",
-        method="POST",
-        api_version="r0",
-        json=False,
-        headers={"Content-Type": file_type},
-        data=file,
-    )
-    try:
-        response: JsonDict = request(req).json()
-    except InternalResponseError:
-        logger.error("The file was not uploaded.")
-        return 1
-    try:
-        print("Content URI: ", response["content_uri"])
-    except KeyError as e:
-        raise InternalResponseError(
-            "Upload was successful, but no content_uri was found.", response
-        ) from e
-    return 0
+    parser.set_defaults(addon="upload")
 
 
 # vim: set ft=python :

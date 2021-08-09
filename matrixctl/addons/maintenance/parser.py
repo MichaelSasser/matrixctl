@@ -22,13 +22,9 @@ from __future__ import annotations
 import logging
 
 from argparse import ArgumentParser
-from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from argparse_addon_manager.addon_manager import AddonManager
-
-from matrixctl.handlers.ansible import ansible_run
-from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -56,33 +52,7 @@ def subparser_maintenance(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "maintenance", help="Run maintenance tasks"
     )
-    parser.set_defaults(func=maintenance)
-
-
-def maintenance(_: Namespace, yaml: YAML) -> int:
-    """Run the maintenance procedure of the ansible playbook.
-
-    Parameters
-    ----------
-    _ : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``.
-        (In this case unused, but necessary because of the structure of the
-        program).
-    yaml : matrixctl.handlers.yaml.YAML
-        The configuration file handler.
-
-    Returns
-    -------
-    err_code : int
-        Non-zero value indicates error code, or zero on success.
-
-    """
-    ansible_run(
-        playbook=yaml.get("ansible", "playbook"),
-        tags="run-postgres-vacuum,rust-synapse-compress-state,start",
-    )
-
-    return 0
+    parser.set_defaults(addon="maintenance")
 
 
 # vim: set ft=python :

@@ -22,13 +22,9 @@ from __future__ import annotations
 import logging
 
 from argparse import ArgumentParser
-from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from argparse_addon_manager.addon_manager import AddonManager
-
-from matrixctl.handlers.ansible import ansible_run
-from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -56,29 +52,7 @@ def subparser_check(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "check", help="Checks the deployment with ansible"
     )
-    parser.set_defaults(func=check)
-
-
-def check(_: Namespace, yaml: YAML) -> int:
-    """Check the deployment with andible.
-
-    Parameters
-    ----------
-    arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``
-    yaml : matrixctl.handlers.yaml.YAML
-        The configuration file handler.
-
-    Returns
-    -------
-    err_code : int
-        Non-zero value indicates error code, or zero on success.
-
-    """
-    logger.debug("check")
-
-    ansible_run(playbook=yaml.get("ansible", "playbook"), tags="check")
-    return 0
+    parser.set_defaults(addon="check")
 
 
 # vim: set ft=python :

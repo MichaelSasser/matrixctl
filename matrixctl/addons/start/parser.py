@@ -22,13 +22,9 @@ from __future__ import annotations
 import logging
 
 from argparse import ArgumentParser
-from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from argparse_addon_manager.addon_manager import AddonManager
-
-from matrixctl.handlers.ansible import ansible_run
-from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -55,9 +51,10 @@ def subparser_start(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "start", help="Starts all OCI containers"
     )
-    parser.set_defaults(func=start)
+    parser.set_defaults(addon="start")
 
 
+@AddonManager.add_subparser
 def subparser_restart(subparsers: SubParsersAction) -> None:
     """Create a subparser for the ``matrixctl restart`` command.
 
@@ -82,27 +79,7 @@ def subparser_restart(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "restart", help="Restarts all OCI containers (alias for start)"
     )
-    parser.set_defaults(func=start)  # Keep it "start"
-
-
-def start(_: Namespace, yaml: YAML) -> int:
-    """Start/Restart the OCI containers.
-
-    Parameters
-    ----------
-    arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``.
-    yaml : matrixctl.handlers.yaml.YAML
-        The configuration file handler.
-
-    Returns
-    -------
-    err_code : int
-        Non-zero value indicates error code, or zero on success.
-
-    """
-    ansible_run(yaml.get("ansible", "playbook"), tags="start")
-    return 0
+    parser.set_defaults(addon="start")  # Keep it "start"
 
 
 # vim: set ft=python :

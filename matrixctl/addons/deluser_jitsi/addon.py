@@ -19,36 +19,52 @@
 
 from __future__ import annotations
 
-from argparse import ArgumentParser
-from argparse import _SubParsersAction as SubParsersAction
+from argparse import Namespace
 
-from argparse_addon_manager.addon_manager import AddonManager
+from matrixctl.handlers.ssh import SSH
+from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@AddonManager.add_subparser
-def subparser_deluser_jitsi(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl deluser-jitsi`` command.
+JID_EXT: str = "matrix-jitsi-web"
+
+
+def addon(arg: Namespace, yaml: YAML) -> int:
+    """Delete a user from the jitsi instance.
+
+    It uses the ``Ssh`` class from the ``ssh_handler``.
 
     Parameters
     ----------
-    subparsers : argparse._SubParsersAction
-        The object which is returned by
-        ``parser.add_subparsers()``.
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
 
     Returns
     -------
-    None
+    err_code : int
+        Non-zero value indicates error code, or zero on success.
 
     """
-    parser: ArgumentParser = subparsers.add_parser(
-        "deluser-jitsi", help="Deletes a jitsi user"
+    address = (
+        yaml.get("ssh", "address")
+        if yaml.get("ssh", "address")
+        else f"matrix.{yaml.get('api','domain')}"
     )
-    parser.add_argument("user", help="The jitsi username to delete")
-    parser.set_defaults(addon="deluser_jitsi")
+    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
+        cmd: str = (
+            "sudo docker exec matrix-jitsi-prosody prosodyctl "
+            "--config /config/prosody.cfg.lua deluser "
+            f'"{arg.user}@{JID_EXT}"'
+        )
+
+        ssh.run_cmd(cmd)
+
+    return 0
 
 
 # vim: set ft=python :

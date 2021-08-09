@@ -20,13 +20,9 @@
 from __future__ import annotations
 
 from argparse import ArgumentParser
-from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from argparse_addon_manager.addon_manager import AddonManager
-
-from matrixctl.handlers.vcs import VCS
-from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -50,29 +46,7 @@ def subparser_update(subparsers: SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "update", help="Updates the ansible repo"
     )
-    parser.set_defaults(func=update)
-
-
-def update(_: Namespace, yaml: YAML) -> int:
-    """Update the synapse playbook with git.
-
-    Parameters
-    ----------
-    arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``.
-    yaml : matrixctl.handlers.yaml.YAML
-        The configuration file handler.
-
-    Returns
-    -------
-    err_code : int
-        Non-zero value indicates error code, or zero on success.
-
-    """
-    git: VCS = VCS(yaml.get("synapse", "playbook"))
-    git.pull()
-
-    return 0
+    parser.set_defaults(addon="update")
 
 
 # vim: set ft=python :

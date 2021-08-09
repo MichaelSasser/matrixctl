@@ -21,23 +21,13 @@
 from __future__ import annotations
 
 from argparse import ArgumentParser
-from argparse import Namespace
 from argparse import _SubParsersAction as SubParsersAction
 
 from argparse_addon_manager.addon_manager import AddonManager
 
-from matrixctl.handlers.ssh import SSH
-from matrixctl.handlers.yaml import YAML
-from matrixctl.password_helpers import ask_password
-from matrixctl.password_helpers import ask_question
-from matrixctl.password_helpers import gen_password
-
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
-
-
-JID_EXT: str = "matrix-jitsi-web"
 
 
 @AddonManager.add_subparser
@@ -64,73 +54,7 @@ def subparser_adduser_jitsi(subparsers: SubParsersAction) -> None:
         help="The password of the new jitsi user. (If you don't enter a "
         "password, you will be asked later.)",
     )
-    parser.set_defaults(func=adduser_jitsi)
-
-
-def adduser_jitsi(arg: Namespace, yaml: YAML) -> int:
-    """Add a User to the jitsi instance.
-
-    It runs ``ask_password()`` first. If ``ask_password()`` returns ``None``
-    it generates a password with ``gen_password()``. Then it gives the user
-    a overview of the username, password and if the new user should be
-    generated as admin (if you added the ``--admin`` argument). Next, it asks
-    a question, if the entered values are correct with the ``ask_question``
-    function.
-
-    If the ``ask_question`` function returns True, it continues. If not, it
-    starts from the beginning.
-
-    Parameters
-    ----------
-    arg : argparse.Namespace
-        The ``Namespace`` object of argparse's ``parse_args()``.
-    yaml : matrixctl.handlers.yaml.YAML
-        The configuration file handler.
-
-    Returns
-    -------
-    err_code : int
-        Non-zero value indicates error code, or zero on success.
-
-    """
-    address = (
-        yaml.get("ssh", "address")
-        if yaml.get("SSH", "Address")
-        else f"matrix.{yaml.get('api', 'domain')}"
-    )
-    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
-        while True:
-            passwd_generated: bool = False
-
-            if arg.passwd is None:
-                arg.passwd = ask_password()
-
-            if arg.passwd == "":
-                arg.passwd = gen_password()
-                passwd_generated = True
-
-            print(f"Username: {arg.user}")
-
-            if passwd_generated:
-                print(f"Password (generated): {arg.passwd}")
-            else:
-                print("Password: **HIDDEN**")
-
-            answer = ask_question()
-
-            if answer:
-                break
-            arg.passwd = None
-
-        cmd: str = (
-            "sudo docker exec matrix-jitsi-prosody prosodyctl "
-            f"--config /config/prosody.cfg.lua register "
-            f'"{arg.user}" {JID_EXT} "{arg.passwd}"'
-        )
-
-        ssh.run_cmd(cmd)
-
-        return 0
+    parser.set_defaults(addon="adduser_jitsi")
 
 
 # vim: set ft=python :
