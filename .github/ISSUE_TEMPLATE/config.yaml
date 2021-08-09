@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "⁉️ Need help with Argparse Addon Manager?"
+    url: https://github.com/MichaelSasser/argparse_addon_manager/discussions
+    about: Please ask and answer questions here.
+  - name: Matrix community
+    url: https://matrix.to/#/#matrixctl:matrix.org
+    about: Please ask and answer questions on Matrix.

@@ -1,0 +1,44 @@
+name: "\U0001F680 Feature request"
+description: Suggest an idea for improving MatrixCtl.
+title: "[Feature]: "
+labels: [enhancement]
+# assignees:
+#   - MichaelSasser
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting an idea to improve MatrixCtl.
+        Please fill in as much of the template below as you're able.
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Feature motivation
+      description: A clear and concise description of the problem or missing capability.
+      placeholder: |
+        I am always frustrated when ...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe a solution you'd like
+      description: A description of what you want to happen.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe the alternatives you've considered
+      description: Let us know about other (alternative) solutions you've tried or researched.
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the feature request here.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://matrixctl.readthedocs.io/en/latest/contributer_documentation/index.html)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
