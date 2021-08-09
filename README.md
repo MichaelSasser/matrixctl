@@ -19,32 +19,32 @@ MatrixCtl as a pure commandline tool. You can use it as package, if you like,
 but breaking changes may be introduced, even in a minor version shift.
 
 ```
-# matrixctl
-usage: matrixctl [-h] [--version] [-d]
-                 {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,rooms,delroom,update,upload,deploy,server-notice,start,stop,restart,maintenance,check,version}
-              ...
+$ matrixctl
+usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG]
+                 {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,maintenance,purge-history,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
+                 ...
 
 positional arguments:
-  {adduser,deluser,adduser-jitsi,deluser-jitsi,user,users,purge-history,rooms,delroom,update,upload,deploy,server-notice,get-event,start,restart,maintenance,check,version}
+  {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,maintenance,purge-history,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
     adduser             Add a new matrix user
-    deluser             Deletes a user
     adduser-jitsi       Add a new jitsi user
+    check               Checks the deployment with ansible
+    delroom             Deletes an empty room from the database
+    deluser             Deletes a user
     deluser-jitsi       Deletes a jitsi user
-    user                Get information about a specific user
-    users               Lists users
+    deploy              Provision and deploy
+    get-event           get an event from the DB
+    maintenance         Run maintenance tasks
     purge-history       Purge historic events from the DB
     rooms               List rooms
-    delroom             Deletes an empty room from the database
+    server-notice       Send a server notice
+    start               Starts all OCI containers
+    restart             Restarts all OCI containers (alias for start)
+    stop                Stops all OCI containers
     update              Updates the ansible repo
     upload              Upload a file.
-    deploy              Provision and deploy
-    server-notice       Send a server notice
-    get-event           get an event from the DB
-    start               Starts all OCI containers
-    stop                Stops all OCI containers
-    restart             Restarts all OCI containers (alias for start)
-    maintenance         Run maintenance tasks
-    check               Checks the OCI containers
+    user                Get information about a specific user
+    users               Lists users
     version             Get the version of the Synapse instance
 
 optional arguments:
