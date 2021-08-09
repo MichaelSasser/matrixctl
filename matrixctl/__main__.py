@@ -23,8 +23,8 @@ import argparse
 import logging
 
 from importlib import import_module
-
 from pathlib import Path
+from types import ModuleType
 
 import coloredlogs
 
@@ -133,7 +133,7 @@ def main() -> int:
     )
 
     try:
-        addon_module_import = f"{addon_module}.{args.addon}.addon"
+        addon_module_import: str = f"{addon_module}.{args.addon}.addon"
     except AttributeError as e:
         if args.debug:
             logger.warning(
@@ -146,7 +146,7 @@ def main() -> int:
         return 1
 
     logger.debug(f"{addon_module_import =}")
-    addon = import_module(addon_module_import)
+    addon: ModuleType = import_module(addon_module_import)
 
     if args.debug:
         logger.debug("Disabing help on AttributeError")  # may not be needed
@@ -158,10 +158,11 @@ def main() -> int:
             'in debug mode, use the "--help" attribute.'
         )
 
-        return int(addon.addon(args, yaml))
+        # Both should fail without catching the error
+        return int(addon.addon(args, yaml))  # type: ignore
 
     try:
-        return int(addon.addon(args, yaml))
+        return int(addon.addon(args, yaml))  # type: ignore
     except AttributeError:
         parser.print_help()
 

@@ -26,7 +26,6 @@ import re
 from argparse import Namespace
 from base64 import b64encode
 
-
 from matrixctl.handlers.ssh import SSH
 from matrixctl.handlers.ssh import SSHResponse
 from matrixctl.handlers.yaml import YAML

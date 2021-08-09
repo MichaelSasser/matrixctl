@@ -55,13 +55,10 @@ def import_addons_from(
         from project root e.g. "matrixctl.addons".
     subparser_name : str
         The name of the module the subparser is in.
-
     ..Note:
-
-       The nothing will be imported, when the subparser is not in (global)
-       addons. To add the subparse to addons you need to decorate the subparsers
-       with ``matrixctl.addon_manager.subparser``
-
+        The nothing will be imported, when the subparser is not in (global)
+        addons. To add the subparse to addons you need to decorate the subparsers
+        with ``matrixctl.addon_manager.subparser``
 
     Returns
     -------
@@ -87,13 +84,10 @@ def subparser(func: SubParserType) -> SubParserType:
     ----------
     func : matrixctl.addon_manager.SubParserType
         A subparser.
-
     ..Note:
-
-       The nothing will be imported, when the subparser is not in (global)
-       addons. To add the subparse to addons you need to decorate the subparsers
-       with ``matrixctl.addon_manager.subparser``
-
+        The nothing will be imported, when the subparser is not in (global)
+        addons. To add the subparse to addons you need to decorate the subparsers
+        with ``matrixctl.addon_manager.subparser``
 
     Returns
     -------

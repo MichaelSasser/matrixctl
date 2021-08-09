@@ -23,7 +23,6 @@ import logging
 
 from argparse import Namespace
 
-
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request

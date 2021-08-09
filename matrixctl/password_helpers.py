@@ -20,10 +20,11 @@
 from __future__ import annotations
 
 import getpass
-import sys
 import logging
 import secrets
 import string
+import sys
+
 from typing import NoReturn
 
 

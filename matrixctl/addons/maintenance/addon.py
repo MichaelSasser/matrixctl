@@ -23,7 +23,6 @@ import logging
 
 from argparse import Namespace
 
-
 from matrixctl.handlers.ansible import ansible_run
 from matrixctl.handlers.yaml import YAML
 

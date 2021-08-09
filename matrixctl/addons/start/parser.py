@@ -50,7 +50,7 @@ def subparser_start(subparsers: _SubParsersAction) -> None:
 
 
 @subparser
-def subparser_restart(subparsers: SubParsersAction) -> None:
+def subparser_restart(subparsers: _SubParsersAction) -> None:
     """Create a subparser for the ``matrixctl restart`` command.
 
     Notes
