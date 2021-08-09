@@ -133,6 +133,6 @@ def setup(func: ParserSetupType) -> argparse.ArgumentParser:
     if len(addons) > 0:
         # skipcq: PYL-W0212
         subparsers: argparse._SubParsersAction = parser.add_subparsers()
-        for subparser in addons:
-            subparser(subparsers)
+        for subparser_ in addons:
+            subparser_(subparsers)
     return parser
