@@ -174,7 +174,7 @@ def main() -> int:
 
     # Setup Addon Manager
     addon_manager: AddonManager = AddonManager()
-    addon_manager.import_addons_from(str(addon_dir), addon_module)
+    addon_manager.import_addons_from(str(addon_dir), addon_module, "parser")
     parser: argparse.ArgumentParser = addon_manager.setup(setup_parser)
     # parser = setup_parser()
 

@@ -21,11 +21,7 @@ from __future__ import annotations
 
 import logging
 
-from argparse import ArgumentParser
 from argparse import Namespace
-from argparse import _SubParsersAction as SubParsersAction
-
-from argparse_addon_manager.addon_manager import AddonManager
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.ansible import ansible_run
@@ -42,40 +38,6 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 logger = logging.getLogger(__name__)
-
-
-@AddonManager.add_subparser
-def subparser_adduser(subparsers: SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl adduser`` command.
-
-    Parameters
-    ----------
-    subparsers : argparse._SubParsersAction
-        The object which is returned by
-        ``parser.add_subparsers()``.
-
-    Returns
-    -------
-    None
-
-    """
-    parser: ArgumentParser = subparsers.add_parser(
-        "adduser", help="Add a new matrix user"
-    )
-    parser.add_argument("user", help="The Username of the new user")
-    parser.add_argument(
-        "-p",
-        "--passwd",
-        help="The password of the new user. (If you don't enter a password, "
-        "you will be asked later.)",
-    )
-    parser.add_argument(
-        "-a", "--admin", action="store_true", help="Create as admin user"
-    )
-    parser.add_argument(
-        "--ansible", action="store_true", help="Use ansible insted of the api"
-    )
-    parser.set_defaults(func=adduser)
 
 
 def adduser(arg: Namespace, yaml: YAML) -> int:
