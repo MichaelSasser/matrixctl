@@ -137,9 +137,10 @@ cycle and the
 branching model (by [Vincent Driessen](https://nvie.com/about/)).
 
 It has two branches with infinite lifetime. The:
-- [develop](https://github.com/MichaelSasser/matrixctl/tree/develop) branch is the
-merging branch,
-- [master](https://github.com/MichaelSasser/matrixctl/tree/master): branch gets updated on every release.
+- [develop](https://github.com/MichaelSasser/matrixctl/tree/develop)
+  branch is the merging branch,
+- [master](https://github.com/MichaelSasser/matrixctl/tree/master)
+  branch gets updated on every release.
 
 
 
