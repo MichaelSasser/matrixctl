@@ -190,6 +190,11 @@ rooms
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: matrixctl.addons.rooms.table
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 purge-history
 -------------
 
@@ -199,6 +204,21 @@ purge-history
    :show-inheritance:
 
 .. automodule:: matrixctl.addons.purge_history.addon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.purge_history.dialog
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.purge_history.handler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.purge_history.timing
    :members:
    :undoc-members:
    :show-inheritance:
