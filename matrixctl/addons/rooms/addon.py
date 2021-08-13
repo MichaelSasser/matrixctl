@@ -23,13 +23,13 @@ import logging
 
 from argparse import Namespace
 
-from tabulate import tabulate
-
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
+
+from .table import print_rooms_table
 
 
 __author__: str = "Michael Sasser"
@@ -95,45 +95,6 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     print_rooms_table(rooms_list)
 
     return 0
-
-
-def print_rooms_table(rooms_list: list[JsonDict]) -> None:
-    """Use this function as helper to pint the room table.
-
-    Parameters
-    ----------
-    rooms_list : list of matrixctl.typehints.JsonDict
-        A list of rooms from the API.
-
-    Returns
-    -------
-    None
-
-    """
-
-    room_list: list[tuple[str, int, str, str]] = []
-
-    for room in rooms_list:
-        name = room["name"]
-        members: int = room["joined_members"]
-        alias: str = room["canonical_alias"]
-        room_id: str = room["room_id"]
-
-        room_list.append(
-            (
-                name,
-                members,
-                alias,
-                room_id,
-            )
-        )
-    print(
-        tabulate(
-            room_list,
-            headers=("Name", "Members", "Alias", "Room ID"),
-            tablefmt="psql",
-        )
-    )
 
 
 # vim: set ft=python :
