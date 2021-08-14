@@ -25,6 +25,8 @@ import sys
 import typing
 import urllib.parse
 
+from contextlib import suppress
+
 import attr
 import requests
 
@@ -186,7 +188,7 @@ def request(req: RequestBuilder) -> requests.Response:
 
     logger.debug(f"{response.status_code=}")
     if response.status_code not in req.success_codes:
-        try:
+        with suppress(Exception):
             if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
                 logger.critical(
                     "The server rejected your access-token. "
@@ -195,9 +197,6 @@ def request(req: RequestBuilder) -> requests.Response:
                     "time, you log out."
                 )
                 sys.exit(1)
-        except Exception:  # pylint: disable=broad-except
-            pass
-
         raise InternalResponseError(payload=response)
 
     return response

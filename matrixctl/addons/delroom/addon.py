@@ -22,6 +22,7 @@ from __future__ import annotations
 import logging
 
 from argparse import Namespace
+from contextlib import suppress
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
@@ -65,7 +66,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         request(req).json()
     except InternalResponseError as e:
         if "json" in dir(e.payload):
-            try:
+            with suppress(KeyError):
                 if e.payload.json()["errcode"] in (
                     "M_NOT_FOUND",
                     "M_UNKNOWN",
@@ -73,8 +74,6 @@ def addon(arg: Namespace, yaml: YAML) -> int:
                     logger.error(f"{e.payload.json()['error']}")
 
                     return 1
-            except KeyError:
-                pass  # log the fallback error
 
         logger.error("Could not delete room")
 

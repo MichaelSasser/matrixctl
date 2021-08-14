@@ -25,6 +25,7 @@ from __future__ import annotations
 import logging
 
 from argparse import Namespace
+from contextlib import suppress
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
@@ -73,12 +74,10 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     try:
         response: JsonDict = request(req).json()
     except InternalResponseError as e:
-        try:
+        with suppress(KeyError):
             if e.payload["errcode"] == "M_UNKNOWN":
                 logger.critical(e.payload["error"])
                 return 1
-        except KeyError:
-            pass
         logger.critical(
             "Something went wrong with the request. Please check your data "
             "again."
