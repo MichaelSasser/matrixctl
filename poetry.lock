@@ -1063,7 +1063,7 @@ dev = ["packaging"]
 
 [[package]]
 name = "tox"
-version = "3.24.1"
+version = "3.24.2"
 description = "tox is a generic virtualenv management and test command line tool"
 category = "dev"
 optional = false
@@ -1235,7 +1235,7 @@ docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "numpydoc", "s
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "6c7003121352053d1d54e5a755b11e4c290a6d4824ed5ab680ebfc509979f266"
+content-hash = "942348101a6ba224aa88af11d03da9175c5cc608c0cb9a69493c98b2c3336fa3"
 
 [metadata.files]
 alabaster = [
@@ -1975,8 +1975,8 @@ towncrier = [
     {file = "towncrier-21.3.0.tar.gz", hash = "sha256:6eed0bc924d72c98c000cb8a64de3bd566e5cb0d11032b73fcccf8a8f956ddfe"},
 ]
 tox = [
-    {file = "tox-3.24.1-py2.py3-none-any.whl", hash = "sha256:60eda26fa47b7130e6fc1145620b1fd897963af521093c3685c3f63d1c394029"},
-    {file = "tox-3.24.1.tar.gz", hash = "sha256:9850daeb96d21b4abf049bc5f197426123039e383ebfed201764e9355fc5a880"},
+    {file = "tox-3.24.2-py2.py3-none-any.whl", hash = "sha256:d45d39203b10fdb2f6887c6779865e31de82cea07419a739844cc4bd4b3493e2"},
+    {file = "tox-3.24.2.tar.gz", hash = "sha256:ae442d4d51d5a3afb3711e4c7d94f5ca8461afd27c53f5dd994aba34896cf02d"},
 ]
 types-attrs = [
     {file = "types_attrs-19.1.0-py2.py3-none-any.whl", hash = "sha256:d11acf7a2531a7c52a740c30fa3eb8d01d3066c10d34c01ff5e59502caac5352"},
