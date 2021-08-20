@@ -266,14 +266,27 @@ get-event
 ---------
 
 .. automodule:: matrixctl.addons.get_event.parser
-   :members:
-   :undoc-members:
-   :show-inheritance:
+ :members:
+ :undoc-members:
+ :show-inheritance:
 
 .. automodule:: matrixctl.addons.get_event.addon
-   :members:
-   :undoc-members:
-   :show-inheritance:
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+get-events
+----------
+
+.. automodule:: matrixctl.addons.get_events.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.get_events.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
 
 ..
    vim: set ft=rst :
