@@ -141,7 +141,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         f" AND type = '{message_type.value}'" if message_type else ""
     )
     query: str = (
-        f"SELECT json FROM event_json WHERE event_id IN ("
+        "SELECT json FROM event_json WHERE event_id IN ("
         "SELECT event_id FROM events WHERE sender = "
         f"'{arg.user}'"
         f"{room_id_str}"
