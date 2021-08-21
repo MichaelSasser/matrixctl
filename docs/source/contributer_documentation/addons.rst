@@ -177,6 +177,19 @@ users
    :undoc-members:
    :show-inheritance:
 
+report
+------
+
+.. automodule:: matrixctl.addons.report.parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.report.addon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 reports
 -------
 
@@ -189,7 +202,6 @@ reports
    :members:
    :undoc-members:
    :show-inheritance:
-
 
 rooms
 -----
