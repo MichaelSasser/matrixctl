@@ -19,6 +19,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any
 
 
@@ -49,6 +50,29 @@ def human_readable_bool(b: Any) -> str:
         b = bool(b)
 
     return "Yes" if b else "No"
+
+
+def timestamp_to_dt(ts: str, sep: str = " ") -> str:
+    """Convert a timestamp (in ms) to a datetime string.
+
+    Parameters
+    ----------
+    ts : str
+        The value to "convert".
+    sep : str
+        The seperator between the date and the time.
+
+    Returns
+    -------
+    dt : str
+        A datetime string (e.g. 2021-08-21 04:55:55)
+
+    """
+    return (
+        datetime.fromtimestamp(int(ts) // 1000.0)
+        .strftime("%Y-%m-%d %H:%M:%S")
+        .replace(" ", sep)
+    )
 
 
 # vim: set ft=python :
