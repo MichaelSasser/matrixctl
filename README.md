@@ -17,7 +17,7 @@ usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG]
                  ...
 
 positional arguments:
-  {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,maintenance,purge-history,reports,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
+  {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,maintenance,purge-history,report,reports,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
     adduser             Add a new matrix user
     adduser-jitsi       Add a new jitsi user
     check               Checks the deployment with ansible
@@ -29,6 +29,7 @@ positional arguments:
     get-events          get user-events from the DB
     maintenance         Run maintenance tasks
     purge-history       Purge historic events from the DB
+    report              Get an report event by report ID
     reports             Lists reported events
     rooms               List rooms
     server-notice       Send a server notice

@@ -45,11 +45,6 @@ logger = logging.getLogger(__name__)
 def addon(_: Namespace, yaml: YAML) -> int:
     """Print a table of the reported events.
 
-    This function generates and prints a table of matrix user accounts.
-    The table can be modified.
-
-    TODO
-
     Examples
     --------
     .. code-block:: console
