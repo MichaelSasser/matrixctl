@@ -84,8 +84,12 @@ def handle_newlines(
         ] = transpose_newlines_to_rows(splitted, occurences)
 
         # The first new line will replace the old line
-        data[line_number + offset] = next(new_rows)
-        # logger.debug(f"new row = {data[line_number+offset]}")
+        try:
+            data[line_number + offset] = next(new_rows)
+            # logger.debug(f"new row = {data[line_number+offset]}")
+        except StopIteration:
+            logger.error("There is a bug in the table handler.")
+            return data, inhibit_sep
 
         # The following lines will be inserted
         for additional_row in new_rows:
