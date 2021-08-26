@@ -32,17 +32,32 @@ logger = logging.getLogger(__name__)
 
 
 def get_colum_length(
-    data: list[list[str]], header: list[list[str]] | None
+    data: list[list[str]], headers: None | list[list[str]]
 ) -> tuple[int, ...]:
-    """Transpose rows and find longest line."""
+    """Transpose rows and find longest line.
+
+    Parameters
+    ----------
+    data : list of list of str
+        The data part of the table.
+    headers : None or list of list of str
+        The headers part of the table.
+
+    Returns
+    -------
+    column_length_tuple : None
+        A n-tuple which describes the longest srting per column. (n is the
+        number of columns)
+
+    """
     # Transpose and get max length
     column_length: Generator[int, None, None] = (
         len(max(n, key=len)) for n in zip(*data)
     )
-    if header is not None:  # Alternative path, when header is enabled
+    if headers is not None:  # Alternative path, when header is enabled
         # do the same with the header
         column_length_header: Generator[int, None, None] = (
-            len(max(n, key=len)) for n in zip(*header)
+            len(max(n, key=len)) for n in zip(*headers)
         )
         return tuple(
             max(m, n) for m, n in zip(column_length_header, column_length)
@@ -54,7 +69,23 @@ def get_colum_length(
 def transpose_newlines_to_rows(
     splitted: list[list[str]], occurences: int
 ) -> Generator[list[str], None, None]:
-    """Transpose newlines in new rows."""
+    """Transpose newlines in new rows.
+
+    Parameters
+    ----------
+    splitted : list of list of str
+        A list of substring-lists, splitted from one row, which contains
+        newline characters. The substing-lists are containing strings,
+        which have been splitted into substings.
+    occurences : int
+        The maximal number of newlines across the row.
+
+    Yields
+    ------
+    row : list[str]
+        A row for each occurence.
+
+    """
     for i in range(occurences + 1):
         row: list[str] = []
         for column in splitted:
@@ -66,16 +97,33 @@ def transpose_newlines_to_rows(
 
 
 def handle_newlines(
-    data: list[list[str]], newlines: dict[int, int]
+    part: list[list[str]], newlines: dict[int, int]
 ) -> tuple[list[list[str]], set[int]]:
-    """Update and insert new lines."""
+    """Update and insert new lines.
+
+    Parameters
+    ----------
+    part : list of list of str
+        Data or headers of the table.
+    newlines : dict [int, int]
+        A dictionary ``{r: n}``, where ``n`` are newlines in row ``r``.
+
+    Returns
+    -------
+    part, inhibit_sep : tuple [list of list of str, set of int]
+        The ``part`` contains the supplemented and updated rows.
+        The ``inhibit_sep`` ``set`` contains the line numbers
+        where a separator yhould be inhibited because the lines handled by
+        this function are belonging together.
+
+    """
     inhibit_sep: set[int] = set()
     offset: int = 0  # grows with every inserted line
 
     # occurences = the maximum number of newline chars in one row (not sum)
     for line_number, occurences in newlines.items():
         splitted = [
-            column.splitlines() for column in data[line_number + offset]
+            column.splitlines() for column in part[line_number + offset]
         ]
         # logger.debug(f"{splitted = }")
 
@@ -85,29 +133,61 @@ def handle_newlines(
 
         # The first new line will replace the old line
         try:
-            data[line_number + offset] = next(new_rows)
+            part[line_number + offset] = next(new_rows)
             # logger.debug(f"new row = {data[line_number+offset]}")
         except StopIteration:
             logger.error("There is a bug in the table handler.")
-            return data, inhibit_sep
+            return part, inhibit_sep
 
         # The following lines will be inserted
         for additional_row in new_rows:
             # logger.debug(f"new row = {additional_row}")
             inhibit_sep.add(line_number + offset)
             offset += 1
-            data.insert(line_number + offset, additional_row)
+            part.insert(line_number + offset, additional_row)
 
-    return data, inhibit_sep
+    return part, inhibit_sep
 
 
 def newlines_in_row(row: list[str]) -> int:
-    """Get the highest number of newlines per row."""
+    """Get the highest number of newlines per row.
+
+    The highest number of newlines for a row is used to dertermine in how
+    many rows the row gets expanded, to get one row per newline - 1.
+
+    Parameters
+    ----------
+    row : list of str
+        Data or headers of the table.
+
+    Returns
+    -------
+    max_newlines : int
+        The highest number of newlines ber row.
+
+    """
     return int(max(cell.count("\n") for cell in row))  # int for mypy
 
 
 def find_newlines(data: list[list[str]]) -> dict[int, int]:
-    """Find newlines and return a dict with positions (key) and occurences."""
+    """Find newlines and return a dict with positions (key) and occurences.
+
+    Notes
+    -----
+    The function only adds an entry to the dict, if there is at least one
+    newline in a row.
+
+    Parameters
+    ----------
+    data : list of str
+        Data or headers of the table.
+
+    Returns
+    -------
+    pos : dict [int, int]
+        A dictionary ``{r: n}``, where ``n`` are newlines in row ``r``.
+
+    """
     return {
         i: newlines_in_row(row)
         for i, row in enumerate(data)
@@ -115,17 +195,46 @@ def find_newlines(data: list[list[str]]) -> dict[int, int]:
     }
 
 
-def create_table_row(line: list[str], max_column_len: tuple[int, ...]) -> str:
-    """Create a table row."""
+def format_table_row(line: list[str], max_column_len: tuple[int, ...]) -> str:
+    """Format a table row into a ``str``.
+
+    Parameters
+    ----------
+    line : list of str
+        A data or headers row, which will be formatted to a string.
+    max_column_len : tuple of int
+        A n-tuple which describes the longest srting per column. (n is the
+        number of columns)
+
+    Returns
+    -------
+    row_string : str
+        A formatted string, which represents a table row.
+
+    """
     return (
         f"| {' | '.join(s.ljust(i) for s, i in zip(line, max_column_len))} |"
     )
 
 
-def cells_to_str(rows: Sequence[Sequence[str]], none: str) -> list[list[str]]:
-    """Convert all cells to strings."""
+def cells_to_str(part: Sequence[Sequence[str]], none: str) -> list[list[str]]:
+    """Convert all cells to strings and format ``None`` values.
+
+    Parameters
+    ----------
+    part : collections.abc.Sequence of collections.abc.Sequence of str
+        Data or header, in which every cell will be to casted to to strings.
+    none : str
+        A string, which is used to replace ``None`` with the specific string.
+
+    Returns
+    -------
+    part : list of list of str
+    The part, where every cell is of type ``str``.
+
+    """
     data: list[list[str]] = []
-    for row in rows:
+    for row in part:
         data.append([str(s if s is not None else none) for s in row])
     return data
 
@@ -136,7 +245,25 @@ def table(
     sep: bool = True,
     none: str = "-",
 ) -> Generator[str, None, None]:
-    """Create a table from data and a optional headers."""
+    """Create a table from data and a optional headers.
+
+    Parameters
+    ----------
+    table_data : collections.abc.Sequence of collections.abc.Sequence of str
+        Data.
+    table_headers : collections.abc.Sequence of str, Optional
+        Headers.
+    sep : bool, default = True
+        ``True``, when ther should be a separator between every row of data.
+    none : str, default = "-"
+        A string, which is used to replace ``None`` with the specific string.
+
+    Yields
+    ------
+    table : Generator [str, None, None]
+    The table (row for row).
+
+    """
     # data: list[Sequence[str]] = list(table_data)
     data: list[list[str]] = cells_to_str(table_data, none)
 
@@ -174,11 +301,11 @@ def table(
     yield sep_line  # Top seperator (will be always printed)
     if headers is not None:
         for line in headers:
-            yield create_table_row(line, max_column_len)
+            yield format_table_row(line, max_column_len)
         yield sep_line_header
 
     for line_number, line in enumerate(data):
-        yield create_table_row(line, max_column_len)
+        yield format_table_row(line, max_column_len)
         if sep and line_number not in inhibit_sep:
             yield sep_line_data if line_number + 1 < num_of_rows else sep_line
 
