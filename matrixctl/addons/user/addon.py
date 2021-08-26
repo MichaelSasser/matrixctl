@@ -126,7 +126,7 @@ def generate_user_tables(
 
     """
 
-    table: list[list[tuple[str, str]]] = [[]]
+    table_: list[list[tuple[str, str]]] = [[]]
 
     for k in user_dict:
         if k == "errcode":
@@ -138,13 +138,13 @@ def generate_user_tables(
                 ret: list[list[tuple[str, str]]] = generate_user_tables(
                     tk, len_domain
                 )
-                table.append(ret[0])
+                table_.append(ret[0])
 
             continue  # Don't add threepids to "table"
 
-        table[0].append(make_human_readable(k, user_dict, len_domain))
+        table_[0].append(make_human_readable(k, user_dict, len_domain))
 
-    return table
+    return table_
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
