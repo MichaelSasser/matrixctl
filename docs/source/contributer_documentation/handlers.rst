@@ -61,5 +61,14 @@ SSH
    :undoc-members:
    :show-inheritance:
 
+Table
+-----
+
+.. automodule:: matrixctl.handlers.table
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 ..
    vim: set ft=rst :

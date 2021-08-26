@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # matrixctl
 # Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
 #
@@ -25,11 +24,10 @@ from argparse import Namespace
 from shutil import get_terminal_size
 from textwrap import TextWrapper
 
-from tabulate import tabulate
-
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
+from matrixctl.handlers.table import table
 from matrixctl.handlers.yaml import YAML
 from matrixctl.print_helpers import timestamp_to_dt
 from matrixctl.typehints import JsonDict
@@ -62,7 +60,7 @@ def addon(_: Namespace, yaml: YAML) -> int:
        | Defendant       | @mallory:matrix.org                          |
        | Plaintiff       | @alice:myhomeverver.tld                      |
        | Reason          | Likes JavaScript                             |
-       +-----------------+----------------------------------------------+
+       |-----------------+----------------------------------------------|
        | ID              | 1                                            |
        | Date            | 2020-08-15                                   |
        | Time            | 09:09:57                                     |
@@ -168,13 +166,8 @@ def addon(_: Namespace, yaml: YAML) -> int:
             )
         )
 
-    print(
-        tabulate(
-            events,
-            tablefmt="grid",
-            missingval="-",
-        )
-    )
+    for line in table(events):
+        print(line)
 
     return 0
 

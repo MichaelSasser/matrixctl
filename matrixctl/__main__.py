@@ -136,7 +136,7 @@ def main() -> int:
         addon_module_import: str = f"{addon_module}.{args.addon}.addon"
     except AttributeError as e:
         if args.debug:
-            logger.warning(
+            logger.error(
                 "The parser of the addon which has been called did not have "
                 'an arg "args.addon". If you did not enter an subcommand, '
                 'e.g. "matrixctl -d" you can ignore this error.'
