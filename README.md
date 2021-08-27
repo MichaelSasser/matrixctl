@@ -7,7 +7,7 @@
 # MatrixCtl
 
 MatrixCtl is a simple, but feature-rich tool to remotely control, manage,
-provision and deploy your matrix homeservers and users from your virtual
+provision and deploy your Matrix homeservers and users from your virtual
 terminal.
 
 ```console
