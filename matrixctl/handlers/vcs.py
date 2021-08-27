@@ -30,7 +30,8 @@ from textwrap import TextWrapper
 from git import GitCommandError
 from git import Repo
 from git.cmd import Git
-from tabulate import tabulate
+
+from .table import table
 
 
 __author__: str = "Michael Sasser"
@@ -141,13 +142,8 @@ class VCS:
             line[1] = wrapper_user.fill(text=line[1])
             line[2] = wrapper_comment.fill(text=line[2])
 
-        print(
-            tabulate(
-                log,
-                headers=("Date", "User", "Commit Message"),
-                tablefmt="psql",
-            )
-        )
+        for print_line in table(log, ("Date", "User", "Commit Message")):
+            print(print_line)
 
     def pull(self) -> None:
         """Git pull the latest commits from GH.

@@ -23,11 +23,10 @@ import logging
 
 from argparse import Namespace
 
-from tabulate import tabulate
-
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
+from matrixctl.handlers.table import table
 from matrixctl.handlers.yaml import YAML
 from matrixctl.print_helpers import human_readable_bool
 from matrixctl.typehints import JsonDict
@@ -145,20 +144,18 @@ def addon(arg: Namespace, yaml: YAML) -> int:
                 display_name,
             )
         )
-    print(
-        tabulate(
-            user_list,
-            headers=(
-                "Name",
-                "Deactivated",
-                "Shadow-Banned",
-                "Admin",
-                "Guest",
-                "Display Name",
-            ),
-            tablefmt="psql",
-        )
-    )
+    for line in table(
+        user_list,
+        (
+            "Name",
+            "Deactivated",
+            "Shadow-Banned",
+            "Admin",
+            "Guest",
+            "Display Name",
+        ),
+    ):
+        print(line)
 
     return 0
 

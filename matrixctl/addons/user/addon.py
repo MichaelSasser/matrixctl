@@ -26,11 +26,10 @@ import sys
 from argparse import Namespace
 from typing import Any
 
-from tabulate import tabulate
-
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
+from matrixctl.handlers.table import table
 from matrixctl.handlers.yaml import YAML
 from matrixctl.print_helpers import human_readable_bool
 from matrixctl.typehints import JsonDict
@@ -127,7 +126,7 @@ def generate_user_tables(
 
     """
 
-    table: list[list[tuple[str, str]]] = [[]]
+    table_: list[list[tuple[str, str]]] = [[]]
 
     for k in user_dict:
         if k == "errcode":
@@ -139,13 +138,13 @@ def generate_user_tables(
                 ret: list[list[tuple[str, str]]] = generate_user_tables(
                     tk, len_domain
                 )
-                table.append(ret[0])
+                table_.append(ret[0])
 
             continue  # Don't add threepids to "table"
 
-        table[0].append(make_human_readable(k, user_dict, len_domain))
+        table_[0].append(make_human_readable(k, user_dict, len_domain))
 
-    return table
+    return table_
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
@@ -153,8 +152,6 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     It uses the admin API to get a python dictionary with the information.
     The ``generate_user_tables`` function makes the information human readable.
-    The Python package ``tabulate`` renders the table as shown below, if
-    everything works well.
 
     Examples
     --------
@@ -226,18 +223,14 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     logger.debug(f"User: {user_tables=}")
 
-    for num, table in enumerate(user_tables):
+    for num, table_ in enumerate(user_tables):
 
         if num < 1:
             print("User:")
         else:
             print("\nThreepid:")
-        print(
-            tabulate(
-                table,
-                tablefmt="psql",
-            )
-        )
+        for line in table(table_, sep=False):
+            print(line)
 
     return 0
 

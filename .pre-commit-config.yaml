@@ -166,14 +166,14 @@ repos:
 
   # pyupgrade
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.23.3
+    rev: v2.24.0
     hooks:
       - id: pyupgrade
         exclude: docs/source/conf.py # Py3.8 needed by rtd
 
   # pycln
   - repo: https://github.com/hadialqattan/pycln
-    rev: v0.0.5
+    rev: v1.0.3
     hooks:
       - id: pycln
         args: [--config=pyproject.toml]

@@ -21,8 +21,7 @@ from __future__ import annotations
 
 import logging
 
-from tabulate import tabulate
-
+from matrixctl.handlers.table import table
 from matrixctl.typehints import JsonDict
 
 
@@ -47,11 +46,11 @@ def print_rooms_table(rooms_list: list[JsonDict]) -> None:
 
     """
 
-    room_list: list[tuple[str, int, str, str]] = []
+    room_list: list[tuple[str, str, str, str]] = []
 
     for room in rooms_list:
         name = room["name"]
-        members: int = room["joined_members"]
+        members: str = str(room["joined_members"])
         alias: str = room["canonical_alias"]
         room_id: str = room["room_id"]
 
@@ -63,13 +62,10 @@ def print_rooms_table(rooms_list: list[JsonDict]) -> None:
                 room_id,
             )
         )
-    print(
-        tabulate(
-            room_list,
-            headers=("Name", "Members", "Alias", "Room ID"),
-            tablefmt="psql",
-        )
-    )
+    for line in table(
+        room_list, ("Name", "Members", "Alias", "Room ID"), False
+    ):
+        print(line)
 
 
 # vim: set ft=python :
