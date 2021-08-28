@@ -56,7 +56,20 @@ def setup_parser() -> argparse.ArgumentParser:
         The parser object, which can be used to parse the arguments.
 
     """
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description=(
+            "MatrixCtl is a simple, but feature-rich tool to remotely "
+            "control, manage, provision and deploy Matrix homeservers."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Thank you for using MatrixCtl!\n"
+            "Check out the docs: https://matrixctl.rtfd.io\n"
+            "Report bugs to: "
+            "https://github.com/MichaelSasser/matrixctl/issues/new/choose"
+        ),
+    )
+    # parser._positionals.title = "addons"
 
     parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument(
