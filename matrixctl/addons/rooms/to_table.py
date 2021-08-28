@@ -16,10 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """Use this module to add the ``rooms`` subcommand to ``matrixctl``."""
-
 from __future__ import annotations
 
 import logging
+
+from collections.abc import Generator
 
 from matrixctl.handlers.table import table
 from matrixctl.typehints import JsonDict
@@ -32,7 +33,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-def print_rooms_table(rooms_list: list[JsonDict]) -> None:
+def to_table(rooms_list: list[JsonDict]) -> Generator[str, None, None]:
     """Use this function as helper to pint the room table.
 
     Parameters
@@ -40,9 +41,10 @@ def print_rooms_table(rooms_list: list[JsonDict]) -> None:
     rooms_list : list of matrixctl.typehints.JsonDict
         A list of rooms from the API.
 
-    Returns
-    -------
-    None
+    Yields
+    ------
+    table_lines : str
+        The table lines.
 
     """
 
@@ -62,10 +64,7 @@ def print_rooms_table(rooms_list: list[JsonDict]) -> None:
                 room_id,
             )
         )
-    for line in table(
-        room_list, ("Name", "Members", "Alias", "Room ID"), False
-    ):
-        print(line)
+    return table(room_list, ("Name", "Members", "Alias", "Room ID"), False)
 
 
 # vim: set ft=python :

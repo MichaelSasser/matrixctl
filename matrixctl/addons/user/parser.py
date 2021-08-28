@@ -47,6 +47,10 @@ def subparser_user(subparsers: _SubParsersAction) -> None:
         "user", help="Get information about a specific user"
     )
     parser.add_argument("user", help="The username of the user")
+
+    parser.add_argument(
+        "-j", "--to-json", action="store_true", help="Output the data as JSON"
+    )
     parser.set_defaults(addon="user")
 
 

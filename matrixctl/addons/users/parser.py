@@ -56,6 +56,9 @@ def subparser_users(subparsers: _SubParsersAction) -> None:
         action="store_true",
         help="Shows deactivated accounts",
     )
+    parser.add_argument(
+        "-j", "--to-json", action="store_true", help="Output the data as JSON"
+    )
     parser.set_defaults(addon="users")
 
 

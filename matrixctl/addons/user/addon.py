@@ -19,20 +19,18 @@
 
 from __future__ import annotations
 
-import datetime
+import json
 import logging
-import sys
 
 from argparse import Namespace
-from typing import Any
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
-from matrixctl.handlers.table import table
 from matrixctl.handlers.yaml import YAML
-from matrixctl.print_helpers import human_readable_bool
 from matrixctl.typehints import JsonDict
+
+from .to_table import to_table
 
 
 __author__: str = "Michael Sasser"
@@ -40,111 +38,6 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 logger = logging.getLogger(__name__)
-
-
-def make_human_readable(
-    k: str, user_dict: dict[str, str], len_domain: int
-) -> tuple[str, str]:
-    """Make a key/value pair of a ``user`` (line) human readable, by modifying.
-
-    Notes
-    -----
-    This function is used as helper by ``matrixctl.user.generate_user_tables``.
-
-    Parameters
-    ----------
-    k : str
-        The key
-    user_dict : `dict` [`str`, `Any`]
-        The line as dict, a JSON string which was converted to a Python
-        dictionary. (This is not a ``Collections.UserDict``)
-    len_domain : int
-        The length in characters of the domain.
-
-    Returns
-    -------
-    err_code : int
-        Non-zero value indicates error code, or zero on success.
-
-    """
-
-    key: str | None = None
-    value: str
-
-    if k == "name":
-        value = str(user_dict[k][1:-len_domain])
-    elif k == "is_guest":
-        value = human_readable_bool(user_dict[k])
-        key = "Guest"
-    elif k in ("admin", "deactivated"):
-        value = human_readable_bool(user_dict[k])
-    elif k.endswith("_ts"):
-        value = str(
-            datetime.datetime.fromtimestamp(float(user_dict[k]))
-        )  # UTC?
-    elif k.endswith("_at"):
-        value = str(
-            datetime.datetime.fromtimestamp(float(user_dict[k]) / 1000.0)
-        )  # UTC?
-
-    else:
-        value = user_dict[k]
-
-    if key is None:
-        key = k.replace("_", " ").title()
-
-    return key, value
-
-
-# TODO: JSON Type?
-# TODO: Returns type wrong
-def generate_user_tables(
-    user_dict: dict[str, Any], len_domain: int
-) -> list[list[tuple[str, str]]]:
-    """Generate a main user table and threepid user tables.
-
-    The function gnerates first a main user table and then for every threepid
-    a additional table from a ``user_dict``.
-    It renames and makes the output human readable.
-
-    Notes
-    -----
-    This function is a recursive function.
-
-    Parameters
-    ----------
-    user_dict : `dict` [`str`, `Any`]
-        The line as dict, a JSON string which was converted to a Python
-        dictionary. (This is not a ``Collections.UserDict``)
-    len_domain : int
-        The length in characters of the domain.
-
-    Returns
-    -------
-    err_code : int
-        A list in the format: ``[[main], threepids_0, ... ,threepids_n]``
-
-    """
-
-    table_: list[list[tuple[str, str]]] = [[]]
-
-    for k in user_dict:
-        if k == "errcode":
-            logger.error("There is no user with that username.")
-            sys.exit(1)
-
-        if k == "threepids":
-            for tk in user_dict[k]:
-                ret: list[list[tuple[str, str]]] = generate_user_tables(
-                    tk, len_domain
-                )
-                table_.append(ret[0])
-
-            continue  # Don't add threepids to "table"
-
-        table_[0].append(make_human_readable(k, user_dict, len_domain))
-
-    return table_
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
@@ -205,6 +98,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
+    len_domain = len(yaml.get("api", "domain")) + 1
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("api", "token"),
         domain=yaml.get("api", "domain"),
@@ -218,18 +112,10 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
         return 1
 
-    len_domain = len(yaml.get("api", "domain")) + 1  # 1 for :
-    user_tables = generate_user_tables(user_dict, len_domain)
-
-    logger.debug(f"User: {user_tables=}")
-
-    for num, table_ in enumerate(user_tables):
-
-        if num < 1:
-            print("User:")
-        else:
-            print("\nThreepid:")
-        for line in table(table_, sep=False):
+    if arg.to_json:
+        print(json.dumps(user_dict, indent=4))
+    else:
+        for line in to_table(user_dict, len_domain):
             print(line)
 
     return 0

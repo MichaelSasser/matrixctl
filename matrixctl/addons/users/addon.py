@@ -19,6 +19,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 
 from argparse import Namespace
@@ -26,10 +27,10 @@ from argparse import Namespace
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
-from matrixctl.handlers.table import table
 from matrixctl.handlers.yaml import YAML
-from matrixctl.print_helpers import human_readable_bool
 from matrixctl.typehints import JsonDict
+
+from .to_table import to_table
 
 
 __author__: str = "Michael Sasser"
@@ -40,9 +41,11 @@ logger = logging.getLogger(__name__)
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
-    """Print a table of the matrix users.
+    """Print a table/json of the matrix users.
 
-    This function generates and prints a table of matrix user accounts.
+    This function generates and prints a table of users or uses json as
+    output format.
+
     The table can be modified.
 
     - If you want guests in the table use the ``--with-guests`` switch.
@@ -54,27 +57,6 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     - Needs API version 2 (``synapse`` 1.28 or greater) to work.
     - API version 1 is deprecated. If you encounter problems please upgrade
       to the latest ``synapse`` release.
-
-    Examples
-    --------
-    .. code-block:: console
-
-       $ matrixctl users
-       +---------+-------------+---------------+-------+-------+--------------+
-       | Name    | Deactivated | Shadow-Banned | Admin | Guest | Display Name |
-       |---------+-------------+---------------+-------+-------|--------------+
-       | dwight  | No          | No            | Yes   | No    | Dwight       |
-       | pam     | No          | No            | No    | No    | Pam          |
-       | jim     | No          | No            | No    | No    | Jim          |
-       | creed   | No          | Yes           | No    | No    | Creed        |
-       | stanley | No          | No            | No    | No    | Stanley      |
-       | kevin   | No          | No            | No    | No    | Cookie       |
-       | angela  | No          | No            | No    | No    | Angela       |
-       | phyllis | No          | No            | No    | No    | Phyllis      |
-       | tobi    | No          | No            | No    | No    | TobiHR       |
-       | michael | No          | No            | Yes   | No    | Best Boss    |
-       | andy    | No          | No            | No    | No    | Andy         |
-       +---------+-------------+---------------+-------+-------+--------------+
 
     Parameters
     ----------
@@ -123,39 +105,11 @@ def addon(arg: Namespace, yaml: YAML) -> int:
             from_user = lst["next_token"]
         except KeyError:
             break
-
-    user_list: list[tuple[str, str, str, str, str, str]] = []
-
-    for user in users_list:
-        name = user["name"][1:-len_domain]
-        deactivated: str = human_readable_bool(user["deactivated"])
-        shadow_banned: str = human_readable_bool(user["shadow_banned"])
-        admin: str = human_readable_bool(user["admin"])
-        guest: str = human_readable_bool(user["is_guest"])
-        display_name = user["displayname"]
-
-        user_list.append(
-            (
-                name,
-                deactivated,
-                shadow_banned,
-                admin,
-                guest,
-                display_name,
-            )
-        )
-    for line in table(
-        user_list,
-        (
-            "Name",
-            "Deactivated",
-            "Shadow-Banned",
-            "Admin",
-            "Guest",
-            "Display Name",
-        ),
-    ):
-        print(line)
+    if arg.to_json:
+        print(json.dumps(users_list, indent=4))
+    else:
+        for line in to_table(users_list, len_domain):
+            print(line)
 
     return 0
 
