@@ -67,6 +67,10 @@ def subparser_rooms(subparsers: _SubParsersAction) -> None:
         default=None,
         help="Search for rooms with a specific search term (Case-Sensitive)",
     )
+
+    parser.add_argument(
+        "-j", "--to-json", action="store_true", help="Output the data as JSON"
+    )
     parser.set_defaults(addon="rooms")
 
 

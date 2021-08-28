@@ -19,6 +19,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 
 from argparse import Namespace
@@ -29,7 +30,7 @@ from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
 
-from .table import print_rooms_table
+from .to_table import to_table
 
 
 __author__: str = "Michael Sasser"
@@ -92,9 +93,33 @@ def addon(arg: Namespace, yaml: YAML) -> int:
             from_room = lst["next_token"]
         except KeyError:
             break
-    print_rooms_table(rooms_list)
+
+    generate_output(rooms_list, arg.to_json)
 
     return 0
+
+
+def generate_output(rooms_list: list[JsonDict], to_json: bool) -> None:
+    """Use this helper to generate the output.
+
+    Parameters
+    ----------
+    rooms_list : list of matrixctl.typehints.JsonDict
+        A list of rooms from the API.
+    to_json : bool
+        ``True``, when the output should be in the JSON format.
+        ``False``, when the output should be a table.
+
+    Returns
+    -------
+    None
+
+    """
+    if to_json:
+        print(json.dumps(rooms_list, indent=4))
+    else:
+        for line in to_table(rooms_list):
+            print(line)
 
 
 # vim: set ft=python :

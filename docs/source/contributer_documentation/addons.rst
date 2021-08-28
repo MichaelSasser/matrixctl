@@ -164,6 +164,11 @@ user
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: matrixctl.addons.user.to_table
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 users
 -----
 
@@ -173,6 +178,11 @@ users
    :show-inheritance:
 
 .. automodule:: matrixctl.addons.users.addon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.users.to_table
    :members:
    :undoc-members:
    :show-inheritance:
@@ -203,6 +213,11 @@ reports
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: matrixctl.addons.reports.to_table
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 rooms
 -----
 
@@ -216,7 +231,7 @@ rooms
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: matrixctl.addons.rooms.table
+.. automodule:: matrixctl.addons.rooms.to_table
    :members:
    :undoc-members:
    :show-inheritance:
