@@ -13,8 +13,10 @@ terminal.
 ```console
 $ matrixctl
 usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG]
-                 {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,maintenance,purge-history,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
+                 {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,maintenance,purge-history,report,reports,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
                  ...
+
+MatrixCtl is a simple, but feature-rich tool to remotely control, manage, provision and deploy Matrix homeservers.
 
 positional arguments:
   {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,maintenance,purge-history,report,reports,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
@@ -50,6 +52,10 @@ optional arguments:
                         Select the server. (default: "default")
   -c CONFIG, --config CONFIG
                         A path to an alternative config file.
+
+Thank you for using MatrixCtl!
+Check out the docs: https://matrixctl.rtfd.io
+Report bugs to: https://github.com/MichaelSasser/matrixctl/issues/new/choose
 ```
 
 ## Installation
