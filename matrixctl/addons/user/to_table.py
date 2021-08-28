@@ -166,9 +166,9 @@ def to_table(
     for num, table_ in enumerate(user_tables):
 
         if num < 1:
-            yield ("User:")
+            yield "User:"
         else:
-            yield ("\nThreepid:")
+            yield "\nThreepid:"
         for line in table(table_, sep=False):
             yield line
 
