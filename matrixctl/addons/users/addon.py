@@ -71,14 +71,14 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    len_domain = len(yaml.get("api", "domain")) + 1  # 1 for :
+    len_domain = len(yaml.get("server", "api", "domain")) + 1  # 1 for :
     from_user: int = 0
     users_list: list[JsonDict] = []
 
     # ToDo: API bool
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
+        token=yaml.get("server", "api", "token"),
+        domain=yaml.get("server", "api", "domain"),
         path="users",
         api_version="v2",
         params={

@@ -51,7 +51,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
     ansible_run(
-        playbook=yaml.get("ansible", "playbook"),
+        playbook=yaml.get("server", "ansible", "playbook"),
         tags="setup-all,start" if arg.start else "setup-all",
     )
 

@@ -60,8 +60,8 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     rooms_list: list[JsonDict] = []
 
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
+        token=yaml.get("server", "api", "token"),
+        domain=yaml.get("server", "api", "domain"),
         path="rooms",
         api_version="v1",
     )

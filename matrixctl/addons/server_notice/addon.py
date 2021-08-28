@@ -59,13 +59,15 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
+        token=yaml.get("server", "api", "token"),
+        domain=yaml.get("server", "api", "domain"),
         path="send_server_notice",
         method="POST",
         api_version="v1",
         data={
-            "user_id": (f"@{arg.username}:" f"{yaml.get('api', 'domain')}"),
+            "user_id": (
+                f"@{arg.username}:" f"{yaml.get('server', 'api', 'domain')}"
+            ),
             "content": {
                 "msgtype": "m.text",
                 "body": arg.message,

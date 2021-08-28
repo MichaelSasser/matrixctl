@@ -51,11 +51,15 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
     address = (
-        yaml.get("ssh", "address")
-        if yaml.get("ssh", "address")
-        else f"matrix.{yaml.get('api','domain')}"
+        yaml.get("server", "ssh", "address")
+        if yaml.get("server", "ssh", "address")
+        else f"matrix.{yaml.get('server', 'api','domain')}"
     )
-    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
+    with SSH(
+        address,
+        yaml.get("server", "ssh", "user"),
+        yaml.get("server", "ssh", "port"),
+    ) as ssh:
         cmd: str = (
             "sudo docker exec matrix-jitsi-prosody prosodyctl "
             "--config /config/prosody.cfg.lua deluser "

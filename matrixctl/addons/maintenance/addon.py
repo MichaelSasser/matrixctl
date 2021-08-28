@@ -94,7 +94,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     todo = []
     for task in (
-        yaml.get("maintenance", "tasks") if not arg.tasks else arg.tasks
+        yaml.get("server", "maintenance", "tasks")
+        if not arg.tasks
+        else arg.tasks
     ):
 
         try:
@@ -108,7 +110,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
             return 1
 
     ansible_run(
-        playbook=yaml.get("ansible", "playbook"),
+        playbook=yaml.get("server", "ansible", "playbook"),
         tags=f"{','.join([t.value for t in todo])},start",
     )
 

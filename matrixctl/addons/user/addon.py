@@ -98,11 +98,11 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    len_domain = len(yaml.get("api", "domain")) + 1
+    len_domain = len(yaml.get('server', "api", "domain")) + 1
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
-        path=f'users/@{arg.user}:{yaml.get("api","domain")}',
+        token=yaml.get('server', "api", "token"),
+        domain=yaml.get('server', "api", "domain"),
+        path=f'users/@{arg.user}:{yaml.get('server', "api","domain")}',
     )
 
     try:
