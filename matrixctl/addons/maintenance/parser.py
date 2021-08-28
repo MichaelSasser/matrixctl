@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # matrixctl
 # Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
 #
@@ -45,7 +44,21 @@ def subparser_maintenance(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "maintenance", help="Run maintenance tasks"
+        "maintenance",
+        help="Run maintenance tasks",
+        description="Perform various maintenance tasks.",
+    )
+    parser.add_argument(
+        "-l",
+        "--list",
+        action="store_true",
+        help="show a list of all available tasks",
+    )
+    parser.add_argument(
+        "tasks",
+        nargs="*",
+        help="maintenance tasks to run (overrides config)",
+        # choices=["vacuum", "compress-state"],
     )
     parser.set_defaults(addon="maintenance")
 

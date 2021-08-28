@@ -22,8 +22,12 @@ from __future__ import annotations
 import logging
 
 from argparse import Namespace
+from collections.abc import Generator
+from enum import Enum
+from enum import unique
 
 from matrixctl.handlers.ansible import ansible_run
+from matrixctl.handlers.table import table
 from matrixctl.handlers.yaml import YAML
 
 
@@ -34,15 +38,47 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-def addon(_: Namespace, yaml: YAML) -> int:
+@unique
+class Task(Enum):
+
+    """Use this enum for describing the maintenance task.
+
+    Supported tasks:
+
+    =============== ===================================================
+    tasks           Description
+    =============== ===================================================
+    vacuum          Reclaims storage occupied by dead tuples.
+    compress_state  Compress Synapse State Tables.
+    =============== ===================================================
+
+    """
+
+    VACUUM = "run-postgres-vacuum"
+    COMPRESS_STATE = "rust-synapse-compress-state"
+
+
+def print_tasks() -> None:  # static data
+    """Print a list of all available tasks."""
+    table_generator: Generator[str, None, None] = table(
+        [
+            ["vacuum", "Reclaims storage occupied by dead tuples."],
+            ["compress-state", "Compress Synapse State Tables."],
+        ],
+        ["Task", "Description"],
+        False,
+    )
+    for line in table_generator:
+        print(line)
+
+
+def addon(arg: Namespace, yaml: YAML) -> int:
     """Run the maintenance procedure of the ansible playbook.
 
     Parameters
     ----------
-    _ : argparse.Namespace
+    arg : argparse.Namespace
         The ``Namespace`` object of argparse's ``parse_args()``.
-        (In this case unused, but necessary because of the structure of the
-        program).
     yaml : matrixctl.handlers.yaml.YAML
         The configuration file handler.
 
@@ -52,9 +88,28 @@ def addon(_: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
+    if arg.list:
+        print_tasks()
+        return 0
+
+    todo = []
+    for task in (
+        yaml.get("maintenance", "tasks") if not arg.tasks else arg.tasks
+    ):
+
+        try:
+            todo.append(Task[task.replace("-", "_").upper()])
+        except KeyError:  # task is not in enum
+            logger.error(
+                f'The task "{task}" is not supported by MatrixCtl. '
+                "Below, you find a list of all available tasks."
+            )
+            print_tasks()
+            return 1
+
     ansible_run(
         playbook=yaml.get("ansible", "playbook"),
-        tags="run-postgres-vacuum,rust-synapse-compress-state,start",
+        tags=f"{','.join([t.value for t in todo])},start",
     )
 
     return 0
