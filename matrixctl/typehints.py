@@ -23,12 +23,6 @@ from typing import Any
 
 
 JsonDict = dict[str, Any]
-YAMLDict = dict[str, "YAMLDict"]
-YAMLFullConfigType = dict[
-    str, dict[str, dict[str, dict[str, str]]]
-]  # Move to types  TODO: DELETE
-# TODO: DELETE
-YAMLServerConfigType = dict[str, dict[str, dict[str, str]]]  # Move to types
 
 
 # vim: set ft=python :

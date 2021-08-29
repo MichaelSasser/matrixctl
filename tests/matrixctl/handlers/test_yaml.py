@@ -36,7 +36,7 @@ def test_get_ansible_playbook(yaml: YAML) -> None:
     desired: str = "/path/to/ansible/playbook"
 
     # Exercise
-    actual: str = yaml.get("ansible", "playbook")
+    actual: str = yaml.get("server", "ansible", "playbook")
 
     # Verify
     assert actual == desired
@@ -51,7 +51,7 @@ def test_get_synapse_playbook(yaml: YAML) -> None:
     desired: str = "/path/to/synapse/playbook"
 
     # Exercise
-    actual: str = yaml.get("synapse", "playbook")
+    actual: str = yaml.get("server", "synapse", "playbook")
 
     # Verify
     assert actual == desired
@@ -66,7 +66,7 @@ def test_get_api_domain(yaml: YAML) -> None:
     desired: str = "example.com"
 
     # Exercise
-    actual: str = yaml.get("api", "domain")
+    actual: str = yaml.get("server", "api", "domain")
 
     # Verify
     assert actual == desired
@@ -81,7 +81,7 @@ def test_get_api_username(yaml: YAML) -> None:
     desired: str = "johndoe"
 
     # Exercise
-    actual: str = yaml.get("api", "username")
+    actual: str = yaml.get("server", "api", "username")
 
     # Verify
     assert actual == desired
@@ -102,7 +102,7 @@ def test_get_api_token(yaml: YAML) -> None:
     )
 
     # Exercise
-    actual: str = yaml.get("api", "token")
+    actual: str = yaml.get("server", "api", "token")
 
     # Verify
     assert actual == desired
@@ -117,7 +117,7 @@ def test_get_ssh_address(yaml: YAML) -> None:
     desired: str = "matrix.example.com"
 
     # Exercise
-    actual: str = yaml.get("ssh", "address")
+    actual: str = yaml.get("server", "ssh", "address")
 
     # Verify
     assert actual == desired
@@ -133,7 +133,7 @@ def test_get_ssh_port(yaml: YAML) -> None:
     desired_type: type = int
 
     # Exercise
-    actual: int = yaml.get("ssh", "port")
+    actual: int = yaml.get("server", "ssh", "port")
 
     # Verify
     assert actual == desired
@@ -149,7 +149,7 @@ def test_get_ssh_user(yaml: YAML) -> None:
     desired: str = "john"
 
     # Exercise
-    actual: str = yaml.get("ssh", "user")
+    actual: str = yaml.get("server", "ssh", "user")
 
     # Verify
     assert actual == desired
@@ -162,19 +162,31 @@ def test_str(yaml: YAML) -> None:
 
     # Setup
     desired: str = (
-        "{'ansible': {'playbook': '/path/to/ansible/playbook'}, 'synapse':"
-        " {'playbook': '/path/to/synapse/playbook'}, 'api': {'domain': "
-        "'example.com', 'username': 'johndoe', 'token': "
-        "'MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQo"
-        "wMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHN"
-        "hc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ"
-        "2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuI"
-        "I8wp3YrAKEa4K'}, 'ssh': {'address': 'matrix.example.com', 'port': "
-        "22, 'user': 'john'}}"
+        "{'servers': {'default': "
+        "{'ansible': {'playbook': '/path/to/ansible/playbook'}, "
+        "'synapse': {'playbook': '/path/to/synapse/playbook'}, "
+        "'api': {'domain': 'example.com', 'username': 'johndoe', "
+        "'token': 'MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaW"
+        "VyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bW"
+        "ljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2"
+        "UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I"
+        "8ZuSHbEuII8wp3YrAKEa4K'}, "
+        "'ssh': {'address': 'matrix.example.com', 'port': 22, "
+        "'user': 'john'}}}, "
+        "'server': {'ansible': {'playbook': '/path/to/ansible/playbook'}, "
+        "'synapse': {'playbook': '/path/to/synapse/playbook'}, "
+        "'api': {'domain': 'example.com', 'username': 'johndoe', "
+        "'token': 'MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaW"
+        "VyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bW"
+        "ljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2"
+        "UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I"
+        "8ZuSHbEuII8wp3YrAKEa4K'}, 'ssh': {'address': 'matrix.example.com', "
+        "'port': 22, 'user': 'john'}}}"
     )
 
     # Exercise
     actual: str = str(yaml)
+    print(f'desired: str = "{actual}"')
 
     # Verify
     assert actual == desired
@@ -187,15 +199,26 @@ def test_repr(yaml: YAML) -> None:
 
     # Setup
     desired: str = (
-        "{'ansible': {'playbook': '/path/to/ansible/playbook'}, 'synapse':"
-        " {'playbook': '/path/to/synapse/playbook'}, 'api': {'domain': "
-        "'example.com', 'username': 'johndoe', 'token': "
-        "'MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQo"
-        "wMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHN"
-        "hc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ"
-        "2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuI"
-        "I8wp3YrAKEa4K'}, 'ssh': {'address': 'matrix.example.com', 'port': "
-        "22, 'user': 'john'}}"
+        "{'servers': {'default': "
+        "{'ansible': {'playbook': '/path/to/ansible/playbook'}, "
+        "'synapse': {'playbook': '/path/to/synapse/playbook'}, "
+        "'api': {'domain': 'example.com', 'username': 'johndoe', "
+        "'token': 'MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaW"
+        "VyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bW"
+        "ljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2"
+        "UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I"
+        "8ZuSHbEuII8wp3YrAKEa4K'}, "
+        "'ssh': {'address': 'matrix.example.com', 'port': 22, "
+        "'user': 'john'}}}, "
+        "'server': {'ansible': {'playbook': '/path/to/ansible/playbook'}, "
+        "'synapse': {'playbook': '/path/to/synapse/playbook'}, "
+        "'api': {'domain': 'example.com', 'username': 'johndoe', "
+        "'token': 'MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaW"
+        "VyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bW"
+        "ljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2"
+        "UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I"
+        "8ZuSHbEuII8wp3YrAKEa4K'}, 'ssh': {'address': 'matrix.example.com', "
+        "'port': 22, 'user': 'john'}}}"
     )
 
     # Exercise

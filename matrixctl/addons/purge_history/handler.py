@@ -57,8 +57,8 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
 
     """
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
+        token=yaml.get("server", "api", "token"),
+        domain=yaml.get("server", "api", "domain"),
         path=f"purge_history_status/{purge_id}",
         method="GET",
         api_version="v1",
