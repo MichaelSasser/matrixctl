@@ -112,7 +112,6 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         re.match(r"^\!.*\:.*\..*$", arg.room_id) if arg.room_id else None
     )
     # try/except
-    print(arg.type)
     message_type: MessageType | None = None  # unset: AttributeError
     with suppress(AttributeError):
         try:
