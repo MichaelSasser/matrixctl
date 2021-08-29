@@ -1,0 +1,2 @@
+All servers in the config (``config.yaml``) file now need too be grouped below
+``servers:``.

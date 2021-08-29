@@ -101,9 +101,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     # return 0
 
     address = (
-        yaml.get("ssh", "address")
-        if yaml.get("ssh", "address")
-        else f"matrix.{yaml.get('api', 'domain')}"
+        yaml.get("server", "ssh", "address")
+        if yaml.get("server", "ssh", "address")
+        else f"matrix.{yaml.get('server', 'api', 'domain')}"
     )
 
     # Todo better matching
@@ -154,7 +154,11 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     logger.debug(f"command: {command}")
 
-    with SSH(address, yaml.get("ssh", "user"), yaml.get("ssh", "port")) as ssh:
+    with SSH(
+        address,
+        yaml.get("server", "ssh", "user"),
+        yaml.get("server", "ssh", "port"),
+    ) as ssh:
         response: SSHResponse = ssh.run_cmd(command, tty=True)
 
     if not response.stderr:

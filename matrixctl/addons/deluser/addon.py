@@ -53,9 +53,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
-        path=f"deactivate/@{arg.user}:{yaml.get('api','domain')}",
+        token=yaml.get("server", "api", "token"),
+        domain=yaml.get("server", "api", "domain"),
+        path=f"deactivate/@{arg.user}:{yaml.get('server', 'api','domain')}",
         api_version="v1",
         method="POST",
         data={"erase": True},

@@ -45,7 +45,7 @@ def addon(_: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    git: VCS = VCS(yaml.get("synapse", "playbook"))
+    git: VCS = VCS(yaml.get("server", "synapse", "playbook"))
     git.pull()
 
     return 0

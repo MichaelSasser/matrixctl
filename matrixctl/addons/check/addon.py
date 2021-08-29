@@ -52,7 +52,9 @@ def addon(_: Namespace, yaml: YAML) -> int:
     """
     logger.debug("check")
 
-    ansible_run(playbook=yaml.get("ansible", "playbook"), tags="check")
+    ansible_run(
+        playbook=yaml.get("server", "ansible", "playbook"), tags="check"
+    )
     return 0
 
 

@@ -20,13 +20,9 @@
 from __future__ import annotations
 
 from typing import Any
-from typing import Dict
 
 
-# Needs to be old style to be compatible with Python 3.8
-JsonDict = Dict[str, Any]
-YAMLFullConfigType = dict[str, dict[str, dict[str, str]]]  # Move to types
-YAMLServerConfigType = dict[str, dict[str, str]]  # Move to types
+JsonDict = dict[str, Any]
 
 
 # vim: set ft=python :

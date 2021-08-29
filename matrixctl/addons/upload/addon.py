@@ -67,8 +67,8 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         return 1
 
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("api", "token"),
-        domain=yaml.get("api", "domain"),
+        token=yaml.get("server", "api", "token"),
+        domain=yaml.get("server", "api", "domain"),
         path="upload/",
         api_path="_matrix/media",
         method="POST",

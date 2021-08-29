@@ -34,8 +34,7 @@ from ruamel.yaml.error import YAMLError
 
 from matrixctl import __version__
 from matrixctl.errors import ConfigFileError
-from matrixctl.typehints import YAMLFullConfigType  # cast
-from matrixctl.typehints import YAMLServerConfigType
+from matrixctl.structures import Config
 
 
 __author__: str = "Michael Sasser"
@@ -43,6 +42,65 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 logger = logging.getLogger(__name__)
+
+
+# Make sure the number of places of the source files line number does not
+# change. Otherwise the debug output shifts.
+def tree_printer(tree: Any, depth: int = 0) -> None:
+    """Print the configuration file recursively.
+
+    Parameters
+    ----------
+    tree : any
+        Initial a ``matrixctl.typehints.Config`` and partials of it
+        afterwards.
+    depth : int
+        The depth of the table
+
+    Returns
+    -------
+    None
+
+    """
+    if isinstance(tree, dict):
+        for key in tree:
+            if isinstance(tree[key], (str, int, float, bool)):
+                logger.debug(
+                    f"{'│ '* depth}├─── {key}: {secrets_filter(tree, key)}"
+                )
+            elif isinstance(tree[key], (list, tuple)):
+                logger.debug(
+                    f"{'│ '* depth}├─── {key}: [{', '.join(tree[key])}]"
+                )
+            else:
+                logger.debug(f"{'│ '* depth}├─┬─ {key}:")
+                tree_printer(tree[key], depth + 1)
+    else:
+        raise ConfigFileError(
+            "There is something wrong with your config file."
+        )
+    logger.debug(f"{'│ '* depth}┴")
+
+
+def secrets_filter(tree: dict[str, str], key: str) -> Any:
+    """Redact secrets when printing the configuration file.
+
+    Parameters
+    ----------
+    tree : dict [str, str]
+        A patrial of ``tree`` from ``tree_printer``. (Can only be this type)
+        afterwards.
+    key : str
+        A ``dict`` key. (Can only be this type)
+
+    Returns
+    -------
+    None
+
+    """
+    if key in "token":
+        return f"<redacted length={len(tree[key])}>"
+    return tree[key]
 
 
 class YAML:
@@ -56,14 +114,14 @@ class YAML:
     __slots__ = ("__yaml", "server")
 
     def __init__(
-        self, paths: Iterable[Path] | None = None, server: str = "default"
+        self, paths: Iterable[Path] | None = None, server: str | None = None
     ) -> None:
         logger.debug("Loading Config file(s)")
 
-        self.server: str = server
+        self.server: str = server or "default"
 
-        self.__yaml: YAMLServerConfigType = self.get_server_config(
-            paths or self.get_paths_to_config(), server
+        self.__yaml: Config = self.get_server_config(
+            paths or self.get_paths_to_config(), self.server
         )
 
         if not self.__yaml:  # dict is empty
@@ -80,7 +138,8 @@ class YAML:
                     "update your config file to the yaml format."
                 )
 
-        self.__debug_output()
+        logger.debug(f'Config loaded for Server: "{self.server}"')
+        tree_printer(self.__yaml)
 
     @staticmethod
     def get_paths_to_config() -> tuple[Path, ...]:
@@ -122,7 +181,7 @@ class YAML:
         return tuple(sorted(paths, key=paths.index))  # unique, order preserved
 
     @staticmethod
-    def read_from_file(yaml: RuamelYAML, path: Path) -> YAMLFullConfigType:
+    def read_from_file(yaml: RuamelYAML, path: Path) -> Config:
         """Read the configuration from a YAML file.
 
         .. Note::
@@ -139,14 +198,14 @@ class YAML:
 
         Returns
         -------
-        full_config : matrixctl.typehints.YAMLFullConfigType
+        full_config : matrixctl.typehints.Config
             The full (with server name) config file as dict.
 
         """
         try:
             with open(path) as stream:
-                # Override default return type Any with YAMLFullConfigType
-                return cast(YAMLFullConfigType, yaml.load(stream))
+                # Override default return type Any with Config
+                return cast(Config, yaml.load(stream))
         except YAMLError:
             logger.error(
                 f"Please check your config file {str(path)}. MatrixCtl was "
@@ -161,19 +220,23 @@ class YAML:
                 "configuration file. Make sure the path is correct."
             )
 
-        return {}
+        return cast(Config, {})
 
     @staticmethod
     def get_server_config(
         paths: Iterable[Path],
-        server: str | None = None,
-    ) -> YAMLServerConfigType:
+        server: str,
+    ) -> Config:
         """Read and concentrate the config in one dict.
 
-        .. Note::
+        The ``servers: ...`` will be removed form the dict.
+        A new entry ``server`` will be created, which represents the selected
+        server.
 
-           When all files were empty or don't exist, an empty dict will be
-           returned.
+        Notes
+        -----
+        When all files were empty or don't exist, an empty dict will be
+        returned.
 
         Parameters
         ----------
@@ -184,19 +247,22 @@ class YAML:
 
         Returns
         -------
-        server_config : matrixctl.typehints.YAMLServerConfigType
+        server_config : matrixctl.typehints.Config
             The config for the selected server.
 
         """
         # RuamelYAML should not be part of the class.
         yaml: RuamelYAML = RuamelYAML(typ="safe")
-        configs: Generator[YAMLFullConfigType, None, None] = (
+        configs: Generator[Config, None, None] = (
             YAML.read_from_file(yaml, path) for path in paths
         )
         try:
-            return dict(ChainMap(*(config for config in configs if config)))[
-                server or "default"
-            ]
+            conf: Config = cast(
+                Config,
+                dict(ChainMap(*(config for config in configs if config))),
+            )
+            conf["server"] = conf["servers"][server]
+            return conf
         except KeyError:
             logger.error(
                 f'The server "{server}" does not exist in your config file.'
@@ -209,32 +275,6 @@ class YAML:
                 "correct YAML syntax."
             )
             sys.exit(1)
-
-    def __debug_output(self) -> None:
-        """Create a debug output for the YAML file.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        None
-
-        """
-        logger.debug(f'Config loaded for Server: "{self.server}"')
-        for key in self.__yaml:
-            logger.debug(f"{key}:")
-
-            for entry in self.__yaml[key]:
-                if entry == "token":
-                    length = len(self.__yaml[key][entry])
-                    logger.debug(
-                        f"  ├─  {entry} : **REDACTED (Length={length})**"
-                    )
-                else:
-                    logger.debug(f"  ├─  {entry} := {self.__yaml[key][entry]}")
-            logger.debug("  ┴")
 
     # TODO: doctest + fixture
     def get(self, *keys: str) -> Any:
@@ -252,7 +292,7 @@ class YAML:
            from matrixctl.handlers.yaml import YAML
 
            yaml: YAML = YAML()
-           port: int = yaml.get("ssh", "port")
+           port: int = yaml.get("server", "ssh", "port")
            print(port)
            # Output: 22
 
@@ -267,21 +307,28 @@ class YAML:
             The value of the entry you described.
 
         """
-        yaml_walker: dict[str, Any] | Any = self.__yaml
+        yaml_walker: Any = self.__yaml
 
         try:
             for key in keys:
-                yaml_walker = yaml_walker.__getitem__(key)
+                yaml_walker = yaml_walker[key]
         except KeyError:
+            tree: str = ".".join(keys[:-1]).replace(
+                "server", f"servers.{self.server}"
+            )
             logger.error(
                 "Please check your config file. For this operation your "
                 f'config file needs to have the entry "{keys[-1]}" '
-                f'in "{keys[0]}".'
+                f'in "{tree}".'
             )
             sys.exit(1)
 
         if not isinstance(yaml_walker, dict):
+            # print(yaml_walker)
             return yaml_walker
+
+        # There is currently no scenario where a whole structure would be
+        # beneficial.
         raise ConfigFileError(
             "The key you have asked for seems to be incorrect. "
             "Please make sure you ask for an single entry, "

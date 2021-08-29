@@ -50,7 +50,7 @@ def addon(_: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    ansible_run(yaml.get("ansible", "playbook"), tags="start")
+    ansible_run(yaml.get("server", "ansible", "playbook"), tags="start")
     return 0
 
 

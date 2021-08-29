@@ -71,7 +71,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     if arg.ansible:
         ansible_run(
-            playbook=yaml.get("ansible", "playbook"),
+            playbook=yaml.get("server", "ansible", "playbook"),
             tags="register-user",
             extra_vars={
                 "username": arg.user,
@@ -82,9 +82,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         return 0
 
     req: RequestBuilder = RequestBuilder(
-        domain=yaml.get("api", "domain"),
-        token=yaml.get("api", "token"),
-        path=f"users/@{arg.user}:{yaml.get('api','domain')}",
+        domain=yaml.get("server", "api", "domain"),
+        token=yaml.get("server", "api", "token"),
+        path=f"users/@{arg.user}:{yaml.get('server', 'api','domain')}",
         data={"password": passwd, "admin": arg.admin},
         method="PUT",
     )
