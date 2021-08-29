@@ -15,12 +15,15 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Type Hints and Errors
-*********************
+Type Hints, Structures and Errors
+*********************************
 
 MatrixCtl is strictly typed to avoid some bugs and help contributors in the
 future to easily identify what they are dealing with. They can be used by third
 party tools such as type checkers, IDEs, linters, etc.
+
+In addition we make use of ``TypedDict`` to create typed structures (add
+type hints to e.g. the configuration).
 
 MatrixCtl specifies some additional errors. Those errors are informing the
 user that, getting a traceback is a bug in this application.
@@ -30,6 +33,14 @@ Type Hints
 ----------
 
 .. automodule:: matrixctl.typehints
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Structures
+----------
+
+.. automodule:: matrixctl.structures
    :members:
    :undoc-members:
    :show-inheritance:

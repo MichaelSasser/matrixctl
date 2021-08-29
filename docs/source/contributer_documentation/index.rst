@@ -94,7 +94,7 @@ Add a feature
 
    handlers
    helpers
-   type_hints_and_errors
+   type_hints_structures_and_errors
    addons
    application
 
