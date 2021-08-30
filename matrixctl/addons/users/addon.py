@@ -28,8 +28,8 @@ from contextlib import suppress
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import Response
-from matrixctl.handlers.api import request
 from matrixctl.handlers.api import generate_worker_configs
+from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
 

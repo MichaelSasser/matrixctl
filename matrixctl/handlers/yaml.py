@@ -34,7 +34,9 @@ from ruamel.yaml.error import YAMLError
 
 from matrixctl import __version__
 from matrixctl.errors import ConfigFileError
-from matrixctl.structures import Config, ConfigServer, ConfigServerAPI
+from matrixctl.structures import Config
+from matrixctl.structures import ConfigServer
+from matrixctl.structures import ConfigServerAPI
 
 
 __author__: str = "Michael Sasser"

@@ -114,11 +114,11 @@ servers:
       # "Help & About" tab. If you scroll down click next to "Access-Token:" on
       # "<click to reveal>". It will be marked for you. Copy it in here.
       token= "MyMatrixToken"
-      
-      # In some cases, MatrixCtl does need to make many requests. To speed those 
-      # requests a notch, you can set a concurrent_limit which is greater than 
-      # one. This sets a limit to how many asynchronous workers can be spawned 
-      # by MatrixCtl. If you set the number to high, MatrixCtl needs more time 
+
+      # In some cases, MatrixCtl does need to make many requests. To speed those
+      # requests a notch, you can set a concurrent_limit which is greater than
+      # one. This sets a limit to how many asynchronous workers can be spawned
+      # by MatrixCtl. If you set the number to high, MatrixCtl needs more time
       # to spawn the workers, then a synchronous request would take.
       concurrent_limit: 10
 

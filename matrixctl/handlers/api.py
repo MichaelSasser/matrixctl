@@ -24,10 +24,10 @@ import logging
 import typing
 import urllib.parse
 
+from collections.abc import Generator
+from collections.abc import Iterable
 from contextlib import suppress
 from copy import deepcopy
-from collections.abc import Iterable
-from typing import Generator
 
 import attr
 import httpx
@@ -150,7 +150,7 @@ def _request(req: RequestBuilder) -> httpx.Response:
 
     Returns
     -------
-    response : requests.Response
+    response : httpx.Response
         Returns the response
 
     """
@@ -192,7 +192,7 @@ def _request(req: RequestBuilder) -> httpx.Response:
 
     logger.debug("JSON response: %s", response.json())
 
-    logger.debug(f"Response Status Code: %d", response.status_code)
+    logger.debug("Response Status Code: %d", response.status_code)
     if response.status_code not in req.success_codes:
         with suppress(Exception):
             if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
@@ -208,7 +208,7 @@ def _request(req: RequestBuilder) -> httpx.Response:
     return response
 
 
-async def _async_request(request_config: RequestBuilder) -> Response:
+async def _async_request(request_config: RequestBuilder) -> httpx.Response:
     """Send an asynchronous request to the synapse API and receive a response.
 
     Attributes
@@ -218,7 +218,7 @@ async def _async_request(request_config: RequestBuilder) -> Response:
 
     Returns
     -------
-    response : requests.Response
+    response : httpx.Response
         Returns the response
 
     """
@@ -258,7 +258,7 @@ async def _async_request(request_config: RequestBuilder) -> Response:
 
     logger.debug("JSON response: %s", response.json())
 
-    logger.debug(f"Response Status Code: %d", response.status_code)
+    logger.debug("Response Status Code: %d", response.status_code)
     if response.status_code not in request_config.success_codes:
         with suppress(Exception):
             if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
@@ -275,8 +275,8 @@ async def _async_request(request_config: RequestBuilder) -> Response:
 
 def generate_worker_configs(
     request_config: RequestBuilder, next_token: int, total: int
-):
-    """Create workers for async requests (minus the already done sync reqest.)
+) -> Generator[RequestBuilder, None, None]:
+    """Create workers for async requests (minus the already done sync reqest).
 
     Attributes
     ----------
@@ -284,18 +284,16 @@ def generate_worker_configs(
         An instance of an RequestBuilder from which was used for an initial
         synchronous request to get the first part of the data and the other
         two arguments from the response.
-
     next_token : int
         The value, which defines from where to start in the next request.
         You get this value from the response of an initial synchronous request.
-
     total : int
         The value which defines how many entries there are.
         You get this value from the response of an initial synchronous request.
 
     Yields
     ------
-    response : matrixctl.handlers.api.RequestBuilder
+    request_config : matrixctl.handlers.api.RequestBuilder
         Yields a fully configured ``RequestsBuilder`` for every request that
         has to be done to get all entries.
 
@@ -314,16 +312,17 @@ def request(
     request_config: Generator[RequestBuilder, None, None],
     concurrent_limit: int,
 ) -> list[httpx.Response]:
-    ...
+    """Overload for request."""
 
 
 @typing.overload
 def request(
     request_config: RequestBuilder, concurrent_limit: int = ...
 ) -> httpx.Response:
-    ...
+    """Overload for request."""
 
 
+# flake8: noqa: C901
 def request(
     request_config: RequestBuilder | Generator[RequestBuilder, None, None],
     concurrent_limit: int = 1,  # default from config is 4
@@ -341,23 +340,24 @@ def request(
         The maximum of concurrent workers. (This information must be pulled
         from the config.)
 
-
     See Also
     --------
     RequestBuilder : matrixctl.handlers.api.RequestBuilder
 
     Returns
     -------
-    response : requests.Response
+    response : httpx.Response
         Returns the response
 
     """
 
     async def worker(
-        input_queue: asyncio.Queue,
-        output_queue: asyncio.Queue,
+        input_queue: asyncio.Queue[tuple[int, RequestBuilder]],
+        output_queue: asyncio.Queue[
+            tuple[int, httpx.Response] | tuple[int, Exception]
+        ],
         concurrent: bool,
-    ):
+    ) -> None:
         """Use this coro as worker to make (a)synchronous request.
 
         Attributes
@@ -380,13 +380,14 @@ def request(
         None
 
         """
+        output: httpx.Response
         while not input_queue.empty():
             idx, item = await input_queue.get()
             try:
                 if concurrent:
-                    output: httpx.Response = await _async_request(item)
+                    output = await _async_request(item)
                 else:
-                    output: httpx.Response = _request(item)
+                    output = _request(item)
                 await output_queue.put((idx, output))
 
             except Exception as err:
@@ -396,8 +397,12 @@ def request(
                 input_queue.task_done()
 
     async def group_results(
-        input_size: int, output_queue: asyncio.Queue, concurrent
-    ) -> Response | list[Response]:
+        input_size: int,
+        output_queue: asyncio.Queue[
+            tuple[int, httpx.Response] | tuple[int, Exception]
+        ],
+        concurrent: bool,
+    ) -> httpx.Response | list[httpx.Response]:
         """Use this coro to group the requests afterwards in a single list.
 
         Attributes
@@ -416,6 +421,7 @@ def request(
             Depending on ``concurrent``, it is a ``httpx.Response`` if
             ``concurrent`` is true, otherwise it is a ``list`` of
             ``httpx.Response``.
+
         """
         output = {}  # No need to sort afterwards
 
@@ -427,7 +433,7 @@ def request(
             return [output[i] for i in range(input_size)]
         return output[0]
 
-    async def procedure() -> Response | list[Response]:
+    async def procedure() -> httpx.Response | list[httpx.Response]:
         """Use this coro to generate and run workers and group the responses.
 
         Returns
@@ -436,8 +442,16 @@ def request(
             Depending on ``concurrent_limit`` an ``request_config``.
 
         """
+
+        input_queue: asyncio.Queue[tuple[int, RequestBuilder]]
+        output_queue: asyncio.Queue[
+            tuple[int, httpx.Response] | tuple[int, Exception]
+        ]
+        # output_queue: asyncio.Queue[
+        #     tuple[tuple[int, httpx.Response], Exception]
+        # ]
         nonlocal concurrent_limit
-        input_queue: asyncio.Queue = asyncio.Queue()
+        input_queue = asyncio.Queue()
         if isinstance(request_config, RequestBuilder):
             input_queue.put_nowait((0, request_config))
             concurrent_limit = 1
@@ -449,7 +463,7 @@ def request(
         input_size = input_queue.qsize()
 
         # Generate task pool, and start collecting data.
-        output_queue: asyncio.Queue = asyncio.Queue()
+        output_queue = asyncio.Queue()
         result_task = asyncio.create_task(
             group_results(input_size, output_queue, concurrent_limit > 1)
         )
