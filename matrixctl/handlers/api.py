@@ -33,6 +33,7 @@ import attr
 import httpx
 
 from matrixctl import __version__
+from matrixctl.errors import ExitQWorker
 from matrixctl.errors import InternalResponseError
 
 
@@ -180,7 +181,7 @@ def _request(req: RequestBuilder) -> httpx.Response:
             "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
             '_domain: ""'
         )
-        raise Exception()  # TODO
+        raise ExitQWorker()  # TODO
     if response.status_code == 404:
         logger.critical(
             "You need to make sure, that your vars.yml contains the "
@@ -188,7 +189,7 @@ def _request(req: RequestBuilder) -> httpx.Response:
             "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
             "location_synapse_admin_api_enabled: true"
         )
-        raise Exception()  # TODO
+        raise ExitQWorker()  # TODO
 
     logger.debug("JSON response: %s", response.json())
 
@@ -202,7 +203,7 @@ def _request(req: RequestBuilder) -> httpx.Response:
                     "and up-to-date. Your access-token will change every "
                     "time, you log out."
                 )
-                raise Exception()  # TODO
+                raise ExitQWorker()  # TODO
         raise InternalResponseError(payload=response)
 
     return response
@@ -246,7 +247,7 @@ async def _async_request(request_config: RequestBuilder) -> httpx.Response:
             "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
             '_domain: ""'
         )
-        raise Exception()  # TODO
+        raise ExitQWorker()  # TODO
     if response.status_code == 404:
         logger.critical(
             "You need to make sure, that your vars.yml contains the "
@@ -254,7 +255,7 @@ async def _async_request(request_config: RequestBuilder) -> httpx.Response:
             "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
             "location_synapse_admin_api_enabled: true"
         )
-        raise Exception()  # TODO
+        raise ExitQWorker()  # TODO
 
     logger.debug("JSON response: %s", response.json())
 
@@ -268,7 +269,7 @@ async def _async_request(request_config: RequestBuilder) -> httpx.Response:
                     "and up-to-date. Your access-token will change every "
                     "time, you log out."
                 )
-                raise Exception()  # TODO
+                raise ExitQWorker()  # TODO
         raise InternalResponseError(payload=response)
     return response
 
@@ -390,7 +391,7 @@ def request(
                     output = _request(item)
                 await output_queue.put((idx, output))
 
-            except Exception as err:
+            except Exception as err:  # skipcq: PYL-W0703
                 await output_queue.put((idx, err))
 
             finally:

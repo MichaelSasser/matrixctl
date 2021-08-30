@@ -224,7 +224,8 @@ class YAML:
 
         return cast(Config, {})
 
-    def apply_defaults(self, server: ConfigServer) -> ConfigServer:
+    @staticmethod
+    def apply_defaults(server: ConfigServer) -> ConfigServer:
         """Apply defaults to the configuration.
 
         Parameters
