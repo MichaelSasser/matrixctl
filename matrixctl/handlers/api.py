@@ -19,16 +19,17 @@
 
 from __future__ import annotations
 
-import json
+import asyncio
 import logging
 import sys
 import typing
 import urllib.parse
 
 from contextlib import suppress
+from typing import Generator
 
 import attr
-import requests
+import httpx
 
 from matrixctl import __version__
 from matrixctl.errors import InternalResponseError
@@ -53,7 +54,8 @@ class RequestBuilder:
     subdomain: str = "matrix"
     api_path: str = "_synapse/admin"
     api_version: str = "v2"
-    data: bytes | str | None | dict[str, typing.Any] = None
+    data: dict[str, typing.Any] | None = None
+    content: bytes | None = None
     method: str = "GET"
     json: bool = True
     params: dict[str, str | int] = {}
@@ -135,8 +137,8 @@ class RequestBuilder:
         )
 
 
-def request(req: RequestBuilder) -> requests.Response:
-    """Send an request to the synapse API and receive a response.
+def _request(req: RequestBuilder) -> httpx.Response:
+    """Send an  syncronus request to the synapse API and receive a response.
 
     Parameters
     ----------
@@ -149,20 +151,21 @@ def request(req: RequestBuilder) -> requests.Response:
         Returns the response
 
     """
-    data = req.data
-    if req.json and data is not None:
-        data = json.dumps(req.data)
 
-    logger.debug(repr(req))
+    logger.debug("repr: %s", repr(req))
 
-    response = requests.Session().request(
-        method=req.method,
-        data=data,
-        url=str(req),
-        params=req.params,
-        headers=req.headers_with_auth,
-        allow_redirects=False,
-    )
+    with httpx.Client(
+        http2=True,
+    ) as client:
+        response: httpx.Response = client.request(
+            method=req.method,
+            data=req.data,
+            content=req.content,
+            url=str(req),
+            params=req.params,
+            headers=req.headers_with_auth,
+            allow_redirects=False,
+        )
 
     if response.status_code == 302:
         logger.critical(
@@ -184,9 +187,9 @@ def request(req: RequestBuilder) -> requests.Response:
         )
         sys.exit(1)
 
-    logger.debug(f"{response.json()=}")
+    logger.debug("JSON response: %s", response.json())
 
-    logger.debug(f"{response.status_code=}")
+    logger.debug(f"Response Status Code: %d", response.status_code)
     if response.status_code not in req.success_codes:
         with suppress(Exception):
             if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
@@ -200,6 +203,146 @@ def request(req: RequestBuilder) -> requests.Response:
         raise InternalResponseError(payload=response)
 
     return response
+
+
+async def _async_request(req):
+
+    logger.debug("repr: %s", repr(req))
+
+    async with httpx.AsyncClient(http2=True) as client:
+        response: httpx.Response = await client.request(
+            method=req.method,
+            data=req.data,
+            content=req.content,
+            url=str(req),
+            params=req.params,
+            headers=req.headers_with_auth,
+            allow_redirects=False,
+        )
+
+    if response.status_code == 302:
+        logger.critical(
+            "The api request resulted in an redirect (302). "
+            "This indicates, that the API might have changed, or your "
+            "playbook is misconfigured.\n"
+            "Please make sure your installation of matrixctl is "
+            "up-to-date and your vars.yml contains:\n\n"
+            "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
+            '_domain: ""'
+        )
+        sys.exit(1)
+    if response.status_code == 404:
+        logger.critical(
+            "You need to make sure, that your vars.yml contains the "
+            "following excessive long line:\n\n"
+            "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
+            "location_synapse_admin_api_enabled: true"
+        )
+        sys.exit(1)
+
+    logger.debug("JSON response: %s", response.json())
+
+    logger.debug(f"Response Status Code: %d", response.status_code)
+    if response.status_code not in req.success_codes:
+        with suppress(Exception):
+            if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
+                logger.critical(
+                    "The server rejected your access-token. "
+                    "Please make sure, your access-token is correct "
+                    "and up-to-date. Your access-token will change every "
+                    "time, you log out."
+                )
+                sys.exit(1)
+        raise InternalResponseError(payload=response)
+    return response
+
+
+def request(
+    request_config: RequestBuilder | Generator[RequestBuilder, None, None],
+    concurrent_limit=4,
+    raise_error=True,
+) -> list[httpx.Response]:
+    async def worker(
+        input_queue: asyncio.Queue,
+        output_queue: asyncio.Queue,
+        concurrent: bool,
+    ):
+        while not input_queue.empty():
+            idx, item = await input_queue.get()
+            try:
+                if concurrent:
+                    output: httpx.Response = await _async_request(item)
+                else:
+                    output: httpx.Response = _request(item)
+                await output_queue.put((idx, output))
+
+            except Exception as err:
+                await output_queue.put((idx, err))
+
+            finally:
+                input_queue.task_done()
+
+    async def group_results(
+        input_size, output_queue: asyncio.Queue, concurrent
+    ):
+        output = {}  # No need to sort afterwards
+
+        for _ in range(input_size):
+            idx, result = await output_queue.get()  # (idx, result)
+            output[idx] = result
+            output_queue.task_done()
+        if concurrent:
+            return [output[i] for i in range(input_size)]
+        return output[0]
+
+    async def procedure():
+        nonlocal concurrent_limit
+        input_queue: asyncio.Queue = asyncio.Queue()
+        if isinstance(request_config, RequestBuilder):
+            input_queue.put_nowait((0, request_config))
+            concurrent_limit = 1
+        else:
+            for idx, item in enumerate(request_config):
+                input_queue.put_nowait((idx, item))
+
+        # Remember size before using Queue
+        input_size = input_queue.qsize()
+
+        # Generate task pool, and start collecting data.
+        output_queue: asyncio.Queue = asyncio.Queue()
+        result_task = asyncio.create_task(
+            group_results(input_size, output_queue, concurrent_limit > 1)
+        )
+        tasks = [
+            asyncio.create_task(
+                worker(input_queue, output_queue, concurrent_limit > 1)
+            )
+            for _ in range(concurrent_limit)
+        ]
+
+        # Wait for tasks complete
+        await asyncio.gather(*tasks)
+
+        # Wait for result fetching
+        results = await result_task
+
+        # Re-raise errors
+        if concurrent_limit > 1:  # if concurrent
+            if raise_error and (
+                errors := [
+                    err for err in results if isinstance(err, Exception)
+                ]
+            ):
+                # noinspection PyUnboundLocalVariable
+                raise Exception(
+                    errors
+                )  # It never runs before assignment, safe to ignore.
+        if raise_error and isinstance(results, Exception):
+            raise Exception(results)
+
+        return results
+
+    return asyncio.run(procedure())
 
 
 # vim: set ft=python :

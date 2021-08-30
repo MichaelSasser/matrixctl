@@ -34,7 +34,6 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
-requests = "^2.25.1"
 GitPython = "^3.1.20"
 coloredlogs = "^15.0.1"
 paramiko = "^2.7.2"
@@ -43,6 +42,7 @@ ansible-runner = ">=1.4.7,<3.0.0"
 attrs = "^21.2.0"
 single-source = "^0.2.0"
 xdg = "^5.1.0"
+httpx = {extras = ["http2"], version = "^0.19.0"}
 sphinx = { version = ">=3.5.1,<5.0.0", optional = true }
 sphinx-autodoc-typehints = { version = "^1.12.0", optional = true }
 sphinxcontrib-programoutput = { version = ">=0.16,<0.18", optional = true }
@@ -72,7 +72,6 @@ black = { version = "^21.7b0", allow-prereleases = true }
 isort = {version = "^5.9.3", extras = ["pyproject"]}
 flake8-bugbear = "^21.4.3"
 types-pkg-resources = "^0.1.3"
-types-requests = "^2.25.2"
 types-tabulate = "^0.8.0"
 types-paramiko = "^0.1.7"
 types-attrs = "^19.1.0"
@@ -128,13 +127,13 @@ filter_files = true
 known_first_party = "matrixctl"
 known_third_party = [
     "pytest",
-    "requests",
     "paramiko",
     "tabulate",
     "argcomplete",
     "coloredlogs",
     "sphinx_rtd_theme",
     "git",
+    "httpx",
     "attr",
     "ansible_runner",
 ]

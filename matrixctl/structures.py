@@ -64,6 +64,7 @@ class ConfigServerAPI(TypedDict):
     domain: str
     username: str
     token: str
+    concurrent_limit: int
 
 
 class ConfigServerSSH(TypedDict):

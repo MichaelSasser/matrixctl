@@ -75,7 +75,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         api_version="r0",
         json=False,
         headers={"Content-Type": file_type},
-        data=file,
+        content=file,
     )
     try:
         response: JsonDict = request(req).json()
