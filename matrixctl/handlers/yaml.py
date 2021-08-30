@@ -34,7 +34,7 @@ from ruamel.yaml.error import YAMLError
 
 from matrixctl import __version__
 from matrixctl.errors import ConfigFileError
-from matrixctl.structures import Config
+from matrixctl.structures import Config, ConfigServer, ConfigServerAPI
 
 
 __author__: str = "Michael Sasser"
@@ -222,8 +222,36 @@ class YAML:
 
         return cast(Config, {})
 
-    @staticmethod
+    def apply_defaults(self, server: ConfigServer) -> ConfigServer:
+        """Apply defaults to the configuration.
+
+        Parameters
+        ----------
+        server : matrixctl.structures.ConfigServer
+            The configuration of a (home)server.
+
+        Returns
+        -------
+        server : matrixctl.structures.ConfigServer
+            The configuration of a (home)server with applied defaults.
+
+        """
+        # Create api if it does not exist
+        try:
+            server["api"]["concurrent_limit"]
+        except KeyError:
+            server["api"] = cast(ConfigServerAPI, {})
+
+        # Create default for concurrent_limit
+        try:
+            server["api"]["concurrent_limit"]
+        except KeyError:
+            server["api"]["concurrent_limit"] = 4
+
+        return server
+
     def get_server_config(
+        self,
         paths: Iterable[Path],
         server: str,
     ) -> Config:
@@ -261,8 +289,9 @@ class YAML:
                 Config,
                 dict(ChainMap(*(config for config in configs if config))),
             )
-            conf["server"] = conf["servers"][server]
+            conf["server"] = self.apply_defaults(conf["servers"][server])
             return conf
+
         except KeyError:
             logger.error(
                 f'The server "{server}" does not exist in your config file.'

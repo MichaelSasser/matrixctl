@@ -34,13 +34,11 @@ class ConfigServer(TypedDict):
 
     """Add a `server` to the YAML config structure."""
 
-    ansible: (
-        ConfigServerAnsible
-        | ConfigServerSynapse
-        | ConfigServerAPI
-        | ConfigServerSSH
-        | ConfigServerMaintenance
-    )
+    ansible: ConfigServerAnsible
+    synapse: ConfigServerSynapse
+    api: ConfigServerAPI
+    ssh: ConfigServerSSH
+    maintenance: ConfigServerMaintenance  # default = 4
 
 
 class ConfigServerAnsible(TypedDict):

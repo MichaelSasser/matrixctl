@@ -24,13 +24,12 @@ import logging
 
 from argparse import Namespace
 from contextlib import suppress
-from copy import deepcopy
-
-from httpx import Response
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import Response
 from matrixctl.handlers.api import request
+from matrixctl.handlers.api import generate_worker_configs
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
 
@@ -112,8 +111,10 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     # New group to not suppress KeyError in here
     if next_token is not None and total is not None:
         async_responses = request(
-            generate_worker_config(req, next_token, total),
-            concurrent_limit=yaml.get("server", "api", "concurrent_limit"),
+            generate_worker_configs(req, next_token, total),
+            concurrent_limit=int(
+                yaml.get("server", "api", "concurrent_limit")
+            ),
         )
 
         for async_response in async_responses:
@@ -126,93 +127,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     else:
         for line in to_table(users, len_domain):
             print(line)
+        print(f"Total number of users: {len(users)}")
 
     return 0
-
-
-def generate_worker_config(req: RequestBuilder, next_token: int, total: int):
-    """Create workers for async requests (minus the already done sync reqest.)"""
-    step_size: int = next_token - 1
-    # logger.debug(math.ceil(total / step_size))
-    for i in range(step_size + 1, total, step_size + 1):
-        worker_config = deepcopy(req)
-        worker_config.params["from"] = i
-        # print(f'FROM -> {worker_config.params["from"]}')
-        yield worker_config
-
-
-# def addon(arg: Namespace, yaml: YAML) -> int:
-#     """Print a table/json of the matrix users.
-#
-#     This function generates and prints a table of users or uses json as
-#     output format.
-#
-#     The table can be modified.
-#
-#     - If you want guests in the table use the ``--with-guests`` switch.
-#     - If you want deactivated user in the table use the ``--with-deactivated``
-#       switch.
-#
-#     Notes
-#     -----
-#     - Needs API version 2 (``synapse`` 1.28 or greater) to work.
-#     - API version 1 is deprecated. If you encounter problems please upgrade
-#       to the latest ``synapse`` release.
-#
-#     Parameters
-#     ----------
-#     arg : argparse.Namespace
-#         The ``Namespace`` object of argparse's ``parse_args()``.
-#     yaml : matrixctl.handlers.yaml.YAML
-#         The configuration file handler.
-#
-#     Returns
-#     -------
-#     err_code : int
-#         Non-zero value indicates error code, or zero on success.
-#
-#     """
-#     len_domain = len(yaml.get("server", "api", "domain")) + 1  # 1 for :
-#     from_user: int = 0
-#     users_list: list[JsonDict] = []
-#
-#     # ToDo: API bool
-#     req: RequestBuilder = RequestBuilder(
-#         token=yaml.get("server", "api", "token"),
-#         domain=yaml.get("server", "api", "domain"),
-#         path="users",
-#         api_version="v2",
-#         params={
-#             "guests": "true" if arg.with_guests or arg.all else "false",
-#             "deactivated": "true"
-#             if arg.with_deactivated or arg.all
-#             else "false",
-#         },
-#     )
-#
-#     while True:
-#
-#         req.params["from"] = from_user  # from must be in the loop
-#         try:
-#             lst: JsonDict = request(req).json()
-#         except InternalResponseError:
-#             logger.critical("Could not get the user table.")
-#
-#             return 1
-#
-#         users_list += lst["users"]
-#
-#         try:
-#             from_user = lst["next_token"]
-#         except KeyError:
-#             break
-#     if arg.to_json:
-#         print(json.dumps(users_list, indent=4))
-#     else:
-#         for line in to_table(users_list, len_domain):
-#             print(line)
-#
-#     return 0
 
 
 # vim: set ft=python :

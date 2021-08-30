@@ -21,11 +21,12 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import sys
 import typing
 import urllib.parse
 
 from contextlib import suppress
+from copy import deepcopy
+from collections.abc import Iterable
 from typing import Generator
 
 import attr
@@ -40,6 +41,8 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 logger = logging.getLogger(__name__)
+
+Response = httpx.Response
 
 
 @attr.s(slots=True, auto_attribs=True, repr=False)
@@ -138,9 +141,9 @@ class RequestBuilder:
 
 
 def _request(req: RequestBuilder) -> httpx.Response:
-    """Send an  syncronus request to the synapse API and receive a response.
+    """Send an syncronus request to the synapse API and receive a response.
 
-    Parameters
+    Attributes
     ----------
     req : matrixctl.handlers.api.RequestBuilder
         An instance of an RequestBuilder
@@ -177,7 +180,7 @@ def _request(req: RequestBuilder) -> httpx.Response:
             "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
             '_domain: ""'
         )
-        sys.exit(1)
+        raise Exception()  # TODO
     if response.status_code == 404:
         logger.critical(
             "You need to make sure, that your vars.yml contains the "
@@ -185,7 +188,7 @@ def _request(req: RequestBuilder) -> httpx.Response:
             "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
             "location_synapse_admin_api_enabled: true"
         )
-        sys.exit(1)
+        raise Exception()  # TODO
 
     logger.debug("JSON response: %s", response.json())
 
@@ -199,24 +202,37 @@ def _request(req: RequestBuilder) -> httpx.Response:
                     "and up-to-date. Your access-token will change every "
                     "time, you log out."
                 )
-                sys.exit(1)
+                raise Exception()  # TODO
         raise InternalResponseError(payload=response)
 
     return response
 
 
-async def _async_request(req):
+async def _async_request(request_config: RequestBuilder) -> Response:
+    """Send an asynchronous request to the synapse API and receive a response.
 
-    logger.debug("repr: %s", repr(req))
+    Attributes
+    ----------
+    req : matrixctl.handlers.api.RequestBuilder
+        An instance of an RequestBuilder
+
+    Returns
+    -------
+    response : requests.Response
+        Returns the response
+
+    """
+
+    logger.debug("repr: %s", repr(request_config))
 
     async with httpx.AsyncClient(http2=True) as client:
         response: httpx.Response = await client.request(
-            method=req.method,
-            data=req.data,
-            content=req.content,
-            url=str(req),
-            params=req.params,
-            headers=req.headers_with_auth,
+            method=request_config.method,
+            data=request_config.data,
+            content=request_config.content,
+            url=str(request_config),
+            params=request_config.params,
+            headers=request_config.headers_with_auth,
             allow_redirects=False,
         )
 
@@ -230,7 +246,7 @@ async def _async_request(req):
             "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
             '_domain: ""'
         )
-        sys.exit(1)
+        raise Exception()  # TODO
     if response.status_code == 404:
         logger.critical(
             "You need to make sure, that your vars.yml contains the "
@@ -238,12 +254,12 @@ async def _async_request(req):
             "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
             "location_synapse_admin_api_enabled: true"
         )
-        sys.exit(1)
+        raise Exception()  # TODO
 
     logger.debug("JSON response: %s", response.json())
 
     logger.debug(f"Response Status Code: %d", response.status_code)
-    if response.status_code not in req.success_codes:
+    if response.status_code not in request_config.success_codes:
         with suppress(Exception):
             if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
                 logger.critical(
@@ -252,21 +268,118 @@ async def _async_request(req):
                     "and up-to-date. Your access-token will change every "
                     "time, you log out."
                 )
-                sys.exit(1)
+                raise Exception()  # TODO
         raise InternalResponseError(payload=response)
     return response
 
 
+def generate_worker_configs(
+    request_config: RequestBuilder, next_token: int, total: int
+):
+    """Create workers for async requests (minus the already done sync reqest.)
+
+    Attributes
+    ----------
+    request_config : matrixctl.handlers.api.RequestBuilder
+        An instance of an RequestBuilder from which was used for an initial
+        synchronous request to get the first part of the data and the other
+        two arguments from the response.
+
+    next_token : int
+        The value, which defines from where to start in the next request.
+        You get this value from the response of an initial synchronous request.
+
+    total : int
+        The value which defines how many entries there are.
+        You get this value from the response of an initial synchronous request.
+
+    Yields
+    ------
+    response : matrixctl.handlers.api.RequestBuilder
+        Yields a fully configured ``RequestsBuilder`` for every request that
+        has to be done to get all entries.
+
+    """
+    step_size: int = next_token - 1
+    # logger.debug(math.ceil(total / step_size))
+    for i in range(step_size + 1, total, step_size + 1):
+        worker_config = deepcopy(request_config)
+        worker_config.params["from"] = i
+        # print(f'FROM -> {worker_config.params["from"]}')
+        yield worker_config
+
+
+@typing.overload
+def request(
+    request_config: Generator[RequestBuilder, None, None],
+    concurrent_limit: int,
+) -> list[httpx.Response]:
+    ...
+
+
+@typing.overload
+def request(
+    request_config: RequestBuilder, concurrent_limit: int = ...
+) -> httpx.Response:
+    ...
+
+
 def request(
     request_config: RequestBuilder | Generator[RequestBuilder, None, None],
-    concurrent_limit=4,
-    raise_error=True,
-) -> list[httpx.Response]:
+    concurrent_limit: int = 1,  # default from config is 4
+) -> list[httpx.Response] | httpx.Response:
+    """Make a (a)synchronous request to the synapse API and receive a response.
+
+    Attributes
+    ----------
+    request_config : RequestBuilder or Generator [RequestBuilder, None, None]
+        An instance of an ``RequestBuilder`` or a list of ``RequestBuilder``.
+        If the function gets a ``RequestBuilder``, the request will be
+        synchronous.
+        If it gets a Generator, the request will be asynchronous.
+    concurrent_limit : int
+        The maximum of concurrent workers. (This information must be pulled
+        from the config.)
+
+
+    See Also
+    --------
+    RequestBuilder : matrixctl.handlers.api.RequestBuilder
+
+    Returns
+    -------
+    response : requests.Response
+        Returns the response
+
+    """
+
     async def worker(
         input_queue: asyncio.Queue,
         output_queue: asyncio.Queue,
         concurrent: bool,
     ):
+        """Use this coro as worker to make (a)synchronous request.
+
+        Attributes
+        ----------
+        input_queue : asyncio.Queue
+            The input queue, which provides the ``RequestBuilder``.
+        output_queue : asyncio.Queue
+            The output queue, which gets the responses of ther requests.
+        concurrent : bool
+            When ``True``, make requests concurrently.
+            When ``False``, make requests synchronously.
+
+
+        See Also
+        --------
+        RequestBuilder : matrixctl.handlers.api.RequestBuilder
+
+        Returns
+        -------
+        None
+
+        """
         while not input_queue.empty():
             idx, item = await input_queue.get()
             try:
@@ -283,8 +396,27 @@ def request(
                 input_queue.task_done()
 
     async def group_results(
-        input_size, output_queue: asyncio.Queue, concurrent
-    ):
+        input_size: int, output_queue: asyncio.Queue, concurrent
+    ) -> Response | list[Response]:
+        """Use this coro to group the requests afterwards in a single list.
+
+        Attributes
+        ----------
+        input_size : int
+            The number of items in the queue.
+        output_queue : asyncio.Queue
+            The output queue, which holds the responses of ther requests.
+        concurrent : bool
+            When ``True``, make requests concurrently.
+            When ``False``, make requests synchronously.
+
+        Returns
+        -------
+        responses : list of httpx.Response or httpx.Response
+            Depending on ``concurrent``, it is a ``httpx.Response`` if
+            ``concurrent`` is true, otherwise it is a ``list`` of
+            ``httpx.Response``.
+        """
         output = {}  # No need to sort afterwards
 
         for _ in range(input_size):
@@ -295,7 +427,15 @@ def request(
             return [output[i] for i in range(input_size)]
         return output[0]
 
-    async def procedure():
+    async def procedure() -> Response | list[Response]:
+        """Use this coro to generate and run workers and group the responses.
+
+        Returns
+        -------
+        responses : list of httpx.Response or httpx.Response
+            Depending on ``concurrent_limit`` an ``request_config``.
+
+        """
         nonlocal concurrent_limit
         input_queue: asyncio.Queue = asyncio.Queue()
         if isinstance(request_config, RequestBuilder):
@@ -305,7 +445,7 @@ def request(
             for idx, item in enumerate(request_config):
                 input_queue.put_nowait((idx, item))
 
-        # Remember size before using Queue
+        # Remember the number of items in the queue, before using it
         input_size = input_queue.qsize()
 
         # Generate task pool, and start collecting data.
@@ -327,21 +467,21 @@ def request(
         results = await result_task
 
         # Re-raise errors
-        if concurrent_limit > 1:  # if concurrent
-            if raise_error and (
-                errors := [
-                    err for err in results if isinstance(err, Exception)
-                ]
-            ):
-                # noinspection PyUnboundLocalVariable
-                raise Exception(
-                    errors
-                )  # It never runs before assignment, safe to ignore.
-        if raise_error and isinstance(results, Exception):
+        # concurrent
+        if concurrent_limit > 1 and isinstance(results, Iterable):
+            if errors := [
+                err for err in results if isinstance(err, Exception)
+            ]:
+                raise Exception(errors)
+        if isinstance(results, Exception):  # Not concurrent
             raise Exception(results)
 
         return results
 
+    # Use a shortpass maybe and remove everything sync above?:
+    # Does not give a real benefit in time and ressources.
+    # if isinstance(request_config, RequestBuilder):
+    #     return _request(request_config)
     return asyncio.run(procedure())
 
 
