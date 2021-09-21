@@ -45,6 +45,13 @@ def subparser_rooms(subparsers: _SubParsersAction) -> None:
     """
     parser: ArgumentParser = subparsers.add_parser("rooms", help="List rooms")
     parser.add_argument(
+        "limit",
+        type=int,
+        default=-1,
+        nargs="?",
+        help="The number of users to show",
+    )
+    parser.add_argument(
         "-s",
         "--order-by-size",
         action="store_true",
@@ -52,13 +59,6 @@ def subparser_rooms(subparsers: _SubParsersAction) -> None:
     )
     parser.add_argument(
         "-r", "--reverse", action="store_true", help="Reverse the order"
-    )
-    parser.add_argument(
-        "-n",
-        "--number",
-        type=int,
-        default=0,
-        help="The number of rooms to show",
     )
     parser.add_argument(
         "filter",

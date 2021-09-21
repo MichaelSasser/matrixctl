@@ -23,9 +23,12 @@ import json
 import logging
 
 from argparse import Namespace
+from contextlib import suppress
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import Response
+from matrixctl.handlers.api import generate_worker_configs
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
@@ -56,18 +59,18 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    from_room: int = 0
-    rooms_list: list[JsonDict] = []
+    rooms: list[JsonDict] = []
+    next_token: int | None = None
+    total: int | None = None
 
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
         domain=yaml.get("server", "api", "domain"),
         path="rooms",
         api_version="v1",
+        params={"limit": arg.limit if 0 < arg.limit < 100 else 100},
+        concurrent_limit=yaml.get("server", "api", "concurrent_limit"),
     )
-
-    if arg.number > 0:
-        req.params["limit"] = arg.number
 
     if arg.filter:
         req.params["search_term"] = arg.filter
@@ -78,33 +81,47 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     if arg.order_by_size:
         req.params["order_by"] = "size"
 
-    while True:
+    try:
+        response: Response = request(req)
+    except InternalResponseError:
+        logger.critical("Could not get the user table.")
+        return 1
+    response_json: JsonDict = response.json()
 
-        req.params["from"] = from_room  # from must be in the loop
-        try:
-            lst: JsonDict = request(req).json()
-        except InternalResponseError:
-            logger.critical("Could not get the room table.")
+    rooms += response_json["rooms"]
 
-            return 1
+    with suppress(KeyError):  # Done: No more users
+        next_token = int(response_json["next_batch"])
+        total = int(response_json["total_rooms"])
+        if 0 < arg.limit < total:
+            total = arg.limit
 
-        rooms_list += lst["rooms"]
-        try:
-            from_room = lst["next_token"]
-        except KeyError:
-            break
+    # New group to not suppress KeyError in here
+    if next_token is not None and total is not None and total > 100:
+        async_responses = request(
+            generate_worker_configs(req, next_token, total),
+            concurrent_limit=req.concurrent_limit,
+        )
 
-    generate_output(rooms_list, arg.to_json)
+        for async_response in async_responses:
+            users_list = async_response.json()["rooms"]
+            for room in users_list:
+                rooms.append(room)
+
+    generate_output(rooms, arg.to_json)
 
     return 0
 
 
-def generate_output(rooms_list: list[JsonDict], to_json: bool) -> None:
+# Add limit
+
+
+def generate_output(rooms: list[JsonDict], to_json: bool) -> None:
     """Use this helper to generate the output.
 
     Parameters
     ----------
-    rooms_list : list of matrixctl.typehints.JsonDict
+    rooms : list of matrixctl.typehints.JsonDict
         A list of rooms from the API.
     to_json : bool
         ``True``, when the output should be in the JSON format.
@@ -116,10 +133,11 @@ def generate_output(rooms_list: list[JsonDict], to_json: bool) -> None:
 
     """
     if to_json:
-        print(json.dumps(rooms_list, indent=4))
+        print(json.dumps(rooms, indent=4))
     else:
-        for line in to_table(rooms_list):
+        for line in to_table(rooms):
             print(line)
+        print(f"Total number of rooms: {len(rooms)}")
 
 
 # vim: set ft=python :

@@ -23,9 +23,12 @@ import json
 import logging
 
 from argparse import Namespace
+from contextlib import suppress
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import Response
+from matrixctl.handlers.api import generate_worker_configs
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
@@ -72,8 +75,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
     len_domain = len(yaml.get("server", "api", "domain")) + 1  # 1 for :
-    from_user: int = 0
-    users_list: list[JsonDict] = []
+    users: list[JsonDict] = []
+    next_token: int | None = None
+    total: int | None = None
 
     # ToDo: API bool
     req: RequestBuilder = RequestBuilder(
@@ -81,35 +85,51 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         domain=yaml.get("server", "api", "domain"),
         path="users",
         api_version="v2",
+        method="GET",
         params={
             "guests": "true" if arg.with_guests or arg.all else "false",
+            "from": 0,
+            "limit": arg.limit if 0 < arg.limit < 100 else 100,
             "deactivated": "true"
             if arg.with_deactivated or arg.all
             else "false",
         },
+        concurrent_limit=yaml.get("server", "api", "concurrent_limit"),
     )
 
-    while True:
+    try:
+        response: Response = request(req)
+    except InternalResponseError:
+        logger.critical("Could not get the data do build the user table.")
+        return 1
+    response_json: JsonDict = response.json()
 
-        req.params["from"] = from_user  # from must be in the loop
-        try:
-            lst: JsonDict = request(req).json()
-        except InternalResponseError:
-            logger.critical("Could not get the user table.")
+    users += response_json["users"]
 
-            return 1
+    with suppress(KeyError):  # Done: No more users
+        next_token = int(response_json["next_token"])
+        total = int(response_json["total"])
+        if 0 < arg.limit < total:
+            total = arg.limit
 
-        users_list += lst["users"]
+    # New group to not suppress KeyError in here
+    if next_token is not None and total is not None and total > 100:
+        async_responses = request(
+            generate_worker_configs(req, next_token, total),
+            concurrent_limit=req.concurrent_limit,
+        )
 
-        try:
-            from_user = lst["next_token"]
-        except KeyError:
-            break
+        for async_response in async_responses:
+            users_list = async_response.json()["users"]
+            for user in users_list:
+                users.append(user)
+
     if arg.to_json:
-        print(json.dumps(users_list, indent=4))
+        print(json.dumps(users, indent=4))
     else:
-        for line in to_table(users_list, len_domain):
+        for line in to_table(users, len_domain):
             print(line)
+        print(f"Total number of users: {len(users)}")
 
     return 0
 
