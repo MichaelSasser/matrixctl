@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "⁉️ Need help with MatrixCtl? Ask in the Discussions on GitHub!"
+    url: https://github.com/MichaelSasser/argparse_addon_manager/discussions
+    about: Please ask and answer questions here.
+  - name: "⁉️ Need help with MatrixCtl? Ask on Matrix!"
+    url: https://matrix.to/#/#matrixctl:matrix.org
+    about: Please ask and answer questions on Matrix.

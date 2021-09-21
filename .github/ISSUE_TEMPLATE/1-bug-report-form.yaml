@@ -1,0 +1,83 @@
+name: "\U0001F41B Bug report"
+description: File a bug report
+title: "[Bug]: "
+labels: [bug]
+# assignees:
+#   - MichaelSasser
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a possible bug in MatrixCtl.
+        Please fill in as much of the template below as you can.
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Problem description
+      description: Also tell us, what did you expect to happen?
+      placeholder: |
+        Steps to reproduce the behavior:
+        1. Run the command, '...'
+        2. See error '...'
+    validations:
+      required: true
+  - type: input
+    id: matrixctl-version
+    attributes:
+      label: MatrixCtl version
+      placeholder: |
+        `matrixctl --version`
+    validations:
+      required: true
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version
+      placeholder: "`python --version`"
+    validations:
+      required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: Operating System version
+      placeholder: |
+        `uname -a`
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output at debug level.
+      placeholder: |
+        You can enable debug output by adding a `-d` right after `matrixctl`.
+        For example: `matrixctl -d adduser -a michael`
+      render: shell
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: I have
+      options:
+        - label: read the README.md,
+          required: true
+        - label: read the docs,
+          required: true
+        - label: searched for similar issues.
+          required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://matrixctl.readthedocs.io/en/latest/contributer_documentation/index.html)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

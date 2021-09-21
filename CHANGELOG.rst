@@ -3,6 +3,71 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 
 .. towncrier release notes start
 
+0.10.3 (2021-09-21)
+===================
+
+Behavior & Breaking Changes
+---------------------------
+
+- The config file now is using the ``YAML`` format instead of the ``TOML``
+  format. (`#174 <https://github.com/MichaelSasser/matrixctl/issues/174>`_)
+- Drop support for python 3.8. (`#181
+  <https://github.com/MichaelSasser/matrixctl/issues/181>`_)
+- The password generation of MatrixCtl has been removed (`#193
+  <https://github.com/MichaelSasser/matrixctl/issues/193>`_)
+- All servers in the config (``config.yaml``) file now need too be grouped
+  below
+  ``servers:``. (`#213
+  <https://github.com/MichaelSasser/matrixctl/issues/213>`_)
+- Remove ``--number`` and ``-n`` in the ``rooms`` addon and replace it with
+  ``[limit]``. (`#217
+  <https://github.com/MichaelSasser/matrixctl/issues/217>`_)
+
+
+Features & Improvements
+-----------------------
+
+- Add ``rust-synapse-compress-state`` to the maintenance command. (`#163
+  <https://github.com/MichaelSasser/matrixctl/issues/163>`_)
+- Multiple servers can be specified in the config file. (`#174
+  <https://github.com/MichaelSasser/matrixctl/issues/174>`_)
+- Per-server maintenance task configuration. (`#184
+  <https://github.com/MichaelSasser/matrixctl/issues/184>`_)
+- Optimized startuptime by lazy importing addons by a factor of 10. Added a
+  ``addon_manager`` which now manages imports of the addon (sub)parsers. (`#187
+  <https://github.com/MichaelSasser/matrixctl/issues/187>`_)
+- Add ``get_events`` addon, which gets user-events from the DB. (`#198
+  <https://github.com/MichaelSasser/matrixctl/issues/198>`_)
+- Add ``reports`` addon. (`#200
+  <https://github.com/MichaelSasser/matrixctl/issues/200>`_)
+- Add ``report`` addon. (`#202
+  <https://github.com/MichaelSasser/matrixctl/issues/202>`_)
+- Replace ``tabulate`` with the new ``table`` handler. (`#206
+  <https://github.com/MichaelSasser/matrixctl/issues/206>`_)
+- With the ``-j`` or ``--to-json`` argument, the output of ``reports``,
+  ``rooms``, ``users`` and ``user`` can be set to the JSON format. (`#211
+  <https://github.com/MichaelSasser/matrixctl/issues/211>`_)
+- All API requests which need multiple requests to collect all data are now
+  asynchronous. Add a optional ``[limit]`` argument to the ``users`` and
+  ``reports`` addon. (`#217
+  <https://github.com/MichaelSasser/matrixctl/issues/217>`_)
+- Add (one-pass) Jinja2 support for the configuration file. (`#229
+  <https://github.com/MichaelSasser/matrixctl/issues/229>`_)
+
+
+Miscellaneous
+-------------
+
+- Add tests for the yaml handler. (`#174
+  <https://github.com/MichaelSasser/matrixctl/issues/174>`_)
+- Commands or subcommands are now located in ``matrixctl.addons`` as packages and
+  considered addons. Addons are splitted in ``parser.py`` and ``addon.py``. It is
+  now allowed to use multible modules for one addon. (`#187
+  <https://github.com/MichaelSasser/matrixctl/issues/187>`_)
+- More flexible yaml handler. (`#213
+  <https://github.com/MichaelSasser/matrixctl/issues/213>`_)
+
+
 0.10.3 (2021-06-26)
 ===================
 

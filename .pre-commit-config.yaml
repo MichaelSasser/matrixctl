@@ -54,23 +54,23 @@ repos:
       # - id: double-quote-string-fixer (KEEP DISABLED)
       # Makes sure files end in a newline and only a newline.
       - id: end-of-file-fixer
-        exclude: "^CHANGELOG.rst"
+        exclude: '^CHANGELOG.rst'
       # Removes "# -*- coding: utf-8 -*-" on the top of python files.
       - id: fix-encoding-pragma
-        args: [ "--remove" ]
+        args: ['--remove']
       # Sort the lines in specified files (defaults to alphabetical).
       # - id: file-contents-sorter (KEEP DISABLED)
       # Replaces or checks mixed line ending to LF.
       - id: mixed-line-ending
-        args: [ "--fix=lf" ]
+        args: ['--fix=lf']
       # Assert that files in tests/ match test*.py.
       - id: name-tests-test
-        args: [ "--django" ]
+        args: ['--django']
       # Protect specific branches from direct checkins.
       - id: no-commit-to-branch
         args:
-          - "-b master"
-          - "-p release/.*"
+          - '-b master'
+          - '-p release/.*'
       # Checks that all your JSON files are pretty.
       # - id: pretty-format-json
       #   args: ["--autofix"]
@@ -111,14 +111,14 @@ repos:
 
   # isort
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.8.0
+    rev: 5.9.3
     hooks:
       - id: isort
-        additional_dependencies: [ toml ]
+        additional_dependencies: [toml]
 
   # format: black
   - repo: https://github.com/ambv/black
-    rev: 21.6b0
+    rev: 21.9b0
     hooks:
       - id: black
 
@@ -127,20 +127,20 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
-        additional_dependencies: [ "flake8-bugbear" ]
+        additional_dependencies: ['flake8-bugbear']
 
   # check docstrings
   - repo: https://github.com/PyCQA/pydocstyle
     rev: 6.1.1
     hooks:
       - id: pydocstyle
-        args: [ "--ignore=D10,D21,D202" ]
+        args: ['--ignore=D10,D21,D202']
         additional_dependencies:
           - toml
 
   # static type checking with mypy
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.902
+    rev: v0.910
     hooks:
       - id: mypy
         additional_dependencies:
@@ -152,7 +152,7 @@ repos:
           - types-attrs
 
   - repo: https://github.com/econchick/interrogate
-    rev: 1.4.0
+    rev: 1.5.0
     hooks:
       - id: interrogate
         args: [tests]
@@ -160,13 +160,36 @@ repos:
 
   # vulture
   - repo: https://github.com/jendrikseipp/vulture
-    rev: "v2.3"
+    rev: 'v2.3'
     hooks:
       - id: vulture
 
-  # # PEP 585 Upgrade (Type Hints)
-  # - repo: https://github.com/sondrelg/pep585-upgrade
-  #   # Use the sha / tag you want to point at
-  #   rev: 'ab1595ee0aa8823dcda1f0bd95b2c194fcd5362b'
+  # pyupgrade
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.26.0
+    hooks:
+      - id: pyupgrade
+        exclude: docs/source/conf.py # Py3.8 needed by rtd
+
+  # pycln
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v1.0.3
+    hooks:
+      - id: pycln
+        args: [--config=pyproject.toml]
+
+  # velin
+  - repo: https://github.com/Carreau/velin
+    rev: 0.0.11
+    hooks:
+      - id: velin
+  # - repo: https://github.com/PyCQA/prospector
+  #   rev: 1.3.1
   #   hooks:
-  #   - id: upgrade-type-hints
+  #     - id: prospector
+  # PEP 585 Upgrade (Type Hints)
+  - repo: https://github.com/sondrelg/pep585-upgrade
+    # Use the sha / tag you want to point at
+    rev: 'v1'
+    hooks:
+    - id: upgrade-type-hints

@@ -26,12 +26,12 @@ import sys
 
 from datetime import date
 from pathlib import Path
-from typing import List
-
-# pylint: disable=W0611
-import sphinx_rtd_theme  # noqa: F401
 
 from single_source import get_version
+
+
+# pylint: disable=W0611
+# import sphinx_rtd_theme  # noqa: F401
 
 
 __version__: str = (
@@ -57,10 +57,11 @@ release: str = __version__
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions: List[str] = [
+extensions: list[str] = [
     "sphinx.ext.autodoc",
     "sphinx.ext.mathjax",
     "sphinx_autodoc_typehints",
+    "sphinx_rtd_theme",
     "sphinxcontrib.programoutput",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.viewcode",
@@ -69,10 +70,9 @@ extensions: List[str] = [
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
     "sphinx.ext.inheritance_diagram",
-    "sphinx_rtd_theme",
 ]
 
-suppress_warnings: List[str] = ["autosectionlabel.*"]
+suppress_warnings: list[str] = ["autosectionlabel.*"]
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
@@ -93,6 +93,9 @@ nitpicky: bool = False
 # true: figures, tables ,code-blocks are auto numbered if they have a caption.
 numfig: bool = True
 
+# This will not work for now and will generate a lot of warnings since
+# gitpython has a circular import somewhere when this option is enabled
+set_type_checking_flag = False  # sphinx-autodoc-typehints: set TYPE_CHECKING
 
 numpydoc_show_class_members: bool = False
 
@@ -109,12 +112,12 @@ autosummary_generate: bool = True
 autosummary_imported_members: bool = True
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path: List[str] = ["_templates"]
+templates_path: list[str] = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns: List[str] = []
+exclude_patterns: list[str] = []
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -126,4 +129,4 @@ html_theme: str = "sphinx_rtd_theme"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path: List[str] = ["_static"]
+html_static_path: list[str] = ["_static"]

@@ -19,12 +19,12 @@ Handlers
 ********
 
 Handlers in MatrixCtl are used to handle the communication between the server
-and the :ref:`Commands` or to load config files.
+and the :ref:`Addons` or to load config files.
 
-TOML
+YAML
 ----
 
-.. automodule:: matrixctl.handlers.toml
+.. automodule:: matrixctl.handlers.yaml
    :members:
    :undoc-members:
    :show-inheritance:
@@ -45,10 +45,10 @@ Ansible
    :undoc-members:
    :show-inheritance:
 
-Git
----
+Git (VCS)
+---------
 
-.. automodule:: matrixctl.handlers.git
+.. automodule:: matrixctl.handlers.vcs
    :members:
    :undoc-members:
    :show-inheritance:
@@ -60,6 +60,15 @@ SSH
    :members:
    :undoc-members:
    :show-inheritance:
+
+Table
+-----
+
+.. automodule:: matrixctl.handlers.table
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 ..
    vim: set ft=rst :

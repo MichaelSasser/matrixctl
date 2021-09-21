@@ -72,6 +72,11 @@ class Error(Exception):
         super().__init__(msg)
 
 
+class ExitQWorker(Exception):
+
+    """Use this exception when you want to exit an Queue worker."""
+
+
 class ConfigFileError(Error):
 
     """Use this exception class for everything related to the config file."""

@@ -20,11 +20,9 @@
 from __future__ import annotations
 
 from typing import Any
-from typing import Dict
 
 
-# Needs to be old style to be compatible with Python 3.8
-JsonDict = Dict[str, Any]
+JsonDict = dict[str, Any]
 
 
 # vim: set ft=python :

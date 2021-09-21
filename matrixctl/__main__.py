@@ -22,35 +22,15 @@ from __future__ import annotations
 import argparse
 import logging
 
-from argparse import _SubParsersAction
-from collections.abc import Callable
+from importlib import import_module
+from pathlib import Path
+from types import ModuleType
 
 import coloredlogs
 
 from matrixctl import __version__
-from matrixctl.adduser import subparser_adduser
-from matrixctl.adduser_jitsi import subparser_adduser_jitsi
-from matrixctl.check import subparser_check
-from matrixctl.delroom import subparser_delroom
-from matrixctl.deluser import subparser_deluser
-from matrixctl.deluser_jitsi import subparser_deluser_jitsi
-from matrixctl.deploy import subparser_deploy
-from matrixctl.get_event import subparser_get_event
-from matrixctl.maintenance import subparser_maintenance
-from matrixctl.purge_history import subparser_purge_history
-from matrixctl.rooms import subparser_rooms
-from matrixctl.server_notice import subparser_server_notice
-from matrixctl.start import subparser_restart
-from matrixctl.start import subparser_start
-from matrixctl.stop import subparser_stop
-from matrixctl.update import subparser_update
-from matrixctl.upload import subparser_upload
-from matrixctl.user import subparser_user
-from matrixctl.users import subparser_users
-from matrixctl.version import subparser_version
-
-
-# Subparsers
+from matrixctl import addon_manager
+from matrixctl.handlers.yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -76,41 +56,35 @@ def setup_parser() -> argparse.ArgumentParser:
         The parser object, which can be used to parse the arguments.
 
     """
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description=(
+            "MatrixCtl is a simple, but feature-rich tool to remotely "
+            "control, manage, provision and deploy Matrix homeservers."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Thank you for using MatrixCtl!\n"
+            "Check out the docs: https://matrixctl.rtfd.io\n"
+            "Report bugs to: "
+            "https://github.com/MichaelSasser/matrixctl/issues/new/choose"
+        ),
+    )
+    # parser._positionals.title = "addons"
 
     parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument(
         "-d", "--debug", action="store_true", help="Enables debugging mode."
     )
-    subparsers: _SubParsersAction = parser.add_subparsers()
-
-    # Subparsers
-    subparsers_tuple: list[Callable[[_SubParsersAction], None]] = [
-        subparser_adduser,
-        subparser_deluser,
-        subparser_adduser_jitsi,
-        subparser_deluser_jitsi,
-        subparser_user,
-        subparser_users,
-        subparser_purge_history,
-        subparser_rooms,
-        subparser_delroom,
-        subparser_update,
-        subparser_upload,
-        subparser_deploy,
-        subparser_server_notice,
-        subparser_get_event,
-        subparser_start,
-        subparser_stop,
-        subparser_restart,  # alias for start
-        subparser_maintenance,
-        subparser_check,
-        subparser_version,
-    ]
-
-    for subparser in subparsers_tuple:
-        subparser(subparsers)
-
+    parser.add_argument(
+        "-s",
+        "--server",
+        help='Select the server. (default: "default")',
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        help="A path to an alternative config file.",
+    )
     return parser
 
 
@@ -139,6 +113,9 @@ def setup_logging(debug_mode: bool) -> None:
         ),
     )
 
+    logger_httpx = logging.getLogger("hpack.hpack")
+    logger_httpx.setLevel(logging.INFO if debug_mode else logging.WARNING)
+
 
 def main() -> int:
     """Use the ``main`` function as entrypoint to run the application.
@@ -153,7 +130,13 @@ def main() -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    parser = setup_parser()
+    addon_module = "matrixctl.addons"
+    addon_dir: Path = Path(__file__).resolve().parent / "addons"
+
+    # Setup Addons
+    addon_manager.import_addons_from(str(addon_dir), addon_module, "parser")
+    parser: argparse.ArgumentParser = addon_manager.setup(setup_parser)
+    # parser = setup_parser()
 
     args: argparse.Namespace = parser.parse_args()
 
@@ -161,8 +144,28 @@ def main() -> int:
 
     logger.debug(f"{args=}")
 
+    yaml: YAML = YAML(
+        None if args.config is None else (args.config,), args.server
+    )
+
+    try:
+        addon_module_import: str = f"{addon_module}.{args.addon}.addon"
+    except AttributeError as e:
+        if args.debug:
+            logger.error(
+                "The parser of the addon which has been called did not have "
+                'an arg "args.addon". If you did not enter an subcommand, '
+                'e.g. "matrixctl -d" you can ignore this error.'
+            )
+            raise AttributeError(e) from e
+        parser.print_help()
+        return 1
+
+    logger.debug(f"{addon_module_import =}")
+    addon: ModuleType = import_module(addon_module_import)
+
     if args.debug:
-        logger.debug("Disabing help on AttributeError")
+        logger.debug("Disabing help on AttributeError")  # may not be needed
         logger.warning(
             "In debugging mode help is disabled! If you don't use any "
             "attibutes, the program will throw a AttributeError like: "
@@ -171,10 +174,11 @@ def main() -> int:
             'in debug mode, use the "--help" attribute.'
         )
 
-        return int(args.func(args))
+        # Both should fail without catching the error
+        return int(addon.addon(args, yaml))  # type: ignore
 
     try:
-        return int(args.func(args))
+        return int(addon.addon(args, yaml))  # type: ignore
     except AttributeError:
         parser.print_help()
 
