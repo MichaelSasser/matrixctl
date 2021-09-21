@@ -25,10 +25,13 @@ import sys
 from collections import ChainMap
 from collections.abc import Generator
 from collections.abc import Iterable
+from getpass import getuser
 from pathlib import Path
 from typing import Any
 from typing import cast
 
+from jinja2 import Template
+from jinja2 import Undefined
 from ruamel.yaml import YAML as RuamelYAML
 from ruamel.yaml.error import YAMLError
 
@@ -105,6 +108,19 @@ def secrets_filter(tree: dict[str, str], key: str) -> Any:
     return tree[key]
 
 
+class JinjaUndefined(Undefined):  # type: ignore
+
+    """Use this class as undefined argument in a Jinja2 Template.
+
+    The class replaces every undefined template with an enpty string.
+
+    """
+
+    def __getattr__(self, _: str) -> Any:
+        """Return en empty string."""
+        return ""
+
+
 class YAML:
 
     """Use the YAML class to read and parse the configuration file(s)."""
@@ -113,6 +129,12 @@ class YAML:
         Path("/etc/matrixctl/config"),
         Path.home() / ".config/matrixctl/config",
     ]
+    JINJA_PREDEFINED: dict[str, str | int] = {
+        "home": str(Path.home()),
+        "user": getuser(),
+        "default_ssh_port": 22,
+        "default_api_concurrent_limit": 4,
+    }
     __slots__ = ("__yaml", "server")
 
     def __init__(
@@ -184,12 +206,15 @@ class YAML:
 
     @staticmethod
     def read_from_file(yaml: RuamelYAML, path: Path) -> Config:
-        """Read the configuration from a YAML file.
+        """Read the config from a YAML file and render the Jinja2 tmplates.
 
         .. Note::
 
-           If the file was empty or does not exist, an empty dict will be
-           returned.
+           - The Renderer does one pass. This means, you can only render
+             templated strings but not the templated string of another
+             templated string.
+           - If the file was empty or does not exist, an empty dict will be
+             returned.
 
         Parameters
         ----------
@@ -206,8 +231,13 @@ class YAML:
         """
         try:
             with open(path) as stream:
+                template: Template = Template(
+                    stream.read(), undefined=JinjaUndefined
+                )
+                rendered = YAML.JINJA_PREDEFINED | yaml.load(template.render())
+                rendered["home"] = str(Path.home())
                 # Override default return type Any with Config
-                return cast(Config, yaml.load(stream))
+                return cast(Config, yaml.load(template.render(rendered)))
         except YAMLError:
             logger.error(
                 f"Please check your config file {str(path)}. MatrixCtl was "

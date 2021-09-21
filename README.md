@@ -80,6 +80,7 @@ To use this tool you need to have a configuration file in
 
 ```yaml
 # Define your homeservers in "servers" here.
+
 servers:
   # Your default server. You can specify muliple servers here with arbitrary
   # Names
@@ -124,9 +125,9 @@ servers:
 
     # Here you can add your SSH configuration.
     ssh:
-      address: matrix.example.com
+      address: "matrix.{{ servers.default.api.domain }}"  # With Jinja2 support
 
-      # The default port is 22
+      # The default port is 22. Can be omitted. Jinja2: "{{ default_ssh_port }}"
       port: 22
 
       # The default username is your current login name.
@@ -141,7 +142,15 @@ servers:
   # Another server.
   foo:
     # ...
+
+server: # This is a reserved name, which cannot be used.
 ```
+
+Predefined Jinja2 placeholders (all placeholders can be overwritten):
+- `"{{ home }}"` -- The current users home path e.g. `/home/michael`,
+- `"{{ user }}"` -- The current users username e.g. `michael`,
+- `"{{ default_ssh_port }}"` -- The default ssh port `22`,
+- `"{{ default_api_concurrent_limit }}"` -- The default concurrent limit `4`.
 
 Check out the
 [documentation](https://matrixctl.readthedocs.io/en/latest/getting_started/config_file.html)
