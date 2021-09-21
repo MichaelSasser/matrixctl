@@ -118,7 +118,7 @@ repos:
 
   # format: black
   - repo: https://github.com/ambv/black
-    rev: 21.7b0
+    rev: 21.9b0
     hooks:
       - id: black
 
@@ -152,7 +152,7 @@ repos:
           - types-attrs
 
   - repo: https://github.com/econchick/interrogate
-    rev: 1.4.0
+    rev: 1.5.0
     hooks:
       - id: interrogate
         args: [tests]
@@ -166,7 +166,7 @@ repos:
 
   # pyupgrade
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.24.0
+    rev: v2.26.0
     hooks:
       - id: pyupgrade
         exclude: docs/source/conf.py # Py3.8 needed by rtd
@@ -190,6 +190,6 @@ repos:
   # PEP 585 Upgrade (Type Hints)
   - repo: https://github.com/sondrelg/pep585-upgrade
     # Use the sha / tag you want to point at
-    rev: 'ab1595ee0aa8823dcda1f0bd95b2c194fcd5362b'
+    rev: 'v1'
     hooks:
     - id: upgrade-type-hints

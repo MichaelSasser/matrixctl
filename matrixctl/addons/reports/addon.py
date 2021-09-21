@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add the ``users`` subcommand to ``matrixctl``."""
+"""Use this module to add the ``reports`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
 
@@ -22,9 +22,12 @@ import json
 import logging
 
 from argparse import Namespace
+from contextlib import suppress
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import Response
+from matrixctl.handlers.api import generate_worker_configs
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
@@ -55,8 +58,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    from_event: int = 0
-    events_raw: list[JsonDict] = []
+    reports: list[JsonDict] = []
+    next_token: int | None = None
+    total: int | None = None
 
     # ToDo: API bool
     req: RequestBuilder = RequestBuilder(
@@ -64,29 +68,44 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         domain=yaml.get("server", "api", "domain"),
         path="event_reports",
         api_version="v1",
+        params={
+            "from": 0,
+            "limit": arg.limit if 0 < arg.limit < 100 else 100,
+        },
+        concurrent_limit=yaml.get("server", "api", "concurrent_limit"),
     )
 
-    while True:
+    try:
+        response: Response = request(req)
+    except InternalResponseError:
+        logger.critical("Could not get the data do build the user table.")
+        return 1
+    response_json: JsonDict = response.json()
 
-        req.params["from"] = from_event  # from must be in the loop
-        try:
-            response: JsonDict = request(req).json()
-        except InternalResponseError:
-            logger.critical("Could not get the event_reports table.")
+    reports += response_json["event_reports"]
 
-            return 1
+    with suppress(KeyError):  # Done: No more users
+        next_token = int(response_json["next_token"])
+        total = int(response_json["total"])
+        if 0 < arg.limit < total:
+            total = arg.limit
 
-        events_raw += response["event_reports"]
+    # New group to not suppress KeyError in here
+    if next_token is not None and total is not None and total > 100:
+        async_responses = request(
+            generate_worker_configs(req, next_token, total),
+            concurrent_limit=req.concurrent_limit,
+        )
 
-        try:
-            from_event = response["next_token"]
-        except KeyError:
-            break
+        for async_response in async_responses:
+            reports_list = async_response.json()["event_reports"]
+            for report in reports_list:
+                reports.append(report)
 
     if arg.to_json:
-        print(json.dumps(events_raw, indent=4))
+        print(json.dumps(reports, indent=4))
     else:
-        for line in to_table(events_raw):
+        for line in to_table(reports):
             print(line)
 
     return 0

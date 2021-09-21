@@ -46,6 +46,13 @@ def subparser_reports(subparsers: _SubParsersAction) -> None:
         "reports", help="Lists reported events"
     )
     parser.add_argument(
+        "limit",
+        type=int,
+        default=-1,
+        nargs="?",
+        help="The number of users to show",
+    )
+    parser.add_argument(
         "-j", "--to-json", action="store_true", help="Output the data as JSON"
     )
     parser.set_defaults(addon="reports")

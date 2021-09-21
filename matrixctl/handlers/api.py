@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import math
 import typing
 import urllib.parse
 
@@ -64,6 +65,7 @@ class RequestBuilder:
     json: bool = True
     params: dict[str, str | int] = {}
     headers: dict[str, str] = {}
+    concurrent_limit: int = 4
     success_codes: tuple[int, ...] = (
         200,
         201,
@@ -274,10 +276,108 @@ async def _async_request(request_config: RequestBuilder) -> httpx.Response:
     return response
 
 
+class RequestStrategy(typing.NamedTuple):
+
+    """Use this NamedTuple as request strategy data.
+
+    This NamedTuple is only used in this module.
+
+    """
+
+    limit: int
+    step_size: int
+    concurrent_limit: int
+    offset: int
+    iterations: int
+
+
+def make_request_strategy(
+    limit: int, concurrent_limit: int, max_step_size: int = 100
+) -> RequestStrategy:
+    """Use this functiona as helper for optimizing asyncronous requests.
+
+    Attributes
+    ----------
+    limit : int
+        A user entered limit or total.
+    concurrent_limit: int
+        The concurrent limit from the config file.
+    max_step_size : int, default=100
+        The maximal step size, which is a soft limit.
+        It is usualy 100, but that value might be different. Check out the API
+        documentation. We usualy take the default one.
+
+    Returns
+    -------
+    RequestStrategy : matrixctl.handlers.api.RequestStrategy
+        A Named tuple with the RequestStrategy values.
+
+    """
+
+    # limit might be total.
+
+    if limit > max_step_size:  # limit step_size
+        step_size = 100
+    else:
+        step_size = limit
+
+    workers = limit / step_size
+
+    if workers > concurrent_limit:
+        workers = concurrent_limit
+
+    iterations = limit / (workers * step_size)
+    new_iterations = math.ceil(iterations)
+    workers_temp = math.ceil(limit / (step_size * new_iterations))
+    new_workers = (
+        workers_temp if workers_temp <= concurrent_limit else concurrent_limit
+    )
+    new_step_size = math.ceil(limit / (new_workers * new_iterations))
+
+    new_limit = new_step_size * new_workers * new_iterations  # total
+    offset = new_limit - limit  # How many to hold back
+
+    # Debuging output
+    logger.debug("concurrent_limit = %s", concurrent_limit)
+    logger.debug("limit = %s", limit)
+    logger.debug(
+        "step_size = %s -> step_size_n = %s (soft limit = 100)",
+        step_size,
+        new_step_size,
+    )
+    logger.debug(
+        "workers = %s     -> new_workers = %s (hard limit = %s)",
+        workers,
+        new_workers,
+        concurrent_limit,
+    )
+    logger.debug(
+        'iterations = %s -> new_iterations = %s ("unlimited")',
+        iterations,
+        new_iterations,
+    )
+    logger.debug("new_limit (true limit) = %s", new_limit)
+    logger.debug("offset = %s (negative not allowed)", offset)
+
+    if offset < 0:
+        raise ValueError()  # TODO
+
+    return RequestStrategy(
+        new_limit, new_step_size, new_limit, offset, new_iterations
+    )
+
+
 def generate_worker_configs(
-    request_config: RequestBuilder, next_token: int, total: int
+    request_config: RequestBuilder, next_token: int, limit: int
 ) -> Generator[RequestBuilder, None, None]:
     """Create workers for async requests (minus the already done sync reqest).
+
+    Notes
+    -----
+    Warning ``Call-By-Reference`` like behavior!
+    The param ``limit`` and the ``concurrent_limit`` in ``request_config``
+    will get changed in this function. Make sure to only use them after using
+    this function!
 
     Attributes
     ----------
@@ -299,12 +399,33 @@ def generate_worker_configs(
         has to be done to get all entries.
 
     """
-    step_size: int = next_token - 1
-    # logger.debug(math.ceil(total / step_size))
-    for i in range(step_size + 1, total, step_size + 1):
-        worker_config = deepcopy(request_config)
+    if limit - next_token < 0:
+        raise InternalResponseError(
+            f"limit - next_token is negative ({limit - next_token}). "
+            "Make sure that you not use generate_worker_configs() if it "
+            "isn't necessary. For example with total > 100."
+        )
+    strategy: RequestStrategy = make_request_strategy(
+        limit - next_token,  # minus the already queried
+        concurrent_limit=request_config.concurrent_limit,
+        max_step_size=limit if limit < 100 else 100,
+    )
+    # limit the request "globally"
+    request_config.params["limit"] = strategy.step_size
+
+    # overwrite the concurrent limit
+    request_config.concurrent_limit = strategy.concurrent_limit
+    # reapply next_token to get the full range back for i
+    logger.debug(
+        "for loop (generator):"
+        f"{next_token + 1 = }, {strategy.limit + next_token + 1 = }, "
+        f"{strategy.step_size = }"
+    )
+    for i in range(
+        next_token + 1, strategy.limit + next_token + 1, strategy.step_size
+    ):
+        worker_config = deepcopy(request_config)  # deepcopy needed
         worker_config.params["from"] = i
-        # print(f'FROM -> {worker_config.params["from"]}')
         yield worker_config
 
 
@@ -495,8 +616,8 @@ def request(
 
     # Use a shortpass maybe and remove everything sync above?:
     # Does not give a real benefit in time and ressources.
-    # if isinstance(request_config, RequestBuilder):
-    #     return _request(request_config)
+    if isinstance(request_config, RequestBuilder):
+        return _request(request_config)
     return asyncio.run(procedure())
 
 

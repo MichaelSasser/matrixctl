@@ -45,6 +45,13 @@ def subparser_users(subparsers: _SubParsersAction) -> None:
     """
     parser: ArgumentParser = subparsers.add_parser("users", help="Lists users")
     parser.add_argument(
+        "limit",
+        type=int,
+        default=-1,
+        nargs="?",
+        help="The number of users to show",
+    )
+    parser.add_argument(
         "-a", "--all", action="store_true", help="Shows all users"
     )
     parser.add_argument(

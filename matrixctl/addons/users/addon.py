@@ -89,16 +89,18 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         params={
             "guests": "true" if arg.with_guests or arg.all else "false",
             "from": 0,
+            "limit": arg.limit if 0 < arg.limit < 100 else 100,
             "deactivated": "true"
             if arg.with_deactivated or arg.all
             else "false",
         },
+        concurrent_limit=yaml.get("server", "api", "concurrent_limit"),
     )
 
     try:
         response: Response = request(req)
     except InternalResponseError:
-        logger.critical("Could not get the user table.")
+        logger.critical("Could not get the data do build the user table.")
         return 1
     response_json: JsonDict = response.json()
 
@@ -107,14 +109,14 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     with suppress(KeyError):  # Done: No more users
         next_token = int(response_json["next_token"])
         total = int(response_json["total"])
+        if 0 < arg.limit < total:
+            total = arg.limit
 
     # New group to not suppress KeyError in here
-    if next_token is not None and total is not None:
+    if next_token is not None and total is not None and total > 100:
         async_responses = request(
             generate_worker_configs(req, next_token, total),
-            concurrent_limit=int(
-                yaml.get("server", "api", "concurrent_limit")
-            ),
+            concurrent_limit=req.concurrent_limit,
         )
 
         for async_response in async_responses:
