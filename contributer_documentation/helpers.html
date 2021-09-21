@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Helpers &mdash; MatrixCtl Unknown documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Type Hints, Structures and Errors" href="type_hints_structures_and_errors.html" />
+    <link rel="prev" title="Handlers" href="handlers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> MatrixCtl
+          </a>
+              <div class="version">
+                Unknown
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributer Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="handlers.html">Handlers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="type_hints_structures_and_errors.html">Type Hints, Structures and Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addons.html">Addons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application.html">Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests_handlers.html">Handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MatrixCtl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Contributer Documentation</a> &raquo;</li>
+      <li>Helpers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contributer_documentation/helpers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="helpers">
+<h1>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h1>
+<p>Helpers or helper function are common functions used throughout the project.</p>
+<section id="module-matrixctl.addon_manager">
+<span id="addon-manager"></span><h2>Addon Manager<a class="headerlink" href="#module-matrixctl.addon_manager" title="Permalink to this headline"></a></h2>
+<p>Use this module as addon manager.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addon_manager.import_addons_from">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">import_addons_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addon_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addon_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#import_addons_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.import_addons_from" title="Permalink to this definition"></a></dt>
+<dd><p>Import addons in (global) addons.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>addon_directory</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The absolute path as string to the addon directory.</p>
+</dd>
+<dt><strong>addon_module</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The import path (with dots <code class="docutils literal notranslate"><span class="pre">.</span></code> not slashes <code class="docutils literal notranslate"><span class="pre">/</span></code>) to the addons
+from project root e.g. “matrixctl.addons”.</p>
+</dd>
+<dt><strong>parser_name</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The name of the module the subparser is in.</p>
+</dd>
+<dt><strong>..Note:</strong></dt><dd><p>The nothing will be imported, when the subparser is not in (global)
+addons. To add the subparse to addons you need to decorate the
+subparsers with <code class="docutils literal notranslate"><span class="pre">matrixctl.addon_manager.subparser</span></code></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>none</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>The function always returnes <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addon_manager.setup">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.setup" title="Permalink to this definition"></a></dt>
+<dd><p>Add subparsers to the (main) parser.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>func</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.addon_manager.ParserSetupType</span></code></span></dt><dd><p>A callback to the main parser.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>parser</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a></span></dt><dd><p>The parser which includes all subparsers.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addon_manager.subparser">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">subparser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#subparser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.subparser" title="Permalink to this definition"></a></dt>
+<dd><p>Decorate subparsers with, to add them to (global) addons on import.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>func</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.addon_manager.SubParserType</span></code></span></dt><dd><p>A subparser.</p>
+</dd>
+<dt><strong>..Note:</strong></dt><dd><p>The nothing will be imported, when the subparser is not in (global)
+addons. To add the subparse to addons you need to decorate the
+subparsers with <code class="docutils literal notranslate"><span class="pre">matrixctl.addon_manager.subparser</span></code></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>decorated_func</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.addon_manager.SubParserType</span></code></span></dt><dd><p>The same subparser which was used as argument. (Without any changes)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">_SubParsersAction</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.print_helpers">
+<span id="print"></span><h2>Print<a class="headerlink" href="#module-matrixctl.print_helpers" title="Permalink to this headline"></a></h2>
+<p>Use the functions of this module as printing helpers.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.print_helpers.human_readable_bool">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.print_helpers.</span></span><span class="sig-name descname"><span class="pre">human_readable_bool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/print_helpers.html#human_readable_bool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.print_helpers.human_readable_bool" title="Permalink to this definition"></a></dt>
+<dd><p>Use this helper function to get a “yes” or “no” string from a “bool”.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>b</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">any</span></code></a></span></dt><dd><p>The value to “convert”.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>answer</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;Yes&quot;</span></code> if expression is <code class="docutils literal notranslate"><span class="pre">True</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">&quot;False&quot;</span></code> if expression is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.print_helpers.timestamp_to_dt">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.print_helpers.</span></span><span class="sig-name descname"><span class="pre">timestamp_to_dt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/print_helpers.html#timestamp_to_dt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.print_helpers.timestamp_to_dt" title="Permalink to this definition"></a></dt>
+<dd><p>Convert a timestamp (in ms) to a datetime string.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>ts</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The value to “convert”.</p>
+</dd>
+<dt><strong>sep</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The seperator between the date and the time.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>dt</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>A datetime string (e.g. 2021-08-21 04:55:55)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.password_helpers">
+<span id="password"></span><h2>Password<a class="headerlink" href="#module-matrixctl.password_helpers" title="Permalink to this headline"></a></h2>
+<p>Use the functions of this module as helpers for passwords.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.password_helpers.ask_password">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.password_helpers.</span></span><span class="sig-name descname"><span class="pre">ask_password</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/password_helpers.html#ask_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.password_helpers.ask_password" title="Permalink to this definition"></a></dt>
+<dd><p>Ask the user to create a password.</p>
+<p>The user will be asked twice for a password. After
+that the function compares the two entered passwords. If they are the
+same, and not empty, the function will return the password.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>None</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>password</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The user entered password.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.password_helpers.ask_question">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.password_helpers.</span></span><span class="sig-name descname"><span class="pre">ask_question</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">question</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Is</span> <span class="pre">everything</span> <span class="pre">correct?'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/password_helpers.html#ask_question"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.password_helpers.ask_question" title="Permalink to this definition"></a></dt>
+<dd><p>Asks the user a simple yes/no a question.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>question</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The yes/no question the user should be asked</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>answer</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.9)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the answer was <code class="docutils literal notranslate"><span class="pre">y</span></code> / <code class="docutils literal notranslate"><span class="pre">j</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">False</span></code> if the answer was <code class="docutils literal notranslate"><span class="pre">n</span></code></p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The user entered value is case-insensitive.</p></li>
+<li><p>If the user answered with an invalid answer (not <code class="docutils literal notranslate"><span class="pre">y</span></code> / <code class="docutils literal notranslate"><span class="pre">j</span></code> / <code class="docutils literal notranslate"><span class="pre">n</span></code>)
+the function asks again.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.password_helpers.create_user">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.password_helpers.</span></span><span class="sig-name descname"><span class="pre">create_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/password_helpers.html#create_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.password_helpers.create_user" title="Permalink to this definition"></a></dt>
+<dd><p>Ask the user to create a password.</p>
+<p>The user will be asked twice for a password. After
+that the function compares the two entered passwords. If they are the
+same, and not empty, the function will ask the user if the data is correct
+without disclosing the password.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>user</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The username.</p>
+</dd>
+<dt><strong>admin</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.9)"><span class="xref std std-ref">bool</span></a> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">none</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">is</span></code> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>True, if the user will be an admin,
+False, if the user will not have eleveted permissions.
+None, if the admin permissions are not an criteria. The field will
+be omitted in the data.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>password</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The user entered password.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="handlers.html" class="btn btn-neutral float-left" title="Handlers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="type_hints_structures_and_errors.html" class="btn btn-neutral float-right" title="Type Hints, Structures and Errors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Michael Sasser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matrixctl.addon_manager &mdash; MatrixCtl Unknown documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> MatrixCtl
+          </a>
+              <div class="version">
+                Unknown
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributer_documentation/index.html">Contributer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MatrixCtl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>matrixctl.addon_manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matrixctl.addon_manager</h1><div class="highlight"><pre>
+<span></span><span class="c1"># matrixctl</span>
+<span class="c1"># Copyright (c) 2021  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Use this module as addon manager.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># from functools import wraps</span>
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
+<span class="kn">from</span> <span class="nn">pkgutil</span> <span class="kn">import</span> <span class="n">iter_modules</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+
+<span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
+<span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael@MichaelSasser.org&quot;</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Leave them here, as long as they are not needed elsewhere</span>
+<span class="c1"># skipcq: PYL-W0212</span>
+<span class="n">SubParserType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">argparse</span><span class="o">.</span><span class="n">_SubParsersAction</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">ParserSetupType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">]</span>
+
+<span class="c1"># global</span>
+<span class="n">addons</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubParserType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<div class="viewcode-block" id="import_addons_from"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.addon_manager.import_addons_from">[docs]</a><span class="k">def</span> <span class="nf">import_addons_from</span><span class="p">(</span>
+    <span class="n">addon_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">addon_module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parser_name</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Import addons in (global) addons.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    addon_directory : str</span>
+<span class="sd">        The absolute path as string to the addon directory.</span>
+<span class="sd">    addon_module : str</span>
+<span class="sd">        The import path (with dots ``.`` not slashes ``/``) to the addons</span>
+<span class="sd">        from project root e.g. &quot;matrixctl.addons&quot;.</span>
+<span class="sd">    parser_name : str</span>
+<span class="sd">        The name of the module the subparser is in.</span>
+<span class="sd">    ..Note:</span>
+<span class="sd">        The nothing will be imported, when the subparser is not in (global)</span>
+<span class="sd">        addons. To add the subparse to addons you need to decorate the</span>
+<span class="sd">        subparsers with ``matrixctl.addon_manager.subparser``</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    none : None</span>
+<span class="sd">        The function always returnes ``None``.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;package dir set to </span><span class="si">{</span><span class="n">addon_directory</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;addon_module set to </span><span class="si">{</span><span class="n">addon_module</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">iter_modules</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">addon_directory</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">addon_module</span><span class="si">}</span><span class="s2">.&quot;</span>
+    <span class="p">):</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">parser_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found module: </span><span class="si">{</span><span class="n">parser</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Imported: </span><span class="si">{</span><span class="n">module</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="subparser"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.addon_manager.subparser">[docs]</a><span class="k">def</span> <span class="nf">subparser</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">SubParserType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SubParserType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Decorate subparsers with, to add them to (global) addons on import.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    func : matrixctl.addon_manager.SubParserType</span>
+<span class="sd">        A subparser.</span>
+<span class="sd">    ..Note:</span>
+<span class="sd">        The nothing will be imported, when the subparser is not in (global)</span>
+<span class="sd">        addons. To add the subparse to addons you need to decorate the</span>
+<span class="sd">        subparsers with ``matrixctl.addon_manager.subparser``</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    decorated_func : matrixctl.addon_manager.SubParserType</span>
+<span class="sd">        The same subparser which was used as argument. (Without any changes)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">func</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">addons</span><span class="p">:</span>
+        <span class="n">addons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+
+    <span class="c1"># @wraps(func)</span>
+    <span class="c1"># def wrapper(parser: argparse._SubParsersAction) -&gt; None:</span>
+    <span class="c1">#     func(parser)</span>
+    <span class="c1">#</span>
+    <span class="c1"># return wrapper</span>
+    <span class="k">return</span> <span class="n">func</span></div>
+
+
+<div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.addon_manager.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">ParserSetupType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Add subparsers to the (main) parser.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    func : matrixctl.addon_manager.ParserSetupType</span>
+<span class="sd">        A callback to the main parser.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    parser : argparse.ArgumentParser</span>
+<span class="sd">        The parser which includes all subparsers.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">addons</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;The Argparse Addon Manager was not able to find any addons. &quot;</span>
+            <span class="s2">&quot;Have you imported the addons with &quot;</span>
+            <span class="s1">&#39;&quot;AddonManager.import_addons_from()&quot;?&#39;</span>
+        <span class="p">)</span>
+
+    <span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">addons</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># skipcq: PYL-W0212</span>
+        <span class="n">subparsers</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">_SubParsersAction</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">subparser_</span> <span class="ow">in</span> <span class="n">addons</span><span class="p">:</span>
+            <span class="n">subparser_</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Michael Sasser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

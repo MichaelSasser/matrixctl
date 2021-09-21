@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matrixctl.addons.get_events.addon &mdash; MatrixCtl Unknown documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> MatrixCtl
+          </a>
+              <div class="version">
+                Unknown
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributer_documentation/index.html">Contributer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">MatrixCtl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>matrixctl.addons.get_events.addon</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matrixctl.addons.get_events.addon</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># matrixctl</span>
+<span class="c1"># Copyright (c) 2020  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Use this module to get an event from the Database.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">suppress</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">unique</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Match</span>
+
+<span class="kn">from</span> <span class="nn">matrixctl.handlers.ssh</span> <span class="kn">import</span> <span class="n">SSH</span>
+<span class="kn">from</span> <span class="nn">matrixctl.handlers.ssh</span> <span class="kn">import</span> <span class="n">SSHResponse</span>
+<span class="kn">from</span> <span class="nn">matrixctl.handlers.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
+
+
+<span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
+<span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael@MichaelSasser.org&quot;</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MessageType"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType">[docs]</a><span class="nd">@unique</span>
+<span class="k">class</span> <span class="nc">MessageType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Use this enum for describing message types.</span>
+
+<span class="sd">    Supported events:</span>
+
+<span class="sd">    ===================== ===================================================</span>
+<span class="sd">    message_type          Usage</span>
+<span class="sd">    ===================== ===================================================</span>
+<span class="sd">    m.room.message        This event is used when sending messages in a room</span>
+<span class="sd">    m.room.name           This event sets the name of an room</span>
+<span class="sd">    m.room.topic          This events sets the room topic</span>
+<span class="sd">    m.room.avatar         This event sets the room avatar</span>
+<span class="sd">    m.room.pinned_events  This event pins events</span>
+<span class="sd">    m.room.member         Adjusts the membership state for a user in a room</span>
+<span class="sd">    m.room.join_rules     This event sets the join rules</span>
+<span class="sd">    m.room.create         This event creates a room</span>
+<span class="sd">    m.room.power_levels   This event sets a rooms power levels</span>
+<span class="sd">    m.room.redaction      This event redacts other events</span>
+<span class="sd">    ===================== ===================================================</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">M_ROOM_MESSAGE</span> <span class="o">=</span> <span class="s2">&quot;m.room.message&quot;</span>
+    <span class="n">M_ROOM_NAME</span> <span class="o">=</span> <span class="s2">&quot;m.room.name&quot;</span>
+    <span class="n">M_ROOM_TOPIC</span> <span class="o">=</span> <span class="s2">&quot;m.room.topic&quot;</span>
+    <span class="n">M_ROOM_AVATAR</span> <span class="o">=</span> <span class="s2">&quot;m.room.avatar&quot;</span>
+    <span class="n">M_ROOM_PINNED_EVENTS</span> <span class="o">=</span> <span class="s2">&quot;m.room.pinned_events&quot;</span>
+    <span class="n">M_ROOM_MEMBER</span> <span class="o">=</span> <span class="s2">&quot;m.room.member&quot;</span>
+    <span class="n">M_ROOM_JOIN_RULES</span> <span class="o">=</span> <span class="s2">&quot;m.room.join_rules&quot;</span>
+    <span class="n">M_ROOM_CREATE</span> <span class="o">=</span> <span class="s2">&quot;m.room.create&quot;</span>
+    <span class="n">M_ROOM_POWER_LEVELS</span> <span class="o">=</span> <span class="s2">&quot;m.room.power_levels&quot;</span>
+    <span class="n">M_ROOM_REDACTION</span> <span class="o">=</span> <span class="s2">&quot;m.room.redaction&quot;</span></div>
+
+
+<div class="viewcode-block" id="addon"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.get_events.addon.addon">[docs]</a><span class="k">def</span> <span class="nf">addon</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Get Events from the Server.</span>
+
+<span class="sd">    It connects via paramiko to the server and runs the psql command provided</span>
+<span class="sd">    by the synapse playbook to run a query on the Database.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arg : argparse.Namespace</span>
+<span class="sd">        The ``Namespace`` object of argparse&#39;s ``parse_args()``</span>
+<span class="sd">    yaml : matrixctl.handlers.yaml.YAML</span>
+<span class="sd">        The configuration file handler.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    err_code : int</span>
+<span class="sd">        Non-zero value indicates error code, or zero on success.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># get_event_ids(arg, yaml)</span>
+    <span class="c1"># return 0</span>
+
+    <span class="n">address</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;address&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;address&quot;</span><span class="p">)</span>
+        <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;matrix.</span><span class="si">{</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;server&#39;</span><span class="p">,</span> <span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="s1">&#39;domain&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Todo better matching</span>
+    <span class="n">is_valid_sender</span><span class="p">:</span> <span class="n">Match</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\@.*\:.*\..*$&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+    <span class="n">is_valid_room_id</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\!.*\:.*\..*$&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">room_id</span><span class="p">)</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">room_id</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="c1"># try/except</span>
+    <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># unset: AttributeError</span>
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">AttributeError</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">message_type</span> <span class="o">=</span> <span class="n">MessageType</span><span class="p">[</span><span class="n">arg</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>  <span class="c1"># message type is not in enum</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Message type is not allowed or wrong.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid_sender</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;The given user has an invalid format. Please make sure you &quot;</span>
+            <span class="s2">&quot;use one with the correct format. &quot;</span>
+            <span class="s2">&quot;Example: @username:domain.tld&quot;</span>
+        <span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid_room_id</span> <span class="ow">and</span> <span class="n">is_valid_room_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;The given room_id has an invalid format. Please make sure you &quot;</span>
+            <span class="s2">&quot;use one with the correct format. &quot;</span>
+            <span class="s2">&quot;Example: !iuyQXswfjgxQMZGrfQ:matrix.org&quot;</span>
+        <span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">room_id_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot; AND room_id = &#39;</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">room_id</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">if</span> <span class="n">is_valid_room_id</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">)</span>
+    <span class="n">message_type_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot; AND type = &#39;</span><span class="si">{</span><span class="n">message_type</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">if</span> <span class="n">message_type</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">)</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;SELECT json FROM event_json WHERE event_id IN (&quot;</span>
+        <span class="s2">&quot;SELECT event_id FROM events WHERE sender = &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">room_id_str</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">message_type_str</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;/usr/local/bin/matrix-postgres-cli -P pager&quot;</span>
+    <span class="n">table</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;synapse&quot;</span>
+
+    <span class="n">command</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;sudo </span><span class="si">{</span><span class="n">cmd</span><span class="si">}</span><span class="s1"> -d </span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s1"> -c &quot;</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;command: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">SSH</span><span class="p">(</span>
+        <span class="n">address</span><span class="p">,</span>
+        <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">),</span>
+        <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">),</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">ssh</span><span class="p">:</span>
+        <span class="n">response</span><span class="p">:</span> <span class="n">SSHResponse</span> <span class="o">=</span> <span class="n">ssh</span><span class="o">.</span><span class="n">run_cmd</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">tty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="o">.</span><span class="n">stderr</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;response: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">stdout</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>
+            <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">)</span>
+            <span class="n">stop</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">start</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">stop</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">stop</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># &quot;empty&quot; response</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="s2">&quot;The event_id was not not in the Database. Please check &quot;</span>
+                    <span class="s2">&quot;if you entered the correct one. &quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="mi">1</span>
+            <span class="n">json_lst</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">stdout</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">stop</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">json_lst</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">json_lst</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+                <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unable to process the response data to JSON.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The response from the Database was empty.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;response: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;An error occured during the query. Are you sure, you used the &quot;</span>
+        <span class="s2">&quot;correct event_id?&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span></div>
+
+
+<span class="c1"># vim: set ft=python :</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Michael Sasser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributer Documentation &mdash; MatrixCtl Unknown documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Handlers" href="handlers.html" />
+    <link rel="prev" title="SSH Public Key" href="../getting_started/ssh_pubkey.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> MatrixCtl
+          </a>
+              <div class="version">
+                Unknown
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributer Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="handlers.html">Handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="type_hints_structures_and_errors.html">Type Hints, Structures and Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addons.html">Addons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application.html">Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests_handlers.html">Handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MatrixCtl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Contributer Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contributer_documentation/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="contributer-documentation">
+<h1>Contributer Documentation<a class="headerlink" href="#contributer-documentation" title="Permalink to this headline"></a></h1>
+<p>First off, thank you for considering contributing to MatrixCtl. Please make sure
+to read our Code of Conduct before you start Contributing to MatrixCtl.</p>
+<section id="contributor-covenant-code-of-conduct">
+<h2>Contributor Covenant Code of Conduct<a class="headerlink" href="#contributor-covenant-code-of-conduct" title="Permalink to this headline"></a></h2>
+<section id="our-pledge">
+<h3>Our Pledge<a class="headerlink" href="#our-pledge" title="Permalink to this headline"></a></h3>
+<p>We as members, contributors, and leaders pledge to make participation in
+our community a harassment-free experience for everyone, regardless of
+age, body size, visible or invisible disability, ethnicity, sex
+characteristics, gender identity and expression, level of experience,
+education, socio-economic status, nationality, personal appearance,
+race, caste, color, religion, or sexual identity and orientation.</p>
+<p>We pledge to act and interact in ways that contribute to an open,
+welcoming, diverse, inclusive, and healthy community.</p>
+</section>
+<section id="our-standards">
+<h3>Our Standards<a class="headerlink" href="#our-standards" title="Permalink to this headline"></a></h3>
+<p>Examples of behavior that contributes to a positive environment for our
+community include:</p>
+<ul class="simple">
+<li><p>Demonstrating empathy and kindness toward other people</p></li>
+<li><p>Being respectful of differing opinions, viewpoints, and experiences</p></li>
+<li><p>Giving and gracefully accepting constructive feedback</p></li>
+<li><p>Accepting responsibility and apologizing to those affected by our
+mistakes, and learning from the experience</p></li>
+<li><p>Focusing on what is best not just for us as individuals, but for the
+overall community</p></li>
+</ul>
+<p>Examples of unacceptable behavior include:</p>
+<ul class="simple">
+<li><p>The use of sexualized language or imagery, and sexual attention or
+advances of any kind</p></li>
+<li><p>Trolling, insulting or derogatory comments, and personal or political
+attacks</p></li>
+<li><p>Public or private harassment</p></li>
+<li><p>Publishing others’ private information, such as a physical or email
+address, without their explicit permission</p></li>
+<li><p>Other conduct which could reasonably be considered inappropriate in a
+professional setting</p></li>
+</ul>
+</section>
+<section id="enforcement-responsibilities">
+<h3>Enforcement Responsibilities<a class="headerlink" href="#enforcement-responsibilities" title="Permalink to this headline"></a></h3>
+<p>Community leaders are responsible for clarifying and enforcing our
+standards of acceptable behavior and will take appropriate and fair
+corrective action in response to any behavior that they deem
+inappropriate, threatening, offensive, or harmful.</p>
+<p>Community leaders have the right and responsibility to remove, edit, or
+reject comments, commits, code, wiki edits, issues, and other
+contributions that are not aligned to this Code of Conduct, and will
+communicate reasons for moderation decisions when appropriate.</p>
+</section>
+<section id="scope">
+<h3>Scope<a class="headerlink" href="#scope" title="Permalink to this headline"></a></h3>
+<p>This Code of Conduct applies within all community spaces, and also
+applies when an individual is officially representing the community in
+public spaces. Examples of representing our community include using an
+official e-mail address, posting via an official social media account,
+or acting as an appointed representative at an online or offline event.</p>
+</section>
+<section id="enforcement">
+<h3>Enforcement<a class="headerlink" href="#enforcement" title="Permalink to this headline"></a></h3>
+<p>Instances of abusive, harassing, or otherwise unacceptable behavior may
+be reported to the community leaders responsible for enforcement at
+<a class="reference external" href="mailto://abuse&#37;&#52;&#48;michaelsasser&#46;org">Abuse<span>&#64;</span>MichaelSasser<span>&#46;</span>org</a>. All
+complaints will be reviewed and investigated promptly and fairly.</p>
+<p>All community leaders are obligated to respect the privacy and security
+of the reporter of any incident.</p>
+</section>
+<section id="enforcement-guidelines">
+<h3>Enforcement Guidelines<a class="headerlink" href="#enforcement-guidelines" title="Permalink to this headline"></a></h3>
+<p>Community leaders will follow these Community Impact Guidelines in
+determining the consequences for any action they deem in violation of
+this Code of Conduct:</p>
+<section id="correction">
+<h4>1. Correction<a class="headerlink" href="#correction" title="Permalink to this headline"></a></h4>
+<p><strong>Community Impact</strong>: Use of inappropriate language or other behavior
+deemed unprofessional or unwelcome in the community.</p>
+<p><strong>Consequence</strong>: A private, written warning from community leaders,
+providing clarity around the nature of the violation and an explanation
+of why the behavior was inappropriate. A public apology may be
+requested.</p>
+</section>
+<section id="warning">
+<h4>2. Warning<a class="headerlink" href="#warning" title="Permalink to this headline"></a></h4>
+<p><strong>Community Impact</strong>: A violation through a single incident or series of
+actions.</p>
+<p><strong>Consequence</strong>: A warning with consequences for continued behavior. No
+interaction with the people involved, including unsolicited interaction
+with those enforcing the Code of Conduct, for a specified period of
+time. This includes avoiding interactions in community spaces as well as
+external channels like social media. Violating these terms may lead to a
+temporary or permanent ban.</p>
+</section>
+<section id="temporary-ban">
+<h4>3. Temporary Ban<a class="headerlink" href="#temporary-ban" title="Permalink to this headline"></a></h4>
+<p><strong>Community Impact</strong>: A serious violation of community standards,
+including sustained inappropriate behavior.</p>
+<p><strong>Consequence</strong>: A temporary ban from any sort of interaction or public
+communication with the community for a specified period of time. No
+public or private interaction with the people involved, including
+unsolicited interaction with those enforcing the Code of Conduct, is
+allowed during this period. Violating these terms may lead to a
+permanent ban.</p>
+</section>
+<section id="permanent-ban">
+<h4>4. Permanent Ban<a class="headerlink" href="#permanent-ban" title="Permalink to this headline"></a></h4>
+<p><strong>Community Impact</strong>: Demonstrating a pattern of violation of community
+standards, including sustained inappropriate behavior, harassment of an
+individual, or aggression toward or disparagement of classes of
+individuals.</p>
+<p><strong>Consequence</strong>: A permanent ban from any sort of public interaction
+within the community.</p>
+</section>
+</section>
+<section id="attribution">
+<h3>Attribution<a class="headerlink" href="#attribution" title="Permalink to this headline"></a></h3>
+<p>This Code of Conduct is adapted from the <a class="reference external" href="https://www.contributor-covenant.org">Contributor
+Covenant</a>, version 2.0,
+available at
+<a class="reference external" href="https://www.contributor-covenant.org/version/2/0/code_of_conduct.html">https://www.contributor-covenant.org/version/2/0/code_of_conduct.html</a>.</p>
+<p>Community Impact Guidelines were inspired by <a class="reference external" href="https://github.com/mozilla/diversity">Mozilla’s code of conduct
+enforcement ladder</a>.</p>
+<p>For answers to common questions about this code of conduct, see the FAQ
+at <a class="reference external" href="https://www.contributor-covenant.org/faq">https://www.contributor-covenant.org/faq</a>. Translations are available
+at <a class="reference external" href="https://www.contributor-covenant.org/translations">https://www.contributor-covenant.org/translations</a>.</p>
+<div class="line-block">
+<div class="line">[homepage]: <a class="reference external" href="https://www.contributor-covenant.org">https://www.contributor-covenant.org</a></div>
+<div class="line">[v2.0]: <a class="reference external" href="https://www.contributor-covenant.org/version/2/0/code_of_conduct.html">https://www.contributor-covenant.org/version/2/0/code_of_conduct.html</a></div>
+<div class="line">[Mozilla CoC]: <a class="reference external" href="https://github.com/mozilla/diversity">https://github.com/mozilla/diversity</a></div>
+<div class="line">[FAQ]: <a class="reference external" href="https://www.contributor-covenant.org/faq">https://www.contributor-covenant.org/faq</a></div>
+<div class="line">[translations]: <a class="reference external" href="https://www.contributor-covenant.org/translations">https://www.contributor-covenant.org/translations</a></div>
+</div>
+</section>
+</section>
+<section id="i-found-a-bug-i-want-to-give-feedback">
+<h2>I found a bug / I want to give feedback<a class="headerlink" href="#i-found-a-bug-i-want-to-give-feedback" title="Permalink to this headline"></a></h2>
+<p>If you found a bug or you want to give feedback, please create an <a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/new/choose">issue</a> using
+one of the templates.</p>
+</section>
+<section id="i-have-a-question">
+<h2>I have a question<a class="headerlink" href="#i-have-a-question" title="Permalink to this headline"></a></h2>
+<p>Please check the
+<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/discussions">discussions</a> first.
+When you don’t find the right thread, feel free to create a new one.</p>
+</section>
+<section id="add-a-feature">
+<h2>Add a feature<a class="headerlink" href="#add-a-feature" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before you start make sure you hand in an <a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/new/choose">issue</a>.
+Describe, what you like to change/add, so others are informed, what
+you are about to change and why you want to change anything.</p>
+</div>
+<ol class="arabic simple">
+<li><p>Make sure you have at least <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">3.9</span></code>,
+<a class="reference external" href="https://python-poetry.org/">poetry</a>, and
+<a class="reference external" href="https://pre-commit.com/">pre-commit</a> installed.</p></li>
+<li><p>Create a fork of MatrixCtl.</p></li>
+<li><p>Clone the fork (<code class="docutils literal notranslate"><span class="pre">origin</span></code>) to your local machine.</p></li>
+<li><p>Add the original repository as a remote named <code class="docutils literal notranslate"><span class="pre">upstream</span></code>.</p></li>
+<li><p>Create a new branch from the
+<a class="reference external" href="https://github.com/MichaelSasser/matrixctl">develop branch</a>.
+Make sure you use the
+<a class="reference external" href="https://danielkummer.github.io/git-flow-cheatsheet/index.html">git-flow</a>
+branching model scheme. (You don’t necessarily need <code class="docutils literal notranslate"><span class="pre">git-flow</span></code>). Example:
+Let’s say your issue was issue <code class="docutils literal notranslate"><span class="pre">#42</span></code> and you want to create a feature.
+Your branch name would be <code class="docutils literal notranslate"><span class="pre">feature/#42</span></code> or <code class="docutils literal notranslate"><span class="pre">feature/#42-my-cool-feature</span></code>.</p></li>
+<li><p>Install the required tools with <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">install</span> <span class="pre">-E</span> <span class="pre">docs</span></code></p></li>
+<li><p>Implement your feature or fix the bug you described in your issue.</p></li>
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">Pull</span> <span class="pre">Request</span></code> as soon as possible as <code class="docutils literal notranslate"><span class="pre">draft</span></code>, so other
+contributors are able to help you and follow your progress.</p></li>
+<li><p>Make sure to add/alter the documentation.</p></li>
+<li><p>Add/alter tests, to test your code.</p></li>
+<li><p>Describe your changes in one sentence in a newsfragment in <code class="docutils literal notranslate"><span class="pre">./news/</span></code>.
+You find the categories in the <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> under the
+<code class="docutils literal notranslate"><span class="pre">[tool.towncrier]</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">directory</span></code>. Example: Let’s say your issue was
+issue <code class="docutils literal notranslate"><span class="pre">#42</span></code> and you added a bugfix. Give the newsfragment the name
+<code class="docutils literal notranslate"><span class="pre">42.bugfix</span></code>. A feature would be called <code class="docutils literal notranslate"><span class="pre">42.feature</span></code>.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">tox</span></code>. If everything is green with no errors, you are good to go.</p></li>
+<li><p>Publish your branch to your fork (<code class="docutils literal notranslate"><span class="pre">origin</span></code>).</p></li>
+<li><p>Create a pull request from the Branch, which contains your changes to
+MatrixCtl’s <code class="docutils literal notranslate"><span class="pre">develop</span></code> branch.</p></li>
+<li><p>Once the pull request is reviewed and merged you can pull the changes from
+<code class="docutils literal notranslate"><span class="pre">upstream</span></code> (the original repository) to your local repository and start
+over again from <code class="docutils literal notranslate"><span class="pre">5.</span></code>. Don’t forget to create an issue first.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Do not add any additional requirement without an approval first. Make
+sure to use the provided <code class="docutils literal notranslate"><span class="pre">Handlers</span></code>, <code class="docutils literal notranslate"><span class="pre">Helpers</span></code>, <code class="docutils literal notranslate"><span class="pre">Errors</span></code>
+(<code class="docutils literal notranslate"><span class="pre">exceptions</span></code>) and <code class="docutils literal notranslate"><span class="pre">Type</span> <span class="pre">Hints</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have any questions feel free to ask in the issues, pull
+requests and discussions.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You often can use one of the <a class="reference internal" href="addons.html#addons"><span class="std std-ref">Addons</span></a> as template for a new
+addon.</p>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Technical Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="handlers.html">Handlers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helpers.html">Helpers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="type_hints_structures_and_errors.html">Type Hints, Structures and Errors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addons.html">Addons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application.html">Application</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Tests:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tests_handlers.html">Handlers</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../getting_started/ssh_pubkey.html" class="btn btn-neutral float-left" title="SSH Public Key" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="handlers.html" class="btn btn-neutral float-right" title="Handlers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Michael Sasser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

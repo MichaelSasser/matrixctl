@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Addons &mdash; MatrixCtl Unknown documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Application" href="application.html" />
+    <link rel="prev" title="Type Hints, Structures and Errors" href="type_hints_structures_and_errors.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> MatrixCtl
+          </a>
+              <div class="version">
+                Unknown
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributer Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="handlers.html">Handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="type_hints_structures_and_errors.html">Type Hints, Structures and Errors</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Addons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application.html">Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests_handlers.html">Handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MatrixCtl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Contributer Documentation</a> &raquo;</li>
+      <li>Addons</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contributer_documentation/addons.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="addons">
+<h1>Addons<a class="headerlink" href="#addons" title="Permalink to this headline"></a></h1>
+<p>Addons are the commands listed below, e.g. <code class="docutils literal notranslate"><span class="pre">adduser</span></code> to create a new user
+on the homeserver or <code class="docutils literal notranslate"><span class="pre">deploy</span></code> to deploy the ansible playbook.</p>
+<section id="module-matrixctl.addons.adduser.parser">
+<span id="adduser"></span><h2>adduser<a class="headerlink" href="#module-matrixctl.addons.adduser.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">adduser</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.adduser.parser.subparser_adduser">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.adduser.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_adduser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/adduser/parser.html#subparser_adduser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.adduser.parser.subparser_adduser" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">adduser</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by
+<code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.adduser.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">adduser</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.adduser.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.adduser.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/adduser/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.adduser.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Add a User to the synapse instance.</p>
+<p>It runs <code class="docutils literal notranslate"><span class="pre">ask_password()</span></code> first. If <code class="docutils literal notranslate"><span class="pre">ask_password()</span></code> returns <code class="docutils literal notranslate"><span class="pre">None</span></code>
+it generates a password with <code class="docutils literal notranslate"><span class="pre">gen_password()</span></code>. Then it gives the user
+a overview of the username, password and if the new user should be
+generated as admin (if you added the <code class="docutils literal notranslate"><span class="pre">--admin</span></code> argument). Next, it asks
+a question, if the entered values are correct with the <code class="docutils literal notranslate"><span class="pre">ask_question</span></code>
+function.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">ask_question</span></code> function returns True, it continues. If not, it
+starts from the beginning.</p>
+<p>Depending on the <code class="docutils literal notranslate"><span class="pre">--ansible</span></code> switch it runs the <code class="docutils literal notranslate"><span class="pre">adduser</span></code> command
+via ansible or the API</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.deluser.parser">
+<span id="deluser"></span><h2>deluser<a class="headerlink" href="#module-matrixctl.addons.deluser.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">deluser</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.deluser.parser.subparser_deluser">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.deluser.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_deluser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/deluser/parser.html#subparser_deluser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.deluser.parser.subparser_deluser" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">deluser</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by
+<code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.deluser.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">deluser</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.deluser.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.deluser.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/deluser/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.deluser.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a user from the the matrix instance.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.adduser_jitsi.parser">
+<span id="adduser-jitsi"></span><h2>adduser-jitsi<a class="headerlink" href="#module-matrixctl.addons.adduser_jitsi.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">adduser-jitsi</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.adduser_jitsi.parser.subparser_adduser_jitsi">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.adduser_jitsi.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_adduser_jitsi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/adduser_jitsi/parser.html#subparser_adduser_jitsi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.adduser_jitsi.parser.subparser_adduser_jitsi" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">adduser-jitsi</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.adduser_jitsi.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">adduser-jitsi</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.adduser_jitsi.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.adduser_jitsi.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/adduser_jitsi/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.adduser_jitsi.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Add a User to the jitsi instance.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.deluser_jitsi.parser">
+<span id="deluser-jitsi"></span><h2>deluser-jitsi<a class="headerlink" href="#module-matrixctl.addons.deluser_jitsi.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add a <code class="docutils literal notranslate"><span class="pre">deluser-jitsi</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.deluser_jitsi.parser.subparser_deluser_jitsi">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.deluser_jitsi.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_deluser_jitsi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/deluser_jitsi/parser.html#subparser_deluser_jitsi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.deluser_jitsi.parser.subparser_deluser_jitsi" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">deluser-jitsi</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by
+<code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.deluser_jitsi.addon"></span><p>Use this module to add a <code class="docutils literal notranslate"><span class="pre">deluser-jitsi</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.deluser_jitsi.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.deluser_jitsi.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/deluser_jitsi/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.deluser_jitsi.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a user from the jitsi instance.</p>
+<p>It uses the <code class="docutils literal notranslate"><span class="pre">Ssh</span></code> class from the <code class="docutils literal notranslate"><span class="pre">ssh_handler</span></code>.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.check.parser">
+<span id="check"></span><h2>check<a class="headerlink" href="#module-matrixctl.addons.check.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">check</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.check.parser.subparser_check">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.check.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/check/parser.html#subparser_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.check.parser.subparser_check" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">check</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by
+<code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.check.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">check</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.check.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.check.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/check/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.check.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Check the deployment with andible.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.deploy.parser">
+<span id="deploy"></span><h2>deploy<a class="headerlink" href="#module-matrixctl.addons.deploy.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">deploy</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.deploy.parser.subparser_deploy">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.deploy.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_deploy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/deploy/parser.html#subparser_deploy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.deploy.parser.subparser_deploy" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">deploy</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by
+<code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.deploy.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">deploy</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.deploy.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.deploy.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/deploy/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.deploy.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Deploy the ansible playbook.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.maintenance.parser">
+<span id="maintenance"></span><h2>maintenance<a class="headerlink" href="#module-matrixctl.addons.maintenance.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.maintenance.parser.subparser_maintenance">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.maintenance.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_maintenance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/maintenance/parser.html#subparser_maintenance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.maintenance.parser.subparser_maintenance" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">maintenance</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by
+<code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.maintenance.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">maintenance</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.addons.maintenance.addon.Task">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.addons.maintenance.addon.</span></span><span class="sig-name descname"><span class="pre">Task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/maintenance/addon.html#Task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.maintenance.addon.Task" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Use this enum for describing the maintenance task.</p>
+<p>Supported tasks:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>tasks</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>vacuum</p></td>
+<td><p>Reclaims storage occupied by dead tuples.</p></td>
+</tr>
+<tr class="row-odd"><td><p>compress_state</p></td>
+<td><p>Compress Synapse State Tables.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.maintenance.addon.Task.COMPRESS_STATE">
+<span class="sig-name descname"><span class="pre">COMPRESS_STATE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'rust-synapse-compress-state'</span></em><a class="headerlink" href="#matrixctl.addons.maintenance.addon.Task.COMPRESS_STATE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.maintenance.addon.Task.VACUUM">
+<span class="sig-name descname"><span class="pre">VACUUM</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'run-postgres-vacuum'</span></em><a class="headerlink" href="#matrixctl.addons.maintenance.addon.Task.VACUUM" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.maintenance.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.maintenance.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/maintenance/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.maintenance.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Run the maintenance procedure of the ansible playbook.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.maintenance.addon.print_tasks">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.maintenance.addon.</span></span><span class="sig-name descname"><span class="pre">print_tasks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/maintenance/addon.html#print_tasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.maintenance.addon.print_tasks" title="Permalink to this definition"></a></dt>
+<dd><p>Print a list of all available tasks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.start.parser">
+<span id="start"></span><h2>start<a class="headerlink" href="#module-matrixctl.addons.start.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">(re)start</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.start.parser.subparser_restart">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.start.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_restart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/start/parser.html#subparser_restart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.start.parser.subparser_restart" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">restart</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.start.subparser_start</span></code></dt><dd><p>Subparser for <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">start</span></code>.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This is a alias for <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">start</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.start.parser.subparser_start">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.start.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/start/parser.html#subparser_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.start.parser.subparser_start" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">start</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.start.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">(re)start</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.start.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.start.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/start/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.start.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Start/Restart the OCI containers.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.stop.parser">
+<span id="stop"></span><h2>stop<a class="headerlink" href="#module-matrixctl.addons.stop.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">stop</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.stop.parser.subparser_stop">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.stop.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/stop/parser.html#subparser_stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.stop.parser.subparser_stop" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">stop</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.stop.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">stop</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.stop.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.stop.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/stop/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.stop.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Stop the OCI containers.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.update.parser">
+<span id="update"></span><h2>update<a class="headerlink" href="#module-matrixctl.addons.update.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">update</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.update.parser.subparser_update">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.update.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/update/parser.html#subparser_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.update.parser.subparser_update" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">update</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.update.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">update</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.update.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.update.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/update/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.update.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Update the synapse playbook with git.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.user.parser">
+<span id="user"></span><h2>user<a class="headerlink" href="#module-matrixctl.addons.user.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">user</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.user.parser.subparser_user">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.user.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/user/parser.html#subparser_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.user.parser.subparser_user" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">user</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.user.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">user</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.user.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.user.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/user/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.user.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>List information about an registered user.</p>
+<p>It uses the admin API to get a python dictionary with the information.
+The <code class="docutils literal notranslate"><span class="pre">generate_user_tables</span></code> function makes the information human readable.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>matrixctl user dwight
+<span class="go">User:</span>
+<span class="go">+----------------------------+--------------------------------------+</span>
+<span class="go">| Name                       | dwight                               |</span>
+<span class="go">| Password Hash              | $2b$12$9DUNderm1ffL1NincPap3RC       |</span>
+<span class="go">|                            | ompaNY1725.slOUghAvEnu5cranT0n       |</span>
+<span class="go">| Guest                      | False                                |</span>
+<span class="go">| Admin                      | True                                 |</span>
+<span class="go">| Consent Version            |                                      |</span>
+<span class="go">| Consent Server Notice Sent |                                      |</span>
+<span class="go">| Appservice Id              |                                      |</span>
+<span class="go">| Creation Ts                | 2020-04-14 13:04:21                  |</span>
+<span class="go">| User Type                  |                                      |</span>
+<span class="go">| Deactivated                | False                                |</span>
+<span class="go">| Displayname                | Dwight Schrute                       |</span>
+<span class="go">| Avatar Url                 | mxc://dunder-mifflin.com/sCr4        |</span>
+<span class="go">|                            | nt0nsr4ng13rW45Cr33d                 |</span>
+<span class="go">+----------------------------+--------------------------------------+</span>
+
+<span class="go">Threepid:</span>
+<span class="go">+--------------+-----------------------------------+</span>
+<span class="go">| Medium       | email                             |</span>
+<span class="go">| Address      | dwight_schrute@dunder-mifflin.com |</span>
+<span class="go">| Validated At | 2020-04-14 15:30:21.123000        |</span>
+<span class="go">| Added At     | 2020-04-14 15:29:19.100000        |</span>
+<span class="go">+--------------+-----------------------------------+</span>
+</pre></div>
+</div>
+<p>If the user does not exist, the return looks like:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>matrixctl user mose
+<span class="go">2020-04-14 13:58:13 - ERROR - The request was not successful.</span>
+<span class="go">2020-04-14 13:58:13 - ERROR - There is no user with that username.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.user.to_table"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">rooms</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.user.to_table.generate_user_tables">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.user.to_table.</span></span><span class="sig-name descname"><span class="pre">generate_user_tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">len_domain</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/user/to_table.html#generate_user_tables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.user.to_table.generate_user_tables" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a main user table and threepid user tables.</p>
+<p>The function gnerates first a main user table and then for every threepid
+a additional table from a <code class="docutils literal notranslate"><span class="pre">user_dict</span></code>.
+It renames and makes the output human readable.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>user_dict</strong><span class="classifier"><cite>dict</cite> [<cite>str</cite>, <cite>Any</cite>]</span></dt><dd><p>The line as dict, a JSON string which was converted to a Python
+dictionary. (This is not a <code class="docutils literal notranslate"><span class="pre">Collections.UserDict</span></code>)</p>
+</dd>
+<dt><strong>len_domain</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The length in characters of the domain.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>A list in the format: <code class="docutils literal notranslate"><span class="pre">[[main],</span> <span class="pre">threepids_0,</span> <span class="pre">...</span> <span class="pre">,threepids_n]</span></code></p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function is a recursive function.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.user.to_table.make_human_readable">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.user.to_table.</span></span><span class="sig-name descname"><span class="pre">make_human_readable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">len_domain</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/user/to_table.html#make_human_readable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.user.to_table.make_human_readable" title="Permalink to this definition"></a></dt>
+<dd><p>Make a key/value pair of a <code class="docutils literal notranslate"><span class="pre">user</span></code> (line) human readable, by modifying.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>k</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The key</p>
+</dd>
+<dt><strong>user_dict</strong><span class="classifier"><cite>dict</cite> [<cite>str</cite>, <cite>Any</cite>]</span></dt><dd><p>The line as dict, a JSON string which was converted to a Python
+dictionary. (This is not a <code class="docutils literal notranslate"><span class="pre">Collections.UserDict</span></code>)</p>
+</dd>
+<dt><strong>len_domain</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The length in characters of the domain.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function is used as helper by <code class="docutils literal notranslate"><span class="pre">matrixctl.user.generate_user_tables</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.user.to_table.to_table">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.user.to_table.</span></span><span class="sig-name descname"><span class="pre">to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">len_domain</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/user/to_table.html#to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.user.to_table.to_table" title="Permalink to this definition"></a></dt>
+<dd><p>Use this function as helper to pint the room table.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>user_dict</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.JsonDict</span></code></span></dt><dd><p>The user data from the API</p>
+</dd>
+<dt><strong>len_domain</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The length of the homeservers domain.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><dl>
+<dt><strong>table_lines</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The table lines.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.users.parser">
+<span id="users"></span><h2>users<a class="headerlink" href="#module-matrixctl.addons.users.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">users</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.users.parser.subparser_users">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.users.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_users</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/users/parser.html#subparser_users"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.users.parser.subparser_users" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">users</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.users.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">users</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.users.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.users.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/users/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.users.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Print a table/json of the matrix users.</p>
+<p>This function generates and prints a table of users or uses json as
+output format.</p>
+<p>The table can be modified.</p>
+<ul class="simple">
+<li><p>If you want guests in the table use the <code class="docutils literal notranslate"><span class="pre">--with-guests</span></code> switch.</p></li>
+<li><p>If you want deactivated user in the table use the <code class="docutils literal notranslate"><span class="pre">--with-deactivated</span></code>
+switch.</p></li>
+</ul>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Needs API version 2 (<code class="docutils literal notranslate"><span class="pre">synapse</span></code> 1.28 or greater) to work.</p></li>
+<li><p>API version 1 is deprecated. If you encounter problems please upgrade
+to the latest <code class="docutils literal notranslate"><span class="pre">synapse</span></code> release.</p></li>
+</ul>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.users.to_table"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">rooms</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.users.to_table.to_table">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.users.to_table.</span></span><span class="sig-name descname"><span class="pre">to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">users_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">len_domain</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/users/to_table.html#to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.users.to_table.to_table" title="Permalink to this definition"></a></dt>
+<dd><p>Use this function as helper to pint the users table.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>users_list</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.JsonDict</span></code></span></dt><dd><p>A list of rooms from the API.</p>
+</dd>
+<dt><strong>len_domain</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The length of the homeservers domain.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><dl>
+<dt><strong>table_lines</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The table lines.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>matrixctl users
+<span class="go">+---------+-------------+---------------+-------+-------+--------------+</span>
+<span class="go">| Name    | Deactivated | Shadow-Banned | Admin | Guest | Display Name |</span>
+<span class="go">|---------+-------------+---------------+-------+-------|--------------+</span>
+<span class="go">| dwight  | No          | No            | Yes   | No    | Dwight       |</span>
+<span class="go">| pam     | No          | No            | No    | No    | Pam          |</span>
+<span class="go">| jim     | No          | No            | No    | No    | Jim          |</span>
+<span class="go">| creed   | No          | Yes           | No    | No    | Creed        |</span>
+<span class="go">| stanley | No          | No            | No    | No    | Stanley      |</span>
+<span class="go">| kevin   | No          | No            | No    | No    | Cookie       |</span>
+<span class="go">| angela  | No          | No            | No    | No    | Angela       |</span>
+<span class="go">| phyllis | No          | No            | No    | No    | Phyllis      |</span>
+<span class="go">| tobi    | No          | No            | No    | No    | TobiHR       |</span>
+<span class="go">| michael | No          | No            | Yes   | No    | Best Boss    |</span>
+<span class="go">| andy    | No          | No            | No    | No    | Andy         |</span>
+<span class="go">+---------+-------------+---------------+-------+-------+--------------+</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.report.parser">
+<span id="report"></span><h2>report<a class="headerlink" href="#module-matrixctl.addons.report.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">report</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.report.parser.subparser_report">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.report.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/report/parser.html#subparser_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.report.parser.subparser_report" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">report</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.report.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">users</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.report.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.report.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/report/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.report.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Print a table of the reported events.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.reports.parser">
+<span id="reports"></span><h2>reports<a class="headerlink" href="#module-matrixctl.addons.reports.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">reports</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.reports.parser.subparser_reports">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.reports.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_reports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/reports/parser.html#subparser_reports"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.reports.parser.subparser_reports" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">reports</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.reports.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">reports</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.reports.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.reports.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/reports/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.reports.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Print a table/json of the reported events.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.reports.to_table"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">rooms</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.reports.to_table.to_table">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.reports.to_table.</span></span><span class="sig-name descname"><span class="pre">to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events_raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/reports/to_table.html#to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.reports.to_table.to_table" title="Permalink to this definition"></a></dt>
+<dd><p>Use this function as helper to pint the events as table.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>events_raw</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.JsonDict</span></code></span></dt><dd><p>A list of events from the API.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><dl>
+<dt><strong>table_lines</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The table lines.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>matrixctl reports
+<span class="go">+-----------------+----------------------------------------------+</span>
+<span class="go">| ID              | 2                                            |</span>
+<span class="go">| Date            | 2021-05-08                                   |</span>
+<span class="go">| Time            | 21:04:55                                     |</span>
+<span class="go">| Score           | -100                                         |</span>
+<span class="go">| Canonical Alias | -                                            |</span>
+<span class="go">| Room Name       | SomeRoom                                     |</span>
+<span class="go">| Room ID         | !AbCdEfGhIjKlMnOpQr:domain.tld               |</span>
+<span class="go">| Event ID        | $Q_sksd348jaidj93jf9ojwef9h329ofijewhf932h9f |</span>
+<span class="go">| Defendant       | @mallory:matrix.org                          |</span>
+<span class="go">| Plaintiff       | @alice:myhomeverver.tld                      |</span>
+<span class="go">| Reason          | Likes JavaScript                             |</span>
+<span class="go">|-----------------+----------------------------------------------|</span>
+<span class="go">| ID              | 1                                            |</span>
+<span class="go">| Date            | 2020-08-15                                   |</span>
+<span class="go">| Time            | 09:09:57                                     |</span>
+<span class="go">| Score           | -100                                         |</span>
+<span class="go">| Canonical Alias | -                                            |</span>
+<span class="go">| Room Name       | -                                            |</span>
+<span class="go">| Room ID         | !AbCdEfGhIjKlMnOpQr:matrix.org               |</span>
+<span class="go">| Event ID        | $123456789012345678901:matrix.org            |</span>
+<span class="go">| Defendant       | @eve:matrix.org                              |</span>
+<span class="go">| Plaintiff       | @bob:myhomeserver.tld                        |</span>
+<span class="go">| Reason          | Hates The Office (US)                        |</span>
+<span class="go">+-----------------+----------------------------------------------+</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.rooms.parser">
+<span id="rooms"></span><h2>rooms<a class="headerlink" href="#module-matrixctl.addons.rooms.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">rooms</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.rooms.parser.subparser_rooms">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.rooms.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_rooms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/rooms/parser.html#subparser_rooms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.rooms.parser.subparser_rooms" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">rooms</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.rooms.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">rooms</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.rooms.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.rooms.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/rooms/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.rooms.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a table of the matrix rooms.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.rooms.addon.generate_output">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.rooms.addon.</span></span><span class="sig-name descname"><span class="pre">generate_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rooms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_json</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/rooms/addon.html#generate_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.rooms.addon.generate_output" title="Permalink to this definition"></a></dt>
+<dd><p>Use this helper to generate the output.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>rooms</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.JsonDict</span></code></span></dt><dd><p>A list of rooms from the API.</p>
+</dd>
+<dt><strong>to_json</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.9)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code>, when the output should be in the JSON format.
+<code class="docutils literal notranslate"><span class="pre">False</span></code>, when the output should be a table.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.rooms.to_table"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">rooms</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.rooms.to_table.to_table">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.rooms.to_table.</span></span><span class="sig-name descname"><span class="pre">to_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rooms_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/rooms/to_table.html#to_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.rooms.to_table.to_table" title="Permalink to this definition"></a></dt>
+<dd><p>Use this function as helper to pint the room table.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>rooms_list</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.JsonDict</span></code></span></dt><dd><p>A list of rooms from the API.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><dl>
+<dt><strong>table_lines</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The table lines.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.purge_history.parser">
+<span id="purge-history"></span><h2>purge-history<a class="headerlink" href="#module-matrixctl.addons.purge_history.parser" title="Permalink to this headline"></a></h2>
+<p>The purge-history command allows to purge historic events from the database.</p>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">purge-histoy</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.purge_history.parser.subparser_purge_history">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.purge_history.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_purge_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/purge_history/parser.html#subparser_purge_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.purge_history.parser.subparser_purge_history" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">purge-history</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.purge_history.addon"></span><p>The purge-history command allows to purge historic events from the database.</p>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">purge-histoy</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.purge_history.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.purge_history.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/purge_history/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.purge_history.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Purge historic message events from the Database.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.purge_history.dialog"></span><p>The purge-history command allows to purge historic events from the database.</p>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">purge-histoy</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.purge_history.dialog.dialog_input">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.purge_history.dialog.</span></span><span class="sig-name descname"><span class="pre">dialog_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/purge_history/dialog.html#dialog_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.purge_history.dialog.dialog_input" title="Permalink to this definition"></a></dt>
+<dd><p>Ask questions and sanitize them.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>request_body</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Dict</span></code></a> [<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">NoReturn</span></code></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.purge_history.handler"></span><p>The purge-history command allows to purge historic events from the database.</p>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">purge-histoy</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.purge_history.handler.handle_purge_status">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.purge_history.handler.</span></span><span class="sig-name descname"><span class="pre">handle_purge_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">purge_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/purge_history/handler.html#handle_purge_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.purge_history.handler.handle_purge_status" title="Permalink to this definition"></a></dt>
+<dd><p>Check the status pf the purge history request.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+<dt><strong>purge_id: str</strong></dt><dd><p>The purge id from a purge history request.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>response: <code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.JsonDict</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></dt><dd><p>The response as dict, containing the status.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.purge_history.timing"></span><p>The purge-history command allows to purge historic events from the database.</p>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">purge-histoy</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.purge_history.timing.check_point_in_time">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.purge_history.timing.</span></span><span class="sig-name descname"><span class="pre">check_point_in_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_or_timestamp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/purge_history/timing.html#check_point_in_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.purge_history.timing.check_point_in_time" title="Permalink to this definition"></a></dt>
+<dd><p>Check the the type of the point in time and set the correct body.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>event_or_timestamp</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The event_id or timestamp (UNIX epoch, in milliseconds).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>request_body: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict</span></code> [<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>]</dt><dd><p>A dict, which can be merged with the request_body dict.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.delroom.parser">
+<span id="delroom"></span><h2>delroom<a class="headerlink" href="#module-matrixctl.addons.delroom.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">delroom</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.delroom.parser.subparser_delroom">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.delroom.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_delroom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/delroom/parser.html#subparser_delroom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.delroom.parser.subparser_delroom" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">delroom</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by
+<code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.delroom.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">delroom</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.delroom.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.delroom.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/delroom/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.delroom.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Delete an empty room from the database.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.upload.parser">
+<span id="upload"></span><h2>upload<a class="headerlink" href="#module-matrixctl.addons.upload.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">upload</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.upload.parser.subparser_upload">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.upload.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_upload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/upload/parser.html#subparser_upload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.upload.parser.subparser_upload" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">upload</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.upload.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">upload</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.upload.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.upload.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/upload/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.upload.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Upload a file or image to the matix instance.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.server_notice.parser">
+<span id="server-notice"></span><h2>server-notice<a class="headerlink" href="#module-matrixctl.addons.server_notice.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">serve-notice</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.server_notice.parser.subparser_server_notice">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.server_notice.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_server_notice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/server_notice/parser.html#subparser_server_notice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.server_notice.parser.subparser_server_notice" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">server-notice</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by <code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.server_notice.addon"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">serve-notice</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.server_notice.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.server_notice.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/server_notice/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.server_notice.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Send a server notice to a matrix instance.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code>.</p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>It uses the synapse admin API.</p></li>
+<li><p>Note that “server notices” must be enabled in homeserver.yaml before
+this API can be used.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.get_event.parser">
+<span id="get-event"></span><h2>get-event<a class="headerlink" href="#module-matrixctl.addons.get_event.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to get an event from the Database.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.get_event.parser.subparser_get_event">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.get_event.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_get_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/get_event/parser.html#subparser_get_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.get_event.parser.subparser_get_event" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">get-event</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by
+<code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.get_event.addon"></span><p>Use this module to get an event from the Database.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.get_event.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.get_event.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/get_event/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.get_event.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Get an Event from the Server.</p>
+<p>It connects via paramiko to the server and runs the psql command provided
+by the synapse playbook to run a query on the Database.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.addons.get_events.parser">
+<span id="get-events"></span><h2>get-events<a class="headerlink" href="#module-matrixctl.addons.get_events.parser" title="Permalink to this headline"></a></h2>
+<p>Use this module to get an events of an user from the Database.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.parser.subparser_get_events">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.get_events.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_get_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/get_events/parser.html#subparser_get_events"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.get_events.parser.subparser_get_events" title="Permalink to this definition"></a></dt>
+<dd><p>Create a subparser for the <code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">get-event</span></code> command.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>subparsers</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse._SubParsersAction</span></code></span></dt><dd><p>The object which is returned by
+<code class="docutils literal notranslate"><span class="pre">parser.add_subparsers()</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-matrixctl.addons.get_events.addon"></span><p>Use this module to get an event from the Database.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.addons.get_events.addon.</span></span><span class="sig-name descname"><span class="pre">MessageType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/get_events/addon.html#MessageType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>Use this enum for describing message types.</p>
+<p>Supported events:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>message_type</p></th>
+<th class="head"><p>Usage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>m.room.message</p></td>
+<td><p>This event is used when sending messages in a room</p></td>
+</tr>
+<tr class="row-odd"><td><p>m.room.name</p></td>
+<td><p>This event sets the name of an room</p></td>
+</tr>
+<tr class="row-even"><td><p>m.room.topic</p></td>
+<td><p>This events sets the room topic</p></td>
+</tr>
+<tr class="row-odd"><td><p>m.room.avatar</p></td>
+<td><p>This event sets the room avatar</p></td>
+</tr>
+<tr class="row-even"><td><p>m.room.pinned_events</p></td>
+<td><p>This event pins events</p></td>
+</tr>
+<tr class="row-odd"><td><p>m.room.member</p></td>
+<td><p>Adjusts the membership state for a user in a room</p></td>
+</tr>
+<tr class="row-even"><td><p>m.room.join_rules</p></td>
+<td><p>This event sets the join rules</p></td>
+</tr>
+<tr class="row-odd"><td><p>m.room.create</p></td>
+<td><p>This event creates a room</p></td>
+</tr>
+<tr class="row-even"><td><p>m.room.power_levels</p></td>
+<td><p>This event sets a rooms power levels</p></td>
+</tr>
+<tr class="row-odd"><td><p>m.room.redaction</p></td>
+<td><p>This event redacts other events</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_AVATAR">
+<span class="sig-name descname"><span class="pre">M_ROOM_AVATAR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'m.room.avatar'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_AVATAR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_CREATE">
+<span class="sig-name descname"><span class="pre">M_ROOM_CREATE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'m.room.create'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_CREATE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_JOIN_RULES">
+<span class="sig-name descname"><span class="pre">M_ROOM_JOIN_RULES</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'m.room.join_rules'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_JOIN_RULES" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_MEMBER">
+<span class="sig-name descname"><span class="pre">M_ROOM_MEMBER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'m.room.member'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_MEMBER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_MESSAGE">
+<span class="sig-name descname"><span class="pre">M_ROOM_MESSAGE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'m.room.message'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_MESSAGE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_NAME">
+<span class="sig-name descname"><span class="pre">M_ROOM_NAME</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'m.room.name'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_NAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_PINNED_EVENTS">
+<span class="sig-name descname"><span class="pre">M_ROOM_PINNED_EVENTS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'m.room.pinned_events'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_PINNED_EVENTS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_POWER_LEVELS">
+<span class="sig-name descname"><span class="pre">M_ROOM_POWER_LEVELS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'m.room.power_levels'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_POWER_LEVELS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_REDACTION">
+<span class="sig-name descname"><span class="pre">M_ROOM_REDACTION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'m.room.redaction'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_REDACTION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_TOPIC">
+<span class="sig-name descname"><span class="pre">M_ROOM_TOPIC</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'m.room.topic'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_TOPIC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.addon">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.get_events.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/get_events/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.get_events.addon.addon" title="Permalink to this definition"></a></dt>
+<dd><p>Get Events from the Server.</p>
+<p>It connects via paramiko to the server and runs the psql command provided
+by the synapse playbook to run a query on the Database.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>arg</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.Namespace</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Namespace</span></code> object of argparse’s <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code></p>
+</dd>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="type_hints_structures_and_errors.html" class="btn btn-neutral float-left" title="Type Hints, Structures and Errors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="application.html" class="btn btn-neutral float-right" title="Application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Michael Sasser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

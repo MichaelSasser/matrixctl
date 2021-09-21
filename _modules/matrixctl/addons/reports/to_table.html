@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matrixctl.addons.reports.to_table &mdash; MatrixCtl Unknown documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> MatrixCtl
+          </a>
+              <div class="version">
+                Unknown
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributer_documentation/index.html">Contributer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">MatrixCtl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>matrixctl.addons.reports.to_table</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matrixctl.addons.reports.to_table</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># matrixctl</span>
+<span class="c1"># Copyright (c) 2020  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Use this module to add the ``rooms`` subcommand to ``matrixctl``.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Generator</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">get_terminal_size</span>
+<span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">TextWrapper</span>
+
+<span class="kn">from</span> <span class="nn">matrixctl.handlers.table</span> <span class="kn">import</span> <span class="n">table</span>
+<span class="kn">from</span> <span class="nn">matrixctl.print_helpers</span> <span class="kn">import</span> <span class="n">timestamp_to_dt</span>
+<span class="kn">from</span> <span class="nn">matrixctl.typehints</span> <span class="kn">import</span> <span class="n">JsonDict</span>
+
+
+<span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
+<span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael@MichaelSasser.org&quot;</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="to_table"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.reports.to_table.to_table">[docs]</a><span class="k">def</span> <span class="nf">to_table</span><span class="p">(</span><span class="n">events_raw</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">JsonDict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Use this function as helper to pint the events as table.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    .. code-block:: console</span>
+
+<span class="sd">       $ matrixctl reports</span>
+<span class="sd">       +-----------------+----------------------------------------------+</span>
+<span class="sd">       | ID              | 2                                            |</span>
+<span class="sd">       | Date            | 2021-05-08                                   |</span>
+<span class="sd">       | Time            | 21:04:55                                     |</span>
+<span class="sd">       | Score           | -100                                         |</span>
+<span class="sd">       | Canonical Alias | -                                            |</span>
+<span class="sd">       | Room Name       | SomeRoom                                     |</span>
+<span class="sd">       | Room ID         | !AbCdEfGhIjKlMnOpQr:domain.tld               |</span>
+<span class="sd">       | Event ID        | $Q_sksd348jaidj93jf9ojwef9h329ofijewhf932h9f |</span>
+<span class="sd">       | Defendant       | @mallory:matrix.org                          |</span>
+<span class="sd">       | Plaintiff       | @alice:myhomeverver.tld                      |</span>
+<span class="sd">       | Reason          | Likes JavaScript                             |</span>
+<span class="sd">       |-----------------+----------------------------------------------|</span>
+<span class="sd">       | ID              | 1                                            |</span>
+<span class="sd">       | Date            | 2020-08-15                                   |</span>
+<span class="sd">       | Time            | 09:09:57                                     |</span>
+<span class="sd">       | Score           | -100                                         |</span>
+<span class="sd">       | Canonical Alias | -                                            |</span>
+<span class="sd">       | Room Name       | -                                            |</span>
+<span class="sd">       | Room ID         | !AbCdEfGhIjKlMnOpQr:matrix.org               |</span>
+<span class="sd">       | Event ID        | $123456789012345678901:matrix.org            |</span>
+<span class="sd">       | Defendant       | @eve:matrix.org                              |</span>
+<span class="sd">       | Plaintiff       | @bob:myhomeserver.tld                        |</span>
+<span class="sd">       | Reason          | Hates The Office (US)                        |</span>
+<span class="sd">       +-----------------+----------------------------------------------+</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    events_raw : list of matrixctl.typehints.JsonDict</span>
+<span class="sd">        A list of events from the API.</span>
+
+<span class="sd">    Yields</span>
+<span class="sd">    ------</span>
+<span class="sd">    table_lines : str</span>
+<span class="sd">        The table lines.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">events</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Terminal width = </span><span class="si">{</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">wrapper_reason</span> <span class="o">=</span> <span class="n">TextWrapper</span><span class="p">(</span>
+        <span class="n">width</span><span class="o">=</span><span class="n">get_terminal_size</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span> <span class="o">-</span> <span class="mi">20</span><span class="p">,</span>  <span class="c1"># is const.</span>
+        <span class="n">drop_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">break_long_words</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events_raw</span><span class="p">:</span>
+        <span class="n">dt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">timestamp_to_dt</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;received_ts&quot;</span><span class="p">],</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">canonical_alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">event</span><span class="p">[</span><span class="s2">&quot;canonical_alias&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;canonical_alias&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="s2">&quot;-&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">(</span>
+                        <span class="s2">&quot;ID&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Date&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Score&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Canonical Alias&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Room Name&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Room ID&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Event ID&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Defendant&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Plaintiff&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Reason&quot;</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">canonical_alias</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39;-&#39;</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;room_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;event_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;sender&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wrapper_reason</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;reason&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">table</span><span class="p">(</span><span class="n">events</span><span class="p">)</span></div>
+
+
+<span class="c1"># vim: set ft=python :</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Michael Sasser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

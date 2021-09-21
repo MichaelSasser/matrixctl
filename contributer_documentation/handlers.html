@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Handlers &mdash; MatrixCtl Unknown documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Helpers" href="helpers.html" />
+    <link rel="prev" title="Contributer Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> MatrixCtl
+          </a>
+              <div class="version">
+                Unknown
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributer Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helpers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="type_hints_structures_and_errors.html">Type Hints, Structures and Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addons.html">Addons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="application.html">Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests_handlers.html">Handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MatrixCtl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Contributer Documentation</a> &raquo;</li>
+      <li>Handlers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contributer_documentation/handlers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="handlers">
+<h1>Handlers<a class="headerlink" href="#handlers" title="Permalink to this headline"></a></h1>
+<p>Handlers in MatrixCtl are used to handle the communication between the server
+and the <a class="reference internal" href="addons.html#addons"><span class="std std-ref">Addons</span></a> or to load config files.</p>
+<section id="module-matrixctl.handlers.yaml">
+<span id="yaml"></span><h2>YAML<a class="headerlink" href="#module-matrixctl.handlers.yaml" title="Permalink to this headline"></a></h2>
+<p>Read and parse the configuration file with this module.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.JinjaUndefined">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.yaml.</span></span><span class="sig-name descname"><span class="pre">JinjaUndefined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">hint=None</span></em>, <em class="sig-param"><span class="pre">obj=missing</span></em>, <em class="sig-param"><span class="pre">name=None</span></em>, <em class="sig-param"><span class="pre">exc=&lt;class</span> <span class="pre">'jinja2.exceptions.UndefinedError'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#JinjaUndefined"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.JinjaUndefined" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">jinja2.runtime.Undefined</span></code></p>
+<p>Use this class as undefined argument in a Jinja2 Template.</p>
+<p>The class replaces every undefined template with an enpty string.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.yaml.</span></span><span class="sig-name descname"><span class="pre">YAML</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Use the YAML class to read and parse the configuration file(s).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.DEFAULT_PATHS">
+<span class="sig-name descname"><span class="pre">DEFAULT_PATHS</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">[PosixPath('/etc/matrixctl/config'),</span> <span class="pre">PosixPath('/home/runner/.config/matrixctl/config')]</span></em><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.DEFAULT_PATHS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.JINJA_PREDEFINED">
+<span class="sig-name descname"><span class="pre">JINJA_PREDEFINED</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a> <span class="p"><span class="pre">|</span></span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">{'default_api_concurrent_limit':</span> <span class="pre">4,</span> <span class="pre">'default_ssh_port':</span> <span class="pre">22,</span> <span class="pre">'home':</span> <span class="pre">'/home/runner',</span> <span class="pre">'user':</span> <span class="pre">'runner'}</span></em><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.JINJA_PREDEFINED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.apply_defaults">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">apply_defaults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.apply_defaults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.apply_defaults" title="Permalink to this definition"></a></dt>
+<dd><p>Apply defaults to the configuration.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>server</strong><span class="classifier"><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.structures.ConfigServer</span></code></a></span></dt><dd><p>The configuration of a (home)server.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>server</strong><span class="classifier"><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.structures.ConfigServer</span></code></a></span></dt><dd><p>The configuration of a (home)server with applied defaults.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServer</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.get" title="Permalink to this definition"></a></dt>
+<dd><p>Get a value from a config entry safely.</p>
+<p><strong>Usage</strong></p>
+<p>Pass strings, describing the path in the <code class="docutils literal notranslate"><span class="pre">self.__yaml</span></code> dictionary.
+Let’s say, you are looking for the synapse path:</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>*keys</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>A tuple of strings describing the values you are looking for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>answer</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">any</span></code></a></span></dt><dd><p>The value of the entry you described.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matrixctl.handlers.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
+
+<span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span> <span class="o">=</span> <span class="n">YAML</span><span class="p">()</span>
+<span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+<span class="c1"># Output: 22</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.get_paths_to_config">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_paths_to_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.get_paths_to_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.get_paths_to_config" title="Permalink to this definition"></a></dt>
+<dd><p>Generate a tuple of path which may contain a configuration file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function preserves the order. The priority of the user
+configuration in <code class="docutils literal notranslate"><span class="pre">XDG_CONFIG_HOME</span></code> is higher than the global
+configuration in <code class="docutils literal notranslate"><span class="pre">/etc/matrixctl/</span></code>. The priority of the
+file extension <code class="docutils literal notranslate"><span class="pre">yaml</span></code> is greater than the priority of the file
+extension <code class="docutils literal notranslate"><span class="pre">yml</span></code>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The paths returned by this function might not exist.</p>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>config_paths</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a></span></dt><dd><p>A tuple of paths, which might contain a config file.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, …]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.get_server_config">
+<span class="sig-name descname"><span class="pre">get_server_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.get_server_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.get_server_config" title="Permalink to this definition"></a></dt>
+<dd><p>Read and concentrate the config in one dict.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">servers:</span> <span class="pre">...</span></code> will be removed form the dict.
+A new entry <code class="docutils literal notranslate"><span class="pre">server</span></code> will be created, which represents the selected
+server.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>paths</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Iterable</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a></span></dt><dd><p>The paths to the configfiles.</p>
+</dd>
+<dt><strong>server</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The selected server. (Defautl: “default”)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>server_config</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.Config</span></code></span></dt><dd><p>The config for the selected server.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.Config" title="matrixctl.structures.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>When all files were empty or don’t exist, an empty dict will be
+returned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.read_from_file">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">read_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.read_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.read_from_file" title="Permalink to this definition"></a></dt>
+<dd><p>Read the config from a YAML file and render the Jinja2 tmplates.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The Renderer does one pass. This means, you can only render
+templated strings but not the templated string of another
+templated string.</p></li>
+<li><p>If the file was empty or does not exist, an empty dict will be
+returned.</p></li>
+</ul>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>yaml</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ruamel.yaml.Yaml</span></code></span></dt><dd><p>The yaml object.</p>
+</dd>
+<dt><strong>path</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Path</span></code></span></dt><dd><p>The path where the config file is located.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>full_config</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.Config</span></code></span></dt><dd><p>The full (with server name) config file as dict.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.Config" title="matrixctl.structures.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.server">
+<span class="sig-name descname"><span class="pre">server</span></span><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.server" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.secrets_filter">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.yaml.</span></span><span class="sig-name descname"><span class="pre">secrets_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#secrets_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.secrets_filter" title="Permalink to this definition"></a></dt>
+<dd><p>Redact secrets when printing the configuration file.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>tree</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> [<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>]</span></dt><dd><p>A patrial of <code class="docutils literal notranslate"><span class="pre">tree</span></code> from <code class="docutils literal notranslate"><span class="pre">tree_printer</span></code>. (Can only be this type)
+afterwards.</p>
+</dd>
+<dt><strong>key</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>A <code class="docutils literal notranslate"><span class="pre">dict</span></code> key. (Can only be this type)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.tree_printer">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.yaml.</span></span><span class="sig-name descname"><span class="pre">tree_printer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#tree_printer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.tree_printer" title="Permalink to this definition"></a></dt>
+<dd><p>Print the configuration file recursively.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>tree</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">any</span></code></a></span></dt><dd><p>Initial a <code class="docutils literal notranslate"><span class="pre">matrixctl.typehints.Config</span></code> and partials of it
+afterwards.</p>
+</dd>
+<dt><strong>depth</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The depth of the table</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.handlers.api">
+<span id="api"></span><h2>API<a class="headerlink" href="#module-matrixctl.handlers.api" title="Permalink to this headline"></a></h2>
+<p>Get access to the API of your homeserver.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">RequestBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdomain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'matrix'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_synapse/admin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'v2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GET'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrent_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">success_codes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(200,</span> <span class="pre">201,</span> <span class="pre">202,</span> <span class="pre">203,</span> <span class="pre">204,</span> <span class="pre">205,</span> <span class="pre">206,</span> <span class="pre">207,</span> <span class="pre">226)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#RequestBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Build the URL for an API request.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.api_path">
+<span class="sig-name descname"><span class="pre">api_path</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.api_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.api_version">
+<span class="sig-name descname"><span class="pre">api_version</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.api_version" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.concurrent_limit">
+<span class="sig-name descname"><span class="pre">concurrent_limit</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.concurrent_limit" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.content">
+<span class="sig-name descname"><span class="pre">content</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.content" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.data" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.domain">
+<span class="sig-name descname"><span class="pre">domain</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.domain" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.headers">
+<span class="sig-name descname"><span class="pre">headers</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.headers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.headers_with_auth">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">headers_with_auth</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.headers_with_auth" title="Permalink to this definition"></a></dt>
+<dd><p>Get the headers with bearer token.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>None</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>headers</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> [<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>]</span></dt><dd><p>Headers with auth. token.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.json">
+<span class="sig-name descname"><span class="pre">json</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.method">
+<span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.method" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.params">
+<span class="sig-name descname"><span class="pre">params</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.params" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.path">
+<span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.scheme">
+<span class="sig-name descname"><span class="pre">scheme</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.scheme" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.subdomain">
+<span class="sig-name descname"><span class="pre">subdomain</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.subdomain" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.success_codes">
+<span class="sig-name descname"><span class="pre">success_codes</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.success_codes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.token">
+<span class="sig-name descname"><span class="pre">token</span></span><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.token" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestStrategy">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">RequestStrategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrent_limit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#RequestStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.RequestStrategy" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.NamedTuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code></a></p>
+<p>Use this NamedTuple as request strategy data.</p>
+<p>This NamedTuple is only used in this module.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestStrategy.concurrent_limit">
+<span class="sig-name descname"><span class="pre">concurrent_limit</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></em><a class="headerlink" href="#matrixctl.handlers.api.RequestStrategy.concurrent_limit" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestStrategy.iterations">
+<span class="sig-name descname"><span class="pre">iterations</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></em><a class="headerlink" href="#matrixctl.handlers.api.RequestStrategy.iterations" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestStrategy.limit">
+<span class="sig-name descname"><span class="pre">limit</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></em><a class="headerlink" href="#matrixctl.handlers.api.RequestStrategy.limit" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestStrategy.offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></em><a class="headerlink" href="#matrixctl.handlers.api.RequestStrategy.offset" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.RequestStrategy.step_size">
+<span class="sig-name descname"><span class="pre">step_size</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></em><a class="headerlink" href="#matrixctl.handlers.api.RequestStrategy.step_size" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.generate_worker_configs">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">generate_worker_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#generate_worker_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.generate_worker_configs" title="Permalink to this definition"></a></dt>
+<dd><p>Create workers for async requests (minus the already done sync reqest).</p>
+<dl class="field-list">
+<dt class="field-odd">Yields</dt>
+<dd class="field-odd"><dl>
+<dt><strong>request_config</strong><span class="classifier"><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></code></a></span></dt><dd><p>Yields a fully configured <code class="docutils literal notranslate"><span class="pre">RequestsBuilder</span></code> for every request that
+has to be done to get all entries.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>[<a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RequestBuilder</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Warning <code class="docutils literal notranslate"><span class="pre">Call-By-Reference</span></code> like behavior!
+The param <code class="docutils literal notranslate"><span class="pre">limit</span></code> and the <code class="docutils literal notranslate"><span class="pre">concurrent_limit</span></code> in <code class="docutils literal notranslate"><span class="pre">request_config</span></code>
+will get changed in this function. Make sure to only use them after using
+this function!</p>
+<dl class="field-list">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl>
+<dt><strong>request_config</strong><span class="classifier"><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></code></a></span></dt><dd><p>An instance of an RequestBuilder from which was used for an initial
+synchronous request to get the first part of the data and the other
+two arguments from the response.</p>
+</dd>
+<dt><strong>next_token</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The value, which defines from where to start in the next request.
+You get this value from the response of an initial synchronous request.</p>
+</dd>
+<dt><strong>total</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The value which defines how many entries there are.
+You get this value from the response of an initial synchronous request.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.preplan_request_strategy">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">preplan_request_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrent_limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#preplan_request_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.preplan_request_strategy" title="Permalink to this definition"></a></dt>
+<dd><p>Use this functiona as helper for optimizing asyncronous requests.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>RequestStrategy</strong><span class="classifier"><a class="reference internal" href="#matrixctl.handlers.api.RequestStrategy" title="matrixctl.handlers.api.RequestStrategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.api.RequestStrategy</span></code></a></span></dt><dd><p>A Named tuple with the RequestStrategy values.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes</dt>
+<dd class="field-even"><dl>
+<dt><strong>limit</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>A user entered limit or total.</p>
+</dd>
+<dt><strong>concurrent_limit: int</strong></dt><dd><p>The concurrent limit from the config file.</p>
+</dd>
+<dt><strong>max_step_size</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>, default=100</span></dt><dd><p>The maximal step size, which is a soft limit.
+It is usualy 100, but that value might be different. Check out the API
+documentation. We usualy take the default one.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.request">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.9)"><span class="pre">collections.abc.Generator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrent_limit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">httpx.Response</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.request" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrent_limit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">httpx.Response</span></span></span></dt>
+<dd><p>Make a (a)synchronous request to the synapse API and receive a response.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>response</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">httpx.Response</span></code></span></dt><dd><p>Returns the response</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RequestBuilder</span></code></a></dt><dd><p>matrixctl.handlers.api.RequestBuilder</p>
+</dd>
+</dl>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl>
+<dt><strong>request_config</strong><span class="classifier"><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RequestBuilder</span></code></a> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">Generator</span></code> [<a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RequestBuilder</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>]</span></dt><dd><p>An instance of an <code class="docutils literal notranslate"><span class="pre">RequestBuilder</span></code> or a list of <code class="docutils literal notranslate"><span class="pre">RequestBuilder</span></code>.
+If the function gets a <code class="docutils literal notranslate"><span class="pre">RequestBuilder</span></code>, the request will be
+synchronous.
+If it gets a Generator, the request will be asynchronous.</p>
+</dd>
+<dt><strong>concurrent_limit</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The maximum of concurrent workers. (This information must be pulled
+from the config.)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.handlers.ansible">
+<span id="ansible"></span><h2>Ansible<a class="headerlink" href="#module-matrixctl.handlers.ansible" title="Permalink to this headline"></a></h2>
+<p>Run a ansible playbook with this module.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.ansible.ansible_run">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.ansible.</span></span><span class="sig-name descname"><span class="pre">ansible_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">playbook</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_vars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/ansible.html#ansible_run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.ansible.ansible_run" title="Permalink to this definition"></a></dt>
+<dd><p>Run an ansible playbook.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>playbook</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a></span></dt><dd><p>The path to the ansible Playbook</p>
+</dd>
+<dt><strong>tags</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The tags to use</p>
+</dd>
+<dt><strong>extra_vars</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> [<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>], <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The extra_vars to use.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.handlers.vcs">
+<span id="git-vcs"></span><h2>Git (VCS)<a class="headerlink" href="#module-matrixctl.handlers.vcs" title="Permalink to this headline"></a></h2>
+<p>Update and manage the synapse playbook repository with this module.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.handlers.vcs.VCS">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.vcs.</span></span><span class="sig-name descname"><span class="pre">VCS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/vcs.html#VCS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.vcs.VCS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Update and manage a repository.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="matrixctl.handlers.vcs.VCS.datetime_last_pulled_commit">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">datetime_last_pulled_commit</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.9)"><span class="pre">datetime.datetime</span></a></em><a class="headerlink" href="#matrixctl.handlers.vcs.VCS.datetime_last_pulled_commit" title="Permalink to this definition"></a></dt>
+<dd><p>Get the datetime the commit was pulled last from git.</p>
+<p>This is used to determine which messages will be produced in the table.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>None</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>datetime</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a></span></dt><dd><p>The datetime object.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.vcs.VCS.log">
+<span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">since</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/vcs.html#VCS.log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.vcs.VCS.log" title="Permalink to this definition"></a></dt>
+<dd><p>Print a table of date, user and commit message since the last pull.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>since</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code>, default=None</span></dt><dd><p>The datetime the last commit was puled.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.vcs.VCS.pull">
+<span class="sig-name descname"><span class="pre">pull</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/vcs.html#VCS.pull"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.vcs.VCS.pull" title="Permalink to this definition"></a></dt>
+<dd><p>Git pull the latest commits from GH.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>None</strong></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.handlers.ssh">
+<span id="ssh"></span><h2>SSH<a class="headerlink" href="#module-matrixctl.handlers.ssh" title="Permalink to this headline"></a></h2>
+<p>Run and evaluate commands on the host machine of your synapse server.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.handlers.ssh.SSH">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.ssh.</span></span><span class="sig-name descname"><span class="pre">SSH</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">22</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/ssh.html#SSH"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.ssh.SSH" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Run and evaluate commands on the host machine of your synapse server.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.ssh.SSH.address">
+<span class="sig-name descname"><span class="pre">address</span></span><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.address" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.ssh.SSH.port">
+<span class="sig-name descname"><span class="pre">port</span></span><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.port" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.ssh.SSH.run_cmd">
+<span class="sig-name descname"><span class="pre">run_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/ssh.html#SSH.run_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.run_cmd" title="Permalink to this definition"></a></dt>
+<dd><p>Run a command on the host machine and receive a response.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>cmd</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The command to run.</p>
+</dd>
+<dt><strong>tty</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.9)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>Request a pseudo-terminal from the server (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>response</strong><span class="classifier"><a class="reference internal" href="#matrixctl.handlers.ssh.SSHResponse" title="matrixctl.handlers.ssh.SSHResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.ssh.SSHResponse</span></code></a></span></dt><dd><p>Receive <code class="docutils literal notranslate"><span class="pre">stdin</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout</span></code> and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> as response.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#matrixctl.handlers.ssh.SSHResponse" title="matrixctl.handlers.ssh.SSHResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">SSHResponse</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.ssh.SSH.user">
+<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#matrixctl.handlers.ssh.SSH.user" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.handlers.ssh.SSHResponse">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.ssh.</span></span><span class="sig-name descname"><span class="pre">SSHResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a> <span class="p"><span class="pre">|</span></span> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a> <span class="p"><span class="pre">|</span></span> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a> <span class="p"><span class="pre">|</span></span> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/ssh.html#SSHResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.NamedTuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code></a></p>
+<p>Store the response of a SSH command as response.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.ssh.SSHResponse.stderr">
+<span class="sig-name descname"><span class="pre">stderr</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a> <span class="p"><span class="pre">|</span></span> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></em><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stderr" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.ssh.SSHResponse.stdin">
+<span class="sig-name descname"><span class="pre">stdin</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a> <span class="p"><span class="pre">|</span></span> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></em><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stdin" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.ssh.SSHResponse.stdout">
+<span class="sig-name descname"><span class="pre">stdout</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a> <span class="p"><span class="pre">|</span></span> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></em><a class="headerlink" href="#matrixctl.handlers.ssh.SSHResponse.stdout" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-matrixctl.handlers.table">
+<span id="table"></span><h2>Table<a class="headerlink" href="#module-matrixctl.handlers.table" title="Permalink to this headline"></a></h2>
+<p>Use this handler to generate and print tables.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.table.cells_to_str">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.table.</span></span><span class="sig-name descname"><span class="pre">cells_to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">none</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/table.html#cells_to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.table.cells_to_str" title="Permalink to this definition"></a></dt>
+<dd><p>Convert all cells to strings and format <code class="docutils literal notranslate"><span class="pre">None</span></code> values.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>part</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.abc.Sequence</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.abc.Sequence</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Data or header, in which every cell will be to casted to to strings.</p>
+</dd>
+<dt><strong>none</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>A string, which is used to replace <code class="docutils literal notranslate"><span class="pre">None</span></code> with the specific string.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>part</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd></dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">The</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">part</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">where</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">every</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">cell</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">is</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span></code></a> <code class="docutils literal notranslate"><span class="pre">str</span></code>.</dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.table.find_newlines">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.table.</span></span><span class="sig-name descname"><span class="pre">find_newlines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/table.html#find_newlines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.table.find_newlines" title="Permalink to this definition"></a></dt>
+<dd><p>Find newlines and return a dict with positions (key) and occurences.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Data or headers of the table.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>pos</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> [<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>]</span></dt><dd><p>A dictionary <code class="docutils literal notranslate"><span class="pre">{r:</span> <span class="pre">n}</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> are newlines in row <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function only adds an entry to the dict, if there is at least one
+newline in a row.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.table.format_table_row">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.table.</span></span><span class="sig-name descname"><span class="pre">format_table_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_column_len</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/table.html#format_table_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.table.format_table_row" title="Permalink to this definition"></a></dt>
+<dd><p>Format a table row into a <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>line</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>A data or headers row, which will be formatted to a string.</p>
+</dd>
+<dt><strong>max_column_len</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>A n-tuple which describes the longest srting per column. (n is the
+number of columns)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>row_string</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>A formatted string, which represents a table row.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.table.get_colum_length">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.table.</span></span><span class="sig-name descname"><span class="pre">get_colum_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/table.html#get_colum_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.table.get_colum_length" title="Permalink to this definition"></a></dt>
+<dd><p>Transpose rows and find longest line.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The data part of the table.</p>
+</dd>
+<dt><strong>headers</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The headers part of the table.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>column_length_tuple</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>A n-tuple which describes the longest srting per column. (n is the
+number of columns)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.table.handle_newlines">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.table.</span></span><span class="sig-name descname"><span class="pre">handle_newlines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newlines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/table.html#handle_newlines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.table.handle_newlines" title="Permalink to this definition"></a></dt>
+<dd><p>Update and insert new lines.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>part</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Data or headers of the table.</p>
+</dd>
+<dt><strong>newlines</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> [<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>]</span></dt><dd><p>A dictionary <code class="docutils literal notranslate"><span class="pre">{r:</span> <span class="pre">n}</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> are newlines in row <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>part, inhibit_sep</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a> [<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a>]</span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">part</span></code> contains the supplemented and updated rows.
+The <code class="docutils literal notranslate"><span class="pre">inhibit_sep</span></code> <code class="docutils literal notranslate"><span class="pre">set</span></code> contains the line numbers
+where a separator yhould be inhibited because the lines handled by
+this function are belonging together.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">set</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.table.newlines_in_row">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.table.</span></span><span class="sig-name descname"><span class="pre">newlines_in_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/table.html#newlines_in_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.table.newlines_in_row" title="Permalink to this definition"></a></dt>
+<dd><p>Get the highest number of newlines per row.</p>
+<p>The highest number of newlines for a row is used to dertermine in how
+many rows the row gets expanded, to get one row per newline - 1.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>row</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Data or headers of the table.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>max_newlines</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The highest number of newlines ber row.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.table.table">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.table.</span></span><span class="sig-name descname"><span class="pre">table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">none</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'-'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/table.html#table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.table.table" title="Permalink to this definition"></a></dt>
+<dd><p>Create a table from data and a optional headers.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>table_data</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.abc.Sequence</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.abc.Sequence</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Data.</p>
+</dd>
+<dt><strong>table_headers</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.abc.Sequence</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Optional</span></code></span></dt><dd><p>Headers.</p>
+</dd>
+<dt><strong>sep</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.9)"><span class="xref std std-ref">bool</span></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code> = <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">True</span></code></a></span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code>, when ther should be a separator between every row of data.</p>
+</dd>
+<dt><strong>none</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code> = “-”</span></dt><dd><p>A string, which is used to replace <code class="docutils literal notranslate"><span class="pre">None</span></code> with the specific string.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><dl>
+<dt><strong>table</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Generator</span></code> [<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>]</span></dt><dd></dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">The</span></code> <a class="reference internal" href="#matrixctl.handlers.table.table" title="matrixctl.handlers.table.table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">table</span></code></a> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">row</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">for</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">row</span></code>).</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.table.transpose_newlines_to_rows">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.table.</span></span><span class="sig-name descname"><span class="pre">transpose_newlines_to_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">splitted</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">occurences</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/table.html#transpose_newlines_to_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.table.transpose_newlines_to_rows" title="Permalink to this definition"></a></dt>
+<dd><p>Transpose newlines in new rows.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>splitted</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>A list of substring-lists, splitted from one row, which contains
+newline characters. The substing-lists are containing strings,
+which have been splitted into substings.</p>
+</dd>
+<dt><strong>occurences</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The maximal number of newlines across the row.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><dl>
+<dt><strong>row</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>]</span></dt><dd><p>A row for each occurence.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Contributer Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="helpers.html" class="btn btn-neutral float-right" title="Helpers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Michael Sasser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

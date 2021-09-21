@@ -1,134 +1,167 @@
-
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>&lt;no title&gt; &#8212; MatrixCtl 0.10.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/classic.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; MatrixCtl Unknown documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">&lt;no title&gt;</a></li> 
-      </ul>
-    </div>  
+</head>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">[ANSIBLE]</span>
-<span class="linenos"> 2</span><span class="c1"># The absolute path to your playbook</span>
-<span class="linenos"> 3</span><span class="c1">#</span>
-<span class="linenos"> 4</span><span class="c1"># Playbook = &quot;/absolute/path/to/your/playbook&quot;</span>
-<span class="linenos"> 5</span>
-<span class="linenos"> 6</span><span class="k">[SYNAPSE]</span>
-<span class="linenos"> 7</span><span class="c1"># The absolute path to the synapse playbook.</span>
-<span class="linenos"> 8</span><span class="c1"># This is only used for updating the playbook.</span>
-<span class="linenos"> 9</span><span class="c1">#</span>
-<span class="linenos">10</span><span class="c1"># Playbook=&quot;/absolut/path/to/the/playbook&quot;</span>
-<span class="linenos">11</span>
-<span class="linenos">12</span><span class="k">[API]</span>
-<span class="linenos">13</span><span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
-<span class="linenos">14</span><span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
-<span class="linenos">15</span><span class="c1"># provision your Server without this section. You also can cerate a user with</span>
-<span class="linenos">16</span><span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
-<span class="linenos">17</span><span class="c1"># that.</span>
-<span class="linenos">18</span>
-<span class="linenos">19</span><span class="c1"># Your domain should be something like &quot;michaelsasser.org&quot; without the</span>
-<span class="linenos">20</span><span class="c1"># &quot;matrix.&quot; in the front. MatrixCtl will add that, if needed. An IP-Address</span>
-<span class="linenos">21</span><span class="c1"># is not enough.</span>
-<span class="linenos">22</span><span class="c1">#</span>
-<span class="linenos">23</span><span class="c1"># Domain=&quot;domain.tld&quot;</span>
-<span class="linenos">24</span>
-<span class="linenos">25</span><span class="c1"># To use the API you need to have an administrator account. Enter your Token</span>
-<span class="linenos">26</span><span class="c1"># here. If you use the riot client you will find it your user settings (click</span>
-<span class="linenos">27</span><span class="c1"># on your username on the upper left corner on your browser) in the</span>
-<span class="linenos">28</span><span class="c1"># &quot;Help &amp; About&quot; tab. If you scroll down click next to &quot;Access-Token:&quot; on</span>
-<span class="linenos">29</span><span class="c1"># &quot;&lt;click to reveal&gt;&quot;. It will be marked for you. Copy it in here.</span>
-<span class="linenos">30</span><span class="c1">#</span>
-<span class="linenos">31</span><span class="c1"># Token=&quot;MySuperLongMatrixToken&quot;</span>
-<span class="linenos">32</span>
-<span class="linenos">33</span><span class="k">[SSH]</span>
-<span class="linenos">34</span><span class="c1"># Here you can add your SSH configuration.</span>
-<span class="linenos">35</span><span class="c1">#</span>
-<span class="linenos">36</span><span class="c1"># Address = &quot;matrix.domain.tld&quot;</span>
-<span class="linenos">37</span>
-<span class="linenos">38</span><span class="c1"># The default port is 22</span>
-<span class="linenos">39</span><span class="c1">#</span>
-<span class="linenos">40</span><span class="c1"># Port = 22</span>
-<span class="linenos">41</span>
-<span class="linenos">42</span><span class="c1"># The default username is your current login name.</span>
-<span class="linenos">43</span><span class="c1">#</span>
-<span class="linenos">44</span><span class="c1"># User = &quot;myusername&quot;</span>
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> MatrixCtl
+          </a>
+              <div class="version">
+                Unknown
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributer_documentation/index.html">Contributer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MatrixCtl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/getting_started/config_file_snippet.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Define your homeservers in &quot;servers&quot; here.</span>
+<span class="linenos"> 2</span><span class="nt">servers</span><span class="p">:</span>
+<span class="linenos"> 3</span>    <span class="c1"># Your default server. You can specify muliple servers here with arbitrary</span>
+<span class="linenos"> 4</span>    <span class="c1"># Names</span>
+<span class="linenos"> 5</span>  <span class="nt">default</span><span class="p">:</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>    <span class="nt">ansible</span><span class="p">:</span>
+<span class="linenos"> 8</span>      <span class="c1"># The absolute path to your playbook</span>
+<span class="linenos"> 9</span>      <span class="nt">playbook</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/path/to/ansible/playbook</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="nt">synapse</span><span class="p">:</span>
+<span class="linenos">12</span>      <span class="c1"># The absolute path to the synapse playbook.</span>
+<span class="linenos">13</span>      <span class="c1"># This is only used for updating the playbook.</span>
+<span class="linenos">14</span>      <span class="nt">playbook</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/path/to/synapse/playbook</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>    <span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
+<span class="linenos">17</span>    <span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
+<span class="linenos">18</span>    <span class="c1"># provision your Server without this section. You also can cerate a user with</span>
+<span class="linenos">19</span>    <span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
+<span class="linenos">20</span>    <span class="c1"># that.</span>
+<span class="linenos">21</span>    <span class="nt">api</span><span class="p">:</span>
+<span class="linenos">22</span>      <span class="c1"># Your domain should be something like &quot;michaelsasser.org&quot; without the</span>
+<span class="linenos">23</span>      <span class="c1"># &quot;matrix.&quot; in the front. MatrixCtl will add that, if needed. An IP-Address</span>
+<span class="linenos">24</span>      <span class="c1"># is not enough.</span>
+<span class="linenos">25</span>      <span class="nt">domain</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example.com</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span>      <span class="c1"># The username your admin user</span>
+<span class="linenos">28</span>      <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">johndoe</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>      <span class="c1"># To use the API you need to have an administrator account. Enter your Token</span>
+<span class="linenos">31</span>      <span class="c1"># here. If you use the element client you will find it your user settings</span>
+<span class="linenos">32</span>      <span class="c1"># (click on your username on the upper left corner on your browser) in the</span>
+<span class="linenos">33</span>      <span class="c1"># &quot;Help &amp; About&quot; tab. If you scroll down click next to &quot;Access-Token:&quot; on</span>
+<span class="linenos">34</span>      <span class="c1"># &quot;&lt;click to reveal&gt;&quot;. It will be marked for you. Copy it in here.</span>
+<span class="linenos">35</span>      <span class="nt">token</span><span class="p">:</span> <span class="s">&quot;MyMatrixToken&quot;</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>      <span class="c1"># In some cases, MatrixCtl does need to make many requests. To speed those</span>
+<span class="linenos">38</span>      <span class="c1"># requests a notch, you can set a concurrent_limit which is greater than</span>
+<span class="linenos">39</span>      <span class="c1"># one. This sets a limit to how many asynchronous workers can be spawned</span>
+<span class="linenos">40</span>      <span class="c1"># by MatrixCtl. If you set the number to high, MatrixCtl needs more time</span>
+<span class="linenos">41</span>      <span class="c1"># to spawn the workers, then a synchronous request would take.</span>
+<span class="linenos">42</span>      <span class="nt">concurrent_limit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span>    <span class="c1"># Here you can add your SSH configuration.</span>
+<span class="linenos">45</span>    <span class="nt">ssh</span><span class="p">:</span>
+<span class="linenos">46</span>      <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">matrix.example.com</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span>      <span class="c1"># The default port is 22</span>
+<span class="linenos">49</span>      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">22</span>
+<span class="linenos">50</span>
+<span class="linenos">51</span>      <span class="c1"># The default username is your current login name.</span>
+<span class="linenos">52</span>      <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">john</span>
+<span class="linenos">53</span>
+<span class="linenos">54</span>    <span class="c1"># Define your maintainance tasks</span>
+<span class="linenos">55</span>    <span class="nt">maintenance</span><span class="p">:</span>
+<span class="linenos">56</span>      <span class="nt">tasks</span><span class="p">:</span>
+<span class="linenos">57</span>        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">compress-state</span>  <span class="c1"># Compress synapses state table</span>
+<span class="linenos">58</span>        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">vacuum</span>          <span class="c1"># VACUUM the synapse database (garbage-collection)</span>
+<span class="linenos">59</span>
+<span class="linenos">60</span>  <span class="c1"># Another server.</span>
+<span class="linenos">61</span>  <span class="nt">foo</span><span class="p">:</span>
+<span class="linenos">62</span>    <span class="c1"># ...</span>
 </pre></div>
 </div>
 
 
-            <div class="clearer"></div>
+           </div>
           </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Michael Sasser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/getting_started/config_file_snippet.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">MatrixCtl 0.10.2 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">&lt;no title&gt;</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2021, Michael Sasser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
-    </div>
-  </body>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>
