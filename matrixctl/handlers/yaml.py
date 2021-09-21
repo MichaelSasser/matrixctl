@@ -234,7 +234,7 @@ class YAML:
                 template: Template = Template(
                     stream.read(), undefined=JinjaUndefined
                 )
-                rendered = yaml.load(template.render()) | YAML.JINJA_PREDEFINED
+                rendered = YAML.JINJA_PREDEFINED | yaml.load(template.render())
                 rendered["home"] = str(Path.home())
                 # Override default return type Any with Config
                 return cast(Config, yaml.load(template.render(rendered)))
