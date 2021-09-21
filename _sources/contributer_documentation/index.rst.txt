@@ -15,9 +15,9 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*************************
+=========================
 Contributer Documentation
-*************************
+=========================
 
 First off, thank you for considering contributing to MatrixCtl. Please make sure
 to read our Code of Conduct before you start Contributing to MatrixCtl.
@@ -25,21 +25,21 @@ to read our Code of Conduct before you start Contributing to MatrixCtl.
 .. include::  coc.rst
 
 I found a bug / I want to give feedback
-***************************************
+=======================================
 
 If you found a bug or you want to give feedback, please create an `issue
 <https://github.com/MichaelSasser/matrixctl/issues/new/choose>`_ using
 one of the templates.
 
 I have a question
-*****************
+=================
 
 Please check the
 `discussions <https://github.com/MichaelSasser/matrixctl/discussions>`_ first.
 When you don't find the right thread, feel free to create a new one.
 
 Add a feature
-*************
+=============
 
 .. note:: Before you start make sure you hand in an `issue
           <https://github.com/MichaelSasser/matrixctl/issues/new/choose>`_.
@@ -97,17 +97,7 @@ Add a feature
    type_hints_structures_and_errors
    addons
    application
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Tests:
-
-   tests_handlers
-
-.. helpers
-.. type_hints_and_errors
-.. commands
-.. application
+   tests
 
 ..
    vim: set ft=rst :
