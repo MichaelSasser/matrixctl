@@ -1252,7 +1252,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-paramiko"
-version = "0.1.9"
+version = "2.7.0"
 description = "Typing stubs for paramiko"
 category = "dev"
 optional = false
@@ -2137,8 +2137,8 @@ types-markupsafe = [
     {file = "types_MarkupSafe-1.1.6-py3-none-any.whl", hash = "sha256:1dd3c3f6e913434282a37f847be51bf6d40117b16b6b2e84b79d568275f21784"},
 ]
 types-paramiko = [
-    {file = "types-paramiko-0.1.9.tar.gz", hash = "sha256:161f368940648230d5a3b7982b5cfc7995c893ee5f2f1c3b24af5d0a86739f12"},
-    {file = "types_paramiko-0.1.9-py3-none-any.whl", hash = "sha256:e176389cd6c8884a90e2d0d0eaad5a4ec549a43d863308ff9ea0324925f65407"},
+    {file = "types-paramiko-2.7.0.tar.gz", hash = "sha256:6b7a92489557fc53ac62bf0ce95854dfce5fbc7eabdcd0351810d20dd12dac00"},
+    {file = "types_paramiko-2.7.0-py3-none-any.whl", hash = "sha256:7650959bc74c79c1b66285999373a690271a105eeb4dcba183fa83d6890714e2"},
 ]
 types-pkg-resources = [
     {file = "types-pkg_resources-0.1.3.tar.gz", hash = "sha256:834a9b8d3dbea343562fd99d5d3359a726f6bf9d3733bccd2b4f3096fbab9dae"},
