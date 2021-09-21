@@ -113,6 +113,9 @@ def setup_logging(debug_mode: bool) -> None:
         ),
     )
 
+    logger_httpx = logging.getLogger("hpack.hpack")
+    logger_httpx.setLevel(logging.INFO)
+
 
 def main() -> int:
     """Use the ``main`` function as entrypoint to run the application.
