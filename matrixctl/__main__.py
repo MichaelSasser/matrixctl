@@ -114,7 +114,7 @@ def setup_logging(debug_mode: bool) -> None:
     )
 
     logger_httpx = logging.getLogger("hpack.hpack")
-    logger_httpx.setLevel(logging.INFO)
+    logger_httpx.setLevel(logging.INFO if debug_mode else logging.WARNING)
 
 
 def main() -> int:
