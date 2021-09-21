@@ -291,8 +291,8 @@ class RequestStrategy(typing.NamedTuple):
     iterations: int
 
 
-def make_request_strategy(
-    limit: int, concurrent_limit: int, max_step_size: int = 100
+def preplan_request_strategy(
+    limit: int, concurrent_limit: int | float, max_step_size: int = 100
 ) -> RequestStrategy:
     """Use this functiona as helper for optimizing asyncronous requests.
 
@@ -313,6 +313,7 @@ def make_request_strategy(
         A Named tuple with the RequestStrategy values.
 
     """
+    concurrent_limit = float(concurrent_limit)
 
     # limit might be total.
 
@@ -321,23 +322,18 @@ def make_request_strategy(
     else:
         step_size = limit
 
-    workers = limit / step_size
+    workers: float = min(limit / step_size, concurrent_limit)
 
-    if workers > concurrent_limit:
-        workers = concurrent_limit
+    iterations: float = limit / (workers * step_size)
+    new_iterations: int = math.ceil(iterations)
+    workers_temp: int = math.ceil(limit / (step_size * new_iterations))
+    new_workers: int = min(workers_temp, math.ceil(concurrent_limit))
+    new_step_size: int = math.ceil(limit / (new_workers * new_iterations))
 
-    iterations = limit / (workers * step_size)
-    new_iterations = math.ceil(iterations)
-    workers_temp = math.ceil(limit / (step_size * new_iterations))
-    new_workers = (
-        workers_temp if workers_temp <= concurrent_limit else concurrent_limit
-    )
-    new_step_size = math.ceil(limit / (new_workers * new_iterations))
+    new_limit: int = new_step_size * new_workers * new_iterations  # total
+    offset: int = new_limit - limit  # How many to hold back
 
-    new_limit = new_step_size * new_workers * new_iterations  # total
-    offset = new_limit - limit  # How many to hold back
-
-    # Debuging output
+    # Debug output
     logger.debug("concurrent_limit = %s", concurrent_limit)
     logger.debug("limit = %s", limit)
     logger.debug(
@@ -360,7 +356,7 @@ def make_request_strategy(
     logger.debug("offset = %s (negative not allowed)", offset)
 
     if offset < 0:
-        raise ValueError()  # TODO
+        raise InternalResponseError("The offset must always be positive.")
 
     return RequestStrategy(
         new_limit, new_step_size, new_limit, offset, new_iterations
@@ -405,7 +401,7 @@ def generate_worker_configs(
             "Make sure that you not use generate_worker_configs() if it "
             "isn't necessary. For example with total > 100."
         )
-    strategy: RequestStrategy = make_request_strategy(
+    strategy: RequestStrategy = preplan_request_strategy(
         limit - next_token,  # minus the already queried
         concurrent_limit=request_config.concurrent_limit,
         max_step_size=limit if limit < 100 else 100,
