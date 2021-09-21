@@ -1,1 +1,0 @@
-Remove ``--number`` and ``-n`` in the ``rooms`` addon and replace it with ``[limit]``.

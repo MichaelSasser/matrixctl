@@ -1,1 +1,0 @@
-The config file now is using the ``YAML`` format instead of the ``TOML`` format.

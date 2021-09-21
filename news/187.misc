@@ -1,1 +1,0 @@
-Commands or subcommands are now located in `matrixctl.addons` as packages and considered addons. Addons are splitted in `parser.py` and `addon.py`. It is now allowed to use multible modules for one addon.
