@@ -73,7 +73,6 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         api_path="_matrix/media",
         method="POST",
         api_version="r0",
-        json=False,
         headers={"Content-Type": file_type},
         content=file,
     )

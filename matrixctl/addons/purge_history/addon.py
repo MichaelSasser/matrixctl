@@ -60,20 +60,19 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    # TODO: FIX
+    arg.room_id = arg.room_id.strip()
 
-    # request_body: dict[str, str | int] = dialog_input(arg)
-    # event_or_time, delete_local = dialog_input(arg)
+    request_body: dict[str, str | int] = dialog_input(arg)
 
-    # logger.debug(f"{request_body = }")
+    logger.debug(f"{request_body = }")
 
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
         domain=yaml.get("server", "api", "domain"),
-        path=f"purge_history/{arg.room_id}/{arg.event_or_timestamp}",
+        path=f"purge_history/{arg.room_id.strip()}",
         method="POST",
         api_version="v1",
-        # data=request_body,  # TODO
+        json=request_body,
     )
 
     try:
@@ -91,30 +90,6 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     logger.debug(f"{response=}")
     return handle_purge_status(yaml, response["purge_id"])
-    ###################
-    # while True:
-    #     status_response: JsonDict | None = get_purge_status(
-    #         yaml, response["purge_id"]
-    #     )
-    #
-    #     if status_response is not None:
-    #         debug(f"{status_response=}")
-    #         if status_response["status"] == "complete":
-    #             print("Done...")
-    #             return 0
-    #         if status_response["status"] == "failed":
-    #             fatal("The server returned, that the purge aproach failed.")
-    #             break
-    #         if status_response["status"] == "active":
-    #             info(
-    #                 "The server is still purging historic message content. "
-    #                 "Please wait..."
-    #             )
-    #             sleep(2)  # wait 2 seconds before try again
-    #             continue
-    #     break
-    #
-    # return 1
 
 
 # vim: set ft=python :
