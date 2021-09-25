@@ -147,7 +147,7 @@ class RequestBuilder:
         )
 
 
-def _request(req: RequestBuilder) -> httpx.Response:
+def _request(request_config: RequestBuilder) -> httpx.Response:
     """Send an syncronus request to the synapse API and receive a response.
 
     Attributes
@@ -162,20 +162,20 @@ def _request(req: RequestBuilder) -> httpx.Response:
 
     """
 
-    logger.debug("repr: %s", repr(req))
+    logger.debug("repr: %s", repr(request_config))
 
     with httpx.Client(
         http2=True,
     ) as client:
         response: httpx.Response = client.request(
-            method=req.method,
-            data=req.data,
-            json=req.json,
-            content=req.content,
-            url=str(req),
-            params=req.params,
-            headers=req.headers_with_auth,
-            timeout=req.timeout,
+            method=request_config.method,
+            data=request_config.data,
+            json=request_config.json,
+            content=request_config.content,
+            url=str(request_config),
+            params=request_config.params,
+            headers=request_config.headers_with_auth,
+            timeout=request_config.timeout,
             allow_redirects=False,
         )
 
@@ -206,7 +206,7 @@ def _request(req: RequestBuilder) -> httpx.Response:
     logger.debug("JSON response: %s", response.json())
 
     logger.debug("Response Status Code: %d", response.status_code)
-    if response.status_code not in req.success_codes:
+    if response.status_code not in request_config.success_codes:
         with suppress(Exception):
             if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
                 logger.critical(
@@ -242,6 +242,7 @@ async def _async_request(request_config: RequestBuilder) -> httpx.Response:
         response: httpx.Response = await client.request(
             method=request_config.method,
             data=request_config.data,
+            json=request_config.json,
             content=request_config.content,
             url=str(request_config),
             params=request_config.params,
