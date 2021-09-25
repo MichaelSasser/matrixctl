@@ -3,6 +3,24 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 
 .. towncrier release notes start
 
+0.11.1 (2021-09-25)
+===================
+
+Features & Improvements
+-----------------------
+
+- ``paramiko`` now creates a ``known_hosts`` entry, if it does not exist.
+  (`#231 <https://github.com/MichaelSasser/matrixctl/issues/231>`_)
+
+
+Bugfixes
+--------
+
+- Fix: ``adduser``, ``deluser``, ``delroom``, ``server-notice``,
+  ``purge-history``. (`#233
+  <https://github.com/MichaelSasser/matrixctl/issues/233>`_)
+
+
 0.11.0 (2021-09-21)
 ===================
 

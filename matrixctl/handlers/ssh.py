@@ -25,6 +25,7 @@ from getpass import getuser
 from types import TracebackType
 from typing import NamedTuple
 
+from paramiko import AutoAddPolicy
 from paramiko import SSHClient
 from paramiko.channel import ChannelFile
 
@@ -59,6 +60,7 @@ class SSH:
         self.user: str = getuser() if user is None else user
         self.__client: SSHClient = SSHClient()
         self.__client.load_system_host_keys()
+        self.__client.set_missing_host_key_policy(AutoAddPolicy())
         self.__connect()
 
     def __connect(self) -> None:

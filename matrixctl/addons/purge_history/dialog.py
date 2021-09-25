@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import logging
 import sys
+import time
 
 from argparse import Namespace
 from typing import NoReturn
@@ -67,8 +68,8 @@ def dialog_input(arg: Namespace) -> dict[str, str | int] | NoReturn:
     if arg.local_events:
         print(
             "You are about to delete *local* message events from the "
-            "Database. As they may represent the only copies of this content "
-            "in existence, you need to conform this action."
+            "Database. As they may represent the only copy of this content "
+            "in existence, you need to confirm this action."
         )
         if not ask_question("Do you want to continue?"):
             sys.exit(0)
@@ -79,6 +80,7 @@ def dialog_input(arg: Namespace) -> dict[str, str | int] | NoReturn:
         print("You are about to delete all mesage events except the last one.")
         if not ask_question("Do you want to continue?"):
             sys.exit(0)
+        request_body["purge_up_to_ts"] = int(round(time.time() * 1000))
     else:
         point_in_time: dict[str, str | int] | None = check_point_in_time(
             arg.event_or_timestamp

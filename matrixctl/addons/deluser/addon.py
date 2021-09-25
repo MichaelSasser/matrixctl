@@ -58,7 +58,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         path=f"deactivate/@{arg.user}:{yaml.get('server', 'api','domain')}",
         api_version="v1",
         method="POST",
-        data={"erase": True},
+        json={"erase": True},
     )
     try:
         request(req)
