@@ -64,7 +64,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         path="send_server_notice",
         method="POST",
         api_version="v1",
-        data={
+        json={
             "user_id": (
                 f"@{arg.username}:" f"{yaml.get('server', 'api', 'domain')}"
             ),
