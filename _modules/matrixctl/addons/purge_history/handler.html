@@ -135,10 +135,12 @@
         <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;purge_history_status/</span><span class="si">{</span><span class="n">purge_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
         <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>  <span class="c1"># 5 (default) -&gt; 10</span>
     <span class="p">)</span>
 
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
 
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">response</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
@@ -165,7 +167,6 @@
                     <span class="s2">&quot;The server is still purging historic message content. &quot;</span>
                     <span class="s2">&quot;Please wait...&quot;</span>
                 <span class="p">)</span>
-                <span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># wait 2 seconds before try again</span>
                 <span class="k">continue</span>
         <span class="k">break</span>
     <span class="k">return</span> <span class="mi">0</span></div>

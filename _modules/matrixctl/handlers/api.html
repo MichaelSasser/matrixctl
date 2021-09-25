@@ -95,6 +95,7 @@
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 <span class="kn">import</span> <span class="nn">urllib.parse</span>
 
@@ -132,13 +133,14 @@
     <span class="n">subdomain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;matrix&quot;</span>
     <span class="n">api_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;_synapse/admin&quot;</span>
     <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;v2&quot;</span>
-    <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># just key/value store</span>
+    <span class="n">json</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># json</span>
+    <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># bytes</span>
     <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;GET&quot;</span>
-    <span class="n">json</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">concurrent_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span>  <span class="c1"># seconds</span>
     <span class="n">success_codes</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="mi">200</span><span class="p">,</span>
         <span class="mi">201</span><span class="p">,</span>
@@ -212,11 +214,13 @@
             <span class="sa">f</span><span class="s2">&quot;headers=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="si">}</span><span class="s2">, params=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="si">}</span><span class="s2">, data=&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;[binary]&#39;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2"> &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;success_codes=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">success_codes</span><span class="si">}</span><span class="s2">, json=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">json</span><span class="si">}</span><span class="s2">, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;token=[redacted (length=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">)</span><span class="si">}</span><span class="s2">)])</span><span class="se">}}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;token=[redacted (length=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">)</span><span class="si">}</span><span class="s2">)], &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;timeout=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;concurrent_limit=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">concurrent_limit</span><span class="si">}</span><span class="s2">)</span><span class="se">}}</span><span class="s2">&quot;</span>
         <span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_request</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_request</span><span class="p">(</span><span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Send an syncronus request to the synapse API and receive a response.</span>
 
 <span class="sd">    Attributes</span>
@@ -231,18 +235,20 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;repr: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">req</span><span class="p">))</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;repr: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">request_config</span><span class="p">))</span>
 
     <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span>
         <span class="n">http2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
         <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
-            <span class="n">method</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-            <span class="n">content</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
-            <span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">req</span><span class="p">),</span>
-            <span class="n">params</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">headers_with_auth</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">json</span><span class="p">,</span>
+            <span class="n">content</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">request_config</span><span class="p">),</span>
+            <span class="n">params</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">headers_with_auth</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
             <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -256,20 +262,24 @@
             <span class="s2">&quot;matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to&quot;</span>
             <span class="s1">&#39;_domain: &quot;&quot;&#39;</span>
         <span class="p">)</span>
-        <span class="k">raise</span> <span class="n">ExitQWorker</span><span class="p">()</span>  <span class="c1"># TODO</span>
+
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-            <span class="s2">&quot;You need to make sure, that your vars.yml contains the &quot;</span>
+            <span class="s2">&quot;The server returned an 404 error. This can have two causes. &quot;</span>
+            <span class="s2">&quot;The first one is, you try to request a ressource, which does not &quot;</span>
+            <span class="s2">&quot;exist. The second one is, your API endpoint is disabled.&quot;</span>
+            <span class="s2">&quot;Make sure, that your vars.yml contains the &quot;</span>
             <span class="s2">&quot;following excessive long line:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
             <span class="s2">&quot;matrix_nginx_proxy_proxy_matrix_client_api_forwarded_&quot;</span>
             <span class="s2">&quot;location_synapse_admin_api_enabled: true&quot;</span>
         <span class="p">)</span>
-        <span class="k">raise</span> <span class="n">ExitQWorker</span><span class="p">()</span>  <span class="c1"># TODO</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;JSON response: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Response Status Code: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">req</span><span class="o">.</span><span class="n">success_codes</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">request_config</span><span class="o">.</span><span class="n">success_codes</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;errcode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;M_UNKNOWN_TOKEN&quot;</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
@@ -278,7 +288,7 @@
                     <span class="s2">&quot;and up-to-date. Your access-token will change every &quot;</span>
                     <span class="s2">&quot;time, you log out.&quot;</span>
                 <span class="p">)</span>
-                <span class="k">raise</span> <span class="n">ExitQWorker</span><span class="p">()</span>  <span class="c1"># TODO</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">response</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">response</span>
@@ -305,10 +315,12 @@
         <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
             <span class="n">method</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
             <span class="n">data</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">json</span><span class="p">,</span>
             <span class="n">content</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
             <span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">request_config</span><span class="p">),</span>
             <span class="n">params</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
             <span class="n">headers</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">headers_with_auth</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
             <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -325,7 +337,10 @@
         <span class="k">raise</span> <span class="n">ExitQWorker</span><span class="p">()</span>  <span class="c1"># TODO</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-            <span class="s2">&quot;You need to make sure, that your vars.yml contains the &quot;</span>
+            <span class="s2">&quot;The server returned an 404 error. This can have two causes. &quot;</span>
+            <span class="s2">&quot;The first one is, you try to request a ressource, which does not &quot;</span>
+            <span class="s2">&quot;exist. The second one is, your API endpoint is disabled.&quot;</span>
+            <span class="s2">&quot;Make sure, that your vars.yml contains the &quot;</span>
             <span class="s2">&quot;following excessive long line:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
             <span class="s2">&quot;matrix_nginx_proxy_proxy_matrix_client_api_forwarded_&quot;</span>
             <span class="s2">&quot;location_synapse_admin_api_enabled: true&quot;</span>

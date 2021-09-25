@@ -97,6 +97,7 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NoReturn</span>
@@ -140,8 +141,8 @@
     <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">local_events</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span>
             <span class="s2">&quot;You are about to delete *local* message events from the &quot;</span>
-            <span class="s2">&quot;Database. As they may represent the only copies of this content &quot;</span>
-            <span class="s2">&quot;in existence, you need to conform this action.&quot;</span>
+            <span class="s2">&quot;Database. As they may represent the only copy of this content &quot;</span>
+            <span class="s2">&quot;in existence, you need to confirm this action.&quot;</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ask_question</span><span class="p">(</span><span class="s2">&quot;Do you want to continue?&quot;</span><span class="p">):</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -152,6 +153,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You are about to delete all mesage events except the last one.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ask_question</span><span class="p">(</span><span class="s2">&quot;Do you want to continue?&quot;</span><span class="p">):</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">request_body</span><span class="p">[</span><span class="s2">&quot;purge_up_to_ts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">point_in_time</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">check_point_in_time</span><span class="p">(</span>
             <span class="n">arg</span><span class="o">.</span><span class="n">event_or_timestamp</span>
