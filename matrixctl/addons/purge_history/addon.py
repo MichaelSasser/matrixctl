@@ -60,15 +60,20 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    request_body: dict[str, str | int] = dialog_input(arg)
+    # TODO: FIX
+
+    # request_body: dict[str, str | int] = dialog_input(arg)
+    # event_or_time, delete_local = dialog_input(arg)
+
+    # logger.debug(f"{request_body = }")
 
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
         domain=yaml.get("server", "api", "domain"),
-        path=f"purge_history/{arg.room_id}",
+        path=f"purge_history/{arg.room_id}/{arg.event_or_timestamp}",
         method="POST",
         api_version="v1",
-        data=request_body,
+        # data=request_body,  # TODO
     )
 
     try:
