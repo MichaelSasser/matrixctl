@@ -62,10 +62,12 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
         path=f"purge_history_status/{purge_id}",
         method="GET",
         api_version="v1",
+        timeout=10.0,  # 5 (default) -> 10
     )
 
     while True:
 
+        sleep(5)
         try:
             response: JsonDict = request(req).json()
         except InternalResponseError:
@@ -92,7 +94,6 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
                     "The server is still purging historic message content. "
                     "Please wait..."
                 )
-                sleep(2)  # wait 2 seconds before try again
                 continue
         break
     return 0

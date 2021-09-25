@@ -22,6 +22,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import math
+import sys
 import typing
 import urllib.parse
 
@@ -59,13 +60,14 @@ class RequestBuilder:
     subdomain: str = "matrix"
     api_path: str = "_synapse/admin"
     api_version: str = "v2"
-    data: dict[str, typing.Any] | None = None
-    content: bytes | None = None
+    data: dict[str, typing.Any] | None = None  # just key/value store
+    json: dict[str, typing.Any] | None = None  # json
+    content: bytes | None = None  # bytes
     method: str = "GET"
-    json: bool = True
     params: dict[str, str | int] = {}
     headers: dict[str, str] = {}
     concurrent_limit: int = 4
+    timeout: float = 5.0  # seconds
     success_codes: tuple[int, ...] = (
         200,
         201,
@@ -139,11 +141,13 @@ class RequestBuilder:
             f"headers={self.headers}, params={self.params}, data="
             f"{'[binary]' if isinstance(self.data, bytes) else self.data} "
             f"success_codes={self.success_codes}, json={self.json}, "
-            f"token=[redacted (length={len(self.token)})])}}"
+            f"token=[redacted (length={len(self.token)})], "
+            f"timeout={self.timeout}, "
+            f"concurrent_limit={self.concurrent_limit})}}"
         )
 
 
-def _request(req: RequestBuilder) -> httpx.Response:
+def _request(request_config: RequestBuilder) -> httpx.Response:
     """Send an syncronus request to the synapse API and receive a response.
 
     Attributes
@@ -158,18 +162,20 @@ def _request(req: RequestBuilder) -> httpx.Response:
 
     """
 
-    logger.debug("repr: %s", repr(req))
+    logger.debug("repr: %s", repr(request_config))
 
     with httpx.Client(
         http2=True,
     ) as client:
         response: httpx.Response = client.request(
-            method=req.method,
-            data=req.data,
-            content=req.content,
-            url=str(req),
-            params=req.params,
-            headers=req.headers_with_auth,
+            method=request_config.method,
+            data=request_config.data,
+            json=request_config.json,
+            content=request_config.content,
+            url=str(request_config),
+            params=request_config.params,
+            headers=request_config.headers_with_auth,
+            timeout=request_config.timeout,
             allow_redirects=False,
         )
 
@@ -183,20 +189,24 @@ def _request(req: RequestBuilder) -> httpx.Response:
             "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
             '_domain: ""'
         )
-        raise ExitQWorker()  # TODO
+
+        sys.exit(1)
     if response.status_code == 404:
         logger.critical(
-            "You need to make sure, that your vars.yml contains the "
+            "The server returned an 404 error. This can have two causes. "
+            "The first one is, you try to request a ressource, which does not "
+            "exist. The second one is, your API endpoint is disabled."
+            "Make sure, that your vars.yml contains the "
             "following excessive long line:\n\n"
             "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
             "location_synapse_admin_api_enabled: true"
         )
-        raise ExitQWorker()  # TODO
+        sys.exit(1)
 
     logger.debug("JSON response: %s", response.json())
 
     logger.debug("Response Status Code: %d", response.status_code)
-    if response.status_code not in req.success_codes:
+    if response.status_code not in request_config.success_codes:
         with suppress(Exception):
             if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
                 logger.critical(
@@ -205,7 +215,7 @@ def _request(req: RequestBuilder) -> httpx.Response:
                     "and up-to-date. Your access-token will change every "
                     "time, you log out."
                 )
-                raise ExitQWorker()  # TODO
+                sys.exit(1)
         raise InternalResponseError(payload=response)
 
     return response
@@ -232,10 +242,12 @@ async def _async_request(request_config: RequestBuilder) -> httpx.Response:
         response: httpx.Response = await client.request(
             method=request_config.method,
             data=request_config.data,
+            json=request_config.json,
             content=request_config.content,
             url=str(request_config),
             params=request_config.params,
             headers=request_config.headers_with_auth,
+            timeout=request_config.timeout,
             allow_redirects=False,
         )
 
@@ -252,7 +264,10 @@ async def _async_request(request_config: RequestBuilder) -> httpx.Response:
         raise ExitQWorker()  # TODO
     if response.status_code == 404:
         logger.critical(
-            "You need to make sure, that your vars.yml contains the "
+            "The server returned an 404 error. This can have two causes. "
+            "The first one is, you try to request a ressource, which does not "
+            "exist. The second one is, your API endpoint is disabled."
+            "Make sure, that your vars.yml contains the "
             "following excessive long line:\n\n"
             "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
             "location_synapse_admin_api_enabled: true"

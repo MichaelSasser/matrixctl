@@ -85,7 +85,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         domain=yaml.get("server", "api", "domain"),
         token=yaml.get("server", "api", "token"),
         path=f"users/@{arg.user}:{yaml.get('server', 'api','domain')}",
-        data={"password": passwd, "admin": arg.admin},
+        json={"password": passwd, "admin": arg.admin},
         method="PUT",
     )
     try:

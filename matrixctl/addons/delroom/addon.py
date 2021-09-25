@@ -59,7 +59,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         path="purge_room",
         method="POST",
         api_version="v1",
-        data={"room_id": arg.RoomID},
+        json={"room_id": arg.RoomID},
     )
 
     try:
