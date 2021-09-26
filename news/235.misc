@@ -1,1 +1,0 @@
-The API handler was refactored, which results roughly in a 10% speed increase for asynchronous requests.
