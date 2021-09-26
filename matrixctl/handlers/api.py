@@ -47,6 +47,26 @@ logger = logging.getLogger(__name__)
 
 Response = httpx.Response
 
+InputQueueType = asyncio.Queue[tuple[int, "RequestBuilder", httpx.AsyncClient]]
+OutputQueueType = asyncio.Queue[
+    t.Union[tuple[int, httpx.Response], tuple[int, Exception]]
+]
+
+
+class RequestStrategy(t.NamedTuple):
+
+    """Use this NamedTuple as request strategy data.
+
+    This NamedTuple is only used in this module.
+
+    """
+
+    limit: int
+    step_size: int
+    concurrent_limit: int
+    offset: int
+    iterations: int
+
 
 @attr.s(slots=True, auto_attribs=True, repr=False)
 class RequestBuilder:
@@ -145,166 +165,6 @@ class RequestBuilder:
             f"timeout={self.timeout}, "
             f"concurrent_limit={self.concurrent_limit})}}"
         )
-
-
-def _request(request_config: RequestBuilder) -> httpx.Response:
-    """Send an syncronus request to the synapse API and receive a response.
-
-    Attributes
-    ----------
-    req : matrixctl.handlers.api.RequestBuilder
-        An instance of an RequestBuilder
-
-    Returns
-    -------
-    response : httpx.Response
-        Returns the response
-
-    """
-
-    logger.debug("repr: %s", repr(request_config))
-
-    with httpx.Client(
-        http2=True,
-    ) as client:
-        response: httpx.Response = client.request(
-            method=request_config.method,
-            data=request_config.data,
-            json=request_config.json,
-            content=request_config.content,
-            url=str(request_config),
-            params=request_config.params,
-            headers=request_config.headers_with_auth,
-            timeout=request_config.timeout,
-            allow_redirects=False,
-        )
-
-    if response.status_code == 302:
-        logger.critical(
-            "The api request resulted in an redirect (302). "
-            "This indicates, that the API might have changed, or your "
-            "playbook is misconfigured.\n"
-            "Please make sure your installation of matrixctl is "
-            "up-to-date and your vars.yml contains:\n\n"
-            "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
-            '_domain: ""'
-        )
-
-        sys.exit(1)
-    if response.status_code == 404:
-        logger.critical(
-            "The server returned an 404 error. This can have two causes. "
-            "The first one is, you try to request a ressource, which does not "
-            "exist. The second one is, your API endpoint is disabled."
-            "Make sure, that your vars.yml contains the "
-            "following excessive long line:\n\n"
-            "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
-            "location_synapse_admin_api_enabled: true"
-        )
-        sys.exit(1)
-
-    logger.debug("JSON response: %s", response.json())
-
-    logger.debug("Response Status Code: %d", response.status_code)
-    if response.status_code not in request_config.success_codes:
-        with suppress(Exception):
-            if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
-                logger.critical(
-                    "The server rejected your access-token. "
-                    "Please make sure, your access-token is correct "
-                    "and up-to-date. Your access-token will change every "
-                    "time, you log out."
-                )
-                sys.exit(1)
-        raise InternalResponseError(payload=response)
-
-    return response
-
-
-async def _async_request(
-    request_config: RequestBuilder, client: httpx.AsyncClient
-) -> httpx.Response:
-    """Send an asynchronous request to the synapse API and receive a response.
-
-    Attributes
-    ----------
-    req : matrixctl.handlers.api.RequestBuilder
-        An instance of an RequestBuilder
-
-    Returns
-    -------
-    response : httpx.Response
-        Returns the response
-
-    """
-
-    logger.debug("repr: %s", repr(request_config))
-
-    response: httpx.Response = await client.request(
-        method=request_config.method,
-        data=request_config.data,
-        json=request_config.json,
-        content=request_config.content,
-        url=str(request_config),
-        params=request_config.params,
-        headers=request_config.headers_with_auth,
-        timeout=request_config.timeout,
-        allow_redirects=False,
-    )
-
-    if response.status_code == 302:
-        logger.critical(
-            "The api request resulted in an redirect (302). "
-            "This indicates, that the API might have changed, or your "
-            "playbook is misconfigured.\n"
-            "Please make sure your installation of matrixctl is "
-            "up-to-date and your vars.yml contains:\n\n"
-            "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
-            '_domain: ""'
-        )
-        raise ExitQWorker()  # TODO
-    if response.status_code == 404:
-        logger.critical(
-            "The server returned an 404 error. This can have two causes. "
-            "The first one is, you try to request a ressource, which does not "
-            "exist. The second one is, your API endpoint is disabled."
-            "Make sure, that your vars.yml contains the "
-            "following excessive long line:\n\n"
-            "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
-            "location_synapse_admin_api_enabled: true"
-        )
-        raise ExitQWorker()  # TODO
-
-    logger.debug("JSON response: %s", response.json())
-
-    logger.debug("Response Status Code: %d", response.status_code)
-    if response.status_code not in request_config.success_codes:
-        with suppress(Exception):
-            if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
-                logger.critical(
-                    "The server rejected your access-token. "
-                    "Please make sure, your access-token is correct "
-                    "and up-to-date. Your access-token will change every "
-                    "time, you log out."
-                )
-                raise ExitQWorker()  # TODO
-        raise InternalResponseError(payload=response)
-    return response
-
-
-class RequestStrategy(t.NamedTuple):
-
-    """Use this NamedTuple as request strategy data.
-
-    This NamedTuple is only used in this module.
-
-    """
-
-    limit: int
-    step_size: int
-    concurrent_limit: int
-    offset: int
-    iterations: int
 
 
 def preplan_request_strategy(
@@ -429,9 +289,14 @@ def generate_worker_configs(
     request_config.concurrent_limit = strategy.concurrent_limit
     # reapply next_token to get the full range back for i
     logger.debug(
-        "for loop (generator):"
-        f"{next_token + 1 = }, {strategy.limit + next_token + 1 = }, "
-        f"{strategy.step_size = }"
+        (
+            "for loop (generator):"
+            "next_token + 1 = %s , strategy.limit + next_token + 1 = %s, "
+            "strategy.step_size = %s"
+        ),
+        next_token + 1,
+        strategy.limit + next_token + 1,
+        strategy.step_size,
     )
     for i in range(
         next_token + 1, strategy.limit + next_token + 1, strategy.step_size
@@ -441,11 +306,8 @@ def generate_worker_configs(
         yield worker_config
 
 
-async def worker(
-    input_queue: asyncio.Queue[tuple[int, RequestBuilder, httpx.AsyncClient]],
-    output_queue: asyncio.Queue[
-        tuple[int, httpx.Response] | tuple[int, Exception]
-    ],
+async def async_worker(
+    input_queue: InputQueueType, output_queue: OutputQueueType
 ) -> None:
     """Use this coro as worker to make (a)synchronous request.
 
@@ -470,7 +332,7 @@ async def worker(
     while not input_queue.empty():
         idx, item, client = await input_queue.get()
         try:
-            output = await _async_request(item, client)
+            output = await _arequest(item, client)
             await output_queue.put((idx, output))
 
         # Capture all exceptions and put them into the output queue
@@ -481,11 +343,8 @@ async def worker(
             input_queue.task_done()
 
 
-async def group_results(
-    input_size: int,
-    output_queue: asyncio.Queue[
-        tuple[int, httpx.Response] | tuple[int, Exception]
-    ],
+async def group_async_results(
+    input_size: int, output_queue: OutputQueueType
 ) -> httpx.Response | list[httpx.Response]:
     """Use this coro to group the requests afterwards in a single list.
 
@@ -514,6 +373,91 @@ async def group_results(
         output[idx] = result
         output_queue.task_done()
     return [output[i] for i in range(input_size)]
+
+
+@t.overload
+async def exec_async_request(
+    request_config: Generator[RequestBuilder, None, None],
+) -> list[httpx.Response]:
+    """Overload for request."""
+
+
+@t.overload
+async def exec_async_request(request_config: RequestBuilder) -> httpx.Response:
+    """Overload for request."""
+
+
+async def exec_async_request(
+    request_config: RequestBuilder | Generator[RequestBuilder, None, None]
+) -> httpx.Response | list[httpx.Response]:
+    """Use this coro to generate and run workers and group the responses.
+
+    Attributes
+    ----------
+    request_config : RequestBuilder or Generator [RequestBuilder, None, None]
+        An instance of an ``RequestBuilder`` or a list of ``RequestBuilder``.
+        If the function gets a ``RequestBuilder``, the request will be
+        synchronous.
+        If it gets a Generator, the request will be asynchronous.
+    concurrent_limit : int
+        The maximum of concurrent workers. (This information must be pulled
+        from the config.)
+
+    See Also
+    --------
+    RequestBuilder : matrixctl.handlers.api.RequestBuilder
+
+    Returns
+    -------
+    responses : list of httpx.Response or httpx.Response
+        Depending on ``concurrent_limit`` an ``request_config``.
+
+    """
+    concurrent_limit: int = 1
+    client: httpx.AsyncClient = httpx.AsyncClient(http2=True)
+
+    input_queue: InputQueueType = asyncio.Queue()
+
+    if isinstance(request_config, RequestBuilder):
+        input_queue.put_nowait((0, request_config, client))
+    else:
+        # get the concurrent_limit from the first request_config
+        first_request_config = next(request_config)
+        concurrent_limit = first_request_config.concurrent_limit
+        input_queue.put_nowait((0, first_request_config, client))
+
+        for idx, item in enumerate(request_config, 1):
+            input_queue.put_nowait((idx, item, client))
+
+    # Remember the number of items in the queue, before using it
+    input_size = input_queue.qsize()
+
+    # Generate task pool, and start collecting data.
+    output_queue: OutputQueueType = asyncio.Queue()
+    result_task = asyncio.create_task(
+        group_async_results(input_size, output_queue)
+    )
+    tasks = [
+        asyncio.create_task(async_worker(input_queue, output_queue))
+        for _ in range(concurrent_limit)
+    ]
+
+    # Wait for tasks complete
+    await asyncio.gather(*tasks)
+    await client.aclose()  # close the client
+
+    # Wait for result fetching
+    results = await result_task
+
+    # Re-raise errors
+    # concurrent
+    if concurrent_limit > 1 and isinstance(results, Iterable):
+        if errors := [err for err in results if isinstance(err, Exception)]:
+            raise Exception(errors)
+    if isinstance(results, Exception):  # Not concurrent
+        raise Exception(results)
+
+    return results
 
 
 @t.overload
@@ -556,69 +500,10 @@ def request(
 
     """
 
-    async def procedure() -> httpx.Response | list[httpx.Response]:
-        """Use this coro to generate and run workers and group the responses.
-
-        Returns
-        -------
-        responses : list of httpx.Response or httpx.Response
-            Depending on ``concurrent_limit`` an ``request_config``.
-
-        """
+    async def gen_async_request() -> list[httpx.Response] | httpx.Response:
+        """Use as helper for executing an async request."""
         nonlocal request_config
-        input_queue: asyncio.Queue[
-            tuple[int, RequestBuilder, httpx.AsyncClient]
-        ]
-        output_queue: asyncio.Queue[
-            tuple[int, httpx.Response] | tuple[int, Exception]
-        ]
-        concurrent_limit: int = 1
-        client: httpx.AsyncClient = httpx.AsyncClient(http2=True)
-
-        input_queue = asyncio.Queue()
-
-        if isinstance(request_config, RequestBuilder):
-            input_queue.put_nowait((0, request_config, client))
-        else:
-            # get the concurrent_limit from the first request_config
-            first_request_config = next(request_config)
-            concurrent_limit = first_request_config.concurrent_limit
-            input_queue.put_nowait((0, first_request_config, client))
-
-            for idx, item in enumerate(request_config, 1):
-                input_queue.put_nowait((idx, item, client))
-
-        # Remember the number of items in the queue, before using it
-        input_size = input_queue.qsize()
-
-        # Generate task pool, and start collecting data.
-        output_queue = asyncio.Queue()
-        result_task = asyncio.create_task(
-            group_results(input_size, output_queue)
-        )
-        tasks = [
-            asyncio.create_task(worker(input_queue, output_queue))
-            for _ in range(concurrent_limit)
-        ]
-
-        # Wait for tasks complete
-        await asyncio.gather(*tasks)
-        await client.aclose()  # close the client
-
-        # Wait for result fetching
-        results = await result_task
-
-        # Re-raise errors
-        # concurrent
-        if concurrent_limit > 1 and isinstance(results, Iterable):
-            if errors := [
-                err for err in results if isinstance(err, Exception)
-            ]:
-                raise Exception(errors)
-        if isinstance(results, Exception):  # Not concurrent
-            raise Exception(results)
-
-        return results
+        return await exec_async_request(request_config)
 
     # This is needed because here is decided, if the request was ment to be
     # async or sync. Even though a request was ment to be async, it may
@@ -627,7 +512,149 @@ def request(
     # addon does't need to check that again.
     if isinstance(request_config, RequestBuilder):
         return _request(request_config)
-    return asyncio.run(procedure())
+    return asyncio.run(gen_async_request())
+
+
+def _request(request_config: RequestBuilder) -> httpx.Response:
+    """Send an syncronus request to the synapse API and receive a response.
+
+    Attributes
+    ----------
+    req : matrixctl.handlers.api.RequestBuilder
+        An instance of an RequestBuilder
+
+    Returns
+    -------
+    response : httpx.Response
+        Returns the response
+
+    """
+
+    logger.debug("repr: %s", repr(request_config))
+
+    with httpx.Client(http2=True, timeout=request_config.timeout) as client:
+        response: httpx.Response = client.request(
+            method=request_config.method,
+            data=request_config.data,
+            json=request_config.json,
+            content=request_config.content,
+            url=str(request_config),
+            params=request_config.params,
+            headers=request_config.headers_with_auth,
+            allow_redirects=False,
+        )
+
+    if response.status_code == 302:
+        logger.critical(
+            "The api request resulted in an redirect (302). "
+            "This indicates, that the API might have changed, or your "
+            "playbook is misconfigured.\n"
+            "Please make sure your installation of matrixctl is "
+            "up-to-date and your vars.yml contains:\n\n"
+            "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
+            '_domain: ""'
+        )
+
+        sys.exit(1)
+    if response.status_code == 404:
+        logger.critical(
+            "The server returned an 404 error. This can have two causes. "
+            "The first one is, you try to request a ressource, which does not "
+            "exist. The second one is, your API endpoint is disabled."
+            "Make sure, that your vars.yml contains the "
+            "following excessive long line:\n\n"
+            "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
+            "location_synapse_admin_api_enabled: true"
+        )
+        sys.exit(1)
+
+    logger.debug("JSON response: %s", response.json())
+
+    logger.debug("Response Status Code: %d", response.status_code)
+    if response.status_code not in request_config.success_codes:
+        with suppress(Exception):
+            if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
+                logger.critical(
+                    "The server rejected your access-token. "
+                    "Please make sure, your access-token is correct "
+                    "and up-to-date. Your access-token will change every "
+                    "time, you log out."
+                )
+                sys.exit(1)
+        raise InternalResponseError(payload=response)
+
+    return response
+
+
+async def _arequest(
+    request_config: RequestBuilder, client: httpx.AsyncClient
+) -> httpx.Response:
+    """Send an asynchronous request to the synapse API and receive a response.
+
+    Attributes
+    ----------
+    req : matrixctl.handlers.api.RequestBuilder
+        An instance of an RequestBuilder
+
+    Returns
+    -------
+    response : httpx.Response
+        Returns the response
+
+    """
+
+    logger.debug("repr: %s", repr(request_config))
+
+    response: httpx.Response = await client.request(
+        method=request_config.method,
+        data=request_config.data,
+        json=request_config.json,
+        content=request_config.content,
+        url=str(request_config),
+        params=request_config.params,
+        headers=request_config.headers_with_auth,
+        timeout=request_config.timeout,
+        allow_redirects=False,
+    )
+
+    if response.status_code == 302:
+        logger.critical(
+            "The api request resulted in an redirect (302). "
+            "This indicates, that the API might have changed, or your "
+            "playbook is misconfigured.\n"
+            "Please make sure your installation of matrixctl is "
+            "up-to-date and your vars.yml contains:\n\n"
+            "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
+            '_domain: ""'
+        )
+        raise ExitQWorker()  # TODO
+    if response.status_code == 404:
+        logger.critical(
+            "The server returned an 404 error. This can have two causes. "
+            "The first one is, you try to request a ressource, which does not "
+            "exist. The second one is, your API endpoint is disabled."
+            "Make sure, that your vars.yml contains the "
+            "following excessive long line:\n\n"
+            "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
+            "location_synapse_admin_api_enabled: true"
+        )
+        raise ExitQWorker()  # TODO
+
+    logger.debug("JSON response: %s", response.json())
+
+    logger.debug("Response Status Code: %d", response.status_code)
+    if response.status_code not in request_config.success_codes:
+        with suppress(Exception):
+            if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
+                logger.critical(
+                    "The server rejected your access-token. "
+                    "Please make sure, your access-token is correct "
+                    "and up-to-date. Your access-token will change every "
+                    "time, you log out."
+                )
+                raise ExitQWorker()  # TODO
+        raise InternalResponseError(payload=response)
+    return response
 
 
 # vim: set ft=python :
