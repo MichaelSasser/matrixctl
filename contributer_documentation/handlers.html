@@ -498,6 +498,79 @@ afterwards.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.async_worker">
+<em class="property"><span class="pre">async</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">async_worker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#async_worker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.async_worker" title="Permalink to this definition"></a></dt>
+<dd><p>Use this coro as worker to make (a)synchronous request.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd></dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RequestBuilder</span></code></a></dt><dd><p>matrixctl.handlers.api.RequestBuilder</p>
+</dd>
+</dl>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl>
+<dt><strong>input_queue</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/asyncio-queue.html#asyncio.Queue" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio.Queue</span></code></a></span></dt><dd><p>The input queue, which provides the <code class="docutils literal notranslate"><span class="pre">RequestBuilder</span></code>.</p>
+</dd>
+<dt><strong>output_queue</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/asyncio-queue.html#asyncio.Queue" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio.Queue</span></code></a></span></dt><dd><p>The output queue, which gets the responses of ther requests.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.exec_async_request">
+<em class="property"><span class="pre">async</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">exec_async_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.9)"><span class="pre">collections.abc.Generator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">httpx.Response</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#exec_async_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.exec_async_request" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">async</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">exec_async_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">httpx.Response</span></span></span></dt>
+<dd><p>Use this coro to generate and run workers and group the responses.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>responses</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">httpx.Response</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">httpx.Response</span></code></span></dt><dd><p>Depending on <code class="docutils literal notranslate"><span class="pre">concurrent_limit</span></code> an <code class="docutils literal notranslate"><span class="pre">request_config</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RequestBuilder</span></code></a></dt><dd><p>matrixctl.handlers.api.RequestBuilder</p>
+</dd>
+</dl>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl>
+<dt><strong>request_config</strong><span class="classifier"><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RequestBuilder</span></code></a> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">Generator</span></code> [<a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RequestBuilder</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>]</span></dt><dd><p>An instance of an <code class="docutils literal notranslate"><span class="pre">RequestBuilder</span></code> or a list of <code class="docutils literal notranslate"><span class="pre">RequestBuilder</span></code>.
+If the function gets a <code class="docutils literal notranslate"><span class="pre">RequestBuilder</span></code>, the request will be
+synchronous.
+If it gets a Generator, the request will be asynchronous.</p>
+</dd>
+<dt><strong>concurrent_limit</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The maximum of concurrent workers. (This information must be pulled
+from the config.)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.handlers.api.generate_worker_configs">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">generate_worker_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#generate_worker_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.generate_worker_configs" title="Permalink to this definition"></a></dt>
 <dd><p>Create workers for async requests (minus the already done sync reqest).</p>
@@ -540,6 +613,33 @@ You get this value from the response of an initial synchronous request.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.group_async_results">
+<em class="property"><span class="pre">async</span> </em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">group_async_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#group_async_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.group_async_results" title="Permalink to this definition"></a></dt>
+<dd><p>Use this coro to group the requests afterwards in a single list.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>responses</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">httpx.Response</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">httpx.Response</span></code></span></dt><dd><p>Depending on <code class="docutils literal notranslate"><span class="pre">concurrent</span></code>, it is a <code class="docutils literal notranslate"><span class="pre">httpx.Response</span></code> if
+<code class="docutils literal notranslate"><span class="pre">concurrent</span></code> is true, otherwise it is a <code class="docutils literal notranslate"><span class="pre">list</span></code> of
+<code class="docutils literal notranslate"><span class="pre">httpx.Response</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes</dt>
+<dd class="field-even"><dl>
+<dt><strong>input_size</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The number of items in the queue.</p>
+</dd>
+<dt><strong>output_queue</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/asyncio-queue.html#asyncio.Queue" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio.Queue</span></code></a></span></dt><dd><p>The output queue, which holds the responses of ther requests.</p>
+</dd>
+<dt><strong>concurrent</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.9)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>When <code class="docutils literal notranslate"><span class="pre">True</span></code>, make requests concurrently.
+When <code class="docutils literal notranslate"><span class="pre">False</span></code>, make requests synchronously.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.handlers.api.preplan_request_strategy">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">preplan_request_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrent_limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#preplan_request_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.preplan_request_strategy" title="Permalink to this definition"></a></dt>
 <dd><p>Use this functiona as helper for optimizing asyncronous requests.</p>
@@ -567,9 +667,9 @@ documentation. We usualy take the default one.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.handlers.api.request">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.9)"><span class="pre">collections.abc.Generator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrent_limit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">httpx.Response</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.request" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.9)"><span class="pre">collections.abc.Generator</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">httpx.Response</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.request" title="Permalink to this definition"></a></dt>
 <dt class="sig sig-object py">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrent_limit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">httpx.Response</span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><span class="pre">matrixctl.handlers.api.RequestBuilder</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">httpx.Response</span></span></span></dt>
 <dd><p>Make a (a)synchronous request to the synapse API and receive a response.</p>
 <dl class="field-list">
 <dt class="field-odd">Returns</dt>

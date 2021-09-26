@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addons.get_events.parser &mdash; MatrixCtl Unknown documentation</title>
+  <title>matrixctl.addons.joinroom.parser &mdash; MatrixCtl Unknown documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -61,7 +61,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      <li>matrixctl.addons.get_events.parser</li>
+      <li>matrixctl.addons.joinroom.parser</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -70,10 +70,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for matrixctl.addons.get_events.parser</h1><div class="highlight"><pre>
+  <h1>Source code for matrixctl.addons.joinroom.parser</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># matrixctl</span>
-<span class="c1"># Copyright (c) 2021  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span class="c1"># Copyright (c) 2020  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
 <span class="c1">#</span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -88,7 +88,7 @@
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
-<span class="sd">&quot;&quot;&quot;Use this module to get an events of an user from the Database.&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Use this module to add the ``joinroom`` subcommand to ``matrixctl``.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
@@ -102,9 +102,9 @@
 <span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael@MichaelSasser.org&quot;</span>
 
 
-<div class="viewcode-block" id="subparser_get_events"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.get_events.parser.subparser_get_events">[docs]</a><span class="nd">@subparser</span>
-<span class="k">def</span> <span class="nf">subparser_get_events</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Create a subparser for the ``matrixctl get-event`` command.</span>
+<div class="viewcode-block" id="subparser_deluser"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.joinroom.parser.subparser_deluser">[docs]</a><span class="nd">@subparser</span>
+<span class="k">def</span> <span class="nf">subparser_deluser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Create a subparser for the ``matrixctl joinroom`` command.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -118,12 +118,11 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
-        <span class="s2">&quot;get-events&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Get user-events from the DB&quot;</span>
+        <span class="s2">&quot;joinroom&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Join a user to a room&quot;</span>
     <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The user (e.g. @foo:bar.baz)&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;room_id&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The room-id&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;--type&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The message type&quot;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">addon</span><span class="o">=</span><span class="s2">&quot;get_events&quot;</span><span class="p">)</span></div>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;room&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The room identifier or alias to join&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The username of the user e.g. &quot;michael&quot;&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">addon</span><span class="o">=</span><span class="s2">&quot;joinroom&quot;</span><span class="p">)</span></div>
 
 
 <span class="c1"># vim: set ft=python :</span>
