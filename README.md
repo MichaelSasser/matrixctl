@@ -65,6 +65,8 @@ MatrixCtl is written in Python. The installation is straight forward. Just run
 `pip install matrixctl`. It will be installed from the
 [Python Package Index (PyPi)](https://pypi.org/project/matrixctl/).
 
+Upgrade MatrixCtl with `pip install --upgrade matrixctl`.
+
 You will find more information in the
 [documentation](https://matrixctl.readthedocs.io/en/latest/installation.html).
 
