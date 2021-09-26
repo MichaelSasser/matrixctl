@@ -443,22 +443,18 @@ def generate_worker_configs(
 @typing.overload
 def request(
     request_config: Generator[RequestBuilder, None, None],
-    concurrent_limit: int,
 ) -> list[httpx.Response]:
     """Overload for request."""
 
 
 @typing.overload
-def request(
-    request_config: RequestBuilder, concurrent_limit: int = ...
-) -> httpx.Response:
+def request(request_config: RequestBuilder) -> httpx.Response:
     """Overload for request."""
 
 
 # flake8: noqa: C901
 def request(
     request_config: RequestBuilder | Generator[RequestBuilder, None, None],
-    concurrent_limit: int = 1,  # default from config is 4
 ) -> list[httpx.Response] | httpx.Response:
     """Make a (a)synchronous request to the synapse API and receive a response.
 
@@ -489,7 +485,6 @@ def request(
         output_queue: asyncio.Queue[
             tuple[int, httpx.Response] | tuple[int, Exception]
         ],
-        concurrent: bool,
     ) -> None:
         """Use this coro as worker to make (a)synchronous request.
 
@@ -499,9 +494,6 @@ def request(
             The input queue, which provides the ``RequestBuilder``.
         output_queue : asyncio.Queue
             The output queue, which gets the responses of ther requests.
-        concurrent : bool
-            When ``True``, make requests concurrently.
-            When ``False``, make requests synchronously.
 
 
         See Also
@@ -517,10 +509,7 @@ def request(
         while not input_queue.empty():
             idx, item = await input_queue.get()
             try:
-                if concurrent:
-                    output = await _async_request(item)
-                else:
-                    output = _request(item)
+                output = await _async_request(item)
                 await output_queue.put((idx, output))
 
             except Exception as err:  # skipcq: PYL-W0703
@@ -534,7 +523,6 @@ def request(
         output_queue: asyncio.Queue[
             tuple[int, httpx.Response] | tuple[int, Exception]
         ],
-        concurrent: bool,
     ) -> httpx.Response | list[httpx.Response]:
         """Use this coro to group the requests afterwards in a single list.
 
@@ -562,9 +550,7 @@ def request(
             idx, result = await output_queue.get()  # (idx, result)
             output[idx] = result
             output_queue.task_done()
-        if concurrent:
-            return [output[i] for i in range(input_size)]
-        return output[0]
+        return [output[i] for i in range(input_size)]
 
     async def procedure() -> httpx.Response | list[httpx.Response]:
         """Use this coro to generate and run workers and group the responses.
@@ -583,13 +569,17 @@ def request(
         # output_queue: asyncio.Queue[
         #     tuple[tuple[int, httpx.Response], Exception]
         # ]
-        nonlocal concurrent_limit
+        concurrent_limit: int = 1
         input_queue = asyncio.Queue()
         if isinstance(request_config, RequestBuilder):
             input_queue.put_nowait((0, request_config))
-            concurrent_limit = 1
         else:
-            for idx, item in enumerate(request_config):
+            # get the concurrent_limit from the first request_config
+            first_request_config = next(request_config)
+            concurrent_limit = first_request_config.concurrent_limit
+            input_queue.put_nowait((0, first_request_config))
+
+            for idx, item in enumerate(request_config, 1):
                 input_queue.put_nowait((idx, item))
 
         # Remember the number of items in the queue, before using it
@@ -598,12 +588,10 @@ def request(
         # Generate task pool, and start collecting data.
         output_queue = asyncio.Queue()
         result_task = asyncio.create_task(
-            group_results(input_size, output_queue, concurrent_limit > 1)
+            group_results(input_size, output_queue)
         )
         tasks = [
-            asyncio.create_task(
-                worker(input_queue, output_queue, concurrent_limit > 1)
-            )
+            asyncio.create_task(worker(input_queue, output_queue))
             for _ in range(concurrent_limit)
         ]
 
@@ -625,8 +613,11 @@ def request(
 
         return results
 
-    # Use a shortpass maybe and remove everything sync above?:
-    # Does not give a real benefit in time and ressources.
+    # This is needed because here is decided, if the request was ment to be
+    # async or sync. Even though a request was ment to be async, it may
+    # be still sync (which is determined during preplanning. In case it is
+    # ment to be async, but is still sync, the output will be a list so the
+    # addon does't need to check that again.
     if isinstance(request_config, RequestBuilder):
         return _request(request_config)
     return asyncio.run(procedure())

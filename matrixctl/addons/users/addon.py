@@ -116,9 +116,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     if next_token is not None and total is not None and total > 100:
         async_responses = request(
             generate_worker_configs(req, next_token, total),
-            concurrent_limit=req.concurrent_limit,
         )
 
+        print(async_responses)
         for async_response in async_responses:
             users_list = async_response.json()["users"]
             for user in users_list:
