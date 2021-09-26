@@ -118,7 +118,6 @@ def addon(arg: Namespace, yaml: YAML) -> int:
             generate_worker_configs(req, next_token, total),
         )
 
-        print(async_responses)
         for async_response in async_responses:
             users_list = async_response.json()["users"]
             for user in users_list:

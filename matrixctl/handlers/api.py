@@ -221,7 +221,9 @@ def _request(request_config: RequestBuilder) -> httpx.Response:
     return response
 
 
-async def _async_request(request_config: RequestBuilder) -> httpx.Response:
+async def _async_request(
+    request_config: RequestBuilder, client: httpx.AsyncClient
+) -> httpx.Response:
     """Send an asynchronous request to the synapse API and receive a response.
 
     Attributes
@@ -238,18 +240,17 @@ async def _async_request(request_config: RequestBuilder) -> httpx.Response:
 
     logger.debug("repr: %s", repr(request_config))
 
-    async with httpx.AsyncClient(http2=True) as client:
-        response: httpx.Response = await client.request(
-            method=request_config.method,
-            data=request_config.data,
-            json=request_config.json,
-            content=request_config.content,
-            url=str(request_config),
-            params=request_config.params,
-            headers=request_config.headers_with_auth,
-            timeout=request_config.timeout,
-            allow_redirects=False,
-        )
+    response: httpx.Response = await client.request(
+        method=request_config.method,
+        data=request_config.data,
+        json=request_config.json,
+        content=request_config.content,
+        url=str(request_config),
+        params=request_config.params,
+        headers=request_config.headers_with_auth,
+        timeout=request_config.timeout,
+        allow_redirects=False,
+    )
 
     if response.status_code == 302:
         logger.critical(
@@ -440,6 +441,81 @@ def generate_worker_configs(
         yield worker_config
 
 
+async def worker(
+    input_queue: asyncio.Queue[tuple[int, RequestBuilder, httpx.AsyncClient]],
+    output_queue: asyncio.Queue[
+        tuple[int, httpx.Response] | tuple[int, Exception]
+    ],
+) -> None:
+    """Use this coro as worker to make (a)synchronous request.
+
+    Attributes
+    ----------
+    input_queue : asyncio.Queue
+        The input queue, which provides the ``RequestBuilder``.
+    output_queue : asyncio.Queue
+        The output queue, which gets the responses of ther requests.
+
+
+    See Also
+    --------
+    RequestBuilder : matrixctl.handlers.api.RequestBuilder
+
+    Returns
+    -------
+    None
+
+    """
+    output: httpx.Response
+    while not input_queue.empty():
+        idx, item, client = await input_queue.get()
+        try:
+            output = await _async_request(item, client)
+            await output_queue.put((idx, output))
+
+        # Capture all exceptions and put them into the output queue
+        except Exception as err:  # skipcq: PYL-W0703
+            await output_queue.put((idx, err))
+
+        finally:
+            input_queue.task_done()
+
+
+async def group_results(
+    input_size: int,
+    output_queue: asyncio.Queue[
+        tuple[int, httpx.Response] | tuple[int, Exception]
+    ],
+) -> httpx.Response | list[httpx.Response]:
+    """Use this coro to group the requests afterwards in a single list.
+
+    Attributes
+    ----------
+    input_size : int
+        The number of items in the queue.
+    output_queue : asyncio.Queue
+        The output queue, which holds the responses of ther requests.
+    concurrent : bool
+        When ``True``, make requests concurrently.
+        When ``False``, make requests synchronously.
+
+    Returns
+    -------
+    responses : list of httpx.Response or httpx.Response
+        Depending on ``concurrent``, it is a ``httpx.Response`` if
+        ``concurrent`` is true, otherwise it is a ``list`` of
+        ``httpx.Response``.
+
+    """
+    output = {}  # No need to sort afterwards
+
+    for _ in range(input_size):
+        idx, result = await output_queue.get()  # (idx, result)
+        output[idx] = result
+        output_queue.task_done()
+    return [output[i] for i in range(input_size)]
+
+
 @typing.overload
 def request(
     request_config: Generator[RequestBuilder, None, None],
@@ -480,78 +556,6 @@ def request(
 
     """
 
-    async def worker(
-        input_queue: asyncio.Queue[tuple[int, RequestBuilder]],
-        output_queue: asyncio.Queue[
-            tuple[int, httpx.Response] | tuple[int, Exception]
-        ],
-    ) -> None:
-        """Use this coro as worker to make (a)synchronous request.
-
-        Attributes
-        ----------
-        input_queue : asyncio.Queue
-            The input queue, which provides the ``RequestBuilder``.
-        output_queue : asyncio.Queue
-            The output queue, which gets the responses of ther requests.
-
-
-        See Also
-        --------
-        RequestBuilder : matrixctl.handlers.api.RequestBuilder
-
-        Returns
-        -------
-        None
-
-        """
-        output: httpx.Response
-        while not input_queue.empty():
-            idx, item = await input_queue.get()
-            try:
-                output = await _async_request(item)
-                await output_queue.put((idx, output))
-
-            except Exception as err:  # skipcq: PYL-W0703
-                await output_queue.put((idx, err))
-
-            finally:
-                input_queue.task_done()
-
-    async def group_results(
-        input_size: int,
-        output_queue: asyncio.Queue[
-            tuple[int, httpx.Response] | tuple[int, Exception]
-        ],
-    ) -> httpx.Response | list[httpx.Response]:
-        """Use this coro to group the requests afterwards in a single list.
-
-        Attributes
-        ----------
-        input_size : int
-            The number of items in the queue.
-        output_queue : asyncio.Queue
-            The output queue, which holds the responses of ther requests.
-        concurrent : bool
-            When ``True``, make requests concurrently.
-            When ``False``, make requests synchronously.
-
-        Returns
-        -------
-        responses : list of httpx.Response or httpx.Response
-            Depending on ``concurrent``, it is a ``httpx.Response`` if
-            ``concurrent`` is true, otherwise it is a ``list`` of
-            ``httpx.Response``.
-
-        """
-        output = {}  # No need to sort afterwards
-
-        for _ in range(input_size):
-            idx, result = await output_queue.get()  # (idx, result)
-            output[idx] = result
-            output_queue.task_done()
-        return [output[i] for i in range(input_size)]
-
     async def procedure() -> httpx.Response | list[httpx.Response]:
         """Use this coro to generate and run workers and group the responses.
 
@@ -562,25 +566,30 @@ def request(
 
         """
 
-        input_queue: asyncio.Queue[tuple[int, RequestBuilder]]
+        input_queue: asyncio.Queue[
+            tuple[int, RequestBuilder, httpx.AsyncClient]
+        ]
         output_queue: asyncio.Queue[
             tuple[int, httpx.Response] | tuple[int, Exception]
         ]
+
+        # client
+        client: httpx.AsyncClient = httpx.AsyncClient(http2=True)
         # output_queue: asyncio.Queue[
         #     tuple[tuple[int, httpx.Response], Exception]
         # ]
         concurrent_limit: int = 1
         input_queue = asyncio.Queue()
         if isinstance(request_config, RequestBuilder):
-            input_queue.put_nowait((0, request_config))
+            input_queue.put_nowait((0, request_config, client))
         else:
             # get the concurrent_limit from the first request_config
             first_request_config = next(request_config)
             concurrent_limit = first_request_config.concurrent_limit
-            input_queue.put_nowait((0, first_request_config))
+            input_queue.put_nowait((0, first_request_config, client))
 
             for idx, item in enumerate(request_config, 1):
-                input_queue.put_nowait((idx, item))
+                input_queue.put_nowait((idx, item, client))
 
         # Remember the number of items in the queue, before using it
         input_size = input_queue.qsize()
@@ -597,6 +606,7 @@ def request(
 
         # Wait for tasks complete
         await asyncio.gather(*tasks)
+        await client.aclose()
 
         # Wait for result fetching
         results = await result_task
