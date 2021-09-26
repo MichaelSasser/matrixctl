@@ -23,7 +23,7 @@ import asyncio
 import logging
 import math
 import sys
-import typing
+import typing as t
 import urllib.parse
 
 from collections.abc import Generator
@@ -60,8 +60,8 @@ class RequestBuilder:
     subdomain: str = "matrix"
     api_path: str = "_synapse/admin"
     api_version: str = "v2"
-    data: dict[str, typing.Any] | None = None  # just key/value store
-    json: dict[str, typing.Any] | None = None  # json
+    data: dict[str, t.Any] | None = None  # just key/value store
+    json: dict[str, t.Any] | None = None  # json
     content: bytes | None = None  # bytes
     method: str = "GET"
     params: dict[str, str | int] = {}
@@ -292,7 +292,7 @@ async def _async_request(
     return response
 
 
-class RequestStrategy(typing.NamedTuple):
+class RequestStrategy(t.NamedTuple):
 
     """Use this NamedTuple as request strategy data.
 
@@ -516,14 +516,14 @@ async def group_results(
     return [output[i] for i in range(input_size)]
 
 
-@typing.overload
+@t.overload
 def request(
     request_config: Generator[RequestBuilder, None, None],
 ) -> list[httpx.Response]:
     """Overload for request."""
 
 
-@typing.overload
+@t.overload
 def request(request_config: RequestBuilder) -> httpx.Response:
     """Overload for request."""
 
@@ -565,21 +565,18 @@ def request(
             Depending on ``concurrent_limit`` an ``request_config``.
 
         """
-
+        nonlocal request_config
         input_queue: asyncio.Queue[
             tuple[int, RequestBuilder, httpx.AsyncClient]
         ]
         output_queue: asyncio.Queue[
             tuple[int, httpx.Response] | tuple[int, Exception]
         ]
-
-        # client
-        client: httpx.AsyncClient = httpx.AsyncClient(http2=True)
-        # output_queue: asyncio.Queue[
-        #     tuple[tuple[int, httpx.Response], Exception]
-        # ]
         concurrent_limit: int = 1
+        client: httpx.AsyncClient = httpx.AsyncClient(http2=True)
+
         input_queue = asyncio.Queue()
+
         if isinstance(request_config, RequestBuilder):
             input_queue.put_nowait((0, request_config, client))
         else:
@@ -606,7 +603,7 @@ def request(
 
         # Wait for tasks complete
         await asyncio.gather(*tasks)
-        await client.aclose()
+        await client.aclose()  # close the client
 
         # Wait for result fetching
         results = await result_task
