@@ -3,6 +3,24 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 
 .. towncrier release notes start
 
+0.11.2 (2021-09-26)
+===================
+
+Features & Improvements
+-----------------------
+
+- Add the ``joinroom`` (join a user to a room) addon to MatrixCtl. (`#89
+  <https://github.com/MichaelSasser/matrixctl/issues/89>`_)
+
+
+Miscellaneous
+-------------
+
+- The API handler was refactored, which results roughly in a 10% speed increase
+  for asynchronous requests. (`#235
+  <https://github.com/MichaelSasser/matrixctl/issues/235>`_)
+
+
 0.11.1 (2021-09-25)
 ===================
 

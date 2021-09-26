@@ -329,5 +329,18 @@ get-events
  :undoc-members:
  :show-inheritance:
 
+joinroom
+--------
+
+.. automodule:: matrixctl.addons.joinroom.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.joinroom.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
 ..
    vim: set ft=rst :
