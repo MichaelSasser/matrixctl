@@ -422,7 +422,10 @@ async def exec_async_request(
         input_queue.put_nowait((0, request_config, client))
     else:
         # get the concurrent_limit from the first request_config
-        first_request_config = next(request_config)
+        try:
+            first_request_config = next(request_config)
+        except StopIteration:
+            return []
         concurrent_limit = first_request_config.concurrent_limit
         input_queue.put_nowait((0, first_request_config, client))
 
