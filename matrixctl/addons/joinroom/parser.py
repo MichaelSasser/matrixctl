@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to get an event from the Database."""
+"""Use this module to add the ``joinroom`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
 
@@ -30,8 +30,8 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 @subparser
-def subparser_get_event(subparsers: _SubParsersAction) -> None:
-    """Create a subparser for the ``matrixctl get-event`` command.
+def subparser_deluser(subparsers: _SubParsersAction) -> None:
+    """Create a subparser for the ``matrixctl joinroom`` command.
 
     Parameters
     ----------
@@ -45,10 +45,11 @@ def subparser_get_event(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "get-event", help="Get an event from the DB"
+        "joinroom", help="Join a user to a room"
     )
-    parser.add_argument("event_id", help="The event-id")
-    parser.set_defaults(addon="get_event")
+    parser.add_argument("room", help="The room identifier or alias to join")
+    parser.add_argument("user", help='The username of the user e.g. "michael"')
+    parser.set_defaults(addon="joinroom")
 
 
 # vim: set ft=python :

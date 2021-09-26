@@ -45,7 +45,7 @@ def subparser_get_events(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "get-events", help="get user-events from the DB"
+        "get-events", help="Get user-events from the DB"
     )
     parser.add_argument("user", help="The user (e.g. @foo:bar.baz)")
     parser.add_argument("room_id", nargs="?", help="The room-id")
