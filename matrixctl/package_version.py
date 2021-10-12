@@ -83,7 +83,7 @@ def __from_metadata(name: str) -> str | None:
         of it is stored in the packages metadata.
 
     """
-    import importlib.metadata as importlib_metadata  # Python >= 3.9
+    import importlib.metadata as importlib_metadata  # Python >= 3.8
 
     version: str | None = None
     with suppress(importlib_metadata.PackageNotFoundError):
@@ -109,6 +109,20 @@ def get_version(name: str, file: str | Path) -> str | None:
         # Optional:
         if __version__ is None:
             raise ValueError("Could not find the version of the package.")
+
+    .. code-block:: python
+       # file: conf.py (sphinx)
+
+       import sys
+
+       sys.path.insert(0, os.path.abspath("../"))
+       sys.path.insert(0, os.path.abspath("../.."))
+
+       from matrixctl.package_version import get_version
+
+       __version__: str = (
+           get_version("matrixctl", Path(__file__).parent) or "Unknown"
+       )
 
     Parameters
     ----------
