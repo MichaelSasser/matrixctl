@@ -39,7 +39,17 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-VERSION_PATTERN: str = r"^\s*version\s*=\s*[\"']\s*([-.\w]{3,})\s*[\"']\s*$"
+# semver
+VERSION_PATTERN: str = (
+    r"^\s*version\s*=\s*[\"']\s*"
+    r"(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)"
+    r"(?:-(?P<prerelease>"
+    r"(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)"
+    r"(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?"
+    r"(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?\s*[\"']\s*$"
+)
+# Fast approx. for simpel versions
+# VERSION_PATTERN: str = r"^\s*version\s*=\s*[\"']\s*([-.\w]{3,})\s*[\"']\s*$"
 
 
 def __from_pyproject(file: Path) -> str | None:
@@ -64,7 +74,16 @@ def __from_pyproject(file: Path) -> str | None:
             for line in fp:
                 version: t.Match[str] | None = vers.search(line)
                 if version is not None:
-                    return version.group(1).strip()
+                    # semver
+                    return (
+                        f"{version.group(1)}."
+                        f"{version.group(2) if version.group(2) else '0'}."
+                        f"{version.group(3) if version.group(3) else '0'}"
+                        f"{'-' + version.group(4) if version.group(4) else ''}"
+                        f"{'+' + version.group(5) if version.group(5) else ''}"
+                    )
+                    # Fast approx.
+                    # return version.group(1).strip()
     return None
 
 
