@@ -116,6 +116,7 @@ def get_version(name: str, file: str | Path) -> str | None:
     Examples
     --------
     .. code-block:: python
+
        # file: __init__.py
 
        from .package_version import get_version
@@ -130,6 +131,7 @@ def get_version(name: str, file: str | Path) -> str | None:
             raise ValueError("Could not find the version of the package.")
 
     .. code-block:: python
+
        # file: conf.py (sphinx)
 
        import sys
