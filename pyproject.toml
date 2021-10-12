@@ -40,7 +40,6 @@ paramiko = "^2.7.2"
 "ruamel.yaml" = "^0.17.10"
 ansible-runner = ">=1.4.7,<3.0.0"
 attrs = "^21.2.0"
-single-source = "^0.2.0"
 xdg = "^5.1.0"
 Jinja2 = "^3.0.1"
 httpx = { version = "^0.19.0", extras = ["http2"] }
@@ -127,7 +126,7 @@ lines_after_imports = 2
 lines_between_types = 1
 multi_line_output = 3
 use_parentheses = true
-skip_glob = ["*/setup.py", "*.rst", "*.md", "*.yaml", "*.txt", "*.yml", "*.lock", "*.toml", "*.ini", "Makefile"]
+skip_glob = ["*/setup.py", "*.rst", "*.md", "*.yaml", "*.txt", "*.yml", "*.lock", "*.toml", "*.ini", "Makefile", "docs/source/conf.py"]
 filter_files = true
 known_first_party = "matrixctl"
 known_third_party = [

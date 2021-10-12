@@ -28,6 +28,14 @@ Addon Manager
    :undoc-members:
    :show-inheritance:
 
+Package Version
+---------------
+
+.. automodule:: matrixctl.package_version
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Print
 -----
 
