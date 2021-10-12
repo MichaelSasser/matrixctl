@@ -23,7 +23,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from .version import get_version
+from .package_version import get_version
 
 
 __author__: str = "Michael Sasser"

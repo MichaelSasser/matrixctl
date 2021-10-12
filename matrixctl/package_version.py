@@ -99,7 +99,7 @@ def get_version(name: str, file: str | Path) -> str | None:
     .. code-block:: python
        # file: __init__.py
 
-       from .version import get_version
+       from .package_version import get_version
 
         __version__: str | None = get_version(__name__, __file__)
 
