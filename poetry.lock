@@ -1248,7 +1248,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-paramiko"
-version = "2.7.1"
+version = "2.7.2"
 description = "Typing stubs for paramiko"
 category = "dev"
 optional = false
@@ -1354,7 +1354,7 @@ docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "numpydoc", "s
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "b21c72329048ae18c81e409ac9617de3ef6d0673b38589234f6e85da0c4f0735"
+content-hash = "6f70a8b56a50c0e095a361277a3c30b866ac441a83ce3d1b21cb27d0e84d51f5"
 
 [metadata.files]
 alabaster = [
@@ -2143,8 +2143,8 @@ types-markupsafe = [
     {file = "types_MarkupSafe-1.1.6-py3-none-any.whl", hash = "sha256:1dd3c3f6e913434282a37f847be51bf6d40117b16b6b2e84b79d568275f21784"},
 ]
 types-paramiko = [
-    {file = "types-paramiko-2.7.1.tar.gz", hash = "sha256:789a203c47567a78ec448b53b03d75082444519adc4beb774cfe9eb1097542aa"},
-    {file = "types_paramiko-2.7.1-py3-none-any.whl", hash = "sha256:9b54858125b9d8cf68b8aa362ff61aa8000cb3bd6713ad74b61b4aa6e7de66ca"},
+    {file = "types-paramiko-2.7.2.tar.gz", hash = "sha256:377d87708053451c2b54a39da7674152d28481847f2e510450443b699db2d777"},
+    {file = "types_paramiko-2.7.2-py3-none-any.whl", hash = "sha256:264ddf4624155d0485ef99d1f23b4dda782567d94e74ede3b2bd64054195b777"},
 ]
 types-pkg-resources = [
     {file = "types-pkg_resources-0.1.3.tar.gz", hash = "sha256:834a9b8d3dbea343562fd99d5d3359a726f6bf9d3733bccd2b4f3096fbab9dae"},
