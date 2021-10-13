@@ -78,7 +78,7 @@ types-pkg-resources = "^0.1.3"
 types-tabulate = "^0.8.0"
 types-paramiko = "^2.7.1"
 types-attrs = "^19.1.0"
-types-Jinja2 = "^2.11.6"
+types-Jinja2 = "^2.11.7"
 
 [tool.poetry.scripts]
 matrixctl = "matrixctl.__main__:main"
