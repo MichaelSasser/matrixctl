@@ -13,13 +13,13 @@ terminal.
 ```console
 $ matrixctl
 usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG]
-                 {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,joinroom,maintenance,purge-history,report,reports,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
+                 {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,is-admin,joinroom,maintenance,purge-history,report,reports,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
                  ...
 
 MatrixCtl is a simple, but feature-rich tool to remotely control, manage, provision and deploy Matrix homeservers.
 
 positional arguments:
-  {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,joinroom,maintenance,purge-history,report,reports,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
+  {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,is-admin,joinroom,maintenance,purge-history,report,reports,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
     adduser             Add a new matrix user
     adduser-jitsi       Add a new jitsi user
     check               Checks the deployment with ansible
@@ -29,6 +29,7 @@ positional arguments:
     deploy              Provision and deploy
     get-event           get an event from the DB
     get-events          get user-events from the DB
+    is-admin            Deletes a user
     joinroom            Join a user to a room
     maintenance         Run maintenance tasks
     purge-history       Purge historic events from the DB
@@ -150,6 +151,7 @@ server: # This is a reserved name, which cannot be used.
 ```
 
 Predefined Jinja2 placeholders (all placeholders can be overwritten):
+
 - `"{{ home }}"` -- The current users home path e.g. `/home/michael`,
 - `"{{ user }}"` -- The current users username e.g. `michael`,
 - `"{{ default_ssh_port }}"` -- The default ssh port `22`,
@@ -173,17 +175,17 @@ cycle and the
 branching model (by [Vincent Driessen](https://nvie.com/about/)).
 
 It has two branches with infinite lifetime. The:
+
 - [develop](https://github.com/MichaelSasser/matrixctl/tree/develop)
   branch is the merging branch,
 - [master](https://github.com/MichaelSasser/matrixctl/tree/master)
   branch gets updated on every release.
-
-
 
 ## Contributing
 
 Please check our [Contributer Documentation](https://matrixctl.readthedocs.io/en/latest/contributer_documentation/index.html#contributer-documentation).
 
 ## License
+
 Copyright &copy; 2020-2001 Michael Sasser <Info@MichaelSasser.org>.
 Released under the GPLv3 license.
