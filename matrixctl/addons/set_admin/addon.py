@@ -58,7 +58,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         path=f"users/@{arg.user}:{yaml.get('server', 'api','domain')}/admin",
         api_version="v1",
         method="PUT",
-        json={"admin": True if arg.admin.lower() == "promote" else False},
+        json={"admin": arg.admin.lower() == "promote"},
     )
     try:
         request(req)
