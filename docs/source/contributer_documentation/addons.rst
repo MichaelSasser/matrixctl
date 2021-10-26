@@ -355,5 +355,18 @@ is-admin
  :undoc-members:
  :show-inheritance:
 
+set-admin
+---------
+
+.. automodule:: matrixctl.addons.set_admin.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.set_admin.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
 ..
    vim: set ft=rst :

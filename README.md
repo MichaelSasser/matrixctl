@@ -13,13 +13,13 @@ terminal.
 ```console
 $ matrixctl
 usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG]
-                 {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,is-admin,joinroom,maintenance,purge-history,report,reports,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
+                 {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,is-admin,joinroom,maintenance,purge-history,report,reports,rooms,server-notice,set-admin,start,restart,stop,update,upload,user,users,version}
                  ...
 
 MatrixCtl is a simple, but feature-rich tool to remotely control, manage, provision and deploy Matrix homeservers.
 
 positional arguments:
-  {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,is-admin,joinroom,maintenance,purge-history,report,reports,rooms,server-notice,start,restart,stop,update,upload,user,users,version}
+  {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,is-admin,joinroom,maintenance,purge-history,report,reports,rooms,server-notice,set-admin,start,restart,stop,update,upload,user,users,version}
     adduser             Add a new matrix user
     adduser-jitsi       Add a new jitsi user
     check               Checks the deployment with ansible
@@ -37,6 +37,7 @@ positional arguments:
     reports             Lists reported events
     rooms               List rooms
     server-notice       Send a server notice
+    set-admin           Change whether a user is an admin or not
     start               Starts all OCI containers
     restart             Restarts all OCI containers (alias for start)
     stop                Stops all OCI containers
