@@ -342,5 +342,18 @@ joinroom
  :undoc-members:
  :show-inheritance:
 
+is-admin
+--------
+
+.. automodule:: matrixctl.addons.is_admin.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.is_admin.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
 ..
    vim: set ft=rst :
