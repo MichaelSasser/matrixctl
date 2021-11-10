@@ -368,5 +368,18 @@ set-admin
  :undoc-members:
  :show-inheritance:
 
+make-room-admin
+---------------
+
+.. automodule:: matrixctl.addons.make_room_admin.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.make_room_admin.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
 ..
    vim: set ft=rst :
