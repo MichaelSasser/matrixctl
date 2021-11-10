@@ -15,7 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to get the number of user in a Matrix room."""
+"""Use this module to grant a user room admin status.
+
+Grant another user the highest power available to a local user who is in the
+room Matrix room.
+
+"""
 
 from __future__ import annotations
 
@@ -37,7 +42,10 @@ logger = logging.getLogger(__name__)
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
-    """Change whether a user is an admin or not.
+    """Grant a user room admin status.
+
+    By default the server admin (the caller) is granted power, but another
+    user can optionally be specified.
 
     Parameters
     ----------
@@ -55,15 +63,18 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
         domain=yaml.get("server", "api", "domain"),
-        path=f"users/@{arg.user}:{yaml.get('server', 'api','domain')}/admin",
+        path=f"rooms/{arg.room}/make_room_admin",
         api_version="v1",
-        method="PUT",
-        json={"admin": arg.admin.lower() == "promote"},
+        method="POST",
     )
+
+    if arg.user is not None:
+        req.json = {"user_id": arg.user}
+
     try:
         request(req)
     except InternalResponseError:
-        logger.error("The user could not be promoted or demoted.")
+        logger.error("The user could not be promoted or demote.")
         return 1
 
     return 0
