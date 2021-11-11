@@ -381,5 +381,18 @@ make-room-admin
  :undoc-members:
  :show-inheritance:
 
+get-event-context
+-----------------
+
+.. automodule:: matrixctl.addons.get_event_context.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.get_event_context.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
 ..
    vim: set ft=rst :
