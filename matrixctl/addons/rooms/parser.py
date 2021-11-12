@@ -61,6 +61,12 @@ def subparser_rooms(subparsers: _SubParsersAction) -> None:
         "-r", "--reverse", action="store_true", help="Reverse the order"
     )
     parser.add_argument(
+        "-e",
+        "--empty",
+        action="store_true",
+        help="only show rooms where no local user is in",
+    )
+    parser.add_argument(
         "filter",
         type=str,
         nargs="?",
