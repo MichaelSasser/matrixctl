@@ -394,5 +394,18 @@ get-event-context
  :undoc-members:
  :show-inheritance:
 
+purge-remote-media
+------------------
+
+.. automodule:: matrixctl.addons.purge_remote_media.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.purge_remote_media.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
 ..
    vim: set ft=rst :
