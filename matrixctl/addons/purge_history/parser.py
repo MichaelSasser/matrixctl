@@ -70,6 +70,12 @@ def subparser_purge_history(subparsers: _SubParsersAction) -> None:
             "the room to purge up to"
         ),
     )
+    parser.add_argument(
+        "-f",
+        "--force",
+        action="store_true",
+        help="No questions asked",
+    )
     parser.set_defaults(addon="purge_history")
 
 

@@ -73,6 +73,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         method="POST",
         api_version="v1",
         json=request_body,
+        timeout=10,
     )
 
     try:
