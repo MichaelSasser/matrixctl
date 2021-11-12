@@ -407,5 +407,18 @@ purge-remote-media
  :undoc-members:
  :show-inheritance:
 
+delete-local-media
+------------------
+
+.. automodule:: matrixctl.addons.delete_local_media.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.delete_local_media.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
 ..
    vim: set ft=rst :
