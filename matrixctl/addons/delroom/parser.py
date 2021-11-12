@@ -45,12 +45,54 @@ def subparser_delroom(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "delroom", help="Deletes an empty room from the database"
+        "delroom", help="Shuts down a room"
+    )
+    parser.add_argument("room", type=str, help="The room, to shut down")
+    parser.add_argument(
+        "new_room_admin",
+        type=str,
+        nargs="?",
+        default=None,
+        help=(
+            "Moves all local users and room aliases automatically to a new "
+            "room, where this user will become the new room admin. "
+            "Users invited to the new room will have power level -10"
+        ),
     )
     parser.add_argument(
-        "RoomID",
+        "new_room_name",
         type=str,
-        help="The Room-ID",
+        nargs="?",
+        default="Content Violation Notification",
+        help=(
+            "the name of the new room. default: "
+            '"Content Violation Notification"'
+        ),
+    )
+    parser.add_argument(
+        "message",
+        type=str,
+        nargs="?",
+        default=None,
+        help=(
+            "The message sent to the new room. default: "
+            '"<old room identifier> has been shutdown due to content '
+            'violations on this server. Please review our Terms of Service."'
+        ),
+    )
+    parser.add_argument(
+        "-b",
+        "--block",
+        action="store_true",
+        help="prevents any new joins to the old room",
+    )
+    parser.add_argument(
+        "--no-purge",
+        action="store_false",
+        help=(
+            "remove all trace of the old room from your database after "
+            "removing all local users"
+        ),
     )
     parser.set_defaults(addon="delroom")
 

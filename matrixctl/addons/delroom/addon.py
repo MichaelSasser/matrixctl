@@ -19,15 +19,17 @@
 
 from __future__ import annotations
 
+import json
 import logging
 
 from argparse import Namespace
-from contextlib import suppress
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import Response
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
+from matrixctl.typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -53,33 +55,65 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
+    body: JsonDict = handle_arguments(arg)
+
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
         domain=yaml.get("server", "api", "domain"),
-        path="purge_room",
-        method="POST",
+        path=f"rooms/{arg.room}",
+        method="DELETE",
         api_version="v1",
-        json={"room_id": arg.RoomID},
+        json=body,
+        timeout=1200,
     )
 
     try:
-        request(req).json()
-    except InternalResponseError as e:
-        if "json" in dir(e.payload):
-            with suppress(KeyError):
-                if e.payload.json()["errcode"] in (
-                    "M_NOT_FOUND",
-                    "M_UNKNOWN",
-                ):
-                    logger.error(f"{e.payload.json()['error']}")
-
-                    return 1
-
-        logger.error("Could not delete room")
-
+        response: Response = request(req)
+    except InternalResponseError:
+        logger.error("Could not delete room.")
         return 1
 
+    try:
+        json_response: JsonDict = response.json()
+    except json.decoder.JSONDecodeError as e:
+        logger.fatal("The JSON response could not be loaded by MatrixCtl.")
+        raise InternalResponseError(f"The response was: {response = }") from e
+
+    print(json.dumps(json_response, indent=4))
+
     return 0
+
+
+def handle_arguments(arg: Namespace) -> JsonDict:
+    """Build the parameters used for the delroom request.
+
+    Parameters
+    ----------
+    arg : argparse.Namespace
+        The ``Namespace`` object of argparse's ``parse_args()``
+
+    Returns
+    -------
+    body : matrixctl.typehints.JsonDict
+        The params.
+
+    """
+    body: JsonDict = {
+        "block": arg.block,
+        "purge": arg.no_purge,
+    }
+    if arg.new_room_admin is not None:
+        body["new_room_user_id"] = arg.new_room_admin
+        body["room_name"] = arg.new_room_name
+        if arg.message is None:
+            body["message"] = (
+                f"{arg.room} has been shutdown due to content violations "
+                "on this server. Please review our Terms of Service."
+            )
+        else:
+            body["message"] = arg.message
+
+    return body
 
 
 # vim: set ft=python :
