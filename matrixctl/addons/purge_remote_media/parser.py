@@ -46,10 +46,7 @@ def subparser_purge_remote_media(subparsers: _SubParsersAction) -> None:
     """
     parser: ArgumentParser = subparsers.add_parser(
         "purge-remote-media",
-        help=(
-            "Grant a user the highest power available to a "
-            "local user who is in the room"
-        ),
+        help=("purge remote media"),
     )
     parser.add_argument(
         "timestamp",

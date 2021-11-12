@@ -22,10 +22,10 @@ from __future__ import annotations
 import json
 import logging
 import sys
-import time
 
 from argparse import Namespace
 from datetime import datetime
+from datetime import timedelta
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
@@ -65,7 +65,8 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
         domain=yaml.get("server", "api", "domain"),
-        path=(f"purge_media_cache?before_ts={timestamp}"),
+        path=("purge_media_cache"),
+        params={"before_ts": timestamp},
         api_version="v1",
         method="POST",
         timeout=1200,
@@ -112,12 +113,16 @@ def handle_timestamp(timestamp: int | None, force: bool) -> int:
         The same timestamp but sanitized, or the timestamp of this exact time.
 
     """
+    ts: float = (datetime.today() - timedelta(days=7)).timestamp()
     if timestamp is None:
         if not force:
-            print("You are about to delete all remote media")
+            print(
+                "You are about to delete all remote media, that wasn't "
+                "accessed in the last seven days"
+            )
             if not ask_question("Do you want to continue?"):
                 sys.exit(0)
-        return int(round(time.time() * 1000))
+        return int(round(ts * 1000))
     try:
         dt = datetime.fromtimestamp(float(timestamp) / 1000)
         logger.info(f"Delete until {dt=}")
