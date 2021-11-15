@@ -47,8 +47,8 @@ def subparser_make_room_admin(subparsers: _SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "make-room-admin",
         help=(
-            "Grant a user the highest power available to a "
-            "local user who is in the room"
+            "Grant a user the highest power level available to a "
+            "local user in this room"
         ),
     )
     parser.add_argument("room", help="The room alias or identifier")

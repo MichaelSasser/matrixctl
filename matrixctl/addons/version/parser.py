@@ -44,7 +44,7 @@ def subparser_version(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "version", help="Get the version of the Synapse instance"
+        "version", help="Get the version information of the Synapse instance"
     )
     parser.set_defaults(addon="version")
 

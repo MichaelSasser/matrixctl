@@ -45,7 +45,7 @@ def subparser_get_event_context(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "get-event-context", help="Find the context of an event"
+        "get-event-context", help="Get the context of an event"
     )
     parser.add_argument("room", help="The room identifier")
     parser.add_argument("event", help="The event identifier")

@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 def setup_parser() -> argparse.ArgumentParser:
-    """Use this class to initialize the parser and the subparsers.
+    """Use this class to initialize the parser.
 
     Parameters
     ----------

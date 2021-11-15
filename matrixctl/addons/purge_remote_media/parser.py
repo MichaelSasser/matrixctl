@@ -46,7 +46,7 @@ def subparser_purge_remote_media(subparsers: _SubParsersAction) -> None:
     """
     parser: ArgumentParser = subparsers.add_parser(
         "purge-remote-media",
-        help=("purge remote media"),
+        help="Purge cached, remote media",
     )
     parser.add_argument(
         "timestamp",
@@ -54,8 +54,8 @@ def subparser_purge_remote_media(subparsers: _SubParsersAction) -> None:
         nargs="?",
         default=None,
         help=(
-            "A timestamp (UNIX epoch, in milliseconds). All cached media that "
-            "was last accessed before this timestamp will be removed"
+            "All cached media that was last accessed before this timestamp"
+            " (UNIX epoch) will be removed"
         ),
     )
     parser.add_argument(

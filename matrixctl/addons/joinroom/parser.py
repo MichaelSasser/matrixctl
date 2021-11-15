@@ -47,7 +47,7 @@ def subparser_deluser(subparsers: _SubParsersAction) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "joinroom", help="Join a user to a room"
     )
-    parser.add_argument("room", help="The room identifier or alias to join")
+    parser.add_argument("room", help="The room identifier or alias")
     parser.add_argument("user", help='The username of the user e.g. "michael"')
     parser.set_defaults(addon="joinroom")
 

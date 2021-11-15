@@ -12,40 +12,9 @@ terminal.
 
 ```console
 $ matrixctl
-usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG]
-                 {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,is-admin,joinroom,maintenance,purge-history,report,reports,rooms,server-notice,set-admin,start,restart,stop,update,upload,user,users,version}
-                 ...
+usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG] Command ...
 
 MatrixCtl is a simple, but feature-rich tool to remotely control, manage, provision and deploy Matrix homeservers.
-
-positional arguments:
-  {adduser,adduser-jitsi,check,delroom,deluser,deluser-jitsi,deploy,get-event,get-events,is-admin,joinroom,maintenance,purge-history,report,reports,rooms,server-notice,set-admin,start,restart,stop,update,upload,user,users,version}
-    adduser             Add a new matrix user
-    adduser-jitsi       Add a new jitsi user
-    check               Checks the deployment with ansible
-    delroom             Deletes an empty room from the database
-    deluser             Deletes a user
-    deluser-jitsi       Deletes a jitsi user
-    deploy              Provision and deploy
-    get-event           get an event from the DB
-    get-events          get user-events from the DB
-    is-admin            Deletes a user
-    joinroom            Join a user to a room
-    maintenance         Run maintenance tasks
-    purge-history       Purge historic events from the DB
-    report              Get an report event by report ID
-    reports             Lists reported events
-    rooms               List rooms
-    server-notice       Send a server notice
-    set-admin           Change whether a user is an admin or not
-    start               Starts all OCI containers
-    restart             Restarts all OCI containers (alias for start)
-    stop                Stops all OCI containers
-    update              Updates the ansible repo
-    upload              Upload a file.
-    user                Get information about a specific user
-    users               Lists users
-    version             Get the version of the Synapse instance
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -55,6 +24,43 @@ optional arguments:
                         Select the server. (default: "default")
   -c CONFIG, --config CONFIG
                         A path to an alternative config file.
+
+Commands:
+  The following are commands, you can use to accomplish various tasks.
+
+  Command
+    adduser             Add users to the homeserver
+    adduser-jitsi       Add users to a jitsi server
+    check               Checks the deployment with Ansible
+    delete-local-media  Delete cached (local) media that was last accessed before a
+                        specific point in time
+    delroom             Shutdown a room
+    deluser             Deactivate users
+    deluser-jitsi       Delete jitsi users
+    deploy              Provision and deploy the Ansible playbook
+    get-event           Get an event from the database
+    get-event-context   Get the context of an event
+    get-events          Get events from the database
+    is-admin            Check, if a user is a homeserver administrator
+    joinroom            Join a user to a room
+    maintenance         Run maintenance tasks
+    make-room-admin     Grant a user the highest power level available to a local user
+                        in this room
+    purge-history       Purge historic events from the database
+    purge-remote-media  Purge cached, remote media
+    report              Get a report event by report identifier
+    reports             Lists reported events
+    rooms               List rooms
+    server-notice       Send a server notice to a user
+    set-admin           Change whether a user is a homeserver admin or not
+    start               Starts all OCI containers
+    restart             Restarts all OCI containers (alias for start)
+    stop                Stop and disable all OCI containers
+    update              Updates the ansible playbook repository
+    upload              Upload a media file.
+    user                Get information about a specific user
+    users               Lists all users of the homeserver
+    version             Get the version information of the Synapse instance
 
 Thank you for using MatrixCtl!
 Check out the docs: https://matrixctl.rtfd.io

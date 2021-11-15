@@ -45,11 +45,9 @@ def subparser_is_admin(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "is-admin", help="Deletes a user"
+        "is-admin", help="Check, if a user is a homeserver administrator"
     )
-    parser.add_argument(
-        "user", help="The username to check, if the user is an admin"
-    )
+    parser.add_argument("user", help="The username")
     parser.add_argument(
         "-j", "--to-json", action="store_true", help="Output the data as JSON"
     )

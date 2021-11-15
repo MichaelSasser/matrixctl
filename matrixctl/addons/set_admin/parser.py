@@ -45,7 +45,7 @@ def subparser_set_admin(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "set-admin", help="Change whether a user is an admin or not"
+        "set-admin", help="Change whether a user is a homeserver admin or not"
     )
     parser.add_argument(
         "user", help="The username of the user to promote/demote"

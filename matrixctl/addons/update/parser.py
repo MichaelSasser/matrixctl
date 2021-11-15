@@ -44,7 +44,7 @@ def subparser_update(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "update", help="Updates the ansible repo"
+        "update", help="Updates the ansible playbook repository"
     )
     parser.set_defaults(addon="update")
 

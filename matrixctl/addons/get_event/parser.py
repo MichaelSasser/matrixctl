@@ -45,9 +45,9 @@ def subparser_get_event(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "get-event", help="Get an event from the DB"
+        "get-event", help="Get an event from the database"
     )
-    parser.add_argument("event_id", help="The event-id")
+    parser.add_argument("event_id", help="The event identifier")
     parser.set_defaults(addon="get_event")
 
 

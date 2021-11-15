@@ -46,23 +46,23 @@ def subparser_delete_local_media(subparsers: _SubParsersAction) -> None:
     """
     parser: ArgumentParser = subparsers.add_parser(
         "delete-local-media",
-        help=("delete local media"),
+        help=(
+            "Delete cached (local) media that was last accessed before a "
+            "specific point in time"
+        ),
     )
     parser.add_argument(
         "timestamp",
         type=int,
         nargs="?",
         default=None,
-        help=(
-            "A timestamp (UNIX epoch, in milliseconds). All cached media that "
-            "was last accessed before this timestamp will be removed"
-        ),
+        help="A timestamp (UNIX epoch)",
     )
     parser.add_argument(
         "--no-keep-profiles",
         action="store_false",
         help=(
-            "also delete files that are still used in image data "
+            "Also delete files that are **still used** in image data "
             "(e.g user profile, room avatar)"
         ),
     )
@@ -72,8 +72,8 @@ def subparser_delete_local_media(subparsers: _SubParsersAction) -> None:
         type=int,
         default=0,
         help=(
-            "Size of the media in bytes. Files that are larger will be "
-            "deleted. default: 0"
+            "Files that are larger than this will be deleted. Size in bytes"
+            " default: 0"
         ),
     )
     parser.add_argument(

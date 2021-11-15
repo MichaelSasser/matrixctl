@@ -52,13 +52,12 @@ def subparser_maintenance(subparsers: _SubParsersAction) -> None:
         "-l",
         "--list",
         action="store_true",
-        help="show a list of all available tasks",
+        help="Show a list of all available tasks",
     )
     parser.add_argument(
         "tasks",
         nargs="*",
-        help="maintenance tasks to run (overrides config)",
-        # choices=["vacuum", "compress-state"],
+        help="Maintenance tasks to run (overrides configuration)",
     )
     parser.set_defaults(addon="maintenance")
 
