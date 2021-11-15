@@ -20,6 +20,7 @@
 from __future__ import annotations
 
 from argparse import ArgumentParser
+from argparse import RawDescriptionHelpFormatter
 from argparse import _SubParsersAction
 
 from matrixctl.addon_manager import subparser
@@ -45,16 +46,29 @@ def subparser_delroom(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "delroom", help="Shuts down a room"
+        "delroom",
+        help="Shutdown a room",
+        formatter_class=RawDescriptionHelpFormatter,
+        description=(
+            "This command uses the Delete Room API, which removes rooms from"
+            " the server.\n\nOptional:\nBy default: All data of the old room"
+            " will be purged from the database.\nOptional: Access for local"
+            " users to join the room ever again, can be blocked\nOptional: A"
+            " new room can be created with a new room administrator. When a"
+            " new room is created, all local users will be invited. They will"
+            " have power level -10, which means, they are muted by default."
+            " With the message argument a message can be sent to the new room."
+            " All room aliases will be transfared to the new room."
+        ),
     )
-    parser.add_argument("room", type=str, help="The room, to shut down")
+    parser.add_argument("room", type=str, help="The room identifier")
     parser.add_argument(
         "new_room_admin",
         type=str,
         nargs="?",
         default=None,
         help=(
-            "Moves all local users and room aliases automatically to a new "
+            "Move all local users and room aliases automatically to a new "
             "room, where this user will become the new room admin. "
             "Users invited to the new room will have power level -10"
         ),
@@ -65,7 +79,7 @@ def subparser_delroom(subparsers: _SubParsersAction) -> None:
         nargs="?",
         default="Content Violation Notification",
         help=(
-            "the name of the new room. default: "
+            "The name of the new room. default: "
             '"Content Violation Notification"'
         ),
     )
@@ -84,13 +98,13 @@ def subparser_delroom(subparsers: _SubParsersAction) -> None:
         "-b",
         "--block",
         action="store_true",
-        help="prevents any new joins to the old room",
+        help="Prevents any new joins to the old room",
     )
     parser.add_argument(
         "--no-purge",
         action="store_false",
         help=(
-            "remove all trace of the old room from your database after "
+            "Do not remove all trace of the old room from the database after "
             "removing all local users"
         ),
     )

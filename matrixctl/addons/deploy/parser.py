@@ -45,14 +45,17 @@ def subparser_deploy(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "deploy", help="Provision and deploy"
+        "deploy", help="Provision and deploy the Ansible playbook"
     )
 
     parser.add_argument(  # Done with tags / Does not use matrixctl.start !
         "-s",
         "--start",
         action="store_true",
-        help="Start/Restart after the deployment",
+        help=(
+            "Start/Restart the homeserver and its components after the"
+            " deployment"
+        ),
     )
     parser.set_defaults(addon="deploy")
 

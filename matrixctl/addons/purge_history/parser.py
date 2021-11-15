@@ -47,7 +47,7 @@ def subparser_purge_history(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "purge-history", help="Purge historic events from the DB"
+        "purge-history", help="Purge historic events from the database"
     )
     parser.add_argument(
         "-l",
@@ -66,8 +66,8 @@ def subparser_purge_history(subparsers: _SubParsersAction) -> None:
         nargs="?",
         default=None,
         help=(
-            "An event or timestamp (UNIX epoch, in milliseconds) as point in "
-            "the room to purge up to"
+            "An event identifier or timestamp (UNIX epoch) as point in time,"
+            "to which events will be purged"
         ),
     )
     parser.add_argument(

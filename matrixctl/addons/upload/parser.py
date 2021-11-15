@@ -44,7 +44,7 @@ def subparser_upload(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "upload", help="Upload a file."
+        "upload", help="Upload a media file."
     )
     parser.add_argument("file", help="The path to a file or image to upload")
     parser.set_defaults(addon="upload")

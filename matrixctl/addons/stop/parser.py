@@ -44,7 +44,7 @@ def subparser_stop(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "stop", help="Stops all OCI containers"
+        "stop", help="Stop and disable all OCI containers"
     )
     parser.set_defaults(addon="stop")
 

@@ -133,7 +133,14 @@ def setup(func: ParserSetupType) -> argparse.ArgumentParser:
     parser: argparse.ArgumentParser = func()
     if len(addons) > 0:
         # skipcq: PYL-W0212
-        subparsers: argparse._SubParsersAction = parser.add_subparsers()
+        subparsers: argparse._SubParsersAction = parser.add_subparsers(
+            title="Commands",
+            description=(
+                "The following are commands, you can use to accomplish "
+                "various tasks."
+            ),
+            metavar="Command",
+        )
         for subparser_ in addons:
             subparser_(subparsers)
     return parser

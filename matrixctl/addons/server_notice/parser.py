@@ -44,7 +44,7 @@ def subparser_server_notice(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "server-notice", help="Send a server notice"
+        "server-notice", help="Send a server notice to a user"
     )
     parser.add_argument(
         "username",

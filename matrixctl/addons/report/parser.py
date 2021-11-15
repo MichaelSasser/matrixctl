@@ -43,9 +43,9 @@ def subparser_report(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "report", help="Get an report event by report ID"
+        "report", help="Get a report event by report identifier"
     )
-    parser.add_argument("report_id", help="The report ID")
+    parser.add_argument("report_id", help="The report identifier")
     parser.set_defaults(addon="report")
 
 

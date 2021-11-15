@@ -49,7 +49,7 @@ def subparser_rooms(subparsers: _SubParsersAction) -> None:
         type=int,
         default=-1,
         nargs="?",
-        help="The number of users to show",
+        help="Limit the number of user, that will be shown",
     )
     parser.add_argument(
         "-s",
@@ -64,7 +64,7 @@ def subparser_rooms(subparsers: _SubParsersAction) -> None:
         "-e",
         "--empty",
         action="store_true",
-        help="only show rooms where no local user is in",
+        help="Only show rooms where no local users are in",
     )
     parser.add_argument(
         "filter",
