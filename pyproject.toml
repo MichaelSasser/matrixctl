@@ -114,6 +114,23 @@ show_traceback = true
 module = "tests.matrixctl.handlers.*"
 allow_untyped_decorators = true  # pytest fixtures
 
+[tool.pyright]
+include = ["matrixctl", "tests"]
+exclude = ["**/__pycache__"]
+
+reportMissingImports = true
+reportMissingTypeStubs = false
+
+pythonVersion = "3.9"
+pythonPlatform = "Linux"
+typeCheckingMode = "basic"
+
+# reportUnknownVariableType ="none"
+# reportUnknownMemberType ="none"
+# reportUnknownParameterType = "none"
+# reportUnknownArgumentType = "none"
+# reportUnknownLambdaType = "none"
+
 
 [tool.isort]
 line_length = 79
