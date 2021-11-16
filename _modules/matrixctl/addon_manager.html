@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addon_manager &mdash; MatrixCtl Unknown documentation</title>
+  <title>matrixctl.addon_manager &mdash; MatrixCtl 0.11.3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -28,7 +28,7 @@
             <a href="../../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                Unknown
+                0.11.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -107,6 +107,7 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="c1"># Leave them here, as long as they are not needed elsewhere</span>
+<span class="c1"># pyright: reportPrivateUsage=false</span>
 <span class="c1"># skipcq: PYL-W0212</span>
 <span class="n">SubParserType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">argparse</span><span class="o">.</span><span class="n">_SubParsersAction</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
 <span class="n">ParserSetupType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">]</span>
@@ -137,7 +138,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    none : None</span>
-<span class="sd">        The function always returnes ``None``.</span>
+<span class="sd">        The function always returns ``None``.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;package dir set to </span><span class="si">{</span><span class="n">addon_directory</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -205,7 +206,14 @@
     <span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">addons</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="c1"># skipcq: PYL-W0212</span>
-        <span class="n">subparsers</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">_SubParsersAction</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">()</span>
+        <span class="n">subparsers</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">_SubParsersAction</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Commands&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+                <span class="s2">&quot;The following are commands, you can use to accomplish &quot;</span>
+                <span class="s2">&quot;various tasks.&quot;</span>
+            <span class="p">),</span>
+            <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;Command&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">for</span> <span class="n">subparser_</span> <span class="ow">in</span> <span class="n">addons</span><span class="p">:</span>
             <span class="n">subparser_</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">parser</span></div>

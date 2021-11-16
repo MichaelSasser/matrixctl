@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addons.rooms.addon &mdash; MatrixCtl Unknown documentation</title>
+  <title>matrixctl.addons.rooms.addon &mdash; MatrixCtl 0.11.3 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -28,7 +28,7 @@
             <a href="../../../../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                Unknown
+                0.11.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -180,12 +180,39 @@
             <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="n">users_list</span><span class="p">:</span>
                 <span class="n">rooms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">room</span><span class="p">)</span>
 
-    <span class="n">generate_output</span><span class="p">(</span><span class="n">rooms</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">to_json</span><span class="p">)</span>
+    <span class="n">generate_output</span><span class="p">(</span>
+        <span class="n">filter_empty_rooms</span><span class="p">(</span><span class="n">rooms</span><span class="p">)</span> <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">empty</span> <span class="k">else</span> <span class="n">rooms</span><span class="p">,</span>
+        <span class="n">arg</span><span class="o">.</span><span class="n">to_json</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="k">return</span> <span class="mi">0</span></div>
 
 
-<span class="c1"># Add limit</span>
+<div class="viewcode-block" id="filter_empty_rooms"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.rooms.addon.filter_empty_rooms">[docs]</a><span class="k">def</span> <span class="nf">filter_empty_rooms</span><span class="p">(</span>
+    <span class="n">rooms</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">JsonDict</span><span class="p">],</span> <span class="n">local_users</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">JsonDict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Filter for empty rooms.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rooms : list of matrixctl.typehints.JsonDict</span>
+<span class="sd">        A rooms list.</span>
+<span class="sd">    local_users : bool</span>
+<span class="sd">        ``true``: Filter, if no local user is in the room.</span>
+<span class="sd">        ``false``: Filter, if no user is in the room.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    rooms : list of matrixctl.typehints.JsonDict</span>
+<span class="sd">        The filtered list.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">room</span>
+        <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="n">rooms</span>
+        <span class="k">if</span> <span class="n">room</span><span class="p">[</span><span class="s2">&quot;joined_local_members&quot;</span> <span class="k">if</span> <span class="n">local_users</span> <span class="k">else</span> <span class="s2">&quot;joined_members&quot;</span><span class="p">]</span>
+        <span class="o">==</span> <span class="mi">0</span>
+    <span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="generate_output"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.rooms.addon.generate_output">[docs]</a><span class="k">def</span> <span class="nf">generate_output</span><span class="p">(</span><span class="n">rooms</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">JsonDict</span><span class="p">],</span> <span class="n">to_json</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

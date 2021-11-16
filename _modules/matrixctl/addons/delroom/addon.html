@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addons.delroom.addon &mdash; MatrixCtl Unknown documentation</title>
+  <title>matrixctl.addons.delroom.addon &mdash; MatrixCtl 0.11.3 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -28,7 +28,7 @@
             <a href="../../../../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                Unknown
+                0.11.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -92,15 +92,17 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
-<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">suppress</span>
 
 <span class="kn">from</span> <span class="nn">matrixctl.errors</span> <span class="kn">import</span> <span class="n">InternalResponseError</span>
 <span class="kn">from</span> <span class="nn">matrixctl.handlers.api</span> <span class="kn">import</span> <span class="n">RequestBuilder</span>
+<span class="kn">from</span> <span class="nn">matrixctl.handlers.api</span> <span class="kn">import</span> <span class="n">Response</span>
 <span class="kn">from</span> <span class="nn">matrixctl.handlers.api</span> <span class="kn">import</span> <span class="n">request</span>
 <span class="kn">from</span> <span class="nn">matrixctl.handlers.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
+<span class="kn">from</span> <span class="nn">matrixctl.typehints</span> <span class="kn">import</span> <span class="n">JsonDict</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -126,33 +128,65 @@
 <span class="sd">        Non-zero value indicates error code, or zero on success.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">handle_arguments</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
     <span class="n">req</span><span class="p">:</span> <span class="n">RequestBuilder</span> <span class="o">=</span> <span class="n">RequestBuilder</span><span class="p">(</span>
         <span class="n">token</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;token&quot;</span><span class="p">),</span>
         <span class="n">domain</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">),</span>
-        <span class="n">path</span><span class="o">=</span><span class="s2">&quot;purge_room&quot;</span><span class="p">,</span>
-        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;rooms/</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">room</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;DELETE&quot;</span><span class="p">,</span>
         <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span>
-        <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;room_id&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">RoomID</span><span class="p">},</span>
+        <span class="n">json</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="k">except</span> <span class="n">InternalResponseError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">&quot;json&quot;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">):</span>
-            <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;errcode&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span>
-                    <span class="s2">&quot;M_NOT_FOUND&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;M_UNKNOWN&quot;</span><span class="p">,</span>
-                <span class="p">):</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-                    <span class="k">return</span> <span class="mi">1</span>
-
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Could not delete room&quot;</span><span class="p">)</span>
-
+        <span class="n">response</span><span class="p">:</span> <span class="n">Response</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Could not delete room.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="mi">1</span>
 
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">json_response</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;The JSON response could not be loaded by MatrixCtl.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The response was: </span><span class="si">{</span><span class="n">response</span> <span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_response</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
     <span class="k">return</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="handle_arguments"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.delroom.addon.handle_arguments">[docs]</a><span class="k">def</span> <span class="nf">handle_arguments</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JsonDict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Build the parameters used for the delroom request.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arg : argparse.Namespace</span>
+<span class="sd">        The ``Namespace`` object of argparse&#39;s ``parse_args()``</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    body : matrixctl.typehints.JsonDict</span>
+<span class="sd">        The params.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;block&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">block</span><span class="p">,</span>
+        <span class="s2">&quot;purge&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">no_purge</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">new_room_admin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">body</span><span class="p">[</span><span class="s2">&quot;new_room_user_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">new_room_admin</span>
+        <span class="n">body</span><span class="p">[</span><span class="s2">&quot;room_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">new_room_name</span>
+        <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">body</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">room</span><span class="si">}</span><span class="s2"> has been shutdown due to content violations &quot;</span>
+                <span class="s2">&quot;on this server. Please review our Terms of Service.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">body</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">message</span>
+
+    <span class="k">return</span> <span class="n">body</span></div>
 
 
 <span class="c1"># vim: set ft=python :</span>

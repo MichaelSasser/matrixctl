@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addons.purge_history.handler &mdash; MatrixCtl Unknown documentation</title>
+  <title>matrixctl.addons.purge_history.handler &mdash; MatrixCtl 0.11.3 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -28,7 +28,7 @@
             <a href="../../../../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                Unknown
+                0.11.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -135,12 +135,12 @@
         <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;purge_history_status/</span><span class="si">{</span><span class="n">purge_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
         <span class="n">api_version</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span>
-        <span class="n">timeout</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>  <span class="c1"># 5 (default) -&gt; 10</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="mf">1200.0</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
 
-        <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">response</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
@@ -159,7 +159,7 @@
                 <span class="k">return</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;failed&quot;</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-                    <span class="s2">&quot;The server returned, that the purge aproach failed.&quot;</span>
+                    <span class="s2">&quot;The server returned, that the purge approach failed.&quot;</span>
                 <span class="p">)</span>
                 <span class="k">break</span>
             <span class="k">if</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;active&quot;</span><span class="p">:</span>
@@ -167,6 +167,7 @@
                     <span class="s2">&quot;The server is still purging historic message content. &quot;</span>
                     <span class="s2">&quot;Please wait...&quot;</span>
                 <span class="p">)</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
                 <span class="k">continue</span>
         <span class="k">break</span>
     <span class="k">return</span> <span class="mi">0</span></div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.handlers.api &mdash; MatrixCtl Unknown documentation</title>
+  <title>matrixctl.handlers.api &mdash; MatrixCtl 0.11.3 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -28,7 +28,7 @@
             <a href="../../../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                Unknown
+                0.11.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -581,11 +581,11 @@
         <span class="k">nonlocal</span> <span class="n">request_config</span>
         <span class="k">return</span> <span class="k">await</span> <span class="n">exec_async_request</span><span class="p">(</span><span class="n">request_config</span><span class="p">)</span>
 
-    <span class="c1"># This is needed because here is decided, if the request was ment to be</span>
-    <span class="c1"># async or sync. Even though a request was ment to be async, it may</span>
+    <span class="c1"># This is needed because here is decided, if the request was meant to be</span>
+    <span class="c1"># async or sync. Even though a request was meant to be async, it may</span>
     <span class="c1"># be still sync (which is determined during preplanning. In case it is</span>
-    <span class="c1"># ment to be async, but is still sync, the output will be a list so the</span>
-    <span class="c1"># addon does&#39;t need to check that again.</span>
+    <span class="c1"># meant to be async, but is still sync, the output will be a list so the</span>
+    <span class="c1"># addon doesn&#39;t need to check that again.</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">request_config</span><span class="p">,</span> <span class="n">RequestBuilder</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">_request</span><span class="p">(</span><span class="n">request_config</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">gen_async_request</span><span class="p">())</span></div>
@@ -617,7 +617,7 @@
             <span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">request_config</span><span class="p">),</span>
             <span class="n">params</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
             <span class="n">headers</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">headers_with_auth</span><span class="p">,</span>
-            <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">follow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">302</span><span class="p">:</span>
@@ -690,7 +690,7 @@
         <span class="n">params</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
         <span class="n">headers</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">headers_with_auth</span><span class="p">,</span>
         <span class="n">timeout</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
-        <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">follow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">302</span><span class="p">:</span>
