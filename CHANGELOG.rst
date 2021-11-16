@@ -3,6 +3,44 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 
 .. towncrier release notes start
 
+0.11.3 (2021-11-16)
+===================
+
+Features & Improvements
+-----------------------
+
+- Add ``is-admin`` addon to determine is a user is an server admin. (`#252
+  <https://github.com/MichaelSasser/matrixctl/issues/252>`_)
+- Add ``set-admin`` addon to promote/demote users to/from homeserver admin
+  (`#254 <https://github.com/MichaelSasser/matrixctl/issues/254>`_)
+- Add make-room-admin addon (`#265
+  <https://github.com/MichaelSasser/matrixctl/issues/265>`_)
+- Add ``get-event-context`` addon. (`#267
+  <https://github.com/MichaelSasser/matrixctl/issues/267>`_)
+- Add ``-f|--force`` switch to ``purge-history`` to answer all questions with
+  ``yes``. (`#271 <https://github.com/MichaelSasser/matrixctl/issues/271>`_)
+- Add ``-e|--empty`` switch argument to ``rooms``, to only show empty rooms.
+  (`#273 <https://github.com/MichaelSasser/matrixctl/issues/273>`_)
+- Add ``purge-remote-media`` addon. (`#275
+  <https://github.com/MichaelSasser/matrixctl/issues/275>`_)
+- ``delroom`` now uses the "Delete Room API" instead of the old "Purge Room
+  API", which id deprecated. (`#277
+  <https://github.com/MichaelSasser/matrixctl/issues/277>`_)
+- Add ``delete-local-media`` addon. (`#278
+  <https://github.com/MichaelSasser/matrixctl/issues/278>`_)
+- Debloat ``matrixctl --help`` (`#281
+  <https://github.com/MichaelSasser/matrixctl/issues/281>`_)
+
+
+Miscellaneous
+-------------
+
+- Remove dependency ``single_source`` (`#245
+  <https://github.com/MichaelSasser/matrixctl/issues/245>`_)
+- Generate the release body with a script while running the release action.
+  (`#284 <https://github.com/MichaelSasser/matrixctl/issues/284>`_)
+
+
 0.11.2 (2021-09-26)
 ===================
 
