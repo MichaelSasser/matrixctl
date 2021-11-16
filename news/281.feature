@@ -1,1 +1,0 @@
-Debloat ``matrixctl --help``
