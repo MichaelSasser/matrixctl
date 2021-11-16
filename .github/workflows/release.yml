@@ -64,24 +64,23 @@ jobs:
       - name: Zip project
         run: zip --junk-paths matrixctl.zip  dist/* README.md LICENSE.txt
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: true
-          prerelease: true
+      - name: Generate changelog_latest.rst from CHANGELOG.rst
+        run: python scripts/get_latest_release.py
 
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Convert from changelog_latest.rst to changelog_latest.md
+        uses: docker://pandoc/core:2.9
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./matrixctl.zip
-          asset_name: matrixctl.zip
-          asset_content_type: application/zip
+          args: >-
+            --output=chagelog_latest.md
+            --from rst
+            --to markdown
+            chagelog_latest.rst
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: false
+          draft: false
+          name: Release ${{ github.ref }}
+          body_path: chagelog_latest.md
+          files: matrixctl.zip

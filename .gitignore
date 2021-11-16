@@ -1,5 +1,10 @@
 /.vim
 
+# Files produced by a script while running the script get_latest_release.py
+# The latter file is used for as release message.
+/chagelog_latest.rst
+/chagelog_latest.md
+
 # Created by https://www.toptal.com/developers/gitignore/api/vim,emacs,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=vim,emacs,python
 
