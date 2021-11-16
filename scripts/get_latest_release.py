@@ -28,8 +28,8 @@ underline of the first headline.
 
 Notes
 -----
-- This script is not part of the source code of MatrixCtl. It is a release helper
-  script.
+- This script is not part of the source code of MatrixCtl. It is a release
+  helper script.
 - After the script finished run the following command:
   ``pandoc chagelog_latest.rst --from rst --to markdown -o chagelog_latest.md``
 
