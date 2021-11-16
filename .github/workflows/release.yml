@@ -49,18 +49,6 @@ jobs:
       - name: Build project
         run: poetry build
 
-      - name: pypi-publish
-        uses: pypa/gh-action-pypi-publish@v1.4.2
-        with:
-          # PyPI user
-          # user: # optional, default is __token__
-          # Password for your PyPI user or an access token
-          password: ${{ secrets.pypi_token }}
-          # The repository URL to use
-          # repository_url: # optional
-          # The target directory for distribution
-          # packages_dir: # optional, default is dist
-
       - name: Zip project
         run: zip --junk-paths matrixctl.zip  dist/* README.md LICENSE.txt
 
@@ -84,3 +72,18 @@ jobs:
           name: Release ${{ github.ref }}
           body_path: chagelog_latest.md
           files: matrixctl.zip
+
+      - name: Delete temp files
+        run: rm -rf matrixctl.zip chagelog_latest.md chagelog_latest.rst
+
+      - name: pypi-publish
+        uses: pypa/gh-action-pypi-publish@v1.4.2
+        with:
+          # PyPI user
+          # user: # optional, default is __token__
+          # Password for your PyPI user or an access token
+          password: ${{ secrets.pypi_token }}
+          # The repository URL to use
+          # repository_url: # optional
+          # The target directory for distribution
+          # packages_dir: # optional, default is dist
