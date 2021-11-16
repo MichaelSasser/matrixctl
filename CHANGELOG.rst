@@ -9,7 +9,7 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 Features & Improvements
 -----------------------
 
-- Add ``is-admin`` addon to determine is a user is an server admin. (`#252
+- Add ``is-admin`` addon to determine if a user is a server admin. (`#252
   <https://github.com/MichaelSasser/matrixctl/issues/252>`_)
 - Add ``set-admin`` addon to promote/demote users to/from homeserver admin
   (`#254 <https://github.com/MichaelSasser/matrixctl/issues/254>`_)
@@ -24,7 +24,7 @@ Features & Improvements
 - Add ``purge-remote-media`` addon. (`#275
   <https://github.com/MichaelSasser/matrixctl/issues/275>`_)
 - ``delroom`` now uses the "Delete Room API" instead of the old "Purge Room
-  API", which id deprecated. (`#277
+  API", which is deprecated. (`#277
   <https://github.com/MichaelSasser/matrixctl/issues/277>`_)
 - Add ``delete-local-media`` addon. (`#278
   <https://github.com/MichaelSasser/matrixctl/issues/278>`_)
