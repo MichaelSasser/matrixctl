@@ -94,6 +94,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
             if arg.with_deactivated or arg.all
             else "false",
         },
+        timeout=10,
         concurrent_limit=yaml.get("server", "api", "concurrent_limit"),
     )
 

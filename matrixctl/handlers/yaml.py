@@ -304,7 +304,7 @@ class YAML:
         paths : Iterable of pathlib.Path
             The paths to the configfiles.
         server : str
-            The selected server. (Defautl: "default")
+            The selected server. (Default: "default")
 
         Returns
         -------

@@ -34,6 +34,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 # Leave them here, as long as they are not needed elsewhere
+# pyright: reportPrivateUsage=false
 # skipcq: PYL-W0212
 SubParserType = Callable[[argparse._SubParsersAction], None]
 ParserSetupType = Callable[[], argparse.ArgumentParser]
@@ -64,7 +65,7 @@ def import_addons_from(
     Returns
     -------
     none : None
-        The function always returnes ``None``.
+        The function always returns ``None``.
 
     """
     logger.debug(f"package dir set to {addon_directory}")
@@ -132,7 +133,14 @@ def setup(func: ParserSetupType) -> argparse.ArgumentParser:
     parser: argparse.ArgumentParser = func()
     if len(addons) > 0:
         # skipcq: PYL-W0212
-        subparsers: argparse._SubParsersAction = parser.add_subparsers()
+        subparsers: argparse._SubParsersAction = parser.add_subparsers(
+            title="Commands",
+            description=(
+                "The following are commands, you can use to accomplish "
+                "various tasks."
+            ),
+            metavar="Command",
+        )
         for subparser_ in addons:
             subparser_(subparsers)
     return parser

@@ -44,14 +44,19 @@ def subparser_adduser(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "adduser", help="Add a new matrix user"
+        "adduser", help="Add users to the homeserver"
     )
-    parser.add_argument("user", help="The Username of the new user")
+    parser.add_argument("user", help="The username of the new user")
     parser.add_argument(
-        "-a", "--admin", action="store_true", help="Create as admin user"
+        "-a",
+        "--admin",
+        action="store_true",
+        help="Create the user as homeserver admin",
     )
     parser.add_argument(
-        "--ansible", action="store_true", help="Use ansible insted of the api"
+        "--ansible",
+        action="store_true",
+        help="Use ansible instead of an API call",
     )
 
     parser.set_defaults(addon="adduser")

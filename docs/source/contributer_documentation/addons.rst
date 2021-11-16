@@ -342,5 +342,83 @@ joinroom
  :undoc-members:
  :show-inheritance:
 
+is-admin
+--------
+
+.. automodule:: matrixctl.addons.is_admin.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.is_admin.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+set-admin
+---------
+
+.. automodule:: matrixctl.addons.set_admin.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.set_admin.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+make-room-admin
+---------------
+
+.. automodule:: matrixctl.addons.make_room_admin.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.make_room_admin.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+get-event-context
+-----------------
+
+.. automodule:: matrixctl.addons.get_event_context.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.get_event_context.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+purge-remote-media
+------------------
+
+.. automodule:: matrixctl.addons.purge_remote_media.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.purge_remote_media.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+delete-local-media
+------------------
+
+.. automodule:: matrixctl.addons.delete_local_media.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.addons.delete_local_media.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
 ..
    vim: set ft=rst :

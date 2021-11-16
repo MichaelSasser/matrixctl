@@ -61,25 +61,30 @@ def dialog_input(arg: Namespace) -> dict[str, str | int] | NoReturn:
 
     # check room_id (! = internal; # = local)
     if not (arg.room_id.startswith("!") or arg.room_id.startswith("#")):
-        logger.critical("The room_id is incorrect. Pleas check it again.")
+        logger.critical("The room_id is incorrect. Please check it again.")
         sys.exit(1)
 
     # Delete local events; Q: Are you sure?
     if arg.local_events:
-        print(
-            "You are about to delete *local* message events from the "
-            "Database. As they may represent the only copy of this content "
-            "in existence, you need to confirm this action."
-        )
-        if not ask_question("Do you want to continue?"):
-            sys.exit(0)
+        if not arg.force:
+            print(
+                "You are about to delete *local* message events from the "
+                "Database. As they may represent the only copy of this "
+                "content in existence, you need to confirm this action."
+            )
+            if not ask_question("Do you want to continue?"):
+                sys.exit(0)
         request_body["delete_local_events"] = True
 
     # Delete all but the last message event; Q: Are you sure?
     if arg.event_or_timestamp is None:
-        print("You are about to delete all mesage events except the last one.")
-        if not ask_question("Do you want to continue?"):
-            sys.exit(0)
+        if not arg.force:
+            print(
+                "You are about to delete all message events except the last "
+                "one."
+            )
+            if not ask_question("Do you want to continue?"):
+                sys.exit(0)
         request_body["purge_up_to_ts"] = int(round(time.time() * 1000))
     else:
         point_in_time: dict[str, str | int] | None = check_point_in_time(

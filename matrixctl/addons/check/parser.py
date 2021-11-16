@@ -45,7 +45,7 @@ def subparser_check(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "check", help="Checks the deployment with ansible"
+        "check", help="Checks the deployment with Ansible"
     )
     parser.set_defaults(addon="check")
 

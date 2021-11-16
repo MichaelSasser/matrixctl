@@ -27,19 +27,13 @@ import sys
 from datetime import date
 from pathlib import Path
 
-from single_source import get_version
-
-
-# pylint: disable=W0611
-# import sphinx_rtd_theme  # noqa: F401
-
-
-__version__: str = (
-    get_version(__name__, Path(__file__).parent.parent) or "Unknown"
-)
-
 sys.path.insert(0, os.path.abspath("../"))
 sys.path.insert(0, os.path.abspath("../.."))
+
+# skipcq: FLK-E402
+from matrixctl.package_version import get_version  # noqa: E402
+
+__version__: str = get_version("matrixctl", Path(__file__).parent) or "Unknown"
 
 # -- Project information -----------------------------------------------------
 

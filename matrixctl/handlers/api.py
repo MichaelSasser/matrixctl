@@ -508,11 +508,11 @@ def request(
         nonlocal request_config
         return await exec_async_request(request_config)
 
-    # This is needed because here is decided, if the request was ment to be
-    # async or sync. Even though a request was ment to be async, it may
+    # This is needed because here is decided, if the request was meant to be
+    # async or sync. Even though a request was meant to be async, it may
     # be still sync (which is determined during preplanning. In case it is
-    # ment to be async, but is still sync, the output will be a list so the
-    # addon does't need to check that again.
+    # meant to be async, but is still sync, the output will be a list so the
+    # addon doesn't need to check that again.
     if isinstance(request_config, RequestBuilder):
         return _request(request_config)
     return asyncio.run(gen_async_request())
@@ -544,7 +544,7 @@ def _request(request_config: RequestBuilder) -> httpx.Response:
             url=str(request_config),
             params=request_config.params,
             headers=request_config.headers_with_auth,
-            allow_redirects=False,
+            follow_redirects=False,
         )
 
     if response.status_code == 302:
@@ -617,7 +617,7 @@ async def _arequest(
         params=request_config.params,
         headers=request_config.headers_with_auth,
         timeout=request_config.timeout,
-        allow_redirects=False,
+        follow_redirects=False,
     )
 
     if response.status_code == 302:

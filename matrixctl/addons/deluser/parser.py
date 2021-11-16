@@ -45,9 +45,9 @@ def subparser_deluser(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "deluser", help="Deletes a user"
+        "deluser", help="Deactivate users"
     )
-    parser.add_argument("user", help="The username to delete")
+    parser.add_argument("user", help="The username of the user to deactivate")
     parser.set_defaults(addon="deluser")
 
 

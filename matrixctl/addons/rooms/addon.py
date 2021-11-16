@@ -107,12 +107,39 @@ def addon(arg: Namespace, yaml: YAML) -> int:
             for room in users_list:
                 rooms.append(room)
 
-    generate_output(rooms, arg.to_json)
+    generate_output(
+        filter_empty_rooms(rooms) if arg.empty else rooms,
+        arg.to_json,
+    )
 
     return 0
 
 
-# Add limit
+def filter_empty_rooms(
+    rooms: list[JsonDict], local_users: bool = True
+) -> list[JsonDict]:
+    """Filter for empty rooms.
+
+    Parameters
+    ----------
+    rooms : list of matrixctl.typehints.JsonDict
+        A rooms list.
+    local_users : bool
+        ``true``: Filter, if no local user is in the room.
+        ``false``: Filter, if no user is in the room.
+
+    Returns
+    -------
+    rooms : list of matrixctl.typehints.JsonDict
+        The filtered list.
+
+    """
+    return [
+        room
+        for room in rooms
+        if room["joined_local_members" if local_users else "joined_members"]
+        == 0
+    ]
 
 
 def generate_output(rooms: list[JsonDict], to_json: bool) -> None:

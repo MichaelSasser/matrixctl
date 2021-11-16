@@ -45,9 +45,11 @@ def subparser_deluser_jitsi(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "deluser-jitsi", help="Deletes a jitsi user"
+        "deluser-jitsi", help="Delete jitsi users"
     )
-    parser.add_argument("user", help="The jitsi username to delete")
+    parser.add_argument(
+        "user", help="The jitsi username of the user to delete"
+    )
     parser.set_defaults(addon="deluser_jitsi")
 
 

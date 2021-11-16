@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.11.2"
+version = "0.11.3"
 description = "Control, manage, provision and deploy matrix homeservers."
 
 license = "GPL-3.0-or-later"
@@ -40,10 +40,9 @@ paramiko = "^2.7.2"
 "ruamel.yaml" = "^0.17.10"
 ansible-runner = ">=1.4.7,<3.0.0"
 attrs = "^21.2.0"
-single-source = "^0.2.0"
 xdg = "^5.1.0"
 Jinja2 = "^3.0.1"
-httpx = { version = "^0.19.0", extras = ["http2"] }
+httpx = { version = ">=0.20,<0.22", extras = ["http2"] }
 
 # Optional:
 sphinx = { version = ">=3.5.1,<5.0.0", optional = true }
@@ -66,20 +65,19 @@ pycodestyle = "^2.7.0"
 yapf = "^0.31.0"
 vulture = "^2.3"
 mypy = "^0.910"
-coverage = "^5.5"
+coverage = "^6.1"
 interrogate = "^1.4.0"
 towncrier = "^21.3.0"
 tox = "^3.24.3"
-black = { version = "^21.9b0", allow-prereleases = true }
-isort = {version = "^5.9.3", extras = ["pyproject"]}
-flake8-bugbear = "^21.4.3"
+black = { version = "^21.10b0", allow-prereleases = true }
+isort = {version = "^5.10.1", extras = ["pyproject"]}
+flake8-bugbear = "^21.9.2"
 
 # typesheds
 types-pkg-resources = "^0.1.3"
-types-tabulate = "^0.8.0"
-types-paramiko = "^2.7.0"
+types-paramiko = "^2.7.4"
 types-attrs = "^19.1.0"
-types-Jinja2 = "^2.11.6"
+types-Jinja2 = "^2.11.7"
 
 [tool.poetry.scripts]
 matrixctl = "matrixctl.__main__:main"
@@ -116,6 +114,23 @@ show_traceback = true
 module = "tests.matrixctl.handlers.*"
 allow_untyped_decorators = true  # pytest fixtures
 
+[tool.pyright]
+include = ["matrixctl", "tests"]
+exclude = ["**/__pycache__"]
+
+reportMissingImports = true
+reportMissingTypeStubs = false
+
+pythonVersion = "3.9"
+pythonPlatform = "Linux"
+typeCheckingMode = "basic"
+
+# reportUnknownVariableType ="none"
+# reportUnknownMemberType ="none"
+# reportUnknownParameterType = "none"
+# reportUnknownArgumentType = "none"
+# reportUnknownLambdaType = "none"
+
 
 [tool.isort]
 line_length = 79
@@ -127,13 +142,12 @@ lines_after_imports = 2
 lines_between_types = 1
 multi_line_output = 3
 use_parentheses = true
-skip_glob = ["*/setup.py", "*.rst", "*.md", "*.yaml", "*.txt", "*.yml", "*.lock", "*.toml", "*.ini", "Makefile"]
+skip_glob = ["*/setup.py", "*.rst", "*.md", "*.yaml", "*.txt", "*.yml", "*.lock", "*.toml", "*.ini", "Makefile", "docs/source/conf.py"]
 filter_files = true
 known_first_party = "matrixctl"
 known_third_party = [
     "pytest",
     "paramiko",
-    "tabulate",
     "argcomplete",
     "coloredlogs",
     "sphinx_rtd_theme",
@@ -182,7 +196,7 @@ filename = "CHANGELOG.rst"
 issue_format = "`#{issue} <https://github.com/MichaelSasser/matrixctl/issues/{issue}>`_"
 directory = "news/"
 top_line = false
-title_format = "{version} ({project_date})"  # {name}
+# title_format = "{version} ({project_date})"  # {name}
 all_bullets = true  # make all fragments bullet points
 wrap = true  # Wrap text to 79 characters
 template = "news/templates/default.rst"
