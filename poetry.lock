@@ -8,7 +8,7 @@ python-versions = "*"
 
 [[package]]
 name = "ansible-runner"
-version = "2.0.3"
+version = "2.1.1"
 description = "\"Consistent Ansible Python API and CLI with container and process isolation runtime capabilities\""
 category = "main"
 optional = false
@@ -1356,8 +1356,8 @@ alabaster = [
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
 ]
 ansible-runner = [
-    {file = "ansible-runner-2.0.3.tar.gz", hash = "sha256:8f6be6e2e3150f5ca56e5352ded0e4db6422bbedbd731f3bc15de6c09fa44096"},
-    {file = "ansible_runner-2.0.3-py3-none-any.whl", hash = "sha256:3f60a2b92a9f788d401a3487d1ab8d5cfb88b38241a24b10df7ced0b8609da2e"},
+    {file = "ansible-runner-2.1.1.tar.gz", hash = "sha256:7684612f7543c5f07f3e8135667eeb22a9dbd98f625cc69901ba9924329ef24f"},
+    {file = "ansible_runner-2.1.1-py3-none-any.whl", hash = "sha256:75f41f3a6126c326b2099f69be52f5adce92f2ef62d130f30151b8d9e2bdbbdc"},
 ]
 anyio = [
     {file = "anyio-3.3.4-py3-none-any.whl", hash = "sha256:4fd09a25ab7fa01d34512b7249e366cd10358cdafc95022c7ff8c8f8a5026d66"},
