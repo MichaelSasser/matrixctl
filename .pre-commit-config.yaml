@@ -118,7 +118,7 @@ repos:
 
   # format: black
   - repo: https://github.com/ambv/black
-    rev: 21.10b0
+    rev: 21.11b1
     hooks:
       - id: black
 
@@ -189,6 +189,6 @@ repos:
   #     - id: prospector
   # PEP 585 Upgrade (Type Hints)
   - repo: https://github.com/sondrelg/pep585-upgrade
-    rev: v1.0.1
+    rev: v1
     hooks:
       - id: upgrade-type-hints
