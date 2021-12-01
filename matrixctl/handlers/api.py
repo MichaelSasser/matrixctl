@@ -156,9 +156,14 @@ class RequestBuilder:
             Data of this class in string representation.
 
         """
+        headers = self.headers | {
+            "User-Agent": f"matrixctl{__version__}",
+            "Authorization": f"Bearer [redacted]",
+        }
+
         return (
             f"{self.__class__.__qualname__}({self.method} {self.__str__()} {{"
-            f"headers={self.headers}, params={self.params}, data="
+            f"headers={headers}, params={self.params}, data="
             f"{'[binary]' if isinstance(self.data, bytes) else self.data} "
             f"success_codes={self.success_codes}, json={self.json}, "
             f"token=[redacted (length={len(self.token)})], "
@@ -170,7 +175,7 @@ class RequestBuilder:
 def preplan_request_strategy(
     limit: int, concurrent_limit: int | float, max_step_size: int = 100
 ) -> RequestStrategy:
-    """Use this functiona as helper for optimizing asyncronous requests.
+    """Use this functiona as helper for optimizing asynchronous requests.
 
     Attributes
     ----------
@@ -180,8 +185,8 @@ def preplan_request_strategy(
         The concurrent limit from the config file.
     max_step_size : int, default=100
         The maximal step size, which is a soft limit.
-        It is usualy 100, but that value might be different. Check out the API
-        documentation. We usualy take the default one.
+        It is usually 100, but that value might be different. Check out the API
+        documentation. We usually take the default one.
 
     Returns
     -------
@@ -532,7 +537,7 @@ def request(
 
 
 def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
-    """Send an syncronus request to the synapse API and receive a response.
+    """Send an synchronous request to the synapse API and receive a response.
 
     Attributes
     ----------
@@ -575,13 +580,13 @@ def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
         sys.exit(1)
     if response.status_code == 404:
         logger.critical(
-            "The server returned an 404 error. This can have two causes. "
-            "The first one is, you try to request a ressource, which does not "
-            "exist. The second one is, your API endpoint is disabled."
-            "Make sure, that your vars.yml contains the "
-            "following excessive long line:\n\n"
-            "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
-            "location_synapse_admin_api_enabled: true"
+            "The server returned an 404 error. This can have multiple causes."
+            " One of them is, you try to request a resource, which does not or"
+            " no longer exist. Another one is, your API endpoint is disabled."
+            " Make sure, that your vars.yml contains the following excessive"
+            " long"
+            " line:\n\nmatrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_admin_api_enabled:"
+            " true"
         )
         sys.exit(1)
 
@@ -648,13 +653,13 @@ async def _arequest(
         raise ExitQWorker()  # TODO
     if response.status_code == 404:
         logger.critical(
-            "The server returned an 404 error. This can have two causes. "
-            "The first one is, you try to request a ressource, which does not "
-            "exist. The second one is, your API endpoint is disabled."
-            "Make sure, that your vars.yml contains the "
-            "following excessive long line:\n\n"
-            "matrix_nginx_proxy_proxy_matrix_client_api_forwarded_"
-            "location_synapse_admin_api_enabled: true"
+            "The server returned an 404 error. This can have multiple causes."
+            " One of them is, you try to request a resource, which does not or"
+            " no longer exist. Another one is, your API endpoint is disabled."
+            " Make sure, that your vars.yml contains the following excessive"
+            " long"
+            " line:\n\nmatrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_admin_api_enabled:"
+            " true"
         )
         raise ExitQWorker()  # TODO
 
