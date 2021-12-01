@@ -185,7 +185,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         return 0
     logger.error(f"response: {response.stderr}")
     print(
-        "An error occured during the query. Are you sure, you used the "
+        "An error occurred during the query. Are you sure, you used the "
         "correct event_id?"
     )
     return 1

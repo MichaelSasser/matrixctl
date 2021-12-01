@@ -168,7 +168,7 @@ def main() -> int:
         logger.debug("Disabing help on AttributeError")  # may not be needed
         logger.warning(
             "In debugging mode help is disabled! If you don't use any "
-            "attibutes, the program will throw a AttributeError like: "
+            "attributes, the program will throw a AttributeError like: "
             "\"AttributeError: 'Namespace' object has no attribute 'func\".'"
             " This is perfectly normal and not a bug. If you want the help "
             'in debug mode, use the "--help" attribute.'

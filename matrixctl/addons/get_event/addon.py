@@ -82,8 +82,8 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     cmd: str = "/usr/local/bin/matrix-postgres-cli -P pager"
     table: str = "synapse"
 
-    command: str = (
-        f"event=$(echo '{event64}' | base64 -d -) && "  # Workaround
+    command: str = (  # Workaround
+        f"event=$(echo '{event64}' | base64 -d -) && "
         f'sudo {cmd} -d {table} -c "{query}"'
     )
 
@@ -122,7 +122,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         return 0
     logger.error(f"response: {response.stderr}")
     print(
-        "An error occured during the query. Are you sure, you used the "
+        "An error occurred during the query. Are you sure, you used the "
         "correct event_id?"
     )
     return 1

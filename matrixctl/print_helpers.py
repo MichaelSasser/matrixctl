@@ -60,7 +60,7 @@ def timestamp_to_dt(ts: str, sep: str = " ") -> str:
     ts : str
         The value to "convert".
     sep : str
-        The seperator between the date and the time.
+        The separator between the date and the time.
 
     Returns
     -------

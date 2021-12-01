@@ -79,12 +79,6 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     If the user does not exist, the return looks like:
 
-    .. code-block:: console
-
-       $ matrixctl user mose
-       2020-04-14 13:58:13 - ERROR - The request was not successful.
-       2020-04-14 13:58:13 - ERROR - There is no user with that username.
-
     Parameters
     ----------
     arg : argparse.Namespace

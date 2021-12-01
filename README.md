@@ -80,8 +80,7 @@ You will find more information in the
 
 ## Documentation
 
-The
-[documentation](https://matrixctl.readthedocs.io/en/latest/index.html) is
+The [documentation](https://matrixctl.readthedocs.io/en/latest/index.html) is
 waiting for you, to check out.
 
 ## Configuration File
@@ -91,12 +90,10 @@ To use this tool you need to have a configuration file in
 
 ```yaml
 # Define your homeservers in "servers" here.
-
 servers:
   # Your default server. You can specify muliple servers here with arbitrary
   # Names
   default:
-
     ansible:
       # The absolute path to your playbook
       playbook: /path/to/ansible/playbook
@@ -108,7 +105,7 @@ servers:
 
     # If your matrix server is deployed, you may want to fill out the API section.
     # It enables matrixctl to run more and faster commands. You can deploy and
-    # provision your Server without this section. You also can cerate a user with
+    # provision your Server without this section. You also can create a user with
     # "matrixctl adduser --ansible YourUsername" and add your privileges after
     # that.
     api:
@@ -125,7 +122,7 @@ servers:
       # (click on your username on the upper left corner on your browser) in the
       # "Help & About" tab. If you scroll down click next to "Access-Token:" on
       # "<click to reveal>". It will be marked for you. Copy it in here.
-      token= "MyMatrixToken"
+      token: "MyMatrixToken"
 
       # In some cases, MatrixCtl does need to make many requests. To speed those
       # requests a notch, you can set a concurrent_limit which is greater than
@@ -136,25 +133,23 @@ servers:
 
     # Here you can add your SSH configuration.
     ssh:
-      address: "matrix.{{ servers.default.api.domain }}"  # With Jinja2 support
+      address: matrix.example.com
 
-      # The default port is 22. Can be omitted. Jinja2: "{{ default_ssh_port }}"
+      # The default port is 22
       port: 22
 
       # The default username is your current login name.
       user: john
 
-    # Define your maintainance tasks
+    # Define your maintenance tasks
     maintenance:
       tasks:
-        - compress-state  # Compress synapses state table
-        - vacuum          # VACUUM the synapse database (garbage-collection)
+        - compress-state # Compress synapses state table
+        - vacuum # VACUUM the synapse database (garbage-collection)
 
   # Another server.
   foo:
     # ...
-
-server: # This is a reserved name, which cannot be used.
 ```
 
 Predefined Jinja2 placeholders (all placeholders can be overwritten):
@@ -171,28 +166,29 @@ for more information.
 ## Discussions & Chat
 
 If you have any thoughts or questions, you can ask them in the
-[discusions](https://github.com/MichaelSasser/matrixctl/discussions) or in
-the projects matrix room `#matrixctl:matrix.org`.
+[discusions](https://github.com/MichaelSasser/matrixctl/discussions) or in the
+projects matrix room `#matrixctl:matrix.org`.
 
 ## Semantic Versioning and Branching Model
 
-This Python package uses [SemVer](https://semver.org/) for its release
-cycle and the
+This Python package uses [SemVer](https://semver.org/) for its release cycle
+and the
 [git-flow](https://danielkummer.github.io/git-flow-cheatsheet/index.html)
 branching model (by [Vincent Driessen](https://nvie.com/about/)).
 
 It has two branches with infinite lifetime. The:
 
-- [develop](https://github.com/MichaelSasser/matrixctl/tree/develop)
-  branch is the merging branch,
-- [master](https://github.com/MichaelSasser/matrixctl/tree/master)
-  branch gets updated on every release.
+- [develop](https://github.com/MichaelSasser/matrixctl/tree/develop) branch is
+  the merging branch,
+- [master](https://github.com/MichaelSasser/matrixctl/tree/master) branch gets
+  updated on every release.
 
 ## Contributing
 
-Please check our [Contributer Documentation](https://matrixctl.readthedocs.io/en/latest/contributer_documentation/index.html#contributer-documentation).
+Please check our
+[Contributer Documentation](https://matrixctl.readthedocs.io/en/latest/contributer_documentation/index.html#contributer-documentation).
 
 ## License
 
-Copyright &copy; 2020-2001 Michael Sasser <Info@MichaelSasser.org>.
-Released under the GPLv3 license.
+Copyright &copy; 2020-2001 Michael Sasser <Info@MichaelSasser.org>. Released
+under the GPLv3 license.

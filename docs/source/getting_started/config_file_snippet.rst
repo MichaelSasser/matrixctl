@@ -18,7 +18,7 @@
 
        # If your matrix server is deployed, you may want to fill out the API section.
        # It enables matrixctl to run more and faster commands. You can deploy and
-       # provision your Server without this section. You also can cerate a user with
+       # provision your Server without this section. You also can create a user with
        # "matrixctl adduser --ansible YourUsername" and add your privileges after
        # that.
        api:
@@ -54,7 +54,7 @@
          # The default username is your current login name.
          user: john
 
-       # Define your maintainance tasks
+       # Define your maintenance tasks
        maintenance:
          tasks:
            - compress-state  # Compress synapses state table

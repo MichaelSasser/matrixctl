@@ -23,12 +23,12 @@ You need this section, if you want to:
 - ``matrixctl maintenance``
 - ``matrixctl check``
 
-.. note:: If you want to run (multiple) playbooks you can create a file which
+.. note:: If you want to run more than one playbook you can create a file which
           contains ``import_playbook`` lines like:
           ``- import_playbook: /PathTo/matrix-docker-ansible-deploy/setup.yml``
           and configure it as playbook in the matrixctl config file.
 
-The ``synapse`` section is used for update (``git pull``) the synapse
+The ``synapse`` section is used to update (``git pull``) the synapse
 playbook
 You need this section, if you want to:
 

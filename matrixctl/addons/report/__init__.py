@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use the modules of this package to add functionallity to Matrixctl."""
+"""Use the modules of this package to add functionality to Matrixctl."""
 
 
 # vim: set ft=python :

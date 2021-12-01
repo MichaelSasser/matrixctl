@@ -20,8 +20,8 @@ We user ssh access for the following:
           section. If you don't want to write your own playbook, follow this
           guide.
 
-Check your keypair
-------------------
+Check your key pair
+-------------------
 
 Check, if you alreadey have a key pair.
 
@@ -34,7 +34,7 @@ If the output looks like the above, you have generated a keypare in the past
 and you can continue in the next section :ref:`Copy Public Key`.
 
 If it looks something like below or prints something like you can continue in
-the section: :ref:`Generate Keypair`.
+the section: :ref:`Generate key pair`.
 
 .. code-block:: console
 
@@ -44,10 +44,10 @@ the section: :ref:`Generate Keypair`.
    $ ls -la ~/.ssh/id_*.pub
    ls: cannot access '/home/michael/.ssh/id_*.pub': No such file or directory
 
-Generate Keypair
-----------------
+Generate key pair
+-----------------
 
-To generate your keypair run:
+To generate your key pair run:
 
 .. code-block:: console
 
