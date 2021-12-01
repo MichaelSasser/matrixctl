@@ -81,9 +81,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         raise InternalResponseError(f"The response was: {response = }") from e
 
     try:
-        json_response: JsonDict = handle_status(
-            yaml, json_response["delete_id"]
-        )
+        json_response = handle_status(yaml, json_response["delete_id"])
     except InternalResponseError as e:
         if e.message:
             logger.fatal(e.message)
@@ -97,8 +95,8 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     return 0
 
 
-def handle_status(yaml: YAML, delete_id: str) -> JsonDict:
-    """handle the status of a delete room request.
+def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
+    """Handle the status of a delete room request.
 
     Parameters
     ----------
