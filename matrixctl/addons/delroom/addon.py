@@ -23,6 +23,7 @@ import json
 import logging
 
 from argparse import Namespace
+from time import sleep
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
@@ -62,7 +63,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         domain=yaml.get("server", "api", "domain"),
         path=f"rooms/{arg.room}",
         method="DELETE",
-        api_version="v1",
+        api_version="v2",
         json=body,
         timeout=1200,
     )
@@ -79,9 +80,115 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         logger.fatal("The JSON response could not be loaded by MatrixCtl.")
         raise InternalResponseError(f"The response was: {response = }") from e
 
+    try:
+        json_response = handle_status(yaml, json_response["delete_id"])
+    except InternalResponseError as e:
+        if e.message:
+            logger.fatal(e.message)
+        logger.fatal(
+            "MatrixCtl was not able to verify the status of the request."
+        )
+        return 1
+
     print(json.dumps(json_response, indent=4))
 
     return 0
+
+
+def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
+    """Handle the status of a delete room request.
+
+    Parameters
+    ----------
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
+    delete_id: str
+        The delete id of a delete room request.
+
+    Returns
+    -------
+    response: matrixctl.typehints.JsonDict, optional
+        The response as dict, containing the status.
+
+    """
+    req: RequestBuilder = RequestBuilder(
+        token=yaml.get("server", "api", "token"),
+        domain=yaml.get("server", "api", "domain"),
+        path=f"rooms/delete_status/{delete_id}",
+        method="GET",
+        api_version="v2",
+        timeout=1200.0,
+    )
+
+    # Lock messages to only print them once
+    msglock_shutting_down: bool = False
+    msglock_purging: bool = False
+
+    while True:
+
+        sleep(1)
+        try:
+            response: Response = request(req)
+        except InternalResponseError as e:
+            raise InternalResponseError(
+                "The delete room request was probably successful but the"
+                " status request failed. You just have to wait a bit."
+            ) from e
+
+        try:
+            json_response: JsonDict = response.json()
+        except json.decoder.JSONDecodeError as e:
+            logger.fatal(
+                "The JSON status response could not be loaded by MatrixCtl."
+            )
+            raise InternalResponseError(
+                f"The response was: {response = }"
+            ) from e
+
+        if response is not None:
+            logger.debug(f"{response=}")
+            # complete
+            if json_response["status"] == "complete":
+                print(
+                    "Status: Complete (the room has been deleted successfully"
+                )
+                break
+            # shutting_down
+            if json_response["status"] == "shutting_down":
+                if not msglock_shutting_down:
+                    print(
+                        "Status: Shutting Down (removing users from the room)"
+                    )
+                msglock_shutting_down = True
+                logger.info(
+                    "The server is still shutting_down the room. "
+                    "Please wait..."
+                )
+                sleep(5)
+                continue
+            # purging
+            if json_response["status"] == "purging":
+                if not msglock_purging:
+                    print(
+                        "Status: Purging (purging the room and event data from"
+                        " database)"
+                    )
+                msglock_purging = True
+                logger.info(
+                    "The server is still purging the room. Please wait..."
+                )
+                sleep(5)
+                continue
+            # failed
+            if json_response["status"] == "failed":
+                logger.critical(
+                    "The server returned, that the approach failed with the"
+                    f" following message: {json_response['status']}."
+                )
+                break
+        break
+
+    return json_response
 
 
 def handle_arguments(arg: Namespace) -> JsonDict:
@@ -113,6 +220,7 @@ def handle_arguments(arg: Namespace) -> JsonDict:
         else:
             body["message"] = arg.message
 
+    logger.debug("Body: %s", body)
     return body
 
 

@@ -41,7 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 def handle_purge_status(yaml: YAML, purge_id: str) -> int:
-    """Check the status pf the purge history request.
+    """Check the status of the purge history request.
 
     Parameters
     ----------
