@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.handlers.api &mdash; MatrixCtl 0.11.3 documentation</title>
+  <title>matrixctl.handlers.api &mdash; MatrixCtl 0.11.4 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -28,7 +28,7 @@
             <a href="../../../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                0.11.3
+                0.11.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -153,12 +153,12 @@
     <span class="n">subdomain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;matrix&quot;</span>
     <span class="n">api_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;_synapse/admin&quot;</span>
     <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;v2&quot;</span>
-    <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># just key/value store</span>
-    <span class="n">json</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># json</span>
-    <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># bytes</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># just key/value store</span>
+    <span class="n">json</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># json</span>
+    <span class="n">content</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># bytes</span>
     <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;GET&quot;</span>
-    <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Cannot be none with MatrixCtl</span>
     <span class="n">concurrent_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span>  <span class="c1"># seconds</span>
     <span class="n">success_codes</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
@@ -315,7 +315,7 @@
 <div class="viewcode-block" id="generate_worker_configs"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.generate_worker_configs">[docs]</a><span class="k">def</span> <span class="nf">generate_worker_configs</span><span class="p">(</span>
     <span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">,</span> <span class="n">next_token</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">RequestBuilder</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Create workers for async requests (minus the already done sync reqest).</span>
+    <span class="sd">&quot;&quot;&quot;Create workers for async requests (minus the already done sync request).</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -362,11 +362,9 @@
     <span class="n">request_config</span><span class="o">.</span><span class="n">concurrent_limit</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">concurrent_limit</span>
     <span class="c1"># reapply next_token to get the full range back for i</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-        <span class="p">(</span>
-            <span class="s2">&quot;for loop (generator):&quot;</span>
-            <span class="s2">&quot;next_token + 1 = </span><span class="si">%s</span><span class="s2"> , strategy.limit + next_token + 1 = </span><span class="si">%s</span><span class="s2">, &quot;</span>
-            <span class="s2">&quot;strategy.step_size = </span><span class="si">%s</span><span class="s2">&quot;</span>
-        <span class="p">),</span>
+        <span class="s2">&quot;for loop (generator):&quot;</span>
+        <span class="s2">&quot;next_token + 1 = </span><span class="si">%s</span><span class="s2"> , strategy.limit + next_token + 1 = </span><span class="si">%s</span><span class="s2">, &quot;</span>
+        <span class="s2">&quot;strategy.step_size = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="n">next_token</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">strategy</span><span class="o">.</span><span class="n">limit</span> <span class="o">+</span> <span class="n">next_token</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">strategy</span><span class="o">.</span><span class="n">step_size</span><span class="p">,</span>
@@ -389,7 +387,7 @@
 <span class="sd">    input_queue : asyncio.Queue</span>
 <span class="sd">        The input queue, which provides the ``RequestBuilder``.</span>
 <span class="sd">    output_queue : asyncio.Queue</span>
-<span class="sd">        The output queue, which gets the responses of ther requests.</span>
+<span class="sd">        The output queue, which gets the responses of there requests.</span>
 
 
 <span class="sd">    See Also</span>
@@ -418,7 +416,7 @@
 
 <div class="viewcode-block" id="group_async_results"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.group_async_results">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">group_async_results</span><span class="p">(</span>
     <span class="n">input_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">output_queue</span><span class="p">:</span> <span class="n">OutputQueueType</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="ne">Exception</span> <span class="o">|</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Use this coro to group the requests afterwards in a single list.</span>
 
 <span class="sd">    Attributes</span>
@@ -426,7 +424,7 @@
 <span class="sd">    input_size : int</span>
 <span class="sd">        The number of items in the queue.</span>
 <span class="sd">    output_queue : asyncio.Queue</span>
-<span class="sd">        The output queue, which holds the responses of ther requests.</span>
+<span class="sd">        The output queue, which holds the responses of there requests.</span>
 <span class="sd">    concurrent : bool</span>
 <span class="sd">        When ``True``, make requests concurrently.</span>
 <span class="sd">        When ``False``, make requests synchronously.</span>
@@ -525,15 +523,25 @@
     <span class="c1"># Wait for result fetching</span>
     <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">result_task</span>
 
+    <span class="c1"># A handled result is one without exceptions</span>
+    <span class="n">handled_results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]</span> <span class="o">|</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="c1"># Re-raise errors</span>
     <span class="c1"># concurrent</span>
-    <span class="k">if</span> <span class="n">concurrent_limit</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">errors</span> <span class="o">:=</span> <span class="p">[</span><span class="n">err</span> <span class="k">for</span> <span class="n">err</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)]:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+        <span class="n">errors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="ne">Exception</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">err</span> <span class="k">for</span> <span class="n">err</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>  <span class="c1"># Not concurrent</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="n">handled_results</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">],</span> <span class="n">results</span>
+        <span class="p">)</span>  <span class="c1"># no exception left</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>  <span class="c1"># Not concurrent</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="n">handled_results</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>  <span class="c1"># no exception left</span>
 
-    <span class="k">return</span> <span class="n">results</span></div>
+    <span class="k">return</span> <span class="n">handled_results</span></div>
 
 
 <span class="nd">@t</span><span class="o">.</span><span class="n">overload</span>
@@ -579,7 +587,12 @@
     <span class="k">async</span> <span class="k">def</span> <span class="nf">gen_async_request</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]</span> <span class="o">|</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Use as helper for executing an async request.&quot;&quot;&quot;</span>
         <span class="k">nonlocal</span> <span class="n">request_config</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">exec_async_request</span><span class="p">(</span><span class="n">request_config</span><span class="p">)</span>
+        <span class="c1"># cast because mypy doesn&#39;t recognize the return type of</span>
+        <span class="c1"># exec_async_request</span>
+        <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">],</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">],</span>
+            <span class="k">await</span> <span class="n">exec_async_request</span><span class="p">(</span><span class="n">request_config</span><span class="p">),</span>
+        <span class="p">)</span>
 
     <span class="c1"># This is needed because here is decided, if the request was meant to be</span>
     <span class="c1"># async or sync. Even though a request was meant to be async, it may</span>
@@ -591,7 +604,7 @@
     <span class="k">return</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">gen_async_request</span><span class="p">())</span></div>
 
 
-<span class="k">def</span> <span class="nf">_request</span><span class="p">(</span><span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_request</span><span class="p">(</span><span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Send an syncronus request to the synapse API and receive a response.</span>
 
 <span class="sd">    Attributes</span>
@@ -608,12 +621,13 @@
 
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;repr: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">request_config</span><span class="p">))</span>
 
+    <span class="c1"># There is some weird stuff going on in httpx. It is set to None by default</span>
     <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">http2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
         <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
             <span class="n">method</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
             <span class="n">json</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">json</span><span class="p">,</span>
-            <span class="n">content</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
+            <span class="n">content</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
             <span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">request_config</span><span class="p">),</span>
             <span class="n">params</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
             <span class="n">headers</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">headers_with_auth</span><span class="p">,</span>
@@ -681,11 +695,12 @@
 
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;repr: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">request_config</span><span class="p">))</span>
 
+    <span class="c1"># There is some weird stuff going on in httpx. It is set to None by default</span>
     <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
         <span class="n">method</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
-        <span class="n">data</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
         <span class="n">json</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">json</span><span class="p">,</span>
-        <span class="n">content</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
+        <span class="n">content</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
         <span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">request_config</span><span class="p">),</span>
         <span class="n">params</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
         <span class="n">headers</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">headers_with_auth</span><span class="p">,</span>

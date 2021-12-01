@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Addons &mdash; MatrixCtl 0.11.3 documentation</title>
+  <title>Addons &mdash; MatrixCtl 0.11.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -31,7 +31,7 @@
             <a href="../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                0.11.3
+                0.11.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -1476,7 +1476,7 @@ to the latest <code class="docutils literal notranslate"><span class="pre">synap
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.addons.purge_history.handler.handle_purge_status">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.addons.purge_history.handler.</span></span><span class="sig-name descname"><span class="pre">handle_purge_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">purge_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/purge_history/handler.html#handle_purge_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.purge_history.handler.handle_purge_status" title="Permalink to this definition"></a></dt>
-<dd><p>Check the status pf the purge history request.</p>
+<dd><p>Check the status of the purge history request.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
@@ -1596,6 +1596,34 @@ to the latest <code class="docutils literal notranslate"><span class="pre">synap
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
 <dt><strong>body</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.JsonDict</span></code></span></dt><dd><p>The params.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]
+..</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.addons.delroom.addon.handle_status">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addons.delroom.addon.</span></span><span class="sig-name descname"><span class="pre">handle_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/delroom/addon.html#handle_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.delroom.addon.handle_status" title="Permalink to this definition"></a></dt>
+<dd><p>Handle the status of a delete room request.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>yaml</strong><span class="classifier"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.handlers.yaml.YAML</span></code></a></span></dt><dd><p>The configuration file handler.</p>
+</dd>
+<dt><strong>delete_id: str</strong></dt><dd><p>The delete id of a delete room request.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>response: <code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.JsonDict</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></dt><dd><p>The response as dict, containing the status.</p>
 </dd>
 </dl>
 <dl class="field-list simple">

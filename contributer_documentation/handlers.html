@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Handlers &mdash; MatrixCtl 0.11.3 documentation</title>
+  <title>Handlers &mdash; MatrixCtl 0.11.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -31,7 +31,7 @@
             <a href="../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                0.11.3
+                0.11.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -369,12 +369,12 @@ afterwards.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.content">
-<span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></em><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.content" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.10)"><span class="pre">collections.abc.Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.content" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.data">
-<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">t.Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></em><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.data" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.data" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -414,7 +414,7 @@ afterwards.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.json">
-<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">t.Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></em><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.json" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.json" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -424,7 +424,7 @@ afterwards.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder.params">
-<span class="sig-name descname"><span class="pre">params</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.params" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">params</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">typing.Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder.params" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -526,7 +526,7 @@ afterwards.</p>
 <dd class="field-odd"><dl>
 <dt><strong>input_queue</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/asyncio-queue.html#asyncio.Queue" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio.Queue</span></code></a></span></dt><dd><p>The input queue, which provides the <code class="docutils literal notranslate"><span class="pre">RequestBuilder</span></code>.</p>
 </dd>
-<dt><strong>output_queue</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/asyncio-queue.html#asyncio.Queue" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio.Queue</span></code></a></span></dt><dd><p>The output queue, which gets the responses of ther requests.</p>
+<dt><strong>output_queue</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/asyncio-queue.html#asyncio.Queue" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio.Queue</span></code></a></span></dt><dd><p>The output queue, which gets the responses of there requests.</p>
 </dd>
 </dl>
 </dd>
@@ -573,7 +573,7 @@ from the config.)</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.handlers.api.generate_worker_configs">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">generate_worker_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#generate_worker_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.generate_worker_configs" title="Permalink to this definition"></a></dt>
-<dd><p>Create workers for async requests (minus the already done sync reqest).</p>
+<dd><p>Create workers for async requests (minus the already done sync request).</p>
 <dl class="field-list">
 <dt class="field-odd">Yields</dt>
 <dd class="field-odd"><dl>
@@ -629,7 +629,7 @@ You get this value from the response of an initial synchronous request.</p>
 <dd class="field-even"><dl>
 <dt><strong>input_size</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>The number of items in the queue.</p>
 </dd>
-<dt><strong>output_queue</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/asyncio-queue.html#asyncio.Queue" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio.Queue</span></code></a></span></dt><dd><p>The output queue, which holds the responses of ther requests.</p>
+<dt><strong>output_queue</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/asyncio-queue.html#asyncio.Queue" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio.Queue</span></code></a></span></dt><dd><p>The output queue, which holds the responses of there requests.</p>
 </dd>
 <dt><strong>concurrent</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.10)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>When <code class="docutils literal notranslate"><span class="pre">True</span></code>, make requests concurrently.
 When <code class="docutils literal notranslate"><span class="pre">False</span></code>, make requests synchronously.</p>
