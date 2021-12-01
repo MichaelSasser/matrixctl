@@ -56,7 +56,7 @@ jobs:
         run: python scripts/get_latest_release.py
 
       - name: Convert from changelog_latest.rst to changelog_latest.md
-        uses: docker://pandoc/core:2.9
+        uses: docker://pandoc/core:2.16.2
         with:
           args: >-
             --output=chagelog_latest.md
