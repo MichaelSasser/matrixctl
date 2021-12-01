@@ -3,6 +3,12 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 
 .. towncrier release notes start
 
+0.11.5 (2021-12-01)
+===================
+
+No significant changes.
+
+
 0.11.4 (2021-12-01)
 ===================
 
