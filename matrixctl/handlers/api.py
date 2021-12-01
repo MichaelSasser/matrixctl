@@ -80,12 +80,12 @@ class RequestBuilder:
     subdomain: str = "matrix"
     api_path: str = "_synapse/admin"
     api_version: str = "v2"
-    data: dict[str, t.Any] = {}  # just key/value store
-    json: dict[str, t.Any] | None = None  # json
-    content: str | bytes | Iterable[bytes] = ""  # bytes
+    data: t.Optional[dict[str, t.Any]] = None  # just key/value store
+    json: t.Optional[dict[str, t.Any]] = None  # json
+    content: t.Optional[t.Union[str, bytes, Iterable[bytes]]] = None  # bytes
     method: str = "GET"
-    params: dict[str, str | int] = {}
-    headers: dict[str, str] = {}
+    params: dict[str, t.Union[str, int]] = {}
+    headers: dict[str, str] = {}  # Cannot be none with MatrixCtl
     concurrent_limit: int = 4
     timeout: float = 5.0  # seconds
     success_codes: tuple[int, ...] = (
@@ -548,12 +548,13 @@ def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
 
     logger.debug("repr: %s", repr(request_config))
 
+    # There is some weird stuff going on in httpx. It is set to None by default
     with httpx.Client(http2=True, timeout=request_config.timeout) as client:
         response: httpx.Response = client.request(
             method=request_config.method,
-            data=request_config.data,
+            data=request_config.data,  # type: ignore
             json=request_config.json,
-            content=request_config.content,
+            content=request_config.content,  # type: ignore
             url=str(request_config),
             params=request_config.params,
             headers=request_config.headers_with_auth,
@@ -621,11 +622,12 @@ async def _arequest(
 
     logger.debug("repr: %s", repr(request_config))
 
+    # There is some weird stuff going on in httpx. It is set to None by default
     response: httpx.Response = await client.request(
         method=request_config.method,
-        data=request_config.data,
+        data=request_config.data,  # type: ignore
         json=request_config.json,
-        content=request_config.content,
+        content=request_config.content,  # type: ignore
         url=str(request_config),
         params=request_config.params,
         headers=request_config.headers_with_auth,
