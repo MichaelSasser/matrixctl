@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.11.3"
+version = "0.11.4"
 description = "Control, manage, provision and deploy matrix homeservers."
 
 license = "GPL-3.0-or-later"

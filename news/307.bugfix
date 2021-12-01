@@ -1,2 +1,0 @@
-Fix a bug introduced in ``be411cf0c1a9413bf25ca1b72004150c032555c2``, after
-the last release because the ``httpx`` typehints are incorrect.

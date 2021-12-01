@@ -3,6 +3,31 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 
 .. towncrier release notes start
 
+0.11.4 (2021-12-01)
+===================
+
+Features & Improvements
+-----------------------
+
+- Update to *Delete Room API v2*. (`#305
+  <https://github.com/MichaelSasser/matrixctl/issues/305>`_)
+
+
+Bugfixes
+--------
+
+- Fix a bug introduced in ``be411cf0c1a9413bf25ca1b72004150c032555c2``, after
+  the last release because the ``httpx`` typehints are incorrect. (`#307
+  <https://github.com/MichaelSasser/matrixctl/issues/307>`_)
+
+
+Miscellaneous
+-------------
+
+- Fix incorrect typehints in the API handler (`#287
+  <https://github.com/MichaelSasser/matrixctl/issues/287>`_)
+
+
 0.11.3 (2021-11-16)
 ===================
 
