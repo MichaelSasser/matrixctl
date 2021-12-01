@@ -109,6 +109,8 @@ ignore_missing_imports = true
 strict_equality = true
 strict = true
 show_traceback = true
+# CI output differs from local
+warn_unused_ignores = false  # workaround see PR: 308
 
 [[tool.mypy.overrides]]
 module = "tests.matrixctl.handlers.*"
