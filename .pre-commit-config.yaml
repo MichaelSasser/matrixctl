@@ -27,7 +27,7 @@ repos:
       # Checks for a common error of placing code before the docstring.
       - id: check-docstring-first
       # check-executables-have-shebangs
-      #- id: check-executables-have-shebangs
+      # - id: check-executables-have-shebangs
       # Attempts to load all json files to verify syntax.
       # - id: check-json
       # Check for files that contain merge conflict strings.
@@ -54,23 +54,23 @@ repos:
       # - id: double-quote-string-fixer (KEEP DISABLED)
       # Makes sure files end in a newline and only a newline.
       - id: end-of-file-fixer
-        exclude: '^CHANGELOG.rst'
+        exclude: "^CHANGELOG.rst"
       # Removes "# -*- coding: utf-8 -*-" on the top of python files.
       - id: fix-encoding-pragma
-        args: ['--remove']
+        args: ["--remove"]
       # Sort the lines in specified files (defaults to alphabetical).
       # - id: file-contents-sorter (KEEP DISABLED)
       # Replaces or checks mixed line ending to LF.
       - id: mixed-line-ending
-        args: ['--fix=lf']
+        args: ["--fix=lf"]
       # Assert that files in tests/ match test*.py.
       - id: name-tests-test
-        args: ['--django']
+        args: ["--django"]
       # Protect specific branches from direct checkins.
       - id: no-commit-to-branch
         args:
-          - '-b master'
-          - '-p release/.*'
+          - "-b master"
+          - "-p release/.*"
       # Checks that all your JSON files are pretty.
       # - id: pretty-format-json
       #   args: ["--autofix"]
@@ -118,7 +118,7 @@ repos:
 
   # format: black
   - repo: https://github.com/ambv/black
-    rev: 21.10b0
+    rev: 21.11b1
     hooks:
       - id: black
 
@@ -127,14 +127,14 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
-        additional_dependencies: ['flake8-bugbear']
+        additional_dependencies: ["flake8-bugbear"]
 
   # check docstrings
   - repo: https://github.com/PyCQA/pydocstyle
     rev: 6.1.1
     hooks:
       - id: pydocstyle
-        args: ['--ignore=D10,D21,D202']
+        args: ["--ignore=D10,D21,D202"]
         additional_dependencies:
           - toml
 
@@ -160,7 +160,7 @@ repos:
 
   # vulture
   - repo: https://github.com/jendrikseipp/vulture
-    rev: 'v2.3'
+    rev: "v2.3"
     hooks:
       - id: vulture
 
@@ -169,7 +169,7 @@ repos:
     rev: v2.29.1
     hooks:
       - id: pyupgrade
-        exclude: docs/source/conf.py # Py3.8 needed by rtd
+        exclude: docs/source/conf.py
 
   # pycln
   - repo: https://github.com/hadialqattan/pycln
@@ -189,7 +189,6 @@ repos:
   #     - id: prospector
   # PEP 585 Upgrade (Type Hints)
   - repo: https://github.com/sondrelg/pep585-upgrade
-    # Use the sha / tag you want to point at
     rev: v1
     hooks:
-    - id: upgrade-type-hints
+      - id: upgrade-type-hints

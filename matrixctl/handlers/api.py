@@ -80,12 +80,12 @@ class RequestBuilder:
     subdomain: str = "matrix"
     api_path: str = "_synapse/admin"
     api_version: str = "v2"
-    data: dict[str, t.Any] | None = None  # just key/value store
-    json: dict[str, t.Any] | None = None  # json
-    content: bytes | None = None  # bytes
+    data: t.Optional[dict[str, t.Any]] = None  # just key/value store
+    json: t.Optional[dict[str, t.Any]] = None  # json
+    content: t.Optional[t.Union[str, bytes, Iterable[bytes]]] = None  # bytes
     method: str = "GET"
-    params: dict[str, str | int] = {}
-    headers: dict[str, str] = {}
+    params: dict[str, t.Union[str, int]] = {}
+    headers: dict[str, str] = {}  # Cannot be none with MatrixCtl
     concurrent_limit: int = 4
     timeout: float = 5.0  # seconds
     success_codes: tuple[int, ...] = (
@@ -242,7 +242,7 @@ def preplan_request_strategy(
 def generate_worker_configs(
     request_config: RequestBuilder, next_token: int, limit: int
 ) -> Generator[RequestBuilder, None, None]:
-    """Create workers for async requests (minus the already done sync reqest).
+    """Create workers for async requests (minus the already done sync request).
 
     Notes
     -----
@@ -289,11 +289,9 @@ def generate_worker_configs(
     request_config.concurrent_limit = strategy.concurrent_limit
     # reapply next_token to get the full range back for i
     logger.debug(
-        (
-            "for loop (generator):"
-            "next_token + 1 = %s , strategy.limit + next_token + 1 = %s, "
-            "strategy.step_size = %s"
-        ),
+        "for loop (generator):"
+        "next_token + 1 = %s , strategy.limit + next_token + 1 = %s, "
+        "strategy.step_size = %s",
         next_token + 1,
         strategy.limit + next_token + 1,
         strategy.step_size,
@@ -316,7 +314,7 @@ async def async_worker(
     input_queue : asyncio.Queue
         The input queue, which provides the ``RequestBuilder``.
     output_queue : asyncio.Queue
-        The output queue, which gets the responses of ther requests.
+        The output queue, which gets the responses of there requests.
 
 
     See Also
@@ -345,7 +343,7 @@ async def async_worker(
 
 async def group_async_results(
     input_size: int, output_queue: OutputQueueType
-) -> httpx.Response | list[httpx.Response]:
+) -> list[Exception | httpx.Response]:
     """Use this coro to group the requests afterwards in a single list.
 
     Attributes
@@ -353,7 +351,7 @@ async def group_async_results(
     input_size : int
         The number of items in the queue.
     output_queue : asyncio.Queue
-        The output queue, which holds the responses of ther requests.
+        The output queue, which holds the responses of there requests.
     concurrent : bool
         When ``True``, make requests concurrently.
         When ``False``, make requests synchronously.
@@ -452,15 +450,25 @@ async def exec_async_request(
     # Wait for result fetching
     results = await result_task
 
+    # A handled result is one without exceptions
+    handled_results: list[httpx.Response] | httpx.Response = []
     # Re-raise errors
     # concurrent
-    if concurrent_limit > 1 and isinstance(results, Iterable):
-        if errors := [err for err in results if isinstance(err, Exception)]:
+    if isinstance(results, Iterable):
+        errors: list[Exception] = [
+            err for err in results if isinstance(err, Exception)
+        ]
+        if errors:
             raise Exception(errors)
-    if isinstance(results, Exception):  # Not concurrent
-        raise Exception(results)
+        handled_results = t.cast(
+            list[httpx.Response], results
+        )  # no exception left
+    else:
+        if isinstance(results, Exception):  # Not concurrent
+            raise Exception(results)
+        handled_results = t.cast(httpx.Response, results)  # no exception left
 
-    return results
+    return handled_results
 
 
 @t.overload
@@ -506,7 +514,12 @@ def request(
     async def gen_async_request() -> list[httpx.Response] | httpx.Response:
         """Use as helper for executing an async request."""
         nonlocal request_config
-        return await exec_async_request(request_config)
+        # cast because mypy doesn't recognize the return type of
+        # exec_async_request
+        return t.cast(
+            t.Union[list[httpx.Response], httpx.Response],
+            await exec_async_request(request_config),
+        )
 
     # This is needed because here is decided, if the request was meant to be
     # async or sync. Even though a request was meant to be async, it may
@@ -518,7 +531,7 @@ def request(
     return asyncio.run(gen_async_request())
 
 
-def _request(request_config: RequestBuilder) -> httpx.Response:
+def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
     """Send an syncronus request to the synapse API and receive a response.
 
     Attributes
@@ -535,12 +548,13 @@ def _request(request_config: RequestBuilder) -> httpx.Response:
 
     logger.debug("repr: %s", repr(request_config))
 
+    # There is some weird stuff going on in httpx. It is set to None by default
     with httpx.Client(http2=True, timeout=request_config.timeout) as client:
         response: httpx.Response = client.request(
             method=request_config.method,
-            data=request_config.data,
+            data=request_config.data,  # type: ignore
             json=request_config.json,
-            content=request_config.content,
+            content=request_config.content,  # type: ignore
             url=str(request_config),
             params=request_config.params,
             headers=request_config.headers_with_auth,
@@ -608,11 +622,12 @@ async def _arequest(
 
     logger.debug("repr: %s", repr(request_config))
 
+    # There is some weird stuff going on in httpx. It is set to None by default
     response: httpx.Response = await client.request(
         method=request_config.method,
-        data=request_config.data,
+        data=request_config.data,  # type: ignore
         json=request_config.json,
-        content=request_config.content,
+        content=request_config.content,  # type: ignore
         url=str(request_config),
         params=request_config.params,
         headers=request_config.headers_with_auth,
