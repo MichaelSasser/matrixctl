@@ -46,7 +46,7 @@ class Error(Exception):
     ) -> None:  # pylint: disable=keyword-arg-before-vararg
         """Use this error like a normal error in your day-to-day programming.
 
-        This is a commandline application. Therefor no user should ever see an
+        This is a commandline application. Therefore no user should ever see an
         exception (except in debug-mode). This error informs the user that,
         getting a traceback is a bug in this application. It gives the person
         instructions, how to hand in a bug report, to contain them asap.
@@ -63,6 +63,7 @@ class Error(Exception):
         None
 
         """
+        self.message = message
         self.payload: Any = payload
         msg: str = self.__class__.BUGMSG
 
