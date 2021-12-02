@@ -1,0 +1,2 @@
+This release changes how MatrixCtl connects to the database. Therefore
+the configuration file must be changed. Please check the `documentation<https://matrixctl.readthedocs.io/en/stable/getting_started/config_file.html>`_ for more information.
