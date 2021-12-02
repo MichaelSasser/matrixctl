@@ -98,26 +98,25 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     query += ")"
 
-    with db_connect(yaml) as conn:
-        with conn.cursor() as cur:
-            cur.execute(query, values)
-            try:
-                print("[", end="")
-                not_first_line: bool = False
-                for event in cur:
-                    if not_first_line:
-                        print(",")
-                    else:
-                        not_first_line = True
-                    print(
-                        json.dumps(json.loads(event[0]), indent=4),
-                        end="",
-                    )
-                print("]")
-                return 0
-            except json.decoder.JSONDecodeError:
-                logger.error("Unable to process the response data to JSON.")
-                return 1
+    with db_connect(yaml) as conn, conn.cursor() as cur:
+        cur.execute(query, values)
+        try:
+            print("[", end="")
+            not_first_line: bool = False
+            for event in cur:
+                if not_first_line:
+                    print(",")
+                else:
+                    not_first_line = True
+                print(
+                    json.dumps(json.loads(event[0]), indent=4),
+                    end="",
+                )
+            print("]")
+            return 0
+        except json.decoder.JSONDecodeError:
+            logger.error("Unable to process the response data to JSON.")
+            return 1
 
 
 # vim: set ft=python :

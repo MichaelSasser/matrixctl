@@ -183,7 +183,7 @@ def db_connect(yaml: YAML) -> Iterator[psycopg.Connection]:
         conn = psycopg.connect(str(connection_uri))
         try:
             yield conn
-        except BaseException as e:
+        except BaseException as e:  # skipcq: PYL-W0703
             logger.error("Rollback initiated.BaseException: %s", e)
             conn.rollback()
             sys.exit(1)

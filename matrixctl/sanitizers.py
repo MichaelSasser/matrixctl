@@ -93,9 +93,7 @@ def sanitize_message_type(
         ``MessageType``, if it is valid, otherwise ``False``
 
     """
-    if message_type is None:
-        return
-    if isinstance(message_type, MessageType):
+    if isinstance(message_type, MessageType) or message_type is None:
         return message_type
     with suppress(TypeError, KeyError, AttributeError):
         return MessageType[message_type.strip().replace(".", "_").upper()]
