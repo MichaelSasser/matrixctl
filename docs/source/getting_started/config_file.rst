@@ -10,11 +10,12 @@ This config file contains four sections:
 - ``synapse``
 - ``api``
 - ``ssh``
+- ``database``
 
-In the ``ansible`` section fill in the absolute path to your fully configured
+In ``ansible`` fill in the absolute path to your fully configured
 Playbook. Make sure ansible is configured correctly on your system.
 To get started, follow the :ref:`Synapse Playbook` guide.
-You need this section, if you want to:
+You need this section, if you want to use one of the following commands:
 
 - ``matrixctl adduser --ansible``
 - ``matrixctl deploy``
@@ -28,13 +29,12 @@ You need this section, if you want to:
           ``- import_playbook: /PathTo/matrix-docker-ansible-deploy/setup.yml``
           and configure it as playbook in the matrixctl config file.
 
-The ``synapse`` section is used to update (``git pull``) the synapse
-playbook
+``synapse`` is used to update (``git pull``) the synapse playbook
 You need this section, if you want to:
 
 - ``matrixctl update``
 
-The ``api`` section is used to communicate with the synapse API directly.
+``api`` is used to communicate with the synapse API directly.
 This is faster and has more additional functionality then the
 `Synapse <https://github.com/spantaleev/matrix-docker-ansible-deploy>`_
 playbook. To get started, follow the :ref:`Access Token` guide.
@@ -51,13 +51,21 @@ It is used for:
 - ``matrixctl server-notice``
 - ``matrixctl purge-history``
 - ``matrixctl version``
+- ``matrixctl delete-local-media``
+- ``matrixctl get-event-context``
+- ``matrixctl is-admin``
+- ``matrixctl joinroom``
+- ``matrixctl make-room-admin``
+- ``matrixctl purge-remote-media``
+- ``matrixctl report``
+- ``matrixctl reports``
+- ``matrixctl set-admin``
 
-With the ``ssh`` section you can use additional functionality, if you like.
+``ssh`` you can use additional functionality.
 It is used for:
 
 - ``matrixctl adduser-jisi``
 - ``matrixctl deluser-jisi``
-- ``matrixctl get-event``
 
 .. note:: If you are not sure, what to fill in that config file, read the rest
           of the "Getting Started" section of this documentation.
@@ -66,3 +74,12 @@ It is used for:
              to read or edit your config file. I contains sensitive data.
 
 .. include::  config_file_snippet.rst
+
+If you configure ``database``, you can use the following commands:
+
+- ``matrixctl get-event``
+- ``matrixctl get-events``
+
+.. note:: You need to create a new PostgreSQL role.
+          The must have the permission to login and ``SELECT`` permissions
+          for the ``json_events`` and ``events`` table.

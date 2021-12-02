@@ -36,6 +36,14 @@ Package Version
    :undoc-members:
    :show-inheritance:
 
+Sanitizers
+----------
+
+.. automodule:: matrixctl.sanitizers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Print
 -----
 
