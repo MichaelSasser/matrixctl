@@ -46,7 +46,7 @@ def get_colum_length(
     Returns
     -------
     column_length_tuple : None
-        A n-tuple which describes the longest srting per column. (n is the
+        A n-tuple which describes the longest string per column. (n is the
         number of columns)
 
     """
@@ -67,28 +67,28 @@ def get_colum_length(
 
 
 def transpose_newlines_to_rows(
-    splitted: list[list[str]], occurences: int
+    split: list[list[str]], occurrences: int
 ) -> Generator[list[str], None, None]:
     """Transpose newlines in new rows.
 
     Parameters
     ----------
-    splitted : list of list of str
-        A list of substring-lists, splitted from one row, which contains
+    split : list of list of str
+        A list of substring-lists, split from one row, which contains
         newline characters. The substing-lists are containing strings,
-        which have been splitted into substings.
-    occurences : int
+        which have been split into substings.
+    occurrences : int
         The maximal number of newlines across the row.
 
     Yields
     ------
     row : list[str]
-        A row for each occurence.
+        A row for each occurrence.
 
     """
-    for i in range(occurences + 1):
+    for i in range(occurrences + 1):
         row: list[str] = []
-        for column in splitted:
+        for column in split:
             try:
                 row.append(column[i])
             except IndexError:
@@ -120,16 +120,14 @@ def handle_newlines(
     inhibit_sep: set[int] = set()
     offset: int = 0  # grows with every inserted line
 
-    # occurences = the maximum number of newline chars in one row (not sum)
-    for line_number, occurences in newlines.items():
-        splitted = [
-            column.splitlines() for column in part[line_number + offset]
-        ]
-        # logger.debug(f"{splitted = }")
+    # occurrences = the maximum number of newline chars in one row (not sum)
+    for line_number, occurrences in newlines.items():
+        split = [column.splitlines() for column in part[line_number + offset]]
+        # logger.debug(f"{split = }")
 
         new_rows: Generator[
             list[str], None, None
-        ] = transpose_newlines_to_rows(splitted, occurences)
+        ] = transpose_newlines_to_rows(split, occurrences)
 
         # The first new line will replace the old line
         try:
@@ -152,7 +150,7 @@ def handle_newlines(
 def newlines_in_row(row: list[str]) -> int:
     """Get the highest number of newlines per row.
 
-    The highest number of newlines for a row is used to dertermine in how
+    The highest number of newlines for a row is used to determine in how
     many rows the row gets expanded, to get one row per newline - 1.
 
     Parameters
@@ -170,7 +168,7 @@ def newlines_in_row(row: list[str]) -> int:
 
 
 def find_newlines(data: list[list[str]]) -> dict[int, int]:
-    """Find newlines and return a dict with positions (key) and occurences.
+    """Find newlines and return a dict with positions (key) and occurrences.
 
     Notes
     -----
@@ -203,7 +201,7 @@ def format_table_row(line: list[str], max_column_len: tuple[int, ...]) -> str:
     line : list of str
         A data or headers row, which will be formatted to a string.
     max_column_len : tuple of int
-        A n-tuple which describes the longest srting per column. (n is the
+        A n-tuple which describes the longest string per column. (n is the
         number of columns)
 
     Returns
@@ -254,16 +252,18 @@ def table(
     table_headers : collections.abc.Sequence of str, Optional
         Headers.
     sep : bool, default = True
-        ``True``, when ther should be a separator between every row of data.
+        ``True``, when there should be a separator between every row of data.
     none : str, default = "-"
         A string, which is used to replace ``None`` with the specific string.
 
     Yields
     ------
     table : Generator [str, None, None]
-    The table (row for row).
+        The table (row for row).
 
     """
+    if not table_data:
+        return
     # data: list[Sequence[str]] = list(table_data)
     data: list[list[str]] = cells_to_str(table_data, none)
 
@@ -293,12 +293,12 @@ def table(
         f"Inhibit the creation of newlines in rows: {inhibit_sep} in data."
     )
 
-    # The 2 in (i + 2) gives 1 extra spcae left and right of the column
+    # The 2 in (i + 2) gives 1 extra space left and right of the column
     sep_line_data: str = f"|{'+'.join('-' * (i + 2) for i in max_column_len)}|"
     sep_line: str = sep_line_data.replace("|", "+")
     sep_line_header: str = sep_line.replace("-", "=")
 
-    yield sep_line  # Top seperator (will be always printed)
+    yield sep_line  # Top separator (will be always printed)
     if headers is not None:
         for line in headers:
             yield format_table_row(line, max_column_len)
