@@ -158,7 +158,7 @@ class RequestBuilder:
         """
         headers = self.headers | {
             "User-Agent": f"matrixctl{__version__}",
-            "Authorization": f"Bearer [redacted]",
+            "Authorization": "Bearer [redacted]",
         }
 
         return (
