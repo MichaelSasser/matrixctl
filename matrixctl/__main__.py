@@ -114,7 +114,9 @@ def setup_logging(debug_mode: bool) -> None:
     )
 
     logger_httpx = logging.getLogger("hpack.hpack")
+    logger_sshtunnel = logging.getLogger("sshtunnel")
     logger_httpx.setLevel(logging.INFO if debug_mode else logging.WARNING)
+    logger_sshtunnel.disabled = not debug_mode
 
 
 def main() -> int:

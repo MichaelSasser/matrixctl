@@ -21,14 +21,13 @@ from __future__ import annotations
 
 import json
 import logging
-import re
+import typing as t
 
 from argparse import Namespace
-from base64 import b64encode
 
-from matrixctl.handlers.ssh import SSH
-from matrixctl.handlers.ssh import SSHResponse
+from matrixctl.handlers.db import db_connect
 from matrixctl.handlers.yaml import YAML
+from matrixctl.sanitizers import sanitize_event_identifier
 
 
 __author__: str = "Michael Sasser"
@@ -36,8 +35,6 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 logger = logging.getLogger(__name__)
-
-JID_EXT: str = "matrix-jitsi-web"
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
@@ -60,72 +57,24 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
 
-    address = (
-        yaml.get("server", "ssh", "address")
-        if yaml.get("server", "ssh", "address")
-        else f"matrix.{yaml.get('server', 'api', 'domain')}"
-    )
-
-    is_valid_event_id = re.match(r"^\$[0-9a-zA-Z.=_-]{1,255}$", arg.event_id)
-    if not is_valid_event_id:
-        logger.error(
-            "The given event_id has an invalid format. Please make sure you "
-            "use one with the correct format. "
-            "Example: $tjeDdqYAk9BDLAUcniGUy640e_D9TrWU2RmCksJQQEQ"
-        )
+    event_identifier: str | t.Literal[
+        False
+    ] | None = sanitize_event_identifier(arg.event_id)
+    if not event_identifier:
         return 1
 
-    # Workaround because of "$" through: paramiko - bash - psql
-    event64 = b64encode(arg.event_id.encode("utf-8")).decode("utf-8")
-
-    query: str = "SELECT json FROM event_json WHERE event_id='$event'"
-    cmd: str = "/usr/local/bin/matrix-postgres-cli -P pager"
-    table: str = "synapse"
-
-    command: str = (  # Workaround
-        f"event=$(echo '{event64}' | base64 -d -) && "
-        f'sudo {cmd} -d {table} -c "{query}"'
-    )
-
-    logger.debug(f"command: {command}")
-
-    with SSH(
-        address,
-        yaml.get("server", "ssh", "user"),
-        yaml.get("server", "ssh", "port"),
-    ) as ssh:
-        response: SSHResponse = ssh.run_cmd(command, tty=True)
-
-    if not response.stderr:
-        logger.debug(f"response: {response.stdout}")
-        if response.stdout:
-            start: int = response.stdout.find("{")
-            stop: int = response.stdout.rfind("}") + 1
-            logger.debug(f"{start=}, {stop=}")
-            if start == -1 and stop == 0:  # "empty" response
-                logger.error(
-                    "The event_id was not not in the Database. Please check "
-                    "if you entered the correct one. "
-                )
-                return 1
-            try:
-                print(
-                    json.dumps(
-                        json.loads(response.stdout[start:stop]), indent=4
-                    )
-                )
-                return 0
-            except json.decoder.JSONDecodeError:
-                logger.error("Unable to process the response data to JSON.")
-                return 1
-        print("The response from the Database was empty.")
-        return 0
-    logger.error(f"response: {response.stderr}")
-    print(
-        "An error occurred during the query. Are you sure, you used the "
-        "correct event_id?"
-    )
-    return 1
+    with db_connect(yaml) as conn, conn.cursor() as cur:
+        cur.execute(
+            "SELECT json FROM event_json WHERE event_id=(%s)",
+            (event_identifier,),
+        )
+        response = cur.fetchone()[0]
+    try:
+        print(json.dumps(json.loads(response), indent=4))
+    except json.decoder.JSONDecodeError:
+        logger.error("Unable to process the response data to JSON.")
+        return 1
+    return 0
 
 
 # vim: set ft=python :

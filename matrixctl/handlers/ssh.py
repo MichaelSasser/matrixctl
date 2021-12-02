@@ -20,6 +20,7 @@
 from __future__ import annotations
 
 import logging
+import shlex
 
 from getpass import getuser
 from types import TracebackType
@@ -113,7 +114,7 @@ class SSH:
         except OSError:
             return None
 
-    def run_cmd(self, cmd: str, tty: bool = False) -> SSHResponse:
+    def run_cmd(self, cmd: str) -> SSHResponse:
         """Run a command on the host machine and receive a response.
 
         Parameters
@@ -132,10 +133,9 @@ class SSH:
         logger.debug(f'SSH Command: "{cmd}"')
 
         response: SSHResponse = SSHResponse(
-            # skipcq: BAN-B601
             *[
                 self.__str_from(s)
-                for s in self.__client.exec_command(cmd, get_pty=tty)
+                for s in self.__client.exec_command(shlex.quote(cmd))
             ]
         )
 
