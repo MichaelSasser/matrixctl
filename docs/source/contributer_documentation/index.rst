@@ -16,7 +16,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =========================
-Contributer Documentation
+Contributor Documentation
 =========================
 
 First off, thank you for considering contributing to MatrixCtl. Please make sure

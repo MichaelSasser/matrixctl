@@ -65,7 +65,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
         domain=yaml.get("server", "api", "domain"),
-        path=("purge_media_cache"),
+        path="purge_media_cache",
         params={"before_ts": timestamp},
         api_version="v1",
         method="POST",
@@ -92,7 +92,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
             logger.error("Unable to process the response data to JSON.")
             return 1
     else:
-        print(f"Deleted Rooms: {json_response['deleted']}")
+        print(f"Deleted Media Files: {json_response['deleted']}")
 
     return 0
 
@@ -128,8 +128,7 @@ def handle_timestamp(timestamp: int | None, force: bool) -> int:
         logger.info(f"Delete until {dt=}")
     except (OverflowError, OSError, ValueError):
         logger.fatal(
-            f"The argument timestamp = {timestamp} is not a valid "
-            "timestamp."
+            f"The argument timestamp = {timestamp} is not a valid timestamp."
         )
     return timestamp
 

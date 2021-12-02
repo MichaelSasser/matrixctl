@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
-    """Upload a file or image to the matix instance.
+    """Upload a file or image to the matrix instance.
 
     Parameters
     ----------

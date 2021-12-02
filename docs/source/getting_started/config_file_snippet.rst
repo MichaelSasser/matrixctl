@@ -18,7 +18,7 @@
 
        # If your matrix server is deployed, you may want to fill out the API section.
        # It enables matrixctl to run more and faster commands. You can deploy and
-       # provision your Server without this section. You also can cerate a user with
+       # provision your Server without this section. You also can create a user with
        # "matrixctl adduser --ansible YourUsername" and add your privileges after
        # that.
        api:
@@ -54,11 +54,28 @@
          # The default username is your current login name.
          user: john
 
-       # Define your maintainance tasks
+       # Define your maintenance tasks
        maintenance:
          tasks:
            - compress-state  # Compress synapses state table
            - vacuum          # VACUUM the synapse database (garbage-collection)
+
+       # Add connection parameters to the Database
+       # Synapse does only read (SELECT) information from the database.
+       # The user needs to be able to login to the synapse database
+       # and SELECT from the events and event_json tables.
+       database:
+         synapse_database: synapse  # this is the playbooks default table name
+         synapse_user: matrixctl    # the username (role) for the database
+         synapse_password: "RolePassword"
+         tunnel: true        # true if an ssh tunnel should be used to connect
+
+         # The port that was used in the playbook  (e.g.
+         # matrix_postgres_container_postgres_bind_port: 5432)
+         # or for your external database. For security reasons the port
+         # should be blocked by your firewall. Iy you enable the tunnel
+         # by setting tunnel: true, MatrixCtl activates a SSH tunnel.
+         port: 5432          # the remote port
 
      # Another server.
      foo:

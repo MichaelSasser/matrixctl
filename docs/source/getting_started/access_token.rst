@@ -34,7 +34,7 @@ no access to the admin API. After all that steps you don't need the
 
 .. note:: You can use this user account as your personal main user account.
 
-.. note:: If you have alredy created an admin user account ignore this step
+.. note:: If you have already created an admin user account ignore this step
           and continue below.
 
 Now Open ``https://element.yourdomain.tld`` to login.
