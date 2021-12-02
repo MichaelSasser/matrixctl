@@ -63,13 +63,12 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     if not event_identifier:
         return 1
 
-    with db_connect(yaml) as conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                "SELECT json FROM event_json WHERE event_id=(%s)",
-                (event_identifier,),
-            )
-            response = cur.fetchone()[0]
+    with db_connect(yaml) as conn, conn.cursor() as cur:
+        cur.execute(
+            "SELECT json FROM event_json WHERE event_id=(%s)",
+            (event_identifier,),
+        )
+        response = cur.fetchone()[0]
     try:
         print(json.dumps(json.loads(response), indent=4))
     except json.decoder.JSONDecodeError:
