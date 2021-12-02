@@ -3,6 +3,36 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 
 .. towncrier release notes start
 
+0.12.0-beta.1 (2021-12-02)
+==========================
+
+Behavior & Breaking Changes
+---------------------------
+
+- This release changes how MatrixCtl connects to the database. Therefore
+  the configuration file must be changed. Please check the
+  `documentation<https://matrixctl.readthedocs.io/en/stable/getting_started/config_file.html>`_
+  for more information. (`#313
+  <https://github.com/MichaelSasser/matrixctl/issues/313>`_)
+
+
+Features & Improvements
+-----------------------
+
+- ``get-event`` and ``get-events`` are not using psycopg instead of a docker
+  command (`#313 <https://github.com/MichaelSasser/matrixctl/issues/313>`_)
+
+
+Bugfixes
+--------
+
+- Empty data for the table handler does no longer raise an error. (`#309
+  <https://github.com/MichaelSasser/matrixctl/issues/309>`_)
+- The message ``Deleted Rooms: 0`` in ``purge-remote-media`` has been corrected
+  to ``Deleted Media Files: 0`` (`#311
+  <https://github.com/MichaelSasser/matrixctl/issues/311>`_)
+
+
 0.11.5 (2021-12-01)
 ===================
 
