@@ -95,9 +95,11 @@ def ssh_tunnel(
 
     Examples
     --------
-    >>> with ssh_tunnel(127.0.0.1, myuser, 5432) as remote_port:
-    >>>     print(f"The local bind port is: {local_bind_port}")
-    The local bind port is: 8765
+    .. code-block:: python
+
+       with ssh_tunnel("127.0.0.1", myuser, 5432) as remote_port:
+           print(f"The local bind port is: {local_bind_port}")
+       # The local bind port is: 8765
 
     Parameters
     ----------
