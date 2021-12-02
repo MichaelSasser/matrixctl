@@ -21,13 +21,11 @@ from __future__ import annotations
 
 import json
 import logging
+import typing as t
 
 from argparse import Namespace
 
-import psycopg
-
-from matrixctl.handlers.db import DBConnectionBuilder
-from matrixctl.handlers.ssh_tunnel import ssh_tunnel
+from matrixctl.handlers.db import db_connect
 from matrixctl.handlers.yaml import YAML
 from matrixctl.sanitizers import sanitize_event_identifier
 
@@ -37,8 +35,6 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 logger = logging.getLogger(__name__)
-
-JID_EXT: str = "matrix-jitsi-web"
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
@@ -61,51 +57,19 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
 
-    if not sanitize_event_identifier(arg.event_id):
+    event_identifier: str | t.Literal[
+        False
+    ] | None = sanitize_event_identifier(arg.event_id)
+    if not event_identifier:
         return 1
 
-    address = (
-        yaml.get("server", "ssh", "address")
-        if yaml.get("server", "ssh", "address")
-        else f"matrix.{yaml.get('server', 'api', 'domain')}"
-    )
-
-    with ssh_tunnel(
-        host=address,
-        port=int(yaml.get("server", "ssh", "port")),
-        username=yaml.get("server", "ssh", "user"),
-        remote_port=yaml.get("server", "database", "port"),
-        enabled=yaml.get("server", "database", "tunnel"),
-        private_key=None,  # TODO yaml.get("server", "database", "private_key")
-    ) as tunnel:
-        database_port = None
-        if tunnel:
-            database_port = tunnel.local_bind_port
-
-        connection_uri = DBConnectionBuilder(
-            host=(
-                "127.0.0.1"
-                if yaml.get("server", "database", "tunnel")
-                else address
-            ),
-            port=int(
-                database_port or yaml.get("server", "database", "port")
-                if yaml.get("server", "database", "tunnel")
-                else yaml.get("server", "database", "port")
-            ),
-            username=yaml.get("server", "database", "synapse_user"),
-            password=yaml.get("server", "database", "synapse_password"),
-            database=yaml.get("server", "database", "synapse_database"),
-        )
-        with psycopg.connect(str(connection_uri)) as conn:
-            with conn.cursor() as cur:
-
-                cur.execute(
-                    "SELECT json FROM event_json WHERE event_id=(%s)",
-                    (str(arg.event_id),),
-                )
-                response = cur.fetchone()[0]
-    print(response)
+    with db_connect(yaml) as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT json FROM event_json WHERE event_id=(%s)",
+                (event_identifier,),
+            )
+            response = cur.fetchone()[0]
     try:
         print(json.dumps(json.loads(response), indent=4))
     except json.decoder.JSONDecodeError:

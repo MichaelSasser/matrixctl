@@ -21,9 +21,17 @@
 from __future__ import annotations
 
 import logging
+import sys
 import typing as t
 import urllib.parse
 
+from collections.abc import Iterator
+from contextlib import contextmanager
+
+import psycopg
+import sshtunnel
+
+from .yaml import YAML
 
 
 __author__: str = "Michael Sasser"
@@ -66,6 +74,125 @@ class DBConnectionBuilder(t.NamedTuple):
         )
         url = urllib.parse.urlparse(url).geturl()
         return url
+
+
+@contextmanager
+def ssh_tunnel(
+    host: str,
+    username: str,
+    remote_port: int,
+    enabled: bool = True,
+    port: int = 22,
+    # private_key: Path | str | None = None,
+) -> Iterator[int | None]:
+    """Create an SSH tunnel.
+
+    Notes
+    -----
+    The tunnel will only be created, when it is enabled. If the tunnel is
+    disabled (``enabled = False``), the function will yield ``None`` instead
+    of the local bind port.
+
+    Examples
+    --------
+    >>> with ssh_tunnel(127.0.0.1, myuser, 5432) as remote_port:
+    >>>     print(f"The local bind port is: {local_bind_port}")
+    The local bind port is: 8765
+
+    Parameters
+    ----------
+    host : str
+        The remote host e.g. ``127.0.0.1`` or ``host.domain.tld``.
+    username : str
+        The username of the user.
+    remote_port : int
+        The port of the application, which should be tunneled.
+    enabled : bool, default: True
+        ``True`` if the tunnel should be enabled or ``False`` if not.
+    port : int, default: 22
+        The ssh port
+    private_key : Path or str, optioal
+        The path to the private key (Currently Disabled)
+
+    Yields
+    ------
+    tun : int
+        The remote port
+    None : None
+        Yields none, when the tunnel is disabled (``enabled = False``).
+
+    """
+    if enabled:
+        tun = sshtunnel.SSHTunnelForwarder(
+            ssh_address_or_host=(host, port),
+            ssh_username=username,
+            remote_bind_address=("127.0.0.1", remote_port),
+            ssh_pkey=None,
+            logger=logging.getLogger(sshtunnel.__name__),
+        )
+
+        try:
+            tun.start()
+            logger.debug(
+                "SSH tunnel created using port: %s", tun.local_bind_port
+            )
+            yield tun.local_bind_port
+        finally:
+            tun.stop()
+            logger.debug("SSH tunnel closed")
+        return
+    yield None
+
+
+@contextmanager
+def db_connect(yaml: YAML) -> Iterator[psycopg.Connection]:
+    """Connect to a PostgreSQL database.
+
+    Parameters
+    ----------
+    yaml : matrixctl.handlers.yaml.YAML
+        The configuration file handler.
+
+    Yields
+    ------
+    conn : psycopg.Connection
+        A new ``Connection`` instance.
+
+    """
+    with ssh_tunnel(
+        host=yaml.get("server", "ssh", "address"),
+        port=int(yaml.get("server", "ssh", "port")),
+        username=yaml.get("server", "ssh", "user"),
+        remote_port=yaml.get("server", "database", "port"),
+        enabled=yaml.get("server", "database", "tunnel"),
+        # private_key=yaml.get("server", "database", "private_key")
+    ) as local_bind_port:
+        connection_uri = DBConnectionBuilder(
+            host=(
+                "127.0.0.1"
+                if yaml.get("server", "database", "tunnel")
+                else yaml.get("server", "ssh", "address")
+            ),
+            port=int(
+                local_bind_port or yaml.get("server", "database", "port")
+            ),
+            username=yaml.get("server", "database", "synapse_user"),
+            password=yaml.get("server", "database", "synapse_password"),
+            database=yaml.get("server", "database", "synapse_database"),
+        )
+        conn = psycopg.connect(str(connection_uri))
+        try:
+            yield conn
+        except BaseException as e:
+            logger.error("Rollback initiated.BaseException: %s", e)
+            conn.rollback()
+            sys.exit(1)
+        else:
+            conn.commit()
+            logger.debug("successful -> commit")
+        finally:
+            conn.close()
+            logger.debug("Connection to the Database has been closed.")
 
 
 # vim: set ft=python :
