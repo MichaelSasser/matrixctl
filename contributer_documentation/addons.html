@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Addons &mdash; MatrixCtl 0.11.5 documentation</title>
+  <title>Addons &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -31,7 +31,7 @@
             <a href="../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                0.11.5
+                0.12.0-beta.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -45,7 +45,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting Started</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributer Documentation</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Contributor Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="handlers.html">Handlers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="helpers.html">Helpers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="type_hints_structures_and_errors.html">Type Hints, Structures and Errors</a></li>
@@ -71,7 +71,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Contributer Documentation</a> &raquo;</li>
+          <li><a href="index.html">Contributor Documentation</a> &raquo;</li>
       <li>Addons</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/contributer_documentation/addons.rst.txt" rel="nofollow"> View page source</a>
@@ -852,11 +852,6 @@ The <code class="docutils literal notranslate"><span class="pre">generate_user_t
 </pre></div>
 </div>
 <p>If the user does not exist, the return looks like:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>matrixctl user mose
-<span class="go">2020-04-14 13:58:13 - ERROR - The request was not successful.</span>
-<span class="go">2020-04-14 13:58:13 - ERROR - There is no user with that username.</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <span class="target" id="module-matrixctl.addons.user.to_table"></span><p>Use this module to add the <code class="docutils literal notranslate"><span class="pre">rooms</span></code> subcommand to <code class="docutils literal notranslate"><span class="pre">matrixctl</span></code>.</p>
@@ -1669,7 +1664,7 @@ to the latest <code class="docutils literal notranslate"><span class="pre">synap
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.addons.upload.addon.addon">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.addons.upload.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/upload/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.upload.addon.addon" title="Permalink to this definition"></a></dt>
-<dd><p>Upload a file or image to the matix instance.</p>
+<dd><p>Upload a file or image to the matrix instance.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
@@ -1850,107 +1845,6 @@ by the synapse playbook to run a query on the Database.</p>
 </dd></dl>
 
 <span class="target" id="module-matrixctl.addons.get_events.addon"></span><p>Use this module to get an event from the Database.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.addons.get_events.addon.</span></span><span class="sig-name descname"><span class="pre">MessageType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/get_events/addon.html#MessageType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
-<p>Use this enum for describing message types.</p>
-<p>Supported events:</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 29%" />
-<col style="width: 71%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>message_type</p></th>
-<th class="head"><p>Usage</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>m.room.message</p></td>
-<td><p>This event is used when sending messages in a room</p></td>
-</tr>
-<tr class="row-odd"><td><p>m.room.name</p></td>
-<td><p>This event sets the name of an room</p></td>
-</tr>
-<tr class="row-even"><td><p>m.room.topic</p></td>
-<td><p>This events sets the room topic</p></td>
-</tr>
-<tr class="row-odd"><td><p>m.room.avatar</p></td>
-<td><p>This event sets the room avatar</p></td>
-</tr>
-<tr class="row-even"><td><p>m.room.pinned_events</p></td>
-<td><p>This event pins events</p></td>
-</tr>
-<tr class="row-odd"><td><p>m.room.member</p></td>
-<td><p>Adjusts the membership state for a user in a room</p></td>
-</tr>
-<tr class="row-even"><td><p>m.room.join_rules</p></td>
-<td><p>This event sets the join rules</p></td>
-</tr>
-<tr class="row-odd"><td><p>m.room.create</p></td>
-<td><p>This event creates a room</p></td>
-</tr>
-<tr class="row-even"><td><p>m.room.power_levels</p></td>
-<td><p>This event sets a rooms power levels</p></td>
-</tr>
-<tr class="row-odd"><td><p>m.room.redaction</p></td>
-<td><p>This event redacts other events</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_AVATAR">
-<span class="sig-name descname"><span class="pre">M_ROOM_AVATAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.avatar'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_AVATAR" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_CREATE">
-<span class="sig-name descname"><span class="pre">M_ROOM_CREATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.create'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_CREATE" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_JOIN_RULES">
-<span class="sig-name descname"><span class="pre">M_ROOM_JOIN_RULES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.join_rules'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_JOIN_RULES" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_MEMBER">
-<span class="sig-name descname"><span class="pre">M_ROOM_MEMBER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.member'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_MEMBER" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_MESSAGE">
-<span class="sig-name descname"><span class="pre">M_ROOM_MESSAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.message'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_MESSAGE" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_NAME">
-<span class="sig-name descname"><span class="pre">M_ROOM_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.name'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_NAME" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_PINNED_EVENTS">
-<span class="sig-name descname"><span class="pre">M_ROOM_PINNED_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.pinned_events'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_PINNED_EVENTS" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_POWER_LEVELS">
-<span class="sig-name descname"><span class="pre">M_ROOM_POWER_LEVELS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.power_levels'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_POWER_LEVELS" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_REDACTION">
-<span class="sig-name descname"><span class="pre">M_ROOM_REDACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.redaction'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_REDACTION" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.MessageType.M_ROOM_TOPIC">
-<span class="sig-name descname"><span class="pre">M_ROOM_TOPIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.topic'</span></em><a class="headerlink" href="#matrixctl.addons.get_events.addon.MessageType.M_ROOM_TOPIC" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.addons.get_events.addon.addon">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.addons.get_events.addon.</span></span><span class="sig-name descname"><span class="pre">addon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addons/get_events/addon.html#addon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addons.get_events.addon.addon" title="Permalink to this definition"></a></dt>

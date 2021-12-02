@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addons.get_event.addon &mdash; MatrixCtl 0.11.5 documentation</title>
+  <title>matrixctl.addons.get_event.addon &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -28,7 +28,7 @@
             <a href="../../../../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                0.11.5
+                0.12.0-beta.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -42,7 +42,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../getting_started/index.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../contributer_documentation/index.html">Contributer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributer_documentation/index.html">Contributor Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
 </ul>
 
@@ -94,14 +94,13 @@
 
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
 
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
-<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64encode</span>
 
-<span class="kn">from</span> <span class="nn">matrixctl.handlers.ssh</span> <span class="kn">import</span> <span class="n">SSH</span>
-<span class="kn">from</span> <span class="nn">matrixctl.handlers.ssh</span> <span class="kn">import</span> <span class="n">SSHResponse</span>
+<span class="kn">from</span> <span class="nn">matrixctl.handlers.db</span> <span class="kn">import</span> <span class="n">db_connect</span>
 <span class="kn">from</span> <span class="nn">matrixctl.handlers.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
+<span class="kn">from</span> <span class="nn">matrixctl.sanitizers</span> <span class="kn">import</span> <span class="n">sanitize_event_identifier</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -109,8 +108,6 @@
 
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-
-<span class="n">JID_EXT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;matrix-jitsi-web&quot;</span>
 
 
 <div class="viewcode-block" id="addon"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.get_event.addon.addon">[docs]</a><span class="k">def</span> <span class="nf">addon</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -133,72 +130,24 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">address</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;address&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;address&quot;</span><span class="p">)</span>
-        <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;matrix.</span><span class="si">{</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;server&#39;</span><span class="p">,</span> <span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="s1">&#39;domain&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="p">)</span>
-
-    <span class="n">is_valid_event_id</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\$[0-9a-zA-Z.=_-]{1,255}$&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">event_id</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid_event_id</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-            <span class="s2">&quot;The given event_id has an invalid format. Please make sure you &quot;</span>
-            <span class="s2">&quot;use one with the correct format. &quot;</span>
-            <span class="s2">&quot;Example: $tjeDdqYAk9BDLAUcniGUy640e_D9TrWU2RmCksJQQEQ&quot;</span>
-        <span class="p">)</span>
+    <span class="n">event_identifier</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitize_event_identifier</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">event_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">event_identifier</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">1</span>
 
-    <span class="c1"># Workaround because of &quot;$&quot; through: paramiko - bash - psql</span>
-    <span class="n">event64</span> <span class="o">=</span> <span class="n">b64encode</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">event_id</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-
-    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;SELECT json FROM event_json WHERE event_id=&#39;$event&#39;&quot;</span>
-    <span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;/usr/local/bin/matrix-postgres-cli -P pager&quot;</span>
-    <span class="n">table</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;synapse&quot;</span>
-
-    <span class="n">command</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;event=$(echo &#39;</span><span class="si">{</span><span class="n">event64</span><span class="si">}</span><span class="s2">&#39; | base64 -d -) &amp;&amp; &quot;</span>  <span class="c1"># Workaround</span>
-        <span class="sa">f</span><span class="s1">&#39;sudo </span><span class="si">{</span><span class="n">cmd</span><span class="si">}</span><span class="s1"> -d </span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s1"> -c &quot;</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
-    <span class="p">)</span>
-
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;command: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">with</span> <span class="n">SSH</span><span class="p">(</span>
-        <span class="n">address</span><span class="p">,</span>
-        <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">),</span>
-        <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">),</span>
-    <span class="p">)</span> <span class="k">as</span> <span class="n">ssh</span><span class="p">:</span>
-        <span class="n">response</span><span class="p">:</span> <span class="n">SSHResponse</span> <span class="o">=</span> <span class="n">ssh</span><span class="o">.</span><span class="n">run_cmd</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">tty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="o">.</span><span class="n">stderr</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;response: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">stdout</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">stdout</span><span class="p">:</span>
-            <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">)</span>
-            <span class="n">stop</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">start</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">stop</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">stop</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># &quot;empty&quot; response</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                    <span class="s2">&quot;The event_id was not not in the Database. Please check &quot;</span>
-                    <span class="s2">&quot;if you entered the correct one. &quot;</span>
-                <span class="p">)</span>
-                <span class="k">return</span> <span class="mi">1</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span>
-                    <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
-                        <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">stdout</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">stop</span><span class="p">]),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-                <span class="k">return</span> <span class="mi">0</span>
-            <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unable to process the response data to JSON.&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="mi">1</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The response from the Database was empty.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;response: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="s2">&quot;An error occured during the query. Are you sure, you used the &quot;</span>
-        <span class="s2">&quot;correct event_id?&quot;</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="mi">1</span></div>
+    <span class="k">with</span> <span class="n">db_connect</span><span class="p">(</span><span class="n">yaml</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">,</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+            <span class="s2">&quot;SELECT json FROM event_json WHERE event_id=(</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">event_identifier</span><span class="p">,),</span>
+        <span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unable to process the response data to JSON.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
 
 
 <span class="c1"># vim: set ft=python :</span>

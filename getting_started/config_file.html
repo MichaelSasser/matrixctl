@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Config File &mdash; MatrixCtl 0.11.5 documentation</title>
+  <title>Config File &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -31,7 +31,7 @@
             <a href="../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                0.11.5
+                0.12.0-beta.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -51,7 +51,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ssh_pubkey.html">SSH Public Key</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../contributer_documentation/index.html">Contributer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributer_documentation/index.html">Contributor Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 </ul>
 
@@ -90,11 +90,12 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">synapse</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">api</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ssh</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">database</span></code></p></li>
 </ul>
-<p>In the <code class="docutils literal notranslate"><span class="pre">ansible</span></code> section fill in the absolute path to your fully configured
+<p>In <code class="docutils literal notranslate"><span class="pre">ansible</span></code> fill in the absolute path to your fully configured
 Playbook. Make sure ansible is configured correctly on your system.
 To get started, follow the <a class="reference internal" href="synapse_playbook.html#synapse-playbook"><span class="std std-ref">Synapse Playbook</span></a> guide.
-You need this section, if you want to:</p>
+You need this section, if you want to use one of the following commands:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">adduser</span> <span class="pre">--ansible</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">deploy</span></code></p></li>
@@ -105,18 +106,17 @@ You need this section, if you want to:</p>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you want to run (multiple) playbooks you can create a file which
+<p>If you want to run more than one playbook you can create a file which
 contains <code class="docutils literal notranslate"><span class="pre">import_playbook</span></code> lines like:
 <code class="docutils literal notranslate"><span class="pre">-</span> <span class="pre">import_playbook:</span> <span class="pre">/PathTo/matrix-docker-ansible-deploy/setup.yml</span></code>
 and configure it as playbook in the matrixctl config file.</p>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">synapse</span></code> section is used for update (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>) the synapse
-playbook
+<p><code class="docutils literal notranslate"><span class="pre">synapse</span></code> is used to update (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>) the synapse playbook
 You need this section, if you want to:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">update</span></code></p></li>
 </ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">api</span></code> section is used to communicate with the synapse API directly.
+<p><code class="docutils literal notranslate"><span class="pre">api</span></code> is used to communicate with the synapse API directly.
 This is faster and has more additional functionality then the
 <a class="reference external" href="https://github.com/spantaleev/matrix-docker-ansible-deploy">Synapse</a>
 playbook. To get started, follow the <a class="reference internal" href="access_token.html#access-token"><span class="std std-ref">Access Token</span></a> guide.
@@ -133,13 +133,21 @@ It is used for:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">server-notice</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">purge-history</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">version</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">delete-local-media</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">get-event-context</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">is-admin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">joinroom</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">make-room-admin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">purge-remote-media</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">report</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">reports</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">set-admin</span></code></p></li>
 </ul>
-<p>With the <code class="docutils literal notranslate"><span class="pre">ssh</span></code> section you can use additional functionality, if you like.
+<p><code class="docutils literal notranslate"><span class="pre">ssh</span></code> you can use additional functionality.
 It is used for:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">adduser-jisi</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">deluser-jisi</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">get-event</span></code></p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -168,7 +176,7 @@ to read or edit your config file. I contains sensitive data.</p>
 <span class="linenos">15</span>
 <span class="linenos">16</span>    <span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
 <span class="linenos">17</span>    <span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
-<span class="linenos">18</span>    <span class="c1"># provision your Server without this section. You also can cerate a user with</span>
+<span class="linenos">18</span>    <span class="c1"># provision your Server without this section. You also can create a user with</span>
 <span class="linenos">19</span>    <span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
 <span class="linenos">20</span>    <span class="c1"># that.</span>
 <span class="linenos">21</span>    <span class="nt">api</span><span class="p">:</span>
@@ -204,16 +212,44 @@ to read or edit your config file. I contains sensitive data.</p>
 <span class="linenos">51</span>      <span class="c1"># The default username is your current login name.</span>
 <span class="linenos">52</span>      <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">john</span>
 <span class="linenos">53</span>
-<span class="linenos">54</span>    <span class="c1"># Define your maintainance tasks</span>
+<span class="linenos">54</span>    <span class="c1"># Define your maintenance tasks</span>
 <span class="linenos">55</span>    <span class="nt">maintenance</span><span class="p">:</span>
 <span class="linenos">56</span>      <span class="nt">tasks</span><span class="p">:</span>
 <span class="linenos">57</span>        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">compress-state</span>  <span class="c1"># Compress synapses state table</span>
 <span class="linenos">58</span>        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">vacuum</span>          <span class="c1"># VACUUM the synapse database (garbage-collection)</span>
 <span class="linenos">59</span>
-<span class="linenos">60</span>  <span class="c1"># Another server.</span>
-<span class="linenos">61</span>  <span class="nt">foo</span><span class="p">:</span>
-<span class="linenos">62</span>    <span class="c1"># ...</span>
+<span class="linenos">60</span>    <span class="c1"># Add connection parameters to the Database</span>
+<span class="linenos">61</span>    <span class="c1"># Synapse does only read (SELECT) information from the database.</span>
+<span class="linenos">62</span>    <span class="c1"># The user needs to be able to login to the synapse database</span>
+<span class="linenos">63</span>    <span class="c1"># and SELECT from the events and event_json tables.</span>
+<span class="linenos">64</span>    <span class="nt">database</span><span class="p">:</span>
+<span class="linenos">65</span>      <span class="nt">synapse_database</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">synapse</span>  <span class="c1"># this is the playbooks default table name</span>
+<span class="linenos">66</span>      <span class="nt">synapse_user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">matrixctl</span>    <span class="c1"># the username (role) for the database</span>
+<span class="linenos">67</span>      <span class="nt">synapse_password</span><span class="p">:</span> <span class="s">&quot;RolePassword&quot;</span>
+<span class="linenos">68</span>      <span class="nt">tunnel</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>        <span class="c1"># true if an ssh tunnel should be used to connect</span>
+<span class="linenos">69</span>
+<span class="linenos">70</span>      <span class="c1"># The port that was used in the playbook  (e.g.</span>
+<span class="linenos">71</span>      <span class="c1"># matrix_postgres_container_postgres_bind_port: 5432)</span>
+<span class="linenos">72</span>      <span class="c1"># or for your external database. For security reasons the port</span>
+<span class="linenos">73</span>      <span class="c1"># should be blocked by your firewall. Iy you enable the tunnel</span>
+<span class="linenos">74</span>      <span class="c1"># by setting tunnel: true, MatrixCtl activates a SSH tunnel.</span>
+<span class="linenos">75</span>      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5432</span>          <span class="c1"># the remote port</span>
+<span class="linenos">76</span>
+<span class="linenos">77</span>  <span class="c1"># Another server.</span>
+<span class="linenos">78</span>  <span class="nt">foo</span><span class="p">:</span>
+<span class="linenos">79</span>    <span class="c1"># ...</span>
 </pre></div>
+</div>
+<p>If you configure <code class="docutils literal notranslate"><span class="pre">database</span></code>, you can use the following commands:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">get-event</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">matrixctl</span> <span class="pre">get-events</span></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You need to create a new PostgreSQL role.
+The must have the permission to login and <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> permissions
+for the <code class="docutils literal notranslate"><span class="pre">json_events</span></code> and <code class="docutils literal notranslate"><span class="pre">events</span></code> table.</p>
 </div>
 </section>
 

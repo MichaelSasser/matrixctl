@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SSH Public Key &mdash; MatrixCtl 0.11.5 documentation</title>
+  <title>SSH Public Key &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Contributer Documentation" href="../contributer_documentation/index.html" />
+    <link rel="next" title="Contributor Documentation" href="../contributer_documentation/index.html" />
     <link rel="prev" title="Access Token" href="access_token.html" /> 
 </head>
 
@@ -31,7 +31,7 @@
             <a href="../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                0.11.5
+                0.12.0-beta.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -51,7 +51,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">SSH Public Key</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../contributer_documentation/index.html">Contributer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributer_documentation/index.html">Contributor Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 </ul>
 
@@ -104,8 +104,8 @@ described in <a class="reference internal" href="config_file.html#config-file"><
 section. If you don’t want to write your own playbook, follow this
 guide.</p>
 </div>
-<section id="check-your-keypair">
-<h2>Check your keypair<a class="headerlink" href="#check-your-keypair" title="Permalink to this headline"></a></h2>
+<section id="check-your-key-pair">
+<h2>Check your key pair<a class="headerlink" href="#check-your-key-pair" title="Permalink to this headline"></a></h2>
 <p>Check, if you alreadey have a key pair.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls -la ~/.ssh/id_*.pub
 <span class="go">-rw-r--r-- 1 michael users 767 30. Sep 2014  /home/michael/.ssh/id_rsa.pub</span>
@@ -114,7 +114,7 @@ guide.</p>
 <p>If the output looks like the above, you have generated a keypare in the past
 and you can continue in the next section <a class="reference internal" href="#copy-public-key"><span class="std std-ref">Copy Public Key</span></a>.</p>
 <p>If it looks something like below or prints something like you can continue in
-the section: <a class="reference internal" href="#generate-keypair"><span class="std std-ref">Generate Keypair</span></a>.</p>
+the section: <a class="reference internal" href="#generate-key-pair"><span class="std std-ref">Generate key pair</span></a>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls -la ~/.ssh/id_*.pub
 <span class="go">zsh: no matches found: /home/michael/.ssh/id_*.pub</span>
 <span class="gp"># </span>or
@@ -123,9 +123,9 @@ the section: <a class="reference internal" href="#generate-keypair"><span class=
 </pre></div>
 </div>
 </section>
-<section id="generate-keypair">
-<h2>Generate Keypair<a class="headerlink" href="#generate-keypair" title="Permalink to this headline"></a></h2>
-<p>To generate your keypair run:</p>
+<section id="generate-key-pair">
+<h2>Generate key pair<a class="headerlink" href="#generate-key-pair" title="Permalink to this headline"></a></h2>
+<p>To generate your key pair run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir ~/.ssh
 <span class="gp">$ </span>ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&quot;your_email@domain.tld&quot;</span>
 <span class="go">Generating public/private rsa key pair.</span>
@@ -219,7 +219,7 @@ the section: <a class="reference internal" href="#generate-keypair"><span class=
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="access_token.html" class="btn btn-neutral float-left" title="Access Token" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../contributer_documentation/index.html" class="btn btn-neutral float-right" title="Contributer Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../contributer_documentation/index.html" class="btn btn-neutral float-right" title="Contributor Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

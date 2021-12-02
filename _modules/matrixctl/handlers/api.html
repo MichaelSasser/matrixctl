@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.handlers.api &mdash; MatrixCtl 0.11.5 documentation</title>
+  <title>matrixctl.handlers.api &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -28,7 +28,7 @@
             <a href="../../../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                0.11.5
+                0.12.0-beta.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -42,7 +42,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../contributer_documentation/index.html">Contributer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributer_documentation/index.html">Contributor Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
 </ul>
 
@@ -229,9 +229,14 @@
 <span class="sd">            Data of this class in string representation.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">|</span> <span class="p">{</span>
+            <span class="s2">&quot;User-Agent&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;matrixctl</span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;Bearer [redacted]&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
         <span class="k">return</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="se">{{</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;headers=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="si">}</span><span class="s2">, params=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="si">}</span><span class="s2">, data=&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;headers=</span><span class="si">{</span><span class="n">headers</span><span class="si">}</span><span class="s2">, params=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="si">}</span><span class="s2">, data=&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;[binary]&#39;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2"> &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;success_codes=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">success_codes</span><span class="si">}</span><span class="s2">, json=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">json</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;token=[redacted (length=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">)</span><span class="si">}</span><span class="s2">)], &quot;</span>
@@ -243,7 +248,7 @@
 <div class="viewcode-block" id="preplan_request_strategy"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.preplan_request_strategy">[docs]</a><span class="k">def</span> <span class="nf">preplan_request_strategy</span><span class="p">(</span>
     <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">concurrent_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">max_step_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RequestStrategy</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Use this functiona as helper for optimizing asyncronous requests.</span>
+    <span class="sd">&quot;&quot;&quot;Use this functiona as helper for optimizing asynchronous requests.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -253,8 +258,8 @@
 <span class="sd">        The concurrent limit from the config file.</span>
 <span class="sd">    max_step_size : int, default=100</span>
 <span class="sd">        The maximal step size, which is a soft limit.</span>
-<span class="sd">        It is usualy 100, but that value might be different. Check out the API</span>
-<span class="sd">        documentation. We usualy take the default one.</span>
+<span class="sd">        It is usually 100, but that value might be different. Check out the API</span>
+<span class="sd">        documentation. We usually take the default one.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -605,7 +610,7 @@
 
 
 <span class="k">def</span> <span class="nf">_request</span><span class="p">(</span><span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Send an syncronus request to the synapse API and receive a response.</span>
+    <span class="sd">&quot;&quot;&quot;Send an synchronous request to the synapse API and receive a response.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -648,13 +653,13 @@
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-            <span class="s2">&quot;The server returned an 404 error. This can have two causes. &quot;</span>
-            <span class="s2">&quot;The first one is, you try to request a ressource, which does not &quot;</span>
-            <span class="s2">&quot;exist. The second one is, your API endpoint is disabled.&quot;</span>
-            <span class="s2">&quot;Make sure, that your vars.yml contains the &quot;</span>
-            <span class="s2">&quot;following excessive long line:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;matrix_nginx_proxy_proxy_matrix_client_api_forwarded_&quot;</span>
-            <span class="s2">&quot;location_synapse_admin_api_enabled: true&quot;</span>
+            <span class="s2">&quot;The server returned an 404 error. This can have multiple causes.&quot;</span>
+            <span class="s2">&quot; One of them is, you try to request a resource, which does not or&quot;</span>
+            <span class="s2">&quot; no longer exist. Another one is, your API endpoint is disabled.&quot;</span>
+            <span class="s2">&quot; Make sure, that your vars.yml contains the following excessive&quot;</span>
+            <span class="s2">&quot; long&quot;</span>
+            <span class="s2">&quot; line:</span><span class="se">\n\n</span><span class="s2">matrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_admin_api_enabled:&quot;</span>
+            <span class="s2">&quot; true&quot;</span>
         <span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
@@ -721,13 +726,13 @@
         <span class="k">raise</span> <span class="n">ExitQWorker</span><span class="p">()</span>  <span class="c1"># TODO</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-            <span class="s2">&quot;The server returned an 404 error. This can have two causes. &quot;</span>
-            <span class="s2">&quot;The first one is, you try to request a ressource, which does not &quot;</span>
-            <span class="s2">&quot;exist. The second one is, your API endpoint is disabled.&quot;</span>
-            <span class="s2">&quot;Make sure, that your vars.yml contains the &quot;</span>
-            <span class="s2">&quot;following excessive long line:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;matrix_nginx_proxy_proxy_matrix_client_api_forwarded_&quot;</span>
-            <span class="s2">&quot;location_synapse_admin_api_enabled: true&quot;</span>
+            <span class="s2">&quot;The server returned an 404 error. This can have multiple causes.&quot;</span>
+            <span class="s2">&quot; One of them is, you try to request a resource, which does not or&quot;</span>
+            <span class="s2">&quot; no longer exist. Another one is, your API endpoint is disabled.&quot;</span>
+            <span class="s2">&quot; Make sure, that your vars.yml contains the following excessive&quot;</span>
+            <span class="s2">&quot; long&quot;</span>
+            <span class="s2">&quot; line:</span><span class="se">\n\n</span><span class="s2">matrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_admin_api_enabled:&quot;</span>
+            <span class="s2">&quot; true&quot;</span>
         <span class="p">)</span>
         <span class="k">raise</span> <span class="n">ExitQWorker</span><span class="p">()</span>  <span class="c1"># TODO</span>
 

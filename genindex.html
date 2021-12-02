@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; MatrixCtl 0.11.5 documentation</title>
+  <title>Index &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -28,7 +28,7 @@
             <a href="index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                0.11.5
+                0.12.0-beta.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -42,7 +42,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributer_documentation/index.html">Contributer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributer_documentation/index.html">Contributor Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
@@ -241,12 +241,18 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.data">data (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
+      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder.database">database (matrixctl.handlers.db.DBConnectionBuilder attribute)</a>
+</li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.vcs.VCS.datetime_last_pulled_commit">datetime_last_pulled_commit (matrixctl.handlers.vcs.VCS property)</a>
 </li>
-      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.DEFAULT_PATHS">DEFAULT_PATHS (matrixctl.handlers.yaml.YAML attribute)</a>
+      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.db_connect">db_connect() (in module matrixctl.handlers.db)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder">DBConnectionBuilder (class in matrixctl.handlers.db)</a>
+</li>
+      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.DEFAULT_PATHS">DEFAULT_PATHS (matrixctl.handlers.yaml.YAML attribute)</a>
+</li>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.purge_history.dialog.dialog_input">dialog_input() (in module matrixctl.addons.purge_history.dialog)</a>
 </li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.domain">domain (matrixctl.handlers.api.RequestBuilder attribute)</a>
@@ -323,17 +329,19 @@
 </li>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.delroom.addon.handle_status">handle_status() (in module matrixctl.addons.delroom.addon)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.delete_local_media.addon.handle_timestamp">handle_timestamp() (in module matrixctl.addons.delete_local_media.addon)</a>
 
       <ul>
         <li><a href="contributer_documentation/addons.html#matrixctl.addons.purge_remote_media.addon.handle_timestamp">(in module matrixctl.addons.purge_remote_media.addon)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.headers">headers (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.headers_with_auth">headers_with_auth (matrixctl.handlers.api.RequestBuilder property)</a>
+</li>
+      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder.host">host (matrixctl.handlers.db.DBConnectionBuilder attribute)</a>
 </li>
       <li><a href="contributer_documentation/helpers.html#matrixctl.print_helpers.human_readable_bool">human_readable_bool() (in module matrixctl.print_helpers)</a>
 </li>
@@ -383,25 +391,25 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType.M_ROOM_AVATAR">M_ROOM_AVATAR (matrixctl.addons.get_events.addon.MessageType attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.M_ROOM_AVATAR">M_ROOM_AVATAR (matrixctl.sanitizers.MessageType attribute)</a>
 </li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType.M_ROOM_CREATE">M_ROOM_CREATE (matrixctl.addons.get_events.addon.MessageType attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.M_ROOM_CREATE">M_ROOM_CREATE (matrixctl.sanitizers.MessageType attribute)</a>
 </li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType.M_ROOM_JOIN_RULES">M_ROOM_JOIN_RULES (matrixctl.addons.get_events.addon.MessageType attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.M_ROOM_JOIN_RULES">M_ROOM_JOIN_RULES (matrixctl.sanitizers.MessageType attribute)</a>
 </li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType.M_ROOM_MEMBER">M_ROOM_MEMBER (matrixctl.addons.get_events.addon.MessageType attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.M_ROOM_MEMBER">M_ROOM_MEMBER (matrixctl.sanitizers.MessageType attribute)</a>
 </li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType.M_ROOM_MESSAGE">M_ROOM_MESSAGE (matrixctl.addons.get_events.addon.MessageType attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.M_ROOM_MESSAGE">M_ROOM_MESSAGE (matrixctl.sanitizers.MessageType attribute)</a>
 </li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType.M_ROOM_NAME">M_ROOM_NAME (matrixctl.addons.get_events.addon.MessageType attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.M_ROOM_NAME">M_ROOM_NAME (matrixctl.sanitizers.MessageType attribute)</a>
 </li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType.M_ROOM_PINNED_EVENTS">M_ROOM_PINNED_EVENTS (matrixctl.addons.get_events.addon.MessageType attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.M_ROOM_PINNED_EVENTS">M_ROOM_PINNED_EVENTS (matrixctl.sanitizers.MessageType attribute)</a>
 </li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType.M_ROOM_POWER_LEVELS">M_ROOM_POWER_LEVELS (matrixctl.addons.get_events.addon.MessageType attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.M_ROOM_POWER_LEVELS">M_ROOM_POWER_LEVELS (matrixctl.sanitizers.MessageType attribute)</a>
 </li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType.M_ROOM_REDACTION">M_ROOM_REDACTION (matrixctl.addons.get_events.addon.MessageType attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.M_ROOM_REDACTION">M_ROOM_REDACTION (matrixctl.sanitizers.MessageType attribute)</a>
 </li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType.M_ROOM_TOPIC">M_ROOM_TOPIC (matrixctl.addons.get_events.addon.MessageType attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.M_ROOM_TOPIC">M_ROOM_TOPIC (matrixctl.sanitizers.MessageType attribute)</a>
 </li>
       <li><a href="contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServer.maintenance">maintenance (matrixctl.structures.ConfigServer attribute)</a>
 </li>
@@ -799,8 +807,6 @@
         <li><a href="contributer_documentation/addons.html#module-matrixctl.addons.update.addon">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     matrixctl.addons.update.parser
 
@@ -815,6 +821,8 @@
         <li><a href="contributer_documentation/addons.html#module-matrixctl.addons.upload.addon">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     matrixctl.addons.upload.parser
 
@@ -886,6 +894,13 @@
 </li>
       </ul></li>
       <li>
+    matrixctl.handlers.db
+
+      <ul>
+        <li><a href="contributer_documentation/handlers.html#module-matrixctl.handlers.db">module</a>
+</li>
+      </ul></li>
+      <li>
     matrixctl.handlers.ssh
 
       <ul>
@@ -935,6 +950,13 @@
 </li>
       </ul></li>
       <li>
+    matrixctl.sanitizers
+
+      <ul>
+        <li><a href="contributer_documentation/helpers.html#module-matrixctl.sanitizers">module</a>
+</li>
+      </ul></li>
+      <li>
     matrixctl.structures
 
       <ul>
@@ -948,7 +970,7 @@
         <li><a href="contributer_documentation/type_hints_structures_and_errors.html#module-matrixctl.typehints">module</a>
 </li>
       </ul></li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_events.addon.MessageType">MessageType (class in matrixctl.addons.get_events.addon)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType">MessageType (class in matrixctl.sanitizers)</a>
 </li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.method">method (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
@@ -1092,6 +1114,8 @@
 </li>
         <li><a href="contributer_documentation/handlers.html#module-matrixctl.handlers.api">matrixctl.handlers.api</a>
 </li>
+        <li><a href="contributer_documentation/handlers.html#module-matrixctl.handlers.db">matrixctl.handlers.db</a>
+</li>
         <li><a href="contributer_documentation/handlers.html#module-matrixctl.handlers.ssh">matrixctl.handlers.ssh</a>
 </li>
         <li><a href="contributer_documentation/handlers.html#module-matrixctl.handlers.table">matrixctl.handlers.table</a>
@@ -1105,6 +1129,8 @@
         <li><a href="contributer_documentation/helpers.html#module-matrixctl.password_helpers">matrixctl.password_helpers</a>
 </li>
         <li><a href="contributer_documentation/helpers.html#module-matrixctl.print_helpers">matrixctl.print_helpers</a>
+</li>
+        <li><a href="contributer_documentation/helpers.html#module-matrixctl.sanitizers">matrixctl.sanitizers</a>
 </li>
         <li><a href="contributer_documentation/type_hints_structures_and_errors.html#module-matrixctl.structures">matrixctl.structures</a>
 </li>
@@ -1139,6 +1165,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.params">params (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
+      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder.password">password (matrixctl.handlers.db.DBConnectionBuilder attribute)</a>
+</li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.path">path (matrixctl.handlers.api.RequestBuilder attribute)</a>
 </li>
       <li><a href="contributer_documentation/type_hints_structures_and_errors.html#matrixctl.errors.InternalResponseError.payload">payload (matrixctl.errors.InternalResponseError attribute)</a>
@@ -1151,9 +1179,11 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.ssh.SSH.port">port (matrixctl.handlers.ssh.SSH attribute)</a>
+      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder.port">port (matrixctl.handlers.db.DBConnectionBuilder attribute)</a>
 
       <ul>
+        <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.ssh.SSH.port">(matrixctl.handlers.ssh.SSH attribute)</a>
+</li>
         <li><a href="contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerSSH.port">(matrixctl.structures.ConfigServerSSH attribute)</a>
 </li>
       </ul></li>
@@ -1187,8 +1217,20 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.scheme">scheme (matrixctl.handlers.api.RequestBuilder attribute)</a>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_event_identifier">sanitize_event_identifier() (in module matrixctl.sanitizers)</a>
 </li>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_message_type">sanitize_message_type() (in module matrixctl.sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_room_identifier">sanitize_room_identifier() (in module matrixctl.sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_user_identifier">sanitize_user_identifier() (in module matrixctl.sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.scheme">scheme (matrixctl.handlers.api.RequestBuilder attribute)</a>
+
+      <ul>
+        <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder.scheme">(matrixctl.handlers.db.DBConnectionBuilder attribute)</a>
+</li>
+      </ul></li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.yaml.secrets_filter">secrets_filter() (in module matrixctl.handlers.yaml)</a>
 </li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.server">server (matrixctl.handlers.yaml.YAML attribute)</a>
@@ -1204,6 +1246,8 @@
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.ssh.SSH">SSH (class in matrixctl.handlers.ssh)</a>
 </li>
       <li><a href="contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServer.ssh">ssh (matrixctl.structures.ConfigServer attribute)</a>
+</li>
+      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.ssh_tunnel">ssh_tunnel() (in module matrixctl.handlers.db)</a>
 </li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.ssh.SSHResponse">SSHResponse (class in matrixctl.handlers.ssh)</a>
 </li>
@@ -1229,6 +1273,8 @@
 </li>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.delroom.parser.subparser_delroom">subparser_delroom() (in module matrixctl.addons.delroom.parser)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.deluser.parser.subparser_deluser">subparser_deluser() (in module matrixctl.addons.deluser.parser)</a>
 
       <ul>
@@ -1237,8 +1283,6 @@
       </ul></li>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.deluser_jitsi.parser.subparser_deluser_jitsi">subparser_deluser_jitsi() (in module matrixctl.addons.deluser_jitsi.parser)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.deploy.parser.subparser_deploy">subparser_deploy() (in module matrixctl.addons.deploy.parser)</a>
 </li>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.get_event.parser.subparser_get_event">subparser_get_event() (in module matrixctl.addons.get_event.parser)</a>
@@ -1317,8 +1361,6 @@
 </li>
       <li><a href="contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_str">test_str() (in module tests.matrixctl.handlers.test_yaml)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     tests.matrixctl.handlers.conftest
 
@@ -1326,6 +1368,8 @@
         <li><a href="contributer_documentation/tests.html#module-tests.matrixctl.handlers.conftest">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     tests.matrixctl.handlers.test_yaml
 
@@ -1334,7 +1378,11 @@
 </li>
       </ul></li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.timeout">timeout (matrixctl.handlers.api.RequestBuilder attribute)</a>
+
+      <ul>
+        <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder.timeout">(matrixctl.handlers.db.DBConnectionBuilder attribute)</a>
 </li>
+      </ul></li>
       <li><a href="contributer_documentation/helpers.html#matrixctl.print_helpers.timestamp_to_dt">timestamp_to_dt() (in module matrixctl.print_helpers)</a>
 </li>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.reports.to_table.to_table">to_table() (in module matrixctl.addons.reports.to_table)</a>
@@ -1371,8 +1419,12 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerAPI.username">username (matrixctl.structures.ConfigServerAPI attribute)</a>
+      <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder.username">username (matrixctl.handlers.db.DBConnectionBuilder attribute)</a>
+
+      <ul>
+        <li><a href="contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerAPI.username">(matrixctl.structures.ConfigServerAPI attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 

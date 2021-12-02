@@ -69,6 +69,14 @@ Table
    :undoc-members:
    :show-inheritance:
 
+Database
+--------
+
+.. automodule:: matrixctl.handlers.db
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 ..
    vim: set ft=rst :

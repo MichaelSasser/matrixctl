@@ -16,13 +16,13 @@ To be able to use **all** features of MatrixCtl you need to have:
 - SSH access to the matrix server from your machine with a public key.
 
 .. note::  If you don't need all features, you are good to start with
-           python 3.8. This is the only mandatory prerequisit of this list.
+           python 3.8. This is the only mandatory prerequisite of this list.
 
 .. seealso:: We have a guide, how you accomplish the rest of the list in the
              :ref:`Getting Started` guide.
 
-Instalation with pip
-********************
+Installation with pip
+*********************
 
 To install MatrixCtl run ``pip install matrixctl`` with a ``Python>=3.8``.
 If you already have a version of MatrixCtl installed, you can upgrade it with

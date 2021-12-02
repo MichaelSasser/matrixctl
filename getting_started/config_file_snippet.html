@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; MatrixCtl 0.11.5 documentation</title>
+  <title>&lt;no title&gt; &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -29,7 +29,7 @@
             <a href="../index.html" class="icon icon-home"> MatrixCtl
           </a>
               <div class="version">
-                0.11.5
+                0.12.0-beta.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -43,7 +43,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributer_documentation/index.html">Contributer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributer_documentation/index.html">Contributor Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 </ul>
 
@@ -88,7 +88,7 @@
 <span class="linenos">15</span>
 <span class="linenos">16</span>    <span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
 <span class="linenos">17</span>    <span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
-<span class="linenos">18</span>    <span class="c1"># provision your Server without this section. You also can cerate a user with</span>
+<span class="linenos">18</span>    <span class="c1"># provision your Server without this section. You also can create a user with</span>
 <span class="linenos">19</span>    <span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
 <span class="linenos">20</span>    <span class="c1"># that.</span>
 <span class="linenos">21</span>    <span class="nt">api</span><span class="p">:</span>
@@ -124,15 +124,32 @@
 <span class="linenos">51</span>      <span class="c1"># The default username is your current login name.</span>
 <span class="linenos">52</span>      <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">john</span>
 <span class="linenos">53</span>
-<span class="linenos">54</span>    <span class="c1"># Define your maintainance tasks</span>
+<span class="linenos">54</span>    <span class="c1"># Define your maintenance tasks</span>
 <span class="linenos">55</span>    <span class="nt">maintenance</span><span class="p">:</span>
 <span class="linenos">56</span>      <span class="nt">tasks</span><span class="p">:</span>
 <span class="linenos">57</span>        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">compress-state</span>  <span class="c1"># Compress synapses state table</span>
 <span class="linenos">58</span>        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">vacuum</span>          <span class="c1"># VACUUM the synapse database (garbage-collection)</span>
 <span class="linenos">59</span>
-<span class="linenos">60</span>  <span class="c1"># Another server.</span>
-<span class="linenos">61</span>  <span class="nt">foo</span><span class="p">:</span>
-<span class="linenos">62</span>    <span class="c1"># ...</span>
+<span class="linenos">60</span>    <span class="c1"># Add connection parameters to the Database</span>
+<span class="linenos">61</span>    <span class="c1"># Synapse does only read (SELECT) information from the database.</span>
+<span class="linenos">62</span>    <span class="c1"># The user needs to be able to login to the synapse database</span>
+<span class="linenos">63</span>    <span class="c1"># and SELECT from the events and event_json tables.</span>
+<span class="linenos">64</span>    <span class="nt">database</span><span class="p">:</span>
+<span class="linenos">65</span>      <span class="nt">synapse_database</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">synapse</span>  <span class="c1"># this is the playbooks default table name</span>
+<span class="linenos">66</span>      <span class="nt">synapse_user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">matrixctl</span>    <span class="c1"># the username (role) for the database</span>
+<span class="linenos">67</span>      <span class="nt">synapse_password</span><span class="p">:</span> <span class="s">&quot;RolePassword&quot;</span>
+<span class="linenos">68</span>      <span class="nt">tunnel</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>        <span class="c1"># true if an ssh tunnel should be used to connect</span>
+<span class="linenos">69</span>
+<span class="linenos">70</span>      <span class="c1"># The port that was used in the playbook  (e.g.</span>
+<span class="linenos">71</span>      <span class="c1"># matrix_postgres_container_postgres_bind_port: 5432)</span>
+<span class="linenos">72</span>      <span class="c1"># or for your external database. For security reasons the port</span>
+<span class="linenos">73</span>      <span class="c1"># should be blocked by your firewall. Iy you enable the tunnel</span>
+<span class="linenos">74</span>      <span class="c1"># by setting tunnel: true, MatrixCtl activates a SSH tunnel.</span>
+<span class="linenos">75</span>      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5432</span>          <span class="c1"># the remote port</span>
+<span class="linenos">76</span>
+<span class="linenos">77</span>  <span class="c1"># Another server.</span>
+<span class="linenos">78</span>  <span class="nt">foo</span><span class="p">:</span>
+<span class="linenos">79</span>    <span class="c1"># ...</span>
 </pre></div>
 </div>
 
