@@ -259,11 +259,11 @@ def table(
     Yields
     ------
     table : Generator [str, None, None]
-    The table (row for row).
+        The table (row for row).
 
     """
     if not table_data:
-        return None
+        return
     # data: list[Sequence[str]] = list(table_data)
     data: list[list[str]] = cells_to_str(table_data, none)
 
