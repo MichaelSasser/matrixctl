@@ -127,7 +127,7 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
-        additional_dependencies: ["flake8-bugbear"]
+        additional_dependencies: ["flake8-bugbear", "flake8-comprehensions"]
 
   # check docstrings
   - repo: https://github.com/PyCQA/pydocstyle
@@ -189,6 +189,6 @@ repos:
   #     - id: prospector
   # PEP 585 Upgrade (Type Hints)
   - repo: https://github.com/sondrelg/pep585-upgrade
-    rev: v1
+    rev: v1.0.1
     hooks:
       - id: upgrade-type-hints
