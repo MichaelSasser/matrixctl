@@ -31,7 +31,8 @@ def activate_virtualenv_in_precommit_hooks(session: nox.Session) -> None:
     that environment when invoked from git.
 
     """
-    assert session.bin is not None  # noqa: S101
+    if session.bin is not None:
+        return
 
     virtualenv = session.env.get("VIRTUAL_ENV")
     if virtualenv is None:
