@@ -167,6 +167,7 @@ def safety(session: nox.Session) -> None:
 def changelogs(session: nox.Session) -> None:
     """Show a draft for the upcoming changelog."""
     args: list[str] = session.posargs or ["--draft"]
+    session.install(".")
     session.install("towncrier")
     session.run("towncrier", *args)
 
