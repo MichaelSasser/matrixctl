@@ -1,5 +1,5 @@
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2021  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,50 +18,14 @@ name: Python CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master, develop ]
+    branches: [master, develop]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2.4.0
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2.3.1
-        with:
-          python-version: 3.9
-
-      - name: Install Poetry
-        uses: snok/install-poetry@v1.3
-        with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v2.1.7
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-
-      - name: Install Project Dependencies
-        run: poetry install -E docs
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-
-      - name: Run pre-commit
-        run: |
-          source .venv/bin/activate
-          pre-commit run --all-files
-
-      - name: Sphinx Build
-        working-directory: ./docs
-        run: |
-          source ../.venv/bin/activate
-          make html
-
-      - name: Test with pytest
-        run: |
-          source .venv/bin/activate
-          poetry run pytest
+      - uses: actions/checkout@v2
+      - uses: excitedleigh/setup-nox@v2.0.0
+      - run: nox

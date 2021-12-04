@@ -42,6 +42,7 @@ ansible-runner = ">=1.4.7,<3.0.0"
 attrs = "^21.2.0"
 xdg = "^5.1.0"
 Jinja2 = "^3.0.1"
+sshtunnel = "^0.4.0"
 psycopg = "^3.0.5"
 httpx = { version = ">=0.20,<0.22", extras = ["http2"] }
 
@@ -51,29 +52,14 @@ sphinx-autodoc-typehints = { version = "^1.12.0", optional = true }
 sphinxcontrib-programoutput = { version = ">=0.16,<0.18", optional = true }
 numpydoc = { version = "^1.1.0", optional = true }
 sphinx_rtd_theme = { version = "^1.0.0", optional = true }
-sshtunnel = "^0.4.0"
 
 [tool.poetry.extras]
 docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "numpydoc", "sphinxcontrib-programoutput"]
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.14.0"
-pytest = "^6.2.4"
-flake8 = "^3.9.2"
-neovim = "^0.3.1"
-pydocstyle = "^6.1.1"
-pylint = "^2.12.1"
-pycodestyle = "^2.7.0"
-yapf = "^0.31.0"
-vulture = "^2.3"
-mypy = "^0.910"
-coverage = "^6.2"
-interrogate = "^1.4.0"
+nox = "^2021.10.1"
 towncrier = "^21.3.0"
-tox = "^3.24.3"
-black = { version = "^21.11b1", allow-prereleases = true }
-isort = {version = "^5.10.1", extras = ["pyproject"]}
-flake8-bugbear = "^21.11.29"
 
 # typesheds
 types-pkg-resources = "^0.1.3"
@@ -87,15 +73,19 @@ matrixctl = "matrixctl.__main__:main"
 [tool.black]
 line-length = 79
 include = '\.pyi?$'
-# exclude __init__.py because of ordered importing
 exclude = '''
 /(
     \.eggs
   | \.git
   | \.hg
   | \.mypy_cache
+  | \.pytest_cache
+  | \.github
   | \.tox
+  | \.nox
   | \.venv
+  | \.news
+  | __pycache__
   | _build
   | buck-out
   | build
@@ -115,8 +105,8 @@ show_traceback = true
 warn_unused_ignores = false  # workaround see PR: 308
 
 [[tool.mypy.overrides]]
-module = "tests.matrixctl.handlers.*"
-allow_untyped_decorators = true  # pytest fixtures
+module = ["tests.matrixctl.handlers.*", "noxfile"]
+disallow_untyped_decorators = false  # pytest fixtures
 
 [tool.pyright]
 include = ["matrixctl", "tests"]
@@ -128,13 +118,6 @@ reportMissingTypeStubs = false
 pythonVersion = "3.9"
 pythonPlatform = "Linux"
 typeCheckingMode = "basic"
-
-# reportUnknownVariableType ="none"
-# reportUnknownMemberType ="none"
-# reportUnknownParameterType = "none"
-# reportUnknownArgumentType = "none"
-# reportUnknownLambdaType = "none"
-
 
 [tool.isort]
 line_length = 79
@@ -156,8 +139,14 @@ known_third_party = [
     "coloredlogs",
     "sphinx_rtd_theme",
     "git",
+    "ruamel",
+    "xdg",
     "httpx",
     "attr",
+    "jinja2",
+    "sshtunnel",
+    "psycopg",
+    "nox",
     "ansible_runner",
 ]
 
@@ -166,7 +155,6 @@ all = true
 
 [tool.flake8]
 max-line-length = 79
-# max-complexity = 12
 ignore = "E501"
 select = "C,E,F,W,B,B901"
 
@@ -174,17 +162,9 @@ select = "C,E,F,W,B,B901"
 ignore-init-method = true
 ignore-init-module = true
 ignore-magic = true
-# ignore-semiprivate = false
-# ignore-private = false
-# ignore-property-decorators = false
-# ignore-module = false
 fail-under = 100
 exclude = ["setup.py", "docs", "build"]
-# ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
 verbose = 1
-# quiet = false
-# whitelist-regex = []
-# color = true
 
 
 [tool.vulture]
@@ -200,7 +180,6 @@ filename = "CHANGELOG.rst"
 issue_format = "`#{issue} <https://github.com/MichaelSasser/matrixctl/issues/{issue}>`_"
 directory = "news/"
 top_line = false
-# title_format = "{version} ({project_date})"  # {name}
 all_bullets = true  # make all fragments bullet points
 wrap = true  # Wrap text to 79 characters
 template = "news/templates/default.rst"
@@ -243,80 +222,3 @@ template = "news/templates/default.rst"
 [build-system]
 requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-
-[tool.tox]
-legacy_tox_ini = """
-[pytest]
-
-addopts = -ra
-testpaths = tests
-xfail_strict = true
-filterwarnings =
-    once::Warning
-    ignore:::pympler[.*]
-
-
-# Keep docs in sync with docs env and .readthedocs.yml.
-# [gh-actions]
-# python =
-#     3.9: py39, precommit, changelog, docs
-# # 3.10: py310
-
-
-[tox]
-envlist = precommit,py39,docs,changelog,
-# py310,
-isolated_build = True
-
-
-[testenv]
-allowlist_externals = poetry
-# Prevent random setuptools/pip breakages like
-# https://github.com/pypa/setuptools/issues/1042 from breaking our builds.
-setenv =
-    VIRTUALENV_NO_DOWNLOAD=1
-extras = {env:TOX_AP_TEST_EXTRAS:tests}
-commands = poetry run pytest {posargs}
-
-
-[testenv:py39]
-allowlist_externals = poetry
-# Python 3.6+ has a number of compile-time warnings on invalid string escapes.
-# PYTHONWARNINGS=d and --no-compile below make them visible during the Tox run.
-basepython = python3.9
-install_command = pip install --no-compile {opts} {packages}
-setenv =
-    PYTHONWARNINGS=d
-extras = {env:TOX_AP_TEST_EXTRAS:tests}
-commands = poetry run coverage run -m pytest --doctest-modules {posargs}
-
-
-[testenv:precommit]
-allowlist_externals = poetry
-basepython = python3.9
-skip_install = true
-deps =
-    pre-commit
-passenv = HOMEPATH  # needed on Windows
-commands =
-    poetry run pre-commit run --all-files
-
-
-[testenv:docs]
-allowlist_externals = poetry
-# Keep basepython in sync with gh-actions and .readthedocs.yml.
-basepython = python3.9
-# extras = docs, func
-# currently disable -n
-commands =
-    poetry run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html
-
-
-[testenv:changelog]
-allowlist_externals = poetry
-basepython = python3.9
-# deps = towncrier
-skip_install = true
-commands = poetry run towncrier --draft
-"""

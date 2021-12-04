@@ -16,10 +16,12 @@
 ---
 name: github pages
 
+# Development docs
+
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   deploy:
