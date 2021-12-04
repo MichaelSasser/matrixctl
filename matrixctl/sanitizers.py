@@ -81,6 +81,25 @@ def sanitize_message_type(
 ) -> MessageType | t.Literal[False] | None:
     """Sanitize an message type.
 
+    Examples
+    --------
+    >>> sanitize_message_type("m.room.message")
+    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+
+    >>> sanitize_message_type("M.RooM.MeSsAgE")
+    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+
+    >>> sanitize_message_type(" m.room.message   ")
+    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+
+    >>> sanitize_message_type(MessageType.M_ROOM_MESSAGE)
+    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+
+    >>> sanitize_message_type("something invalid")
+    False
+
+    >>> sanitize_message_type(None)
+
     Parameters
     ----------
     message_type : typing.Any
@@ -105,6 +124,23 @@ def sanitize_event_identifier(
     event_identifier: t.Any,
 ) -> str | t.Literal[False] | None:
     """Sanitize an event identifier.
+
+    Examples
+    --------
+    >>> sanitize_event_identifier(
+    ...    "$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y"
+    ... )
+    '$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y'
+
+    >>> sanitize_event_identifier(
+    ...    " $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y "
+    ... )
+    '$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y'
+
+    >>> sanitize_event_identifier("something invalid")
+    False
+
+    >>> sanitize_event_identifier(None)
 
     Parameters
     ----------
@@ -137,6 +173,23 @@ def sanitize_user_identifier(
 ) -> str | t.Literal[False] | None:
     """Sanitize an user identifier.
 
+    Examples
+    --------
+    >>> sanitize_user_identifier(
+    ...    "@user:domain.tld"
+    ... )
+    '@user:domain.tld'
+
+    >>> sanitize_user_identifier(
+    ...    " @user:domain.tld "
+    ... )
+    '@user:domain.tld'
+
+    >>> sanitize_user_identifier("something invalid")
+    False
+
+    >>> sanitize_user_identifier(None)
+
     Parameters
     ----------
     user_identifier : typing.Any
@@ -167,6 +220,23 @@ def sanitize_room_identifier(
     room_identifier: t.Any,
 ) -> str | t.Literal[False] | None:
     """Sanitize an room identifier.
+
+    Examples
+    --------
+    >>> sanitize_room_identifier(
+    ...    "!room:domain.tld"
+    ... )
+    '!room:domain.tld'
+
+    >>> sanitize_room_identifier(
+    ...    " !room:domain.tld "
+    ... )
+    '!room:domain.tld'
+
+    >>> sanitize_room_identifier("something invalid")
+    False
+
+    >>> sanitize_room_identifier(None)
 
     Parameters
     ----------

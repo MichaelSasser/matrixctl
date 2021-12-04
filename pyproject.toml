@@ -289,7 +289,7 @@ install_command = pip install --no-compile {opts} {packages}
 setenv =
     PYTHONWARNINGS=d
 extras = {env:TOX_AP_TEST_EXTRAS:tests}
-commands = poetry run coverage run -m pytest {posargs}
+commands = poetry run coverage run -m pytest --doctest-modules {posargs}
 
 
 [testenv:precommit]
@@ -311,8 +311,6 @@ basepython = python3.9
 # currently disable -n
 commands =
     poetry run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html
-    poetry run sphinx-build -T -W -b doctest -d {envtmpdir}/doctrees docs/source docs/build/html
-    poetry run python -m doctest README.md
 
 
 [testenv:changelog]
