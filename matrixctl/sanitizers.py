@@ -77,7 +77,7 @@ class MessageType(Enum):
 
 
 def sanitize_message_type(
-    message_type: str | MessageType,
+    message_type: str | MessageType | None,
 ) -> MessageType | t.Literal[False] | None:
     """Sanitize an message type.
 
