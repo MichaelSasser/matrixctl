@@ -710,19 +710,22 @@ virtualenv = ">=20.0.8"
 
 [[package]]
 name = "psycopg"
-version = "3.0.7"
+version = "3.0.12"
 description = "PostgreSQL database adapter for Python"
 category = "main"
 optional = false
 python-versions = ">=3.6"
 
+[package.dependencies]
+tzdata = {version = "*", markers = "sys_platform == \"win32\""}
+
 [package.extras]
-binary = ["psycopg-binary (==3.0.7)"]
-c = ["psycopg-c (==3.0.7)"]
-dev = ["black", "dnspython (>=2.1.0,<2.2.0)", "flake8 (>=4.0.1,<4.1.0)", "mypy (>=0.910)", "pytest-mypy (>=0.8.1)", "types-setuptools (>=57.4.0)", "wheel"]
-docs = ["Sphinx (>=4.2.0,<4.3.0)", "docutils (>=0.17.0,<0.18.0)", "furo (>=2021.9.8)", "sphinx-autobuild (>=2021.3.14)", "sphinx-autodoc-typehints (>=1.12.0,<1.13.0)", "dnspython (>=2.1.0,<2.2.0)", "shapely (>=1.7.0,<1.8.0)"]
+binary = ["psycopg-binary (==3.0.12)"]
+c = ["psycopg-c (==3.0.12)"]
+dev = ["black (>=22.3.0)", "dnspython (>=2.1)", "flake8 (>=4.0)", "mypy (>=0.920,!=0.930,!=0.931)", "types-setuptools (>=57.4)", "wheel (>=0.37)"]
+docs = ["Sphinx (>=4.2)", "furo (==2021.11.23)", "sphinx-autobuild (>=2021.3.14)", "sphinx-autodoc-typehints (>=1.12)", "dnspython (>=2.1)", "shapely (>=1.7)"]
 pool = ["psycopg-pool"]
-test = ["mypy (>=0.910)", "pproxy (>=2.7.8,<2.8.0)", "pytest (>=6.2.5,<6.3.0)", "pytest-asyncio (>=0.16.0,<0.17.0)", "pytest-cov (>=3.0.0,<3.1.0)", "pytest-randomly (>=3.10.1,<3.11.0)", "tenacity (>=8.0.1,<8.1.0)"]
+test = ["mypy (>=0.920,!=0.930,!=0.931)", "pproxy (>=2.7)", "pytest (>=6.2.5)", "pytest-asyncio (>=0.16,<0.17)", "pytest-cov (>=3.0)", "pytest-randomly (>=3.10)"]
 
 [[package]]
 name = "ptyprocess"
@@ -1300,6 +1303,14 @@ description = "Backported and Experimental Type Hints for Python 3.6+"
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[[package]]
+name = "tzdata"
+version = "2022.1"
+description = "Provider of IANA time zone data"
+category = "main"
+optional = false
+python-versions = ">=2"
 
 [[package]]
 name = "urllib3"
@@ -1929,8 +1940,8 @@ pre-commit = [
     {file = "pre_commit-2.16.0.tar.gz", hash = "sha256:fe9897cac830aa7164dbd02a4e7b90cae49630451ce88464bca73db486ba9f65"},
 ]
 psycopg = [
-    {file = "psycopg-3.0.7-py3-none-any.whl", hash = "sha256:9a0e89937ad08e1e0af6ec97a5030ee02273bd651d4fb682e7d8facd80973fda"},
-    {file = "psycopg-3.0.7.tar.gz", hash = "sha256:54f3bbcb7ece702d0141a1669e4e46e6cd3b0635813fc8ad4887ce085902e354"},
+    {file = "psycopg-3.0.12-py3-none-any.whl", hash = "sha256:57c3b208fbe1a8b7dd1a6db1389cf3ecede06998692ce98240e5fbe41d87e75c"},
+    {file = "psycopg-3.0.12.tar.gz", hash = "sha256:cede6d073a73ace182e6f14dd7410cdfe049a7655ab3f338447fe1a293a3a2cb"},
 ]
 ptyprocess = [
     {file = "ptyprocess-0.7.0-py2.py3-none-any.whl", hash = "sha256:4b41f3967fce3af57cc7e94b888626c18bf37a083e3651ca8feeb66d492fef35"},
@@ -2196,6 +2207,10 @@ types-pkg-resources = [
 typing-extensions = [
     {file = "typing_extensions-4.0.1-py3-none-any.whl", hash = "sha256:7f001e5ac290a0c0401508864c7ec868be4e701886d5b573a9528ed3973d9d3b"},
     {file = "typing_extensions-4.0.1.tar.gz", hash = "sha256:4ca091dea149f945ec56afb48dae714f21e8692ef22a395223bcd328961b6a0e"},
+]
+tzdata = [
+    {file = "tzdata-2022.1-py2.py3-none-any.whl", hash = "sha256:238e70234214138ed7b4e8a0fab0e5e13872edab3be586ab8198c407620e2ab9"},
+    {file = "tzdata-2022.1.tar.gz", hash = "sha256:8b536a8ec63dc0751342b3984193a3118f8fca2afe25752bb9b7fffd398552d3"},
 ]
 urllib3 = [
     {file = "urllib3-1.26.7-py2.py3-none-any.whl", hash = "sha256:c4fdf4019605b6e5423637e01bc9fe4daef873709a7973e195ceba0a62bbc844"},
