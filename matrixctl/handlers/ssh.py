@@ -135,6 +135,8 @@ class SSH:
         response: SSHResponse = SSHResponse(
             *[
                 self.__str_from(s)
+                # false positive
+                # skipcq BAN-B601
                 for s in self.__client.exec_command(shlex.quote(cmd))
             ]
         )

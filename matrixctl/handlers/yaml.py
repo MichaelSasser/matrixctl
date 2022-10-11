@@ -86,7 +86,7 @@ def tree_printer(tree: t.Any, depth: int = 0) -> None:
         raise ConfigFileError(
             "There is something wrong with your config file."
         )
-    logger.debug(f"{'│ '* depth}┴")
+    logger.debug("%s┴", "│ " * depth)
 
 
 def secrets_filter(tree: dict[str, str], key: str) -> t.Any:
@@ -164,7 +164,7 @@ class YAML:
                     "update your config file to the yaml format."
                 )
 
-        logger.debug(f'Config loaded for Server: "{self.server}"')
+        logger.debug("Config loaded for Server: %s", self.server)
         tree_printer(self.__yaml)
 
     @staticmethod

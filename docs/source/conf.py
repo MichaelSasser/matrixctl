@@ -76,10 +76,6 @@ intersphinx_mapping = {
 }
 intersphinx_timeout = 10
 
-# numpydoc_xref_aliases = {
-#     'LeaveOneOut': 'sklearn.model_selection.LeaveOneOut',
-# }
-
 source_encoding: str = "utf-8"
 
 # true: will complain about missing docstrings
