@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import typing as t
 
 # from functools import wraps
 from importlib import import_module
@@ -101,7 +102,7 @@ def subparser(func: SubParserType) -> SubParserType:
         addons.append(func)
 
     # @wraps(func)
-    # def wrapper(parser: argparse._SubParsersAction) -> None:
+    # def wrapper(parser: argparse._SubParsersAction[t.Any]) -> None:
     #     func(parser)
     #
     # return wrapper
@@ -133,7 +134,7 @@ def setup(func: ParserSetupType) -> argparse.ArgumentParser:
     parser: argparse.ArgumentParser = func()
     if len(addons) > 0:
         # skipcq: PYL-W0212
-        subparsers: argparse._SubParsersAction = parser.add_subparsers(
+        subparsers: argparse._SubParsersAction[t.Any] = parser.add_subparsers(
             title="Commands",
             description=(
                 "The following are commands, you can use to accomplish "

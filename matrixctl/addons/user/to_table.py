@@ -75,9 +75,12 @@ def make_human_readable(
     elif k in ("admin", "deactivated"):
         value = human_readable_bool(user_dict[k])
     elif k.endswith("_ts"):
-        value = str(
-            datetime.datetime.fromtimestamp(float(user_dict[k]))
-        )  # UTC?
+        try:
+            value = str(
+                datetime.datetime.fromtimestamp(float(user_dict[k]))
+            )  # UTC?
+        except TypeError:
+            value = "-"
     elif k.endswith("_at"):
         value = str(
             datetime.datetime.fromtimestamp(float(user_dict[k]) / 1000.0)
@@ -169,8 +172,7 @@ def to_table(
             yield "User:"
         else:
             yield "\nThreepid:"
-        for line in table(table_, sep=False):
-            yield line
+        yield from table(table_, sep=False)
 
 
 # vim: set ft=python :

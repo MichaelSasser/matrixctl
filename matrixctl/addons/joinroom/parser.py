@@ -19,6 +19,8 @@
 
 from __future__ import annotations
 
+import typing as t
+
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
@@ -30,12 +32,12 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 @subparser
-def subparser_deluser(subparsers: _SubParsersAction) -> None:
+def subparser_deluser(subparsers: _SubParsersAction[t.Any]) -> None:
     """Create a subparser for the ``matrixctl joinroom`` command.
 
     Parameters
     ----------
-    subparsers : argparse._SubParsersAction
+    subparsers : argparse._SubParsersAction of typing.Any
         The object which is returned by
         ``parser.add_subparsers()``.
 

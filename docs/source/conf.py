@@ -99,7 +99,14 @@ numpydoc_show_class_members: bool = False
 numpydoc_xref_param_type: bool = True
 
 # Report warnings for all validation checks
-numpydoc_validation_checks = {"all"}
+# GL01: Docstring text (summary) should start in the line immediately after the opening quotes (not in the same line, or leaving a blank line in between)
+# GL02: Closing quotes should be placed in the line after the last text in the docstring (do not close the quotes in the same line as the text, or leave a blank line between the last text and the quotes)
+# GL03: Double line break found; please use only one blank line to separate sections or paragraphs, and do not leave blank lines at the end of docstrings
+# ES01: No extended summary found
+# RT03: Return value has no description
+# SA01: See Also section not found
+# EX01: No examples section found
+# numpydoc_validation_checks = {"all"}
 
 # generate autosummary even if no references
 autosummary_generate: bool = True

@@ -19,6 +19,8 @@
 
 from __future__ import annotations
 
+import typing as t
+
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
@@ -30,12 +32,12 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 @subparser
-def subparser_start(subparsers: _SubParsersAction) -> None:
+def subparser_start(subparsers: _SubParsersAction[t.Any]) -> None:
     """Create a subparser for the ``matrixctl start`` command.
 
     Parameters
     ----------
-    subparsers : argparse._SubParsersAction
+    subparsers : argparse._SubParsersAction of typing.Any
         The object which is returned by ``parser.add_subparsers()``.
 
     Returns
@@ -50,7 +52,7 @@ def subparser_start(subparsers: _SubParsersAction) -> None:
 
 
 @subparser
-def subparser_restart(subparsers: _SubParsersAction) -> None:
+def subparser_restart(subparsers: _SubParsersAction[t.Any]) -> None:
     """Create a subparser for the ``matrixctl restart`` command.
 
     Notes
@@ -63,7 +65,7 @@ def subparser_restart(subparsers: _SubParsersAction) -> None:
 
     Parameters
     ----------
-    subparsers : argparse._SubParsersAction
+    subparsers : argparse._SubParsersAction or typing.Any
         The object which is returned by ``parser.add_subparsers()``.
 
     Returns
