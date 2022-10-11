@@ -130,7 +130,7 @@ class SSH:
             Receive ``stdin``, ``stdout`` and ``stderr`` as response.
 
         """
-        logger.debug(f'SSH Command: "{cmd}"')
+        logger.debug("SSH Command: %s", cmd)
 
         response: SSHResponse = SSHResponse(
             *[
@@ -141,7 +141,7 @@ class SSH:
             ]
         )
 
-        logger.debug(f'SSH Response: "{response}"')
+        logger.debug("SSH Response: %s", response)
 
         return response
 
@@ -183,7 +183,12 @@ class SSH:
         None
 
         """
-        logger.debug(f"SSH __exit__: {exc_type=}, {exc_val=}, {exc_tb=}")
+        logger.debug(
+            "SSH __exit__: exc_type = %s, exc_val = %s, exc_tb = %s",
+            exc_type,
+            exc_val,
+            exc_tb,
+        )
         self.__disconnect()
 
     def __del__(self) -> None:
