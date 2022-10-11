@@ -70,14 +70,17 @@ def tree_printer(tree: t.Any, depth: int = 0) -> None:
         for key in tree:
             if isinstance(tree[key], (str, int, float, bool)):
                 logger.debug(
-                    f"{'│ '* depth}├─── {key}: {secrets_filter(tree, key)}"
+                    "%s├─── %s: %s",
+                    "│ " * depth,
+                    key,
+                    secrets_filter(tree, key),
                 )
             elif isinstance(tree[key], (list, tuple)):
                 logger.debug(
-                    f"{'│ '* depth}├─── {key}: [{', '.join(tree[key])}]"
+                    "%s├─── %s: [%s]", "│ " * depth, key, ", ".join(tree[key])
                 )
             else:
-                logger.debug(f"{'│ '* depth}├─┬─ {key}:")
+                logger.debug("%s├─┬─ %s:", "│ " * depth, key)
                 tree_printer(tree[key], depth + 1)
     else:
         raise ConfigFileError(
@@ -229,6 +232,8 @@ class YAML:
 
         """
         try:
+            # The user should be able to use any file and location
+            # skipcq: PTC-W6004
             with open(path) as stream:
                 template: Template = Template(
                     stream.read(), undefined=JinjaUndefined
@@ -239,16 +244,22 @@ class YAML:
                 return t.cast(Config, yaml.load(template.render(rendered)))
         except YAMLError:
             logger.error(
-                f"Please check your config file {str(path)}. MatrixCtl was "
-                "not able to read it."
+                (
+                    "Please check your config file %s. MatrixCtl was "
+                    "not able to read it."
+                ),
+                str(path),
             )
         except FileNotFoundError:
-            logger.debug(f'The config file "{str(path)}" does not exist.')
+            logger.debug("The config file %s does not exist.", str(path))
         except IsADirectoryError:
             logger.error(
-                "The path to the configuration file you entered "
-                f'"{str(path)}" seems to be a directory and not a '
-                "configuration file. Make sure the path is correct."
+                (
+                    "The path to the configuration file you entered %s "
+                    "seems to be a directory and not a "
+                    "configuration file. Make sure the path is correct."
+                ),
+                str(path),
             )
 
         return t.cast(Config, {})
@@ -334,14 +345,17 @@ class YAML:
 
         except KeyError:
             logger.error(
-                f'The server "{server}" does not exist in your config file.'
+                "The server %s does not exist in your config file.", server
             )
             sys.exit(1)
         except TypeError:
             logger.error(
-                f'The Path(s) to the configuration file you entered "{paths}" '
-                "seems to have syntax paroblems. Make sure you use the "
-                "correct YAML syntax."
+                (
+                    "The Path(s) to the configuration file you entered %s "
+                    "seems to have syntax paroblems. Make sure you use the "
+                    "correct YAML syntax."
+                ),
+                paths,
             )
             sys.exit(1)
 
@@ -386,9 +400,12 @@ class YAML:
                 "server", f"servers.{self.server}"
             )
             logger.error(
-                "Please check your config file. For this operation your "
-                f'config file needs to have the entry "{keys[-1]}" '
-                f'in "{tree}".'
+                (
+                    "Please check your config file. For this operation your "
+                    "config file needs to have the entry %s in %s."
+                ),
+                keys[-1],
+                tree,
             )
             sys.exit(1)
 

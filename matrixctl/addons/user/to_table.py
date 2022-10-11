@@ -164,7 +164,7 @@ def to_table(
     """
     user_tables = generate_user_tables(user_dict, len_domain)
 
-    logger.debug(f"User: {user_tables=}")
+    logger.debug("User: users_table = %s", user_tables)
 
     for num, table_ in enumerate(user_tables):
 
