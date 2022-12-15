@@ -125,6 +125,12 @@ def sanitize(
     identifier: t.Any | None,
     error_message: str,
 ) -> str | t.Literal[False] | None:
+    """Create a new sanitizer based on compiled RegEx expressions.
+
+    A helper function for simplifying the latter sanitize identifier specific
+    functions.
+
+    """
     if identifier is None:
         return None
     with suppress(TypeError, AttributeError):
