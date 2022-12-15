@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ---
-
 version: 2
 
 sphinx:
@@ -29,7 +28,6 @@ build:
     python: "3.10"
 
 python:
-  version: "3.10"
   install:
     - method: pip
       path: .
