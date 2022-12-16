@@ -47,7 +47,9 @@ def subparser_adduser_jitsi(subparsers: _SubParsersAction[t.Any]) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "adduser-jitsi", help="Add users to a jitsi server"
+        "adduser-jitsi",
+        help="[DEPRECATED] Add users to a jitsi server",
+        description="This feature will be removed in MatrixCtl v0.13.0",
     )
     parser.add_argument("user", help="The Username of the new jitsi user")
     parser.set_defaults(addon="adduser_jitsi")

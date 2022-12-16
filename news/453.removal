@@ -1,0 +1,1 @@
+Add a deprecation warning to the adduser-jitsi and deluser-jitsi commands. They are planned for removal in MatrixCtl v0.13.0.

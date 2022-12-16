@@ -47,7 +47,9 @@ def subparser_deluser_jitsi(subparsers: _SubParsersAction[t.Any]) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "deluser-jitsi", help="Delete jitsi users"
+        "deluser-jitsi",
+        help="[DEPRECATED] Delete jitsi users",
+        description="This feature will be removed in MatrixCtl v0.13.0",
     )
     parser.add_argument(
         "user", help="The jitsi username of the user to delete"

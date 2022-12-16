@@ -20,6 +20,8 @@
 
 from __future__ import annotations
 
+import logging
+
 from argparse import Namespace
 
 from matrixctl.handlers.ssh import SSH
@@ -30,6 +32,8 @@ from matrixctl.password_helpers import create_user
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
+
+logger = logging.getLogger(__name__)
 
 JID_EXT: str = "matrix-jitsi-web"
 
@@ -50,13 +54,12 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    address = (
-        yaml.get("server", "ssh", "address")
-        if yaml.get("server", "ssh", "address")
-        else f"matrix.{yaml.get('server', 'api', 'domain')}"
+    logger.warning(
+        "[DEPRECATION WARNING] adduser-jitsi will be retired in version 0.13.0"
     )
+
     with SSH(
-        address,
+        yaml.get("server", "ssh", "address"),
         yaml.get("server", "ssh", "user"),
         yaml.get("server", "ssh", "port"),
     ) as ssh:
