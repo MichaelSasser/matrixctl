@@ -105,7 +105,7 @@ def secrets_filter(tree: dict[str, str], key: str) -> t.Any:
     None
 
     """
-    if key in "token":
+    if key in {"token", "synapse_password"}:
         return f"<redacted length={len(tree[key])}>"
     return tree[key]
 
