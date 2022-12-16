@@ -130,6 +130,21 @@ def sanitize(
     A helper function for simplifying the latter sanitize identifier specific
     functions.
 
+    Parameters
+    ----------
+    pattern : typing.Pattern
+        The RegEx pattern used for the specific sanitizing
+    identifier : typing.Any | None
+        The identifier to sanitize based on the pattern
+    error_message : str
+        The error string used for logging errors
+
+    Returns
+    -------
+    result : typing.Literal[False] or str, optional
+        The function returns ``None`` if ``identifier`` is ``None``,
+        the sanitized string, when it is valid, otherwise ``False``
+
     """
     if identifier is None:
         return None
