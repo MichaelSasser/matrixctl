@@ -134,7 +134,7 @@ def sanitize(
     ----------
     pattern : typing.Pattern
         The RegEx pattern used for the specific sanitizing
-    identifier : typing.Any | None
+    identifier : typing.Any, optional
         The identifier to sanitize based on the pattern
     error_message : str
         The error string used for logging errors

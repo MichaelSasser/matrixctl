@@ -140,8 +140,7 @@ class RequestBuilder:
             f"/{self.api_version}"
             f"/{self.path}"
         )
-        url = urllib.parse.urlparse(url).geturl()
-        return url
+        return urllib.parse.urlparse(url).geturl()
 
     def __repr__(self) -> str:
         """Get a string representation of this class.
@@ -198,11 +197,7 @@ def preplan_request_strategy(
 
     # limit might be total.
 
-    if limit > max_step_size:  # limit step_size
-        step_size = 100
-    else:
-        step_size = limit
-
+    step_size: int = 100 if limit > max_step_size else limit
     workers: float = min(limit / step_size, concurrent_limit)
 
     iterations: float = limit / (workers * step_size)
@@ -285,7 +280,7 @@ def generate_worker_configs(
     strategy: RequestStrategy = preplan_request_strategy(
         limit - next_token,  # minus the already queried
         concurrent_limit=request_config.concurrent_limit,
-        max_step_size=limit if limit < 100 else 100,
+        max_step_size=min(limit, 100),
     )
     # limit the request "globally"
     request_config.params["limit"] = strategy.step_size
@@ -459,21 +454,15 @@ async def exec_async_request(
     handled_results: list[httpx.Response] | httpx.Response = []
     # Re-raise errors
     # concurrent
+    errors: list[Exception]
     if isinstance(results, Iterable):
-        errors: list[Exception] = [
-            err for err in results if isinstance(err, Exception)
-        ]
-        if errors:
+        if errors := [err for err in results if isinstance(err, Exception)]:
             raise Exception(errors)
-        handled_results = t.cast(
-            list[httpx.Response], results
-        )  # no exception left
+        return t.cast(list[httpx.Response], results)
     else:
         if isinstance(results, Exception):  # Not concurrent
             raise Exception(results)
-        handled_results = t.cast(httpx.Response, results)  # no exception left
-
-    return handled_results
+        return t.cast(httpx.Response, results)
 
 
 @t.overload

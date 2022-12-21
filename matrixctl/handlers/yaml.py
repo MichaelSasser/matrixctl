@@ -66,26 +66,25 @@ def tree_printer(tree: t.Any, depth: int = 0) -> None:
     None
 
     """
-    if isinstance(tree, dict):
-        for key in tree:
-            if isinstance(tree[key], (str, int, float, bool)):
-                logger.debug(
-                    "%s├─── %s: %s",
-                    "│ " * depth,
-                    key,
-                    secrets_filter(tree, key),
-                )
-            elif isinstance(tree[key], (list, tuple)):
-                logger.debug(
-                    "%s├─── %s: [%s]", "│ " * depth, key, ", ".join(tree[key])
-                )
-            else:
-                logger.debug("%s├─┬─ %s:", "│ " * depth, key)
-                tree_printer(tree[key], depth + 1)
-    else:
+    if not isinstance(tree, dict):
         raise ConfigFileError(
             "There is something wrong with your config file."
         )
+    for key in tree:
+        if isinstance(tree[key], (str, int, float, bool)):
+            logger.debug(
+                "%s├─── %s: %s",
+                "│ " * depth,
+                key,
+                secrets_filter(tree, key),
+            )
+        elif isinstance(tree[key], (list, tuple)):
+            logger.debug(
+                "%s├─── %s: [%s]", "│ " * depth, key, ", ".join(tree[key])
+            )
+        else:
+            logger.debug("%s├─┬─ %s:", "│ " * depth, key)
+            tree_printer(tree[key], depth + 1)
     logger.debug("%s┴", "│ " * depth)
 
 
@@ -105,9 +104,10 @@ def secrets_filter(tree: dict[str, str], key: str) -> t.Any:
     None
 
     """
-    if key in {"token", "synapse_password"}:
-        return f"<redacted length={len(tree[key])}>"
-    return tree[key]
+    redact = {"token", "synapse_password"}
+    return (
+        f"<redacted length={len(tree[key])}>" if key in redact else tree[key]
+    )
 
 
 class JinjaUndefined(Undefined):  # type: ignore

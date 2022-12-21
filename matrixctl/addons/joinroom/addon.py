@@ -62,7 +62,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     arg.room = arg.room.strip()
     arg.user = arg.user.strip()
 
-    if not arg.room[0] in {"!", "#"} or ":" not in arg.room:
+    if arg.room[0] not in {"!", "#"} or ":" not in arg.room:
         logger.error(
             "Make sure, to use the correct room identifier or alias e.g. "
             "!636q39766251:domain.tld or #myroom:domain.tld"

@@ -72,7 +72,7 @@ def make_human_readable(
     elif k == "is_guest":
         value = human_readable_bool(user_dict[k])
         key = "Guest"
-    elif k in ("admin", "deactivated"):
+    elif k in {"admin", "deactivated"}:
         value = human_readable_bool(user_dict[k])
     elif k.endswith("_ts"):
         try:

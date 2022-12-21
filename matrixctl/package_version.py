@@ -68,7 +68,7 @@ def __from_pyproject(file: Path) -> str | None:
         If the package is installed, the return value will be ``None``.
 
     """
-    with suppress(FileNotFoundError), file.open() as fp:
+    with (suppress(FileNotFoundError), file.open() as fp):
         vers: t.Pattern[str] = re.compile(VERSION_PATTERN)
         for line in fp:
             version: t.Match[str] | None = vers.search(line)
@@ -76,10 +76,10 @@ def __from_pyproject(file: Path) -> str | None:
                 # semver
                 return (
                     f"{version.group(1)}."
-                    f"{version.group(2) if version.group(2) else '0'}."
-                    f"{version.group(3) if version.group(3) else '0'}"
-                    f"{'-' + version.group(4) if version.group(4) else ''}"
-                    f"{'+' + version.group(5) if version.group(5) else ''}"
+                    f"{version.group(2) or '0'}."
+                    f"{version.group(3) or '0'}"
+                    f"{f'-{version.group(4)}' if version.group(4) else ''}"
+                    f"{f'+{version.group(5)}' if version.group(5) else ''}"
                 )
                 # Fast approx.
                 # return version.group(1).strip()

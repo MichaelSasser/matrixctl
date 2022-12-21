@@ -231,9 +231,9 @@ def cells_to_str(part: Sequence[Sequence[str]], none: str) -> list[list[str]]:
     The part, where every cell is of type ``str``.
 
     """
-    data: list[list[str]] = []
-    for row in part:
-        data.append([str(s if s is not None else none) for s in row])
+    data: list[list[str]] = [
+        [str(s if s is not None else none) for s in row] for row in part
+    ]
     return data
 
 
@@ -296,14 +296,11 @@ def table(
     # The 2 in (i + 2) gives 1 extra space left and right of the column
     sep_line_data: str = f"|{'+'.join('-' * (i + 2) for i in max_column_len)}|"
     sep_line: str = sep_line_data.replace("|", "+")
-    sep_line_header: str = sep_line.replace("-", "=")
-
     yield sep_line  # Top separator (will be always printed)
     if headers is not None:
         for line in headers:
             yield format_table_row(line, max_column_len)
-        yield sep_line_header
-
+        yield sep_line.replace("-", "=")
     for line_number, line in enumerate(data):
         yield format_table_row(line, max_column_len)
         if sep and line_number not in inhibit_sep:

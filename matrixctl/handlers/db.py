@@ -72,8 +72,7 @@ class DBConnectionBuilder(t.NamedTuple):
             f"/{self.database}"
             f"?connect_timeout={self.timeout}"
         )
-        url = urllib.parse.urlparse(url).geturl()
-        return url
+        return urllib.parse.urlparse(url).geturl()
 
 
 @contextmanager

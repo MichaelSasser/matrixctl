@@ -93,11 +93,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         return 0
 
     todo = []
-    for task in (
-        yaml.get("server", "maintenance", "tasks")
-        if not arg.tasks
-        else arg.tasks
-    ):
+    for task in arg.tasks or yaml.get("server", "maintenance", "tasks"):
 
         try:
             todo.append(Task[task.replace("-", "_").upper()])
