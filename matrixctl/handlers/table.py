@@ -287,7 +287,7 @@ def table(
         newlines,
     )
     logger.debug(
-        "Inhibit the creation of newlines in rows: {} in data.", inhibit_sep
+        "Inhibit the creation of newlines in rows: %s in data.", inhibit_sep
     )
 
     # The 2 in (i + 2) gives 1 extra space left and right of the column
