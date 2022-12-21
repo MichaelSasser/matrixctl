@@ -1,4 +1,5 @@
 /.vim
+/.sourcery.yaml
 
 # Files produced by a script while running the script get_latest_release.py
 # The latter file is used for as release message.

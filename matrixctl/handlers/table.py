@@ -123,7 +123,6 @@ def handle_newlines(
     # occurrences = the maximum number of newline chars in one row (not sum)
     for line_number, occurrences in newlines.items():
         split = [column.splitlines() for column in part[line_number + offset]]
-        # logger.debug(f"{split = }")
 
         new_rows: Generator[
             list[str], None, None
@@ -132,14 +131,12 @@ def handle_newlines(
         # The first new line will replace the old line
         try:
             part[line_number + offset] = next(new_rows)
-            # logger.debug(f"new row = {data[line_number+offset]}")
         except StopIteration:
             logger.error("There is a bug in the table handler.")
             return part, inhibit_sep
 
         # The following lines will be inserted
         for additional_row in new_rows:
-            # logger.debug(f"new row = {additional_row}")
             inhibit_sep.add(line_number + offset)
             offset += 1
             part.insert(line_number + offset, additional_row)
@@ -282,15 +279,15 @@ def table(
     num_of_rows: int = len(data)
 
     logger.debug(
-        f"Create new Table with {num_of_columns} x {num_of_rows} Cells."
+        "Create new Table with %s x %s Cells.", num_of_columns, num_of_rows
     )
-    logger.debug(f"Maximal length of text per column {max_column_len}.")
+    logger.debug("Maximal length of text per column %s.", max_column_len)
     logger.debug(
-        "Found newlines in data: {{r: n}}, where n are newlines in row r: "
-        f"{newlines}"
+        "Found newlines in data: {{r: n}}, where n are newlines in row r: %s",
+        newlines,
     )
     logger.debug(
-        f"Inhibit the creation of newlines in rows: {inhibit_sep} in data."
+        "Inhibit the creation of newlines in rows: {} in data.", inhibit_sep
     )
 
     # The 2 in (i + 2) gives 1 extra space left and right of the column

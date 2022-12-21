@@ -99,8 +99,11 @@ def addon(arg: Namespace, yaml: YAML) -> int:
             todo.append(Task[task.replace("-", "_").upper()])
         except KeyError:  # task is not in enum
             logger.error(
-                f'The task "{task}" is not supported by MatrixCtl. '
-                "Below, you find a list of all available tasks."
+                (
+                    'The task "%s" is not supported by MatrixCtl. '
+                    "Below, you find a list of all available tasks."
+                ),
+                task,
             )
             print_tasks()
             return 1

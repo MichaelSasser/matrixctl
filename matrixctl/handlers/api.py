@@ -451,7 +451,6 @@ async def exec_async_request(
     results = await result_task
 
     # A handled result is one without exceptions
-    handled_results: list[httpx.Response] | httpx.Response = []
     # Re-raise errors
     # concurrent
     errors: list[Exception]
@@ -459,10 +458,9 @@ async def exec_async_request(
         if errors := [err for err in results if isinstance(err, Exception)]:
             raise Exception(errors)
         return t.cast(list[httpx.Response], results)
-    else:
-        if isinstance(results, Exception):  # Not concurrent
-            raise Exception(results)
-        return t.cast(httpx.Response, results)
+    if isinstance(results, Exception):  # Not concurrent
+        raise Exception(results)
+    return t.cast(httpx.Response, results)
 
 
 @t.overload

@@ -125,10 +125,10 @@ def handle_timestamp(timestamp: int | None, force: bool) -> int:
         return int(round(ts * 1000))
     try:
         dt = datetime.fromtimestamp(float(timestamp) / 1000)
-        logger.info(f"Delete until {dt=}")
+        logger.info("Delete until dt = %s", dt)
     except (OverflowError, OSError, ValueError):
         logger.fatal(
-            f"The argument timestamp = {timestamp} is not a valid timestamp."
+            "The argument timestamp = %s is not a valid timestamp.", timestamp
         )
     return timestamp
 
