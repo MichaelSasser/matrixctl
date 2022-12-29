@@ -45,7 +45,7 @@ def get_colum_length(
 
     Returns
     -------
-    column_length_tuple : None
+    column_length_tuple : tuple of int
         A n-tuple which describes the longest string per column. (n is the
         number of columns)
 
@@ -82,7 +82,7 @@ def transpose_newlines_to_rows(
 
     Yields
     ------
-    row : list[str]
+    row : list of str
         A row for each occurrence.
 
     """
@@ -110,8 +110,9 @@ def handle_newlines(
 
     Returns
     -------
-    part, inhibit_sep : tuple [list of list of str, set of int]
+    part : list of list of str
         The ``part`` contains the supplemented and updated rows.
+    inhibit_sep : set of int
         The ``inhibit_sep`` ``set`` contains the line numbers
         where a separator yhould be inhibited because the lines handled by
         this function are belonging together.
@@ -255,7 +256,7 @@ def table(
 
     Yields
     ------
-    table : Generator [str, None, None]
+    table : str
         The table (row for row).
 
     """
