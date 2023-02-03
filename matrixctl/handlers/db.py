@@ -166,6 +166,7 @@ def db_connect(yaml: YAML) -> Iterator[psycopg.Connection]:
         username=yaml.get("server", "ssh", "user"),
         remote_port=yaml.get("server", "database", "port"),
         enabled=yaml.get("server", "database", "tunnel"),
+        # skipcq PY-W0069
         # private_key=yaml.get("server", "database", "private_key")
     ) as local_bind_port:
         connection_uri = DBConnectionBuilder(

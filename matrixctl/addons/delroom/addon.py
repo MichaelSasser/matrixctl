@@ -145,7 +145,7 @@ def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
             ) from e
 
         if response is not None:
-            logger.debug(f"{response=}")
+            logger.debug("response: %s", response)
             # complete
             if json_response["status"] == "complete":
                 print(
@@ -181,8 +181,11 @@ def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
             # failed
             if json_response["status"] == "failed":
                 logger.critical(
-                    "The server returned, that the approach failed with the"
-                    f" following message: {json_response['status']}."
+                    (
+                        "The server returned, that the approach failed with "
+                        "the following message: %s."
+                    ),
+                    json_response["status"],
                 )
                 break
         break

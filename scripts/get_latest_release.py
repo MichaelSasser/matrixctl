@@ -94,12 +94,17 @@ def main(input_path: Path, output_path: Path) -> int:
         with input_path.open() as fp:
             found_headlines = _HEADLINE.split(fp.read())
     except OSError:
-        logger.fatal(f"Unable to read from the input file! {input_path =}")
+        logger.fatal(
+            "Unable to read from the input file! input_path %s", input_path
+        )
         return 1
 
     # Check, that there are enough headlines to work with
     if len(found_headlines) < 3:
-        logger.fatal(f"Unable to find enough headlines! {found_headlines =}")
+        logger.fatal(
+            "Unable to find enough headlines! found_headlines: %s",
+            found_headlines,
+        )
         return 2
 
     entry: str = f"{found_headlines[1]}{found_headlines[2].rstrip()}"
@@ -110,7 +115,9 @@ def main(input_path: Path, output_path: Path) -> int:
         with output_path.open("w") as fp:
             fp.write(entry)
     except OSError:
-        logger.fatal(f"Unable to write to the output file! {output_path =}")
+        logger.fatal(
+            "Unable to write to the output file! output_path: %s", output_path
+        )
         return 1
 
     return 0
@@ -126,9 +133,9 @@ if __name__ == "__main__":
     # The path to the project root
     project_root_path: Path = Path(__file__).resolve().parent.parent
 
-    input_path: Path = project_root_path / "CHANGELOG.rst"
-    output_path: Path = project_root_path / "chagelog_latest.rst"
+    input: Path = project_root_path / "CHANGELOG.rst"
+    output: Path = project_root_path / "chagelog_latest.rst"
 
-    sys.exit(main(input_path, output_path))
+    sys.exit(main(input, output))
 
 # vim: set ft=python :
