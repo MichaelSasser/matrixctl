@@ -110,6 +110,14 @@ def subparser_delroom(subparsers: _SubParsersAction[t.Any]) -> None:
             "removing all local users"
         ),
     )
+    parser.add_argument(
+        "--force-purge",
+        action="store_true",
+        help=(
+            "force a purge to go ahead even if there are local users still in "
+            "the room. Do not use this unless a regular purge operation fails"
+        ),
+    )
     parser.set_defaults(addon="delroom")
 
 
