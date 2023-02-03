@@ -66,7 +66,6 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
     )
 
     while True:
-
         sleep(1)
         try:
             response: JsonDict = request(req).json()

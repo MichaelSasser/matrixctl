@@ -85,7 +85,7 @@ repos:
       #   additional_dependencies: ["flake8-bugbear"]
 
   - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.9.0
+    rev: v1.10.0
     hooks:
       # Enforce that noqa annotations always occur with specific codes.
       # Sample annotations: # noqa: F401, # noqa: F401,W203
@@ -111,14 +111,14 @@ repos:
 
   # isort
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.11.2
+    rev: 5.12.0
     hooks:
       - id: isort
         additional_dependencies: [toml]
 
   # format: black
   - repo: https://github.com/ambv/black
-    rev: 22.12.0
+    rev: 23.1.0
     hooks:
       - id: black
 
@@ -131,7 +131,7 @@ repos:
 
   # check docstrings
   - repo: https://github.com/PyCQA/pydocstyle
-    rev: 6.1.1
+    rev: 6.3.0
     hooks:
       - id: pydocstyle
         args: ["--ignore=D10,D21,D202"]
@@ -160,7 +160,7 @@ repos:
 
   # vulture
   - repo: https://github.com/jendrikseipp/vulture
-    rev: "v2.6"
+    rev: "v2.7"
     hooks:
       - id: vulture
 
@@ -173,7 +173,7 @@ repos:
 
   # pycln
   - repo: https://github.com/hadialqattan/pycln
-    rev: v2.1.2
+    rev: v2.1.3
     hooks:
       - id: pycln
         args: [--config=pyproject.toml]

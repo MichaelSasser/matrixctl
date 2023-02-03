@@ -57,7 +57,6 @@ def ansible_run(
 
     """
     with tempfile.TemporaryDirectory() as temp_dir:
-
         logger.debug(
             f'Created temporary directory "{temp_dir}" for the '
             "ansible-runner. The temporary directory will be removed after "

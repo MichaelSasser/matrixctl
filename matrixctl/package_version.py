@@ -68,7 +68,7 @@ def __from_pyproject(file: Path) -> str | None:
         If the package is installed, the return value will be ``None``.
 
     """
-    with (suppress(FileNotFoundError), file.open() as fp):
+    with suppress(FileNotFoundError), file.open() as fp:
         vers: t.Pattern[str] = re.compile(VERSION_PATTERN)
         for line in fp:
             version: t.Match[str] | None = vers.search(line)

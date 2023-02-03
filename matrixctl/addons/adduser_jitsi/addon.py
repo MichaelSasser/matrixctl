@@ -63,7 +63,6 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         yaml.get("server", "ssh", "user"),
         yaml.get("server", "ssh", "port"),
     ) as ssh:
-
         passwd: str = create_user(arg.user)
 
         cmd: str = (

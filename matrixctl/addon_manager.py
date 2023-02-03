@@ -70,7 +70,7 @@ def import_addons_from(
     """
     logger.debug("package dir set to %s", addon_directory)
     logger.debug("addon_module set to %s", addon_module)
-    for (_, module_name, _) in iter_modules(
+    for _, module_name, _ in iter_modules(
         [addon_directory], f"{addon_module}."
     ):
         parser = f"{module_name}.{parser_name}"

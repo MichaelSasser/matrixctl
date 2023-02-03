@@ -167,7 +167,6 @@ def to_table(
     logger.debug("User: users_table = %s", user_tables)
 
     for num, table_ in enumerate(user_tables):
-
         if num < 1:
             yield "User:"
         else:

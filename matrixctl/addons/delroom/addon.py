@@ -125,7 +125,6 @@ def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
     msglock_purging: bool = False
 
     while True:
-
         sleep(1)
         try:
             response: Response = request(req)

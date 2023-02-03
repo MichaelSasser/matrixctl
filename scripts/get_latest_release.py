@@ -93,7 +93,7 @@ def main(input_path: Path, output_path: Path) -> int:
     try:
         with input_path.open() as fp:
             found_headlines = _HEADLINE.split(fp.read())
-    except (OSError):
+    except OSError:
         logger.fatal(f"Unable to read from the input file! {input_path =}")
         return 1
 
@@ -109,7 +109,7 @@ def main(input_path: Path, output_path: Path) -> int:
     try:
         with output_path.open("w") as fp:
             fp.write(entry)
-    except (OSError):
+    except OSError:
         logger.fatal(f"Unable to write to the output file! {output_path =}")
         return 1
 
