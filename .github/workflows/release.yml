@@ -82,7 +82,7 @@ jobs:
         run: rm -rf matrixctl.zip chagelog_latest.md chagelog_latest.rst
 
       - name: pypi-publish
-        uses: pypa/gh-action-pypi-publish@v1.6.4
+        uses: pypa/gh-action-pypi-publish@v1.7.1
         with:
           # PyPI user
           # user: # optional, default is __token__
