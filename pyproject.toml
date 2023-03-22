@@ -35,7 +35,7 @@ classifiers = [
 python = "^3.10"
 GitPython = "^3.1.28"
 coloredlogs = "^15.0.1"
-paramiko = "^2.11.0"
+paramiko = ">=2.11,<4.0"
 "ruamel.yaml" = "^0.17.21"
 ansible-runner = ">=1.4.7,<3.0.0"
 attrs = "^22.1.0"
