@@ -125,7 +125,6 @@ def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
     msglock_purging: bool = False
 
     while True:
-
         sleep(1)
         try:
             response: Response = request(req)
@@ -146,11 +145,11 @@ def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
             ) from e
 
         if response is not None:
-            logger.debug(f"{response=}")
+            logger.debug("response: %s", response)
             # complete
             if json_response["status"] == "complete":
                 print(
-                    "Status: Complete (the room has been deleted successfully"
+                    "Status: Complete (the room has been deleted successfully)"
                 )
                 break
             # shutting_down
@@ -182,8 +181,11 @@ def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
             # failed
             if json_response["status"] == "failed":
                 logger.critical(
-                    "The server returned, that the approach failed with the"
-                    f" following message: {json_response['status']}."
+                    (
+                        "The server returned, that the approach failed with "
+                        "the following message: %s."
+                    ),
+                    json_response["status"],
                 )
                 break
         break
@@ -205,9 +207,13 @@ def handle_arguments(arg: Namespace) -> JsonDict:
         The params.
 
     """
+    if arg.force_purge and arg.no_purge:
+        arg.no_purge = False
+
     body: JsonDict = {
         "block": arg.block,
         "purge": arg.no_purge,
+        "force_purge": arg.force_purge,
     }
     if arg.new_room_admin is not None:
         body["new_room_user_id"] = arg.new_room_admin

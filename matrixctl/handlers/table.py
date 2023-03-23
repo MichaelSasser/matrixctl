@@ -45,7 +45,7 @@ def get_colum_length(
 
     Returns
     -------
-    column_length_tuple : None
+    column_length_tuple : tuple of int
         A n-tuple which describes the longest string per column. (n is the
         number of columns)
 
@@ -82,7 +82,7 @@ def transpose_newlines_to_rows(
 
     Yields
     ------
-    row : list[str]
+    row : list of str
         A row for each occurrence.
 
     """
@@ -110,8 +110,9 @@ def handle_newlines(
 
     Returns
     -------
-    part, inhibit_sep : tuple [list of list of str, set of int]
+    part : list of list of str
         The ``part`` contains the supplemented and updated rows.
+    inhibit_sep : set of int
         The ``inhibit_sep`` ``set`` contains the line numbers
         where a separator yhould be inhibited because the lines handled by
         this function are belonging together.
@@ -123,7 +124,6 @@ def handle_newlines(
     # occurrences = the maximum number of newline chars in one row (not sum)
     for line_number, occurrences in newlines.items():
         split = [column.splitlines() for column in part[line_number + offset]]
-        # logger.debug(f"{split = }")
 
         new_rows: Generator[
             list[str], None, None
@@ -132,14 +132,12 @@ def handle_newlines(
         # The first new line will replace the old line
         try:
             part[line_number + offset] = next(new_rows)
-            # logger.debug(f"new row = {data[line_number+offset]}")
         except StopIteration:
             logger.error("There is a bug in the table handler.")
             return part, inhibit_sep
 
         # The following lines will be inserted
         for additional_row in new_rows:
-            # logger.debug(f"new row = {additional_row}")
             inhibit_sep.add(line_number + offset)
             offset += 1
             part.insert(line_number + offset, additional_row)
@@ -231,9 +229,9 @@ def cells_to_str(part: Sequence[Sequence[str]], none: str) -> list[list[str]]:
     The part, where every cell is of type ``str``.
 
     """
-    data: list[list[str]] = []
-    for row in part:
-        data.append([str(s if s is not None else none) for s in row])
+    data: list[list[str]] = [
+        [str(s if s is not None else none) for s in row] for row in part
+    ]
     return data
 
 
@@ -258,7 +256,7 @@ def table(
 
     Yields
     ------
-    table : Generator [str, None, None]
+    table : str
         The table (row for row).
 
     """
@@ -282,28 +280,25 @@ def table(
     num_of_rows: int = len(data)
 
     logger.debug(
-        f"Create new Table with {num_of_columns} x {num_of_rows} Cells."
+        "Create new Table with %s x %s Cells.", num_of_columns, num_of_rows
     )
-    logger.debug(f"Maximal length of text per column {max_column_len}.")
+    logger.debug("Maximal length of text per column %s.", max_column_len)
     logger.debug(
-        "Found newlines in data: {{r: n}}, where n are newlines in row r: "
-        f"{newlines}"
+        "Found newlines in data: {{r: n}}, where n are newlines in row r: %s",
+        newlines,
     )
     logger.debug(
-        f"Inhibit the creation of newlines in rows: {inhibit_sep} in data."
+        "Inhibit the creation of newlines in rows: %s in data.", inhibit_sep
     )
 
     # The 2 in (i + 2) gives 1 extra space left and right of the column
     sep_line_data: str = f"|{'+'.join('-' * (i + 2) for i in max_column_len)}|"
     sep_line: str = sep_line_data.replace("|", "+")
-    sep_line_header: str = sep_line.replace("-", "=")
-
     yield sep_line  # Top separator (will be always printed)
     if headers is not None:
         for line in headers:
             yield format_table_row(line, max_column_len)
-        yield sep_line_header
-
+        yield sep_line.replace("-", "=")
     for line_number, line in enumerate(data):
         yield format_table_row(line, max_column_len)
         if sep and line_number not in inhibit_sep:

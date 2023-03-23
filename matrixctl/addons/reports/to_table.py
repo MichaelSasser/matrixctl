@@ -122,7 +122,7 @@ def to_table(events_raw: list[JsonDict]) -> Generator[str, None, None]:
                     f"{dt}\n"
                     f"{event['score']}\n"
                     f"{canonical_alias}\n"
-                    f"{event['name'] if event['name'] else '-'}\n"
+                    f"{event['name'] or '-'}\n"
                     f"{event['room_id']}\n"
                     f"{event['event_id']}\n"
                     f"{event['sender']}\n"

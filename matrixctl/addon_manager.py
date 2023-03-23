@@ -20,8 +20,8 @@ from __future__ import annotations
 
 import argparse
 import logging
+import typing as t
 
-# from functools import wraps
 from importlib import import_module
 from pkgutil import iter_modules
 from typing import Callable
@@ -68,15 +68,15 @@ def import_addons_from(
         The function always returns ``None``.
 
     """
-    logger.debug(f"package dir set to {addon_directory}")
-    logger.debug(f"addon_module set to {addon_module}")
-    for (_, module_name, _) in iter_modules(
+    logger.debug("package dir set to %s", addon_directory)
+    logger.debug("addon_module set to %s", addon_module)
+    for _, module_name, _ in iter_modules(
         [addon_directory], f"{addon_module}."
     ):
         parser = f"{module_name}.{parser_name}"
-        logger.debug(f"Found module: {parser}")
+        logger.debug("Found module: %s", parser)
         module = import_module(parser)
-        logger.debug(f"Imported: {module}")
+        logger.debug("Imported: %s", module)
 
 
 def subparser(func: SubParserType) -> SubParserType:
@@ -99,12 +99,6 @@ def subparser(func: SubParserType) -> SubParserType:
     """
     if func not in addons:
         addons.append(func)
-
-    # @wraps(func)
-    # def wrapper(parser: argparse._SubParsersAction) -> None:
-    #     func(parser)
-    #
-    # return wrapper
     return func
 
 
@@ -133,7 +127,7 @@ def setup(func: ParserSetupType) -> argparse.ArgumentParser:
     parser: argparse.ArgumentParser = func()
     if len(addons) > 0:
         # skipcq: PYL-W0212
-        subparsers: argparse._SubParsersAction = parser.add_subparsers(
+        subparsers: argparse._SubParsersAction[t.Any] = parser.add_subparsers(
             title="Commands",
             description=(
                 "The following are commands, you can use to accomplish "

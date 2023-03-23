@@ -77,9 +77,28 @@ class MessageType(Enum):
 
 
 def sanitize_message_type(
-    message_type: str | MessageType,
+    message_type: str | MessageType | None,
 ) -> MessageType | t.Literal[False] | None:
     """Sanitize an message type.
+
+    Examples
+    --------
+    >>> sanitize_message_type("m.room.message")
+    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+
+    >>> sanitize_message_type("M.RooM.MeSsAgE")
+    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+
+    >>> sanitize_message_type(" m.room.message   ")
+    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+
+    >>> sanitize_message_type(MessageType.M_ROOM_MESSAGE)
+    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+
+    >>> sanitize_message_type("something invalid")
+    False
+
+    >>> sanitize_message_type(None)
 
     Parameters
     ----------
@@ -101,10 +120,63 @@ def sanitize_message_type(
     return False
 
 
+def sanitize(
+    pattern: t.Pattern[str],
+    identifier: t.Any | None,
+    error_message: str,
+) -> str | t.Literal[False] | None:
+    """Create a new sanitizer based on compiled RegEx expressions.
+
+    A helper function for simplifying the latter sanitize identifier specific
+    functions.
+
+    Parameters
+    ----------
+    pattern : typing.Pattern
+        The RegEx pattern used for the specific sanitizing
+    identifier : typing.Any, optional
+        The identifier to sanitize based on the pattern
+    error_message : str
+        The error string used for logging errors
+
+    Returns
+    -------
+    result : typing.Literal[False] or str, optional
+        The function returns ``None`` if ``identifier`` is ``None``,
+        the sanitized string, when it is valid, otherwise ``False``
+
+    """
+    if identifier is None:
+        return None
+    with suppress(TypeError, AttributeError):
+        identifier = str(identifier).strip()
+        if pattern.match(identifier):
+            return t.cast(str, identifier)
+    logger.error(error_message)
+    return False
+
+
 def sanitize_event_identifier(
     event_identifier: t.Any,
 ) -> str | t.Literal[False] | None:
     """Sanitize an event identifier.
+
+    Examples
+    --------
+    >>> sanitize_event_identifier(
+    ...    "$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y"
+    ... )
+    '$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y'
+
+    >>> sanitize_event_identifier(
+    ...    " $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y "
+    ... )
+    '$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y'
+
+    >>> sanitize_event_identifier("something invalid")
+    False
+
+    >>> sanitize_event_identifier(None)
 
     Parameters
     ----------
@@ -118,24 +190,38 @@ def sanitize_event_identifier(
         the sanitized string, when it is valid, otherwise ``False``
 
     """
-    if event_identifier is None:
-        return None
-    with suppress(TypeError, AttributeError):
-        event_identifier = str(event_identifier).strip()
-        if EVENT_ID_PATTERN.match(event_identifier):
-            return t.cast(str, event_identifier)
-    logger.error(
-        "The given event identifier has an invalid format. Please make"
-        " sure you use one with the correct format. For example:"
-        " $tjeDdqYAk9BDLAUcniGUy640e_D9TrWU2RmCksJQQEQ"
+    return sanitize(
+        pattern=EVENT_ID_PATTERN,
+        identifier=event_identifier,
+        error_message=(
+            "The given event identifier has an invalid format. Please make"
+            " sure you use one with the correct format. For example:"
+            " $tjeDdqYAk9BDLAUcniGUy640e_D9TrWU2RmCksJQQEQ"
+        ),
     )
-    return False
 
 
 def sanitize_user_identifier(
     user_identifier: t.Any,
 ) -> str | t.Literal[False] | None:
     """Sanitize an user identifier.
+
+    Examples
+    --------
+    >>> sanitize_user_identifier(
+    ...    "@user:domain.tld"
+    ... )
+    '@user:domain.tld'
+
+    >>> sanitize_user_identifier(
+    ...    " @user:domain.tld "
+    ... )
+    '@user:domain.tld'
+
+    >>> sanitize_user_identifier("something invalid")
+    False
+
+    >>> sanitize_user_identifier(None)
 
     Parameters
     ----------
@@ -149,24 +235,38 @@ def sanitize_user_identifier(
         the sanitized string, when it is valid, otherwise ``False``
 
     """
-    if user_identifier is None:
-        return None
-    with suppress(TypeError, AttributeError):
-        user_identifier = str(user_identifier).strip()
-        if USER_ID_PATTERN.match(user_identifier):
-            return t.cast(str, user_identifier)
-    logger.error(
-        "The given user identifier has an invalid format. Please make sure"
-        " you use one with the correct format. For example:"
-        " @username:domain.tld"
+    return sanitize(
+        pattern=USER_ID_PATTERN,
+        identifier=user_identifier,
+        error_message=(
+            "The given user identifier has an invalid format. Please make sure"
+            " you use one with the correct format. For example:"
+            " @username:domain.tld"
+        ),
     )
-    return False
 
 
 def sanitize_room_identifier(
     room_identifier: t.Any,
 ) -> str | t.Literal[False] | None:
     """Sanitize an room identifier.
+
+    Examples
+    --------
+    >>> sanitize_room_identifier(
+    ...    "!room:domain.tld"
+    ... )
+    '!room:domain.tld'
+
+    >>> sanitize_room_identifier(
+    ...    " !room:domain.tld "
+    ... )
+    '!room:domain.tld'
+
+    >>> sanitize_room_identifier("something invalid")
+    False
+
+    >>> sanitize_room_identifier(None)
 
     Parameters
     ----------
@@ -180,18 +280,15 @@ def sanitize_room_identifier(
         the sanitized string, when it is valid, otherwise ``False``
 
     """
-    if room_identifier is None:
-        return None
-    with suppress(TypeError, AttributeError):
-        room_identifier = str(room_identifier).strip()
-        if ROOM_ID_PATTERN.match(room_identifier):
-            return t.cast(str, room_identifier)
-    logger.error(
-        "The given room identifier has an invalid format. Please make sure"
-        " you use one with the correct format. For example:"
-        " !iuyQXswfjgxQMZGrfQ:matrix.org"
+    return sanitize(
+        pattern=ROOM_ID_PATTERN,
+        identifier=room_identifier,
+        error_message=(
+            "The given room identifier has an invalid format. Please make sure"
+            " you use one with the correct format. For example:"
+            " !iuyQXswfjgxQMZGrfQ:matrix.org"
+        ),
     )
-    return False
 
 
 # vim: set ft=python :

@@ -114,7 +114,7 @@ def handle_timestamp(timestamp: int | None, force: bool) -> int:
         The same timestamp but sanitized, or the timestamp of this exact time.
 
     """
-    ts: float = (datetime.today() - timedelta(days=30)).timestamp()
+    ts: float = (datetime.now() - timedelta(days=30)).timestamp()
     if timestamp is None:
         if not force:
             print(

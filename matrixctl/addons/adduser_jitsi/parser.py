@@ -20,6 +20,8 @@
 
 from __future__ import annotations
 
+import typing as t
+
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
@@ -31,12 +33,12 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 @subparser
-def subparser_adduser_jitsi(subparsers: _SubParsersAction) -> None:
+def subparser_adduser_jitsi(subparsers: _SubParsersAction[t.Any]) -> None:
     """Create a subparser for the ``matrixctl adduser-jitsi`` command.
 
     Parameters
     ----------
-    subparsers : argparse._SubParsersAction
+    subparsers : argparse._SubParsersAction of typing.Any
         The object which is returned by ``parser.add_subparsers()``.
 
     Returns
@@ -45,7 +47,9 @@ def subparser_adduser_jitsi(subparsers: _SubParsersAction) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "adduser-jitsi", help="Add users to a jitsi server"
+        "adduser-jitsi",
+        help="[DEPRECATED] Add users to a jitsi server",
+        description="This feature will be removed in MatrixCtl v0.13.0",
     )
     parser.add_argument("user", help="The Username of the new jitsi user")
     parser.set_defaults(addon="adduser_jitsi")

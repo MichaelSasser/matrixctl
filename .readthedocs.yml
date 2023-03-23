@@ -15,7 +15,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ---
-
 version: 2
 
 sphinx:
@@ -24,11 +23,11 @@ sphinx:
 formats: all
 
 build:
-  image: testing
-  # python: 3.9
+  os: ubuntu-22.04
+  tools:
+    python: "3.10"
 
 python:
-  version: 3.9
   install:
     - method: pip
       path: .

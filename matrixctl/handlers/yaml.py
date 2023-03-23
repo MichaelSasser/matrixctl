@@ -21,14 +21,13 @@ from __future__ import annotations
 import logging
 import os
 import sys
+import typing as t
 
 from collections import ChainMap
-from collections.abc import Generator
 from collections.abc import Iterable
+from collections.abc import MutableMapping
 from getpass import getuser
 from pathlib import Path
-from typing import Any
-from typing import cast
 
 from jinja2 import Template
 from jinja2 import Undefined
@@ -51,7 +50,7 @@ logger = logging.getLogger(__name__)
 
 # Make sure the number of places of the source files line number does not
 # change. Otherwise the debug output shifts.
-def tree_printer(tree: Any, depth: int = 0) -> None:
+def tree_printer(tree: t.Any, depth: int = 0) -> None:
     """Print the configuration file recursively.
 
     Parameters
@@ -67,27 +66,29 @@ def tree_printer(tree: Any, depth: int = 0) -> None:
     None
 
     """
-    if isinstance(tree, dict):
-        for key in tree:
-            if isinstance(tree[key], (str, int, float, bool)):
-                logger.debug(
-                    f"{'│ '* depth}├─── {key}: {secrets_filter(tree, key)}"
-                )
-            elif isinstance(tree[key], (list, tuple)):
-                logger.debug(
-                    f"{'│ '* depth}├─── {key}: [{', '.join(tree[key])}]"
-                )
-            else:
-                logger.debug(f"{'│ '* depth}├─┬─ {key}:")
-                tree_printer(tree[key], depth + 1)
-    else:
+    if not isinstance(tree, dict):
         raise ConfigFileError(
             "There is something wrong with your config file."
         )
-    logger.debug(f"{'│ '* depth}┴")
+    for key in tree:
+        if isinstance(tree[key], (str, int, float, bool)):
+            logger.debug(
+                "%s├─── %s: %s",
+                "│ " * depth,
+                key,
+                secrets_filter(tree, key),
+            )
+        elif isinstance(tree[key], (list, tuple)):
+            logger.debug(
+                "%s├─── %s: [%s]", "│ " * depth, key, ", ".join(tree[key])
+            )
+        else:
+            logger.debug("%s├─┬─ %s:", "│ " * depth, key)
+            tree_printer(tree[key], depth + 1)
+    logger.debug("%s┴", "│ " * depth)
 
 
-def secrets_filter(tree: dict[str, str], key: str) -> Any:
+def secrets_filter(tree: dict[str, str], key: str) -> t.Any:
     """Redact secrets when printing the configuration file.
 
     Parameters
@@ -103,9 +104,10 @@ def secrets_filter(tree: dict[str, str], key: str) -> Any:
     None
 
     """
-    if key in "token":
-        return f"<redacted length={len(tree[key])}>"
-    return tree[key]
+    redact = {"token", "synapse_password"}
+    return (
+        f"<redacted length={len(tree[key])}>" if key in redact else tree[key]
+    )
 
 
 class JinjaUndefined(Undefined):  # type: ignore
@@ -116,7 +118,7 @@ class JinjaUndefined(Undefined):  # type: ignore
 
     """
 
-    def __getattr__(self, _: str) -> Any:
+    def __getattr__(self, _: str) -> t.Any:
         """Return en empty string."""
         return ""
 
@@ -162,7 +164,7 @@ class YAML:
                     "update your config file to the yaml format."
                 )
 
-        logger.debug(f'Config loaded for Server: "{self.server}"')
+        logger.debug("Config loaded for Server: %s", self.server)
         tree_printer(self.__yaml)
 
     @staticmethod
@@ -230,29 +232,37 @@ class YAML:
 
         """
         try:
+            # The user should be able to use any file and location
+            # skipcq: PTC-W6004
             with open(path) as stream:
                 template: Template = Template(
                     stream.read(), undefined=JinjaUndefined
                 )
                 rendered = YAML.JINJA_PREDEFINED | yaml.load(template.render())
                 rendered["home"] = str(Path.home())
-                # Override default return type Any with Config
-                return cast(Config, yaml.load(template.render(rendered)))
+                # Override default return type t.Any with Config
+                return t.cast(Config, yaml.load(template.render(rendered)))
         except YAMLError:
             logger.error(
-                f"Please check your config file {str(path)}. MatrixCtl was "
-                "not able to read it."
+                (
+                    "Please check your config file %s. MatrixCtl was "
+                    "not able to read it."
+                ),
+                str(path),
             )
         except FileNotFoundError:
-            logger.debug(f'The config file "{str(path)}" does not exist.')
+            logger.debug("The config file %s does not exist.", str(path))
         except IsADirectoryError:
             logger.error(
-                "The path to the configuration file you entered "
-                f'"{str(path)}" seems to be a directory and not a '
-                "configuration file. Make sure the path is correct."
+                (
+                    "The path to the configuration file you entered %s "
+                    "seems to be a directory and not a "
+                    "configuration file. Make sure the path is correct."
+                ),
+                str(path),
             )
 
-        return cast(Config, {})
+        return t.cast(Config, {})
 
     @staticmethod
     def apply_defaults(server: ConfigServer) -> ConfigServer:
@@ -273,7 +283,7 @@ class YAML:
         try:
             server["api"]["concurrent_limit"]
         except KeyError:
-            server["api"] = cast(ConfigServerAPI, {})
+            server["api"] = t.cast(ConfigServerAPI, {})
 
         # Create default for concurrent_limit
         try:
@@ -314,32 +324,43 @@ class YAML:
         """
         # RuamelYAML should not be part of the class.
         yaml: RuamelYAML = RuamelYAML(typ="safe")
-        configs: Generator[Config, None, None] = (
+        configs: t.Generator[Config, None, None] = (
             YAML.read_from_file(yaml, path) for path in paths
         )
         try:
-            conf: Config = cast(
+            conf: Config = t.cast(
                 Config,
-                dict(ChainMap(*(config for config in configs if config))),
+                dict(
+                    ChainMap(
+                        *(
+                            t.cast(MutableMapping[t.Any, t.Any], config)
+                            for config in configs
+                            if config
+                        )
+                    )
+                ),
             )
             conf["server"] = self.apply_defaults(conf["servers"][server])
             return conf
 
         except KeyError:
             logger.error(
-                f'The server "{server}" does not exist in your config file.'
+                "The server %s does not exist in your config file.", server
             )
             sys.exit(1)
         except TypeError:
             logger.error(
-                f'The Path(s) to the configuration file you entered "{paths}" '
-                "seems to have syntax paroblems. Make sure you use the "
-                "correct YAML syntax."
+                (
+                    "The Path(s) to the configuration file you entered %s "
+                    "seems to have syntax paroblems. Make sure you use the "
+                    "correct YAML syntax."
+                ),
+                paths,
             )
             sys.exit(1)
 
     # TODO: doctest + fixture
-    def get(self, *keys: str) -> Any:
+    def get(self, *keys: str) -> t.Any:
         """Get a value from a config entry safely.
 
         **Usage**
@@ -369,7 +390,7 @@ class YAML:
             The value of the entry you described.
 
         """
-        yaml_walker: Any = self.__yaml
+        yaml_walker: t.Any = self.__yaml
 
         try:
             for key in keys:
@@ -379,9 +400,12 @@ class YAML:
                 "server", f"servers.{self.server}"
             )
             logger.error(
-                "Please check your config file. For this operation your "
-                f'config file needs to have the entry "{keys[-1]}" '
-                f'in "{tree}".'
+                (
+                    "Please check your config file. For this operation your "
+                    "config file needs to have the entry %s in %s."
+                ),
+                keys[-1],
+                tree,
             )
             sys.exit(1)
 

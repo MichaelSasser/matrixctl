@@ -66,7 +66,6 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
     )
 
     while True:
-
         sleep(1)
         try:
             response: JsonDict = request(req).json()
@@ -80,7 +79,7 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
         # return response
 
         if response is not None:
-            logger.debug(f"{response=}")
+            logger.debug("response: %s", response)
             if response["status"] == "complete":
                 print("Done...")
                 return 0

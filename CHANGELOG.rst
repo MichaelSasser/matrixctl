@@ -11,7 +11,7 @@ Behavior & Breaking Changes
 
 - This release changes how MatrixCtl connects to the database. Therefore
   the configuration file must be changed. Please check the
-  `documentation<https://matrixctl.readthedocs.io/en/stable/getting_started/config_file.html>`_
+  `documentation <https://matrixctl.readthedocs.io/en/stable/getting_started/config_file.html>`_
   for more information. (`#313
   <https://github.com/MichaelSasser/matrixctl/issues/313>`_)
 

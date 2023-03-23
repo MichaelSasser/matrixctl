@@ -72,12 +72,15 @@ def make_human_readable(
     elif k == "is_guest":
         value = human_readable_bool(user_dict[k])
         key = "Guest"
-    elif k in ("admin", "deactivated"):
+    elif k in {"admin", "deactivated"}:
         value = human_readable_bool(user_dict[k])
     elif k.endswith("_ts"):
-        value = str(
-            datetime.datetime.fromtimestamp(float(user_dict[k]))
-        )  # UTC?
+        try:
+            value = str(
+                datetime.datetime.fromtimestamp(float(user_dict[k]))
+            )  # UTC?
+        except TypeError:
+            value = "-"
     elif k.endswith("_at"):
         value = str(
             datetime.datetime.fromtimestamp(float(user_dict[k]) / 1000.0)
@@ -161,16 +164,14 @@ def to_table(
     """
     user_tables = generate_user_tables(user_dict, len_domain)
 
-    logger.debug(f"User: {user_tables=}")
+    logger.debug("User: users_table = %s", user_tables)
 
     for num, table_ in enumerate(user_tables):
-
         if num < 1:
             yield "User:"
         else:
             yield "\nThreepid:"
-        for line in table(table_, sep=False):
-            yield line
+        yield from table(table_, sep=False)
 
 
 # vim: set ft=python :

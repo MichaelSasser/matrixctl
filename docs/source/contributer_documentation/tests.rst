@@ -42,5 +42,13 @@ YAML
    :undoc-members:
    :show-inheritance:
 
+Sanitizers
+----------
+
+.. automodule:: tests.matrixctl.test_sanitizers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ..
    vim: set ft=rst :

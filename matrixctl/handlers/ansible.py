@@ -57,11 +57,13 @@ def ansible_run(
 
     """
     with tempfile.TemporaryDirectory() as temp_dir:
-
         logger.debug(
-            f'Created temporary directory "{temp_dir}" for the '
-            "ansible-runner. The temporary directory will be removed after "
-            "the ansible-runner succeeded or failed."
+            (
+                'Created temporary directory "%s" for the '
+                "ansible-runner. The temporary directory will be removed "
+                "after the ansible-runner succeeded or failed."
+            ),
+            temp_dir,
         )
 
         runner_config: RunnerConfig = RunnerConfig(
@@ -77,10 +79,10 @@ def ansible_run(
 
         # debug output
         logger.debug("Runner status")
-        logger.debug(f"{runner.status}: {runner.rc}")
+        logger.debug("%s: %s", runner.status, runner.rc)
         for host_event in runner.events:
             logger.debug(host_event["event"])
-        logger.debug(f"Final status: {runner.stats}")
+        logger.debug("Final status: %s", runner.stats)
 
 
 # vim: set ft=python :
