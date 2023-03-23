@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Helpers &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
+  <title>Helpers &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -28,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> MatrixCtl
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MatrixCtl
           </a>
               <div class="version">
-                0.12.0-beta.1
+                0.12.0-beta.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -70,9 +76,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Contributor Documentation</a> &raquo;</li>
-      <li>Helpers</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Contributor Documentation</a></li>
+      <li class="breadcrumb-item active">Helpers</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/contributer_documentation/helpers.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -83,24 +89,27 @@
            <div itemprop="articleBody">
              
   <section id="helpers">
-<h1>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h1>
+<h1>Helpers<a class="headerlink" href="#helpers" title="Permalink to this heading"></a></h1>
 <p>Helpers or helper function are common functions used throughout the project.</p>
 <section id="module-matrixctl.addon_manager">
-<span id="addon-manager"></span><h2>Addon Manager<a class="headerlink" href="#module-matrixctl.addon_manager" title="Permalink to this headline"></a></h2>
+<span id="addon-manager"></span><h2>Addon Manager<a class="headerlink" href="#module-matrixctl.addon_manager" title="Permalink to this heading"></a></h2>
 <p>Use this module as addon manager.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.addon_manager.import_addons_from">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">import_addons_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addon_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addon_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#import_addons_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.import_addons_from" title="Permalink to this definition"></a></dt>
 <dd><p>Import addons in (global) addons.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>addon_directory</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The absolute path as string to the addon directory.</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
-<dt><strong>addon_module</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The import path (with dots <code class="docutils literal notranslate"><span class="pre">.</span></code> not slashes <code class="docutils literal notranslate"><span class="pre">/</span></code>) to the addons
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl>
+<dt><strong>addon_directory</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The absolute path as string to the addon directory.</p>
+</dd>
+<dt><strong>addon_module</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The import path (with dots <code class="docutils literal notranslate"><span class="pre">.</span></code> not slashes <code class="docutils literal notranslate"><span class="pre">/</span></code>) to the addons
 from project root e.g. “matrixctl.addons”.</p>
 </dd>
-<dt><strong>parser_name</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The name of the module the subparser is in.</p>
+<dt><strong>parser_name</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The name of the module the subparser is in.</p>
 </dd>
 <dt><strong>..Note:</strong></dt><dd><p>The nothing will be imported, when the subparser is not in (global)
 addons. To add the subparse to addons you need to decorate the
@@ -108,15 +117,9 @@ subparsers with <code class="docutils literal notranslate"><span class="pre">mat
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>none</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>The function always returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>
-..</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>none</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>The function always returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd>
 </dl>
 </dd>
@@ -128,21 +131,18 @@ subparsers with <code class="docutils literal notranslate"><span class="pre">mat
 <span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.setup" title="Permalink to this definition"></a></dt>
 <dd><p>Add subparsers to the (main) parser.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></a></p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl>
 <dt><strong>func</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.addon_manager.ParserSetupType</span></code></span></dt><dd><p>A callback to the main parser.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>parser</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a></span></dt><dd><p>The parser which includes all subparsers.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></a>
-..</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>parser</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a></span></dt><dd><p>The parser which includes all subparsers.</p>
 </dd>
 </dl>
 </dd>
@@ -154,8 +154,11 @@ subparsers with <code class="docutils literal notranslate"><span class="pre">mat
 <span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">subparser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#subparser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.subparser" title="Permalink to this definition"></a></dt>
 <dd><p>Decorate subparsers with, to add them to (global) addons on import.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">_SubParsersAction</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl>
 <dt><strong>func</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.addon_manager.SubParserType</span></code></span></dt><dd><p>A subparser.</p>
 </dd>
 <dt><strong>..Note:</strong></dt><dd><p>The nothing will be imported, when the subparser is not in (global)
@@ -164,15 +167,9 @@ subparsers with <code class="docutils literal notranslate"><span class="pre">mat
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
 <dt><strong>decorated_func</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.addon_manager.SubParserType</span></code></span></dt><dd><p>The same subparser which was used as argument. (Without any changes)</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">_SubParsersAction</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]
-..</p>
 </dd>
 </dl>
 </dd>
@@ -181,7 +178,7 @@ subparsers with <code class="docutils literal notranslate"><span class="pre">mat
 
 </section>
 <section id="module-matrixctl.package_version">
-<span id="package-version"></span><h2>Package Version<a class="headerlink" href="#module-matrixctl.package_version" title="Permalink to this headline"></a></h2>
+<span id="package-version"></span><h2>Package Version<a class="headerlink" href="#module-matrixctl.package_version" title="Permalink to this heading"></a></h2>
 <p>Get the packages version.</p>
 <p>The package’s version is determined by first checking if a
 <code class="docutils literal notranslate"><span class="pre">pyproject.toml``exists.</span> <span class="pre">If</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">given,</span> <span class="pre">the</span> <span class="pre">version</span> <span class="pre">variable</span> <span class="pre">is</span>
@@ -195,17 +192,20 @@ be determined, it will return <code class="docutils literal notranslate"><span c
 <span class="sig-prename descclassname"><span class="pre">matrixctl.package_version.</span></span><span class="sig-name descname"><span class="pre">get_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/package_version.html#get_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.package_version.get_version" title="Permalink to this definition"></a></dt>
 <dd><p>Get the version of a Python package.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>name</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The packages <code class="docutils literal notranslate"><span class="pre">__name__</span></code>.</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
 </dd>
-<dt><strong>file</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">__name__</span></code> of <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code></p>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl>
+<dt><strong>name</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The packages <code class="docutils literal notranslate"><span class="pre">__name__</span></code>.</p>
+</dd>
+<dt><strong>file</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">__name__</span></code> of <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code></p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>version</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>The package version, if the package is installed and the version
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>version</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>The package version, if the package is installed and the version
 of it is stored in the packages metadata.</p>
 </dd>
 </dl>
@@ -244,12 +244,12 @@ of it is stored in the packages metadata.</p>
 
 </section>
 <section id="module-matrixctl.sanitizers">
-<span id="sanitizers"></span><h2>Sanitizers<a class="headerlink" href="#module-matrixctl.sanitizers" title="Permalink to this headline"></a></h2>
+<span id="sanitizers"></span><h2>Sanitizers<a class="headerlink" href="#module-matrixctl.sanitizers" title="Permalink to this heading"></a></h2>
 <p>Use the functions of this module as printing helpers.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">MessageType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#MessageType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.MessageType" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
 <p>Use this enum for describing message types.</p>
 <p>Supported events:</p>
 <table class="docutils align-default">
@@ -348,24 +348,77 @@ of it is stored in the packages metadata.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_event_identifier">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_event_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_event_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_event_identifier" title="Permalink to this definition"></a></dt>
-<dd><p>Sanitize an event identifier.</p>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize" title="Permalink to this definition"></a></dt>
+<dd><p>Create a new sanitizer based on compiled RegEx expressions.</p>
+<p>A helper function for simplifying the latter sanitize identifier specific
+functions.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>event_identifier</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typeing.Any</span></code></span></dt><dd><p>The event identifier to sanitize</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">False</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl>
+<dt><strong>pattern</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Pattern" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Pattern</span></code></a></span></dt><dd><p>The RegEx pattern used for the specific sanitizing</p>
+</dd>
+<dt><strong>identifier</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Any</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The identifier to sanitize based on the pattern</p>
+</dd>
+<dt><strong>error_message</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The error string used for logging errors</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>result</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">event_identifier</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>result</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">identifier</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
 the sanitized string, when it is valid, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_event_identifier">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_event_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_event_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_event_identifier" title="Permalink to this definition"></a></dt>
+<dd><p>Sanitize an event identifier.</p>
+<dl class="field-list">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">False</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl>
+<dt><strong>event_identifier</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typeing.Any</span></code></span></dt><dd><p>The event identifier to sanitize</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>result</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">event_identifier</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+the sanitized string, when it is valid, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_event_identifier</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="s2">&quot;$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">&#39;$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_event_identifier</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="s2">&quot; $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y &quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">&#39;$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_event_identifier</span><span class="p">(</span><span class="s2">&quot;something invalid&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_event_identifier</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -373,20 +426,47 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 <span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_message_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_message_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_message_type" title="Permalink to this definition"></a></dt>
 <dd><p>Sanitize an message type.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>message_type</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Any</span></code></a></span></dt><dd><p>The event identifier to sanitize</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#matrixctl.sanitizers.MessageType" title="matrixctl.sanitizers.MessageType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageType</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">False</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl>
+<dt><strong>message_type</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Any</span></code></a></span></dt><dd><p>The event identifier to sanitize</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>message_type_sanitized</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference internal" href="#matrixctl.sanitizers.MessageType" title="matrixctl.sanitizers.MessageType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageType</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">message_type</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>message_type_sanitized</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference internal" href="#matrixctl.sanitizers.MessageType" title="matrixctl.sanitizers.MessageType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageType</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">message_type</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
 <code class="docutils literal notranslate"><span class="pre">MessageType</span></code>, if it is valid, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="s2">&quot;m.room.message&quot;</span><span class="p">)</span>
+<span class="go">&lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="s2">&quot;M.RooM.MeSsAgE&quot;</span><span class="p">)</span>
+<span class="go">&lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="s2">&quot; m.room.message   &quot;</span><span class="p">)</span>
+<span class="go">&lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span><span class="p">)</span>
+<span class="go">&lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="s2">&quot;something invalid&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -394,20 +474,43 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 <span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_room_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">room_identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_room_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_room_identifier" title="Permalink to this definition"></a></dt>
 <dd><p>Sanitize an room identifier.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>room_identifier</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Any</span></code></a></span></dt><dd><p>The room identifier to sanitize</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">False</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl>
+<dt><strong>room_identifier</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Any</span></code></a></span></dt><dd><p>The room identifier to sanitize</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>room_identifier_sanitized</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">room_identifier</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>room_identifier_sanitized</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">room_identifier</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
 the sanitized string, when it is valid, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_room_identifier</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="s2">&quot;!room:domain.tld&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">&#39;!room:domain.tld&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_room_identifier</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="s2">&quot; !room:domain.tld &quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">&#39;!room:domain.tld&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_room_identifier</span><span class="p">(</span><span class="s2">&quot;something invalid&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_room_identifier</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -415,47 +518,67 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 <span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_user_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_user_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_user_identifier" title="Permalink to this definition"></a></dt>
 <dd><p>Sanitize an user identifier.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>user_identifier</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Any</span></code></a></span></dt><dd><p>The user identifier to sanitize</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">False</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl>
+<dt><strong>user_identifier</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Any</span></code></a></span></dt><dd><p>The user identifier to sanitize</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>event_identifier_sanitized</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">user_identifier</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>event_identifier_sanitized</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">user_identifier</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
 the sanitized string, when it is valid, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_user_identifier</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="s2">&quot;@user:domain.tld&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">&#39;@user:domain.tld&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_user_identifier</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="s2">&quot; @user:domain.tld &quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">&#39;@user:domain.tld&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_user_identifier</span><span class="p">(</span><span class="s2">&quot;something invalid&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_user_identifier</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
 <section id="module-matrixctl.print_helpers">
-<span id="print"></span><h2>Print<a class="headerlink" href="#module-matrixctl.print_helpers" title="Permalink to this headline"></a></h2>
+<span id="print"></span><h2>Print<a class="headerlink" href="#module-matrixctl.print_helpers" title="Permalink to this heading"></a></h2>
 <p>Use the functions of this module as printing helpers.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.print_helpers.human_readable_bool">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.print_helpers.</span></span><span class="sig-name descname"><span class="pre">human_readable_bool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/print_helpers.html#human_readable_bool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.print_helpers.human_readable_bool" title="Permalink to this definition"></a></dt>
 <dd><p>Use this helper function to get a “yes” or “no” string from a “bool”.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>b</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">any</span></code></a></span></dt><dd><p>The value to “convert”.</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Parameters</dt>
 <dd class="field-even"><dl>
-<dt><strong>answer</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;Yes&quot;</span></code> if expression is <code class="docutils literal notranslate"><span class="pre">True</span></code>, or
-<code class="docutils literal notranslate"><span class="pre">&quot;False&quot;</span></code> if expression is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dt><strong>b</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">any</span></code></a></span></dt><dd><p>The value to “convert”.</p>
 </dd>
 </dl>
-<dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>
-..</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>answer</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">&quot;Yes&quot;</span></code> if expression is <code class="docutils literal notranslate"><span class="pre">True</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">&quot;False&quot;</span></code> if expression is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 </dd>
 </dl>
 </dd>
@@ -467,23 +590,20 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 <span class="sig-prename descclassname"><span class="pre">matrixctl.print_helpers.</span></span><span class="sig-name descname"><span class="pre">timestamp_to_dt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/print_helpers.html#timestamp_to_dt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.print_helpers.timestamp_to_dt" title="Permalink to this definition"></a></dt>
 <dd><p>Convert a timestamp (in ms) to a datetime string.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>ts</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The value to “convert”.</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
-<dt><strong>sep</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The separator between the date and the time.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Parameters</dt>
 <dd class="field-even"><dl>
-<dt><strong>dt</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>A datetime string (e.g. 2021-08-21 04:55:55)</p>
+<dt><strong>ts</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The value to “convert”.</p>
+</dd>
+<dt><strong>sep</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The separator between the date and the time.</p>
 </dd>
 </dl>
-<dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>
-..</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>dt</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>A datetime string (e.g. 2021-08-21 04:55:55)</p>
 </dd>
 </dl>
 </dd>
@@ -492,7 +612,7 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 
 </section>
 <section id="module-matrixctl.password_helpers">
-<span id="password"></span><h2>Password<a class="headerlink" href="#module-matrixctl.password_helpers" title="Permalink to this headline"></a></h2>
+<span id="password"></span><h2>Password<a class="headerlink" href="#module-matrixctl.password_helpers" title="Permalink to this heading"></a></h2>
 <p>Use the functions of this module as helpers for passwords.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.password_helpers.ask_password">
@@ -502,14 +622,17 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 that the function compares the two entered passwords. If they are the
 same, and not empty, the function will return the password.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.NoReturn" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">NoReturn</span></code></a>]</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl class="simple">
 <dt><strong>None</strong></dt><dd></dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>password</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The user entered password.</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>password</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The user entered password.</p>
 </dd>
 </dl>
 </dd>
@@ -521,22 +644,19 @@ same, and not empty, the function will return the password.</p>
 <span class="sig-prename descclassname"><span class="pre">matrixctl.password_helpers.</span></span><span class="sig-name descname"><span class="pre">ask_question</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">question</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Is</span> <span class="pre">everything</span> <span class="pre">correct?'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/password_helpers.html#ask_question"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.password_helpers.ask_question" title="Permalink to this definition"></a></dt>
 <dd><p>Asks the user a simple yes/no a question.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>question</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The yes/no question the user should be asked</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
 </dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Parameters</dt>
 <dd class="field-even"><dl>
-<dt><strong>answer</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.10)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the answer was <code class="docutils literal notranslate"><span class="pre">y</span></code> / <code class="docutils literal notranslate"><span class="pre">j</span></code>, or
-<code class="docutils literal notranslate"><span class="pre">False</span></code> if the answer was <code class="docutils literal notranslate"><span class="pre">n</span></code></p>
+<dt><strong>question</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The yes/no question the user should be asked</p>
 </dd>
 </dl>
-<dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>
-..</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>answer</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.11)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the answer was <code class="docutils literal notranslate"><span class="pre">y</span></code> / <code class="docutils literal notranslate"><span class="pre">j</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">False</span></code> if the answer was <code class="docutils literal notranslate"><span class="pre">n</span></code></p>
 </dd>
 </dl>
 </dd>
@@ -558,20 +678,23 @@ that the function compares the two entered passwords. If they are the
 same, and not empty, the function will ask the user if the data is correct
 without disclosing the password.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>user</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The username.</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.NoReturn" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">NoReturn</span></code></a>]</p>
 </dd>
-<dt><strong>admin</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.10)"><span class="xref std std-ref">bool</span></a> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">none</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">is</span></code> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>True, if the user will be an admin,
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><dl>
+<dt><strong>user</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The username.</p>
+</dd>
+<dt><strong>admin</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.11)"><span class="xref std std-ref">bool</span></a> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">none</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">is</span></code> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>True, if the user will be an admin,
 False, if the user will not have eleveted permissions.
 None, if the admin permissions are not an criteria. The field will
 be omitted in the data.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>password</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The user entered password.</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl>
+<dt><strong>password</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The user entered password.</p>
 </dd>
 </dl>
 </dd>
@@ -592,7 +715,7 @@ be omitted in the data.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Michael Sasser.</p>
+    <p>&#169; Copyright 2023, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

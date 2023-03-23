@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Access Token &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
+  <title>Access Token &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -28,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> MatrixCtl
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MatrixCtl
           </a>
               <div class="version">
-                0.12.0-beta.1
+                0.12.0-beta.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -68,9 +74,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Getting Started</a> &raquo;</li>
-      <li>Access Token</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Getting Started</a></li>
+      <li class="breadcrumb-item active">Access Token</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/getting_started/access_token.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -81,11 +87,11 @@
            <div itemprop="articleBody">
              
   <section id="access-token">
-<h1>Access Token<a class="headerlink" href="#access-token" title="Permalink to this headline"></a></h1>
+<h1>Access Token<a class="headerlink" href="#access-token" title="Permalink to this heading"></a></h1>
 <p>To use the API of Synapse you need a access token of an administrator.
 To get an access token, you need an user account.
 MatrixCtl helps you to register one. Just run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>matrixctl adduser --ansible --admin myusername
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>matrixctl<span class="w"> </span>adduser<span class="w"> </span>--ansible<span class="w"> </span>--admin<span class="w"> </span>myusername
 <span class="go">Password:</span>
 <span class="go">Password (again):</span>
 <span class="go">Username: myusername</span>
@@ -163,13 +169,13 @@ In the Advanced section you find <code class="docutils literal notranslate"><spa
 <p>This is your access token. It is already highlighted for you. Just copy it into
 the config file into the <code class="docutils literal notranslate"><span class="pre">api</span></code> section.</p>
 <section id="copy-the-token">
-<h2>Copy The Token<a class="headerlink" href="#copy-the-token" title="Permalink to this headline"></a></h2>
+<h2>Copy The Token<a class="headerlink" href="#copy-the-token" title="Permalink to this heading"></a></h2>
 <p>Now you can copy the token into the <code class="docutils literal notranslate"><span class="pre">api</span></code> section of your config file.
 If you don’t have a config file head over to the <a class="reference internal" href="config_file.html#config-file"><span class="std std-ref">Config File</span></a> chapter.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
 <span class="l l-Scalar l-Scalar-Plain">api.</span>
-  <span class="l l-Scalar l-Scalar-Plain">domain</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yourdomain.tld</span>
-  <span class="l l-Scalar l-Scalar-Plain">token</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">MDAxZmxvY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzMGNpZCB1c2VyX2lkID0gQG15dXNlcm5hbWU6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSA3WkB1KkdyY3JTRG1CI3Z0CjAwMmZzaWduYXR1cmUgJblnYOAEQJVeHaMgwnMsAagpZBc8CIC6Dwwy027tfJAK</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">domain</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yourdomain.tld</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">token</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MDAxZmxvY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAzMGNpZCB1c2VyX2lkID0gQG15dXNlcm5hbWU6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSA3WkB1KkdyY3JTRG1CI3Z0CjAwMmZzaWduYXR1cmUgJblnYOAEQJVeHaMgwnMsAagpZBc8CIC6Dwwy027tfJAK</span>
 <span class="nn">...</span>
 </pre></div>
 </div>
@@ -204,7 +210,7 @@ instance in <strong>your name</strong>.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Michael Sasser.</p>
+    <p>&#169; Copyright 2023, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

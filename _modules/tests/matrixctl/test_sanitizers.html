@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tests.matrixctl.test_sanitizers &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            MatrixCtl
+          </a>
+              <div class="version">
+                0.12.0-beta.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributer_documentation/index.html">Contributor Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MatrixCtl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tests.matrixctl.test_sanitizers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tests.matrixctl.test_sanitizers</h1><div class="highlight"><pre>
+<span></span><span class="c1"># matrixctl</span>
+<span class="c1"># Copyright (c) 2021  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;Test the sanitizers.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+
+<span class="kn">from</span> <span class="nn">matrixctl</span> <span class="kn">import</span> <span class="n">sanitizers</span>
+
+
+<span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
+<span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael@MichaelSasser.org&quot;</span>
+
+<span class="c1">###############################################################################</span>
+<span class="c1">#                            message_type</span>
+<span class="c1">###############################################################################</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_message_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_message_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_message_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_message_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_message_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_message_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.MESSAGE&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_name_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_name_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_name_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_name_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_name_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_name_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_NAME</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.NAME&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_topic_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_topic_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_topic_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_TOPIC</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_topic_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_topic_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_topic_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_TOPIC</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.TOPIC&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_avatar_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_avatar_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_avatar_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_AVATAR</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_avatar_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_avatar_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_avatar_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_AVATAR</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.AVATAR&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_pinned_events_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_pinned_events_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_pinned_events_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_PINNED_EVENTS</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_pinned_events_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_pinned_events_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_pinned_events_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_PINNED_EVENTS</span>
+    <span class="p">)</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.PINNED_EVENTS&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_member_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_member_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_member_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MEMBER</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_member_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_member_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_member_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MEMBER</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.MEMBER&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_join_rules_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_join_rules_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_join_rules_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_JOIN_RULES</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_join_rules_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_join_rules_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_join_rules_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_JOIN_RULES</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.JOIN_RULES&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_create_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_create_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_create_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_CREATE</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_create_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_create_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_create_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_CREATE</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.CREATE&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_power_levels_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_power_levels_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_power_levels_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_POWER_LEVELS</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_power_levels_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_power_levels_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_power_levels_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_POWER_LEVELS</span>
+    <span class="p">)</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.POWER_LEVELS&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_redaction_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_redaction_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_redaction_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_m_room_redaction_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_redaction_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_m_room_redaction_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.REDACTION&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_invalid"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_invalid">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_invalid</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test invalid message type as string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.INVALID_TYPE&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_with_spaces"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_with_spaces">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_with_spaces</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string with spaces around.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; M.ROOM.REDACTION &quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_lower_case"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_lower_case">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_lower_case</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as lowercase string.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;m.room.redaction&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_message_type_none"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_none">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_message_type_none</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test none case.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1">#                         event_identifier</span>
+<span class="c1">###############################################################################</span>
+
+
+<div class="viewcode-block" id="test_sanitize_event_identifier_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_event_identifier_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid identifier.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_identifier</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_event_identifier_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_event_identifier_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid identifier with spaces around.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y&quot;</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y &quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_event_identifier_3"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_3">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_event_identifier_3</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test invalid identifier (without $).&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_event_identifier_4"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_4">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_event_identifier_4</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test invalid identifier (empty str).&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_event_identifier_5"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_5">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_event_identifier_5</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test missing identifier (None).&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_event_identifier_6"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_6">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_event_identifier_6</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test wrong type.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;hello&quot;</span><span class="p">}</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+    <span class="c1"># Cleanup - None</span>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1">#                         user_identifier</span>
+<span class="c1">###############################################################################</span>
+
+
+<div class="viewcode-block" id="test_sanitize_user_identifier_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_user_identifier_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid identifier.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;@user:domain.tld&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_user_identifier</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_user_identifier_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_user_identifier_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid identifier with spaces around.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;@user:domain.tld&quot;</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; @user:domain.tld &quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_user_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_user_identifier_3"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_3">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_user_identifier_3</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test invalid identifier (without $).&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; user:domain.tld &quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_user_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_user_identifier_4"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_4">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_user_identifier_4</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test invalid identifier (empty str).&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_user_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_user_identifier_5"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_5">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_user_identifier_5</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test missing identifier (None).&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_user_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_user_identifier_6"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_6">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_user_identifier_6</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test wrong type.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;hello&quot;</span><span class="p">}</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_user_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+    <span class="c1"># Cleanup - None</span>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1">#                         room_identifier</span>
+<span class="c1">###############################################################################</span>
+
+
+<div class="viewcode-block" id="test_sanitize_room_identifier_1"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_1">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_room_identifier_1</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid identifier.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;!room:domain.tld&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_room_identifier</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_room_identifier_2"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_2">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_room_identifier_2</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid identifier with spaces around.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;!room:domain.tld&quot;</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; !room:domain.tld &quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_room_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_room_identifier_3"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_3">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_room_identifier_3</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test invalid identifier (without $).&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;room:domain.tld&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_room_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_room_identifier_4"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_4">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_room_identifier_4</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test invalid identifier (empty str).&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_room_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_room_identifier_5"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_5">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_room_identifier_5</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test missing identifier (None).&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_room_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_sanitize_room_identifier_6"><a class="viewcode-back" href="../../../contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_6">[docs]</a><span class="k">def</span> <span class="nf">test_sanitize_room_identifier_6</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test wrong type.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">testdata</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;hello&quot;</span><span class="p">}</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span>
+        <span class="kc">False</span>
+    <span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_room_identifier</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+    <span class="c1"># Cleanup - None</span>
+
+
+<span class="c1"># vim: set ft=python :</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Michael Sasser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

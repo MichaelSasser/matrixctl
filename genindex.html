@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
+  <title>Index &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -14,7 +14,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -25,14 +27,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> MatrixCtl
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MatrixCtl
           </a>
               <div class="version">
-                0.12.0-beta.1
+                0.12.0-beta.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -59,8 +65,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Index</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Index</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -1140,6 +1146,8 @@
 </li>
         <li><a href="contributer_documentation/tests.html#module-tests.matrixctl.handlers.test_yaml">tests.matrixctl.handlers.test_yaml</a>
 </li>
+        <li><a href="contributer_documentation/tests.html#module-tests.matrixctl.test_sanitizers">tests.matrixctl.test_sanitizers</a>
+</li>
       </ul></li>
   </ul></td>
 </tr></table>
@@ -1168,8 +1176,6 @@
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder.password">password (matrixctl.handlers.db.DBConnectionBuilder attribute)</a>
 </li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.path">path (matrixctl.handlers.api.RequestBuilder attribute)</a>
-</li>
-      <li><a href="contributer_documentation/type_hints_structures_and_errors.html#matrixctl.errors.InternalResponseError.payload">payload (matrixctl.errors.InternalResponseError attribute)</a>
 </li>
       <li><a href="contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerAnsible.playbook">playbook (matrixctl.structures.ConfigServerAnsible attribute)</a>
 
@@ -1217,6 +1223,8 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize">sanitize() (in module matrixctl.sanitizers)</a>
+</li>
       <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_event_identifier">sanitize_event_identifier() (in module matrixctl.sanitizers)</a>
 </li>
       <li><a href="contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_message_type">sanitize_message_type() (in module matrixctl.sanitizers)</a>
@@ -1271,10 +1279,10 @@
 </li>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.delete_local_media.parser.subparser_delete_local_media">subparser_delete_local_media() (in module matrixctl.addons.delete_local_media.parser)</a>
 </li>
-      <li><a href="contributer_documentation/addons.html#matrixctl.addons.delroom.parser.subparser_delroom">subparser_delroom() (in module matrixctl.addons.delroom.parser)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="contributer_documentation/addons.html#matrixctl.addons.delroom.parser.subparser_delroom">subparser_delroom() (in module matrixctl.addons.delroom.parser)</a>
+</li>
       <li><a href="contributer_documentation/addons.html#matrixctl.addons.deluser.parser.subparser_deluser">subparser_deluser() (in module matrixctl.addons.deluser.parser)</a>
 
       <ul>
@@ -1359,6 +1367,92 @@
 </li>
       <li><a href="contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_repr">test_repr() (in module tests.matrixctl.handlers.test_yaml)</a>
 </li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_1">test_sanitize_event_identifier_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_2">test_sanitize_event_identifier_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_3">test_sanitize_event_identifier_3() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_4">test_sanitize_event_identifier_4() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_5">test_sanitize_event_identifier_5() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_6">test_sanitize_event_identifier_6() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_invalid">test_sanitize_message_type_invalid() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_lower_case">test_sanitize_message_type_lower_case() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_avatar_1">test_sanitize_message_type_m_room_avatar_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_avatar_2">test_sanitize_message_type_m_room_avatar_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_create_1">test_sanitize_message_type_m_room_create_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_create_2">test_sanitize_message_type_m_room_create_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_join_rules_1">test_sanitize_message_type_m_room_join_rules_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_join_rules_2">test_sanitize_message_type_m_room_join_rules_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_member_1">test_sanitize_message_type_m_room_member_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_member_2">test_sanitize_message_type_m_room_member_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_message_1">test_sanitize_message_type_m_room_message_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_message_2">test_sanitize_message_type_m_room_message_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_name_1">test_sanitize_message_type_m_room_name_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_name_2">test_sanitize_message_type_m_room_name_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_pinned_events_1">test_sanitize_message_type_m_room_pinned_events_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_pinned_events_2">test_sanitize_message_type_m_room_pinned_events_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_power_levels_1">test_sanitize_message_type_m_room_power_levels_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_power_levels_2">test_sanitize_message_type_m_room_power_levels_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_redaction_1">test_sanitize_message_type_m_room_redaction_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_redaction_2">test_sanitize_message_type_m_room_redaction_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_topic_1">test_sanitize_message_type_m_room_topic_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_topic_2">test_sanitize_message_type_m_room_topic_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_none">test_sanitize_message_type_none() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_message_type_with_spaces">test_sanitize_message_type_with_spaces() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_1">test_sanitize_room_identifier_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_2">test_sanitize_room_identifier_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_3">test_sanitize_room_identifier_3() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_4">test_sanitize_room_identifier_4() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_5">test_sanitize_room_identifier_5() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_6">test_sanitize_room_identifier_6() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_1">test_sanitize_user_identifier_1() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_2">test_sanitize_user_identifier_2() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_3">test_sanitize_user_identifier_3() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_4">test_sanitize_user_identifier_4() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_5">test_sanitize_user_identifier_5() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
+      <li><a href="contributer_documentation/tests.html#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_6">test_sanitize_user_identifier_6() (in module tests.matrixctl.test_sanitizers)</a>
+</li>
       <li><a href="contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_str">test_str() (in module tests.matrixctl.handlers.test_yaml)</a>
 </li>
       <li>
@@ -1368,13 +1462,18 @@
         <li><a href="contributer_documentation/tests.html#module-tests.matrixctl.handlers.conftest">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     tests.matrixctl.handlers.test_yaml
 
       <ul>
         <li><a href="contributer_documentation/tests.html#module-tests.matrixctl.handlers.test_yaml">module</a>
+</li>
+      </ul></li>
+      <li>
+    tests.matrixctl.test_sanitizers
+
+      <ul>
+        <li><a href="contributer_documentation/tests.html#module-tests.matrixctl.test_sanitizers">module</a>
 </li>
       </ul></li>
       <li><a href="contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder.timeout">timeout (matrixctl.handlers.api.RequestBuilder attribute)</a>
@@ -1461,7 +1560,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Michael Sasser.</p>
+    <p>&#169; Copyright 2023, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

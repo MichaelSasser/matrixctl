@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MatrixCtl documentation &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
+  <title>MatrixCtl documentation &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -15,7 +15,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -27,14 +29,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> MatrixCtl
+
+          
+          
+          <a href="#" class="icon icon-home">
+            MatrixCtl
           </a>
               <div class="version">
-                0.12.0-beta.1
+                0.12.0-beta.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -61,8 +67,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>MatrixCtl documentation</li>
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">MatrixCtl documentation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -73,7 +79,7 @@
            <div itemprop="articleBody">
              
   <section id="matrixctl-documentation">
-<h1>MatrixCtl documentation<a class="headerlink" href="#matrixctl-documentation" title="Permalink to this headline"></a></h1>
+<h1>MatrixCtl documentation<a class="headerlink" href="#matrixctl-documentation" title="Permalink to this heading"></a></h1>
 <p>MatrixCtl is a python program to control, manage, provision and deploy our
 matrix homeserver. I had a bunch of shell scripts doing that. Two weeks
 after using them I couldn’t remember the order in which I have to use the
@@ -106,7 +112,7 @@ features.</p>
 </ul>
 </div>
 <section id="branching-model">
-<h2>Branching Model<a class="headerlink" href="#branching-model" title="Permalink to this headline"></a></h2>
+<h2>Branching Model<a class="headerlink" href="#branching-model" title="Permalink to this heading"></a></h2>
 <p>This repository uses the
 <a class="reference external" href="https://danielkummer.github.io/git-flow-cheatsheet/index.html">git-flow</a>
 branching model by <a class="reference external" href="https://nvie.com/about/">Vincent Driessen</a>.
@@ -119,14 +125,14 @@ It has two branches with infinite lifetime:</p>
 merging branch.</p>
 </section>
 <section id="command-line-tool">
-<h2>Command line tool<a class="headerlink" href="#command-line-tool" title="Permalink to this headline"></a></h2>
+<h2>Command line tool<a class="headerlink" href="#command-line-tool" title="Permalink to this heading"></a></h2>
 <p>MatrixCtl as a pure commandline tool. You can use it as package, if you like,
 but breaking changes may introduced, even in a minor change.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG] Command ...
 
 MatrixCtl is a simple, but feature-rich tool to remotely control, manage, provision and deploy Matrix homeservers.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   --version             show program&#39;s version number and exit
   -d, --debug           Enables debugging mode.
@@ -140,13 +146,13 @@ Commands:
 
   Command
     adduser             Add users to the homeserver
-    adduser-jitsi       Add users to a jitsi server
+    adduser-jitsi       [DEPRECATED] Add users to a jitsi server
     check               Checks the deployment with Ansible
     delete-local-media  Delete cached (local) media that was last accessed
                         before a specific point in time
     delroom             Shutdown a room
     deluser             Deactivate users
-    deluser-jitsi       Delete jitsi users
+    deluser-jitsi       [DEPRECATED] Delete jitsi users
     deploy              Provision and deploy the Ansible playbook
     get-event           Get an event from the database
     get-event-context   Get the context of an event
@@ -179,93 +185,93 @@ Report bugs to: https://github.com/MichaelSasser/matrixctl/issues/new/choose
 </div>
 </section>
 <section id="configuration-file">
-<h2>Configuration File<a class="headerlink" href="#configuration-file" title="Permalink to this headline"></a></h2>
+<h2>Configuration File<a class="headerlink" href="#configuration-file" title="Permalink to this heading"></a></h2>
 <p>To use this program you need to have this config file in
 <code class="docutils literal notranslate"><span class="pre">/etc/matrixctl/config</span></code> or in <code class="docutils literal notranslate"><span class="pre">~/.config/matrixctl/config</span></code>.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Define your homeservers in &quot;servers&quot; here.</span>
 <span class="linenos"> 2</span><span class="nt">servers</span><span class="p">:</span>
-<span class="linenos"> 3</span>    <span class="c1"># Your default server. You can specify muliple servers here with arbitrary</span>
-<span class="linenos"> 4</span>    <span class="c1"># Names</span>
-<span class="linenos"> 5</span>  <span class="nt">default</span><span class="p">:</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="c1"># Your default server. You can specify muliple servers here with arbitrary</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="c1"># Names</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="nt">default</span><span class="p">:</span>
 <span class="linenos"> 6</span>
-<span class="linenos"> 7</span>    <span class="nt">ansible</span><span class="p">:</span>
-<span class="linenos"> 8</span>      <span class="c1"># The absolute path to your playbook</span>
-<span class="linenos"> 9</span>      <span class="nt">playbook</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/path/to/ansible/playbook</span>
+<span class="linenos"> 7</span><span class="w">    </span><span class="nt">ansible</span><span class="p">:</span>
+<span class="linenos"> 8</span><span class="w">      </span><span class="c1"># The absolute path to your playbook</span>
+<span class="linenos"> 9</span><span class="w">      </span><span class="nt">playbook</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/path/to/ansible/playbook</span>
 <span class="linenos">10</span>
-<span class="linenos">11</span>    <span class="nt">synapse</span><span class="p">:</span>
-<span class="linenos">12</span>      <span class="c1"># The absolute path to the synapse playbook.</span>
-<span class="linenos">13</span>      <span class="c1"># This is only used for updating the playbook.</span>
-<span class="linenos">14</span>      <span class="nt">playbook</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/path/to/synapse/playbook</span>
+<span class="linenos">11</span><span class="w">    </span><span class="nt">synapse</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">      </span><span class="c1"># The absolute path to the synapse playbook.</span>
+<span class="linenos">13</span><span class="w">      </span><span class="c1"># This is only used for updating the playbook.</span>
+<span class="linenos">14</span><span class="w">      </span><span class="nt">playbook</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/path/to/synapse/playbook</span>
 <span class="linenos">15</span>
-<span class="linenos">16</span>    <span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
-<span class="linenos">17</span>    <span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
-<span class="linenos">18</span>    <span class="c1"># provision your Server without this section. You also can create a user with</span>
-<span class="linenos">19</span>    <span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
-<span class="linenos">20</span>    <span class="c1"># that.</span>
-<span class="linenos">21</span>    <span class="nt">api</span><span class="p">:</span>
-<span class="linenos">22</span>      <span class="c1"># Your domain should be something like &quot;michaelsasser.org&quot; without the</span>
-<span class="linenos">23</span>      <span class="c1"># &quot;matrix.&quot; in the front. MatrixCtl will add that, if needed. An IP-Address</span>
-<span class="linenos">24</span>      <span class="c1"># is not enough.</span>
-<span class="linenos">25</span>      <span class="nt">domain</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example.com</span>
+<span class="linenos">16</span><span class="w">    </span><span class="c1"># If your matrix server is deployed, you may want to fill out the API section.</span>
+<span class="linenos">17</span><span class="w">    </span><span class="c1"># It enables matrixctl to run more and faster commands. You can deploy and</span>
+<span class="linenos">18</span><span class="w">    </span><span class="c1"># provision your Server without this section. You also can create a user with</span>
+<span class="linenos">19</span><span class="w">    </span><span class="c1"># &quot;matrixctl adduser --ansible YourUsername&quot; and add your privileges after</span>
+<span class="linenos">20</span><span class="w">    </span><span class="c1"># that.</span>
+<span class="linenos">21</span><span class="w">    </span><span class="nt">api</span><span class="p">:</span>
+<span class="linenos">22</span><span class="w">      </span><span class="c1"># Your domain should be something like &quot;michaelsasser.org&quot; without the</span>
+<span class="linenos">23</span><span class="w">      </span><span class="c1"># &quot;matrix.&quot; in the front. MatrixCtl will add that, if needed. An IP-Address</span>
+<span class="linenos">24</span><span class="w">      </span><span class="c1"># is not enough.</span>
+<span class="linenos">25</span><span class="w">      </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
 <span class="linenos">26</span>
-<span class="linenos">27</span>      <span class="c1"># The username your admin user</span>
-<span class="linenos">28</span>      <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">johndoe</span>
+<span class="linenos">27</span><span class="w">      </span><span class="c1"># The username your admin user</span>
+<span class="linenos">28</span><span class="w">      </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">johndoe</span>
 <span class="linenos">29</span>
-<span class="linenos">30</span>      <span class="c1"># To use the API you need to have an administrator account. Enter your Token</span>
-<span class="linenos">31</span>      <span class="c1"># here. If you use the element client you will find it your user settings</span>
-<span class="linenos">32</span>      <span class="c1"># (click on your username on the upper left corner on your browser) in the</span>
-<span class="linenos">33</span>      <span class="c1"># &quot;Help &amp; About&quot; tab. If you scroll down click next to &quot;Access-Token:&quot; on</span>
-<span class="linenos">34</span>      <span class="c1"># &quot;&lt;click to reveal&gt;&quot;. It will be marked for you. Copy it in here.</span>
-<span class="linenos">35</span>      <span class="nt">token</span><span class="p">:</span> <span class="s">&quot;MyMatrixToken&quot;</span>
+<span class="linenos">30</span><span class="w">      </span><span class="c1"># To use the API you need to have an administrator account. Enter your Token</span>
+<span class="linenos">31</span><span class="w">      </span><span class="c1"># here. If you use the element client you will find it your user settings</span>
+<span class="linenos">32</span><span class="w">      </span><span class="c1"># (click on your username on the upper left corner on your browser) in the</span>
+<span class="linenos">33</span><span class="w">      </span><span class="c1"># &quot;Help &amp; About&quot; tab. If you scroll down click next to &quot;Access-Token:&quot; on</span>
+<span class="linenos">34</span><span class="w">      </span><span class="c1"># &quot;&lt;click to reveal&gt;&quot;. It will be marked for you. Copy it in here.</span>
+<span class="linenos">35</span><span class="w">      </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;MyMatrixToken&quot;</span>
 <span class="linenos">36</span>
-<span class="linenos">37</span>      <span class="c1"># In some cases, MatrixCtl does need to make many requests. To speed those</span>
-<span class="linenos">38</span>      <span class="c1"># requests a notch, you can set a concurrent_limit which is greater than</span>
-<span class="linenos">39</span>      <span class="c1"># one. This sets a limit to how many asynchronous workers can be spawned</span>
-<span class="linenos">40</span>      <span class="c1"># by MatrixCtl. If you set the number to high, MatrixCtl needs more time</span>
-<span class="linenos">41</span>      <span class="c1"># to spawn the workers, then a synchronous request would take.</span>
-<span class="linenos">42</span>      <span class="nt">concurrent_limit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="linenos">37</span><span class="w">      </span><span class="c1"># In some cases, MatrixCtl does need to make many requests. To speed those</span>
+<span class="linenos">38</span><span class="w">      </span><span class="c1"># requests a notch, you can set a concurrent_limit which is greater than</span>
+<span class="linenos">39</span><span class="w">      </span><span class="c1"># one. This sets a limit to how many asynchronous workers can be spawned</span>
+<span class="linenos">40</span><span class="w">      </span><span class="c1"># by MatrixCtl. If you set the number to high, MatrixCtl needs more time</span>
+<span class="linenos">41</span><span class="w">      </span><span class="c1"># to spawn the workers, then a synchronous request would take.</span>
+<span class="linenos">42</span><span class="w">      </span><span class="nt">concurrent_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
 <span class="linenos">43</span>
-<span class="linenos">44</span>    <span class="c1"># Here you can add your SSH configuration.</span>
-<span class="linenos">45</span>    <span class="nt">ssh</span><span class="p">:</span>
-<span class="linenos">46</span>      <span class="nt">address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">matrix.example.com</span>
+<span class="linenos">44</span><span class="w">    </span><span class="c1"># Here you can add your SSH configuration.</span>
+<span class="linenos">45</span><span class="w">    </span><span class="nt">ssh</span><span class="p">:</span>
+<span class="linenos">46</span><span class="w">      </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">matrix.example.com</span>
 <span class="linenos">47</span>
-<span class="linenos">48</span>      <span class="c1"># The default port is 22</span>
-<span class="linenos">49</span>      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">22</span>
+<span class="linenos">48</span><span class="w">      </span><span class="c1"># The default port is 22</span>
+<span class="linenos">49</span><span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">22</span>
 <span class="linenos">50</span>
-<span class="linenos">51</span>      <span class="c1"># The default username is your current login name.</span>
-<span class="linenos">52</span>      <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">john</span>
+<span class="linenos">51</span><span class="w">      </span><span class="c1"># The default username is your current login name.</span>
+<span class="linenos">52</span><span class="w">      </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">john</span>
 <span class="linenos">53</span>
-<span class="linenos">54</span>    <span class="c1"># Define your maintenance tasks</span>
-<span class="linenos">55</span>    <span class="nt">maintenance</span><span class="p">:</span>
-<span class="linenos">56</span>      <span class="nt">tasks</span><span class="p">:</span>
-<span class="linenos">57</span>        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">compress-state</span>  <span class="c1"># Compress synapses state table</span>
-<span class="linenos">58</span>        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">vacuum</span>          <span class="c1"># VACUUM the synapse database (garbage-collection)</span>
+<span class="linenos">54</span><span class="w">    </span><span class="c1"># Define your maintenance tasks</span>
+<span class="linenos">55</span><span class="w">    </span><span class="nt">maintenance</span><span class="p">:</span>
+<span class="linenos">56</span><span class="w">      </span><span class="nt">tasks</span><span class="p">:</span>
+<span class="linenos">57</span><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compress-state</span><span class="w">  </span><span class="c1"># Compress synapses state table</span>
+<span class="linenos">58</span><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vacuum</span><span class="w">          </span><span class="c1"># VACUUM the synapse database (garbage-collection)</span>
 <span class="linenos">59</span>
-<span class="linenos">60</span>    <span class="c1"># Add connection parameters to the Database</span>
-<span class="linenos">61</span>    <span class="c1"># Synapse does only read (SELECT) information from the database.</span>
-<span class="linenos">62</span>    <span class="c1"># The user needs to be able to login to the synapse database</span>
-<span class="linenos">63</span>    <span class="c1"># and SELECT from the events and event_json tables.</span>
-<span class="linenos">64</span>    <span class="nt">database</span><span class="p">:</span>
-<span class="linenos">65</span>      <span class="nt">synapse_database</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">synapse</span>  <span class="c1"># this is the playbooks default table name</span>
-<span class="linenos">66</span>      <span class="nt">synapse_user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">matrixctl</span>    <span class="c1"># the username (role) for the database</span>
-<span class="linenos">67</span>      <span class="nt">synapse_password</span><span class="p">:</span> <span class="s">&quot;RolePassword&quot;</span>
-<span class="linenos">68</span>      <span class="nt">tunnel</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>        <span class="c1"># true if an ssh tunnel should be used to connect</span>
+<span class="linenos">60</span><span class="w">    </span><span class="c1"># Add connection parameters to the Database</span>
+<span class="linenos">61</span><span class="w">    </span><span class="c1"># Synapse does only read (SELECT) information from the database.</span>
+<span class="linenos">62</span><span class="w">    </span><span class="c1"># The user needs to be able to login to the synapse database</span>
+<span class="linenos">63</span><span class="w">    </span><span class="c1"># and SELECT from the events and event_json tables.</span>
+<span class="linenos">64</span><span class="w">    </span><span class="nt">database</span><span class="p">:</span>
+<span class="linenos">65</span><span class="w">      </span><span class="nt">synapse_database</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">synapse</span><span class="w">  </span><span class="c1"># this is the playbooks default table name</span>
+<span class="linenos">66</span><span class="w">      </span><span class="nt">synapse_user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">matrixctl</span><span class="w">    </span><span class="c1"># the username (role) for the database</span>
+<span class="linenos">67</span><span class="w">      </span><span class="nt">synapse_password</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;RolePassword&quot;</span>
+<span class="linenos">68</span><span class="w">      </span><span class="nt">tunnel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">        </span><span class="c1"># true if an ssh tunnel should be used to connect</span>
 <span class="linenos">69</span>
-<span class="linenos">70</span>      <span class="c1"># The port that was used in the playbook  (e.g.</span>
-<span class="linenos">71</span>      <span class="c1"># matrix_postgres_container_postgres_bind_port: 5432)</span>
-<span class="linenos">72</span>      <span class="c1"># or for your external database. For security reasons the port</span>
-<span class="linenos">73</span>      <span class="c1"># should be blocked by your firewall. Iy you enable the tunnel</span>
-<span class="linenos">74</span>      <span class="c1"># by setting tunnel: true, MatrixCtl activates a SSH tunnel.</span>
-<span class="linenos">75</span>      <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5432</span>          <span class="c1"># the remote port</span>
+<span class="linenos">70</span><span class="w">      </span><span class="c1"># The port that was used in the playbook  (e.g.</span>
+<span class="linenos">71</span><span class="w">      </span><span class="c1"># matrix_postgres_container_postgres_bind_port: 5432)</span>
+<span class="linenos">72</span><span class="w">      </span><span class="c1"># or for your external database. For security reasons the port</span>
+<span class="linenos">73</span><span class="w">      </span><span class="c1"># should be blocked by your firewall. Iy you enable the tunnel</span>
+<span class="linenos">74</span><span class="w">      </span><span class="c1"># by setting tunnel: true, MatrixCtl activates a SSH tunnel.</span>
+<span class="linenos">75</span><span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5432</span><span class="w">          </span><span class="c1"># the remote port</span>
 <span class="linenos">76</span>
-<span class="linenos">77</span>  <span class="c1"># Another server.</span>
-<span class="linenos">78</span>  <span class="nt">foo</span><span class="p">:</span>
-<span class="linenos">79</span>    <span class="c1"># ...</span>
+<span class="linenos">77</span><span class="w">  </span><span class="c1"># Another server.</span>
+<span class="linenos">78</span><span class="w">  </span><span class="nt">foo</span><span class="p">:</span>
+<span class="linenos">79</span><span class="w">    </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 </section>
 <section id="semantic-versioning">
-<h2>Semantic Versioning<a class="headerlink" href="#semantic-versioning" title="Permalink to this headline"></a></h2>
+<h2>Semantic Versioning<a class="headerlink" href="#semantic-versioning" title="Permalink to this heading"></a></h2>
 <p><strong>After release “1.0.0”</strong> this repository will use
 <a class="reference external" href="https://semver.org/">SemVer</a> for its release
 cycle.</p>
@@ -279,7 +285,7 @@ a “z” change (e.g. “0.1.1” -&gt; “0.1.2”).</p>
 </section>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
@@ -287,7 +293,7 @@ a “z” change (e.g. “0.1.1” -&gt; “0.1.2”).</p>
 </ul>
 </section>
 <section id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this headline"></a></h1>
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h1>
 <p>Copyright © 2020 Michael Sasser
 &lt;<a class="reference external" href="mailto:Info&#37;&#52;&#48;MichaelSasser">Info<span>&#64;</span>MichaelSasser<span>&#46;</span>org</a>&gt;. Released under
 the GPLv3 license.</p>
@@ -303,7 +309,7 @@ the GPLv3 license.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Michael Sasser.</p>
+    <p>&#169; Copyright 2023, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

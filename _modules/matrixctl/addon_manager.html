@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addon_manager &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
+  <title>matrixctl.addon_manager &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -14,7 +14,9 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -25,14 +27,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> MatrixCtl
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MatrixCtl
           </a>
               <div class="version">
-                0.12.0-beta.1
+                0.12.0-beta.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -59,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>matrixctl.addon_manager</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matrixctl.addon_manager</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -93,8 +99,8 @@
 
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
 
-<span class="c1"># from functools import wraps</span>
 <span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
 <span class="kn">from</span> <span class="nn">pkgutil</span> <span class="kn">import</span> <span class="n">iter_modules</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
@@ -119,7 +125,7 @@
 <div class="viewcode-block" id="import_addons_from"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.addon_manager.import_addons_from">[docs]</a><span class="k">def</span> <span class="nf">import_addons_from</span><span class="p">(</span>
     <span class="n">addon_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">addon_module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parser_name</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Import addons in (global) addons.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Import addons in (global) addons.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -141,19 +147,19 @@
 <span class="sd">        The function always returns ``None``.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;package dir set to </span><span class="si">{</span><span class="n">addon_directory</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;addon_module set to </span><span class="si">{</span><span class="n">addon_module</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">iter_modules</span><span class="p">(</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;package dir set to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">addon_directory</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;addon_module set to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">addon_module</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">iter_modules</span><span class="p">(</span>
         <span class="p">[</span><span class="n">addon_directory</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">addon_module</span><span class="si">}</span><span class="s2">.&quot;</span>
     <span class="p">):</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">parser_name</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found module: </span><span class="si">{</span><span class="n">parser</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found module: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">parser</span><span class="p">)</span>
         <span class="n">module</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Imported: </span><span class="si">{</span><span class="n">module</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Imported: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="subparser"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.addon_manager.subparser">[docs]</a><span class="k">def</span> <span class="nf">subparser</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">SubParserType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SubParserType</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Decorate subparsers with, to add them to (global) addons on import.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorate subparsers with, to add them to (global) addons on import.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -172,17 +178,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">func</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">addons</span><span class="p">:</span>
         <span class="n">addons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-
-    <span class="c1"># @wraps(func)</span>
-    <span class="c1"># def wrapper(parser: argparse._SubParsersAction) -&gt; None:</span>
-    <span class="c1">#     func(parser)</span>
-    <span class="c1">#</span>
-    <span class="c1"># return wrapper</span>
     <span class="k">return</span> <span class="n">func</span></div>
 
 
 <div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.addon_manager.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">ParserSetupType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Add subparsers to the (main) parser.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add subparsers to the (main) parser.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -206,7 +206,7 @@
     <span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">addons</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="c1"># skipcq: PYL-W0212</span>
-        <span class="n">subparsers</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">_SubParsersAction</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+        <span class="n">subparsers</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">_SubParsersAction</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Commands&quot;</span><span class="p">,</span>
             <span class="n">description</span><span class="o">=</span><span class="p">(</span>
                 <span class="s2">&quot;The following are commands, you can use to accomplish &quot;</span>
@@ -226,7 +226,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Michael Sasser.</p>
+    <p>&#169; Copyright 2023, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

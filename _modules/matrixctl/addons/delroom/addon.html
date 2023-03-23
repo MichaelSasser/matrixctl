@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addons.delroom.addon &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
+  <title>matrixctl.addons.delroom.addon &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -14,7 +14,9 @@
         <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -25,14 +27,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> MatrixCtl
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            MatrixCtl
           </a>
               <div class="version">
-                0.12.0-beta.1
+                0.12.0-beta.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -59,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      <li>matrixctl.addons.delroom.addon</li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matrixctl.addons.delroom.addon</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -114,7 +120,7 @@
 
 
 <div class="viewcode-block" id="addon"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.delroom.addon.addon">[docs]</a><span class="k">def</span> <span class="nf">addon</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Delete an empty room from the database.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete an empty room from the database.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -151,7 +157,7 @@
         <span class="n">json_response</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;The JSON response could not be loaded by MatrixCtl.&quot;</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The response was: </span><span class="si">{</span><span class="n">response</span> <span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The response was: </span><span class="si">{</span><span class="n">response</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">json_response</span> <span class="o">=</span> <span class="n">handle_status</span><span class="p">(</span><span class="n">yaml</span><span class="p">,</span> <span class="n">json_response</span><span class="p">[</span><span class="s2">&quot;delete_id&quot;</span><span class="p">])</span>
@@ -169,7 +175,7 @@
 
 
 <div class="viewcode-block" id="handle_status"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.delroom.addon.handle_status">[docs]</a><span class="k">def</span> <span class="nf">handle_status</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">,</span> <span class="n">delete_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JsonDict</span><span class="p">:</span>  <span class="c1"># noqa: C901</span>
-    <span class="sd">&quot;&quot;&quot;Handle the status of a delete room request.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle the status of a delete room request.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -198,7 +204,6 @@
     <span class="n">msglock_purging</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-
         <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">response</span><span class="p">:</span> <span class="n">Response</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
@@ -215,15 +220,15 @@
                 <span class="s2">&quot;The JSON status response could not be loaded by MatrixCtl.&quot;</span>
             <span class="p">)</span>
             <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;The response was: </span><span class="si">{</span><span class="n">response</span> <span class="si">= }</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;The response was: </span><span class="si">{</span><span class="n">response</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span>
             <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
 
         <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">response</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;response: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
             <span class="c1"># complete</span>
             <span class="k">if</span> <span class="n">json_response</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;complete&quot;</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span>
-                    <span class="s2">&quot;Status: Complete (the room has been deleted successfully&quot;</span>
+                    <span class="s2">&quot;Status: Complete (the room has been deleted successfully)&quot;</span>
                 <span class="p">)</span>
                 <span class="k">break</span>
             <span class="c1"># shutting_down</span>
@@ -255,8 +260,11 @@
             <span class="c1"># failed</span>
             <span class="k">if</span> <span class="n">json_response</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;failed&quot;</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-                    <span class="s2">&quot;The server returned, that the approach failed with the&quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot; following message: </span><span class="si">{</span><span class="n">json_response</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span>
+                    <span class="p">(</span>
+                        <span class="s2">&quot;The server returned, that the approach failed with &quot;</span>
+                        <span class="s2">&quot;the following message: </span><span class="si">%s</span><span class="s2">.&quot;</span>
+                    <span class="p">),</span>
+                    <span class="n">json_response</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">],</span>
                 <span class="p">)</span>
                 <span class="k">break</span>
         <span class="k">break</span>
@@ -265,7 +273,7 @@
 
 
 <div class="viewcode-block" id="handle_arguments"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.delroom.addon.handle_arguments">[docs]</a><span class="k">def</span> <span class="nf">handle_arguments</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JsonDict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Build the parameters used for the delroom request.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build the parameters used for the delroom request.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -278,9 +286,13 @@
 <span class="sd">        The params.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">force_purge</span> <span class="ow">and</span> <span class="n">arg</span><span class="o">.</span><span class="n">no_purge</span><span class="p">:</span>
+        <span class="n">arg</span><span class="o">.</span><span class="n">no_purge</span> <span class="o">=</span> <span class="kc">False</span>
+
     <span class="n">body</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;block&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">block</span><span class="p">,</span>
         <span class="s2">&quot;purge&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">no_purge</span><span class="p">,</span>
+        <span class="s2">&quot;force_purge&quot;</span><span class="p">:</span> <span class="n">arg</span><span class="o">.</span><span class="n">force_purge</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">new_room_admin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">body</span><span class="p">[</span><span class="s2">&quot;new_room_user_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">new_room_admin</span>
@@ -307,7 +319,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Michael Sasser.</p>
+    <p>&#169; Copyright 2023, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

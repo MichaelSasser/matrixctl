@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.handlers.api &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
+  <title>matrixctl.handlers.api &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -14,7 +14,9 @@
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -25,14 +27,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> MatrixCtl
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            MatrixCtl
           </a>
               <div class="version">
-                0.12.0-beta.1
+                0.12.0-beta.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -59,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>matrixctl.handlers.api</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matrixctl.handlers.api</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -128,7 +134,7 @@
 
 <div class="viewcode-block" id="RequestStrategy"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.RequestStrategy">[docs]</a><span class="k">class</span> <span class="nc">RequestStrategy</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">NamedTuple</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot;Use this NamedTuple as request strategy data.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this NamedTuple as request strategy data.</span>
 
 <span class="sd">    This NamedTuple is only used in this module.</span>
 
@@ -144,7 +150,7 @@
 <div class="viewcode-block" id="RequestBuilder"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.RequestBuilder">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">RequestBuilder</span><span class="p">:</span>
 
-    <span class="sd">&quot;&quot;&quot;Build the URL for an API request.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build the URL for an API request.&quot;&quot;&quot;</span>
 
     <span class="n">token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
     <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
@@ -175,7 +181,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">headers_with_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Get the headers with bearer token.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the headers with bearer token.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -193,7 +199,7 @@
         <span class="p">}</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Build the URL.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build the URL.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -207,17 +213,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scheme</span><span class="si">}</span><span class="s2">://&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">subdomain</span><span class="si">}{</span><span class="s1">&#39;.&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subdomain</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">subdomain</span><span class="si">}{</span><span class="s1">&#39;.&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">subdomain</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">api_path</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">api_version</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">url</span>
+        <span class="k">return</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get a string representation of this class.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a string representation of this class.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -237,7 +242,7 @@
         <span class="k">return</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="se">{{</span><span class="s2">&quot;</span>
             <span class="sa">f</span><span class="s2">&quot;headers=</span><span class="si">{</span><span class="n">headers</span><span class="si">}</span><span class="s2">, params=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="si">}</span><span class="s2">, data=&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;[binary]&#39;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;[binary]&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="nb">bytes</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2"> &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;success_codes=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">success_codes</span><span class="si">}</span><span class="s2">, json=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">json</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;token=[redacted (length=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">)</span><span class="si">}</span><span class="s2">)], &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;timeout=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="si">}</span><span class="s2">, &quot;</span>
@@ -248,7 +253,7 @@
 <div class="viewcode-block" id="preplan_request_strategy"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.preplan_request_strategy">[docs]</a><span class="k">def</span> <span class="nf">preplan_request_strategy</span><span class="p">(</span>
     <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">concurrent_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">max_step_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RequestStrategy</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Use this functiona as helper for optimizing asynchronous requests.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this functiona as helper for optimizing asynchronous requests.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -271,11 +276,7 @@
 
     <span class="c1"># limit might be total.</span>
 
-    <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="n">max_step_size</span><span class="p">:</span>  <span class="c1"># limit step_size</span>
-        <span class="n">step_size</span> <span class="o">=</span> <span class="mi">100</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">step_size</span> <span class="o">=</span> <span class="n">limit</span>
-
+    <span class="n">step_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span> <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="n">max_step_size</span> <span class="k">else</span> <span class="n">limit</span>
     <span class="n">workers</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">limit</span> <span class="o">/</span> <span class="n">step_size</span><span class="p">,</span> <span class="n">concurrent_limit</span><span class="p">)</span>
 
     <span class="n">iterations</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">limit</span> <span class="o">/</span> <span class="p">(</span><span class="n">workers</span> <span class="o">*</span> <span class="n">step_size</span><span class="p">)</span>
@@ -320,7 +321,7 @@
 <div class="viewcode-block" id="generate_worker_configs"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.generate_worker_configs">[docs]</a><span class="k">def</span> <span class="nf">generate_worker_configs</span><span class="p">(</span>
     <span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">,</span> <span class="n">next_token</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">RequestBuilder</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Create workers for async requests (minus the already done sync request).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create workers for async requests (minus the already done sync request).</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -351,14 +352,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">limit</span> <span class="o">-</span> <span class="n">next_token</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;limit - next_token is negative (</span><span class="si">{</span><span class="n">limit</span> <span class="o">-</span> <span class="n">next_token</span><span class="si">}</span><span class="s2">). &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;limit - next_token is negative (</span><span class="si">{</span><span class="n">limit</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">next_token</span><span class="si">}</span><span class="s2">). &quot;</span>
             <span class="s2">&quot;Make sure that you not use generate_worker_configs() if it &quot;</span>
             <span class="s2">&quot;isn&#39;t necessary. For example with total &gt; 100.&quot;</span>
         <span class="p">)</span>
     <span class="n">strategy</span><span class="p">:</span> <span class="n">RequestStrategy</span> <span class="o">=</span> <span class="n">preplan_request_strategy</span><span class="p">(</span>
         <span class="n">limit</span> <span class="o">-</span> <span class="n">next_token</span><span class="p">,</span>  <span class="c1"># minus the already queried</span>
         <span class="n">concurrent_limit</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">concurrent_limit</span><span class="p">,</span>
-        <span class="n">max_step_size</span><span class="o">=</span><span class="n">limit</span> <span class="k">if</span> <span class="n">limit</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="k">else</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">max_step_size</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="c1"># limit the request &quot;globally&quot;</span>
     <span class="n">request_config</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">step_size</span>
@@ -385,7 +386,7 @@
 <div class="viewcode-block" id="async_worker"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.async_worker">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">async_worker</span><span class="p">(</span>
     <span class="n">input_queue</span><span class="p">:</span> <span class="n">InputQueueType</span><span class="p">,</span> <span class="n">output_queue</span><span class="p">:</span> <span class="n">OutputQueueType</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Use this coro as worker to make (a)synchronous request.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this coro as worker to make (a)synchronous request.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -422,7 +423,7 @@
 <div class="viewcode-block" id="group_async_results"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.group_async_results">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">group_async_results</span><span class="p">(</span>
     <span class="n">input_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">output_queue</span><span class="p">:</span> <span class="n">OutputQueueType</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="ne">Exception</span> <span class="o">|</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Use this coro to group the requests afterwards in a single list.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this coro to group the requests afterwards in a single list.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -455,18 +456,18 @@
 <span class="k">async</span> <span class="k">def</span> <span class="nf">exec_async_request</span><span class="p">(</span>
     <span class="n">request_config</span><span class="p">:</span> <span class="n">Generator</span><span class="p">[</span><span class="n">RequestBuilder</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Overload for request.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Overload for request.&quot;&quot;&quot;</span>
 
 
 <span class="nd">@t</span><span class="o">.</span><span class="n">overload</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">exec_async_request</span><span class="p">(</span><span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Overload for request.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Overload for request.&quot;&quot;&quot;</span>
 
 
 <div class="viewcode-block" id="exec_async_request"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.exec_async_request">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">exec_async_request</span><span class="p">(</span>
     <span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span> <span class="o">|</span> <span class="n">Generator</span><span class="p">[</span><span class="n">RequestBuilder</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Use this coro to generate and run workers and group the responses.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this coro to generate and run workers and group the responses.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -529,43 +530,35 @@
     <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">result_task</span>
 
     <span class="c1"># A handled result is one without exceptions</span>
-    <span class="n">handled_results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]</span> <span class="o">|</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="c1"># Re-raise errors</span>
     <span class="c1"># concurrent</span>
+    <span class="n">errors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="ne">Exception</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
-        <span class="n">errors</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="ne">Exception</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">err</span> <span class="k">for</span> <span class="n">err</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)</span>
-        <span class="p">]</span>
-        <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">errors</span> <span class="o">:=</span> <span class="p">[</span><span class="n">err</span> <span class="k">for</span> <span class="n">err</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">)]:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
-        <span class="n">handled_results</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
-            <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">],</span> <span class="n">results</span>
-        <span class="p">)</span>  <span class="c1"># no exception left</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>  <span class="c1"># Not concurrent</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-        <span class="n">handled_results</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>  <span class="c1"># no exception left</span>
-
-    <span class="k">return</span> <span class="n">handled_results</span></div>
+        <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">],</span> <span class="n">results</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>  <span class="c1"># Not concurrent</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span></div>
 
 
 <span class="nd">@t</span><span class="o">.</span><span class="n">overload</span>
 <span class="k">def</span> <span class="nf">request</span><span class="p">(</span>
     <span class="n">request_config</span><span class="p">:</span> <span class="n">Generator</span><span class="p">[</span><span class="n">RequestBuilder</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Overload for request.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Overload for request.&quot;&quot;&quot;</span>
 
 
 <span class="nd">@t</span><span class="o">.</span><span class="n">overload</span>
 <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Overload for request.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Overload for request.&quot;&quot;&quot;</span>
 
 
 <span class="c1"># flake8: noqa: C901</span>
 <div class="viewcode-block" id="request"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.request">[docs]</a><span class="k">def</span> <span class="nf">request</span><span class="p">(</span>
     <span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span> <span class="o">|</span> <span class="n">Generator</span><span class="p">[</span><span class="n">RequestBuilder</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]</span> <span class="o">|</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Make a (a)synchronous request to the synapse API and receive a response.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a (a)synchronous request to the synapse API and receive a response.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -590,7 +583,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">gen_async_request</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">]</span> <span class="o">|</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Use as helper for executing an async request.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Use as helper for executing an async request.&quot;&quot;&quot;</span>
         <span class="k">nonlocal</span> <span class="n">request_config</span>
         <span class="c1"># cast because mypy doesn&#39;t recognize the return type of</span>
         <span class="c1"># exec_async_request</span>
@@ -610,7 +603,7 @@
 
 
 <span class="k">def</span> <span class="nf">_request</span><span class="p">(</span><span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">NoReturn</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Send an synchronous request to the synapse API and receive a response.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Send an synchronous request to the synapse API and receive a response.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -684,7 +677,7 @@
 <span class="k">async</span> <span class="k">def</span> <span class="nf">_arequest</span><span class="p">(</span>
     <span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Send an asynchronous request to the synapse API and receive a response.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Send an asynchronous request to the synapse API and receive a response.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -763,7 +756,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Michael Sasser.</p>
+    <p>&#169; Copyright 2023, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

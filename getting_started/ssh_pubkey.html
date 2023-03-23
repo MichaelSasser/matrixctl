@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SSH Public Key &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
+  <title>SSH Public Key &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -28,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> MatrixCtl
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MatrixCtl
           </a>
               <div class="version">
-                0.12.0-beta.1
+                0.12.0-beta.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -68,9 +74,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Getting Started</a> &raquo;</li>
-      <li>SSH Public Key</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Getting Started</a></li>
+      <li class="breadcrumb-item active">SSH Public Key</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/getting_started/ssh_pubkey.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -81,7 +87,7 @@
            <div itemprop="articleBody">
              
   <section id="ssh-public-key">
-<h1>SSH Public Key<a class="headerlink" href="#ssh-public-key" title="Permalink to this headline"></a></h1>
+<h1>SSH Public Key<a class="headerlink" href="#ssh-public-key" title="Permalink to this heading"></a></h1>
 <p>To get easy access to the other matrix plugins (e.g. bridges) and other
 additional functionality, to communicate with the OCI containers, you need to
 have a ssh public key installed on your matrix host server.
@@ -105,9 +111,9 @@ section. If you don’t want to write your own playbook, follow this
 guide.</p>
 </div>
 <section id="check-your-key-pair">
-<h2>Check your key pair<a class="headerlink" href="#check-your-key-pair" title="Permalink to this headline"></a></h2>
+<h2>Check your key pair<a class="headerlink" href="#check-your-key-pair" title="Permalink to this heading"></a></h2>
 <p>Check, if you alreadey have a key pair.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls -la ~/.ssh/id_*.pub
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls<span class="w"> </span>-la<span class="w"> </span>~/.ssh/id_*.pub
 <span class="go">-rw-r--r-- 1 michael users 767 30. Sep 2014  /home/michael/.ssh/id_rsa.pub</span>
 </pre></div>
 </div>
@@ -115,19 +121,19 @@ guide.</p>
 and you can continue in the next section <a class="reference internal" href="#copy-public-key"><span class="std std-ref">Copy Public Key</span></a>.</p>
 <p>If it looks something like below or prints something like you can continue in
 the section: <a class="reference internal" href="#generate-key-pair"><span class="std std-ref">Generate key pair</span></a>.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls -la ~/.ssh/id_*.pub
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls<span class="w"> </span>-la<span class="w"> </span>~/.ssh/id_*.pub
 <span class="go">zsh: no matches found: /home/michael/.ssh/id_*.pub</span>
 <span class="gp"># </span>or
-<span class="gp">$ </span>ls -la ~/.ssh/id_*.pub
+<span class="gp">$ </span>ls<span class="w"> </span>-la<span class="w"> </span>~/.ssh/id_*.pub
 <span class="go">ls: cannot access &#39;/home/michael/.ssh/id_*.pub&#39;: No such file or directory</span>
 </pre></div>
 </div>
 </section>
 <section id="generate-key-pair">
-<h2>Generate key pair<a class="headerlink" href="#generate-key-pair" title="Permalink to this headline"></a></h2>
+<h2>Generate key pair<a class="headerlink" href="#generate-key-pair" title="Permalink to this heading"></a></h2>
 <p>To generate your key pair run:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir ~/.ssh
-<span class="gp">$ </span>ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&quot;your_email@domain.tld&quot;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>~/.ssh
+<span class="gp">$ </span>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>rsa<span class="w"> </span>-b<span class="w"> </span><span class="m">4096</span><span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;your_email@domain.tld&quot;</span>
 <span class="go">Generating public/private rsa key pair.</span>
 <span class="go">Enter file in which to save the key (/root/.ssh/id_rsa):</span>
 <span class="go">Created directory &#39;/root/.ssh&#39;.</span>
@@ -153,13 +159,13 @@ the section: <a class="reference internal" href="#generate-key-pair"><span class
 </div>
 <p>If prints something like below you need to install <code class="docutils literal notranslate"><span class="pre">openssh</span></code>, <code class="docutils literal notranslate"><span class="pre">sshd</span></code> or
 <code class="docutils literal notranslate"><span class="pre">openssh-client</span></code> (depends on your distribution).</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir ~/.ssh
-<span class="gp">$ </span>ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&quot;your_email@domain.tld&quot;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>~/.ssh
+<span class="gp">$ </span>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>rsa<span class="w"> </span>-b<span class="w"> </span><span class="m">4096</span><span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;your_email@domain.tld&quot;</span>
 <span class="go">bash: ssh-keygen: command not found</span>
 </pre></div>
 </div>
 <p>On Arch linux the installation of <code class="docutils literal notranslate"><span class="pre">openssl</span></code> would look like:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pacman -Sy openssh
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pacman<span class="w"> </span>-Sy<span class="w"> </span>openssh
 <span class="go">:: Synchronizing package databases...</span>
 <span class="go"> core is up to date</span>
 <span class="go"> extra is up to date</span>
@@ -206,9 +212,9 @@ the section: <a class="reference internal" href="#generate-key-pair"><span class
 </div>
 </section>
 <section id="copy-public-key">
-<h2>Copy Public Key<a class="headerlink" href="#copy-public-key" title="Permalink to this headline"></a></h2>
+<h2>Copy Public Key<a class="headerlink" href="#copy-public-key" title="Permalink to this heading"></a></h2>
 <p>Now copy your public key to your Server:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ssh-copy-id -i ~/.ssh/id_rsa.pub user@matrix.domain.tld
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ssh-copy-id<span class="w"> </span>-i<span class="w"> </span>~/.ssh/id_rsa.pub<span class="w"> </span>user@matrix.domain.tld
 </pre></div>
 </div>
 </section>
@@ -225,7 +231,7 @@ the section: <a class="reference internal" href="#generate-key-pair"><span class
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Michael Sasser.</p>
+    <p>&#169; Copyright 2023, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

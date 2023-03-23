@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addons.maintenance.addon &mdash; MatrixCtl 0.12.0-beta.1 documentation</title>
+  <title>matrixctl.addons.maintenance.addon &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -14,7 +14,9 @@
         <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -25,14 +27,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> MatrixCtl
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            MatrixCtl
           </a>
               <div class="version">
-                0.12.0-beta.1
+                0.12.0-beta.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -59,9 +65,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      <li>matrixctl.addons.maintenance.addon</li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matrixctl.addons.maintenance.addon</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -114,7 +120,7 @@
 <div class="viewcode-block" id="Task"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.maintenance.addon.Task">[docs]</a><span class="nd">@unique</span>
 <span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot;Use this enum for describing the maintenance task.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this enum for describing the maintenance task.</span>
 
 <span class="sd">    Supported tasks:</span>
 
@@ -132,7 +138,7 @@
 
 
 <div class="viewcode-block" id="print_tasks"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.maintenance.addon.print_tasks">[docs]</a><span class="k">def</span> <span class="nf">print_tasks</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># static data</span>
-    <span class="sd">&quot;&quot;&quot;Print a list of all available tasks.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a list of all available tasks.&quot;&quot;&quot;</span>
     <span class="n">table_generator</span><span class="p">:</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="p">(</span>
         <span class="p">[</span>
             <span class="p">[</span><span class="s2">&quot;vacuum&quot;</span><span class="p">,</span> <span class="s2">&quot;Reclaims storage occupied by dead tuples.&quot;</span><span class="p">],</span>
@@ -146,7 +152,7 @@
 
 
 <div class="viewcode-block" id="addon"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.maintenance.addon.addon">[docs]</a><span class="k">def</span> <span class="nf">addon</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Run the maintenance procedure of the ansible playbook.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the maintenance procedure of the ansible playbook.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -166,25 +172,23 @@
         <span class="k">return</span> <span class="mi">0</span>
 
     <span class="n">todo</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="p">(</span>
-        <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;maintenance&quot;</span><span class="p">,</span> <span class="s2">&quot;tasks&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">arg</span><span class="o">.</span><span class="n">tasks</span>
-        <span class="k">else</span> <span class="n">arg</span><span class="o">.</span><span class="n">tasks</span>
-    <span class="p">):</span>
-
+    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">arg</span><span class="o">.</span><span class="n">tasks</span> <span class="ow">or</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;maintenance&quot;</span><span class="p">,</span> <span class="s2">&quot;tasks&quot;</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">todo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Task</span><span class="p">[</span><span class="n">task</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()])</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>  <span class="c1"># task is not in enum</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;The task &quot;</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s1">&quot; is not supported by MatrixCtl. &#39;</span>
-                <span class="s2">&quot;Below, you find a list of all available tasks.&quot;</span>
+                <span class="p">(</span>
+                    <span class="s1">&#39;The task &quot;</span><span class="si">%s</span><span class="s1">&quot; is not supported by MatrixCtl. &#39;</span>
+                    <span class="s2">&quot;Below, you find a list of all available tasks.&quot;</span>
+                <span class="p">),</span>
+                <span class="n">task</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">print_tasks</span><span class="p">()</span>
             <span class="k">return</span> <span class="mi">1</span>
 
     <span class="n">ansible_run</span><span class="p">(</span>
         <span class="n">playbook</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ansible&quot;</span><span class="p">,</span> <span class="s2">&quot;playbook&quot;</span><span class="p">),</span>
-        <span class="n">tags</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">todo</span><span class="p">])</span><span class="si">}</span><span class="s2">,start&quot;</span><span class="p">,</span>
+        <span class="n">tags</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">todo</span><span class="p">])</span><span class="si">}</span><span class="s2">,start&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="k">return</span> <span class="mi">0</span></div>
@@ -200,7 +204,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Michael Sasser.</p>
+    <p>&#169; Copyright 2023, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
