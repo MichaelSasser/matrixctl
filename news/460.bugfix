@@ -1,1 +1,0 @@
-Ensure MatrixCtl does not log the database password for synapse in debug mode
