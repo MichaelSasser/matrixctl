@@ -3,6 +3,37 @@ This is the changelog of MatrixCtl. You can find the issue tracker on
 
 .. towncrier release notes start
 
+0.12.0-beta.2 (2023-03-24)
+==========================
+
+Bugfixes
+--------
+
+- Fix ``M_UNKNOWN`` bug when using ``purge-history``. (`#165
+  <https://github.com/MichaelSasser/matrixctl/issues/165>`_)
+- Ensure MatrixCtl does not log the database password for synapse in debug mode
+  (`#460 <https://github.com/MichaelSasser/matrixctl/issues/460>`_)
+
+
+Removals & Deprecations
+-----------------------
+
+- Add a deprecation warning to the adduser-jitsi and deluser-jitsi commands.
+  They are planned for removal in MatrixCtl v0.13.0. (`#453
+  <https://github.com/MichaelSasser/matrixctl/issues/453>`_)
+
+
+Miscellaneous
+-------------
+
+- Add tests to the sanitizers (`#315
+  <https://github.com/MichaelSasser/matrixctl/issues/315>`_)
+- Update pre-commit plugin flake8 to new repo url (`#448
+  <https://github.com/MichaelSasser/matrixctl/issues/448>`_)
+- Fix rtd: Invalid configuration option: python.version (`#450
+  <https://github.com/MichaelSasser/matrixctl/issues/450>`_)
+
+
 0.12.0-beta.1 (2021-12-02)
 ==========================
 

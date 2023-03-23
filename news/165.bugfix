@@ -1,1 +1,0 @@
-Fix ``M_UNKNOWN`` bug when using ``purge-history``.
