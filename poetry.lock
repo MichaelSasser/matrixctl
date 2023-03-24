@@ -14,14 +14,14 @@ files = [
 
 [[package]]
 name = "ansible-runner"
-version = "2.3.1"
+version = "2.3.2"
 description = "\"Consistent Ansible Python API and CLI with container and process isolation runtime capabilities\""
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "ansible-runner-2.3.1.tar.gz", hash = "sha256:1d2f02d3a62573f38e68a23790118b7981791c2bed2b5f22f7a36a221c288756"},
-    {file = "ansible_runner-2.3.1-py3-none-any.whl", hash = "sha256:f26d409293964d3a90c1af1acfd32d461f314f4405b72308d62f65d8ac4c0621"},
+    {file = "ansible-runner-2.3.2.tar.gz", hash = "sha256:c420e76ba18311d6350c8982fc3c0519b00624654053e538b0ea630651b08921"},
+    {file = "ansible_runner-2.3.2-py3-none-any.whl", hash = "sha256:21f94eeaa536e19ab3913ad882c0722c86aad9cb371eebf99361b8c1fb38ee8c"},
 ]
 
 [package.dependencies]
