@@ -2311,14 +2311,14 @@ files = [
 
 [[package]]
 name = "types-paramiko"
-version = "2.12.0.3"
+version = "3.0.0.4"
 description = "Typing stubs for paramiko"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "types-paramiko-2.12.0.3.tar.gz", hash = "sha256:3a79232382bcc7ed140f53d865feaec35188fd2ee105efdbf325200736e01aa2"},
-    {file = "types_paramiko-2.12.0.3-py3-none-any.whl", hash = "sha256:a8b224e8a93cc0ffb60f67516890e49977ea0d3f5811c605238e71d9c49a152d"},
+    {file = "types-paramiko-3.0.0.4.tar.gz", hash = "sha256:1a4b6e0f145ae7f071219cec1e6513c4fa404ca5901eccfb1e36e434a18c1304"},
+    {file = "types_paramiko-3.0.0.4-py3-none-any.whl", hash = "sha256:ffdbc7a8b8d33a17288c3be6ae98a18a293c79939a24daa9cff35acf22735925"},
 ]
 
 [package.dependencies]
@@ -2517,4 +2517,4 @@ docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "numpydoc", "s
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "efe2ebb9e8968c4d62b7720d4dbec686486535501b3fff5e8339d1f6966bcb6d"
+content-hash = "0a38cc1e872c6dd2a3cbda25a19ad6e0359a467112ec2ac17eb8d0eac77bc8d0"
