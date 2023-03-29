@@ -508,10 +508,7 @@ def request(
         nonlocal request_config
         # cast because mypy doesn't recognize the return type of
         # exec_async_request
-        return t.cast(
-            t.Union[list[httpx.Response], httpx.Response],
-            await exec_async_request(request_config),
-        )
+        return await exec_async_request(request_config)
 
     # This is needed because here is decided, if the request was meant to be
     # async or sync. Even though a request was meant to be async, it may
