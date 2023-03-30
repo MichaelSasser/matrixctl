@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +23,9 @@ from __future__ import annotations
 
 import logging
 
+
 from datetime import datetime
+from datetime import timezone
 
 
 __author__: str = "Michael Sasser"
@@ -51,8 +52,11 @@ def check_point_in_time(
 
     """
     try:
-        dt = datetime.fromtimestamp(float(event_or_timestamp) / 1000)
-        logger.debug(f"Delete until {dt=}")
+        dt = datetime.fromtimestamp(
+            float(event_or_timestamp) / 1000,
+            tz=timezone.utc,
+        )
+        logger.debug("Delete until dt: %s", dt)
         return {"purge_up_to_ts": int(event_or_timestamp)}
     except (OverflowError, OSError, ValueError):
         if event_or_timestamp.startswith("$"):

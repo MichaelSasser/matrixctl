@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +22,7 @@ import datetime
 import logging
 import sys
 
+
 from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper
@@ -42,17 +42,16 @@ logger = logging.getLogger(__name__)
 
 
 class VCS:
-
     """Update and manage a repository."""
 
-    def __init__(self, path: Path | str) -> None:
+    def __init__(self: VCS, path: Path | str) -> None:
         self.path: Path = Path(path)
         self.repo: Repo = Repo(self.path)
 
         if self.repo.bare:
             logger.critical(
                 "Please make sure you entered the correct repository "
-                "in [SYNAPSE] -> Playbook."
+                "in [SYNAPSE] -> Playbook.",
             )
             sys.exit(1)
 
@@ -61,7 +60,7 @@ class VCS:
         self.master = self.heads.master
 
     @property
-    def datetime_last_pulled_commit(self) -> datetime.datetime:
+    def datetime_last_pulled_commit(self: VCS) -> datetime.datetime:
         """Get the datetime the commit was pulled last from git.
 
         This is used to determine which messages will be produced in the table.
@@ -78,9 +77,12 @@ class VCS:
         """
         log = self.master.log()
 
-        return datetime.datetime.fromtimestamp(log[-1].time[0])
+        return datetime.datetime.fromtimestamp(
+            log[-1].time[0],
+            tz=datetime.timezone.utc,
+        )
 
-    def log(self, since: datetime.datetime | None = None) -> None:
+    def log(self: VCS, since: datetime.datetime | None = None) -> None:
         """Print a table of date, user and commit message since the last pull.
 
         Parameters
@@ -99,7 +101,7 @@ class VCS:
             cmd.append(f"--since={str(since)}")
 
         terminal_size_x, _ = get_terminal_size()
-        logger.debug(f"Terminal width = {terminal_size_x}")
+        logger.debug("Terminal width: %s", terminal_size_x)
 
         ######################################################################
         #                          Terminal width                            #
@@ -115,13 +117,15 @@ class VCS:
         # |<----12----->|        |      |     |     |       |        |     | #
         # |<--3-->|     |        |      |     |     |       |        |     | #
         # |_______d a t e________|______u s e r_____|_______commit_msg_____| #
-        #                               |<--->|            |<------>|        #
-        #                                 15                 x - 35          #
+        #                               |<--->|             |<------>|       #
+        #                                 15                  x - 35         #
         #                                                                    #
         ######################################################################
 
         wrapper_user = TextWrapper(
-            width=15, drop_whitespace=True, break_long_words=True
+            width=15,
+            drop_whitespace=True,
+            break_long_words=True,
         )
         wrapper_comment = TextWrapper(
             width=terminal_size_x - 35,
@@ -145,7 +149,7 @@ class VCS:
         for print_line in table(log, ("Date", "User", "Commit Message")):
             print(print_line)
 
-    def pull(self) -> None:
+    def pull(self: VCS) -> None:
         """Git pull the latest commits from GH.
 
         Parameters
@@ -163,9 +167,9 @@ class VCS:
         try:
             self.git.pull()
         except GitCommandError:
-            logger.error(
+            logger.exception(
                 "MatrixCtl was not able to connect to the synapse playbook "
-                "on GitHub. Are you connected to the internet?"
+                "on GitHub. Are you connected to the internet?",
             )
             sys.exit(1)
 

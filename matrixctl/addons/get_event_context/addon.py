@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@ from __future__ import annotations
 
 import json
 import logging
+
 
 from argparse import Namespace
 
@@ -65,13 +65,13 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     try:
         response: JsonDict = request(req).json()
     except InternalResponseError:
-        logger.error("Could not receive the event context.")
+        logger.exception("Could not receive the event context.")
         return 1
 
     try:
         print(json.dumps(response, indent=4))
     except json.decoder.JSONDecodeError:
-        logger.error("Unable to process the response data to JSON.")
+        logger.exception("Unable to process the response data to JSON.")
         return 1
 
     return 0

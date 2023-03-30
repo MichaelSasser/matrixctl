@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 from __future__ import annotations
 
 import typing as t
+
 
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
@@ -47,13 +47,17 @@ def subparser_set_admin(subparsers: _SubParsersAction[t.Any]) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "set-admin", help="Change whether a user is a homeserver admin or not"
+        "set-admin",
+        help="Change whether a user is a homeserver admin or not",
     )
     parser.add_argument(
-        "user", help="The username of the user to promote/demote"
+        "user",
+        help="The username of the user to promote/demote",
     )
     parser.add_argument(
-        "admin", choices=["promote", "demote"], help="Promote or demote a user"
+        "admin",
+        choices=["promote", "demote"],
+        help="Promote or demote a user",
     )
     parser.set_defaults(addon="set_admin")
 

@@ -54,9 +54,7 @@ tox = "^4.4.8"
 [tool.poetry.group.dev.dependencies]
 towncrier = "^22.12.0"
 flake8 = "^6.0.0"
-pydocstyle = "^6.3.0"
 pylint = "^2.17.1"
-pycodestyle = "^2.10.0"
 yapf = "^0.32.0"
 vulture = "^2.7"
 mypy = "^1.1.1"
@@ -70,6 +68,7 @@ types-pkg-resources = "^0.1.3"
 types-paramiko = "^3.0.0.6"
 types-attrs = "^19.1.0"
 types-Jinja2 = "^2.11.9"
+ruff = "^0.0.260"
 
 [tool.poetry.group.docs]
 optional = true
@@ -83,6 +82,189 @@ sphinx_rtd_theme = "^1.2.0"
 
 [tool.poetry.scripts]
 matrixctl = "matrixctl.__main__:main"
+
+[tool.ruff]
+line-length = 79
+cache-dir = "~/.cache/ruff"
+task-tags = ["TODO", "FIXME", "WARN", "SEC", "SECURITY", "INFO", "NOTE"]
+# typing-modules = ["airflow.typing_compat"]
+fix = true
+# respect-gitignore = false
+show-fixes = true
+ignore-init-module-imports = true
+src = ["matrixctl", "docs"]
+ignore = ["D202", "TCH003", "TCH001", "ANN401"]
+select = [
+  "E",  # pycodestyle (Errors)
+  "W",  # pycodestyle (Warnings)
+  "F",  # pyflakes
+  "UP", # pyupgrade
+  "D",  # pydocstyle
+  # "C",  # mccabe
+  "I",   # isort
+  "N",   # pep8-naming
+  "YTT", # flake8-2020
+  "ANN", # flake8-annotations
+  "S",   # flake8-bandit
+  "BLE", # flake8-blind-except
+  "FBT", # flake8-boolean-trap
+  "B",   # flake8-bugbear
+  "A",   # flake8-builtins
+  "COM", # flake8-commas
+  "C4",  # flake8-comprehensions
+  "DTZ", # flake8-datetimez
+  "T10", # flake8-debugger
+  "EM",  # flake8-errmsg
+  "EXE", # flake8-executable
+  "ISC", # flake8-implicit-str-concat
+  "ICN", # flake8-import-conventions
+  "G",   # flake8-logging-format
+  # "INP",  # flake8-no-pep420
+  "PIE", # flake8-pie
+  # "T20",  # flake8-print
+  "PYI", # flake8-pyi
+  "PT",  # flake8-pytest-style
+  "Q",   # flake8-quotes
+  "RSE", # flake8-raise
+  "RET", # flake8-return
+  "SLF", # flake8-self
+  "SIM", # flake8-simplify
+  "TID", # flake8-tidy-imports
+  "TCH", # flake8-type-checking
+  # "INT",  # flake8-gettext
+  "ARG", # flake8-unused-arguments
+  "PTH", # flake8-use-pathlib
+  "ERA", # eradicate
+  # "PD",   # pandas-vet
+  "PGH", # pygrep-hooks
+  "PL",  # Pylint
+  "PLE", # Error
+  "PLR", # Refactor
+  "PLW", # Warning
+  "TRY", # tryceratops
+  "NPY", # NumPy-specific rules
+  "RUF", # Ruff-specific rules
+]
+# fixable = [
+#   "E",  # pycodestyle (Errors)
+#   "W",  # pycodestyle (Warnings)
+#   "F",  # pyflakes
+#   "UP", # pyupgrade
+#   "D",  # pydocstyle
+#   # "C",  # mccabe
+#   "I",  # isort
+#   "N",  # pep8-naming
+#   "YTT",  # flake8-2020
+#   "ANN",  # flake8-annotations
+#   "S",    # flake8-bandit
+#   "BLE",  # flake8-blind-except
+#   "FBT",  # flake8-boolean-trap
+#   "B",    # flake8-bugbear
+#   "A",    # flake8-builtins
+#   "COM",  # flake8-commas
+#   "C4",   # flake8-comprehensions
+#   "DTZ",  # flake8-datetimez
+#   "T10",  # flake8-debugger
+#   "EM",   # flake8-errmsg
+#   "EXE",  # flake8-executable
+#   "ISC",  # flake8-implicit-str-concat
+#   "ICN",  # flake8-import-conventions
+#   "G",    # flake8-logging-format
+#   # "INP",  # flake8-no-pep420
+#   "PIE",  # flake8-pie
+#   # "T20",  # flake8-print
+#   "PYI",  # flake8-pyi
+#   "PT",   # flake8-pytest-style
+#   "Q",    # flake8-quotes
+#   "RSE",  # flake8-raise
+#   "RET",  # flake8-return
+#   "SLF",  # flake8-self
+#   "SIM",  # flake8-simplify
+#   "TID",  # flake8-tidy-imports
+#   "TCH",  # flake8-type-checking
+#   # "INT",  # flake8-gettext
+#   "ARG",  # flake8-unused-arguments
+#   "PTH",  # flake8-use-pathlib
+#   "ERA",  # eradicate
+#   # "PD",   # pandas-vet
+#   "PGH",  # pygrep-hooks
+#   "PL",   # Pylint
+#   "PLE",  # Error
+#   "PLR",  # Refactor
+#   "PLW",  # Warning
+#   "TRY",  # tryceratops
+#   "NPY",  # NumPy-specific rules
+#   "RUF",  # Ruff-specific rules
+# ]
+exclude = [
+  ".git",
+  ".mypy_cache",
+  ".nox",
+  ".pytype",
+  ".ruff_cache",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "venv",
+]
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+target-version = "py310"
+
+
+[tool.ruff.flake8-annotations]
+# allow-star-arg-any = true
+suppress-dummy-args = true
+suppress-none-returning = true
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.mccabe]
+# Unlike Flake8, default to a complexity level of 10.
+max-complexity = 10
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.ruff.flake8-import-conventions]
+[tool.ruff.flake8-import-conventions.aliases]
+# Declare the default aliases.
+altair = "alt"
+"matplotlib.pyplot" = "plt"
+numpy = "np"
+pandas = "pd"
+typing = "t"
+
+
+[tool.ruff.isort]
+force-single-line = true
+lines-after-imports = 2
+constants = ["__version__"]
+forced-separate = ["tests", "matrixctl"]
+required-imports = ["from __future__ import annotations"]
+known-first-party = ["matrixctl"]
+lines-between-types = 2
+known-third-party = [
+  "pytest",
+  "paramiko",
+  "argcomplete",
+  "coloredlogs",
+  "sphinx_rtd_theme",
+  "git",
+  "httpx",
+  "attr",
+  "ansible_runner",
+]
+
+[tool.ruff.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+# "__init__.py" = ["E402"]
+# "path/to/file.py" = ["E402"]
 
 [tool.black]
 line-length = 79

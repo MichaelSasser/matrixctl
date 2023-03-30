@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +18,7 @@
 from __future__ import annotations
 
 import logging
+
 
 from collections.abc import Generator
 
@@ -62,9 +62,9 @@ def to_table(rooms_list: list[JsonDict]) -> Generator[str, None, None]:
                 members,
                 alias,
                 room_id,
-            )
+            ),
         )
-    return table(room_list, ("Name", "Members", "Alias", "Room ID"), False)
+    return table(room_list, ("Name", "Members", "Alias", "Room ID"), sep=False)
 
 
 # vim: set ft=python :

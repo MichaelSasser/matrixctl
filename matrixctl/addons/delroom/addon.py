@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@ from __future__ import annotations
 
 import json
 import logging
+
 
 from argparse import Namespace
 from time import sleep
@@ -71,14 +71,15 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     try:
         response: Response = request(req)
     except InternalResponseError:
-        logger.error("Could not delete room.")
+        logger.exception("Could not delete room.")
         return 1
 
     try:
         json_response: JsonDict = response.json()
     except json.decoder.JSONDecodeError as e:
         logger.fatal("The JSON response could not be loaded by MatrixCtl.")
-        raise InternalResponseError(f"The response was: {response = }") from e
+        msg: str = f"The response was: {response = }"
+        raise InternalResponseError(msg) from e
 
     try:
         json_response = handle_status(yaml, json_response["delete_id"])
@@ -86,7 +87,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         if e.message:
             logger.fatal(e.message)
         logger.fatal(
-            "MatrixCtl was not able to verify the status of the request."
+            "MatrixCtl was not able to verify the status of the request.",
         )
         return 1
 
@@ -95,7 +96,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     return 0
 
 
-def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
+def handle_status(yaml: YAML, delete_id: str) -> JsonDict:
     """Handle the status of a delete room request.
 
     Parameters
@@ -129,39 +130,40 @@ def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
         try:
             response: Response = request(req)
         except InternalResponseError as e:
-            raise InternalResponseError(
+            msg: str = (
                 "The delete room request was probably successful but the"
                 " status request failed. You just have to wait a bit."
-            ) from e
+            )
+            raise InternalResponseError(msg) from e
 
         try:
             json_response: JsonDict = response.json()
         except json.decoder.JSONDecodeError as e:
             logger.fatal(
-                "The JSON status response could not be loaded by MatrixCtl."
+                "The JSON status response could not be loaded by MatrixCtl.",
             )
-            raise InternalResponseError(
-                f"The response was: {response = }"
-            ) from e
+            msg_: str = f"The response was: {response = }"
+            raise InternalResponseError(msg_) from e
 
         if response is not None:
             logger.debug("response: %s", response)
             # complete
             if json_response["status"] == "complete":
                 print(
-                    "Status: Complete (the room has been deleted successfully)"
+                    "Status: Complete (the room has been deleted"
+                    "successfully)",
                 )
                 break
             # shutting_down
             if json_response["status"] == "shutting_down":
                 if not msglock_shutting_down:
                     print(
-                        "Status: Shutting Down (removing users from the room)"
+                        "Status: Shutting Down (removing users from the room)",
                     )
                 msglock_shutting_down = True
                 logger.info(
                     "The server is still shutting_down the room. "
-                    "Please wait..."
+                    "Please wait...",
                 )
                 sleep(5)
                 continue
@@ -170,11 +172,11 @@ def handle_status(yaml: YAML, delete_id: str) -> JsonDict:  # noqa: C901
                 if not msglock_purging:
                     print(
                         "Status: Purging (purging the room and event data from"
-                        " database)"
+                        " database)",
                     )
                 msglock_purging = True
                 logger.info(
-                    "The server is still purging the room. Please wait..."
+                    "The server is still purging the room. Please wait...",
                 )
                 sleep(5)
                 continue

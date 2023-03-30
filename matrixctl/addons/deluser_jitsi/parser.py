@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 from __future__ import annotations
 
 import typing as t
+
 
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
@@ -52,7 +52,8 @@ def subparser_deluser_jitsi(subparsers: _SubParsersAction[t.Any]) -> None:
         description="This feature will be removed in MatrixCtl v0.13.0",
     )
     parser.add_argument(
-        "user", help="The jitsi username of the user to delete"
+        "user",
+        help="The jitsi username of the user to delete",
     )
     parser.set_defaults(addon="deluser_jitsi")
 

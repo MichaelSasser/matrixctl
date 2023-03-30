@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+
 
 from importlib import import_module
 from pathlib import Path
@@ -69,11 +69,13 @@ def setup_parser() -> argparse.ArgumentParser:
             "https://github.com/MichaelSasser/matrixctl/issues/new/choose"
         ),
     )
-    # parser._positionals.title = "addons"
 
     parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument(
-        "-d", "--debug", action="store_true", help="Enables debugging mode."
+        "-d",
+        "--debug",
+        action="store_true",
+        help="Enables debugging mode.",
     )
     parser.add_argument(
         "-s",
@@ -88,7 +90,7 @@ def setup_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def setup_logging(debug_mode: bool) -> None:
+def setup_logging(*, debug_mode: bool) -> None:
     """Use this function to setup logging for the application.
 
     Parameters
@@ -138,32 +140,32 @@ def main() -> int:
     # Setup Addons
     addon_manager.import_addons_from(str(addon_dir), addon_module, "parser")
     parser: argparse.ArgumentParser = addon_manager.setup(setup_parser)
-    # parser = setup_parser()
 
     args: argparse.Namespace = parser.parse_args()
 
-    setup_logging(args.debug)
+    setup_logging(debug_mode=args.debug)
 
-    logger.debug(f"{args=}")
+    logger.debug("args: %s", args)
 
     yaml: YAML = YAML(
-        None if args.config is None else (args.config,), args.server
+        None if args.config is None else (args.config,),
+        args.server,
     )
 
     try:
         addon_module_import: str = f"{addon_module}.{args.addon}.addon"
     except AttributeError as e:
         if args.debug:
-            logger.error(
+            logger.exception(
                 "The parser of the addon which has been called did not have "
                 'an arg "args.addon". If you did not enter an subcommand, '
-                'e.g. "matrixctl -d" you can ignore this error.'
+                'e.g. "matrixctl -d" you can ignore this error.',
             )
             raise AttributeError(e) from e
         parser.print_help()
         return 1
 
-    logger.debug(f"{addon_module_import =}")
+    logger.debug("addon_module_import: %s", addon_module_import)
     addon: ModuleType = import_module(addon_module_import)
 
     if args.debug:
@@ -173,14 +175,14 @@ def main() -> int:
             "attributes, the program will throw a AttributeError like: "
             "\"AttributeError: 'Namespace' object has no attribute 'func\".'"
             " This is perfectly normal and not a bug. If you want the help "
-            'in debug mode, use the "--help" attribute.'
+            'in debug mode, use the "--help" attribute.',
         )
 
         # Both should fail without catching the error
-        return int(addon.addon(args, yaml))  # type: ignore
+        return int(addon.addon(args, yaml))  # type: ignore # noqa: PGH003
 
     try:
-        return int(addon.addon(args, yaml))  # type: ignore
+        return int(addon.addon(args, yaml))  # type: ignore # noqa: PGH003
     except AttributeError:
         parser.print_help()
 

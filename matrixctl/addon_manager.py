@@ -1,5 +1,5 @@
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,9 +22,10 @@ import argparse
 import logging
 import typing as t
 
+
+from collections.abc import Callable
 from importlib import import_module
 from pkgutil import iter_modules
-from typing import Callable
 
 
 __author__: str = "Michael Sasser"
@@ -35,8 +36,8 @@ logger = logging.getLogger(__name__)
 
 # Leave them here, as long as they are not needed elsewhere
 # pyright: reportPrivateUsage=false
-# skipcq: PYL-W0212
-SubParserType = Callable[[argparse._SubParsersAction], None]
+SubParsersAction = argparse._SubParsersAction  # noqa: SLF001
+SubParserType = Callable[[SubParsersAction], None]
 ParserSetupType = Callable[[], argparse.ArgumentParser]
 
 # global
@@ -44,7 +45,9 @@ addons: list[SubParserType] = []
 
 
 def import_addons_from(
-    addon_directory: str, addon_module: str, parser_name: str
+    addon_directory: str,
+    addon_module: str,
+    parser_name: str,
 ) -> None:
     """Import addons in (global) addons.
 
@@ -71,7 +74,8 @@ def import_addons_from(
     logger.debug("package dir set to %s", addon_directory)
     logger.debug("addon_module set to %s", addon_module)
     for _, module_name, _ in iter_modules(
-        [addon_directory], f"{addon_module}."
+        [addon_directory],
+        f"{addon_module}.",
     ):
         parser = f"{module_name}.{parser_name}"
         logger.debug("Found module: %s", parser)
@@ -121,13 +125,12 @@ def setup(func: ParserSetupType) -> argparse.ArgumentParser:
         logger.error(
             "The Argparse Addon Manager was not able to find any addons. "
             "Have you imported the addons with "
-            '"AddonManager.import_addons_from()"?'
+            '"AddonManager.import_addons_from()"?',
         )
 
     parser: argparse.ArgumentParser = func()
     if len(addons) > 0:
-        # skipcq: PYL-W0212
-        subparsers: argparse._SubParsersAction[t.Any] = parser.add_subparsers(
+        subparsers: SubParsersAction[t.Any] = parser.add_subparsers(
             title="Commands",
             description=(
                 "The following are commands, you can use to accomplish "

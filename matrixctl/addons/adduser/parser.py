@@ -1,5 +1,5 @@
 # matrixctl
-# Copyright (c) 2020-2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 from __future__ import annotations
 
 import typing as t
+
 
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
@@ -46,7 +47,8 @@ def subparser_adduser(subparsers: _SubParsersAction[t.Any]) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "adduser", help="Add users to the homeserver"
+        "adduser",
+        help="Add users to the homeserver",
     )
     parser.add_argument("user", help="The username of the new user")
     parser.add_argument(

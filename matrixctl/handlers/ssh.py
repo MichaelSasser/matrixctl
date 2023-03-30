@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,13 +21,14 @@ from __future__ import annotations
 import logging
 import shlex
 
+
 from getpass import getuser
 from types import TracebackType
 from typing import NamedTuple
 
 from paramiko import AutoAddPolicy
 from paramiko import SSHClient
-from paramiko.channel import ChannelFile
+from paramiko.channel import ChannelFile  # noqa: TCH002
 
 
 __author__: str = "Michael Sasser"
@@ -39,7 +39,6 @@ logger = logging.getLogger(__name__)
 
 
 class SSHResponse(NamedTuple):
-
     """Store the response of a SSH command as response."""
 
     stdin: str | None
@@ -48,13 +47,15 @@ class SSHResponse(NamedTuple):
 
 
 class SSH:
-
     """Run and evaluate commands on the host machine of your synapse server."""
 
     __slots__ = ("address", "__client", "user", "port")
 
     def __init__(
-        self, address: str, user: str | None = None, port: int = 22
+        self: SSH,
+        address: str,
+        user: str | None = None,
+        port: int = 22,
     ) -> None:
         self.address: str = address
         self.port: int = port
@@ -64,7 +65,7 @@ class SSH:
         self.__client.set_missing_host_key_policy(AutoAddPolicy())
         self.__connect()
 
-    def __connect(self) -> None:
+    def __connect(self: SSH) -> None:
         """Connect to the SSH server.
 
         Parameters
@@ -79,7 +80,7 @@ class SSH:
         self.__client.connect(self.address, self.port, self.user)
         logger.debug("SSH connected")
 
-    def __disconnect(self) -> None:
+    def __disconnect(self: SSH) -> None:
         """Disconnect from the SSH server.
 
         Parameters
@@ -114,7 +115,7 @@ class SSH:
         except OSError:
             return None
 
-    def run_cmd(self, cmd: str) -> SSHResponse:
+    def run_cmd(self: SSH, cmd: str) -> SSHResponse:
         """Run a command on the host machine and receive a response.
 
         Parameters
@@ -138,14 +139,14 @@ class SSH:
                 # false positive
                 # skipcq BAN-B601
                 for s in self.__client.exec_command(shlex.quote(cmd))
-            ]
+            ],
         )
 
         logger.debug("SSH Response: %s", response)
 
         return response
 
-    def __enter__(self) -> SSH:
+    def __enter__(self: SSH) -> SSH:
         """Connect to the SSH server with the "with" statement.
 
         Parameters
@@ -162,7 +163,7 @@ class SSH:
         return self
 
     def __exit__(
-        self,
+        self: SSH,
         exc_type: type[BaseException] | None,
         exc_val: BaseException | None,
         exc_tb: TracebackType | None,
@@ -191,7 +192,7 @@ class SSH:
         )
         self.__disconnect()
 
-    def __del__(self) -> None:
+    def __del__(self: SSH) -> None:
         """Close the connection to the SSH.
 
         Parameters

@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,8 +21,11 @@ from __future__ import annotations
 import json
 import logging
 
+
 from argparse import Namespace
 from contextlib import suppress
+
+from .to_table import to_table
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
@@ -33,11 +35,11 @@ from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
 
-from .to_table import to_table
-
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+DEFAULT_LIMIT: int = 100
 
 
 logger = logging.getLogger(__name__)
@@ -68,7 +70,11 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         domain=yaml.get("server", "api", "domain"),
         path="rooms",
         api_version="v1",
-        params={"limit": arg.limit if 0 < arg.limit < 100 else 100},
+        params={
+            "limit": arg.limit
+            if 0 < arg.limit < DEFAULT_LIMIT
+            else DEFAULT_LIMIT,
+        },
         concurrent_limit=yaml.get("server", "api", "concurrent_limit"),
     )
 
@@ -97,7 +103,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
             total = arg.limit
 
     # New group to not suppress KeyError in here
-    if next_token is not None and total is not None and total > 100:
+    if next_token is not None and total is not None and total > DEFAULT_LIMIT:
         async_responses = request(
             generate_worker_configs(req, next_token, total),
         )
@@ -109,14 +115,16 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     generate_output(
         filter_empty_rooms(rooms) if arg.empty else rooms,
-        arg.to_json,
+        to_json=arg.to_json,
     )
 
     return 0
 
 
 def filter_empty_rooms(
-    rooms: list[JsonDict], local_users: bool = True
+    rooms: list[JsonDict],
+    *,
+    local_users: bool = True,
 ) -> list[JsonDict]:
     """Filter for empty rooms.
 
@@ -142,7 +150,7 @@ def filter_empty_rooms(
     ]
 
 
-def generate_output(rooms: list[JsonDict], to_json: bool) -> None:
+def generate_output(rooms: list[JsonDict], *, to_json: bool) -> None:
     """Use this helper to generate the output.
 
     Parameters

@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # get_latest_release.py - A support script for the MatrixCtl project
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@ import logging
 import re
 import sys
 import typing as t
+
 
 from pathlib import Path
 
@@ -95,12 +96,13 @@ def main(input_path: Path, output_path: Path) -> int:
             found_headlines = _HEADLINE.split(fp.read())
     except OSError:
         logger.fatal(
-            "Unable to read from the input file! input_path %s", input_path
+            "Unable to read from the input file! input_path %s",
+            input_path,
         )
         return 1
 
     # Check, that there are enough headlines to work with
-    if len(found_headlines) < 3:
+    if len(found_headlines) < 3:  # noqa: PLR2004
         logger.fatal(
             "Unable to find enough headlines! found_headlines: %s",
             found_headlines,
@@ -116,7 +118,8 @@ def main(input_path: Path, output_path: Path) -> int:
             fp.write(entry)
     except OSError:
         logger.fatal(
-            "Unable to write to the output file! output_path: %s", output_path
+            "Unable to write to the output file! output_path: %s",
+            output_path,
         )
         return 1
 
@@ -133,9 +136,9 @@ if __name__ == "__main__":
     # The path to the project root
     project_root_path: Path = Path(__file__).resolve().parent.parent
 
-    input: Path = project_root_path / "CHANGELOG.rst"
+    input_: Path = project_root_path / "CHANGELOG.rst"
     output: Path = project_root_path / "chagelog_latest.rst"
 
-    sys.exit(main(input, output))
+    sys.exit(main(input_, output))
 
 # vim: set ft=python :

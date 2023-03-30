@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +22,6 @@ from typing import TypedDict
 
 
 class Config(TypedDict):
-
     """Cast the YAML config to a typed dict."""
 
     servers: dict[str, ConfigServer]
@@ -31,7 +29,6 @@ class Config(TypedDict):
 
 
 class ConfigServer(TypedDict):
-
     """Add a `server` to the YAML config structure."""
 
     ansible: ConfigServerAnsible
@@ -42,21 +39,18 @@ class ConfigServer(TypedDict):
 
 
 class ConfigServerAnsible(TypedDict):
-
     """Add `ansible` to `server` in the YAML config structure."""
 
     playbook: str
 
 
 class ConfigServerSynapse(TypedDict):
-
     """Add `synapse` to `server` in the YAML config structure."""
 
     playbook: str
 
 
 class ConfigServerAPI(TypedDict):
-
     """Add `api` to `server` in the YAML config structure."""
 
     domain: str
@@ -66,7 +60,6 @@ class ConfigServerAPI(TypedDict):
 
 
 class ConfigServerSSH(TypedDict):
-
     """Add `ssh` to `server` in the YAML config structure."""
 
     address: str
@@ -75,7 +68,6 @@ class ConfigServerSSH(TypedDict):
 
 
 class ConfigServerMaintenance(TypedDict):
-
     """Add `maintenance` to `server` in the YAML config structure."""
 
     tasks: list[str]

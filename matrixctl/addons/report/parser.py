@@ -1,5 +1,5 @@
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 from __future__ import annotations
 
 import typing as t
+
 
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
@@ -45,7 +46,8 @@ def subparser_report(subparsers: _SubParsersAction[t.Any]) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "report", help="Get a report event by report identifier"
+        "report",
+        help="Get a report event by report identifier",
     )
     parser.add_argument("report_id", help="The report identifier")
     parser.set_defaults(addon="report")

@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,17 +23,18 @@ from __future__ import annotations
 
 import logging
 
+
 from argparse import Namespace
 from contextlib import suppress
+
+from .dialog import dialog_input
+from .handler import handle_purge_status
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
-
-from .dialog import dialog_input
-from .handler import handle_purge_status
 
 
 __author__: str = "Michael Sasser"
@@ -64,7 +64,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     request_body: dict[str, str | int] = dialog_input(arg)
 
-    logger.debug(f"{request_body = }")
+    logger.debug("request_body: %s", request_body)
 
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
@@ -85,11 +85,11 @@ def addon(arg: Namespace, yaml: YAML) -> int:
                 return 1
         logger.critical(
             "Something went wrong with the request. Please check your data "
-            "again."
+            "again.",
         )
         return 1
 
-    logger.debug(f"{response=}")
+    logger.debug("response: %s", response)
     return handle_purge_status(yaml, response["purge_id"])
 
 

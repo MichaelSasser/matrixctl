@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@ from __future__ import annotations
 import json
 import logging
 import typing as t
+
 
 from argparse import Namespace
 
@@ -72,7 +72,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     try:
         print(json.dumps(json.loads(response), indent=4))
     except json.decoder.JSONDecodeError:
-        logger.error("Unable to process the response data to JSON.")
+        logger.exception("Unable to process the response data to JSON.")
         return 1
     return 0
 

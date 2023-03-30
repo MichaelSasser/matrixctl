@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 from __future__ import annotations
 
 import logging
+
 
 from argparse import Namespace
 from mimetypes import MimeTypes
@@ -55,10 +55,10 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
     file_path: Path = Path(arg.file).absolute()
-    logger.debug(f"upload: {file_path=}")
+    logger.debug("upload file_path: %s", file_path)
     mime_types: MimeTypes = MimeTypes()
     file_type: str = str(mime_types.guess_type(file_path.name)[0])
-    logger.debug(f"upload: {file_type=}")
+    logger.debug("upload file_type: %s", file_type)
     try:
         with file_path.open("rb") as fp:
             file: bytes = fp.read()
@@ -79,14 +79,15 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     try:
         response: JsonDict = request(req).json()
     except InternalResponseError:
-        logger.error("The file was not uploaded.")
+        logger.exception("The file was not uploaded.")
         return 1
     try:
         print("Content URI: ", response["content_uri"])
     except KeyError as e:
-        raise InternalResponseError(
-            "Upload was successful, but no content_uri was found.", response
-        ) from e
+        msg: str = (
+            f"Upload was successful, but no content_uri was found. {response}"
+        )
+        raise InternalResponseError(msg) from e
     return 0
 
 

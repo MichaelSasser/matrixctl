@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,8 +34,8 @@ import attr
 import httpx
 
 from matrixctl import __version__
-from matrixctl.errors import ExitQWorker
 from matrixctl.errors import InternalResponseError
+from matrixctl.errors import QWorkerExit
 
 
 __author__: str = "Michael Sasser"
@@ -634,7 +633,7 @@ async def _arequest(
             "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
             '_domain: ""'
         )
-        raise ExitQWorker()  # TODO
+        raise QWorkerExit()  # TODO
     if response.status_code == 404:
         logger.critical(
             "The server returned an 404 error. This can have multiple causes."
@@ -645,7 +644,7 @@ async def _arequest(
             " line:\n\nmatrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_admin_api_enabled:"
             " true"
         )
-        raise ExitQWorker()  # TODO
+        raise QWorkerExit()  # TODO
 
     logger.debug("JSON response: %s", response.json())
 
@@ -659,7 +658,7 @@ async def _arequest(
                     "and up-to-date. Your access-token will change every "
                     "time, you log out."
                 )
-                raise ExitQWorker()  # TODO
+                raise QWorkerExit()  # TODO
         raise InternalResponseError(payload=response)
     return response
 

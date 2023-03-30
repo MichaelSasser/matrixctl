@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 from __future__ import annotations
 
 import logging
+
 
 from argparse import Namespace
 
@@ -63,7 +63,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     try:
         request(req)
     except InternalResponseError:
-        logger.error("The user was not deleted.")
+        logger.exception("The user was not deleted.")
 
     return 0
 

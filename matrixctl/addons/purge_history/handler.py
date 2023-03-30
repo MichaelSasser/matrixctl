@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +22,7 @@ Use this module to add the ``purge-histoy`` subcommand to ``matrixctl``.
 from __future__ import annotations
 
 import logging
+
 
 from time import sleep
 
@@ -73,10 +73,9 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
             logger.critical(
                 "The purge history request was successful but the status "
                 "request failed. You just have to wait a bit."
-                "If that happens the next time, please hand in a bug report."
+                "If that happens the next time, please hand in a bug report.",
             )
             return 1
-        # return response
 
         if response is not None:
             logger.debug("response: %s", response)
@@ -85,13 +84,13 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
                 return 0
             if response["status"] == "failed":
                 logger.critical(
-                    "The server returned, that the purge approach failed."
+                    "The server returned, that the purge approach failed.",
                 )
                 break
             if response["status"] == "active":
                 logger.info(
                     "The server is still purging historic message content. "
-                    "Please wait..."
+                    "Please wait...",
                 )
                 sleep(5)
                 continue

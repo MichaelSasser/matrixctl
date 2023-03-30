@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,6 +24,7 @@ import sys
 import typing as t
 import urllib.parse
 
+
 from collections.abc import Iterator
 from contextlib import contextmanager
 
@@ -42,7 +42,6 @@ logger = logging.getLogger(__name__)
 
 
 class DBConnectionBuilder(t.NamedTuple):
-
     """Build the URL for an API request."""
 
     host: str
@@ -53,7 +52,7 @@ class DBConnectionBuilder(t.NamedTuple):
     timeout: int = 10
     scheme: str = "postgresql"
 
-    def __str__(self) -> str:
+    def __str__(self: DBConnectionBuilder) -> str:
         """Build the URL.
 
         Parameters
@@ -80,9 +79,9 @@ def ssh_tunnel(
     host: str,
     username: str,
     remote_port: int,
-    enabled: bool = True,
     port: int = 22,
-    # private_key: Path | str | None = None,
+    *,
+    enabled: bool = True,
 ) -> Iterator[int | None]:
     """Create an SSH tunnel.
 
@@ -135,7 +134,8 @@ def ssh_tunnel(
         try:
             tun.start()
             logger.debug(
-                "SSH tunnel created using port: %s", tun.local_bind_port
+                "SSH tunnel created using port: %s",
+                tun.local_bind_port,
             )
             yield tun.local_bind_port
         finally:
@@ -167,7 +167,6 @@ def db_connect(yaml: YAML) -> Iterator[psycopg.Connection]:
         remote_port=yaml.get("server", "database", "port"),
         enabled=yaml.get("server", "database", "tunnel"),
         # skipcq PY-W0069
-        # private_key=yaml.get("server", "database", "private_key")
     ) as local_bind_port:
         connection_uri = DBConnectionBuilder(
             host=(
@@ -176,7 +175,7 @@ def db_connect(yaml: YAML) -> Iterator[psycopg.Connection]:
                 else yaml.get("server", "ssh", "address")
             ),
             port=int(
-                local_bind_port or yaml.get("server", "database", "port")
+                local_bind_port or yaml.get("server", "database", "port"),
             ),
             username=yaml.get("server", "database", "synapse_user"),
             password=yaml.get("server", "database", "synapse_password"),
@@ -185,8 +184,8 @@ def db_connect(yaml: YAML) -> Iterator[psycopg.Connection]:
         conn = psycopg.connect(str(connection_uri))
         try:
             yield conn
-        except BaseException as e:  # skipcq: PYL-W0703
-            logger.error("Rollback initiated.BaseException: %s", e)
+        except BaseException:  # skipcq: PYL-W0703
+            logger.exception("Rollback initiated.")
             conn.rollback()
             sys.exit(1)
         else:
