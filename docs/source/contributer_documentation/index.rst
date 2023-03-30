@@ -59,7 +59,7 @@ Add a feature
    branching model scheme. (You don't necessarily need ``git-flow``). Example:
    Let's say your issue was issue ``#42`` and you want to create a feature.
    Your branch name would be ``feature/#42`` or ``feature/#42-my-cool-feature``.
-#. Install the required tools with ``poetry install -E docs``
+#. Install the required tools with ``poetry install --with docs``
 #. Implement your feature or fix the bug you described in your issue.
 #. Create a ``Pull Request`` as soon as possible as ``draft``, so other
    contributors are able to help you and follow your progress.
