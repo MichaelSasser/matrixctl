@@ -35,6 +35,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 # Leave them here, as long as they are not needed elsewhere
+# skipcq: PYL-W0212  # noqa: ERA001
 # pyright: reportPrivateUsage=false
 SubParsersAction = argparse._SubParsersAction  # noqa: SLF001
 SubParserType = Callable[[SubParsersAction], None]
