@@ -2477,14 +2477,14 @@ files = [
 
 [[package]]
 name = "xdg"
-version = "5.1.1"
+version = "6.0.0"
 description = "Variables defined by the XDG Base Directory Specification"
 category = "main"
 optional = false
-python-versions = ">=3.6,<4.0"
+python-versions = ">=3.7,<4.0"
 files = [
-    {file = "xdg-5.1.1-py3-none-any.whl", hash = "sha256:865a7b56ed1d4cd2fce2ead1eddf97360843619757f473cd90b75f1817ca541d"},
-    {file = "xdg-5.1.1.tar.gz", hash = "sha256:aa619f26ccec6088b2a6018721d4ee86e602099b24644a90a8d3308a25acd06c"},
+    {file = "xdg-6.0.0-py3-none-any.whl", hash = "sha256:df3510755b4395157fc04fc3b02467c777f3b3ca383257397f09ab0d4c16f936"},
+    {file = "xdg-6.0.0.tar.gz", hash = "sha256:24278094f2d45e846d1eb28a2ebb92d7b67fc0cab5249ee3ce88c95f649a1c92"},
 ]
 
 [[package]]
@@ -2505,4 +2505,4 @@ docs = ["sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "numpydoc", "s
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "1e438ed3b211056a7bea32ab1b9e03904648713b4b9022a1fb64172dba297e12"
+content-hash = "e4f0e2d0ccd80882ce4f24759c47b2f6f18b948e1fc5835022808de82d963853"
