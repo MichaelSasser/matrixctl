@@ -42,7 +42,7 @@ attrs = "^22.2.0"
 xdg = "^6.0.0"
 Jinja2 = "^3.1.2"
 psycopg = "^3.1.8"
-httpx = { version = "^0.23.3", extras = ["http2"] }
+httpx = { version = ">=0.23.3,<0.25.0", extras = ["http2"] }
 sshtunnel = "^0.4.0"
 
 [tool.poetry.group.test.dependencies]
