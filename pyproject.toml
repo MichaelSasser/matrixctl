@@ -27,6 +27,7 @@ classifiers = [
   "Operating System :: Unix",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
@@ -287,7 +288,7 @@ exclude = '''
 '''
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 platform = "linux"
 ignore_missing_imports = true
 strict_equality = true
@@ -307,7 +308,7 @@ exclude = ["**/__pycache__"]
 reportMissingImports = true
 reportMissingTypeStubs = false
 
-pythonVersion = "3.10"
+pythonVersion = "3.11"
 pythonPlatform = "Linux"
 typeCheckingMode = "basic"
 
@@ -459,7 +460,7 @@ filterwarnings =
 
 
 [tox]
-envlist = precommit,py310,docs,changelog,
+envlist = precommit,py310,py311,docs,changelog,
 # py310,
 isolated_build = True
 
@@ -471,46 +472,39 @@ allowlist_externals = poetry
 setenv =
     VIRTUALENV_NO_DOWNLOAD=1
 extras = {env:TOX_AP_TEST_EXTRAS:tests}
-commands = poetry run pytest {posargs}
-
-
-[testenv:py310]
-allowlist_externals = poetry
-# Python 3.6+ has a number of compile-time warnings on invalid string escapes.
-# PYTHONWARNINGS=d and --no-compile below make them visible during the Tox run.
-basepython = python3.10
-install_command = pip install --no-compile {opts} {packages}
-setenv =
-    PYTHONWARNINGS=d
-extras = {env:TOX_AP_TEST_EXTRAS:tests}
-commands = poetry run coverage run -m pytest --doctest-modules {posargs}
-
+commands =
+  poetry install -v
+  poetry run coverage run -m pytest --doctest-modules {posargs}
 
 [testenv:precommit]
 allowlist_externals = poetry
-basepython = python3.10
+basepython = python3.11
 skip_install = true
 deps =
     pre-commit
 passenv = HOMEPATH  # needed on Windows
 commands =
-    poetry run pre-commit run --all-files
+  poetry install -v
+  poetry run pre-commit run --all-files
 
 
 [testenv:docs]
 allowlist_externals = poetry
 # Keep basepython in sync with gh-actions and .readthedocs.yml.
-basepython = python3.10
+basepython = python3.11
 # extras = docs, func
 # currently disable -n
 commands =
-    poetry run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html
+  poetry install --with docs -v
+  poetry run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html
 
 
 [testenv:changelog]
 allowlist_externals = poetry
-basepython = python3.10
+basepython = python3.11
 # deps = towncrier
 skip_install = true
-commands = poetry run towncrier --draft
+commands =
+  poetry install -v
+  poetry run towncrier --draft
 """

@@ -99,7 +99,7 @@ def dialog_input(arg: Namespace) -> dict[str, str | int] | NoReturn:
             sys.exit(1)
         request_body = {**request_body, **point_in_time}
 
-    return request_body  # noqa: RET504
+    return request_body
 
 
 # vim: set ft=python :

@@ -79,7 +79,7 @@ class VCS:
 
         return datetime.datetime.fromtimestamp(
             log[-1].time[0],
-            tz=datetime.timezone.utc,
+            tz=datetime.UTC,
         )
 
     def log(self: VCS, since: datetime.datetime | None = None) -> None:
