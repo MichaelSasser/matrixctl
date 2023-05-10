@@ -54,7 +54,7 @@ def format_bytes(size: int) -> str:
     while fsize > power:
         fsize /= power
         n += 1
-    return f"{size:1.2f} {prefix[n]+'B'}"
+    return f"{fsize:1.2f} {prefix[n]+'B'}"
 
 
 def to_table(rooms_list: list[JsonDict]) -> Generator[str, None, None]:
