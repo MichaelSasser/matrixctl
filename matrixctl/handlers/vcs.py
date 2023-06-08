@@ -98,7 +98,7 @@ class VCS:
         cmd = ["--pretty=%as\t%an\t%s"]
 
         if since:
-            cmd.append(f"--since={str(since)}")
+            cmd.append(f"--since={since!s}")
 
         terminal_size_x, _ = get_terminal_size()
         logger.debug("Terminal width: %s", terminal_size_x)
