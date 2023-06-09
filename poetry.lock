@@ -2084,13 +2084,13 @@ files = [
 
 [[package]]
 name = "towncrier"
-version = "22.12.0"
+version = "23.6.0"
 description = "Building newsfiles for your project."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "towncrier-22.12.0-py3-none-any.whl", hash = "sha256:9767a899a4d6856950f3598acd9e8f08da2663c49fdcda5ea0f9e6ba2afc8eea"},
-    {file = "towncrier-22.12.0.tar.gz", hash = "sha256:9c49d7e75f646a9aea02ae904c0bc1639c8fd14a01292d2b123b8d307564034d"},
+    {file = "towncrier-23.6.0-py3-none-any.whl", hash = "sha256:da552f29192b3c2b04d630133f194c98e9f14f0558669d427708e203fea4d0a5"},
+    {file = "towncrier-23.6.0.tar.gz", hash = "sha256:fc29bd5ab4727c8dacfbe636f7fb5dc53b99805b62da1c96b214836159ff70c1"},
 ]
 
 [package.dependencies]
@@ -2098,7 +2098,6 @@ click = "*"
 click-default-group = "*"
 incremental = "*"
 jinja2 = "*"
-setuptools = "*"
 tomli = {version = "*", markers = "python_version < \"3.11\""}
 
 [package.extras]
@@ -2376,4 +2375,4 @@ tomli = ">=2.0.1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "5537a13688f6e75629f02480fc68e6d96f421c0fc74ab10c3a0a94bf64652a0d"
+content-hash = "ad3b5786f5b16a871d5464f83ff8f9d2bc8c0bca00c204b2d7e8dd96faba394f"
