@@ -53,7 +53,7 @@ pre-commit = "^3.2.1"
 tox = "^4.4.8"
 
 [tool.poetry.group.dev.dependencies]
-towncrier = "^22.12.0"
+towncrier = ">=22.12,<24.0"
 flake8 = "^6.0.0"
 pylint = "^2.17.1"
 yapf = ">=0.32,<0.34"
