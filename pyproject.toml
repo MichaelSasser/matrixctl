@@ -95,7 +95,7 @@ fix = true
 show-fixes = true
 ignore-init-module-imports = true
 src = ["matrixctl", "docs"]
-ignore = ["D202", "TCH003", "TCH001", "ANN401"]
+ignore = ["D202", "TCH003", "TCH001", "ANN401", "ANN101"]
 select = [
   "E",  # pycodestyle (Errors)
   "W",  # pycodestyle (Warnings)
@@ -377,6 +377,8 @@ ignore-magic = true
 fail-under = 100
 exclude = ["setup.py", "docs", "build"]
 # ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
+# ignore-regex see: https://github.com/econchick/interrogate/issues?q=is%3Aissue+overload
+ignore-regex = ["request", "exec_async_request"]
 verbose = 1
 # quiet = false
 # whitelist-regex = []
@@ -388,6 +390,9 @@ make_whitelist = true
 min_confidence = 80
 paths = ["matrixctl"]
 sort_by_size = true
+
+[tool.coverage.report]
+exclude_also = ["@t.overload", "pragma: no cover"]
 
 [tool.towncrier]
 package = "matrixctl"
@@ -465,6 +470,10 @@ envlist = precommit,py310,py311,docs,changelog,
 # py310,
 isolated_build = True
 
+[coverage:report]
+exclude_also =
+    @t.overload
+    pragma: no cover
 
 [testenv]
 allowlist_externals = poetry

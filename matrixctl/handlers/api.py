@@ -25,6 +25,7 @@ import sys
 import typing as t
 import urllib.parse
 
+
 from collections.abc import Generator
 from collections.abc import Iterable
 from contextlib import suppress
@@ -41,6 +42,9 @@ from matrixctl.errors import QWorkerExit
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
+HTTP_RETURN_CODE_302: int = 302
+HTTP_RETURN_CODE_404: int = 404
+
 
 logger = logging.getLogger(__name__)
 
@@ -48,12 +52,11 @@ Response = httpx.Response
 
 InputQueueType = asyncio.Queue[tuple[int, "RequestBuilder", httpx.AsyncClient]]
 OutputQueueType = asyncio.Queue[
-    t.Union[tuple[int, httpx.Response], tuple[int, Exception]]
+    tuple[int, httpx.Response] | tuple[int, Exception]
 ]
 
 
 class RequestStrategy(t.NamedTuple):
-
     """Use this NamedTuple as request strategy data.
 
     This NamedTuple is only used in this module.
@@ -69,7 +72,6 @@ class RequestStrategy(t.NamedTuple):
 
 @attr.s(slots=True, auto_attribs=True, repr=False)
 class RequestBuilder:
-
     """Build the URL for an API request."""
 
     token: str = attr.ib()
@@ -79,12 +81,13 @@ class RequestBuilder:
     subdomain: str = "matrix"
     api_path: str = "_synapse/admin"
     api_version: str = "v2"
-    data: t.Optional[dict[str, t.Any]] = None  # just key/value store
-    json: t.Optional[dict[str, t.Any]] = None  # json
-    content: t.Optional[t.Union[str, bytes, Iterable[bytes]]] = None  # bytes
+    data: dict[str, t.Any] | None = None  # just key/value store
+    json: dict[str, t.Any] | None = None  # json
+    content: str | bytes | Iterable[bytes] | None = None  # bytes
     method: str = "GET"
-    params: dict[str, t.Union[str, int]] = {}
-    headers: dict[str, str] = {}  # Cannot be none with MatrixCtl
+    params: dict[str, str | int] = {}  # noqa: RUF012
+    # Cannot be none with MatrixCtl
+    headers: dict[str, str] = {}  # noqa: RUF012
     concurrent_limit: int = 4
     timeout: float = 5.0  # seconds
     success_codes: tuple[int, ...] = (
@@ -171,7 +174,9 @@ class RequestBuilder:
 
 
 def preplan_request_strategy(
-    limit: int, concurrent_limit: int | float, max_step_size: int = 100
+    limit: int,
+    concurrent_limit: float,
+    max_step_size: int = 100,
 ) -> RequestStrategy:
     """Use this functiona as helper for optimizing asynchronous requests.
 
@@ -231,15 +236,22 @@ def preplan_request_strategy(
     logger.debug("offset = %s (negative not allowed)", offset)
 
     if offset < 0:
-        raise InternalResponseError("The offset must always be positive.")
+        msg: str = "The offset must always be positive."
+        raise InternalResponseError(msg)
 
     return RequestStrategy(
-        new_limit, new_step_size, new_limit, offset, new_iterations
+        new_limit,
+        new_step_size,
+        new_limit,
+        offset,
+        new_iterations,
     )
 
 
 def generate_worker_configs(
-    request_config: RequestBuilder, next_token: int, limit: int
+    request_config: RequestBuilder,
+    next_token: int,
+    limit: int,
 ) -> Generator[RequestBuilder, None, None]:
     """Create workers for async requests (minus the already done sync request).
 
@@ -271,11 +283,12 @@ def generate_worker_configs(
 
     """
     if limit - next_token < 0:
-        raise InternalResponseError(
+        msg: str = (
             f"limit - next_token is negative ({limit - next_token}). "
             "Make sure that you not use generate_worker_configs() if it "
             "isn't necessary. For example with total > 100."
         )
+        raise InternalResponseError(msg)
     strategy: RequestStrategy = preplan_request_strategy(
         limit - next_token,  # minus the already queried
         concurrent_limit=request_config.concurrent_limit,
@@ -296,7 +309,9 @@ def generate_worker_configs(
         strategy.step_size,
     )
     for i in range(
-        next_token + 1, strategy.limit + next_token + 1, strategy.step_size
+        next_token + 1,
+        strategy.limit + next_token + 1,
+        strategy.step_size,
     ):
         worker_config = deepcopy(request_config)  # deepcopy needed
         worker_config.params["from"] = i
@@ -304,7 +319,8 @@ def generate_worker_configs(
 
 
 async def async_worker(
-    input_queue: InputQueueType, output_queue: OutputQueueType
+    input_queue: InputQueueType,
+    output_queue: OutputQueueType,
 ) -> None:
     """Use this coro as worker to make (a)synchronous request.
 
@@ -333,7 +349,7 @@ async def async_worker(
             await output_queue.put((idx, output))
 
         # Capture all exceptions and put them into the output queue
-        except Exception as err:  # skipcq: PYL-W0703
+        except Exception as err:  # skipcq: PYL-W0703 # noqa: BLE001
             await output_queue.put((idx, err))
 
         finally:
@@ -341,7 +357,8 @@ async def async_worker(
 
 
 async def group_async_results(
-    input_size: int, output_queue: OutputQueueType
+    input_size: int,
+    output_queue: OutputQueueType,
 ) -> list[Exception | httpx.Response]:
     """Use this coro to group the requests afterwards in a single list.
 
@@ -376,16 +393,18 @@ async def group_async_results(
 async def exec_async_request(
     request_config: Generator[RequestBuilder, None, None],
 ) -> list[httpx.Response]:
-    """Overload for request."""
+    ...
 
 
 @t.overload
-async def exec_async_request(request_config: RequestBuilder) -> httpx.Response:
-    """Overload for request."""
+async def exec_async_request(
+    request_config: RequestBuilder,
+) -> httpx.Response:
+    ...
 
 
 async def exec_async_request(
-    request_config: RequestBuilder | Generator[RequestBuilder, None, None]
+    request_config: RequestBuilder | Generator[RequestBuilder, None, None],
 ) -> httpx.Response | list[httpx.Response]:
     """Use this coro to generate and run workers and group the responses.
 
@@ -435,7 +454,7 @@ async def exec_async_request(
     # Generate task pool, and start collecting data.
     output_queue: OutputQueueType = asyncio.Queue()
     result_task = asyncio.create_task(
-        group_async_results(input_size, output_queue)
+        group_async_results(input_size, output_queue),
     )
     tasks = [
         asyncio.create_task(async_worker(input_queue, output_queue))
@@ -455,10 +474,10 @@ async def exec_async_request(
     errors: list[Exception]
     if isinstance(results, Iterable):
         if errors := [err for err in results if isinstance(err, Exception)]:
-            raise Exception(errors)
+            raise Exception(errors)  # noqa: TRY002
         return t.cast(list[httpx.Response], results)
     if isinstance(results, Exception):  # Not concurrent
-        raise Exception(results)
+        raise Exception(results)  # noqa: TRY004,TRY002
     return t.cast(httpx.Response, results)
 
 
@@ -466,12 +485,14 @@ async def exec_async_request(
 def request(
     request_config: Generator[RequestBuilder, None, None],
 ) -> list[httpx.Response]:
-    """Overload for request."""
+    ...
 
 
 @t.overload
-def request(request_config: RequestBuilder) -> httpx.Response:
-    """Overload for request."""
+def request(
+    request_config: RequestBuilder,
+) -> httpx.Response:
+    ...
 
 
 # flake8: noqa: C901
@@ -540,16 +561,16 @@ def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
     with httpx.Client(http2=True, timeout=request_config.timeout) as client:
         response: httpx.Response = client.request(
             method=request_config.method,
-            data=request_config.data,  # type: ignore
+            data=request_config.data,  # type: ignore # noqa: PGH003
             json=request_config.json,
-            content=request_config.content,  # type: ignore
+            content=request_config.content,  # type: ignore # noqa: PGH003
             url=str(request_config),
             params=request_config.params,
             headers=request_config.headers_with_auth,
             follow_redirects=False,
         )
 
-    if response.status_code == 302:
+    if response.status_code == HTTP_RETURN_CODE_302:
         logger.critical(
             "The api request resulted in an redirect (302). "
             "This indicates, that the API might have changed, or your "
@@ -557,19 +578,19 @@ def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
             "Please make sure your installation of matrixctl is "
             "up-to-date and your vars.yml contains:\n\n"
             "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
-            '_domain: ""'
+            '_domain: ""',
         )
 
         sys.exit(1)
-    if response.status_code == 404:
+    if response.status_code == HTTP_RETURN_CODE_404:
         logger.critical(
             "The server returned an 404 error. This can have multiple causes."
             " One of them is, you try to request a resource, which does not or"
             " no longer exist. Another one is, your API endpoint is disabled."
             " Make sure, that your vars.yml contains the following excessive"
             " long"
-            " line:\n\nmatrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_admin_api_enabled:"
-            " true"
+            " line:\n\nmatrix_nginx_proxy_proxy_matrix_client_api_forwarded"
+            "_location_synapse_admin_api_enabled: true",
         )
         sys.exit(1)
 
@@ -583,7 +604,7 @@ def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
                     "The server rejected your access-token. "
                     "Please make sure, your access-token is correct "
                     "and up-to-date. Your access-token will change every "
-                    "time, you log out."
+                    "time, you log out.",
                 )
                 sys.exit(1)
         raise InternalResponseError(payload=response)
@@ -592,7 +613,8 @@ def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
 
 
 async def _arequest(
-    request_config: RequestBuilder, client: httpx.AsyncClient
+    request_config: RequestBuilder,
+    client: httpx.AsyncClient,
 ) -> httpx.Response:
     """Send an asynchronous request to the synapse API and receive a response.
 
@@ -613,9 +635,9 @@ async def _arequest(
     # There is some weird stuff going on in httpx. It is set to None by default
     response: httpx.Response = await client.request(
         method=request_config.method,
-        data=request_config.data,  # type: ignore
+        data=request_config.data,  # type: ignore # noqa: PGH003
         json=request_config.json,
-        content=request_config.content,  # type: ignore
+        content=request_config.content,  # type: ignore # noqa: PGH003
         url=str(request_config),
         params=request_config.params,
         headers=request_config.headers_with_auth,
@@ -623,7 +645,7 @@ async def _arequest(
         follow_redirects=False,
     )
 
-    if response.status_code == 302:
+    if response.status_code == HTTP_RETURN_CODE_302:
         logger.critical(
             "The api request resulted in an redirect (302). "
             "This indicates, that the API might have changed, or your "
@@ -631,20 +653,20 @@ async def _arequest(
             "Please make sure your installation of matrixctl is "
             "up-to-date and your vars.yml contains:\n\n"
             "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
-            '_domain: ""'
+            '_domain: ""',
         )
-        raise QWorkerExit()  # TODO
-    if response.status_code == 404:
+        raise QWorkerExit  # TODO
+    if response.status_code == HTTP_RETURN_CODE_404:
         logger.critical(
             "The server returned an 404 error. This can have multiple causes."
             " One of them is, you try to request a resource, which does not or"
             " no longer exist. Another one is, your API endpoint is disabled."
             " Make sure, that your vars.yml contains the following excessive"
             " long"
-            " line:\n\nmatrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_admin_api_enabled:"
-            " true"
+            " line:\n\nmatrix_nginx_proxy_proxy_matrix_client_api_forwarded"
+            "_location_synapse_admin_api_enabled: true",
         )
-        raise QWorkerExit()  # TODO
+        raise QWorkerExit  # TODO
 
     logger.debug("JSON response: %s", response.json())
 
@@ -656,9 +678,9 @@ async def _arequest(
                     "The server rejected your access-token. "
                     "Please make sure, your access-token is correct "
                     "and up-to-date. Your access-token will change every "
-                    "time, you log out."
+                    "time, you log out.",
                 )
-                raise QWorkerExit()  # TODO
+                raise QWorkerExit  # TODO
         raise InternalResponseError(payload=response)
     return response
 

@@ -127,11 +127,11 @@ class JinjaUndefined(Undefined):  # type: ignore  # noqa: PGH003
 class YAML:
     """Use the YAML class to read and parse the configuration file(s)."""
 
-    DEFAULT_PATHS: list[Path] = [
+    DEFAULT_PATHS: t.ClassVar[list[Path]] = [
         Path("/etc/matrixctl/config"),
         Path.home() / ".config/matrixctl/config",
     ]
-    JINJA_PREDEFINED: dict[str, str | int] = {
+    JINJA_PREDEFINED: t.ClassVar[dict[str, str | int]] = {
         "home": str(Path.home()),
         "user": getuser(),
         "default_ssh_port": 22,

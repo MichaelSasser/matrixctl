@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 # skipcq: PYL-W0212  # noqa: ERA001
 # pyright: reportPrivateUsage=false
 SubParsersAction = argparse._SubParsersAction  # noqa: SLF001
-SubParserType = Callable[[SubParsersAction], None]
+SubParserType = Callable[[SubParsersAction], None]  # type: ignore # noqa: PGH003
 ParserSetupType = Callable[[], argparse.ArgumentParser]
 
 # global

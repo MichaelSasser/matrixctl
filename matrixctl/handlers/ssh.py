@@ -146,7 +146,7 @@ class SSH:
 
         return response
 
-    def __enter__(self: SSH) -> SSH:
+    def __enter__(self: SSH) -> SSH:  # noqa: PYI034
         """Connect to the SSH server with the "with" statement.
 
         Parameters
