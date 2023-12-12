@@ -1708,20 +1708,20 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "ruamel-yaml"
-version = "0.17.32"
+version = "0.18.5"
 description = "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order"
 optional = false
-python-versions = ">=3"
+python-versions = ">=3.7"
 files = [
-    {file = "ruamel.yaml-0.17.32-py3-none-any.whl", hash = "sha256:23cd2ed620231677564646b0c6a89d138b6822a0d78656df7abda5879ec4f447"},
-    {file = "ruamel.yaml-0.17.32.tar.gz", hash = "sha256:ec939063761914e14542972a5cba6d33c23b0859ab6342f61cf070cfc600efc2"},
+    {file = "ruamel.yaml-0.18.5-py3-none-any.whl", hash = "sha256:a013ac02f99a69cdd6277d9664689eb1acba07069f912823177c5eced21a6ada"},
+    {file = "ruamel.yaml-0.18.5.tar.gz", hash = "sha256:61917e3a35a569c1133a8f772e1226961bf5a1198bea7e23f06a0841dea1ab0e"},
 ]
 
 [package.dependencies]
-"ruamel.yaml.clib" = {version = ">=0.2.7", markers = "platform_python_implementation == \"CPython\" and python_version < \"3.12\""}
+"ruamel.yaml.clib" = {version = ">=0.2.7", markers = "platform_python_implementation == \"CPython\" and python_version < \"3.13\""}
 
 [package.extras]
-docs = ["ryd"]
+docs = ["mercurial (>5.7)", "ryd"]
 jinja2 = ["ruamel.yaml.jinja2 (>=0.2)"]
 
 [[package]]
@@ -2424,4 +2424,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "cf1b63bdb512a0835c118c11a7799927b5857bdce089345869d8faa56a775afe"
+content-hash = "89e229364fb35b43ac62c439d1c31d9b55ade4a5bff60ca475a459573244bff2"
