@@ -55,7 +55,7 @@ tox = "^4.4.8"
 [tool.poetry.group.dev.dependencies]
 towncrier = ">=22.12,<24.0"
 flake8 = "^6.0.0"
-pylint = "^2.17.1"
+pylint = ">=2.17.1,<4.0.0"
 yapf = ">=0.32,<0.41"
 vulture = "^2.7"
 mypy = "^1.1.1"
