@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@ from __future__ import annotations
 import logging
 import tempfile
 
+
 from pathlib import Path
 
 from ansible_runner.interface import Runner
@@ -34,7 +34,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-# ToDo: Make async to get debug output while running
+# TODO: Make async to get debug output while running
 def ansible_run(
     playbook: Path,
     tags: str | None = None,

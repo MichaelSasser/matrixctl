@@ -1,5 +1,5 @@
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import logging
 
+
 from collections.abc import Generator
 from collections.abc import Sequence
 
@@ -32,7 +33,8 @@ logger = logging.getLogger(__name__)
 
 
 def get_colum_length(
-    data: list[list[str]], headers: None | list[list[str]]
+    data: list[list[str]],
+    headers: None | list[list[str]],
 ) -> tuple[int, ...]:
     """Transpose rows and find longest line.
 
@@ -52,22 +54,24 @@ def get_colum_length(
     """
     # Transpose and get max length
     column_length: Generator[int, None, None] = (
-        len(max(n, key=len)) for n in zip(*data)
+        len(max(n, key=len)) for n in zip(*data, strict=True)
     )
     if headers is not None:  # Alternative path, when header is enabled
         # do the same with the header
         column_length_header: Generator[int, None, None] = (
-            len(max(n, key=len)) for n in zip(*headers)
+            len(max(n, key=len)) for n in zip(*headers, strict=True)
         )
         return tuple(
-            max(m, n) for m, n in zip(column_length_header, column_length)
+            max(m, n)
+            for m, n in zip(column_length_header, column_length, strict=True)
         )
 
     return tuple(column_length)
 
 
 def transpose_newlines_to_rows(
-    split: list[list[str]], occurrences: int
+    split: list[list[str]],
+    occurrences: int,
 ) -> Generator[list[str], None, None]:
     """Transpose newlines in new rows.
 
@@ -97,7 +101,8 @@ def transpose_newlines_to_rows(
 
 
 def handle_newlines(
-    part: list[list[str]], newlines: dict[int, int]
+    part: list[list[str]],
+    newlines: dict[int, int],
 ) -> tuple[list[list[str]], set[int]]:
     """Update and insert new lines.
 
@@ -126,14 +131,16 @@ def handle_newlines(
         split = [column.splitlines() for column in part[line_number + offset]]
 
         new_rows: Generator[
-            list[str], None, None
+            list[str],
+            None,
+            None,
         ] = transpose_newlines_to_rows(split, occurrences)
 
         # The first new line will replace the old line
         try:
             part[line_number + offset] = next(new_rows)
         except StopIteration:
-            logger.error("There is a bug in the table handler.")
+            logger.exception("There is a bug in the table handler.")
             return part, inhibit_sep
 
         # The following lines will be inserted
@@ -208,9 +215,10 @@ def format_table_row(line: list[str], max_column_len: tuple[int, ...]) -> str:
         A formatted string, which represents a table row.
 
     """
-    return (
-        f"| {' | '.join(s.ljust(i) for s, i in zip(line, max_column_len))} |"
+    row: str = " | ".join(
+        s.ljust(i) for s, i in zip(line, max_column_len, strict=True)
     )
+    return f"| {row} |"
 
 
 def cells_to_str(part: Sequence[Sequence[str]], none: str) -> list[list[str]]:
@@ -238,8 +246,9 @@ def cells_to_str(part: Sequence[Sequence[str]], none: str) -> list[list[str]]:
 def table(
     table_data: Sequence[Sequence[str]],
     table_headers: Sequence[str] | None = None,
-    sep: bool = True,
     none: str = "-",
+    *,
+    sep: bool = True,
 ) -> Generator[str, None, None]:
     """Create a table from data and a optional headers.
 
@@ -262,7 +271,6 @@ def table(
     """
     if not table_data:
         return
-    # data: list[Sequence[str]] = list(table_data)
     data: list[list[str]] = cells_to_str(table_data, none)
 
     headers: list[list[str]] | None = None
@@ -280,7 +288,9 @@ def table(
     num_of_rows: int = len(data)
 
     logger.debug(
-        "Create new Table with %s x %s Cells.", num_of_columns, num_of_rows
+        "Create new Table with %s x %s Cells.",
+        num_of_columns,
+        num_of_rows,
     )
     logger.debug("Maximal length of text per column %s.", max_column_len)
     logger.debug(
@@ -288,7 +298,8 @@ def table(
         newlines,
     )
     logger.debug(
-        "Inhibit the creation of newlines in rows: %s in data.", inhibit_sep
+        "Inhibit the creation of newlines in rows: %s in data.",
+        inhibit_sep,
     )
 
     # The 2 in (i + 2) gives 1 extra space left and right of the column

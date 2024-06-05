@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@ from __future__ import annotations
 
 import logging
 
+
 from argparse import Namespace
 from collections.abc import Generator
 from enum import Enum
@@ -40,7 +40,6 @@ logger = logging.getLogger(__name__)
 
 @unique
 class Task(Enum):
-
     """Use this enum for describing the maintenance task.
 
     Supported tasks:
@@ -66,7 +65,7 @@ def print_tasks() -> None:  # static data
             ["compress-state", "Compress Synapse State Tables."],
         ],
         ["Task", "Description"],
-        False,
+        sep=False,
     )
     for line in table_generator:
         print(line)
@@ -94,10 +93,12 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     todo = []
     for task in arg.tasks or yaml.get("server", "maintenance", "tasks"):
+        # This loop can only contains a hand full of elements to go through
+
         try:
             todo.append(Task[task.replace("-", "_").upper()])
         except KeyError:  # task is not in enum
-            logger.error(
+            logger.exception(
                 (
                     'The task "%s" is not supported by MatrixCtl. '
                     "Below, you find a list of all available tasks."

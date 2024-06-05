@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,12 +25,12 @@ import logging
 import sys
 import time
 
-from argparse import Namespace
-from typing import NoReturn
 
-from matrixctl.password_helpers import ask_question
+from argparse import Namespace
 
 from .timing import check_point_in_time
+
+from matrixctl.password_helpers import ask_question
 
 
 __author__: str = "Michael Sasser"
@@ -41,7 +40,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-def dialog_input(arg: Namespace) -> dict[str, str | int] | NoReturn:
+def dialog_input(arg: Namespace) -> dict[str, str | int]:
     """Ask questions and sanitize them.
 
     Parameters
@@ -70,7 +69,7 @@ def dialog_input(arg: Namespace) -> dict[str, str | int] | NoReturn:
             print(
                 "You are about to delete *local* message events from the "
                 "Database. As they may represent the only copy of this "
-                "content in existence, you need to confirm this action."
+                "content in existence, you need to confirm this action.",
             )
             if not ask_question("Do you want to continue?"):
                 sys.exit(0)
@@ -81,20 +80,20 @@ def dialog_input(arg: Namespace) -> dict[str, str | int] | NoReturn:
         if not arg.force:
             print(
                 "You are about to delete all message events except the last "
-                "one."
+                "one.",
             )
             if not ask_question("Do you want to continue?"):
                 sys.exit(0)
         request_body["purge_up_to_ts"] = int(round(time.time() * 1000))
     else:
         point_in_time: dict[str, str | int] | None = check_point_in_time(
-            arg.event_or_timestamp
+            arg.event_or_timestamp,
         )
 
         if point_in_time is None:
             logger.critical(
                 "The event/timestamp does not seem to be correct. "
-                "Please check that argument again."
+                "Please check that argument again.",
             )
             sys.exit(1)
         request_body = {**request_body, **point_in_time}

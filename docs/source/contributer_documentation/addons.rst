@@ -99,6 +99,24 @@ deploy
    :undoc-members:
    :show-inheritance:
 
+largest-rooms
+-------------
+
+.. automodule:: matrixctl.addons.largest_rooms.parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.largest_rooms.addon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.largest_rooms.to_table
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 maintenance
 -----------
 

@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add a ``deluser-jitsi`` subcommand to ``matrixctl``."""
+"""Use this module to estimate the largest rooms from the database."""
 
 from __future__ import annotations
 
@@ -32,14 +32,13 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 @subparser
-def subparser_deluser_jitsi(subparsers: _SubParsersAction[t.Any]) -> None:
-    """Create a subparser for the ``matrixctl deluser-jitsi`` command.
+def subparser_rooms(subparsers: _SubParsersAction[t.Any]) -> None:
+    """Create a subparser for the ``matrixctl largest-rooms`` command.
 
     Parameters
     ----------
     subparsers : argparse._SubParsersAction of typing.Any
-        The object which is returned by
-        ``parser.add_subparsers()``.
+        The object which is returned by ``parser.add_subparsers()``.
 
     Returns
     -------
@@ -47,15 +46,16 @@ def subparser_deluser_jitsi(subparsers: _SubParsersAction[t.Any]) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "deluser-jitsi",
-        help="[DEPRECATED] Delete jitsi users",
-        description="This feature will be removed in MatrixCtl v0.13.0",
+        "largest-rooms",
+        help="List an approximation of the 10 largest rooms in the database",
     )
     parser.add_argument(
-        "user",
-        help="The jitsi username of the user to delete",
+        "-j",
+        "--to-json",
+        action="store_true",
+        help="Output the data as JSON",
     )
-    parser.set_defaults(addon="deluser_jitsi")
+    parser.set_defaults(addon="largest_rooms")
 
 
 # vim: set ft=python :

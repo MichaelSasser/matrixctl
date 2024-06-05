@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@ from __future__ import annotations
 
 import logging
 
+
 from collections.abc import Generator
 
 from matrixctl.handlers.table import table
@@ -36,7 +36,8 @@ logger = logging.getLogger(__name__)
 
 
 def to_table(
-    users_list: list[JsonDict], len_domain: int
+    users_list: list[JsonDict],
+    len_domain: int,
 ) -> Generator[str, None, None]:
     """Use this function as helper to pint the users table.
 
@@ -93,7 +94,7 @@ def to_table(
                 admin,
                 guest,
                 display_name,
-            )
+            ),
         )
     return table(
         user_list,
@@ -105,7 +106,7 @@ def to_table(
             "Guest",
             "Display Name",
         ),
-        False,
+        sep=False,
     )
 
 

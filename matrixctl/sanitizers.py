@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +22,7 @@ import logging
 import re
 import typing as t
 
+
 from contextlib import suppress
 from enum import Enum
 from enum import unique
@@ -42,7 +42,6 @@ ROOM_ID_PATTERN: t.Pattern[str] = re.compile(r"^\!.*\:.*\..*$")
 
 @unique
 class MessageType(Enum):
-
     """Use this enum for describing message types.
 
     Supported events:
@@ -164,12 +163,12 @@ def sanitize_event_identifier(
     Examples
     --------
     >>> sanitize_event_identifier(
-    ...    "$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y"
+    ...     "$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y"
     ... )
     '$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y'
 
     >>> sanitize_event_identifier(
-    ...    " $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y "
+    ...     " $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y "
     ... )
     '$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y'
 
@@ -208,14 +207,10 @@ def sanitize_user_identifier(
 
     Examples
     --------
-    >>> sanitize_user_identifier(
-    ...    "@user:domain.tld"
-    ... )
+    >>> sanitize_user_identifier("@user:domain.tld")
     '@user:domain.tld'
 
-    >>> sanitize_user_identifier(
-    ...    " @user:domain.tld "
-    ... )
+    >>> sanitize_user_identifier(" @user:domain.tld ")
     '@user:domain.tld'
 
     >>> sanitize_user_identifier("something invalid")
@@ -253,14 +248,10 @@ def sanitize_room_identifier(
 
     Examples
     --------
-    >>> sanitize_room_identifier(
-    ...    "!room:domain.tld"
-    ... )
+    >>> sanitize_room_identifier("!room:domain.tld")
     '!room:domain.tld'
 
-    >>> sanitize_room_identifier(
-    ...    " !room:domain.tld "
-    ... )
+    >>> sanitize_room_identifier(" !room:domain.tld ")
     '!room:domain.tld'
 
     >>> sanitize_room_identifier("something invalid")

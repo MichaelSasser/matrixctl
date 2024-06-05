@@ -34,8 +34,32 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
+def format_bytes(size: int) -> str:
+    """Format bytes (storage) into a string using the correct prefix.
+
+    Parameters
+    ----------
+    size : int
+        An integer representing some storage size in bytes
+
+    Returns
+    -------
+    formatted : str
+        The size formatted with a prefix of bytes.
+
+    """
+    fsize: float = float(size)
+    power = 2**10
+    n = 0
+    prefix = {0: "", 1: "k", 2: "M", 3: "G", 4: "T"}
+    while fsize > power:
+        fsize /= power
+        n += 1
+    return f"{fsize:1.2f} {prefix[n]+'B'}"
+
+
 def to_table(rooms_list: list[JsonDict]) -> Generator[str, None, None]:
-    """Use this function as helper to pint the room table.
+    """Use this function as helper to pint the largest-room table.
 
     Parameters
     ----------
@@ -49,23 +73,19 @@ def to_table(rooms_list: list[JsonDict]) -> Generator[str, None, None]:
 
     """
 
-    room_list: list[tuple[str, str, str, str]] = []
+    room_list: list[tuple[str, str]] = []
 
     for room in rooms_list:
-        name = room["name"]
-        members: str = str(room["joined_members"])
-        alias: str = room["canonical_alias"]
-        room_id: str = room["room_id"]
+        room_id = room["room_id"]
+        size: int = int(room["estimated_size"])
 
         room_list.append(
             (
-                name,
-                members,
-                alias,
                 room_id,
+                format_bytes(size),
             ),
         )
-    return table(room_list, ("Name", "Members", "Alias", "Room ID"), sep=False)
+    return table(room_list, ("Room ID", "Estimated Size"), sep=False)
 
 
 # vim: set ft=python :

@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 from __future__ import annotations
 
 import logging
+
 
 from argparse import Namespace
 
@@ -66,12 +66,22 @@ def addon(_: Namespace, yaml: YAML) -> int:
         logger.critical("Could not get the server sersion.")
 
         return 1
-    logger.debug(f"{response=}")
+    logger.debug("response: %s", response)
     try:
         print(f"Server Version: {response['server_version']}")
+    except KeyError:
+        logger.exception("MatrixCtl was not able to read the server version.")
+
+    # DEPRECATED
+    # TODO: Remove this feature
+    try:
         print(f"Python Version: {response['python_version']}")
     except KeyError:
-        logger.error("MatrixCtl was not able to read the server version.")
+        logger.warning(
+            "MatrixCtl was not able to read the Python version used by "
+            "Synapse. In newer Synapse versions, this field is missing "
+            "and this warning can be ignored.",
+        )
 
     return 0
 

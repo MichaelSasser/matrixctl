@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,8 +18,11 @@
 
 from __future__ import annotations
 
+import typing as t
+
+
 from datetime import datetime
-from typing import Any
+from datetime import timezone
 
 
 __author__: str = "Michael Sasser"
@@ -28,7 +30,7 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 # TODO: Check if used and for what; type?; docs.
-def human_readable_bool(b: Any) -> str:
+def human_readable_bool(b: t.Any) -> str:
     """Use this helper function to get a "yes" or "no" string from a "bool".
 
     Parameters
@@ -69,7 +71,7 @@ def timestamp_to_dt(ts: str, sep: str = " ") -> str:
 
     """
     return (
-        datetime.fromtimestamp(int(ts) // 1000.0)
+        datetime.fromtimestamp(int(ts) // 1000.0, tz=timezone.utc)
         .strftime("%Y-%m-%d %H:%M:%S")
         .replace(" ", sep)
     )

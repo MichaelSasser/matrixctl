@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 from __future__ import annotations
 
 import typing as t
+
 
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
@@ -46,7 +46,8 @@ def subparser_users(subparsers: _SubParsersAction[t.Any]) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "users", help="Lists all users of the homeserver"
+        "users",
+        help="Lists all users of the homeserver",
     )
     parser.add_argument(
         "limit",
@@ -56,10 +57,16 @@ def subparser_users(subparsers: _SubParsersAction[t.Any]) -> None:
         help="Limit the number of users to show",
     )
     parser.add_argument(
-        "-a", "--all", action="store_true", help="Shows all users"
+        "-a",
+        "--all",
+        action="store_true",
+        help="Shows all users",
     )
     parser.add_argument(
-        "-g", "--with-guests", action="store_true", help="Shows guests"
+        "-g",
+        "--with-guests",
+        action="store_true",
+        help="Shows guests",
     )
     parser.add_argument(
         "-d",
@@ -68,7 +75,10 @@ def subparser_users(subparsers: _SubParsersAction[t.Any]) -> None:
         help="Shows deactivated accounts",
     )
     parser.add_argument(
-        "-j", "--to-json", action="store_true", help="Output the data as JSON"
+        "-j",
+        "--to-json",
+        action="store_true",
+        help="Output the data as JSON",
     )
     parser.set_defaults(addon="users")
 

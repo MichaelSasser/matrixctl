@@ -1,5 +1,5 @@
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,17 +21,19 @@
 
 from __future__ import annotations
 
-import os
 import sys
 
-from datetime import date
+
+from datetime import datetime
+from datetime import timezone
 from pathlib import Path
 
-sys.path.insert(0, os.path.abspath("../"))
-sys.path.insert(0, os.path.abspath("../.."))
 
-# skipcq: FLK-E402
-from matrixctl.package_version import get_version  # noqa: E402
+sys.path.insert(0, str(Path("../").resolve()))
+sys.path.insert(0, str(Path("../..").resolve()))
+
+from matrixctl.package_version import get_version  # skipcq: FLK-E402
+
 
 __version__: str = get_version("matrixctl", Path(__file__).parent) or "Unknown"
 
@@ -39,7 +41,9 @@ __version__: str = get_version("matrixctl", Path(__file__).parent) or "Unknown"
 
 project: str = "MatrixCtl"
 author: str = "Michael Sasser"
-project_copyright: str = f"{date.today().year}, {author}"
+project_copyright: str = (
+    f"{datetime.now(tz=timezone.utc).date().year}, {author}"
+)
 
 # The full version, including alpha/beta/rc tags
 version: str = __version__
@@ -70,9 +74,6 @@ suppress_warnings: list[str] = ["autosectionlabel.*"]
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
-    # "numpy": ("https://www.numpy.org/devdocs", None),
-    # "scipy": ("https://scipy.github.io/devdocs", None),
-    # "matplotlib": ("https://matplotlib.org", None),
 }
 intersphinx_timeout = 10
 

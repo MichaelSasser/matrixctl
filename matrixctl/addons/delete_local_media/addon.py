@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +22,11 @@ import json
 import logging
 import sys
 
+
 from argparse import Namespace
 from datetime import datetime
 from datetime import timedelta
+from datetime import timezone
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
@@ -60,7 +61,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
 
-    timestamp = handle_timestamp(arg.timestamp, arg.force)
+    timestamp = handle_timestamp(arg.timestamp, force=arg.force)
 
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
@@ -79,26 +80,25 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     try:
         response: Response = request(req)
     except InternalResponseError:
-        logger.error("The user could not be promoted or demote.")
+        logger.exception("The user could not be promoted or demote.")
         return 1
 
     try:
         json_response: JsonDict = response.json()
     except json.decoder.JSONDecodeError as e:
         logger.fatal("The JSON response could not be loaded by MatrixCtl.")
-        raise InternalResponseError(f"The response was: {response = }") from e
+        msg = f"The response was: {response = }"
+        raise InternalResponseError(msg) from e
 
     try:
         print(json.dumps(json_response, indent=4))
-        return 0
     except json.decoder.JSONDecodeError:
-        logger.error("Unable to process the response data to JSON.")
+        logger.exception("Unable to process the response data to JSON.")
         return 1
-
     return 0
 
 
-def handle_timestamp(timestamp: int | None, force: bool) -> int:
+def handle_timestamp(timestamp: int | None, *, force: bool) -> int:
     """Ask or generate timestamp.
 
     Parameters
@@ -114,23 +114,25 @@ def handle_timestamp(timestamp: int | None, force: bool) -> int:
         The same timestamp but sanitized, or the timestamp of this exact time.
 
     """
-    ts: float = (datetime.now() - timedelta(days=30)).timestamp()
+    ts: float = (
+        datetime.now(tz=timezone.utc) - timedelta(days=30)
+    ).timestamp()
     if timestamp is None:
         if not force:
             print(
                 "You are about to delete all remote media, that wasn't "
-                "accessed in the last 30 days"
+                "accessed in the last 30 days",
             )
             if not ask_question("Do you want to continue?"):
                 sys.exit(0)
         return int(round(ts * 1000))
     try:
-        dt = datetime.fromtimestamp(float(timestamp) / 1000)
-        logger.info(f"Delete until {dt=}")
+        dt = datetime.fromtimestamp(float(timestamp) / 1000, tz=timezone.utc)
+        logger.info("Delete until %s", dt)
     except (OverflowError, OSError, ValueError):
         logger.fatal(
-            f"The argument timestamp = {timestamp} is not a valid "
-            "timestamp."
+            "The argument timestamp = %s is not a valid timestamp.",
+            timestamp,
         )
     return timestamp
 

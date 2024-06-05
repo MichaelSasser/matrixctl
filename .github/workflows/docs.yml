@@ -28,9 +28,9 @@ jobs:
       working-directory: ./docs
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v4.1.1
       - name: Set up Python 3.10
-        uses: actions/setup-python@v4.5.0
+        uses: actions/setup-python@v5.0.0
         with:
           python-version: "3.10"
 
@@ -42,7 +42,7 @@ jobs:
 
       - name: Load cached venv
         id: cached-poetry-dependencies
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@v3.3.2
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
@@ -58,7 +58,7 @@ jobs:
           make html
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3.9.2
+        uses: peaceiris/actions-gh-pages@v3.9.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/build/html/

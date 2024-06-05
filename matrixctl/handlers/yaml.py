@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,12 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """Read and parse the configuration file with this module."""
+
 from __future__ import annotations
 
 import logging
 import os
 import sys
 import typing as t
+
 
 from collections import ChainMap
 from collections.abc import Iterable
@@ -31,7 +32,7 @@ from pathlib import Path
 
 from jinja2 import Template
 from jinja2 import Undefined
-from ruamel.yaml import YAML as RuamelYAML
+from ruamel.yaml import YAML as RuamelYAML  # noqa: N811
 from ruamel.yaml.error import YAMLError
 
 from matrixctl import __version__
@@ -67,20 +68,22 @@ def tree_printer(tree: t.Any, depth: int = 0) -> None:
 
     """
     if not isinstance(tree, dict):
-        raise ConfigFileError(
-            "There is something wrong with your config file."
-        )
+        msg: str = "There is something wrong with your config file."
+        raise ConfigFileError(msg)
     for key in tree:
-        if isinstance(tree[key], (str, int, float, bool)):
+        if isinstance(tree[key], str | int | float | bool):
             logger.debug(
                 "%s├─── %s: %s",
                 "│ " * depth,
                 key,
                 secrets_filter(tree, key),
             )
-        elif isinstance(tree[key], (list, tuple)):
+        elif isinstance(tree[key], list | tuple):
             logger.debug(
-                "%s├─── %s: [%s]", "│ " * depth, key, ", ".join(tree[key])
+                "%s├─── %s: [%s]",
+                "│ " * depth,
+                key,
+                ", ".join(tree[key]),
             )
         else:
             logger.debug("%s├─┬─ %s:", "│ " * depth, key)
@@ -110,28 +113,26 @@ def secrets_filter(tree: dict[str, str], key: str) -> t.Any:
     )
 
 
-class JinjaUndefined(Undefined):  # type: ignore
-
+class JinjaUndefined(Undefined):  # type: ignore  # noqa: PGH003
     """Use this class as undefined argument in a Jinja2 Template.
 
     The class replaces every undefined template with an enpty string.
 
     """
 
-    def __getattr__(self, _: str) -> t.Any:
+    def __getattr__(self: JinjaUndefined, _: str) -> t.Any:
         """Return en empty string."""
         return ""
 
 
 class YAML:
-
     """Use the YAML class to read and parse the configuration file(s)."""
 
-    DEFAULT_PATHS: list[Path] = [
+    DEFAULT_PATHS: t.ClassVar[list[Path]] = [
         Path("/etc/matrixctl/config"),
         Path.home() / ".config/matrixctl/config",
     ]
-    JINJA_PREDEFINED: dict[str, str | int] = {
+    JINJA_PREDEFINED: t.ClassVar[dict[str, str | int]] = {
         "home": str(Path.home()),
         "user": getuser(),
         "default_ssh_port": 22,
@@ -140,28 +141,31 @@ class YAML:
     __slots__ = ("__yaml", "server")
 
     def __init__(
-        self, paths: Iterable[Path] | None = None, server: str | None = None
+        self: YAML,
+        paths: Iterable[Path] | None = None,
+        server: str | None = None,
     ) -> None:
         logger.debug("Loading Config file(s)")
 
         self.server: str = server or "default"
 
         self.__yaml: Config = self.get_server_config(
-            paths or self.get_paths_to_config(), self.server
+            paths or self.get_paths_to_config(),
+            self.server,
         )
 
         if not self.__yaml:  # dict is empty
             logger.error(
                 "You need to create a configuration file for MatrixCtl. "
                 "Make sure to check out the docs: https://matrixctl.rtfd.io/en"
-                "/latest/getting_started/config_file.html"
+                "/latest/getting_started/config_file.html",
             )
             # TODO: Remove the warning below before releasing v1.0.0.
             if int(__version__[0]) < 1:
                 logger.error(
                     "Since MatixCtl v0.11.0 the configuration file uses the "
                     "yaml format. If you used MatrixCtl before, make sure to "
-                    "update your config file to the yaml format."
+                    "update your config file to the yaml format.",
                 )
 
         logger.debug("Config loaded for Server: %s", self.server)
@@ -233,17 +237,17 @@ class YAML:
         """
         try:
             # The user should be able to use any file and location
-            # skipcq: PTC-W6004
-            with open(path) as stream:
+            with path.open() as stream:
                 template: Template = Template(
-                    stream.read(), undefined=JinjaUndefined
+                    stream.read(),
+                    undefined=JinjaUndefined,
                 )
                 rendered = YAML.JINJA_PREDEFINED | yaml.load(template.render())
                 rendered["home"] = str(Path.home())
                 # Override default return type t.Any with Config
                 return t.cast(Config, yaml.load(template.render(rendered)))
         except YAMLError:
-            logger.error(
+            logger.exception(
                 (
                     "Please check your config file %s. MatrixCtl was "
                     "not able to read it."
@@ -253,7 +257,7 @@ class YAML:
         except FileNotFoundError:
             logger.debug("The config file %s does not exist.", str(path))
         except IsADirectoryError:
-            logger.error(
+            logger.exception(
                 (
                     "The path to the configuration file you entered %s "
                     "seems to be a directory and not a "
@@ -294,7 +298,7 @@ class YAML:
         return server
 
     def get_server_config(
-        self,
+        self: YAML,
         paths: Iterable[Path],
         server: str,
     ) -> Config:
@@ -336,20 +340,20 @@ class YAML:
                             t.cast(MutableMapping[t.Any, t.Any], config)
                             for config in configs
                             if config
-                        )
-                    )
+                        ),
+                    ),
                 ),
             )
             conf["server"] = self.apply_defaults(conf["servers"][server])
-            return conf
 
         except KeyError:
-            logger.error(
-                "The server %s does not exist in your config file.", server
+            logger.exception(
+                "The server %s does not exist in your config file.",
+                server,
             )
             sys.exit(1)
         except TypeError:
-            logger.error(
+            logger.exception(
                 (
                     "The Path(s) to the configuration file you entered %s "
                     "seems to have syntax paroblems. Make sure you use the "
@@ -358,9 +362,10 @@ class YAML:
                 paths,
             )
             sys.exit(1)
+        return conf
 
     # TODO: doctest + fixture
-    def get(self, *keys: str) -> t.Any:
+    def get(self: YAML, *keys: str) -> t.Any:
         """Get a value from a config entry safely.
 
         **Usage**
@@ -397,9 +402,10 @@ class YAML:
                 yaml_walker = yaml_walker[key]
         except KeyError:
             tree: str = ".".join(keys[:-1]).replace(
-                "server", f"servers.{self.server}"
+                "server",
+                f"servers.{self.server}",
             )
-            logger.error(
+            logger.exception(
                 (
                     "Please check your config file. For this operation your "
                     "config file needs to have the entry %s in %s."
@@ -410,21 +416,23 @@ class YAML:
             sys.exit(1)
 
         if not isinstance(yaml_walker, dict):
-            # print(yaml_walker)
             return yaml_walker
 
         # There is currently no scenario where a whole structure would be
         # beneficial.
-        raise ConfigFileError(
+        msg: str = (
             "The key you have asked for seems to be incorrect. "
             "Please make sure you ask for an single entry, "
             "not a entire section."
         )
+        raise ConfigFileError(msg)
 
-    def __repr__(self) -> str:
+    def __repr__(self: YAML) -> str:
+        """Wrap RuamelYAML repr."""
         return repr(self.__yaml)
 
-    def __str__(self) -> str:
+    def __str__(self: YAML) -> str:
+        """Wrap RuamelYAML str."""
         return str(self.__yaml)
 
 

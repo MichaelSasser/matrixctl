@@ -1,5 +1,5 @@
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 from __future__ import annotations
 
 import typing as t
+
 
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
@@ -45,7 +46,8 @@ def subparser_reports(subparsers: _SubParsersAction[t.Any]) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "reports", help="Lists reported events"
+        "reports",
+        help="Lists reported events",
     )
     parser.add_argument(
         "limit",
@@ -55,7 +57,10 @@ def subparser_reports(subparsers: _SubParsersAction[t.Any]) -> None:
         help="Limit the number of events, that will be shown",
     )
     parser.add_argument(
-        "-j", "--to-json", action="store_true", help="Output the data as JSON"
+        "-j",
+        "--to-json",
+        action="store_true",
+        help="Output the data as JSON",
     )
     parser.set_defaults(addon="reports")
 

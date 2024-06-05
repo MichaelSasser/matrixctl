@@ -106,9 +106,9 @@ If you don't have a config file head over to the :ref:`Config File` chapter.
 
 
 .. note:: To be able to use the admin API, you need to have
-          ``matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to_domain: ""``
+          ``matrix_static_files_container_labels_base_domain_enabled: true``
           and
-          ``matrix_nginx_proxy_proxy_matrix_client_api_forwarded_location_synapse_admin_api_enabled: true``
+          ``matrix_synapse_container_labels_public_client_synapse_admin_api_enabled: true``
           in your ``vars.yml file. This will stop the playbook from setting
           up a redirect ``matrix.yourdomain.tld`` to
           ``element.yourdomain.tld``

@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,8 +22,6 @@ import getpass
 import logging
 import sys
 
-from typing import NoReturn
-
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +30,7 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def create_user(user: str, admin: bool | None = None) -> str | NoReturn:
+def create_user(user: str, admin: bool | None = None) -> str:
     """Ask the user to create a password.
 
     The user will be asked twice for a password. After
@@ -75,7 +72,7 @@ def create_user(user: str, admin: bool | None = None) -> str | NoReturn:
         sys.exit(1)
 
 
-def ask_password() -> str | NoReturn:
+def ask_password() -> str:
     """Ask the user to create a password.
 
     The user will be asked twice for a password. After
@@ -97,7 +94,7 @@ def ask_password() -> str | NoReturn:
 
     while True:
         passwd = getpass.getpass()
-        if passwd == "":
+        if not passwd:
             print("The password must not be empty!")
             continue
         passwd2 = getpass.getpass("Password (again): ")

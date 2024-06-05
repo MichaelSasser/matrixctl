@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,10 +18,10 @@
 
 from __future__ import annotations
 
-from typing import Any
+import typing as t
 
 
-JsonDict = dict[str, Any]
+JsonDict = dict[str, t.Any]
 
 
 # vim: set ft=python :

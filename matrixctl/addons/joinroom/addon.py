@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 from __future__ import annotations
 
 import logging
+
 
 from argparse import Namespace
 
@@ -65,7 +65,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     if arg.room[0] not in {"!", "#"} or ":" not in arg.room:
         logger.error(
             "Make sure, to use the correct room identifier or alias e.g. "
-            "!636q39766251:domain.tld or #myroom:domain.tld"
+            "!636q39766251:domain.tld or #myroom:domain.tld",
         )
     if not arg.user.startswith("@"):
         arg.user = f"@{arg.user}"
@@ -88,7 +88,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     try:
         request(request_config)
     except InternalResponseError:
-        logger.error("Unknown Error. The user was not joined to the room.")
+        logger.exception("Unknown Error. The user was not joined to the room.")
 
     return 0
 

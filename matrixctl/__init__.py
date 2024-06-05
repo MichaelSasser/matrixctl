@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +16,7 @@
 # flake8: noqa
 # pylint: disable:undefined-variable
 
-"""Use MatrixCtl to control, manage, provision and deploy your homeserver. """
+"""Use MatrixCtl to control, manage, provision and deploy your homeserver."""
 
 from __future__ import annotations
 

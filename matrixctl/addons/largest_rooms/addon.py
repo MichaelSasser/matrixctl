@@ -14,19 +14,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add the ``upload`` subcommand to ``matrixctl``."""
+"""Use this module to list an approximation of the largest rooms."""
 
 from __future__ import annotations
 
+import json
 import logging
 
 
 from argparse import Namespace
-from mimetypes import MimeTypes
-from pathlib import Path
+
+from .to_table import to_table
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
+from matrixctl.handlers.api import Response
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
@@ -35,11 +37,14 @@ from matrixctl.typehints import JsonDict
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
+DEFAULT_LIMIT: int = 100
+
+
 logger = logging.getLogger(__name__)
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
-    """Upload a file or image to the matrix instance.
+    """Generate a table of the top 10 matrix rooms in terms of DB storage.
 
     Parameters
     ----------
@@ -54,41 +59,50 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    file_path: Path = Path(arg.file).absolute()
-    logger.debug("upload file_path: %s", file_path)
-    mime_types: MimeTypes = MimeTypes()
-    file_type: str = str(mime_types.guess_type(file_path.name)[0])
-    logger.debug("upload file_type: %s", file_type)
-    try:
-        with file_path.open("rb") as fp:
-            file: bytes = fp.read()
-    except FileNotFoundError:
-        print("No such file found. Please check your filepath.")
-        return 1
-
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
         domain=yaml.get("server", "api", "domain"),
-        path="upload/",
-        api_path="_matrix/media",
-        method="POST",
-        api_version="r0",
-        headers={"Content-Type": file_type},
-        content=file,
+        path="statistics/database/rooms",
+        api_version="v1",
     )
+
     try:
-        response: JsonDict = request(req).json()
+        response: Response = request(req)
     except InternalResponseError:
-        logger.exception("The file was not uploaded.")
+        logger.critical("Could not get top 10 rooms in terms of DB storage.")
         return 1
-    try:
-        print("Content URI: ", response["content_uri"])
-    except KeyError as e:
-        msg: str = (
-            f"Upload was successful, but no content_uri was found. {response}"
-        )
-        raise InternalResponseError(msg) from e
+    response_json: JsonDict = response.json()
+
+    generate_output(
+        response_json["rooms"],
+        to_json=arg.to_json,
+    )
+
     return 0
+
+
+def generate_output(rooms: list[JsonDict], *, to_json: bool) -> None:
+    """Use this helper to generate the output.
+
+    Parameters
+    ----------
+    rooms : list of matrixctl.typehints.JsonDict
+        A list of rooms from the API.
+    to_json : bool
+        ``True``, when the output should be in the JSON format.
+        ``False``, when the output should be a table.
+
+    Returns
+    -------
+    None
+
+    """
+    if to_json:
+        print(json.dumps(rooms, indent=4))
+    else:
+        for line in to_table(rooms):
+            print(line)
+        print(f"Total number of rooms: {len(rooms)}")
 
 
 # vim: set ft=python :

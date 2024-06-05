@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,12 +18,14 @@
 
 from __future__ import annotations
 
-import datetime
 import logging
 import sys
+import typing as t
+
 
 from collections.abc import Generator
-from typing import Any
+from datetime import datetime
+from datetime import timezone
 
 from matrixctl.handlers.table import table
 from matrixctl.print_helpers import human_readable_bool
@@ -39,7 +40,9 @@ logger = logging.getLogger(__name__)
 
 
 def make_human_readable(
-    k: str, user_dict: dict[str, str], len_domain: int
+    k: str,
+    user_dict: dict[str, str],
+    len_domain: int,
 ) -> tuple[str, str]:
     """Make a key/value pair of a ``user`` (line) human readable, by modifying.
 
@@ -51,7 +54,7 @@ def make_human_readable(
     ----------
     k : str
         The key
-    user_dict : `dict` [`str`, `Any`]
+    user_dict : `dict` [`str`, `typing.Any`]
         The line as dict, a JSON string which was converted to a Python
         dictionary. (This is not a ``Collections.UserDict``)
     len_domain : int
@@ -77,14 +80,24 @@ def make_human_readable(
     elif k.endswith("_ts"):
         try:
             value = str(
-                datetime.datetime.fromtimestamp(float(user_dict[k]))
-            )  # UTC?
+                datetime.fromtimestamp(float(user_dict[k]), tz=timezone.utc),
+            )
+        except ValueError:  # Some of them are in ms now
+            value = str(
+                datetime.fromtimestamp(
+                    float(user_dict[k]) / 1000.0,
+                    tz=timezone.utc,
+                ),
+            )
         except TypeError:
             value = "-"
     elif k.endswith("_at"):
         value = str(
-            datetime.datetime.fromtimestamp(float(user_dict[k]) / 1000.0)
-        )  # UTC?
+            datetime.fromtimestamp(
+                float(user_dict[k]) / 1000.0,
+                tz=timezone.utc,
+            ),
+        )
 
     else:
         value = user_dict[k]
@@ -96,7 +109,8 @@ def make_human_readable(
 
 
 def generate_user_tables(
-    user_dict: dict[str, Any], len_domain: int
+    user_dict: dict[str, t.Any],
+    len_domain: int,
 ) -> list[list[tuple[str, str]]]:
     """Generate a main user table and threepid user tables.
 
@@ -110,7 +124,7 @@ def generate_user_tables(
 
     Parameters
     ----------
-    user_dict : `dict` [`str`, `Any`]
+    user_dict : `dict` [`str`, `typing.Any`]
         The line as dict, a JSON string which was converted to a Python
         dictionary. (This is not a ``Collections.UserDict``)
     len_domain : int
@@ -133,7 +147,8 @@ def generate_user_tables(
         if k == "threepids":
             for tk in user_dict[k]:
                 ret: list[list[tuple[str, str]]] = generate_user_tables(
-                    tk, len_domain
+                    tk,
+                    len_domain,
                 )
                 table_.append(ret[0])
 
@@ -145,7 +160,8 @@ def generate_user_tables(
 
 
 def to_table(
-    user_dict: JsonDict, len_domain: int
+    user_dict: JsonDict,
+    len_domain: int,
 ) -> Generator[str, None, None]:
     """Use this function as helper to pint the room table.
 

@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,6 +24,7 @@ room Matrix room.
 from __future__ import annotations
 
 import logging
+
 
 from argparse import Namespace
 
@@ -74,7 +74,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     try:
         request(req)
     except InternalResponseError:
-        logger.error("The user could not be promoted or demote.")
+        logger.exception("The user could not be promoted or demote.")
         return 1
 
     return 0

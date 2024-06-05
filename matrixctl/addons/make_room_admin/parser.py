@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 from __future__ import annotations
 
 import typing as t
+
 
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
@@ -55,7 +55,9 @@ def subparser_make_room_admin(subparsers: _SubParsersAction[t.Any]) -> None:
     )
     parser.add_argument("room", help="The room alias or identifier")
     parser.add_argument(
-        "user", nargs="?", help="The user identifier of the user to promote"
+        "user",
+        nargs="?",
+        help="The user identifier of the user to promote",
     )
     parser.set_defaults(addon="make_room_admin")
 

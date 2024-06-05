@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 from __future__ import annotations
 
 import typing as t
+
 
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
@@ -46,12 +46,16 @@ def subparser_user(subparsers: _SubParsersAction[t.Any]) -> None:
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "user", help="Get information about a specific user"
+        "user",
+        help="Get information about a specific user",
     )
     parser.add_argument("user", help="The username of the user")
 
     parser.add_argument(
-        "-j", "--to-json", action="store_true", help="Output the data as JSON"
+        "-j",
+        "--to-json",
+        action="store_true",
+        help="Output the data as JSON",
     )
     parser.set_defaults(addon="user")
 

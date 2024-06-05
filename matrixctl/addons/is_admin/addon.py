@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@ from __future__ import annotations
 
 import json
 import logging
+
 
 from argparse import Namespace
 
@@ -70,7 +70,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     try:
         response: Response = request(req)
     except InternalResponseError:
-        logger.error("The user could not be checked.")
+        logger.exception("The user could not be checked.")
         return 1
 
     response_json: JsonDict = response.json()

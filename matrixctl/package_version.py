@@ -1,5 +1,5 @@
 # matrixctl
-# Copyright (c) 2021  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2021-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ from __future__ import annotations
 import re
 import typing as t
 
+
 from contextlib import suppress
 from pathlib import Path
 
@@ -49,7 +50,6 @@ VERSION_PATTERN: str = (
     r"(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?\s*[\"']\s*$"
 )
 # Fast approx. for simpel versions
-# VERSION_PATTERN: str = r"^\s*version\s*=\s*[\"']\s*([-.\w]{3,})\s*[\"']\s*$"
 
 
 def __from_pyproject(file: Path) -> str | None:
@@ -82,7 +82,6 @@ def __from_pyproject(file: Path) -> str | None:
                     f"{f'+{version.group(5)}' if version.group(5) else ''}"
                 )
                 # Fast approx.
-                # return version.group(1).strip()
     return None
 
 
@@ -103,10 +102,9 @@ def __from_metadata(name: str) -> str | None:
     """
     import importlib.metadata as importlib_metadata  # Python >= 3.8
 
-    version: str | None = None
     with suppress(importlib_metadata.PackageNotFoundError):
-        version = importlib_metadata.version(name).strip()
-    return version
+        return importlib_metadata.version(name).strip()
+    return None
 
 
 def get_version(name: str, file: str | Path) -> str | None:

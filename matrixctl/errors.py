@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,14 +18,15 @@
 
 from __future__ import annotations
 
+import typing as t
+
+
 from sys import version_info
-from typing import Any
 
 from pkg_resources import get_distribution
 
 
 class Error(Exception):
-
     """Use this exception class as base error for the project."""
 
     BUGMSG: str = (
@@ -42,7 +42,9 @@ class Error(Exception):
     )
 
     def __init__(
-        self, message: str | None = None, payload: Any = None
+        self: Error,
+        message: str | None = None,
+        payload: t.Any = None,
     ) -> None:  # pylint: disable=keyword-arg-before-vararg
         """Use this error like a normal error in your day-to-day programming.
 
@@ -64,7 +66,7 @@ class Error(Exception):
 
         """
         self.message = message
-        self.payload: Any = payload
+        self.payload: t.Any = payload
         msg: str = self.__class__.BUGMSG
 
         if message:
@@ -73,18 +75,15 @@ class Error(Exception):
         super().__init__(msg)
 
 
-class ExitQWorker(Exception):
-
+class QWorkerExit(Exception):  # noqa: N818
     """Use this exception when you want to exit an Queue worker."""
 
 
 class ConfigFileError(Error):
-
     """Use this exception class for everything related to the config file."""
 
 
 class InternalResponseError(Error):  # TODO: rename
-
     """Use this exception class for everything else."""
 
 

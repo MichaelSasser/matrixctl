@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "matrixctl"
-version = "0.12.0-beta.2"
+version = "0.12.0"
 description = "Control, manage, provision and deploy matrix homeservers."
 
 license = "GPL-3.0-or-later"
@@ -8,7 +8,7 @@ readme = "README.md"
 repository = "https://github.com/MichaelSasser/matrixctl"
 homepage = "https://michaelsasser.github.io/matrixctl/index.html"
 documentation = "https://michaelsasser.github.io/matrixctl/index.html"
-keywords = ['Matrix', 'Synapse', 'Docker', 'OCI-Container']
+keywords = ['Matrix', 'Synapse', 'Docker']
 authors = ["Michael Sasser <Michael@MichaelSasser.org>"]
 maintainers = ["Michael Sasser <Michael@MichaelSasser.org>"]
 # Look here for all Classifiers:
@@ -27,67 +27,156 @@ classifiers = [
   "Operating System :: Unix",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Topic :: Utilities",
   "Typing :: Typed",
 ]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-GitPython = "^3.1.28"
+GitPython = "^3.1.43"
 coloredlogs = "^15.0.1"
-paramiko = "^2.11.0"
-"ruamel.yaml" = "^0.17.21"
-ansible-runner = ">=1.4.7,<3.0.0"
-attrs = "^22.1.0"
-xdg = "^5.1.1"
-Jinja2 = "^3.1.2"
-psycopg = "^3.1.3"
-httpx = { version = "^0.23", extras = ["http2"] }
+paramiko = "^3.4.0"
+"ruamel.yaml" = ">=0.18.6"
+ansible-runner = "^2.4.0"
+attrs = ">=23.2.0"
+xdg = "^6.0.0"
+Jinja2 = "^3.1.4"
+psycopg = "^3.1.19"
+httpx = { version = ">=0.27.0", extras = ["http2"] }
 sshtunnel = "^0.4.0"
 
-# Optional:
-sphinx = { version = "^5.2.3", optional = true }
-sphinx-autodoc-typehints = { version = "^1.19.4", optional = true }
-sphinxcontrib-programoutput = { version = "^0.17", optional = true }
-numpydoc = { version = "^1.5.0", optional = true }
-sphinx_rtd_theme = { version = "^1.0.0", optional = true }
+[tool.poetry.group.test.dependencies]
+pytest = "^8.2.2"
+coverage = "^7.5.3"
+pre-commit = "^3.7.1"
+tox = "^4.15.0"
 
-[tool.poetry.extras]
-docs = [
-  "sphinx",
-  "sphinx_rtd_theme",
-  "sphinx-autodoc-typehints",
-  "numpydoc",
-  "sphinxcontrib-programoutput",
-]
-
-[tool.poetry.dev-dependencies]
-pre-commit = "^3.2.0"
-pytest = "^7.2.2"
-flake8 = "^5.0.4"
-neovim = "^0.3.1"
-pydocstyle = "^6.2.3"
-pylint = "^2.17.1"
-pycodestyle = "^2.9.1"
-yapf = "^0.32.0"
-vulture = "^2.6"
-mypy = "^1.1"
-coverage = "^7.2"
-interrogate = "^1.5.0"
-towncrier = "^22.12.0"
-tox = "^4.4.7"
-black = { version = "^23.1", allow-prereleases = true }
-isort = { version = "^5.11.4", extras = ["pyproject"] }
-flake8-bugbear = "^23.3.12"
+[tool.poetry.group.dev.dependencies]
+towncrier = ">=23.11.0"
+flake8 = "^7.0.0"
+pylint = ">=3.2.2"
+yapf = ">=0.40.2"
+vulture = "^2.11"
+mypy = "^1.10.0"
+interrogate = "^1.7.0"
+flake8-bugbear = "^24.4.26"
+pynvim = "^0.5.0"
+black = { version = "^24.4.2", allow-prereleases = true }
+isort = { version = "^5.13.2", extras = ["pyproject"] }
 
 # typesheds
 types-pkg-resources = "^0.1.3"
-types-paramiko = "^2.12.0"
+types-paramiko = "^3.4.0.20240423"
 types-attrs = "^19.1.0"
 types-Jinja2 = "^2.11.9"
+ruff = ">=0.4.8"
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+sphinx = ">=6.1.3,<8.0.0"
+sphinx-autodoc-typehints = "^1.22"
+sphinxcontrib-programoutput = "^0.17"
+numpydoc = "^1.5.0"
+sphinx_rtd_theme = ">=1.2,<3.0"
 
 [tool.poetry.scripts]
 matrixctl = "matrixctl.__main__:main"
+
+[tool.ruff]
+line-length = 79
+cache-dir = "~/.cache/ruff"
+fix = true
+src = ["matrixctl", "docs"]
+show-fixes = true
+target-version = "py310"
+
+exclude = [
+  ".git",
+  ".mypy_cache",
+  ".nox",
+  ".pytype",
+  ".ruff_cache",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "venv",
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+task-tags = ["TODO", "FIXME", "WARN", "SEC", "SECURITY", "INFO", "NOTE"]
+ignore = [
+  "D202",
+  "D203",
+  "TCH003",
+  "TCH001",
+  "ANN401",
+  "ANN101",
+  "T201",    # Print statements
+  "TD002",   # Missing TODO author
+  "TD003",   # Missing TODO issue link
+  "FIX002",  # Unresolved TODO
+  "PERF203", # Try/except in loop
+]
+select = ["ALL"]
+
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true
+suppress-dummy-args = true
+# suppress-none-returning = true
+
+[tool.ruff.lint.flake8-bandit]
+check-typed-exception = true
+
+[tool.ruff.lint.flake8-copyright]
+author = "Michael Sasser <Michael@MichaelSasser.org>"
+min-file-size = 512
+
+[tool.ruff.lint.flake8-import-conventions]
+banned-from = ["typing"]
+
+[tool.ruff.lint.flake8-import-conventions.extend-aliases]
+"typing" = "t"
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.mccabe]
+# Unlike Flake8, default to a complexity level of 10.
+max-complexity = 10
+
+[tool.ruff.lint.isort]
+force-single-line = true
+lines-after-imports = 2
+constants = ["__version__"]
+forced-separate = ["tests", "matrixctl"]
+required-imports = ["from __future__ import annotations"]
+known-first-party = ["matrixctl"]
+lines-between-types = 2
+known-third-party = [
+  "pytest",
+  "paramiko",
+  "argcomplete",
+  "coloredlogs",
+  "sphinx_rtd_theme",
+  "git",
+  "httpx",
+  "attr",
+  "ansible_runner",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+"docs/*" = ["INP001"]
 
 [tool.black]
 line-length = 79
@@ -110,7 +199,7 @@ exclude = '''
 '''
 
 [tool.mypy]
-python_version = 3.10
+python_version = "3.11"
 platform = "linux"
 ignore_missing_imports = true
 strict_equality = true
@@ -130,7 +219,7 @@ exclude = ["**/__pycache__"]
 reportMissingImports = true
 reportMissingTypeStubs = false
 
-pythonVersion = "3.10"
+pythonVersion = "3.11"
 pythonPlatform = "Linux"
 typeCheckingMode = "basic"
 
@@ -198,6 +287,8 @@ ignore-magic = true
 fail-under = 100
 exclude = ["setup.py", "docs", "build"]
 # ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
+# ignore-regex see: https://github.com/econchick/interrogate/issues?q=is%3Aissue+overload
+ignore-regex = ["request", "exec_async_request"]
 verbose = 1
 # quiet = false
 # whitelist-regex = []
@@ -209,6 +300,9 @@ make_whitelist = true
 min_confidence = 80
 paths = ["matrixctl"]
 sort_by_size = true
+
+[tool.coverage.report]
+exclude_also = ["@t.overload", "pragma: no cover"]
 
 [tool.towncrier]
 package = "matrixctl"
@@ -282,10 +376,13 @@ filterwarnings =
 
 
 [tox]
-envlist = precommit,py310,docs,changelog,
-# py310,
+envlist = precommit,py310,py311,py312,docs,changelog,
 isolated_build = True
 
+[coverage:report]
+exclude_also =
+    @t.overload
+    pragma: no cover
 
 [testenv]
 allowlist_externals = poetry
@@ -294,46 +391,39 @@ allowlist_externals = poetry
 setenv =
     VIRTUALENV_NO_DOWNLOAD=1
 extras = {env:TOX_AP_TEST_EXTRAS:tests}
-commands = poetry run pytest {posargs}
-
-
-[testenv:py310]
-allowlist_externals = poetry
-# Python 3.6+ has a number of compile-time warnings on invalid string escapes.
-# PYTHONWARNINGS=d and --no-compile below make them visible during the Tox run.
-basepython = python3.10
-install_command = pip install --no-compile {opts} {packages}
-setenv =
-    PYTHONWARNINGS=d
-extras = {env:TOX_AP_TEST_EXTRAS:tests}
-commands = poetry run coverage run -m pytest --doctest-modules {posargs}
-
+commands =
+  poetry install -v
+  poetry run coverage run -m pytest --doctest-modules {posargs}
 
 [testenv:precommit]
 allowlist_externals = poetry
-basepython = python3.10
+basepython = python3.12
 skip_install = true
 deps =
     pre-commit
 passenv = HOMEPATH  # needed on Windows
 commands =
-    poetry run pre-commit run --all-files
+  poetry install -v
+  poetry run pre-commit run --all-files
 
 
 [testenv:docs]
 allowlist_externals = poetry
 # Keep basepython in sync with gh-actions and .readthedocs.yml.
-basepython = python3.10
+basepython = python3.12
 # extras = docs, func
 # currently disable -n
 commands =
-    poetry run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html
+  poetry install --with docs -v
+  poetry run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html
 
 
 [testenv:changelog]
 allowlist_externals = poetry
-basepython = python3.10
+basepython = python3.12
 # deps = towncrier
 skip_install = true
-commands = poetry run towncrier --draft
+commands =
+  poetry install -v
+  poetry run towncrier --draft
 """

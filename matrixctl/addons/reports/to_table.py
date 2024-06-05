@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # matrixctl
-# Copyright (c) 2020  Michael Sasser <Michael@MichaelSasser.org>
+# Copyright (c) 2020-2023  Michael Sasser <Michael@MichaelSasser.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@ from __future__ import annotations
 
 import logging
 
+
 from collections.abc import Generator
 from shutil import get_terminal_size
 from textwrap import TextWrapper
@@ -33,6 +33,19 @@ from matrixctl.typehints import JsonDict
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
+TABLE_HEADERS: tuple[str, ...] = (
+    "ID",
+    "Date",
+    "Time",
+    "Score",
+    "Canonical Alias",
+    "Room Name",
+    "Room ID",
+    "Event ID",
+    "Defendant",
+    "Plaintiff",
+    "Reason",
+)
 
 logger = logging.getLogger(__name__)
 
@@ -84,7 +97,7 @@ def to_table(events_raw: list[JsonDict]) -> Generator[str, None, None]:
     """
     events: list[tuple[str, str]] = []
 
-    logger.debug(f"Terminal width = {get_terminal_size().columns}")
+    logger.debug("Terminal width: %s", get_terminal_size().columns)
 
     wrapper_reason = TextWrapper(
         width=get_terminal_size().columns - 20,  # is const.
@@ -102,21 +115,7 @@ def to_table(events_raw: list[JsonDict]) -> Generator[str, None, None]:
 
         events.append(
             (
-                "\n".join(
-                    (
-                        "ID",
-                        "Date",
-                        "Time",
-                        "Score",
-                        "Canonical Alias",
-                        "Room Name",
-                        "Room ID",
-                        "Event ID",
-                        "Defendant",
-                        "Plaintiff",
-                        "Reason",
-                    )
-                ),
+                "\n".join(TABLE_HEADERS),
                 (
                     f"{event['id']}\n"
                     f"{dt}\n"
@@ -129,7 +128,7 @@ def to_table(events_raw: list[JsonDict]) -> Generator[str, None, None]:
                     f"{event['user_id']}\n"
                     f"{wrapper_reason.fill(text=event['reason'])}"
                 ),
-            )
+            ),
         )
     return table(events)
 
