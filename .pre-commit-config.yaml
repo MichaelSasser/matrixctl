@@ -19,7 +19,7 @@ repos:
       # types.
       - id: check-builtin-literals
       # Forbid files which have a UTF-8 byte-order marker
-      - id: check-byte-order-marker
+      - id: fix-byte-order-marker
       # Check for files with names that would conflict on a case-insensitive
       # filesystem like MacOS HFS+ or Windows FAT.
       - id: check-case-conflict
