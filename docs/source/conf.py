@@ -32,7 +32,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path("../").resolve()))
 sys.path.insert(0, str(Path("../..").resolve()))
 
-from matrixctl.package_version import get_version  # noqa: E402
+from matrixctl.package_version import get_version  # skipcq: FLK-E402
 
 
 __version__: str = get_version("matrixctl", Path(__file__).parent) or "Unknown"

@@ -392,15 +392,13 @@ async def group_async_results(
 @t.overload
 async def exec_async_request(
     request_config: Generator[RequestBuilder, None, None],
-) -> list[httpx.Response]:
-    ...
+) -> list[httpx.Response]: ...
 
 
 @t.overload
 async def exec_async_request(
     request_config: RequestBuilder,
-) -> httpx.Response:
-    ...
+) -> httpx.Response: ...
 
 
 async def exec_async_request(
@@ -484,15 +482,13 @@ async def exec_async_request(
 @t.overload
 def request(
     request_config: Generator[RequestBuilder, None, None],
-) -> list[httpx.Response]:
-    ...
+) -> list[httpx.Response]: ...
 
 
 @t.overload
 def request(
     request_config: RequestBuilder,
-) -> httpx.Response:
-    ...
+) -> httpx.Response: ...
 
 
 # flake8: noqa: C901
@@ -540,7 +536,7 @@ def request(
     return asyncio.run(gen_async_request())
 
 
-def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
+def _request(request_config: RequestBuilder) -> httpx.Response:
     """Send an synchronous request to the synapse API and receive a response.
 
     Attributes
@@ -589,8 +585,8 @@ def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
             " no longer exist. Another one is, your API endpoint is disabled."
             " Make sure, that your vars.yml contains the following excessive"
             " long"
-            " line:\n\nmatrix_nginx_proxy_proxy_matrix_client_api_forwarded"
-            "_location_synapse_admin_api_enabled: true",
+            " line:\n\nmatrix_synapse_container_labels_public_client_synapse"
+            "_admin_api_enabled: true",
         )
         sys.exit(1)
 
@@ -663,8 +659,8 @@ async def _arequest(
             " no longer exist. Another one is, your API endpoint is disabled."
             " Make sure, that your vars.yml contains the following excessive"
             " long"
-            " line:\n\nmatrix_nginx_proxy_proxy_matrix_client_api_forwarded"
-            "_location_synapse_admin_api_enabled: true",
+            " line:\n\nmatrix_synapse_container_labels_public_client_synapse"
+            "_admin_api_enabled: true",
         )
         raise QWorkerExit  # TODO
 

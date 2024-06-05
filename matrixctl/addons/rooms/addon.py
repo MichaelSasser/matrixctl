@@ -71,9 +71,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         path="rooms",
         api_version="v1",
         params={
-            "limit": arg.limit
-            if 0 < arg.limit < DEFAULT_LIMIT
-            else DEFAULT_LIMIT,
+            "limit": (
+                arg.limit if 0 < arg.limit < DEFAULT_LIMIT else DEFAULT_LIMIT
+            ),
         },
         concurrent_limit=yaml.get("server", "api", "concurrent_limit"),
     )

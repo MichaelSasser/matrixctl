@@ -23,9 +23,6 @@ import logging
 import sys
 
 
-from typing import NoReturn
-
-
 logger = logging.getLogger(__name__)
 
 
@@ -33,7 +30,7 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def create_user(user: str, admin: bool | None = None) -> str | NoReturn:
+def create_user(user: str, admin: bool | None = None) -> str:
     """Ask the user to create a password.
 
     The user will be asked twice for a password. After
@@ -75,7 +72,7 @@ def create_user(user: str, admin: bool | None = None) -> str | NoReturn:
         sys.exit(1)
 
 
-def ask_password() -> str | NoReturn:
+def ask_password() -> str:
     """Ask the user to create a password.
 
     The user will be asked twice for a password. After

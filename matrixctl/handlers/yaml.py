@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """Read and parse the configuration file with this module."""
+
 from __future__ import annotations
 
 import logging

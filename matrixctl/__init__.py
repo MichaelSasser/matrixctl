@@ -16,7 +16,7 @@
 # flake8: noqa
 # pylint: disable:undefined-variable
 
-"""Use MatrixCtl to control, manage, provision and deploy your homeserver. """
+"""Use MatrixCtl to control, manage, provision and deploy your homeserver."""
 
 from __future__ import annotations
 

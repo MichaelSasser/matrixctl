@@ -27,7 +27,6 @@ import time
 
 
 from argparse import Namespace
-from typing import NoReturn
 
 from .timing import check_point_in_time
 
@@ -41,7 +40,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-def dialog_input(arg: Namespace) -> dict[str, str | int] | NoReturn:
+def dialog_input(arg: Namespace) -> dict[str, str | int]:
     """Ask questions and sanitize them.
 
     Parameters

@@ -74,9 +74,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         return 1
 
     # Sanitize message_type
-    message_type: MessageType | t.Literal[
-        False
-    ] | None = sanitize_message_type(arg.type)
+    message_type: MessageType | t.Literal[False] | None = (
+        sanitize_message_type(arg.type)
+    )
     if message_type is False:
         return 1
 

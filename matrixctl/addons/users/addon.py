@@ -90,12 +90,12 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         params={
             "guests": "true" if arg.with_guests or arg.all else "false",
             "from": 0,
-            "limit": arg.limit
-            if 0 < arg.limit < DEFAULT_LIMIT
-            else DEFAULT_LIMIT,
-            "deactivated": "true"
-            if arg.with_deactivated or arg.all
-            else "false",
+            "limit": (
+                arg.limit if 0 < arg.limit < DEFAULT_LIMIT else DEFAULT_LIMIT
+            ),
+            "deactivated": (
+                "true" if arg.with_deactivated or arg.all else "false"
+            ),
         },
         timeout=10,
         concurrent_limit=yaml.get("server", "api", "concurrent_limit"),

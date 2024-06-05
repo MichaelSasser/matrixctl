@@ -16,7 +16,6 @@
 
 """Talk to the the database."""
 
-
 from __future__ import annotations
 
 import logging

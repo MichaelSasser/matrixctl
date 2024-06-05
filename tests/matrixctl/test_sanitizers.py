@@ -38,9 +38,9 @@ def test_sanitize_message_type_m_room_message_1() -> None:
     desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_MESSAGE
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -56,9 +56,9 @@ def test_sanitize_message_type_m_room_message_2() -> None:
     testdata: str = "M.ROOM.MESSAGE"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -73,9 +73,9 @@ def test_sanitize_message_type_m_room_name_1() -> None:
     desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_MESSAGE
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -91,9 +91,9 @@ def test_sanitize_message_type_m_room_name_2() -> None:
     testdata: str = "M.ROOM.NAME"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -108,9 +108,9 @@ def test_sanitize_message_type_m_room_topic_1() -> None:
     desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_TOPIC
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -126,9 +126,9 @@ def test_sanitize_message_type_m_room_topic_2() -> None:
     testdata: str = "M.ROOM.TOPIC"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -143,9 +143,9 @@ def test_sanitize_message_type_m_room_avatar_1() -> None:
     desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_AVATAR
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -161,9 +161,9 @@ def test_sanitize_message_type_m_room_avatar_2() -> None:
     testdata: str = "M.ROOM.AVATAR"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -180,9 +180,9 @@ def test_sanitize_message_type_m_room_pinned_events_1() -> None:
     )
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -200,9 +200,9 @@ def test_sanitize_message_type_m_room_pinned_events_2() -> None:
     testdata: str = "M.ROOM.PINNED_EVENTS"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -217,9 +217,9 @@ def test_sanitize_message_type_m_room_member_1() -> None:
     desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_MEMBER
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -235,9 +235,9 @@ def test_sanitize_message_type_m_room_member_2() -> None:
     testdata: str = "M.ROOM.MEMBER"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -252,9 +252,9 @@ def test_sanitize_message_type_m_room_join_rules_1() -> None:
     desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_JOIN_RULES
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -270,9 +270,9 @@ def test_sanitize_message_type_m_room_join_rules_2() -> None:
     testdata: str = "M.ROOM.JOIN_RULES"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -287,9 +287,9 @@ def test_sanitize_message_type_m_room_create_1() -> None:
     desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_CREATE
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -305,9 +305,9 @@ def test_sanitize_message_type_m_room_create_2() -> None:
     testdata: str = "M.ROOM.CREATE"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -324,9 +324,9 @@ def test_sanitize_message_type_m_room_power_levels_1() -> None:
     )
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -344,9 +344,9 @@ def test_sanitize_message_type_m_room_power_levels_2() -> None:
     testdata: str = "M.ROOM.POWER_LEVELS"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -361,9 +361,9 @@ def test_sanitize_message_type_m_room_redaction_1() -> None:
     desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_REDACTION
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -379,9 +379,9 @@ def test_sanitize_message_type_m_room_redaction_2() -> None:
     testdata: str = "M.ROOM.REDACTION"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -397,9 +397,9 @@ def test_sanitize_message_type_invalid() -> None:
     testdata: str = "M.ROOM.INVALID_TYPE"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -415,9 +415,9 @@ def test_sanitize_message_type_with_spaces() -> None:
     testdata: str = " M.ROOM.REDACTION "
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -433,9 +433,9 @@ def test_sanitize_message_type_lower_case() -> None:
     testdata: str = "m.room.redaction"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -451,9 +451,9 @@ def test_sanitize_message_type_none() -> None:
     testdata: None = None
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.MessageType | t.Literal[False] | None = (
+        sanitizers.sanitize_message_type(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -473,9 +473,9 @@ def test_sanitize_event_identifier_1() -> None:
     desired: str = "$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y"
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_event_identifier(desired)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_event_identifier(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -491,9 +491,9 @@ def test_sanitize_event_identifier_2() -> None:
     testdata: str = " $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y "
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_event_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_event_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -509,9 +509,9 @@ def test_sanitize_event_identifier_3() -> None:
     testdata: str = "event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y"
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_event_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_event_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -527,9 +527,9 @@ def test_sanitize_event_identifier_4() -> None:
     testdata: str = ""
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_event_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_event_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -545,9 +545,9 @@ def test_sanitize_event_identifier_5() -> None:
     testdata: None = None
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_event_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_event_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -562,9 +562,9 @@ def test_sanitize_event_identifier_6() -> None:
     testdata: set[str] = {"hello"}
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_event_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_event_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -583,9 +583,9 @@ def test_sanitize_user_identifier_1() -> None:
     desired: str = "@user:domain.tld"
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_user_identifier(desired)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_user_identifier(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -601,9 +601,9 @@ def test_sanitize_user_identifier_2() -> None:
     testdata: str = " @user:domain.tld "
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_user_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_user_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -619,9 +619,9 @@ def test_sanitize_user_identifier_3() -> None:
     testdata: str = " user:domain.tld "
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_user_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_user_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -637,9 +637,9 @@ def test_sanitize_user_identifier_4() -> None:
     testdata: str = ""
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_user_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_user_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -655,9 +655,9 @@ def test_sanitize_user_identifier_5() -> None:
     testdata: None = None
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_user_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_user_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -672,9 +672,9 @@ def test_sanitize_user_identifier_6() -> None:
     testdata: set[str] = {"hello"}
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_user_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_user_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -693,9 +693,9 @@ def test_sanitize_room_identifier_1() -> None:
     desired: str = "!room:domain.tld"
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_room_identifier(desired)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_room_identifier(desired)
+    )
 
     # Verify
     assert actual == desired
@@ -711,9 +711,9 @@ def test_sanitize_room_identifier_2() -> None:
     testdata: str = " !room:domain.tld "
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_room_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_room_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -729,9 +729,9 @@ def test_sanitize_room_identifier_3() -> None:
     testdata: str = "room:domain.tld"
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_room_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_room_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -747,9 +747,9 @@ def test_sanitize_room_identifier_4() -> None:
     testdata: str = ""
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_room_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_room_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -765,9 +765,9 @@ def test_sanitize_room_identifier_5() -> None:
     testdata: None = None
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_room_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_room_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
@@ -782,9 +782,9 @@ def test_sanitize_room_identifier_6() -> None:
     testdata: set[str] = {"hello"}
 
     # Exercise
-    actual: str | t.Literal[
-        False
-    ] | None = sanitizers.sanitize_room_identifier(testdata)
+    actual: str | t.Literal[False] | None = (
+        sanitizers.sanitize_room_identifier(testdata)
+    )
 
     # Verify
     assert actual == desired
