@@ -80,7 +80,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     next_token: int | None = None
     total: int | None = None
 
-    # ToDo: API bool
+    # TODO: API bool
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
         domain=yaml.get("server", "api", "domain"),

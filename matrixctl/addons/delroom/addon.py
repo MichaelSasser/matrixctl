@@ -96,6 +96,8 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     return 0
 
 
+# TODO: Try to simplify this function
+# ruff: noqa: C901
 def handle_status(yaml: YAML, delete_id: str) -> JsonDict:
     """Handle the status of a delete room request.
 

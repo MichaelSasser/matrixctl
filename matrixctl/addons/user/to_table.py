@@ -20,12 +20,12 @@ from __future__ import annotations
 
 import logging
 import sys
+import typing as t
 
 
 from collections.abc import Generator
 from datetime import datetime
 from datetime import timezone
-from typing import Any
 
 from matrixctl.handlers.table import table
 from matrixctl.print_helpers import human_readable_bool
@@ -54,7 +54,7 @@ def make_human_readable(
     ----------
     k : str
         The key
-    user_dict : `dict` [`str`, `Any`]
+    user_dict : `dict` [`str`, `typing.Any`]
         The line as dict, a JSON string which was converted to a Python
         dictionary. (This is not a ``Collections.UserDict``)
     len_domain : int
@@ -109,7 +109,7 @@ def make_human_readable(
 
 
 def generate_user_tables(
-    user_dict: dict[str, Any],
+    user_dict: dict[str, t.Any],
     len_domain: int,
 ) -> list[list[tuple[str, str]]]:
     """Generate a main user table and threepid user tables.
@@ -124,7 +124,7 @@ def generate_user_tables(
 
     Parameters
     ----------
-    user_dict : `dict` [`str`, `Any`]
+    user_dict : `dict` [`str`, `typing.Any`]
         The line as dict, a JSON string which was converted to a Python
         dictionary. (This is not a ``Collections.UserDict``)
     len_domain : int

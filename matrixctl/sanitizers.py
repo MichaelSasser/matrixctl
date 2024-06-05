@@ -163,12 +163,12 @@ def sanitize_event_identifier(
     Examples
     --------
     >>> sanitize_event_identifier(
-    ...    "$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y"
+    ...     "$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y"
     ... )
     '$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y'
 
     >>> sanitize_event_identifier(
-    ...    " $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y "
+    ...     " $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y "
     ... )
     '$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y'
 
@@ -207,14 +207,10 @@ def sanitize_user_identifier(
 
     Examples
     --------
-    >>> sanitize_user_identifier(
-    ...    "@user:domain.tld"
-    ... )
+    >>> sanitize_user_identifier("@user:domain.tld")
     '@user:domain.tld'
 
-    >>> sanitize_user_identifier(
-    ...    " @user:domain.tld "
-    ... )
+    >>> sanitize_user_identifier(" @user:domain.tld ")
     '@user:domain.tld'
 
     >>> sanitize_user_identifier("something invalid")
@@ -252,14 +248,10 @@ def sanitize_room_identifier(
 
     Examples
     --------
-    >>> sanitize_room_identifier(
-    ...    "!room:domain.tld"
-    ... )
+    >>> sanitize_room_identifier("!room:domain.tld")
     '!room:domain.tld'
 
-    >>> sanitize_room_identifier(
-    ...    " !room:domain.tld "
-    ... )
+    >>> sanitize_room_identifier(" !room:domain.tld ")
     '!room:domain.tld'
 
     >>> sanitize_room_identifier("something invalid")

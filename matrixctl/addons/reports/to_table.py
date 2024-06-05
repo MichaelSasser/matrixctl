@@ -33,6 +33,19 @@ from matrixctl.typehints import JsonDict
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
+TABLE_HEADERS: tuple[str, ...] = (
+    "ID",
+    "Date",
+    "Time",
+    "Score",
+    "Canonical Alias",
+    "Room Name",
+    "Room ID",
+    "Event ID",
+    "Defendant",
+    "Plaintiff",
+    "Reason",
+)
 
 logger = logging.getLogger(__name__)
 
@@ -102,21 +115,7 @@ def to_table(events_raw: list[JsonDict]) -> Generator[str, None, None]:
 
         events.append(
             (
-                "\n".join(
-                    (
-                        "ID",
-                        "Date",
-                        "Time",
-                        "Score",
-                        "Canonical Alias",
-                        "Room Name",
-                        "Room ID",
-                        "Event ID",
-                        "Defendant",
-                        "Plaintiff",
-                        "Reason",
-                    ),
-                ),
+                "\n".join(TABLE_HEADERS),
                 (
                     f"{event['id']}\n"
                     f"{dt}\n"

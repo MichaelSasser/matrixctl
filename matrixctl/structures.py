@@ -18,17 +18,17 @@
 
 from __future__ import annotations
 
-from typing import TypedDict
+import typing as t
 
 
-class Config(TypedDict):
+class Config(t.TypedDict):
     """Cast the YAML config to a typed dict."""
 
     servers: dict[str, ConfigServer]
     server: ConfigServer
 
 
-class ConfigServer(TypedDict):
+class ConfigServer(t.TypedDict):
     """Add a `server` to the YAML config structure."""
 
     ansible: ConfigServerAnsible
@@ -38,19 +38,19 @@ class ConfigServer(TypedDict):
     maintenance: ConfigServerMaintenance  # default = 4
 
 
-class ConfigServerAnsible(TypedDict):
+class ConfigServerAnsible(t.TypedDict):
     """Add `ansible` to `server` in the YAML config structure."""
 
     playbook: str
 
 
-class ConfigServerSynapse(TypedDict):
+class ConfigServerSynapse(t.TypedDict):
     """Add `synapse` to `server` in the YAML config structure."""
 
     playbook: str
 
 
-class ConfigServerAPI(TypedDict):
+class ConfigServerAPI(t.TypedDict):
     """Add `api` to `server` in the YAML config structure."""
 
     domain: str
@@ -59,7 +59,7 @@ class ConfigServerAPI(TypedDict):
     concurrent_limit: int
 
 
-class ConfigServerSSH(TypedDict):
+class ConfigServerSSH(t.TypedDict):
     """Add `ssh` to `server` in the YAML config structure."""
 
     address: str
@@ -67,7 +67,7 @@ class ConfigServerSSH(TypedDict):
     user: str
 
 
-class ConfigServerMaintenance(TypedDict):
+class ConfigServerMaintenance(t.TypedDict):
     """Add `maintenance` to `server` in the YAML config structure."""
 
     tasks: list[str]

@@ -651,7 +651,7 @@ async def _arequest(
             "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
             '_domain: ""',
         )
-        raise QWorkerExit  # TODO
+        raise QWorkerExit
     if response.status_code == HTTP_RETURN_CODE_404:
         logger.critical(
             "The server returned an 404 error. This can have multiple causes."
@@ -662,7 +662,7 @@ async def _arequest(
             " line:\n\nmatrix_synapse_container_labels_public_client_synapse"
             "_admin_api_enabled: true",
         )
-        raise QWorkerExit  # TODO
+        raise QWorkerExit
 
     logger.debug("JSON response: %s", response.json())
 
@@ -676,7 +676,7 @@ async def _arequest(
                     "and up-to-date. Your access-token will change every "
                     "time, you log out.",
                 )
-                raise QWorkerExit  # TODO
+                raise QWorkerExit
         raise InternalResponseError(payload=response)
     return response
 

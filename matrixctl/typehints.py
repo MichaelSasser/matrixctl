@@ -18,10 +18,10 @@
 
 from __future__ import annotations
 
-from typing import Any
+import typing as t
 
 
-JsonDict = dict[str, Any]
+JsonDict = dict[str, t.Any]
 
 
 # vim: set ft=python :

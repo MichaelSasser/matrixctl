@@ -93,6 +93,8 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     todo = []
     for task in arg.tasks or yaml.get("server", "maintenance", "tasks"):
+        # This loop can only contains a hand full of elements to go through
+
         try:
             todo.append(Task[task.replace("-", "_").upper()])
         except KeyError:  # task is not in enum

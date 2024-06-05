@@ -18,9 +18,11 @@
 
 from __future__ import annotations
 
+import typing as t
+
+
 from datetime import datetime
 from datetime import timezone
-from typing import Any
 
 
 __author__: str = "Michael Sasser"
@@ -28,7 +30,7 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 # TODO: Check if used and for what; type?; docs.
-def human_readable_bool(b: Any) -> str:
+def human_readable_bool(b: t.Any) -> str:
     """Use this helper function to get a "yes" or "no" string from a "bool".
 
     Parameters

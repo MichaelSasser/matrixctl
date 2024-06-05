@@ -20,11 +20,11 @@ from __future__ import annotations
 
 import logging
 import shlex
+import typing as t
 
 
 from getpass import getuser
 from types import TracebackType
-from typing import NamedTuple
 
 from paramiko import AutoAddPolicy
 from paramiko import SSHClient
@@ -38,7 +38,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-class SSHResponse(NamedTuple):
+class SSHResponse(t.NamedTuple):
     """Store the response of a SSH command as response."""
 
     stdin: str | None

@@ -34,7 +34,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-# ToDo: Make async to get debug output while running
+# TODO: Make async to get debug output while running
 def ansible_run(
     playbook: Path,
     tags: str | None = None,
