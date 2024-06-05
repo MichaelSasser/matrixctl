@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import logging
 
+
 from argparse import Namespace
 
 from matrixctl.errors import InternalResponseError

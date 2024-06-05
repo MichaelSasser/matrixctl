@@ -25,12 +25,12 @@ import logging
 import sys
 import time
 
-from argparse import Namespace
-from typing import NoReturn
 
-from matrixctl.password_helpers import ask_question
+from argparse import Namespace
 
 from .timing import check_point_in_time
+
+from matrixctl.password_helpers import ask_question
 
 
 __author__: str = "Michael Sasser"
@@ -40,7 +40,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-def dialog_input(arg: Namespace) -> dict[str, str | int] | NoReturn:
+def dialog_input(arg: Namespace) -> dict[str, str | int]:
     """Ask questions and sanitize them.
 
     Parameters

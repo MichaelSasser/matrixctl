@@ -1,7 +1,6 @@
 ---
 minimum_pre_commit_version: 2.13.0
-# default_language_version:
-#   python: python3.10
+
 repos:
   - repo: meta
     hooks:
@@ -71,72 +70,22 @@ repos:
         args:
           - "-b master"
           - "-p release/.*"
-      # Checks that all your JSON files are pretty.
-      # - id: pretty-format-json
-      #   args: ["--autofix"]
-      # Sorts entries in requirements.txt and removes incorrect entry
-      # - id: requirements-txt-fixer  (KEEP DISABLED)
-      # Sorts simple YAML files which consist only of top-level keys,
-      # preserving comments and blocks.
-      # - id: sort-simple-yaml  (KEEP DISABLED)
-      # Trims trailing whitespace.
+
       - id: trailing-whitespace
-      # - id: flake8
-      #   additional_dependencies: ["flake8-bugbear"]
 
-  - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.10.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.4.8
     hooks:
-      # Enforce that noqa annotations always occur with specific codes.
-      # Sample annotations: # noqa: F401, # noqa: F401,W203
-      - id: python-check-blanket-noqa
-      # Prevent common mistakes of assert mck.not_called(),
-      # assert mck.called_once_with(...) and mck.assert_called.
-      - id: python-check-mock-methods
-      # A quick check for the eval() built-in function
-      - id: python-no-eval
-      # A quick check for the deprecated .warn() method of python loggers
-      - id: python-no-log-warn
-      # Enforce that python3.6+ type annotations are used instead of
-      # type comments
-      - id: python-use-type-annotations
-      # Detect common mistake of using single backticks when writing rst
-      - id: rst-backticks
-      # Detect mistake of rst directive not ending with double colon
-      - id: rst-directive-colons
-      #Detect mistake of inline code touching normal text in rst
-      - id: rst-inline-touching-normal
-      # Forbid files which have a UTF-8 Unicode replacement character
-      - id: text-unicode-replacement-char
-
-  # isort
-  - repo: https://github.com/timothycrosley/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        additional_dependencies: [toml]
+      - id: ruff # Linter
+        args: [--fix]
+      - id: ruff-format # Formatter
 
   # format: black
   - repo: https://github.com/ambv/black
     rev: 24.4.2
     hooks:
       - id: black
-
-  # flake8
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.0.0
-    hooks:
-      - id: flake8
-        additional_dependencies: ["flake8-bugbear"]
-
-  # check docstrings
-  - repo: https://github.com/PyCQA/pydocstyle
-    rev: 6.3.0
-    hooks:
-      - id: pydocstyle
-        args: ["--ignore=D10,D21,D202"]
-        additional_dependencies:
-          - toml
 
   # static type checking with mypy
   - repo: https://github.com/pre-commit/mirrors-mypy
@@ -164,31 +113,9 @@ repos:
     hooks:
       - id: vulture
 
-  # pyupgrade
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.2
-    hooks:
-      - id: pyupgrade
-        exclude: docs/source/conf.py
-
   # pycln
   - repo: https://github.com/hadialqattan/pycln
     rev: v2.4.0
     hooks:
       - id: pycln
         args: [--config=pyproject.toml]
-
-  # # velin
-  # - repo: https://github.com/Carreau/velin
-  #   rev: 0.0.12
-  #   hooks:
-  #     - id: velin
-  # - repo: https://github.com/PyCQA/prospector
-  #   rev: 1.3.1
-  #   hooks:
-  #     - id: prospector
-  # PEP 585 Upgrade (Type Hints)
-  - repo: https://github.com/sondrelg/pep585-upgrade
-    rev: v1.0
-    hooks:
-      - id: upgrade-type-hints

@@ -22,6 +22,7 @@ import datetime
 import logging
 import sys
 
+
 from pathlib import Path
 from shutil import get_terminal_size
 from textwrap import TextWrapper

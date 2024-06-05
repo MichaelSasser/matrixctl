@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import logging
 
+
 from argparse import Namespace
 
 from matrixctl.errors import InternalResponseError
@@ -76,10 +77,10 @@ def addon(_: Namespace, yaml: YAML) -> int:
     try:
         print(f"Python Version: {response['python_version']}")
     except KeyError:
-        logger.warn(
+        logger.warning(
             "MatrixCtl was not able to read the Python version used by "
             "Synapse. In newer Synapse versions, this field is missing "
-            "and this warning can be ignored."
+            "and this warning can be ignored.",
         )
 
     return 0

@@ -25,6 +25,7 @@ import sys
 import typing as t
 import urllib.parse
 
+
 from collections.abc import Generator
 from collections.abc import Iterable
 from contextlib import suppress
@@ -535,7 +536,7 @@ def request(
     return asyncio.run(gen_async_request())
 
 
-def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
+def _request(request_config: RequestBuilder) -> httpx.Response:
     """Send an synchronous request to the synapse API and receive a response.
 
     Attributes
@@ -585,7 +586,7 @@ def _request(request_config: RequestBuilder) -> httpx.Response | t.NoReturn:
             " Make sure, that your vars.yml contains the following excessive"
             " long"
             " line:\n\nmatrix_synapse_container_labels_public_client_synapse"
-            "_admin_api_enabled: true"
+            "_admin_api_enabled: true",
         )
         sys.exit(1)
 
@@ -659,7 +660,7 @@ async def _arequest(
             " Make sure, that your vars.yml contains the following excessive"
             " long"
             " line:\n\nmatrix_synapse_container_labels_public_client_synapse"
-            "_admin_api_enabled: true"
+            "_admin_api_enabled: true",
         )
         raise QWorkerExit  # TODO
 

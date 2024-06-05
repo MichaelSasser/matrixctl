@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import logging
 
+
 from collections.abc import Generator
 from collections.abc import Sequence
 

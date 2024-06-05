@@ -95,7 +95,7 @@ fix = true
 show-fixes = true
 ignore-init-module-imports = true
 src = ["matrixctl", "docs"]
-ignore = ["D202", "TCH003", "TCH001", "ANN401", "ANN101"]
+ignore = ["D202", "D203", "TCH003", "TCH001", "ANN401", "ANN101"]
 select = [
   "E",  # pycodestyle (Errors)
   "W",  # pycodestyle (Warnings)

@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import logging
 
+
 from argparse import Namespace
 from mimetypes import MimeTypes
 from pathlib import Path

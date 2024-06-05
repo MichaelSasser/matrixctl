@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import logging
 
+
 from argparse import Namespace
 from collections.abc import Generator
 from enum import Enum

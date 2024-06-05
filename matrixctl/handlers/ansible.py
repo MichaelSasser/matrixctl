@@ -21,6 +21,7 @@ from __future__ import annotations
 import logging
 import tempfile
 
+
 from pathlib import Path
 
 from ansible_runner.interface import Runner
