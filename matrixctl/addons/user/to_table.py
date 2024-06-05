@@ -82,6 +82,10 @@ def make_human_readable(
             value = str(
                 datetime.fromtimestamp(float(user_dict[k]), tz=timezone.utc),
             )
+        except ValueError:  # Some of them are in ms now
+            value = str(
+                datetime.fromtimestamp(float(user_dict[k]) / 1000.0, tz=timezone.utc),
+            )
         except TypeError:
             value = "-"
     elif k.endswith("_at"):

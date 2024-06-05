@@ -69,9 +69,19 @@ def addon(_: Namespace, yaml: YAML) -> int:
     logger.debug("response: %s", response)
     try:
         print(f"Server Version: {response['server_version']}")
-        print(f"Python Version: {response['python_version']}")
     except KeyError:
         logger.exception("MatrixCtl was not able to read the server version.")
+
+    # DEPRECATED
+    # TODO: Remove this feature
+    try:
+        print(f"Python Version: {response['python_version']}")
+    except KeyError:
+        logger.warn(
+            "MatrixCtl was not able to read the Python version used by "
+            "Synapse. In newer Synapse versions, this field is missing "
+            "and this warning can be ignored."
+        )
 
     return 0
 

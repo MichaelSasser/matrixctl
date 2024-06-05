@@ -57,9 +57,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
 
-    event_identifier: str | t.Literal[
-        False
-    ] | None = sanitize_event_identifier(arg.event_id)
+    event_identifier: str | t.Literal[False] | None = (
+        sanitize_event_identifier(arg.event_id)
+    )
     if not event_identifier:
         return 1
 

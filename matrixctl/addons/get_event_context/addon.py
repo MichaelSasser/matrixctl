@@ -60,6 +60,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         path=f"rooms/{arg.room}/context/{arg.event}",
         api_version="v1",
         method="GET",
+        timeout=120,  # Usually takes 20 to 30 seconds
     )
 
     try:
