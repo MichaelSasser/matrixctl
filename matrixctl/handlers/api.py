@@ -25,7 +25,6 @@ import sys
 import typing as t
 import urllib.parse
 
-
 from collections.abc import Generator
 from collections.abc import Iterable
 from contextlib import suppress
@@ -392,15 +391,13 @@ async def group_async_results(
 @t.overload
 async def exec_async_request(
     request_config: Generator[RequestBuilder, None, None],
-) -> list[httpx.Response]:
-    ...
+) -> list[httpx.Response]: ...
 
 
 @t.overload
 async def exec_async_request(
     request_config: RequestBuilder,
-) -> httpx.Response:
-    ...
+) -> httpx.Response: ...
 
 
 async def exec_async_request(
@@ -484,15 +481,13 @@ async def exec_async_request(
 @t.overload
 def request(
     request_config: Generator[RequestBuilder, None, None],
-) -> list[httpx.Response]:
-    ...
+) -> list[httpx.Response]: ...
 
 
 @t.overload
 def request(
     request_config: RequestBuilder,
-) -> httpx.Response:
-    ...
+) -> httpx.Response: ...
 
 
 # flake8: noqa: C901

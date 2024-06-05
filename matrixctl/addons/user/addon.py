@@ -21,16 +21,15 @@ from __future__ import annotations
 import json
 import logging
 
-
 from argparse import Namespace
-
-from .to_table import to_table
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
+
+from .to_table import to_table
 
 
 __author__: str = "Michael Sasser"

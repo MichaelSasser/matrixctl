@@ -25,13 +25,12 @@ import logging
 import sys
 import time
 
-
 from argparse import Namespace
 from typing import NoReturn
 
-from .timing import check_point_in_time
-
 from matrixctl.password_helpers import ask_question
+
+from .timing import check_point_in_time
 
 
 __author__: str = "Michael Sasser"

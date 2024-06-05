@@ -24,7 +24,6 @@ import sys
 import typing as t
 import urllib.parse
 
-
 from collections.abc import Iterator
 from contextlib import contextmanager
 

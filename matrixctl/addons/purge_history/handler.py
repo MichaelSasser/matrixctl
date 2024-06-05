@@ -23,7 +23,6 @@ from __future__ import annotations
 
 import logging
 
-
 from time import sleep
 
 from matrixctl.errors import InternalResponseError

@@ -23,18 +23,17 @@ from __future__ import annotations
 
 import logging
 
-
 from argparse import Namespace
 from contextlib import suppress
-
-from .dialog import dialog_input
-from .handler import handle_purge_status
 
 from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
 from matrixctl.typehints import JsonDict
+
+from .dialog import dialog_input
+from .handler import handle_purge_status
 
 
 __author__: str = "Michael Sasser"

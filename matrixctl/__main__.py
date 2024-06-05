@@ -21,7 +21,6 @@ from __future__ import annotations
 import argparse
 import logging
 
-
 from importlib import import_module
 from pathlib import Path
 from types import ModuleType

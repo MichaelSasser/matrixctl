@@ -21,7 +21,6 @@ from __future__ import annotations
 import logging
 import shlex
 
-
 from getpass import getuser
 from types import TracebackType
 from typing import NamedTuple

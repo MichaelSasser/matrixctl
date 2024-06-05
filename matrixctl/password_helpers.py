@@ -22,7 +22,6 @@ import getpass
 import logging
 import sys
 
-
 from typing import NoReturn
 
 

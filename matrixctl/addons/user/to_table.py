@@ -21,7 +21,6 @@ from __future__ import annotations
 import logging
 import sys
 
-
 from collections.abc import Generator
 from datetime import datetime
 from datetime import timezone
@@ -84,7 +83,9 @@ def make_human_readable(
             )
         except ValueError:  # Some of them are in ms now
             value = str(
-                datetime.fromtimestamp(float(user_dict[k]) / 1000.0, tz=timezone.utc),
+                datetime.fromtimestamp(
+                    float(user_dict[k]) / 1000.0, tz=timezone.utc
+                ),
             )
         except TypeError:
             value = "-"
