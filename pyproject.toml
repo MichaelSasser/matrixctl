@@ -376,8 +376,7 @@ filterwarnings =
 
 
 [tox]
-envlist = precommit,py310,py311,docs,changelog,
-# py310,
+envlist = precommit,py310,py311,py312,docs,changelog,
 isolated_build = True
 
 [coverage:report]
@@ -398,7 +397,7 @@ commands =
 
 [testenv:precommit]
 allowlist_externals = poetry
-basepython = python3.11
+basepython = python3.12
 skip_install = true
 deps =
     pre-commit
@@ -411,7 +410,7 @@ commands =
 [testenv:docs]
 allowlist_externals = poetry
 # Keep basepython in sync with gh-actions and .readthedocs.yml.
-basepython = python3.11
+basepython = python3.12
 # extras = docs, func
 # currently disable -n
 commands =
@@ -421,7 +420,7 @@ commands =
 
 [testenv:changelog]
 allowlist_externals = poetry
-basepython = python3.11
+basepython = python3.12
 # deps = towncrier
 skip_install = true
 commands =
