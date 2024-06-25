@@ -47,32 +47,6 @@ deluser
    :undoc-members:
    :show-inheritance:
 
-adduser-jitsi
--------------
-
-.. automodule:: matrixctl.addons.adduser_jitsi.parser
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: matrixctl.addons.adduser_jitsi.addon
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-deluser-jitsi
--------------
-
-.. automodule:: matrixctl.addons.deluser_jitsi.parser
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: matrixctl.addons.deluser_jitsi.addon
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 check
 -----
 
