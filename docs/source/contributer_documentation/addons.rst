@@ -308,6 +308,19 @@ upload
    :undoc-members:
    :show-inheritance:
 
+download
+--------
+
+.. automodule:: matrixctl.addons.download.parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.download.addon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 server-notice
 -------------
 
