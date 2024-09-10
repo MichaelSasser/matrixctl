@@ -21,7 +21,9 @@ from __future__ import annotations
 import asyncio
 import logging
 import math
+import shutil
 import sys
+import tempfile
 import typing as t
 import urllib.parse
 
@@ -30,9 +32,12 @@ from collections.abc import Generator
 from collections.abc import Iterable
 from contextlib import suppress
 from copy import deepcopy
+from mimetypes import MimeTypes
+from pathlib import Path
 
 import attr
 import httpx
+import rich.progress
 
 from matrixctl import __version__
 from matrixctl.errors import InternalResponseError
@@ -679,6 +684,110 @@ async def _arequest(
                 raise QWorkerExit
         raise InternalResponseError(payload=response)
     return response
+
+
+def streamed_download(
+    request_config: RequestBuilder,
+    download_path: Path,
+) -> None:
+    """Make a (a)synchronous request to the synapse API and receive a response.
+
+    Attributes
+    ----------
+    request_config : RequestBuilder or Generator [RequestBuilder, None, None]
+        An instance of an ``RequestBuilder`` or a list of ``RequestBuilder``.
+        If the function gets a ``RequestBuilder``, the request will be
+        synchronous.
+        If it gets a Generator, the request will be asynchronous.
+    concurrent_limit : int
+        The maximum of concurrent workers. (This information must be pulled
+        from the config.)
+
+    See Also
+    --------
+    RequestBuilder : matrixctl.handlers.api.RequestBuilder
+
+    Returns
+    -------
+    response : httpx.Response
+        Returns the response
+
+    """
+    download_file = tempfile.NamedTemporaryFile(
+        mode="wb",
+        delete=False,
+    )
+    path_download_file: Path = Path(download_file.name)
+    logger.debug("Temporary file: %s", path_download_file)
+    extension: str | None = None
+    try:
+        with httpx.stream(
+            method=request_config.method,
+            data=request_config.data,  # type: ignore # noqa: PGH003
+            json=request_config.json,
+            content=request_config.content,  # type: ignore # noqa: PGH003
+            url=str(request_config),
+            params=request_config.params,
+            headers=request_config.headers_with_auth,
+            timeout=request_config.timeout,
+            follow_redirects=False,
+        ) as response:
+            total: int = int(response.headers["Content-Length"])
+            try:
+                content_type: str = response.headers["Content-Type"]
+                if content_type:
+                    mime_types: MimeTypes = MimeTypes()
+                    extension = mime_types.guess_extension(
+                        content_type,
+                        strict=True,
+                    )
+            except IndexError as err:
+                logger.debug(
+                    "Response did not include Content-Type. Error: %s",
+                    err,
+                )
+            with rich.progress.Progress(
+                "[progress.percentage]{task.percentage:>3.0f}%",
+                rich.progress.BarColumn(bar_width=None),
+                rich.progress.DownloadColumn(),
+                rich.progress.TransferSpeedColumn(),
+            ) as progress:
+                download_task: rich.progress.TaskID = progress.add_task(
+                    "Download",
+                    total=total,
+                )
+                for chunk in response.iter_bytes():
+                    download_file.write(chunk)
+                    progress.update(
+                        download_task,
+                        completed=response.num_bytes_downloaded,
+                    )
+
+    except Exception as err:  # skipcq: PYL-W0703
+        raise InternalResponseError(payload=response) from err
+    finally:
+        download_file.close()
+
+    if extension:
+        download_path = download_path.with_suffix(extension)
+        logger.debug("Found extension: %s.", extension)
+        logger.debug("New Download path: %s", download_path)
+    else:
+        logger.debug(
+            "Exception was %s. Not renaming file extension.",
+            extension,
+        )
+
+    if download_path.exists():
+        error_message = (
+            f"The file {download_path} already exists. "
+            "Please make sure, that the file does not exist.",
+        )
+        raise FileExistsError(error_message)
+
+    shutil.copy(path_download_file, download_path)
+
+    path_download_file.unlink()
 
 
 # vim: set ft=python :
