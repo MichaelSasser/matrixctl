@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":enableRenovate",
+    ":enableVulnerabilityAlerts",
+    ":semanticCommits",
+    ":semanticPrefixChore",
+    ":gitSignOff",
+    "security:openssf-scorecard",
+    "mergeConfidence:all-badges",
+    ":automergePr",
+    ":automergeLinters",
+    ":automergePatch",
+    ":automergeRequireAllStatusChecks",
+    ":renovatePrefix",
+    "rebaseStalePrs"
+  ]
+}
