@@ -15,6 +15,6 @@
     ":automergePatch",
     ":automergeRequireAllStatusChecks",
     ":renovatePrefix",
-    "rebaseStalePrs"
+    ":rebaseStalePrs"
   ]
 }
