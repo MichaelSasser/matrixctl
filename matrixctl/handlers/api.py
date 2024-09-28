@@ -49,6 +49,17 @@ __email__: str = "Michael@MichaelSasser.org"
 
 HTTP_RETURN_CODE_302: int = 302
 HTTP_RETURN_CODE_404: int = 404
+DEFAULT_SUCCESS_CODES: tuple[int, ...] = (
+    200,
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    226,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -95,17 +106,7 @@ class RequestBuilder:
     headers: dict[str, str] = {}  # noqa: RUF012
     concurrent_limit: int = 4
     timeout: float = 5.0  # seconds
-    success_codes: tuple[int, ...] = (
-        200,
-        201,
-        202,
-        203,
-        204,
-        205,
-        206,
-        207,
-        226,
-    )
+    success_codes: tuple[int, ...] = DEFAULT_SUCCESS_CODES
 
     @property
     def headers_with_auth(self) -> dict[str, str]:
@@ -541,6 +542,70 @@ def request(
     return asyncio.run(gen_async_request())
 
 
+def handle_sync_response_status_code(
+    response: httpx.Response,
+    success_codes: tuple[int, ...] | None = None,
+) -> None:
+    """Handle the response status code of a synchronous request.
+
+    Attributes
+    ----------
+    response : https.Response
+        The response of the synchronous request.
+
+    success_codes : tuple of int, optional
+        A tuple of success codes. For example: 200, 201, 202, 203.
+        If the parameter is not set, the default success codes are used.
+
+    Returns
+    -------
+    None
+        The function either returns None or raises an exception.
+    """
+    success_codes = success_codes or DEFAULT_SUCCESS_CODES
+    if response.status_code == HTTP_RETURN_CODE_302:
+        logger.critical(
+            "The api request resulted in an redirect (302). "
+            "This indicates, that the API might have changed, or your "
+            "playbook is misconfigured.\n"
+            "Please make sure your installation of matrixctl is "
+            "up-to-date and your vars.yml contains:\n\n"
+            "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
+            '_domain: ""',
+        )
+
+        sys.exit(1)
+    if response.status_code == HTTP_RETURN_CODE_404:
+        logger.critical(
+            "The server returned an 404 error. This can have multiple causes."
+            " One of them is, you try to request a resource, which does not or"
+            " no longer exist. Another one is, your API endpoint is disabled."
+            " Make sure, that your vars.yml contains the following excessive"
+            " long"
+            " line:\n\nmatrix_synapse_container_labels_public_client_synapse"
+            "_admin_api_enabled: true",
+        )
+        sys.exit(1)
+
+    try:
+        logger.debug("JSON response: %s", response.json())
+    except httpx.ResponseNotRead:
+        logger.debug("Response: %s", response.read())
+
+    logger.debug("Response Status Code: %d", response.status_code)
+    if response.status_code not in success_codes:
+        with suppress(Exception):
+            if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
+                logger.critical(
+                    "The server rejected your access-token. "
+                    "Please make sure, your access-token is correct "
+                    "and up-to-date. Your access-token will change every "
+                    "time, you log out.",
+                )
+                sys.exit(1)
+        raise InternalResponseError(payload=response)
+
+
 def _request(request_config: RequestBuilder) -> httpx.Response:
     """Send an synchronous request to the synapse API and receive a response.
 
@@ -570,45 +635,7 @@ def _request(request_config: RequestBuilder) -> httpx.Response:
             headers=request_config.headers_with_auth,
             follow_redirects=False,
         )
-
-    if response.status_code == HTTP_RETURN_CODE_302:
-        logger.critical(
-            "The api request resulted in an redirect (302). "
-            "This indicates, that the API might have changed, or your "
-            "playbook is misconfigured.\n"
-            "Please make sure your installation of matrixctl is "
-            "up-to-date and your vars.yml contains:\n\n"
-            "matrix_nginx_proxy_proxy_matrix_client_redirect_root_uri_to"
-            '_domain: ""',
-        )
-
-        sys.exit(1)
-    if response.status_code == HTTP_RETURN_CODE_404:
-        logger.critical(
-            "The server returned an 404 error. This can have multiple causes."
-            " One of them is, you try to request a resource, which does not or"
-            " no longer exist. Another one is, your API endpoint is disabled."
-            " Make sure, that your vars.yml contains the following excessive"
-            " long"
-            " line:\n\nmatrix_synapse_container_labels_public_client_synapse"
-            "_admin_api_enabled: true",
-        )
-        sys.exit(1)
-
-    logger.debug("JSON response: %s", response.json())
-
-    logger.debug("Response Status Code: %d", response.status_code)
-    if response.status_code not in request_config.success_codes:
-        with suppress(Exception):
-            if response.json()["errcode"] == "M_UNKNOWN_TOKEN":
-                logger.critical(
-                    "The server rejected your access-token. "
-                    "Please make sure, your access-token is correct "
-                    "and up-to-date. Your access-token will change every "
-                    "time, you log out.",
-                )
-                sys.exit(1)
-        raise InternalResponseError(payload=response)
+    handle_sync_response_status_code(response, request_config.success_codes)
 
     return response
 
@@ -720,6 +747,7 @@ def streamed_download(
     path_download_file: Path = Path(download_file.name)
     logger.debug("Temporary file: %s", path_download_file)
     extension: str | None = None
+    content_length: int | None = None
     try:
         with httpx.stream(
             method=request_config.method,
@@ -732,7 +760,18 @@ def streamed_download(
             timeout=request_config.timeout,
             follow_redirects=False,
         ) as response:
-            total: int = int(response.headers["Content-Length"])
+            handle_sync_response_status_code(
+                response,
+                request_config.success_codes,
+            )
+            try:
+                content_length = int(response.headers["Content-Length"])
+                logger.debug("Content-Length: %s", content_length)
+            except KeyError as err:
+                logger.warning(
+                    "Response did not include Content-Length. Error: %s",
+                    err,
+                )
             try:
                 content_type: str = response.headers["Content-Type"]
                 if content_type:
@@ -746,22 +785,26 @@ def streamed_download(
                     "Response did not include Content-Type. Error: %s",
                     err,
                 )
-            with rich.progress.Progress(
-                "[progress.percentage]{task.percentage:>3.0f}%",
-                rich.progress.BarColumn(bar_width=None),
-                rich.progress.DownloadColumn(),
-                rich.progress.TransferSpeedColumn(),
-            ) as progress:
-                download_task: rich.progress.TaskID = progress.add_task(
-                    "Download",
-                    total=total,
-                )
+            if content_length is None:
                 for chunk in response.iter_bytes():
                     download_file.write(chunk)
-                    progress.update(
-                        download_task,
-                        completed=response.num_bytes_downloaded,
+            else:
+                with rich.progress.Progress(
+                    "[progress.percentage]{task.percentage:>3.0f}%",
+                    rich.progress.BarColumn(bar_width=None),
+                    rich.progress.DownloadColumn(),
+                    rich.progress.TransferSpeedColumn(),
+                ) as progress:
+                    download_task: rich.progress.TaskID = progress.add_task(
+                        "Download",
+                        total=content_length,
                     )
+                    for chunk in response.iter_bytes():
+                        download_file.write(chunk)
+                        progress.update(
+                            download_task,
+                            completed=response.num_bytes_downloaded,
+                        )
 
     except Exception as err:  # skipcq: PYL-W0703
         raise InternalResponseError(payload=response) from err
