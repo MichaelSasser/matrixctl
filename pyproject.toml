@@ -56,16 +56,9 @@ tox = "^4.15.0"
 
 [tool.poetry.group.dev.dependencies]
 towncrier = ">=23.11.0"
-flake8 = "^7.0.0"
-pylint = ">=3.2.2"
-yapf = ">=0.40.2"
 vulture = "^2.11"
 mypy = "^1.10.0"
 interrogate = "^1.7.0"
-flake8-bugbear = "^24.4.26"
-pynvim = "^0.5.0"
-black = { version = "^24.4.2", allow-prereleases = true }
-isort = { version = "^5.13.2", extras = ["pyproject"] }
 
 # typesheds
 types-setuptools = "75.1.0.20240917"
@@ -182,26 +175,6 @@ known-third-party = [
 "tests/**/*.py" = ["S101"]
 "docs/*" = ["INP001"]
 
-[tool.black]
-line-length = 79
-include = '\.pyi?$'
-# exclude __init__.py because of ordered importing
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-  | tests/.*/setup.py
-)/
-'''
-
 [tool.mypy]
 python_version = "3.11"
 platform = "linux"
@@ -233,43 +206,6 @@ typeCheckingMode = "basic"
 # reportUnknownArgumentType = "none"
 # reportUnknownLambdaType = "none"
 
-
-[tool.isort]
-line_length = 79
-force_single_line = true
-atomic = true
-float_to_top = true
-include_trailing_comma = true
-lines_after_imports = 2
-lines_between_types = 1
-multi_line_output = 3
-use_parentheses = true
-skip_glob = [
-  "*/setup.py",
-  "*.rst",
-  "*.md",
-  "*.yaml",
-  "*.txt",
-  "*.yml",
-  "*.lock",
-  "*.toml",
-  "*.ini",
-  "Makefile",
-  "docs/source/conf.py",
-]
-filter_files = true
-known_first_party = "matrixctl"
-known_third_party = [
-  "pytest",
-  "paramiko",
-  "argcomplete",
-  "coloredlogs",
-  "sphinx_rtd_theme",
-  "git",
-  "httpx",
-  "attr",
-  "ansible_runner",
-]
 
 [tool.pycln]
 all = true
