@@ -128,6 +128,8 @@ ignore = [
   "TD003",   # Missing TODO issue link
   "FIX002",  # Unresolved TODO
   "PERF203", # Try/except in loop
+  "COM812",
+  "ISC001",
 ]
 select = ["ALL"]
 
@@ -163,7 +165,7 @@ constants = ["__version__"]
 forced-separate = ["tests", "matrixctl"]
 required-imports = ["from __future__ import annotations"]
 known-first-party = ["matrixctl"]
-lines-between-types = 2
+lines-between-types = 1
 known-third-party = [
   "pytest",
   "paramiko",
