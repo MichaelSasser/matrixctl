@@ -27,7 +27,6 @@ import tempfile
 import typing as t
 import urllib.parse
 
-
 from collections.abc import Generator
 from collections.abc import Iterable
 from contextlib import suppress

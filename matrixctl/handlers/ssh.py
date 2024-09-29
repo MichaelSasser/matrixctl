@@ -22,7 +22,6 @@ import logging
 import shlex
 import typing as t
 
-
 from getpass import getuser
 from types import TracebackType
 

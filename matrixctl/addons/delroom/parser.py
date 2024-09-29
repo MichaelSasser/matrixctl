@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import typing as t
 
-
 from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
 from argparse import _SubParsersAction

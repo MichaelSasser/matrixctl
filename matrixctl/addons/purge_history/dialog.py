@@ -25,7 +25,6 @@ import logging
 import sys
 import time
 
-
 from argparse import Namespace
 
 from .timing import check_point_in_time

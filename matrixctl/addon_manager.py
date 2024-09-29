@@ -22,7 +22,6 @@ import argparse
 import logging
 import typing as t
 
-
 from collections.abc import Callable
 from importlib import import_module
 from pkgutil import iter_modules

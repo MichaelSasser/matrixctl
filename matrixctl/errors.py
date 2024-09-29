@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import typing as t
 
-
 from sys import version_info
 
 from pkg_resources import get_distribution

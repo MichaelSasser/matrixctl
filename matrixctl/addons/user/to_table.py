@@ -22,7 +22,6 @@ import logging
 import sys
 import typing as t
 
-
 from collections.abc import Generator
 from datetime import datetime
 from datetime import timezone

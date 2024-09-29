@@ -22,7 +22,6 @@ import json
 import logging
 import sys
 
-
 from argparse import Namespace
 from datetime import datetime
 from datetime import timedelta
