@@ -74,13 +74,22 @@ dev-dependencies = [
   "sphinxcontrib-programoutput>=0.17",
   "numpydoc>=1.5.0",
   "sphinx-rtd-theme>=1.2,<3.0",
+  "basedpyright>=1.18.2",
 ]
 
 [tool.rye.scripts]
+# Application entry points
 matrixctl = { call = "matrixctl.__main__:main" }
-lint = { chain = ["lint:ruff-format", "lint:ruff-check"] }
-"lint:ruff-format" = "ruff format"
-"lint:ruff-check" = "ruff check --fix"
+
+# Linting
+check = { chain = ["check:lint", "check:fmt"] }
+"check:lint" = "rye lint"
+"check:fmt" = "rye fmt --check"
+"check:type" = "rye run basedpyright"
+
+fix = { chain = ["fix:lint", "fix:fmt"] }
+"fix:lint" = "rye lint --fix"
+"fix:fmt" = "rye fmt"
 
 [tool.hatch.metadata]
 allow-direct-references = true
@@ -204,7 +213,7 @@ allow_untyped_decorators = true       # pytest fixtures
 
 
 [tool.pyright]
-include = ["matrixctl", "tests"]
+include = ["src/matrixctl", "tests"]
 exclude = ["**/__pycache__"]
 
 reportMissingImports = true
