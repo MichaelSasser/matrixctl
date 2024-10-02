@@ -67,7 +67,13 @@ extensions: list[str] = [
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
     "sphinx.ext.inheritance_diagram",
+    "myst_parser",
 ]
+
+source_suffix: dict[str, str] = {
+    ".rst": "restructuredtext",
+    ".md": "markdown",
+}
 
 suppress_warnings: list[str] = ["autosectionlabel.*"]
 
