@@ -65,11 +65,11 @@ jobs:
           prerelease: false
           draft: false
           name: Release ${{ steps.get_version.outputs.VERSION }}
-          body_path: chagelog_latest.md
+          body_path: changelog_latest.md
           files: matrixctl.zip
 
       - name: Delete temp files
-        run: rm -rf matrixctl.zip chagelog_latest.md
+        run: rm -rf matrixctl.zip changelog_latest.md
 
       - name: Publish
         run: rye publish --token <your_token> --yes --skip-existing
