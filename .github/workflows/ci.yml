@@ -61,4 +61,4 @@ jobs:
       - name: Test with pytest
         run: |
           . .venv/bin/activate
-          poetry run pytest
+          rye test
