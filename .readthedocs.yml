@@ -17,3 +17,4 @@ build:
     # - uv venv
     # - uv pip install .[docs]
     - rye sync --all-features
+    - .venv/bin/python -m sphinx -T -b html -d docs/_build/doctrees -D language=en docs $READTHEDOCS_OUTPUT/html
