@@ -55,7 +55,7 @@ jobs:
       - name: Sphinx Build
         working-directory: ./docs
         run: |
-          . .venv/bin/activate
+          . ../.venv/bin/activate
           make html
 
       - name: Test with pytest
