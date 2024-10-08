@@ -16,7 +16,7 @@ usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG] Command ...
 
 MatrixCtl is a simple, but feature-rich tool to remotely control, manage, provision and deploy Matrix homeservers.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   --version             show program's version number and exit
   -d, --debug           Enables debugging mode.
@@ -30,22 +30,20 @@ Commands:
 
   Command
     adduser             Add users to the homeserver
-    adduser-jitsi       Add users to a jitsi server
     check               Checks the deployment with Ansible
-    delete-local-media  Delete cached (local) media that was last accessed before a
-                        specific point in time
+    delete-local-media  Delete cached (local) media that was last accessed before a specific point in time
     delroom             Shutdown a room
     deluser             Deactivate users
-    deluser-jitsi       Delete jitsi users
     deploy              Provision and deploy the Ansible playbook
+    download            Download a media file.
     get-event           Get an event from the database
     get-event-context   Get the context of an event
     get-events          Get events from the database
     is-admin            Check, if a user is a homeserver administrator
     joinroom            Join a user to a room
+    largest-rooms       List an approximation of the 10 largest rooms in the database
     maintenance         Run maintenance tasks
-    make-room-admin     Grant a user the highest power level available to a local user
-                        in this room
+    make-room-admin     Grant a user the highest power level available to a local user in this room
     purge-history       Purge historic events from the database
     purge-remote-media  Purge cached, remote media
     report              Get a report event by report identifier
