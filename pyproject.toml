@@ -84,7 +84,7 @@ docs = [
 [tool.rye.scripts]
 # Application entry points
 matrixctl = { call = "matrixctl.__main__:main" }
-# docs = { rye run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html }
+doc = { cmd = "sphinx-build -T -W -b html docs/source docs/build/html" }
 
 # Linting
 check = { chain = ["check:lint", "check:fmt"] }
