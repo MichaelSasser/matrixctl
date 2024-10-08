@@ -73,6 +73,11 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     except json.decoder.JSONDecodeError:
         logger.exception("Unable to process the response data to JSON.")
         return 1
+    except Exception:
+        logger.exception(
+            "Unable to process the response data to JSON. Response was None"
+        )
+        return 1
     return 0
 
 

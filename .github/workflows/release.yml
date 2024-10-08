@@ -27,43 +27,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.2.1
-      - name: Set up Python 3.10
+        uses: actions/checkout@v4.2.0
+
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5.2.0
         with:
-          python-version: "3.10"
+          python-version: "3.12"
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1.4
+      - name: Setup Rye
+        id: setup-rye
+        uses: eifinger/setup-rye@v4
         with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
+          version: "0.41.0"
+          enable-cache: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v4.1.0
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install Project Dependencies
+        run: rye sync --all-features
+        if: steps.setup-rye.outputs.cache-hit != 'true'
 
       - name: Build project
-        run: poetry build
+        run: rye build --all --clean
 
       - name: Zip project
         run: zip --junk-paths matrixctl.zip  dist/* README.md LICENSE.txt
 
-      - name: Generate changelog_latest.rst from CHANGELOG.rst
-        run: python scripts/get_latest_release.py
-
-      - name: Convert from changelog_latest.rst to changelog_latest.md
-        uses: docker://pandoc/core:3.5.0
-        with:
-          args: >-
-            --output=chagelog_latest.md
-            --from rst
-            --to markdown
-            --markdown-headings=atx
-            chagelog_latest.rst
+      - name: Generate changelog_latest.md
+        run: git cliff --latest > changelog_latest.md
 
       - name: Get the version
         id: get_version
@@ -75,20 +65,22 @@ jobs:
           prerelease: false
           draft: false
           name: Release ${{ steps.get_version.outputs.VERSION }}
-          body_path: chagelog_latest.md
+          body_path: changelog_latest.md
           files: matrixctl.zip
 
       - name: Delete temp files
-        run: rm -rf matrixctl.zip chagelog_latest.md chagelog_latest.rst
+        run: rm -rf matrixctl.zip changelog_latest.md
 
-      - name: pypi-publish
-        uses: pypa/gh-action-pypi-publish@v1.10.3
-        with:
-          # PyPI user
-          # user: # optional, default is __token__
-          # Password for your PyPI user or an access token
-          password: ${{ secrets.pypi_token }}
-          # The repository URL to use
-          # repository_url: # optional
-          # The target directory for distribution
-          # packages_dir: # optional, default is dist
+      - name: Publish
+        run: rye publish --token <your_token> --yes --skip-existing
+      # - name: pypi-publish
+      #   uses: pypa/gh-action-pypi-publish@v1.10.2
+      #   with:
+      #     # PyPI user
+      #     # user: # optional, default is __token__
+      #     # Password for your PyPI user or an access token
+      #     password: ${{ secrets.pypi_token }}
+      #     # The repository URL to use
+      #     # repository_url: # optional
+      #     # The target directory for distribution
+      #     # packages_dir: # optional, default is dist

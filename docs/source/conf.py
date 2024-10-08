@@ -30,6 +30,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path("../").resolve()))
 sys.path.insert(0, str(Path("../..").resolve()))
+sys.path.insert(0, str((Path("../") / "src").resolve()))
+sys.path.insert(0, str((Path("../..") / "src").resolve()))
 
 from matrixctl.package_version import get_version  # skipcq: FLK-E402
 
@@ -67,7 +69,13 @@ extensions: list[str] = [
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
     "sphinx.ext.inheritance_diagram",
+    "myst_parser",
 ]
+
+source_suffix: dict[str, str] = {
+    ".rst": "restructuredtext",
+    ".md": "markdown",
+}
 
 suppress_warnings: list[str] = ["autosectionlabel.*"]
 

@@ -28,28 +28,23 @@ jobs:
       working-directory: ./docs
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.2.1
-      - name: Set up Python 3.10
+        uses: actions/checkout@v4.2.0
+
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5.2.0
         with:
-          python-version: "3.10"
+          python-version: "3.12"
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1.4
+      - name: Setup Rye
+        id: setup-rye
+        uses: eifinger/setup-rye@v4
         with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v4.1.0
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+          enable-cache: true
+          version: "0.41.0"
 
       - name: Install Project Dependencies
-        run: poetry install -E docs
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: rye sync --all-features
+        if: steps.setup-rye.outputs.cache-hit != 'true'
 
       - name: Make docs
         working-directory: ${{env.working-directory}}

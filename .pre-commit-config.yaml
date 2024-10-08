@@ -1,6 +1,7 @@
 ---
 minimum_pre_commit_version: 2.13.0
 
+exclude: ^requirements.*\.lock$
 repos:
   - repo: meta
     hooks:
@@ -53,7 +54,6 @@ repos:
       # - id: double-quote-string-fixer (KEEP DISABLED)
       # Makes sure files end in a newline and only a newline.
       - id: end-of-file-fixer
-        exclude: "^CHANGELOG.rst"
       # Removes "# -*- coding: utf-8 -*-" on the top of python files.
       - id: fix-encoding-pragma
         args: ["--remove"]
