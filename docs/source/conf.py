@@ -30,6 +30,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path("../").resolve()))
 sys.path.insert(0, str(Path("../..").resolve()))
+sys.path.insert(0, str((Path("../") / "src").resolve()))
+sys.path.insert(0, str((Path("../..") / "src").resolve()))
 
 from matrixctl.package_version import get_version  # skipcq: FLK-E402
 
