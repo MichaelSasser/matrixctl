@@ -53,10 +53,10 @@ Add a feature
 3. Clone the fork (``origin``) to your local machine.
 4. Add the original repository as a remote named ``upstream``.
 5. Create a new branch from the
-   `develop branch <https://github.com/MichaelSasser/matrixctl>`_.
+   `master branch <https://github.com/MichaelSasser/matrixctl>`_.
    Make sure you use the
-   `git-flow <https://danielkummer.github.io/git-flow-cheatsheet/index.html>`_
-   branching model scheme. (You don't necessarily need ``git-flow``). Example:
+   `GitHub Flow <https://docs.github.com/en/get-started/using-github/github-flow>`_.
+   For example:
    Let's say your issue was issue ``#42`` and you want to create a feature.
    Your branch name would be ``feature/#42`` or ``feature/#42-my-cool-feature``.
 #. Install the required tools with ``rye sync --all-features``
@@ -65,15 +65,12 @@ Add a feature
    contributors are able to help you and follow your progress.
 #. Make sure to add/alter the documentation.
 #. Add/alter tests, to test your code.
-#. Describe your changes in one sentence in a newsfragment in ``./news/``.
-   You find the categories in the ``pyproject.toml`` under the
-   ``[tool.towncrier]`` -> ``directory``. Example: Let's say your issue was
-   issue ``#42`` and you added a bugfix. Give the newsfragment the name
-   ``42.bugfix``. A feature would be called ``42.feature``.
 #. Run ``tox``. If everything is green with no errors, you are good to go.
+#. Describe your changes using
+   `Conventional Commits <https://www.conventionalcommits.org/en/>`_.
 #. Publish your branch to your fork (``origin``).
 #. Create a pull request from the Branch, which contains your changes to
-   MatrixCtl's ``develop`` branch.
+   MatrixCtl's ``main`` branch.
 #. Once the pull request is reviewed and merged you can pull the changes from
    ``upstream`` (the original repository) to your local repository and start
    over again from ``5.``. Don't forget to create an issue first.

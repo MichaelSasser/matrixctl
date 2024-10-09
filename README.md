@@ -187,16 +187,8 @@ projects matrix room `#matrixctl:matrix.org`.
 ## Semantic Versioning and Branching Model
 
 This Python package uses [SemVer](https://semver.org/) for its release cycle
-and the
-[git-flow](https://danielkummer.github.io/git-flow-cheatsheet/index.html)
-branching model (by [Vincent Driessen](https://nvie.com/about/)).
-
-It has two branches with infinite lifetime. The:
-
-- [develop](https://github.com/MichaelSasser/matrixctl/tree/develop) branch is
-  the merging branch,
-- [master](https://github.com/MichaelSasser/matrixctl/tree/master) branch gets
-  updated on every release.
+follows the
+[GitHub Flow](https://docs.github.com/en/get-started/using-github/github-flow).
 
 ## Contributing
 
