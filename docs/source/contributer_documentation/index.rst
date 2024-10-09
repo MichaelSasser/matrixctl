@@ -53,7 +53,7 @@ Add a feature
 3. Clone the fork (``origin``) to your local machine.
 4. Add the original repository as a remote named ``upstream``.
 5. Create a new branch from the
-   `master branch <https://github.com/MichaelSasser/matrixctl>`_.
+   `main branch <https://github.com/MichaelSasser/matrixctl>`_.
    Make sure you use the
    `GitHub Flow <https://docs.github.com/en/get-started/using-github/github-flow>`_.
    For example:

@@ -35,8 +35,8 @@ from matrixctl.handlers.yaml import YAML
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
-# API: https://github.com/matrix-org/synapse/blob/master/docs/admin_api/
-#              user_admin_api.rst
+# API:
+# https://element-hq.github.io/synapse/latest/admin_api/user_admin_api.html
 
 
 logger = logging.getLogger(__name__)

@@ -50,7 +50,7 @@ Homepage = "https://michaelsasser.github.io/matrixctl/index.html"
 Documentation = "https://michaelsasser.github.io/matrixctl/index.html"
 Repository = "https://github.com/MichaelSasser/matrixctl"
 Issues = "https://github.com/MichaelSasser/matrixctl/issues"
-Changelog = "https://github.com/MichaelSasser/matrixctl/blob/master/CHANGELOG.md"
+Changelog = "https://github.com/MichaelSasser/matrixctl/blob/main/CHANGELOG.md"
 
 [tool.rye]
 managed = true
