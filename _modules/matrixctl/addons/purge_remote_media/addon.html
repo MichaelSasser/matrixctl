@@ -1,22 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addons.purge_remote_media.addon &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>matrixctl.addons.purge_remote_media.addon &mdash; MatrixCtl 0.12.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=61ccb1f1"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -33,9 +32,6 @@
           <a href="../../../../index.html" class="icon icon-home">
             MatrixCtl
           </a>
-              <div class="version">
-                0.12.0-beta.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -77,9 +73,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for matrixctl.addons.purge_remote_media.addon</h1><div class="highlight"><pre>
-<span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># matrixctl</span>
-<span class="c1"># Copyright (c) 2021  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span></span><span class="c1"># matrixctl</span>
+<span class="c1"># Copyright (c) 2021-2023  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
 <span class="c1">#</span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -105,6 +100,7 @@
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timezone</span>
 
 <span class="kn">from</span> <span class="nn">matrixctl.errors</span> <span class="kn">import</span> <span class="n">InternalResponseError</span>
 <span class="kn">from</span> <span class="nn">matrixctl.handlers.api</span> <span class="kn">import</span> <span class="n">RequestBuilder</span>
@@ -122,7 +118,9 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="addon"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.purge_remote_media.addon.addon">[docs]</a><span class="k">def</span> <span class="nf">addon</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="addon">
+<a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.purge_remote_media.addon.addon">[docs]</a>
+<span class="k">def</span> <span class="nf">addon</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove remote media.</span>
 
 <span class="sd">    Parameters</span>
@@ -139,7 +137,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">handle_timestamp</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">force</span><span class="p">)</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">handle_timestamp</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">arg</span><span class="o">.</span><span class="n">force</span><span class="p">)</span>
 
     <span class="n">req</span><span class="p">:</span> <span class="n">RequestBuilder</span> <span class="o">=</span> <span class="n">RequestBuilder</span><span class="p">(</span>
         <span class="n">token</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;token&quot;</span><span class="p">),</span>
@@ -154,21 +152,21 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">response</span><span class="p">:</span> <span class="n">Response</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">InternalResponseError</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The user could not be promoted or demote.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;The user could not be promoted or demote.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="mi">1</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">json_response</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;The JSON response could not be loaded by MatrixCtl.&quot;</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The response was: </span><span class="si">{</span><span class="n">response</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;The JSON response could not be loaded by MatrixCtl.&quot;</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The response was: </span><span class="si">{</span><span class="n">response</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span>
+        <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
 
     <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">to_json</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_response</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
-            <span class="k">return</span> <span class="mi">0</span>
         <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unable to process the response data to JSON.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unable to process the response data to JSON.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="mi">1</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleted Media Files: </span><span class="si">{</span><span class="n">json_response</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -176,7 +174,10 @@
     <span class="k">return</span> <span class="mi">0</span></div>
 
 
-<div class="viewcode-block" id="handle_timestamp"><a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.purge_remote_media.addon.handle_timestamp">[docs]</a><span class="k">def</span> <span class="nf">handle_timestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+
+<div class="viewcode-block" id="handle_timestamp">
+<a class="viewcode-back" href="../../../../contributer_documentation/addons.html#matrixctl.addons.purge_remote_media.addon.handle_timestamp">[docs]</a>
+<span class="k">def</span> <span class="nf">handle_timestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Ask or generate timestamp.</span>
 
 <span class="sd">    Parameters</span>
@@ -192,24 +193,26 @@
 <span class="sd">        The same timestamp but sanitized, or the timestamp of this exact time.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ts</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
+    <span class="n">ts</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">timestamp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span>
                 <span class="s2">&quot;You are about to delete all remote media, that wasn&#39;t &quot;</span>
-                <span class="s2">&quot;accessed in the last seven days&quot;</span>
+                <span class="s2">&quot;accessed in the last seven days&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">ask_question</span><span class="p">(</span><span class="s2">&quot;Do you want to continue?&quot;</span><span class="p">):</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">ts</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Delete until dt = </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="ne">OverflowError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span>
-            <span class="s2">&quot;The argument timestamp = </span><span class="si">%s</span><span class="s2"> is not a valid timestamp.&quot;</span><span class="p">,</span> <span class="n">timestamp</span>
+            <span class="s2">&quot;The argument timestamp = </span><span class="si">%s</span><span class="s2"> is not a valid timestamp.&quot;</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">return</span> <span class="n">timestamp</span></div>
+
 
 
 <span class="c1"># vim: set ft=python :</span>
@@ -222,7 +225,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Michael Sasser.</p>
+    <p>&#169; Copyright 2024, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

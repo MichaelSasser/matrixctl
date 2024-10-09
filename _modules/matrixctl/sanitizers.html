@@ -1,22 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.sanitizers &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>matrixctl.sanitizers &mdash; MatrixCtl 0.12.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=61ccb1f1"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,9 +32,6 @@
           <a href="../../index.html" class="icon icon-home">
             MatrixCtl
           </a>
-              <div class="version">
-                0.12.0-beta.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -77,9 +73,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for matrixctl.sanitizers</h1><div class="highlight"><pre>
-<span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># matrixctl</span>
-<span class="c1"># Copyright (c) 2020  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span></span><span class="c1"># matrixctl</span>
+<span class="c1"># Copyright (c) 2020-2023  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
 <span class="c1">#</span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -119,9 +114,10 @@
 <span class="n">ROOM_ID_PATTERN</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\!.*\:.*\..*$&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="MessageType"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType">[docs]</a><span class="nd">@unique</span>
+<div class="viewcode-block" id="MessageType">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType">[docs]</a>
+<span class="nd">@unique</span>
 <span class="k">class</span> <span class="nc">MessageType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this enum for describing message types.</span>
 
 <span class="sd">    Supported events:</span>
@@ -155,7 +151,10 @@
     <span class="n">M_ROOM_REDACTION</span> <span class="o">=</span> <span class="s2">&quot;m.room.redaction&quot;</span></div>
 
 
-<div class="viewcode-block" id="sanitize_message_type"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_message_type">[docs]</a><span class="k">def</span> <span class="nf">sanitize_message_type</span><span class="p">(</span>
+
+<div class="viewcode-block" id="sanitize_message_type">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_message_type">[docs]</a>
+<span class="k">def</span> <span class="nf">sanitize_message_type</span><span class="p">(</span>
     <span class="n">message_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">MessageType</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sanitize an message type.</span>
@@ -199,7 +198,10 @@
     <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="sanitize"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize">[docs]</a><span class="k">def</span> <span class="nf">sanitize</span><span class="p">(</span>
+
+<div class="viewcode-block" id="sanitize">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize">[docs]</a>
+<span class="k">def</span> <span class="nf">sanitize</span><span class="p">(</span>
     <span class="n">pattern</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">identifier</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">error_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -235,7 +237,10 @@
     <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="sanitize_event_identifier"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_event_identifier">[docs]</a><span class="k">def</span> <span class="nf">sanitize_event_identifier</span><span class="p">(</span>
+
+<div class="viewcode-block" id="sanitize_event_identifier">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_event_identifier">[docs]</a>
+<span class="k">def</span> <span class="nf">sanitize_event_identifier</span><span class="p">(</span>
     <span class="n">event_identifier</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sanitize an event identifier.</span>
@@ -243,12 +248,12 @@
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    &gt;&gt;&gt; sanitize_event_identifier(</span>
-<span class="sd">    ...    &quot;$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y&quot;</span>
+<span class="sd">    ...     &quot;$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y&quot;</span>
 <span class="sd">    ... )</span>
 <span class="sd">    &#39;$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y&#39;</span>
 
 <span class="sd">    &gt;&gt;&gt; sanitize_event_identifier(</span>
-<span class="sd">    ...    &quot; $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y &quot;</span>
+<span class="sd">    ...     &quot; $event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y &quot;</span>
 <span class="sd">    ... )</span>
 <span class="sd">    &#39;$event-abcdefghijklmH4omLrEumu7Pd01Qp-LySpK_Y&#39;</span>
 
@@ -280,21 +285,20 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sanitize_user_identifier"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_user_identifier">[docs]</a><span class="k">def</span> <span class="nf">sanitize_user_identifier</span><span class="p">(</span>
+
+<div class="viewcode-block" id="sanitize_user_identifier">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_user_identifier">[docs]</a>
+<span class="k">def</span> <span class="nf">sanitize_user_identifier</span><span class="p">(</span>
     <span class="n">user_identifier</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sanitize an user identifier.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    &gt;&gt;&gt; sanitize_user_identifier(</span>
-<span class="sd">    ...    &quot;@user:domain.tld&quot;</span>
-<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; sanitize_user_identifier(&quot;@user:domain.tld&quot;)</span>
 <span class="sd">    &#39;@user:domain.tld&#39;</span>
 
-<span class="sd">    &gt;&gt;&gt; sanitize_user_identifier(</span>
-<span class="sd">    ...    &quot; @user:domain.tld &quot;</span>
-<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; sanitize_user_identifier(&quot; @user:domain.tld &quot;)</span>
 <span class="sd">    &#39;@user:domain.tld&#39;</span>
 
 <span class="sd">    &gt;&gt;&gt; sanitize_user_identifier(&quot;something invalid&quot;)</span>
@@ -325,21 +329,20 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sanitize_room_identifier"><a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_room_identifier">[docs]</a><span class="k">def</span> <span class="nf">sanitize_room_identifier</span><span class="p">(</span>
+
+<div class="viewcode-block" id="sanitize_room_identifier">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_room_identifier">[docs]</a>
+<span class="k">def</span> <span class="nf">sanitize_room_identifier</span><span class="p">(</span>
     <span class="n">room_identifier</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sanitize an room identifier.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    &gt;&gt;&gt; sanitize_room_identifier(</span>
-<span class="sd">    ...    &quot;!room:domain.tld&quot;</span>
-<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; sanitize_room_identifier(&quot;!room:domain.tld&quot;)</span>
 <span class="sd">    &#39;!room:domain.tld&#39;</span>
 
-<span class="sd">    &gt;&gt;&gt; sanitize_room_identifier(</span>
-<span class="sd">    ...    &quot; !room:domain.tld &quot;</span>
-<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; sanitize_room_identifier(&quot; !room:domain.tld &quot;)</span>
 <span class="sd">    &#39;!room:domain.tld&#39;</span>
 
 <span class="sd">    &gt;&gt;&gt; sanitize_room_identifier(&quot;something invalid&quot;)</span>
@@ -370,6 +373,7 @@
     <span class="p">)</span></div>
 
 
+
 <span class="c1"># vim: set ft=python :</span>
 </pre></div>
 
@@ -380,7 +384,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Michael Sasser.</p>
+    <p>&#169; Copyright 2024, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

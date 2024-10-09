@@ -1,23 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SSH Public Key &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>SSH Public Key &mdash; MatrixCtl 0.12.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=61ccb1f1"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,9 +35,6 @@
           <a href="../index.html" class="icon icon-home">
             MatrixCtl
           </a>
-              <div class="version">
-                0.12.0-beta.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -87,7 +83,7 @@
            <div itemprop="articleBody">
              
   <section id="ssh-public-key">
-<h1>SSH Public Key<a class="headerlink" href="#ssh-public-key" title="Permalink to this heading"></a></h1>
+<h1>SSH Public Key<a class="headerlink" href="#ssh-public-key" title="Link to this heading"></a></h1>
 <p>To get easy access to the other matrix plugins (e.g. bridges) and other
 additional functionality, to communicate with the OCI containers, you need to
 have a ssh public key installed on your matrix host server.
@@ -111,7 +107,7 @@ section. If you don’t want to write your own playbook, follow this
 guide.</p>
 </div>
 <section id="check-your-key-pair">
-<h2>Check your key pair<a class="headerlink" href="#check-your-key-pair" title="Permalink to this heading"></a></h2>
+<h2>Check your key pair<a class="headerlink" href="#check-your-key-pair" title="Link to this heading"></a></h2>
 <p>Check, if you alreadey have a key pair.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls<span class="w"> </span>-la<span class="w"> </span>~/.ssh/id_*.pub
 <span class="go">-rw-r--r-- 1 michael users 767 30. Sep 2014  /home/michael/.ssh/id_rsa.pub</span>
@@ -130,7 +126,7 @@ the section: <a class="reference internal" href="#generate-key-pair"><span class
 </div>
 </section>
 <section id="generate-key-pair">
-<h2>Generate key pair<a class="headerlink" href="#generate-key-pair" title="Permalink to this heading"></a></h2>
+<h2>Generate key pair<a class="headerlink" href="#generate-key-pair" title="Link to this heading"></a></h2>
 <p>To generate your key pair run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>~/.ssh
 <span class="gp">$ </span>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>rsa<span class="w"> </span>-b<span class="w"> </span><span class="m">4096</span><span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;your_email@domain.tld&quot;</span>
@@ -212,7 +208,7 @@ the section: <a class="reference internal" href="#generate-key-pair"><span class
 </div>
 </section>
 <section id="copy-public-key">
-<h2>Copy Public Key<a class="headerlink" href="#copy-public-key" title="Permalink to this heading"></a></h2>
+<h2>Copy Public Key<a class="headerlink" href="#copy-public-key" title="Link to this heading"></a></h2>
 <p>Now copy your public key to your Server:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ssh-copy-id<span class="w"> </span>-i<span class="w"> </span>~/.ssh/id_rsa.pub<span class="w"> </span>user@matrix.domain.tld
 </pre></div>
@@ -231,7 +227,7 @@ the section: <a class="reference internal" href="#generate-key-pair"><span class
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Michael Sasser.</p>
+    <p>&#169; Copyright 2024, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

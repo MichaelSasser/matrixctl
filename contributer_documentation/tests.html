@@ -1,23 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tests &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Tests &mdash; MatrixCtl 0.12.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=61ccb1f1"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,9 +35,6 @@
           <a href="../index.html" class="icon icon-home">
             MatrixCtl
           </a>
-              <div class="version">
-                0.12.0-beta.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -89,601 +85,601 @@
            <div itemprop="articleBody">
              
   <section id="tests">
-<h1>Tests<a class="headerlink" href="#tests" title="Permalink to this heading"></a></h1>
+<h1>Tests<a class="headerlink" href="#tests" title="Link to this heading"></a></h1>
 <section id="handlers">
-<h2>Handlers<a class="headerlink" href="#handlers" title="Permalink to this heading"></a></h2>
+<h2>Handlers<a class="headerlink" href="#handlers" title="Link to this heading"></a></h2>
 <p>Handlers in MatrixCtl are used to handle the communication between the server
 and the <a class="reference internal" href="addons.html#addons"><span class="std std-ref">Addons</span></a> or to load config files.</p>
 <section id="module-tests.matrixctl.handlers.conftest">
-<span id="fixtures"></span><h3>Fixtures<a class="headerlink" href="#module-tests.matrixctl.handlers.conftest" title="Permalink to this heading"></a></h3>
+<span id="fixtures"></span><h3>Fixtures<a class="headerlink" href="#module-tests.matrixctl.handlers.conftest" title="Link to this heading"></a></h3>
 <p>Create handler fixtures for testing.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.conftest.yaml">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.conftest.</span></span><span class="sig-name descname"><span class="pre">yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/conftest.html#yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.conftest.yaml" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.conftest.</span></span><span class="sig-name descname"><span class="pre">yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/conftest.html#yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.conftest.yaml" title="Link to this definition"></a></dt>
 <dd><p>Create a fixture for the YAML class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-class docutils literal notranslate"><span class="pre">YAML</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="handlers.html#matrixctl.handlers.yaml.YAML" title="matrixctl.handlers.yaml.YAML"><code class="xref py py-class docutils literal notranslate"><span class="pre">YAML</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 </section>
 <section id="module-tests.matrixctl.handlers.test_yaml">
-<span id="yaml"></span><h3>YAML<a class="headerlink" href="#module-tests.matrixctl.handlers.test_yaml" title="Permalink to this heading"></a></h3>
+<span id="yaml"></span><h3>YAML<a class="headerlink" href="#module-tests.matrixctl.handlers.test_yaml" title="Link to this heading"></a></h3>
 <p>Test the yaml handler.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.test_yaml.test_get_ansible_playbook">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_ansible_playbook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_ansible_playbook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_ansible_playbook" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_ansible_playbook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_ansible_playbook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_ansible_playbook" title="Link to this definition"></a></dt>
 <dd><p>Test ansible -&gt; playbook.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.test_yaml.test_get_api_domain">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_api_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_api_domain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_api_domain" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_api_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_api_domain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_api_domain" title="Link to this definition"></a></dt>
 <dd><p>Test api -&gt; domain.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.test_yaml.test_get_api_token">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_api_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_api_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_api_token" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_api_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_api_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_api_token" title="Link to this definition"></a></dt>
 <dd><p>Test api -&gt; token.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.test_yaml.test_get_api_username">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_api_username</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_api_username"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_api_username" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_api_username</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_api_username"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_api_username" title="Link to this definition"></a></dt>
 <dd><p>Test api -&gt; username.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.test_yaml.test_get_ssh_address">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_ssh_address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_ssh_address"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_ssh_address" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_ssh_address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_ssh_address"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_ssh_address" title="Link to this definition"></a></dt>
 <dd><p>Test ssh -&gt; address.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.test_yaml.test_get_ssh_port">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_ssh_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_ssh_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_ssh_port" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_ssh_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_ssh_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_ssh_port" title="Link to this definition"></a></dt>
 <dd><p>Test ssh -&gt; port.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.test_yaml.test_get_ssh_user">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_ssh_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_ssh_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_ssh_user" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_ssh_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_ssh_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_ssh_user" title="Link to this definition"></a></dt>
 <dd><p>Test ssh -&gt; user.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.test_yaml.test_get_synapse_playbook">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_synapse_playbook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_synapse_playbook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_synapse_playbook" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_get_synapse_playbook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_get_synapse_playbook"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_get_synapse_playbook" title="Link to this definition"></a></dt>
 <dd><p>Test synapse -&gt; playbook.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.test_yaml.test_repr">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_repr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_repr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_repr" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_repr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_repr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_repr" title="Link to this definition"></a></dt>
 <dd><p>Test __repr__().</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.handlers.test_yaml.test_str">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_str" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.handlers.test_yaml.</span></span><span class="sig-name descname"><span class="pre">test_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/handlers/test_yaml.html#test_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.handlers.test_yaml.test_str" title="Link to this definition"></a></dt>
 <dd><p>Test __str__().</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 </section>
 <section id="module-tests.matrixctl.test_sanitizers">
-<span id="sanitizers"></span><h3>Sanitizers<a class="headerlink" href="#module-tests.matrixctl.test_sanitizers" title="Permalink to this heading"></a></h3>
+<span id="sanitizers"></span><h3>Sanitizers<a class="headerlink" href="#module-tests.matrixctl.test_sanitizers" title="Link to this heading"></a></h3>
 <p>Test the sanitizers.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid identifier.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid identifier with spaces around.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_3">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_3</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_3" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_3</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_3" title="Link to this definition"></a></dt>
 <dd><p>Test invalid identifier (without $).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_4">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_4" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_4" title="Link to this definition"></a></dt>
 <dd><p>Test invalid identifier (empty str).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_5">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_5</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_5" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_5</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_5" title="Link to this definition"></a></dt>
 <dd><p>Test missing identifier (None).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_6">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_6</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_6" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_event_identifier_6</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_event_identifier_6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_event_identifier_6" title="Link to this definition"></a></dt>
 <dd><p>Test wrong type.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_invalid">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_invalid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_invalid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_invalid" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_invalid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_invalid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_invalid" title="Link to this definition"></a></dt>
 <dd><p>Test invalid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_lower_case">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_lower_case</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_lower_case"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_lower_case" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_lower_case</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_lower_case"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_lower_case" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as lowercase string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_avatar_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_avatar_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_avatar_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_avatar_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_avatar_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_avatar_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_avatar_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as MessageType.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_avatar_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_avatar_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_avatar_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_avatar_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_avatar_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_avatar_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_avatar_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_create_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_create_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_create_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_create_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_create_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_create_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_create_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as MessageType.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_create_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_create_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_create_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_create_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_create_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_create_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_create_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_join_rules_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_join_rules_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_join_rules_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_join_rules_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_join_rules_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_join_rules_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_join_rules_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as MessageType.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_join_rules_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_join_rules_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_join_rules_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_join_rules_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_join_rules_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_join_rules_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_join_rules_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_member_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_member_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_member_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_member_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_member_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_member_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_member_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as MessageType.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_member_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_member_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_member_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_member_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_member_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_member_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_member_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_message_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_message_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_message_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_message_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_message_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_message_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_message_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as MessageType.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_message_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_message_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_message_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_message_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_message_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_message_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_message_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_name_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_name_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_name_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_name_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_name_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_name_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_name_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as MessageType.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_name_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_name_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_name_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_name_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_name_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_name_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_name_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_pinned_events_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_pinned_events_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_pinned_events_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_pinned_events_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_pinned_events_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_pinned_events_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_pinned_events_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as MessageType.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_pinned_events_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_pinned_events_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_pinned_events_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_pinned_events_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_pinned_events_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_pinned_events_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_pinned_events_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_power_levels_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_power_levels_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_power_levels_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_power_levels_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_power_levels_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_power_levels_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_power_levels_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as MessageType.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_power_levels_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_power_levels_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_power_levels_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_power_levels_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_power_levels_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_power_levels_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_power_levels_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_redaction_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_redaction_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_redaction_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_redaction_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_redaction_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_redaction_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_redaction_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as MessageType.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_redaction_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_redaction_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_redaction_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_redaction_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_redaction_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_redaction_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_redaction_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_topic_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_topic_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_topic_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_topic_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_topic_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_topic_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_topic_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as MessageType.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_topic_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_topic_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_topic_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_topic_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_m_room_topic_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_m_room_topic_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_m_room_topic_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_none">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_none</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_none"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_none" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_none</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_none"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_none" title="Link to this definition"></a></dt>
 <dd><p>Test none case.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_message_type_with_spaces">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_with_spaces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_with_spaces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_with_spaces" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_message_type_with_spaces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_message_type_with_spaces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_message_type_with_spaces" title="Link to this definition"></a></dt>
 <dd><p>Test valid message type as string with spaces around.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid identifier.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid identifier with spaces around.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_3">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_3</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_3" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_3</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_3" title="Link to this definition"></a></dt>
 <dd><p>Test invalid identifier (without $).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_4">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_4" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_4" title="Link to this definition"></a></dt>
 <dd><p>Test invalid identifier (empty str).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_5">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_5</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_5" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_5</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_5" title="Link to this definition"></a></dt>
 <dd><p>Test missing identifier (None).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_6">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_6</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_6" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_room_identifier_6</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_room_identifier_6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_room_identifier_6" title="Link to this definition"></a></dt>
 <dd><p>Test wrong type.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_1">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_1" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_1" title="Link to this definition"></a></dt>
 <dd><p>Test valid identifier.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_2">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_2" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_2" title="Link to this definition"></a></dt>
 <dd><p>Test valid identifier with spaces around.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_3">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_3</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_3" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_3</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_3" title="Link to this definition"></a></dt>
 <dd><p>Test invalid identifier (without $).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_4">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_4" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_4</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_4" title="Link to this definition"></a></dt>
 <dd><p>Test invalid identifier (empty str).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_5">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_5</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_5" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_5</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_5" title="Link to this definition"></a></dt>
 <dd><p>Test missing identifier (None).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_6">
-<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_6</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_6" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">tests.matrixctl.test_sanitizers.</span></span><span class="sig-name descname"><span class="pre">test_sanitize_user_identifier_6</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/matrixctl/test_sanitizers.html#test_sanitize_user_identifier_6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.matrixctl.test_sanitizers.test_sanitize_user_identifier_6" title="Link to this definition"></a></dt>
 <dd><p>Test wrong type.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -703,7 +699,7 @@ and the <a class="reference internal" href="addons.html#addons"><span class="std
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Michael Sasser.</p>
+    <p>&#169; Copyright 2024, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -1,23 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Type Hints, Structures and Errors &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>Type Hints, Structures and Errors &mdash; MatrixCtl 0.12.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=61ccb1f1"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,9 +35,6 @@
           <a href="../index.html" class="icon icon-home">
             MatrixCtl
           </a>
-              <div class="version">
-                0.12.0-beta.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -89,7 +85,7 @@
            <div itemprop="articleBody">
              
   <section id="type-hints-structures-and-errors">
-<h1>Type Hints, Structures and Errors<a class="headerlink" href="#type-hints-structures-and-errors" title="Permalink to this heading"></a></h1>
+<h1>Type Hints, Structures and Errors<a class="headerlink" href="#type-hints-structures-and-errors" title="Link to this heading"></a></h1>
 <p>MatrixCtl is strictly typed to avoid some bugs and help contributors in the
 future to easily identify what they are dealing with. They can be used by third
 party tools such as type checkers, IDEs, linters, etc.</p>
@@ -99,181 +95,181 @@ type hints to e.g. the configuration).</p>
 user that, getting a traceback is a bug in this application.
 They are giving the person instructions, how to hand in a bug report.</p>
 <section id="module-matrixctl.typehints">
-<span id="type-hints"></span><h2>Type Hints<a class="headerlink" href="#module-matrixctl.typehints" title="Permalink to this heading"></a></h2>
+<span id="type-hints"></span><h2>Type Hints<a class="headerlink" href="#module-matrixctl.typehints" title="Link to this heading"></a></h2>
 <p>Use this module for custom type definitions.</p>
 </section>
 <section id="module-matrixctl.structures">
-<span id="structures"></span><h2>Structures<a class="headerlink" href="#module-matrixctl.structures" title="Permalink to this heading"></a></h2>
+<span id="structures"></span><h2>Structures<a class="headerlink" href="#module-matrixctl.structures" title="Link to this heading"></a></h2>
 <p>Use this module for structures.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="matrixctl.structures.Config">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.Config" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
 <p>Cast the YAML config to a typed dict.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.Config.server">
-<span class="sig-name descname"><span class="pre">server</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServer</span></code></a></em><a class="headerlink" href="#matrixctl.structures.Config.server" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">server</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServer</span></code></a></em><a class="headerlink" href="#matrixctl.structures.Config.server" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.Config.servers">
-<span class="sig-name descname"><span class="pre">servers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference internal" href="#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServer</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#matrixctl.structures.Config.servers" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">servers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference internal" href="#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServer</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#matrixctl.structures.Config.servers" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServer</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServer" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServer</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
 <p>Add a <cite>server</cite> to the YAML config structure.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServer.ansible">
-<span class="sig-name descname"><span class="pre">ansible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerAnsible" title="matrixctl.structures.ConfigServerAnsible"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerAnsible</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.ansible" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ansible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerAnsible" title="matrixctl.structures.ConfigServerAnsible"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerAnsible</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.ansible" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServer.api">
-<span class="sig-name descname"><span class="pre">api</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerAPI" title="matrixctl.structures.ConfigServerAPI"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerAPI</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.api" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">api</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerAPI" title="matrixctl.structures.ConfigServerAPI"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerAPI</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.api" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServer.maintenance">
-<span class="sig-name descname"><span class="pre">maintenance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerMaintenance" title="matrixctl.structures.ConfigServerMaintenance"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerMaintenance</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.maintenance" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">maintenance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerMaintenance" title="matrixctl.structures.ConfigServerMaintenance"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerMaintenance</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.maintenance" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServer.ssh">
-<span class="sig-name descname"><span class="pre">ssh</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerSSH" title="matrixctl.structures.ConfigServerSSH"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerSSH</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.ssh" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ssh</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerSSH" title="matrixctl.structures.ConfigServerSSH"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerSSH</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.ssh" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServer.synapse">
-<span class="sig-name descname"><span class="pre">synapse</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerSynapse" title="matrixctl.structures.ConfigServerSynapse"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerSynapse</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.synapse" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">synapse</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerSynapse" title="matrixctl.structures.ConfigServerSynapse"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerSynapse</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.synapse" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerAPI</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerAPI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerAPI</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerAPI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
 <p>Add <cite>api</cite> to <cite>server</cite> in the YAML config structure.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI.concurrent_limit">
-<span class="sig-name descname"><span class="pre">concurrent_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.concurrent_limit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">concurrent_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.concurrent_limit" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI.domain">
-<span class="sig-name descname"><span class="pre">domain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.domain" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">domain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.domain" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI.token">
-<span class="sig-name descname"><span class="pre">token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.token" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.token" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI.username">
-<span class="sig-name descname"><span class="pre">username</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.username" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">username</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.username" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAnsible">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerAnsible</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerAnsible"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerAnsible" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerAnsible</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerAnsible"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerAnsible" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
 <p>Add <cite>ansible</cite> to <cite>server</cite> in the YAML config structure.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAnsible.playbook">
-<span class="sig-name descname"><span class="pre">playbook</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAnsible.playbook" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">playbook</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAnsible.playbook" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerMaintenance">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerMaintenance</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerMaintenance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerMaintenance" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerMaintenance</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerMaintenance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerMaintenance" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
 <p>Add <cite>maintenance</cite> to <cite>server</cite> in the YAML config structure.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerMaintenance.tasks">
-<span class="sig-name descname"><span class="pre">tasks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#matrixctl.structures.ConfigServerMaintenance.tasks" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">tasks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#matrixctl.structures.ConfigServerMaintenance.tasks" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerSSH">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerSSH</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerSSH"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerSSH" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerSSH</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerSSH"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerSSH" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
 <p>Add <cite>ssh</cite> to <cite>server</cite> in the YAML config structure.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerSSH.address">
-<span class="sig-name descname"><span class="pre">address</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerSSH.address" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">address</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerSSH.address" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerSSH.port">
-<span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerSSH.port" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerSSH.port" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerSSH.user">
-<span class="sig-name descname"><span class="pre">user</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerSSH.user" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">user</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerSSH.user" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerSynapse">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerSynapse</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerSynapse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerSynapse" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerSynapse</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerSynapse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerSynapse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
 <p>Add <cite>synapse</cite> to <cite>server</cite> in the YAML config structure.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerSynapse.playbook">
-<span class="sig-name descname"><span class="pre">playbook</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerSynapse.playbook" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">playbook</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerSynapse.playbook" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
 <section id="module-matrixctl.errors">
-<span id="errors"></span><h2>Errors<a class="headerlink" href="#module-matrixctl.errors" title="Permalink to this heading"></a></h2>
+<span id="errors"></span><h2>Errors<a class="headerlink" href="#module-matrixctl.errors" title="Link to this heading"></a></h2>
 <p>Use the exceptions of this module for the application.</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="matrixctl.errors.ConfigFileError">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.errors.</span></span><span class="sig-name descname"><span class="pre">ConfigFileError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/errors.html#ConfigFileError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.errors.ConfigFileError" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.errors.</span></span><span class="sig-name descname"><span class="pre">ConfigFileError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/errors.html#ConfigFileError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.errors.ConfigFileError" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#matrixctl.errors.Error" title="matrixctl.errors.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a></p>
 <p>Use this exception class for everything related to the config file.</p>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="matrixctl.errors.Error">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.errors.</span></span><span class="sig-name descname"><span class="pre">Error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/errors.html#Error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.errors.Error" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.errors.</span></span><span class="sig-name descname"><span class="pre">Error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/errors.html#Error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.errors.Error" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 <p>Use this exception class as base error for the project.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.errors.Error.BUGMSG">
-<span class="sig-name descname"><span class="pre">BUGMSG</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'If</span> <span class="pre">you</span> <span class="pre">discover</span> <span class="pre">this</span> <span class="pre">message,</span> <span class="pre">please</span> <span class="pre">try</span> <span class="pre">updating</span> <span class="pre">MatrixCtl.</span> <span class="pre">If</span> <span class="pre">you</span> <span class="pre">see</span> <span class="pre">this</span> <span class="pre">message</span> <span class="pre">again,</span> <span class="pre">we</span> <span class="pre">would</span> <span class="pre">be</span> <span class="pre">glad,</span> <span class="pre">if</span> <span class="pre">you</span> <span class="pre">would</span> <span class="pre">run</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">command</span> <span class="pre">again</span> <span class="pre">in</span> <span class="pre">debug-mode</span> <span class="pre">(matrixctl</span> <span class="pre">-d</span> <span class="pre">[...])</span> <span class="pre">and</span> <span class="pre">hand</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">&quot;Bug</span> <span class="pre">report&quot;</span> <span class="pre">at</span> <span class="pre">https://github.com/MichaelSasser/matrixctl/issues</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">complete</span> <span class="pre">output.\n\nPython</span> <span class="pre">version:</span> <span class="pre">3.10.10</span> <span class="pre">final\nMatrixCtl</span> <span class="pre">version:</span> <span class="pre">0.12.0b2</span> <span class="pre">\n'</span></em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">BUGMSG</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'If</span> <span class="pre">you</span> <span class="pre">discover</span> <span class="pre">this</span> <span class="pre">message,</span> <span class="pre">please</span> <span class="pre">try</span> <span class="pre">updating</span> <span class="pre">MatrixCtl.</span> <span class="pre">If</span> <span class="pre">you</span> <span class="pre">see</span> <span class="pre">this</span> <span class="pre">message</span> <span class="pre">again,</span> <span class="pre">we</span> <span class="pre">would</span> <span class="pre">be</span> <span class="pre">glad,</span> <span class="pre">if</span> <span class="pre">you</span> <span class="pre">would</span> <span class="pre">run</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">command</span> <span class="pre">again</span> <span class="pre">in</span> <span class="pre">debug-mode</span> <span class="pre">(matrixctl</span> <span class="pre">-d</span> <span class="pre">[...])</span> <span class="pre">and</span> <span class="pre">hand</span> <span class="pre">in</span> <span class="pre">a</span> <span class="pre">&quot;Bug</span> <span class="pre">report&quot;</span> <span class="pre">at</span> <span class="pre">https://github.com/MichaelSasser/matrixctl/issues</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">complete</span> <span class="pre">output.\n\nPython</span> <span class="pre">version:</span> <span class="pre">3.10.15</span> <span class="pre">final\nMatrixCtl</span> <span class="pre">version:</span> <span class="pre">0.12.0</span> <span class="pre">\n'</span></em><a class="headerlink" href="#matrixctl.errors.Error.BUGMSG" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py exception">
-<dt class="sig sig-object py" id="matrixctl.errors.ExitQWorker">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.errors.</span></span><span class="sig-name descname"><span class="pre">ExitQWorker</span></span><a class="reference internal" href="../_modules/matrixctl/errors.html#ExitQWorker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.errors.ExitQWorker" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
-<p>Use this exception when you want to exit an Queue worker.</p>
+<dt class="sig sig-object py" id="matrixctl.errors.InternalResponseError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.errors.</span></span><span class="sig-name descname"><span class="pre">InternalResponseError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/errors.html#InternalResponseError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.errors.InternalResponseError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matrixctl.errors.Error" title="matrixctl.errors.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a></p>
+<p>Use this exception class for everything else.</p>
 </dd></dl>
 
 <dl class="py exception">
-<dt class="sig sig-object py" id="matrixctl.errors.InternalResponseError">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.errors.</span></span><span class="sig-name descname"><span class="pre">InternalResponseError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/errors.html#InternalResponseError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.errors.InternalResponseError" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#matrixctl.errors.Error" title="matrixctl.errors.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a></p>
-<p>Use this exception class for everything else.</p>
+<dt class="sig sig-object py" id="matrixctl.errors.QWorkerExit">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.errors.</span></span><span class="sig-name descname"><span class="pre">QWorkerExit</span></span><a class="reference internal" href="../_modules/matrixctl/errors.html#QWorkerExit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.errors.QWorkerExit" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Use this exception when you want to exit an Queue worker.</p>
 </dd></dl>
 
 </section>
@@ -290,7 +286,7 @@ They are giving the person instructions, how to hand in a bug report.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Michael Sasser.</p>
+    <p>&#169; Copyright 2024, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

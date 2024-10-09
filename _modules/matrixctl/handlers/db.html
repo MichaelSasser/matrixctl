@@ -1,22 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.handlers.db &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>matrixctl.handlers.db &mdash; MatrixCtl 0.12.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=61ccb1f1"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -33,9 +32,6 @@
           <a href="../../../index.html" class="icon icon-home">
             MatrixCtl
           </a>
-              <div class="version">
-                0.12.0-beta.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -77,9 +73,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for matrixctl.handlers.db</h1><div class="highlight"><pre>
-<span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># matrixctl</span>
-<span class="c1"># Copyright (c) 2020  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span></span><span class="c1"># matrixctl</span>
+<span class="c1"># Copyright (c) 2020-2023  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
 <span class="c1">#</span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -95,7 +90,6 @@
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="sd">&quot;&quot;&quot;Talk to the the database.&quot;&quot;&quot;</span>
-
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
@@ -120,8 +114,9 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="DBConnectionBuilder"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder">[docs]</a><span class="k">class</span> <span class="nc">DBConnectionBuilder</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">NamedTuple</span><span class="p">):</span>
-
+<div class="viewcode-block" id="DBConnectionBuilder">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.db.DBConnectionBuilder">[docs]</a>
+<span class="k">class</span> <span class="nc">DBConnectionBuilder</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">NamedTuple</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Build the URL for an API request.&quot;&quot;&quot;</span>
 
     <span class="n">host</span><span class="p">:</span> <span class="nb">str</span>
@@ -132,7 +127,7 @@
     <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">scheme</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;postgresql&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">DBConnectionBuilder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Build the URL.</span>
 
 <span class="sd">        Parameters</span>
@@ -154,14 +149,17 @@
         <span class="k">return</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="ssh_tunnel"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.db.ssh_tunnel">[docs]</a><span class="nd">@contextmanager</span>
+
+<div class="viewcode-block" id="ssh_tunnel">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.db.ssh_tunnel">[docs]</a>
+<span class="nd">@contextmanager</span>
 <span class="k">def</span> <span class="nf">ssh_tunnel</span><span class="p">(</span>
     <span class="n">host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">remote_port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">22</span><span class="p">,</span>
-    <span class="c1"># private_key: Path | str | None = None,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an SSH tunnel.</span>
 
@@ -214,7 +212,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">tun</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                <span class="s2">&quot;SSH tunnel created using port: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">tun</span><span class="o">.</span><span class="n">local_bind_port</span>
+                <span class="s2">&quot;SSH tunnel created using port: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">tun</span><span class="o">.</span><span class="n">local_bind_port</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">yield</span> <span class="n">tun</span><span class="o">.</span><span class="n">local_bind_port</span>
         <span class="k">finally</span><span class="p">:</span>
@@ -224,7 +223,10 @@
     <span class="k">yield</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="db_connect"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.db.db_connect">[docs]</a><span class="nd">@contextmanager</span>
+
+<div class="viewcode-block" id="db_connect">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.db.db_connect">[docs]</a>
+<span class="nd">@contextmanager</span>
 <span class="k">def</span> <span class="nf">db_connect</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">psycopg</span><span class="o">.</span><span class="n">Connection</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Connect to a PostgreSQL database.</span>
 
@@ -246,7 +248,6 @@
         <span class="n">remote_port</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;database&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">),</span>
         <span class="n">enabled</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;database&quot;</span><span class="p">,</span> <span class="s2">&quot;tunnel&quot;</span><span class="p">),</span>
         <span class="c1"># skipcq PY-W0069</span>
-        <span class="c1"># private_key=yaml.get(&quot;server&quot;, &quot;database&quot;, &quot;private_key&quot;)</span>
     <span class="p">)</span> <span class="k">as</span> <span class="n">local_bind_port</span><span class="p">:</span>
         <span class="n">connection_uri</span> <span class="o">=</span> <span class="n">DBConnectionBuilder</span><span class="p">(</span>
             <span class="n">host</span><span class="o">=</span><span class="p">(</span>
@@ -255,7 +256,7 @@
                 <span class="k">else</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;ssh&quot;</span><span class="p">,</span> <span class="s2">&quot;address&quot;</span><span class="p">)</span>
             <span class="p">),</span>
             <span class="n">port</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span>
-                <span class="n">local_bind_port</span> <span class="ow">or</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;database&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">)</span>
+                <span class="n">local_bind_port</span> <span class="ow">or</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;database&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">),</span>
             <span class="p">),</span>
             <span class="n">username</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;database&quot;</span><span class="p">,</span> <span class="s2">&quot;synapse_user&quot;</span><span class="p">),</span>
             <span class="n">password</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;database&quot;</span><span class="p">,</span> <span class="s2">&quot;synapse_password&quot;</span><span class="p">),</span>
@@ -264,8 +265,8 @@
         <span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">connection_uri</span><span class="p">))</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">conn</span>
-        <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># skipcq: PYL-W0703</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Rollback initiated.BaseException: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">BaseException</span><span class="p">:</span>  <span class="c1"># skipcq: PYL-W0703</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Rollback initiated.&quot;</span><span class="p">)</span>
             <span class="n">conn</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -274,6 +275,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Connection to the Database has been closed.&quot;</span><span class="p">)</span></div>
+
 
 
 <span class="c1"># vim: set ft=python :</span>
@@ -286,7 +288,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Michael Sasser.</p>
+    <p>&#169; Copyright 2024, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

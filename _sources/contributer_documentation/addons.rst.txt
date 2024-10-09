@@ -47,32 +47,6 @@ deluser
    :undoc-members:
    :show-inheritance:
 
-adduser-jitsi
--------------
-
-.. automodule:: matrixctl.addons.adduser_jitsi.parser
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: matrixctl.addons.adduser_jitsi.addon
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-deluser-jitsi
--------------
-
-.. automodule:: matrixctl.addons.deluser_jitsi.parser
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-.. automodule:: matrixctl.addons.deluser_jitsi.addon
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 check
 -----
 
@@ -95,6 +69,24 @@ deploy
    :show-inheritance:
 
 .. automodule:: matrixctl.addons.deploy.addon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+largest-rooms
+-------------
+
+.. automodule:: matrixctl.addons.largest_rooms.parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.largest_rooms.addon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.largest_rooms.to_table
    :members:
    :undoc-members:
    :show-inheritance:
@@ -286,6 +278,19 @@ upload
    :show-inheritance:
 
 .. automodule:: matrixctl.addons.upload.addon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+download
+--------
+
+.. automodule:: matrixctl.addons.download.parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.addons.download.addon
    :members:
    :undoc-members:
    :show-inheritance:

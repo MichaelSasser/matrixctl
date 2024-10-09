@@ -1,23 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MatrixCtl documentation &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>MatrixCtl documentation &mdash; MatrixCtl 0.12.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=61ccb1f1"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -35,9 +34,6 @@
           <a href="#" class="icon icon-home">
             MatrixCtl
           </a>
-              <div class="version">
-                0.12.0-beta.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -79,7 +75,7 @@
            <div itemprop="articleBody">
              
   <section id="matrixctl-documentation">
-<h1>MatrixCtl documentation<a class="headerlink" href="#matrixctl-documentation" title="Permalink to this heading"></a></h1>
+<h1>MatrixCtl documentation<a class="headerlink" href="#matrixctl-documentation" title="Link to this heading"></a></h1>
 <p>MatrixCtl is a python program to control, manage, provision and deploy our
 matrix homeserver. I had a bunch of shell scripts doing that. Two weeks
 after using them I couldn’t remember the order in which I have to use the
@@ -112,20 +108,12 @@ features.</p>
 </ul>
 </div>
 <section id="branching-model">
-<h2>Branching Model<a class="headerlink" href="#branching-model" title="Permalink to this heading"></a></h2>
+<h2>Branching Model<a class="headerlink" href="#branching-model" title="Link to this heading"></a></h2>
 <p>This repository uses the
-<a class="reference external" href="https://danielkummer.github.io/git-flow-cheatsheet/index.html">git-flow</a>
-branching model by <a class="reference external" href="https://nvie.com/about/">Vincent Driessen</a>.
-It has two branches with infinite lifetime:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/tree/master">master</a></p></li>
-<li><p><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/tree/develop">develop</a></p></li>
-</ul>
-<p>The master branch gets updated on every release. The develop branch is the
-merging branch.</p>
+<a class="reference external" href="https://docs.github.com/en/get-started/using-github/github-flow">GitHub Flow</a>.</p>
 </section>
 <section id="command-line-tool">
-<h2>Command line tool<a class="headerlink" href="#command-line-tool" title="Permalink to this heading"></a></h2>
+<h2>Command line tool<a class="headerlink" href="#command-line-tool" title="Link to this heading"></a></h2>
 <p>MatrixCtl as a pure commandline tool. You can use it as package, if you like,
 but breaking changes may introduced, even in a minor change.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG] Command ...
@@ -146,19 +134,20 @@ Commands:
 
   Command
     adduser             Add users to the homeserver
-    adduser-jitsi       [DEPRECATED] Add users to a jitsi server
     check               Checks the deployment with Ansible
     delete-local-media  Delete cached (local) media that was last accessed
                         before a specific point in time
     delroom             Shutdown a room
     deluser             Deactivate users
-    deluser-jitsi       [DEPRECATED] Delete jitsi users
     deploy              Provision and deploy the Ansible playbook
+    download            Download a media file.
     get-event           Get an event from the database
     get-event-context   Get the context of an event
     get-events          Get events from the database
     is-admin            Check, if a user is a homeserver administrator
     joinroom            Join a user to a room
+    largest-rooms       List an approximation of the 10 largest rooms in the
+                        database
     maintenance         Run maintenance tasks
     make-room-admin     Grant a user the highest power level available to a
                         local user in this room
@@ -185,7 +174,7 @@ Report bugs to: https://github.com/MichaelSasser/matrixctl/issues/new/choose
 </div>
 </section>
 <section id="configuration-file">
-<h2>Configuration File<a class="headerlink" href="#configuration-file" title="Permalink to this heading"></a></h2>
+<h2>Configuration File<a class="headerlink" href="#configuration-file" title="Link to this heading"></a></h2>
 <p>To use this program you need to have this config file in
 <code class="docutils literal notranslate"><span class="pre">/etc/matrixctl/config</span></code> or in <code class="docutils literal notranslate"><span class="pre">~/.config/matrixctl/config</span></code>.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Define your homeservers in &quot;servers&quot; here.</span>
@@ -271,7 +260,7 @@ Report bugs to: https://github.com/MichaelSasser/matrixctl/issues/new/choose
 </div>
 </section>
 <section id="semantic-versioning">
-<h2>Semantic Versioning<a class="headerlink" href="#semantic-versioning" title="Permalink to this heading"></a></h2>
+<h2>Semantic Versioning<a class="headerlink" href="#semantic-versioning" title="Link to this heading"></a></h2>
 <p><strong>After release “1.0.0”</strong> this repository will use
 <a class="reference external" href="https://semver.org/">SemVer</a> for its release
 cycle.</p>
@@ -285,7 +274,7 @@ a “z” change (e.g. “0.1.1” -&gt; “0.1.2”).</p>
 </section>
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
@@ -293,7 +282,7 @@ a “z” change (e.g. “0.1.1” -&gt; “0.1.2”).</p>
 </ul>
 </section>
 <section id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h1>
+<h1>License<a class="headerlink" href="#license" title="Link to this heading"></a></h1>
 <p>Copyright © 2020 Michael Sasser
 &lt;<a class="reference external" href="mailto:Info&#37;&#52;&#48;MichaelSasser">Info<span>&#64;</span>MichaelSasser<span>&#46;</span>org</a>&gt;. Released under
 the GPLv3 license.</p>
@@ -309,7 +298,7 @@ the GPLv3 license.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Michael Sasser.</p>
+    <p>&#169; Copyright 2024, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

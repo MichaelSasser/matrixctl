@@ -1,22 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.handlers.yaml &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>matrixctl.handlers.yaml &mdash; MatrixCtl 0.12.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=61ccb1f1"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -33,9 +32,6 @@
           <a href="../../../index.html" class="icon icon-home">
             MatrixCtl
           </a>
-              <div class="version">
-                0.12.0-beta.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -77,9 +73,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for matrixctl.handlers.yaml</h1><div class="highlight"><pre>
-<span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># matrixctl</span>
-<span class="c1"># Copyright (c) 2020  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span></span><span class="c1"># matrixctl</span>
+<span class="c1"># Copyright (c) 2020-2023  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
 <span class="c1">#</span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -95,6 +90,7 @@
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="sd">&quot;&quot;&quot;Read and parse the configuration file with this module.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -110,7 +106,7 @@
 
 <span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Template</span>
 <span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Undefined</span>
-<span class="kn">from</span> <span class="nn">ruamel.yaml</span> <span class="kn">import</span> <span class="n">YAML</span> <span class="k">as</span> <span class="n">RuamelYAML</span>
+<span class="kn">from</span> <span class="nn">ruamel.yaml</span> <span class="kn">import</span> <span class="n">YAML</span> <span class="k">as</span> <span class="n">RuamelYAML</span>  <span class="c1"># noqa: N811</span>
 <span class="kn">from</span> <span class="nn">ruamel.yaml.error</span> <span class="kn">import</span> <span class="n">YAMLError</span>
 
 <span class="kn">from</span> <span class="nn">matrixctl</span> <span class="kn">import</span> <span class="n">__version__</span>
@@ -129,7 +125,9 @@
 
 <span class="c1"># Make sure the number of places of the source files line number does not</span>
 <span class="c1"># change. Otherwise the debug output shifts.</span>
-<div class="viewcode-block" id="tree_printer"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.tree_printer">[docs]</a><span class="k">def</span> <span class="nf">tree_printer</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="tree_printer">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.tree_printer">[docs]</a>
+<span class="k">def</span> <span class="nf">tree_printer</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the configuration file recursively.</span>
 
 <span class="sd">    Parameters</span>
@@ -146,20 +144,22 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span>
-            <span class="s2">&quot;There is something wrong with your config file.&quot;</span>
-        <span class="p">)</span>
+        <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;There is something wrong with your config file.&quot;</span>
+        <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">tree</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">├─── </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;│ &quot;</span> <span class="o">*</span> <span class="n">depth</span><span class="p">,</span>
                 <span class="n">key</span><span class="p">,</span>
                 <span class="n">secrets_filter</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span>
             <span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">├─── </span><span class="si">%s</span><span class="s2">: [</span><span class="si">%s</span><span class="s2">]&quot;</span><span class="p">,</span> <span class="s2">&quot;│ &quot;</span> <span class="o">*</span> <span class="n">depth</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">├─── </span><span class="si">%s</span><span class="s2">: [</span><span class="si">%s</span><span class="s2">]&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;│ &quot;</span> <span class="o">*</span> <span class="n">depth</span><span class="p">,</span>
+                <span class="n">key</span><span class="p">,</span>
+                <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">key</span><span class="p">]),</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">├─┬─ </span><span class="si">%s</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="s2">&quot;│ &quot;</span> <span class="o">*</span> <span class="n">depth</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
@@ -167,7 +167,10 @@
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">┴&quot;</span><span class="p">,</span> <span class="s2">&quot;│ &quot;</span> <span class="o">*</span> <span class="n">depth</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="secrets_filter"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.secrets_filter">[docs]</a><span class="k">def</span> <span class="nf">secrets_filter</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">:</span>
+
+<div class="viewcode-block" id="secrets_filter">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.secrets_filter">[docs]</a>
+<span class="k">def</span> <span class="nf">secrets_filter</span><span class="p">(</span><span class="n">tree</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Redact secrets when printing the configuration file.</span>
 
 <span class="sd">    Parameters</span>
@@ -189,28 +192,32 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="JinjaUndefined"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.JinjaUndefined">[docs]</a><span class="k">class</span> <span class="nc">JinjaUndefined</span><span class="p">(</span><span class="n">Undefined</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
 
+<div class="viewcode-block" id="JinjaUndefined">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.JinjaUndefined">[docs]</a>
+<span class="k">class</span> <span class="nc">JinjaUndefined</span><span class="p">(</span><span class="n">Undefined</span><span class="p">):</span>  <span class="c1"># type: ignore  # noqa: PGH003</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this class as undefined argument in a Jinja2 Template.</span>
 
 <span class="sd">    The class replaces every undefined template with an enpty string.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">JinjaUndefined</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return en empty string.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="YAML"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML">[docs]</a><span class="k">class</span> <span class="nc">YAML</span><span class="p">:</span>
 
+<div class="viewcode-block" id="YAML">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML">[docs]</a>
+<span class="k">class</span> <span class="nc">YAML</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use the YAML class to read and parse the configuration file(s).&quot;&quot;&quot;</span>
 
-    <span class="n">DEFAULT_PATHS</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">DEFAULT_PATHS</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Path</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/etc/matrixctl/config&quot;</span><span class="p">),</span>
         <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.config/matrixctl/config&quot;</span><span class="p">,</span>
     <span class="p">]</span>
-    <span class="n">JINJA_PREDEFINED</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">JINJA_PREDEFINED</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;home&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()),</span>
         <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">getuser</span><span class="p">(),</span>
         <span class="s2">&quot;default_ssh_port&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
@@ -219,34 +226,39 @@
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;__yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;server&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">server</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">YAML</span><span class="p">,</span>
+        <span class="n">paths</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">server</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Loading Config file(s)&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">server</span> <span class="ow">or</span> <span class="s2">&quot;default&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__yaml</span><span class="p">:</span> <span class="n">Config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_server_config</span><span class="p">(</span>
-            <span class="n">paths</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_paths_to_config</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span>
+            <span class="n">paths</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_paths_to_config</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__yaml</span><span class="p">:</span>  <span class="c1"># dict is empty</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;You need to create a configuration file for MatrixCtl. &quot;</span>
                 <span class="s2">&quot;Make sure to check out the docs: https://matrixctl.rtfd.io/en&quot;</span>
-                <span class="s2">&quot;/latest/getting_started/config_file.html&quot;</span>
+                <span class="s2">&quot;/latest/getting_started/config_file.html&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="c1"># TODO: Remove the warning below before releasing v1.0.0.</span>
             <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">__version__</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                     <span class="s2">&quot;Since MatixCtl v0.11.0 the configuration file uses the &quot;</span>
                     <span class="s2">&quot;yaml format. If you used MatrixCtl before, make sure to &quot;</span>
-                    <span class="s2">&quot;update your config file to the yaml format.&quot;</span>
+                    <span class="s2">&quot;update your config file to the yaml format.&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Config loaded for Server: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
         <span class="n">tree_printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__yaml</span><span class="p">)</span>
 
-<div class="viewcode-block" id="YAML.get_paths_to_config"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.get_paths_to_config">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="YAML.get_paths_to_config">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.get_paths_to_config">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_paths_to_config</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a tuple of path which may contain a configuration file.</span>
 
@@ -285,7 +297,10 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">paths</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>  <span class="c1"># unique, order preserved</span></div>
 
-<div class="viewcode-block" id="YAML.read_from_file"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.read_from_file">[docs]</a>    <span class="nd">@staticmethod</span>
+
+<div class="viewcode-block" id="YAML.read_from_file">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.read_from_file">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">read_from_file</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">RuamelYAML</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Config</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Read the config from a YAML file and render the Jinja2 tmplates.</span>
 
@@ -312,17 +327,17 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># The user should be able to use any file and location</span>
-            <span class="c1"># skipcq: PTC-W6004</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">path</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
                 <span class="n">template</span><span class="p">:</span> <span class="n">Template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span>
-                    <span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">undefined</span><span class="o">=</span><span class="n">JinjaUndefined</span>
+                    <span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
+                    <span class="n">undefined</span><span class="o">=</span><span class="n">JinjaUndefined</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">rendered</span> <span class="o">=</span> <span class="n">YAML</span><span class="o">.</span><span class="n">JINJA_PREDEFINED</span> <span class="o">|</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">())</span>
                 <span class="n">rendered</span><span class="p">[</span><span class="s2">&quot;home&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">())</span>
                 <span class="c1"># Override default return type t.Any with Config</span>
                 <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">rendered</span><span class="p">)))</span>
         <span class="k">except</span> <span class="n">YAMLError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                 <span class="p">(</span>
                     <span class="s2">&quot;Please check your config file </span><span class="si">%s</span><span class="s2">. MatrixCtl was &quot;</span>
                     <span class="s2">&quot;not able to read it.&quot;</span>
@@ -332,7 +347,7 @@
         <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The config file </span><span class="si">%s</span><span class="s2"> does not exist.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">IsADirectoryError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                 <span class="p">(</span>
                     <span class="s2">&quot;The path to the configuration file you entered </span><span class="si">%s</span><span class="s2"> &quot;</span>
                     <span class="s2">&quot;seems to be a directory and not a &quot;</span>
@@ -343,7 +358,10 @@
 
         <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="p">{})</span></div>
 
-<div class="viewcode-block" id="YAML.apply_defaults"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.apply_defaults">[docs]</a>    <span class="nd">@staticmethod</span>
+
+<div class="viewcode-block" id="YAML.apply_defaults">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.apply_defaults">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">apply_defaults</span><span class="p">(</span><span class="n">server</span><span class="p">:</span> <span class="n">ConfigServer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConfigServer</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply defaults to the configuration.</span>
 
@@ -372,8 +390,11 @@
 
         <span class="k">return</span> <span class="n">server</span></div>
 
-<div class="viewcode-block" id="YAML.get_server_config"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.get_server_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_server_config</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
+
+<div class="viewcode-block" id="YAML.get_server_config">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.get_server_config">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_server_config</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">YAML</span><span class="p">,</span>
         <span class="n">paths</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
         <span class="n">server</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Config</span><span class="p">:</span>
@@ -415,20 +436,20 @@
                             <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">MutableMapping</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">],</span> <span class="n">config</span><span class="p">)</span>
                             <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">configs</span>
                             <span class="k">if</span> <span class="n">config</span>
-                        <span class="p">)</span>
-                    <span class="p">)</span>
+                        <span class="p">),</span>
+                    <span class="p">),</span>
                 <span class="p">),</span>
             <span class="p">)</span>
             <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_defaults</span><span class="p">(</span><span class="n">conf</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">])</span>
-            <span class="k">return</span> <span class="n">conf</span>
 
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="s2">&quot;The server </span><span class="si">%s</span><span class="s2"> does not exist in your config file.&quot;</span><span class="p">,</span> <span class="n">server</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="s2">&quot;The server </span><span class="si">%s</span><span class="s2"> does not exist in your config file.&quot;</span><span class="p">,</span>
+                <span class="n">server</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                 <span class="p">(</span>
                     <span class="s2">&quot;The Path(s) to the configuration file you entered </span><span class="si">%s</span><span class="s2"> &quot;</span>
                     <span class="s2">&quot;seems to have syntax paroblems. Make sure you use the &quot;</span>
@@ -436,10 +457,14 @@
                 <span class="p">),</span>
                 <span class="n">paths</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">conf</span></div>
+
 
     <span class="c1"># TODO: doctest + fixture</span>
-<div class="viewcode-block" id="YAML.get"><a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">:</span>
+<div class="viewcode-block" id="YAML.get">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.get">[docs]</a>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">YAML</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a value from a config entry safely.</span>
 
 <span class="sd">        **Usage**</span>
@@ -476,9 +501,10 @@
                 <span class="n">yaml_walker</span> <span class="o">=</span> <span class="n">yaml_walker</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="n">tree</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keys</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
-                <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;servers.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;servers.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                 <span class="p">(</span>
                     <span class="s2">&quot;Please check your config file. For this operation your &quot;</span>
                     <span class="s2">&quot;config file needs to have the entry </span><span class="si">%s</span><span class="s2"> in </span><span class="si">%s</span><span class="s2">.&quot;</span>
@@ -489,22 +515,26 @@
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">yaml_walker</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="c1"># print(yaml_walker)</span>
             <span class="k">return</span> <span class="n">yaml_walker</span>
 
         <span class="c1"># There is currently no scenario where a whole structure would be</span>
         <span class="c1"># beneficial.</span>
-        <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span>
+        <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;The key you have asked for seems to be incorrect. &quot;</span>
             <span class="s2">&quot;Please make sure you ask for an single entry, &quot;</span>
             <span class="s2">&quot;not a entire section.&quot;</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrap RuamelYAML repr.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__yaml</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrap RuamelYAML str.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__yaml</span><span class="p">)</span></div>
+
 
 
 <span class="c1"># vim: set ft=python :</span>
@@ -517,7 +547,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Michael Sasser.</p>
+    <p>&#169; Copyright 2024, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

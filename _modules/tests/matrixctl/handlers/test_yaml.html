@@ -1,22 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tests.matrixctl.handlers.test_yaml &mdash; MatrixCtl 0.12.0-beta.2 documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <title>tests.matrixctl.handlers.test_yaml &mdash; MatrixCtl 0.12.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=61ccb1f1"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -33,9 +32,6 @@
           <a href="../../../../index.html" class="icon icon-home">
             MatrixCtl
           </a>
-              <div class="version">
-                0.12.0-beta.2
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -77,9 +73,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for tests.matrixctl.handlers.test_yaml</h1><div class="highlight"><pre>
-<span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># matrixctl</span>
-<span class="c1"># Copyright (c) 2021  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
+<span></span><span class="c1"># matrixctl</span>
+<span class="c1"># Copyright (c) 2021-2023  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
 <span class="c1">#</span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -108,7 +103,9 @@
 <span class="c1"># TODO: Test debug output</span>
 
 
-<div class="viewcode-block" id="test_get_ansible_playbook"><a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ansible_playbook">[docs]</a><span class="k">def</span> <span class="nf">test_get_ansible_playbook</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="test_get_ansible_playbook">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ansible_playbook">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_ansible_playbook</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test ansible -&gt; playbook.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
@@ -120,10 +117,13 @@
     <span class="c1"># Verify</span>
     <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
 
+
     <span class="c1"># Cleanup - None</span>
 
 
-<div class="viewcode-block" id="test_get_synapse_playbook"><a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_synapse_playbook">[docs]</a><span class="k">def</span> <span class="nf">test_get_synapse_playbook</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="test_get_synapse_playbook">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_synapse_playbook">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_synapse_playbook</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test synapse -&gt; playbook.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
@@ -135,10 +135,13 @@
     <span class="c1"># Verify</span>
     <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
 
+
     <span class="c1"># Cleanup - None</span>
 
 
-<div class="viewcode-block" id="test_get_api_domain"><a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_api_domain">[docs]</a><span class="k">def</span> <span class="nf">test_get_api_domain</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="test_get_api_domain">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_api_domain">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_api_domain</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test api -&gt; domain.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
@@ -150,10 +153,13 @@
     <span class="c1"># Verify</span>
     <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
 
+
     <span class="c1"># Cleanup - None</span>
 
 
-<div class="viewcode-block" id="test_get_api_username"><a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_api_username">[docs]</a><span class="k">def</span> <span class="nf">test_get_api_username</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="test_get_api_username">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_api_username">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_api_username</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test api -&gt; username.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
@@ -165,10 +171,13 @@
     <span class="c1"># Verify</span>
     <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
 
+
     <span class="c1"># Cleanup - None</span>
 
 
-<div class="viewcode-block" id="test_get_api_token"><a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_api_token">[docs]</a><span class="k">def</span> <span class="nf">test_get_api_token</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="test_get_api_token">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_api_token">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_api_token</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test api -&gt; token.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
@@ -186,10 +195,13 @@
     <span class="c1"># Verify</span>
     <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
 
+
     <span class="c1"># Cleanup - None</span>
 
 
-<div class="viewcode-block" id="test_get_ssh_address"><a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ssh_address">[docs]</a><span class="k">def</span> <span class="nf">test_get_ssh_address</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="test_get_ssh_address">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ssh_address">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_ssh_address</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test ssh -&gt; address.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
@@ -201,10 +213,13 @@
     <span class="c1"># Verify</span>
     <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
 
+
     <span class="c1"># Cleanup - None</span>
 
 
-<div class="viewcode-block" id="test_get_ssh_port"><a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ssh_port">[docs]</a><span class="k">def</span> <span class="nf">test_get_ssh_port</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="test_get_ssh_port">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ssh_port">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_ssh_port</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test ssh -&gt; port.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
@@ -218,10 +233,13 @@
     <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="n">desired_type</span><span class="p">)</span></div>
 
+
     <span class="c1"># Cleanup - None</span>
 
 
-<div class="viewcode-block" id="test_get_ssh_user"><a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ssh_user">[docs]</a><span class="k">def</span> <span class="nf">test_get_ssh_user</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="test_get_ssh_user">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ssh_user">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_ssh_user</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test ssh -&gt; user.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
@@ -233,10 +251,13 @@
     <span class="c1"># Verify</span>
     <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
 
+
     <span class="c1"># Cleanup - None</span>
 
 
-<div class="viewcode-block" id="test_str"><a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_str">[docs]</a><span class="k">def</span> <span class="nf">test_str</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="test_str">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_str">[docs]</a>
+<span class="k">def</span> <span class="nf">test_str</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test __str__().&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
@@ -268,10 +289,13 @@
     <span class="c1"># Verify</span>
     <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
 
+
     <span class="c1"># Cleanup - None</span>
 
 
-<div class="viewcode-block" id="test_repr"><a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_repr">[docs]</a><span class="k">def</span> <span class="nf">test_repr</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="test_repr">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_repr">[docs]</a>
+<span class="k">def</span> <span class="nf">test_repr</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test __repr__().&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
@@ -302,6 +326,7 @@
     <span class="c1"># Verify</span>
     <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
 
+
     <span class="c1"># Cleanup - None</span>
 
 
@@ -315,7 +340,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Michael Sasser.</p>
+    <p>&#169; Copyright 2024, Michael Sasser.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
