@@ -18,8 +18,7 @@ name: Upload Release Asset
 
 on:
   push:
-    tags:
-      - "v*"
+    tags: ["v*"]
 
 jobs:
   build:

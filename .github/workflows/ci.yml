@@ -18,9 +18,11 @@ name: Python CI
 
 on:
   push:
-    branches: [master]
+    branches: ["main"]
+    paths-ignore: ["**/*.md"]
   pull_request:
-    branches: [master, develop]
+    branches: ["main"]
+  workflow_dispatch:
 
 jobs:
   build:

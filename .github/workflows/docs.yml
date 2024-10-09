@@ -18,8 +18,7 @@ name: github pages
 
 on:
   push:
-    branches:
-      - master
+    branches: ["main"]
 
 jobs:
   deploy:
