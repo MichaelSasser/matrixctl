@@ -28,10 +28,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.2.1
 
-      # - name: Set up Python 3.12
-      #   uses: actions/setup-python@v5.2.0
-      #   with:
-      #     python-version: "3.12"
+      - name: "Set Python Version ${{ matrix.python-version }}"
+        run: echo '${{ matrix.python-version }}' > .python-version
 
       - name: Setup Rye
         id: setup-rye
