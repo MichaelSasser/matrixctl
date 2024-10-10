@@ -19,7 +19,7 @@ name: Python CI
 on:
   push:
     branches: ["main"]
-    paths-ignore: ["**/*.md"]
+    paths-ignore: ["*.md"]
   pull_request:
     branches: ["main"]
   workflow_dispatch:
@@ -46,8 +46,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Project Dependencies
-        run: rye sync --all-features
-        if: steps.setup-rye.outputs.cache-hit != 'true'
+        run: rye sync --all-features --no-lock
 
       - name: Run pre-commit
         run: |
