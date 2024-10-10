@@ -28,20 +28,18 @@ classifiers = [
 ]
 
 dependencies = [
-    "GitPython>=3.1.43,<4.0.0",
-    "coloredlogs>=15.0.1,<16.0.0",
-    "paramiko>=3.4.0,<4.0.0",
-    "ruamel.yaml>=0.18.6",
-    "ansible-runner>=2.4.0,<3.0.0",
-    "attrs>=23.2.0",
-    "xdg>=6.0.0,<7.0.0",
-    "Jinja2>=3.1.4,<4.0.0",
-    "psycopg>=3.1.19,<4.0.0",
-    "httpx[http2]>=0.27.2",
-    "sshtunnel>=0.4.0,<0.5.0",
-    "rich>=13.8.0,<14.0.0",
-    "myst-parser[docs]>=4.0.0",
-    "tomli[docs]>=2.0.2",
+  "GitPython>=3.1.43,<4.0.0",
+  "coloredlogs>=15.0.1,<16.0.0",
+  "paramiko>=3.4.0,<4.0.0",
+  "ruamel.yaml>=0.18.6",
+  "ansible-runner>=2.4.0,<3.0.0",
+  "attrs>=23.2.0",
+  "xdg>=6.0.0,<7.0.0",
+  "Jinja2>=3.1.4,<4.0.0",
+  "psycopg>=3.1.19,<4.0.0",
+  "httpx[http2]>=0.27.2",
+  "sshtunnel>=0.4.0,<0.5.0",
+  "rich>=13.8.0,<14.0.0",
 ]
 
 requires-python = ">=3.10,<4.0"
@@ -80,6 +78,9 @@ docs = [
   "sphinxcontrib-programoutput>=0.17",
   "numpydoc>=1.5.0",
   "sphinx-rtd-theme>=3.0,<4.0",
+  "myst-parser>=4.0.0",
+  "tomli>=2.0.2; python_version < '3.11'",
+  "exceptiongroup>=1.2.2; python_version < '3.11'",
 ]
 
 [tool.rye.scripts]
