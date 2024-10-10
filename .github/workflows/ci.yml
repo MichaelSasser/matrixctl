@@ -50,7 +50,7 @@ jobs:
       - name: Install Project Dependencies
         run: |
           rye pin --no-update-requires-python '${{ matrix.python-version }}'
-          rye sync --all-features --no-lock
+          rye sync --all-features
 
       - name: Run pre-commit
         run: |
