@@ -42,7 +42,7 @@ jobs:
       - name: Install Project Dependencies
         run: |
           rye pin --no-update-requires-python '3.12'
-          rye sync --all-features --no-lock
+          rye sync --all-features
 
       - name: Build project
         run: rye build --all --clean
