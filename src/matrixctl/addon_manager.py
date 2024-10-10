@@ -41,28 +41,28 @@ SubParserType = Callable[[SubParsersAction], None]  # type: ignore # noqa: PGH00
 ParserSetupType = Callable[[], argparse.ArgumentParser]
 
 # global
-addons: list[SubParserType] = []
+commands: list[SubParserType] = []
 
 
-def import_addons_from(
+def import_commands_from(
     addon_directory: str,
     addon_module: str,
     parser_name: str,
 ) -> None:
-    """Import addons in (global) addons.
+    """Import commands in (global) commands.
 
     Parameters
     ----------
     addon_directory : str
         The absolute path as string to the addon directory.
     addon_module : str
-        The import path (with dots ``.`` not slashes ``/``) to the addons
-        from project root e.g. "matrixctl.addons".
+        The import path (with dots ``.`` not slashes ``/``) to the commands
+        from project root e.g. "matrixctl.commands".
     parser_name : str
         The name of the module the subparser is in.
     ..Note:
         The nothing will be imported, when the subparser is not in (global)
-        addons. To add the subparse to addons you need to decorate the
+        commands. To add the subparse to commands you need to decorate the
         subparsers with ``matrixctl.addon_manager.subparser``
 
     Returns
@@ -84,7 +84,7 @@ def import_addons_from(
 
 
 def subparser(func: SubParserType) -> SubParserType:
-    """Decorate subparsers with, to add them to (global) addons on import.
+    """Decorate subparsers with, to add them to (global) commands on import.
 
     Parameters
     ----------
@@ -92,7 +92,7 @@ def subparser(func: SubParserType) -> SubParserType:
         A subparser.
     ..Note:
         The nothing will be imported, when the subparser is not in (global)
-        addons. To add the subparse to addons you need to decorate the
+        commands. To add the subparse to commands you need to decorate the
         subparsers with ``matrixctl.addon_manager.subparser``
 
     Returns
@@ -101,8 +101,8 @@ def subparser(func: SubParserType) -> SubParserType:
         The same subparser which was used as argument. (Without any changes)
 
     """
-    if func not in addons:
-        addons.append(func)
+    if func not in commands:
+        commands.append(func)
     return func
 
 
@@ -121,15 +121,15 @@ def setup(func: ParserSetupType) -> argparse.ArgumentParser:
 
     """
 
-    if len(addons) == 0:
+    if len(commands) == 0:
         logger.error(
-            "The Argparse Addon Manager was not able to find any addons. "
-            "Have you imported the addons with "
-            '"AddonManager.import_addons_from()"?',
+            "The Argparse Addon Manager was not able to find any commands. "
+            "Have you imported the commands with "
+            '"AddonManager.import_commands_from()"?',
         )
 
     parser: argparse.ArgumentParser = func()
-    if len(addons) > 0:
+    if len(commands) > 0:
         subparsers: SubParsersAction[t.Any] = parser.add_subparsers(
             title="Commands",
             description=(
@@ -138,6 +138,6 @@ def setup(func: ParserSetupType) -> argparse.ArgumentParser:
             ),
             metavar="Command",
         )
-        for subparser_ in addons:
+        for subparser_ in commands:
             subparser_(subparsers)
     return parser

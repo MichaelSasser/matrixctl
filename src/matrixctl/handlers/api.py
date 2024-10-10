@@ -94,8 +94,6 @@ class RequestBuilder:
     path: str = attr.ib()
     scheme: str = "https"
     subdomain: str = "matrix"
-    api_path: str = "_synapse/admin"
-    api_version: str = "v2"
     data: dict[str, t.Any] | None = None  # just key/value store
     json: dict[str, t.Any] | None = None  # json
     content: str | bytes | Iterable[bytes] | None = None  # bytes
@@ -139,13 +137,13 @@ class RequestBuilder:
             The URL.
 
         """
+        path = self.path.startswith("/") and self.path or f"/{self.path}"
+
         url: str = (
             f"{self.scheme}://"
             f"{self.subdomain}{'.' if self.subdomain else ''}"
             f"{self.domain}"
-            f"/{self.api_path}"
-            f"/{self.api_version}"
-            f"/{self.path}"
+            f"{path}"
         )
         return urllib.parse.urlparse(url).geturl()
 

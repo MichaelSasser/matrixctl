@@ -204,7 +204,7 @@ Features & Improvements
   <https://github.com/MichaelSasser/matrixctl/issues/174>`_)
 - Per-server maintenance task configuration. (`#184
   <https://github.com/MichaelSasser/matrixctl/issues/184>`_)
-- Optimized startuptime by lazy importing addons by a factor of 10. Added a
+- Optimized startuptime by lazy importing commands by a factor of 10. Added a
   ``addon_manager`` which now manages imports of the addon (sub)parsers. (`#187
   <https://github.com/MichaelSasser/matrixctl/issues/187>`_)
 - Add ``get_events`` addon, which gets user-events from the DB. (`#198
@@ -231,8 +231,8 @@ Miscellaneous
 
 - Add tests for the yaml handler. (`#174
   <https://github.com/MichaelSasser/matrixctl/issues/174>`_)
-- Commands or subcommands are now located in ``matrixctl.addons`` as packages and
-  considered addons. Addons are splitted in ``parser.py`` and ``addon.py``. It is
+- Commands or subcommands are now located in ``matrixctl.commands`` as packages and
+  considered commands. Commands are splitted in ``parser.py`` and ``addon.py``. It is
   now allowed to use multible modules for one addon. (`#187
   <https://github.com/MichaelSasser/matrixctl/issues/187>`_)
 - More flexible yaml handler. (`#213

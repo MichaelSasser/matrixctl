@@ -133,11 +133,11 @@ def main() -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    addon_module = "matrixctl.addons"
-    addon_dir: Path = Path(__file__).resolve().parent / "addons"
+    addon_module = "matrixctl.commands"
+    addon_dir: Path = Path(__file__).resolve().parent / "commands"
 
-    # Setup Addons
-    addon_manager.import_addons_from(str(addon_dir), addon_module, "parser")
+    # Setup Commands
+    addon_manager.import_commands_from(str(addon_dir), addon_module, "parser")
     parser: argparse.ArgumentParser = addon_manager.setup(setup_parser)
 
     args: argparse.Namespace = parser.parse_args()
