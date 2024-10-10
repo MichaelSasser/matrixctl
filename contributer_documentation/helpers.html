@@ -51,12 +51,13 @@
 <li class="toctree-l2"><a class="reference internal" href="handlers.html">Handlers</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Helpers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="type_hints_structures_and_errors.html">Type Hints, Structures and Errors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="addons.html">Addons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html">Commands</a></li>
 <li class="toctree-l2"><a class="reference internal" href="application.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html">Tests</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html#changelog-deprecated">Changelog (deprecated)</a></li>
 </ul>
 
         </div>
@@ -91,9 +92,9 @@
 <span id="addon-manager"></span><h2>Addon Manager<a class="headerlink" href="#module-matrixctl.addon_manager" title="Link to this heading"></a></h2>
 <p>Use this module as addon manager.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="matrixctl.addon_manager.import_addons_from">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">import_addons_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addon_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addon_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#import_addons_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.import_addons_from" title="Link to this definition"></a></dt>
-<dd><p>Import addons in (global) addons.</p>
+<dt class="sig sig-object py" id="matrixctl.addon_manager.import_commands_from">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">import_commands_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addon_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addon_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#import_commands_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.import_commands_from" title="Link to this definition"></a></dt>
+<dd><p>Import commands in (global) commands.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
@@ -102,13 +103,13 @@
 <dd class="field-even"><dl>
 <dt><strong>addon_directory</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The absolute path as string to the addon directory.</p>
 </dd>
-<dt><strong>addon_module</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The import path (with dots <code class="docutils literal notranslate"><span class="pre">.</span></code> not slashes <code class="docutils literal notranslate"><span class="pre">/</span></code>) to the addons
-from project root e.g. “matrixctl.addons”.</p>
+<dt><strong>addon_module</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The import path (with dots <code class="docutils literal notranslate"><span class="pre">.</span></code> not slashes <code class="docutils literal notranslate"><span class="pre">/</span></code>) to the commands
+from project root e.g. “matrixctl.commands”.</p>
 </dd>
 <dt><strong>parser_name</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The name of the module the subparser is in.</p>
 </dd>
 <dt><strong>..Note:</strong></dt><dd><p>The nothing will be imported, when the subparser is not in (global)
-addons. To add the subparse to addons you need to decorate the
+commands. To add the subparse to commands you need to decorate the
 subparsers with <code class="docutils literal notranslate"><span class="pre">matrixctl.addon_manager.subparser</span></code></p>
 </dd>
 </dl>
@@ -148,7 +149,7 @@ subparsers with <code class="docutils literal notranslate"><span class="pre">mat
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.addon_manager.subparser">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">subparser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#subparser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.subparser" title="Link to this definition"></a></dt>
-<dd><p>Decorate subparsers with, to add them to (global) addons on import.</p>
+<dd><p>Decorate subparsers with, to add them to (global) commands on import.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">_SubParsersAction</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>
@@ -158,7 +159,7 @@ subparsers with <code class="docutils literal notranslate"><span class="pre">mat
 <dt><strong>func</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.addon_manager.SubParserType</span></code></span></dt><dd><p>A subparser.</p>
 </dd>
 <dt><strong>..Note:</strong></dt><dd><p>The nothing will be imported, when the subparser is not in (global)
-addons. To add the subparse to addons you need to decorate the
+commands. To add the subparse to commands you need to decorate the
 subparsers with <code class="docutils literal notranslate"><span class="pre">matrixctl.addon_manager.subparser</span></code></p>
 </dd>
 </dl>
