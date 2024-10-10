@@ -27,15 +27,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.1
 
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5.2.0
-        with:
-          python-version: "3.12"
+      # - name: Set up Python 3.12
+      #   uses: actions/setup-python@v5.2.0
+      #   with:
+      #     python-version: "${{ matrix.python-version }}"
 
       - name: Setup Rye
         id: setup-rye
@@ -43,10 +46,13 @@ jobs:
         with:
           version: "0.41.0"
           enable-cache: true
+          cache-prefix: python-${{ matrix.python-version }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Project Dependencies
-        run: rye sync --all-features --no-lock
+        run: |
+          rye pin --no-update-requires-python '${{ matrix.python-version }}'
+          rye sync --all-features --no-lock
 
       - name: Run pre-commit
         run: |

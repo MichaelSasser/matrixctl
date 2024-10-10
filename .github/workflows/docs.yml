@@ -29,10 +29,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.2.1
 
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5.2.0
-        with:
-          python-version: "3.12"
+      # - name: Set up Python 3.12
+      #   uses: actions/setup-python@v5.2.0
+      #   with:
+      #     python-version: "3.12"
 
       - name: Setup Rye
         id: setup-rye
@@ -42,7 +42,9 @@ jobs:
           version: "0.41.0"
 
       - name: Install Project Dependencies
-        run: rye sync --all-features --no-lock
+        run: |
+          rye pin --no-update-requires-python '3.12'
+          rye sync --all-features --no-lock
 
       - name: Make docs
         working-directory: ${{env.working-directory}}
