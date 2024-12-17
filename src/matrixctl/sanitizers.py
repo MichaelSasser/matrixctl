@@ -45,20 +45,24 @@ class MessageType(Enum):
 
     Supported events:
 
-    ===================== ===================================================
-    message_type          Usage
-    ===================== ===================================================
-    m.room.message        This event is used when sending messages in a room
-    m.room.name           This event sets the name of an room
-    m.room.topic          This events sets the room topic
-    m.room.avatar         This event sets the room avatar
-    m.room.pinned_events  This event pins events
-    m.room.member         Adjusts the membership state for a user in a room
-    m.room.join_rules     This event sets the join rules
-    m.room.create         This event creates a room
-    m.room.power_levels   This event sets a rooms power levels
-    m.room.redaction      This event redacts other events
-    ===================== ===================================================
+    ========================   ================================================
+    message_type               Usage
+    ========================   ================================================
+    m.room.message             This event to send messages to a room
+    m.room.name                This event sets the name of an room
+    m.room.topic               This events sets the room topic
+    m.room.avatar              This event sets the room avatar
+    m.room.pinned_events       This event pins events
+    m.room.member              Adjusts the membership for a user in a room
+    m.room.join_rules          This event sets the join rules
+    m.room.create              This event creates a room
+    m.room.power_levels        This event sets a rooms power levels
+    m.room.redaction           This event redacts other events
+    m.reaction                 This event is a reaction to another event
+    m.room.encrypted           This event is used for encrypted messages
+    m.room.history_visibility  This event sets the history visibility
+    m.room.guest_access        This event sets the guest access
+    =========================  ================================================
 
     """
 
@@ -72,6 +76,31 @@ class MessageType(Enum):
     M_ROOM_CREATE = "m.room.create"
     M_ROOM_POWER_LEVELS = "m.room.power_levels"
     M_ROOM_REDACTION = "m.room.redaction"
+    M_REACTION = "m.reaction"
+    M_ROOM_ENCRYPTED = "m.room.encrypted"
+    M_ROOM_HISTORY_VISIBILITY = "m.room.history_visibility"
+    M_ROOM_GUEST_ACCESS = "m.room.guest_access"
+
+    @staticmethod
+    def from_string(s: str) -> MessageType:
+        """Convert a string to a MessageType.
+
+        Parameters
+        ----------
+        s : str
+            The string to convert to a MessageType.
+
+        Returns
+        -------
+        message_type : MessageType
+            The MessageType object.
+
+        """
+        try:
+            return MessageType[s.upper().replace(".", "_")]
+        except KeyError as e:
+            err_msg = "The message type is not supported by MatrixCtl."
+            raise ValueError(err_msg) from e
 
 
 def sanitize_message_type(
