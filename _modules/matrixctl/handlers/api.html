@@ -8,13 +8,13 @@
   <title>matrixctl.handlers.api &mdash; MatrixCtl 0.12.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../../_static/documentation_options.js?v=61ccb1f1"></script>
-      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -218,7 +218,7 @@
 <span class="sd">            The URL.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scheme</span><span class="si">}</span><span class="s2">://&quot;</span>
@@ -842,76 +842,76 @@
 <span class="sd">        Returns the response</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">download_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span>
+    <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span>
         <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wb&quot;</span><span class="p">,</span>
         <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">path_download_file</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">download_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Temporary file: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path_download_file</span><span class="p">)</span>
-    <span class="n">extension</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">content_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span>
-            <span class="n">method</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>  <span class="c1"># type: ignore # noqa: PGH003</span>
-            <span class="n">json</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">json</span><span class="p">,</span>
-            <span class="n">content</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>  <span class="c1"># type: ignore # noqa: PGH003</span>
-            <span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">request_config</span><span class="p">),</span>
-            <span class="n">params</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">headers_with_auth</span><span class="p">,</span>
-            <span class="n">timeout</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
-            <span class="n">follow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
-            <span class="n">handle_sync_response_status_code</span><span class="p">(</span>
-                <span class="n">response</span><span class="p">,</span>
-                <span class="n">request_config</span><span class="o">.</span><span class="n">success_codes</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">content_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">])</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Content-Length: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">content_length</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                    <span class="s2">&quot;Response did not include Content-Length. Error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="n">err</span><span class="p">,</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">download_file</span><span class="p">:</span>
+        <span class="n">path_download_file</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">download_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Temporary file: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path_download_file</span><span class="p">)</span>
+        <span class="n">extension</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">content_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span>
+                <span class="n">method</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>  <span class="c1"># type: ignore # noqa: PGH003</span>
+                <span class="n">json</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">json</span><span class="p">,</span>
+                <span class="n">content</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>  <span class="c1"># type: ignore # noqa: PGH003</span>
+                <span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">request_config</span><span class="p">),</span>
+                <span class="n">params</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                <span class="n">headers</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">headers_with_auth</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+                <span class="n">follow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">handle_sync_response_status_code</span><span class="p">(</span>
+                    <span class="n">response</span><span class="p">,</span>
+                    <span class="n">request_config</span><span class="o">.</span><span class="n">success_codes</span><span class="p">,</span>
                 <span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">content_type</span><span class="p">:</span>
-                    <span class="n">mime_types</span><span class="p">:</span> <span class="n">MimeTypes</span> <span class="o">=</span> <span class="n">MimeTypes</span><span class="p">()</span>
-                    <span class="n">extension</span> <span class="o">=</span> <span class="n">mime_types</span><span class="o">.</span><span class="n">guess_extension</span><span class="p">(</span>
-                        <span class="n">content_type</span><span class="p">,</span>
-                        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">content_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">])</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Content-Length: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">content_length</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="s2">&quot;Response did not include Content-Length. Error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">err</span><span class="p">,</span>
                     <span class="p">)</span>
-            <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                    <span class="s2">&quot;Response did not include Content-Type. Error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="n">err</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="k">if</span> <span class="n">content_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_bytes</span><span class="p">():</span>
-                    <span class="n">download_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">with</span> <span class="n">rich</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">Progress</span><span class="p">(</span>
-                    <span class="s2">&quot;[progress.percentage]</span><span class="si">{task.percentage:&gt;3.0f}</span><span class="s2">%&quot;</span><span class="p">,</span>
-                    <span class="n">rich</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">BarColumn</span><span class="p">(</span><span class="n">bar_width</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
-                    <span class="n">rich</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">DownloadColumn</span><span class="p">(),</span>
-                    <span class="n">rich</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">TransferSpeedColumn</span><span class="p">(),</span>
-                <span class="p">)</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
-                    <span class="n">download_task</span><span class="p">:</span> <span class="n">rich</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">TaskID</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span>
-                        <span class="s2">&quot;Download&quot;</span><span class="p">,</span>
-                        <span class="n">total</span><span class="o">=</span><span class="n">content_length</span><span class="p">,</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">content_type</span><span class="p">:</span>
+                        <span class="n">mime_types</span><span class="p">:</span> <span class="n">MimeTypes</span> <span class="o">=</span> <span class="n">MimeTypes</span><span class="p">()</span>
+                        <span class="n">extension</span> <span class="o">=</span> <span class="n">mime_types</span><span class="o">.</span><span class="n">guess_extension</span><span class="p">(</span>
+                            <span class="n">content_type</span><span class="p">,</span>
+                            <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="s2">&quot;Response did not include Content-Type. Error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">err</span><span class="p">,</span>
                     <span class="p">)</span>
+                <span class="k">if</span> <span class="n">content_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_bytes</span><span class="p">():</span>
                         <span class="n">download_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-                        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-                            <span class="n">download_task</span><span class="p">,</span>
-                            <span class="n">completed</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">num_bytes_downloaded</span><span class="p">,</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="n">rich</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">Progress</span><span class="p">(</span>
+                        <span class="s2">&quot;[progress.percentage]</span><span class="si">{task.percentage:&gt;3.0f}</span><span class="s2">%&quot;</span><span class="p">,</span>
+                        <span class="n">rich</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">BarColumn</span><span class="p">(</span><span class="n">bar_width</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+                        <span class="n">rich</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">DownloadColumn</span><span class="p">(),</span>
+                        <span class="n">rich</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">TransferSpeedColumn</span><span class="p">(),</span>
+                    <span class="p">)</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
+                        <span class="n">download_task</span><span class="p">:</span> <span class="n">rich</span><span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">TaskID</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span>
+                                <span class="s2">&quot;Download&quot;</span><span class="p">,</span>
+                                <span class="n">total</span><span class="o">=</span><span class="n">content_length</span><span class="p">,</span>
+                            <span class="p">)</span>
                         <span class="p">)</span>
+                        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_bytes</span><span class="p">():</span>
+                            <span class="n">download_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+                            <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                                <span class="n">download_task</span><span class="p">,</span>
+                                <span class="n">completed</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">num_bytes_downloaded</span><span class="p">,</span>
+                            <span class="p">)</span>
 
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>  <span class="c1"># skipcq: PYL-W0703</span>
-        <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">response</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">download_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>  <span class="c1"># skipcq: PYL-W0703</span>
+            <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">response</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
 
     <span class="k">if</span> <span class="n">extension</span><span class="p">:</span>
         <span class="n">download_path</span> <span class="o">=</span> <span class="n">download_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
