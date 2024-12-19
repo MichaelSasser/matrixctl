@@ -44,7 +44,7 @@ jobs:
 
       - name: Make docs
         working-directory: ${{env.working-directory}}
-        run: make html
+        run: uv run make html
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4.0.0
