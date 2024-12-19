@@ -55,7 +55,7 @@ jobs:
 
       - name: Build docs
         working-directory: ./docs
-        run: make html
+        run: uv run make html
 
       - name: Test with pytest
         run: uv run pytest tests
