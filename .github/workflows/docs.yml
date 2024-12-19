@@ -28,28 +28,23 @@ jobs:
       working-directory: ./docs
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.2.1
+        uses: actions/checkout@v4.2.2
 
-      - name: "Set Python Version ${{ matrix.python-version }}"
-        run: echo '${{ matrix.python-version }}' > .python-version
-
-      - name: Setup Rye
-        id: setup-rye
-        uses: eifinger/setup-rye@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
           enable-cache: true
-          version: "0.41.0"
+          cache-dependency-glob: "uv.lock"
 
-      - name: Install Project Dependencies
-        run: |
-          rye pin --no-update-requires-python '3.12'
-          rye sync --all-features
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install 3.13
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
 
       - name: Make docs
         working-directory: ${{env.working-directory}}
-        run: |
-          source ../.venv/bin/activate
-          make html
+        run: uv run make html
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4.0.0

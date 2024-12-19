@@ -27,7 +27,7 @@ from types import TracebackType
 
 from paramiko import AutoAddPolicy
 from paramiko import SSHClient
-from paramiko.channel import ChannelFile  # noqa: TCH002
+from paramiko.channel import ChannelFile  # noqa: TC002
 
 
 __author__: str = "Michael Sasser"
@@ -48,7 +48,7 @@ class SSHResponse(t.NamedTuple):
 class SSH:
     """Run and evaluate commands on the host machine of your synapse server."""
 
-    __slots__ = ("address", "__client", "user", "port")
+    __slots__ = ("__client", "address", "port", "user")
 
     def __init__(
         self: SSH,

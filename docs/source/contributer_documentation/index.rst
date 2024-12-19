@@ -47,8 +47,8 @@ Add a feature
           you are about to change and why you want to change anything.
 
 1. Make sure you have at least ``Python 3.10``,
-   `rye <https://https://rye.astral.sh//>`_, and
-   `pre-commit <https://pre-commit.com/>`_ installed.
+   `uv <https://docs.astral.sh/uv/>`_, and the plugin
+   `tox-uv <https://github.com/tox-dev/tox-uv/>`_ installed.
 2. Create a fork of MatrixCtl.
 3. Clone the fork (``origin``) to your local machine.
 4. Add the original repository as a remote named ``upstream``.
@@ -59,13 +59,13 @@ Add a feature
    For example:
    Let's say your issue was issue ``#42`` and you want to create a feature.
    Your branch name would be ``feature/#42`` or ``feature/#42-my-cool-feature``.
-#. Install the required tools with ``rye sync --all-features``
+#. Install the required tools with ``rye sync --all-extras --dev``
 #. Implement your feature or fix the bug you described in your issue.
 #. Create a ``Pull Request`` as soon as possible as ``draft``, so other
    contributors are able to help you and follow your progress.
 #. Make sure to add/alter the documentation.
 #. Add/alter tests, to test your code.
-#. Run ``tox``. If everything is green with no errors, you are good to go.
+#. Run ``make tox``. If everything is green with no errors, you are good to go.
 #. Describe your changes using
    `Conventional Commits <https://www.conventionalcommits.org/en/>`_.
 #. Publish your branch to your fork (``origin``).
