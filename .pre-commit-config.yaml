@@ -1,7 +1,7 @@
 ---
 minimum_pre_commit_version: 2.13.0
 
-exclude: ^requirements.*\.lock$
+exclude: ^.*\.lock$
 repos:
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.
