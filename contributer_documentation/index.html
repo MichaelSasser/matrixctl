@@ -241,8 +241,8 @@ you are about to change and why you want to change anything.</p>
 </div>
 <ol class="arabic simple">
 <li><p>Make sure you have at least <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">3.10</span></code>,
-<a class="reference external" href="https://https://rye.astral.sh//">rye</a>, and
-<a class="reference external" href="https://pre-commit.com/">pre-commit</a> installed.</p></li>
+<a class="reference external" href="https://docs.astral.sh/uv/">uv</a>, and the plugin
+<a class="reference external" href="https://github.com/tox-dev/tox-uv/">tox-uv</a> installed.</p></li>
 <li><p>Create a fork of MatrixCtl.</p></li>
 <li><p>Clone the fork (<code class="docutils literal notranslate"><span class="pre">origin</span></code>) to your local machine.</p></li>
 <li><p>Add the original repository as a remote named <code class="docutils literal notranslate"><span class="pre">upstream</span></code>.</p></li>
@@ -253,13 +253,13 @@ Make sure you use the
 For example:
 Let’s say your issue was issue <code class="docutils literal notranslate"><span class="pre">#42</span></code> and you want to create a feature.
 Your branch name would be <code class="docutils literal notranslate"><span class="pre">feature/#42</span></code> or <code class="docutils literal notranslate"><span class="pre">feature/#42-my-cool-feature</span></code>.</p></li>
-<li><p>Install the required tools with <code class="docutils literal notranslate"><span class="pre">rye</span> <span class="pre">sync</span> <span class="pre">--all-features</span></code></p></li>
+<li><p>Install the required tools with <code class="docutils literal notranslate"><span class="pre">rye</span> <span class="pre">sync</span> <span class="pre">--all-extras</span> <span class="pre">--dev</span></code></p></li>
 <li><p>Implement your feature or fix the bug you described in your issue.</p></li>
 <li><p>Create a <code class="docutils literal notranslate"><span class="pre">Pull</span> <span class="pre">Request</span></code> as soon as possible as <code class="docutils literal notranslate"><span class="pre">draft</span></code>, so other
 contributors are able to help you and follow your progress.</p></li>
 <li><p>Make sure to add/alter the documentation.</p></li>
 <li><p>Add/alter tests, to test your code.</p></li>
-<li><p>Run <code class="docutils literal notranslate"><span class="pre">tox</span></code>. If everything is green with no errors, you are good to go.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">tox</span></code>. If everything is green with no errors, you are good to go.</p></li>
 <li><p>Describe your changes using
 <a class="reference external" href="https://www.conventionalcommits.org/en/">Conventional Commits</a>.</p></li>
 <li><p>Publish your branch to your fork (<code class="docutils literal notranslate"><span class="pre">origin</span></code>).</p></li>
