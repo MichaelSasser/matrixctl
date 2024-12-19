@@ -29,41 +29,33 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
 
-      - name: "Set Python Version ${{ matrix.python-version }}"
-        run: echo '${{ matrix.python-version }}' > .python-version
+      # - name: "Set Python Version ${{ matrix.python-version }}"
+      #   run: echo '${{ matrix.python-version }}' > .python-version
 
-      - name: Setup Rye
-        id: setup-rye
-        uses: eifinger/setup-rye@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
         with:
-          version: "0.41.0"
           enable-cache: true
-          cache-prefix: python-${{ matrix.python-version }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache-dependency-glob: "uv.lock"
 
-      - name: Install Project Dependencies
-        run: |
-          rye pin --no-update-requires-python '${{ matrix.python-version }}'
-          rye sync --all-features
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
 
       - name: Run pre-commit
-        run: |
-          . .venv/bin/activate
-          pre-commit run --all-files
+        run: uv run pre-commit run --all-files
 
-      - name: Sphinx Build
+      - name: Build docs
         working-directory: ./docs
-        run: |
-          . ../.venv/bin/activate
-          make html
+        run: make html
 
       - name: Test with pytest
-        run: |
-          . .venv/bin/activate
-          rye test
+        run: uv run pytest tests

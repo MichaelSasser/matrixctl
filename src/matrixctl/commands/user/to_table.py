@@ -138,13 +138,13 @@ def generate_user_tables(
 
     table_: list[list[tuple[str, str]]] = [[]]
 
-    for k in user_dict:
+    for k, v in user_dict.items():
         if k == "errcode":
             logger.error("There is no user with that username.")
             sys.exit(1)
 
         if k == "threepids":
-            for tk in user_dict[k]:
+            for tk in v:
                 ret: list[list[tuple[str, str]]] = generate_user_tables(
                     tk,
                     len_domain,

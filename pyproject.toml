@@ -4,7 +4,7 @@ version = "0.12.0"
 description = "Control, manage, provision and deploy matrix homeservers."
 authors = [{ name = "Michael Sasser", email = "Michael@MichaelSasser.org" }]
 maintainers = [{ name = "Michael Sasser", email = "Michael@MichaelSasser.org" }]
-readme = "README.md"
+readme = { file = "README.md", content-type = "text/markdown" }
 keywords = ["Matrix", "Synapse", "Docker"]
 
 classifiers = [
@@ -51,21 +51,24 @@ Repository = "https://github.com/MichaelSasser/matrixctl"
 Issues = "https://github.com/MichaelSasser/matrixctl/issues"
 Changelog = "https://github.com/MichaelSasser/matrixctl/blob/main/CHANGELOG.md"
 
-[tool.rye]
+[tool.uv.pip]
+strict = true
+
+[tool.uv]
+python-preference = "only-managed"
 managed = true
-universal = true
-generate-hashes = true
 dev-dependencies = [
   # Typesheds
   "types-setuptools>=75.1.0.20240917",
   "types-paramiko>=3.4.0.20240423,<4.0.0.0",
   "types-attrs>=19.1.0,<20.0.0",
   "types-Jinja2>=2.11.9,<3.0.0",
-  "towncrier>=24.8.0",
+
+  # Dev tools
   "ruff>=0.6.8",
   "pytest>=8.3.3",
   "coverage>=7.6.1",
-  "tox>=4.20.0",
+  # "tox>=4.20.0",
   "pre-commit>=3.8.0",
   "basedpyright>=1.18.2",
   "git-cliff>=2.6.1",
@@ -83,26 +86,20 @@ docs = [
   "exceptiongroup>=1.2.2; python_version < '3.11'",
 ]
 
-[tool.rye.scripts]
-# Application entry points
-matrixctl = { call = "matrixctl.__main__:main" }
-doc = { cmd = "sphinx-build -T -W -b html docs/source docs/build/html" }
+[project.scripts]
+matrixctl = "matrixctl.__main__:main"
 
-# Linting
-check = { chain = ["check:lint", "check:fmt"] }
-"check:lint" = "rye lint"
-"check:fmt" = "rye fmt --check"
-"check:type" = "rye run basedpyright"
-
-fix = { chain = ["fix:lint", "fix:fmt"] }
-"fix:lint" = "rye lint --fix"
-"fix:fmt" = "rye fmt"
-
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/matrixctl"]
+# doc = { cmd = "sphinx-build -T -W -b html docs/source docs/build/html" }
+#
+# # Linting
+# check = { chain = ["check:lint", "check:fmt"] }
+# "check:lint" = "rye lint"
+# "check:fmt" = "rye fmt --check"
+# "check:type" = "rye run basedpyright"
+#
+# fix = { chain = ["fix:lint", "fix:fmt"] }
+# "fix:lint" = "rye lint --fix"
+# "fix:fmt" = "rye fmt"
 
 [build-system]
 requires = ["hatchling"]
@@ -142,10 +139,9 @@ task-tags = ["TODO", "FIXME", "WARN", "SEC", "SECURITY", "INFO", "NOTE"]
 ignore = [
   "D202",
   "D203",
-  "TCH003",
-  "TCH001",
+  "TC003",
+  "TC001",
   "ANN401",
-  "ANN101",
   "T201",    # Print statements
   "TD002",   # Missing TODO author
   "TD003",   # Missing TODO issue link
@@ -221,14 +217,19 @@ module = "tests.matrixctl.handlers.*"
 allow_untyped_decorators = true       # pytest fixtures
 
 
-[tool.pyright]
+[tool.basedpyright]
+venvPath = "."
 include = ["src/matrixctl", "tests"]
 exclude = ["**/__pycache__"]
 
 reportMissingImports = true
 reportMissingTypeStubs = false
 
-pythonVersion = "3.11"
+# Workaround: doesn show a lot of false positives for YAML.get().
+# Since we use ruff anyways, this should not be important.
+reportCallIssue = false
+
+# pythonVersion = "3.11"
 pythonPlatform = "Linux"
 typeCheckingMode = "basic"
 
@@ -375,63 +376,65 @@ filterwarnings =
     ignore:::pympler[.*]
 
 
-# Keep docs in sync with docs env and .readthedocs.yml.
-# [gh-actions]
-# python =
-#     3.10: py39, precommit, changelog, docs
-# # 3.10: py310
-
-
 [tox]
-rye_discovery = true
-envlist = precommit,py310,py311,py312,docs,changelog,
-isolated_build = True
+envlist = py3{10,11,12,13},fix,docs,dev,changelog
+# isolated_build = True
+# uv_sync_flags=--python={env_python}
 
 [coverage:report]
 exclude_also =
     @t.overload
     pragma: no cover
 
-[testenv]
-allowlist_externals = rye
-# Prevent random setuptools/pip breakages like
-# https://github.com/pypa/setuptools/issues/1042 from breaking our builds.
-setenv =
-    VIRTUALENV_NO_DOWNLOAD=1
-extras = {env:TOX_AP_TEST_EXTRAS:tests}
-commands =
-  rye sync --all-features
-  rye run coverage run -m pytest --doctest-modules {posargs}
 
-[testenv:precommit]
-allowlist_externals = rye
-basepython = python3.12
+[testenv:fix]
+description = run code formatter and linter (auto-fix)
 skip_install = true
-deps =
-    pre-commit
-passenv = HOMEPATH  # needed on Windows
+with_dev = true
 commands =
-  rye sync --all-features
-  rye run pre-commit run --all-files
+    uv run pre-commit run --all-files --show-diff-on-failure
 
+# [testenv:type]
+# runner = uv-venv-lock-runner
+# description = run type checker via mypy
+# with_dev = true
+# extras =
+#   docs
+# commands =
+#     uv run mypy {posargs:src}
 
 [testenv:docs]
-allowlist_externals = rye
-# Keep basepython in sync with gh-actions and .readthedocs.yml.
-basepython = python3.12
-# extras = docs, func
-# currently disable -n
+runner = uv-venv-lock-runner
+description = build the documentation
+# basepython = python3.12
+extras =
+  docs
 commands =
-  rye sync --all-features
-  rye run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html
-
+  uv run sphinx-build -T -W -b html -d {envtmpdir}/doctrees docs/source docs/build/html
 
 [testenv:changelog]
-allowlist_externals = rye
-basepython = python3.12
-# deps = towncrier
-skip_install = true
+# runner = uv-venv-lock-runner
+description = output the unreleased changelog
+with_dev = true
 commands =
-  rye sync --all-features
-  rye run git-cliff --unreleased
+  uv run git-cliff --unreleased
+
+[testenv:dev]
+runner = uv-venv-lock-runner
+description = dev environment
+with_dev = true
+extras =
+  docs
+commands =
+    uv pip tree
+
+[testenv]
+runner = uv-venv-lock-runner
+uv_sync_flags=--python={env_python}
+allow_externals = converge
+with_dev = true
+extras =
+  docs
+commands =
+  uv run --python={env_python} coverage run -m pytest --doctest-modules {posargs}
 """

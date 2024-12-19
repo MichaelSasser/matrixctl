@@ -22,7 +22,10 @@ import typing as t
 
 from sys import version_info
 
-from pkg_resources import get_distribution
+from .package_version import get_version
+
+
+__version__: str | None = get_version(__name__, __file__)
 
 
 class Error(Exception):
@@ -37,7 +40,7 @@ class Error(Exception):
         "with the complete output.\n\n"
         f"Python version: {version_info.major}.{version_info.minor}."
         f"{version_info.micro} {version_info.releaselevel}\n"
-        f"MatrixCtl version: {get_distribution('matrixctl').version} \n"
+        f"MatrixCtl version: {__version__} \n"
     )
 
     def __init__(

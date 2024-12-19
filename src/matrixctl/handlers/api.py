@@ -137,7 +137,7 @@ class RequestBuilder:
             The URL.
 
         """
-        path = self.path.startswith("/") and self.path or f"/{self.path}"
+        path = (self.path.startswith("/") and self.path) or f"/{self.path}"
 
         url: str = (
             f"{self.scheme}://"
@@ -737,76 +737,76 @@ def streamed_download(
         Returns the response
 
     """
-    download_file = tempfile.NamedTemporaryFile(
+    with tempfile.NamedTemporaryFile(
         mode="wb",
         delete=False,
-    )
-    path_download_file: Path = Path(download_file.name)
-    logger.debug("Temporary file: %s", path_download_file)
-    extension: str | None = None
-    content_length: int | None = None
-    try:
-        with httpx.stream(
-            method=request_config.method,
-            data=request_config.data,  # type: ignore # noqa: PGH003
-            json=request_config.json,
-            content=request_config.content,  # type: ignore # noqa: PGH003
-            url=str(request_config),
-            params=request_config.params,
-            headers=request_config.headers_with_auth,
-            timeout=request_config.timeout,
-            follow_redirects=False,
-        ) as response:
-            handle_sync_response_status_code(
-                response,
-                request_config.success_codes,
-            )
-            try:
-                content_length = int(response.headers["Content-Length"])
-                logger.debug("Content-Length: %s", content_length)
-            except KeyError as err:
-                logger.warning(
-                    "Response did not include Content-Length. Error: %s",
-                    err,
+    ) as download_file:
+        path_download_file: Path = Path(download_file.name)
+        logger.debug("Temporary file: %s", path_download_file)
+        extension: str | None = None
+        content_length: int | None = None
+        try:
+            with httpx.stream(
+                method=request_config.method,
+                data=request_config.data,  # type: ignore # noqa: PGH003
+                json=request_config.json,
+                content=request_config.content,  # type: ignore # noqa: PGH003
+                url=str(request_config),
+                params=request_config.params,
+                headers=request_config.headers_with_auth,
+                timeout=request_config.timeout,
+                follow_redirects=False,
+            ) as response:
+                handle_sync_response_status_code(
+                    response,
+                    request_config.success_codes,
                 )
-            try:
-                content_type: str = response.headers["Content-Type"]
-                if content_type:
-                    mime_types: MimeTypes = MimeTypes()
-                    extension = mime_types.guess_extension(
-                        content_type,
-                        strict=True,
+                try:
+                    content_length = int(response.headers["Content-Length"])
+                    logger.debug("Content-Length: %s", content_length)
+                except KeyError as err:
+                    logger.warning(
+                        "Response did not include Content-Length. Error: %s",
+                        err,
                     )
-            except IndexError as err:
-                logger.debug(
-                    "Response did not include Content-Type. Error: %s",
-                    err,
-                )
-            if content_length is None:
-                for chunk in response.iter_bytes():
-                    download_file.write(chunk)
-            else:
-                with rich.progress.Progress(
-                    "[progress.percentage]{task.percentage:>3.0f}%",
-                    rich.progress.BarColumn(bar_width=None),
-                    rich.progress.DownloadColumn(),
-                    rich.progress.TransferSpeedColumn(),
-                ) as progress:
-                    download_task: rich.progress.TaskID = progress.add_task(
-                        "Download",
-                        total=content_length,
+                try:
+                    content_type: str = response.headers["Content-Type"]
+                    if content_type:
+                        mime_types: MimeTypes = MimeTypes()
+                        extension = mime_types.guess_extension(
+                            content_type,
+                            strict=True,
+                        )
+                except IndexError as err:
+                    logger.debug(
+                        "Response did not include Content-Type. Error: %s",
+                        err,
                     )
+                if content_length is None:
                     for chunk in response.iter_bytes():
                         download_file.write(chunk)
-                        progress.update(
-                            download_task,
-                            completed=response.num_bytes_downloaded,
+                else:
+                    with rich.progress.Progress(
+                        "[progress.percentage]{task.percentage:>3.0f}%",
+                        rich.progress.BarColumn(bar_width=None),
+                        rich.progress.DownloadColumn(),
+                        rich.progress.TransferSpeedColumn(),
+                    ) as progress:
+                        download_task: rich.progress.TaskID = (
+                            progress.add_task(
+                                "Download",
+                                total=content_length,
+                            )
                         )
+                        for chunk in response.iter_bytes():
+                            download_file.write(chunk)
+                            progress.update(
+                                download_task,
+                                completed=response.num_bytes_downloaded,
+                            )
 
-    except Exception as err:  # skipcq: PYL-W0703
-        raise InternalResponseError(payload=response) from err
-    finally:
-        download_file.close()
+        except Exception as err:  # skipcq: PYL-W0703
+            raise InternalResponseError(payload=response) from err
 
     if extension:
         download_path = download_path.with_suffix(extension)

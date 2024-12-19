@@ -62,25 +62,29 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     if not event_identifier:
         return 1
 
+    response: str | None = None
     with db_connect(yaml) as conn, conn.cursor() as cur:
         cur.execute(
             "SELECT json FROM event_json WHERE event_id=(%s)",
             (event_identifier,),
         )
-        response = cur.fetchone()[0]
-    try:
-        print(json.dumps(json.loads(response), indent=4))
-    except json.decoder.JSONDecodeError:
-        logger.exception("Unable to process the response data to JSON.")
-        return 1
-    except Exception:
-        logger.exception(
-            (
-                "Unable to process the response data to JSON."
-                "Response was None"
-            ),
-        )
-        return 1
+        response_ = cur.fetchone()
+        if response_ is not None:
+            response = response_[0]
+    if response is not None:
+        try:
+            print(json.dumps(json.loads(response), indent=4))
+        except json.decoder.JSONDecodeError:
+            logger.exception("Unable to process the response data to JSON.")
+            return 1
+        except Exception:
+            logger.exception(
+                (
+                    "Unable to process the response data to JSON."
+                    "Response was None"
+                ),
+            )
+            return 1
     return 0
 
 
