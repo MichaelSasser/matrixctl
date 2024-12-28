@@ -1,6 +1,6 @@
 [project]
 name = "matrixctl"
-version = "0.12.1-beta.1"
+version = "0.12.1b2"
 description = "Control, manage, provision and deploy matrix homeservers."
 authors = [{ name = "Michael Sasser", email = "Michael@MichaelSasser.org" }]
 maintainers = [{ name = "Michael Sasser", email = "Michael@MichaelSasser.org" }]
@@ -40,6 +40,7 @@ dependencies = [
   "httpx[http2]>=0.27.2",
   "sshtunnel>=0.4.0,<0.5.0",
   "rich>=13.8.0,<14.0.0",
+  "packaging>=24.2",
 ]
 
 requires-python = ">=3.10,<4.0"
@@ -277,6 +278,13 @@ sort_by_size = true
 [tool.coverage.report]
 exclude_also = ["@t.overload", "pragma: no cover"]
 
+# Note: Useful for debugging while testing. When enabled, doctests will fail.
+#
+# [tool.pytest.ini_options]
+# log_cli = true
+# log_cli_level = "DEBUG"
+# log_cli_format = "%(asctime)s %(name)s:%(lineno)d [%(funcName)s] %(levelname)s %(message)s"
+# log_cli_date_format = "%Y-%m-%dT%H:%M:%S"
 
 [tool.git-cliff.changelog]
 # DOCS: https://git-cliff.org/docs/configuration

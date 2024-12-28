@@ -7,7 +7,9 @@ All notable changes to MatrixCtl will be documented in this file.
 You can find the issue tracker on
 [GitHub](https://github.com/MichaelSasser/matrixctl/issues).
 
-## Unreleased
+## 0.12.1-beta.1 - 2024-12-28
+
+### 🏗️ Breaking changes
 
 ### ⚙️ Miscellaneous Tasks
 
@@ -56,6 +58,19 @@ You can find the issue tracker on
 - Update dependency pylint to v3.3.1
 - Update dependency tox to v4.20.0
 - Update dependency types-setuptools to v75
+- Update pypa/gh-action-pypi-publish action to v1.10.3
+- Update dependency ruff to v0.6.9
+- Update dependency tox to v4.21.2
+- Update dependency vulture to v2.13
+- Update actions/cache action to v4.1.0
+- Update dependency pre-commit to v4
+- Update actions/checkout action to v4.2.1
+- Update pandoc/core docker tag to v3.5.0
+- Update dependency pre-commit to v4.0.1
+- Update actions/checkout action to v4.2.1 ([#856](https://github.com/MichaelSasser/matrixctl/issues/856))
+- Update actions/checkout action to v4.2.2 ([#857](https://github.com/MichaelSasser/matrixctl/issues/857))
+- Update astral-sh/setup-uv action to v5 ([#860](https://github.com/MichaelSasser/matrixctl/issues/860))
+- Lock file maintenance ([#861](https://github.com/MichaelSasser/matrixctl/issues/861))
 
 ### 🚀 Features
 
@@ -63,21 +78,53 @@ You can find the issue tracker on
 
 - Add download command
 
+#### Ci
+
+- Add codeql workflow
+
 ### 🐛 Bug Fixes
+
+#### Ci
+
+- Replace master/develop branch with main branch
+- Rye run sync regardless of cache hit; remove old codeql workflow
+- Add `tomli` since it seems to be required for ci to build the docs
+- Use a version matrix and let rye pin the python version
+- Create `.python-version` before installing rye to avoid multiple toolchains
+- Remove `--no-lock` from `rye sync`
+- Wrap make for docs in 'uv run'
 
 #### Deps
 
 - Update dependency psycopg to v3.2.1
 - Update dependency psycopg to v3.2.2
 - Update dependency paramiko to v3.5.0
+- Update dependency psycopg to v3.2.3
+- Update dependency rich to v13.9.2
 
 #### Docs
 
 - Add docs for the download feature
+- Replace master branch with main branch
+- Wrap make in 'uv run'
+
+#### Pre-commit
+
+- Ignore all `lock` files
 
 #### Renovate
 
 - Add missing `:`
+
+### 📚 Documentation
+
+#### Changelog
+
+- Make the old changelog available under changelog
+
+#### Readme
+
+- Typo
 
 ## 0.12.0 - 2024-06-05
 

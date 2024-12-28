@@ -654,7 +654,7 @@ wheels = [
 
 [[package]]
 name = "matrixctl"
-version = "0.12.1b1"
+version = "0.12.1b2"
 source = { editable = "." }
 dependencies = [
     { name = "ansible-runner" },
@@ -663,6 +663,7 @@ dependencies = [
     { name = "gitpython" },
     { name = "httpx", extra = ["http2"] },
     { name = "jinja2" },
+    { name = "packaging" },
     { name = "paramiko" },
     { name = "psycopg" },
     { name = "rich" },
@@ -708,6 +709,7 @@ requires-dist = [
     { name = "jinja2", specifier = ">=3.1.4,<4.0.0" },
     { name = "myst-parser", marker = "extra == 'docs'", specifier = ">=4.0.0" },
     { name = "numpydoc", marker = "extra == 'docs'", specifier = ">=1.5.0" },
+    { name = "packaging", specifier = ">=24.2" },
     { name = "paramiko", specifier = ">=3.4.0,<4.0.0" },
     { name = "psycopg", specifier = ">=3.1.19,<4.0.0" },
     { name = "rich", specifier = ">=13.8.0,<14.0.0" },

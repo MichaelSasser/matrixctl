@@ -22,10 +22,7 @@ import typing as t
 
 from sys import version_info
 
-from .package_version import get_version
-
-
-__version__: str | None = get_version(__name__, __file__)
+from matrixctl import __version__
 
 
 class Error(Exception):

@@ -145,10 +145,12 @@ def sanitize(
 
     """
     if identifier is None:
+        logger.debug("The identifier is None.")
         return None
     with suppress(TypeError, AttributeError):
         identifier = str(identifier).strip()
         if pattern.match(identifier):
+            logger.debug("The identifier is valid.")
             return t.cast(str, identifier)
     logger.error(error_message)
     return False

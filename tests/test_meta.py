@@ -23,19 +23,22 @@ Tests:
 
 from __future__ import annotations
 
+import logging
 import re
 
-from matrixctl import __version__
+from packaging import version as pversion
+
+
+logger = logging.getLogger(__name__)
 
 
 def test_version() -> None:
-    """Test, if the version matches SemVer.
+    """Test, if the version matches the PyPA specification.
 
     Notes
     -----
-    The regular expression is from `SemVer.org
-    <https://semver.org/spec/v2.0.0.html#is-there-a-suggested-regular-
-    expression-regex-to-check-a-semver-string>`_.
+    See `PyPA <https://packaging.python.org/en/latest/specifications/>`_ for
+    more information.
 
     Parameters
     ----------
@@ -46,15 +49,18 @@ def test_version() -> None:
     None
 
     """
+
     # Setup
+    logger.info("Using version pattern %s", pversion.VERSION_PATTERN)
+
     desired = re.compile(
-        r"^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\."
-        r"(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-]"
-        r"[0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?"
-        r"(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$",
+        r"^\s*" + pversion.VERSION_PATTERN + r"\s*$",
+        re.VERBOSE | re.IGNORECASE,
     )
 
     # Exercise
+    from matrixctl import __version__
+
     actual = __version__
 
     # Verify

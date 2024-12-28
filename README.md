@@ -184,10 +184,11 @@ If you have any thoughts or questions, you can ask them in the
 [discusions](https://github.com/MichaelSasser/matrixctl/discussions) or in the
 projects matrix room `#matrixctl:matrix.org`.
 
-## Semantic Versioning and Branching Model
+## PyPA Versioning and Branching Model
 
-This Python package uses [SemVer](https://semver.org/) for its release cycle
-and follows the
+This Python package uses
+[PyPA](https://packaging.python.org/en/latest/specifications/) for its release
+cycle and follows the
 [GitHub Flow](https://docs.github.com/en/get-started/using-github/github-flow).
 
 ## Contributing

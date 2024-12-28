@@ -28,27 +28,26 @@ be determined, it will return ``None``.
 
 from __future__ import annotations
 
+import logging
 import re
 import typing as t
 
 from contextlib import suppress
 from pathlib import Path
 
+from packaging import version as pversion
+
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
+logger = logging.getLogger(__name__)
 
-# semver
-VERSION_PATTERN: str = (
-    r"^\s*version\s*=\s*[\"']\s*"
-    r"(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)"
-    r"(?:-(?P<prerelease>"
-    r"(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)"
-    r"(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?"
-    r"(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?\s*[\"']\s*$"
+
+VERSION_PATTERN: t.Pattern[str] = re.compile(
+    r"^\s*version\s*=\s*[\"']\s*" + pversion.VERSION_PATTERN + r"\s*[\"']\s*$",
+    re.VERBOSE | re.IGNORECASE,
 )
-# Fast approx. for simpel versions
 
 
 def __from_pyproject(file: Path) -> str | None:
@@ -67,20 +66,19 @@ def __from_pyproject(file: Path) -> str | None:
         If the package is installed, the return value will be ``None``.
 
     """
+    logger.debug("Trying to get the version from the file %s.", file)
     with suppress(FileNotFoundError), file.open() as fp:
-        vers: t.Pattern[str] = re.compile(VERSION_PATTERN)
         for line in fp:
-            version: t.Match[str] | None = vers.search(line)
-            if version is not None:
-                # semver
+            version_: t.Match[str] | None = VERSION_PATTERN.search(line)
+            if version_ is not None:
+                logger.debug("Found version: %s", version_)
                 return (
-                    f"{version.group(1)}."
-                    f"{version.group(2) or '0'}."
-                    f"{version.group(3) or '0'}"
-                    f"{f'-{version.group(4)}' if version.group(4) else ''}"
-                    f"{f'+{version.group(5)}' if version.group(5) else ''}"
+                    f"{version_.group(1)}."
+                    f"{version_.group(2) or '0'}."
+                    f"{version_.group(3) or '0'}"
+                    f"{f'-{version_.group(4)}' if version_.group(4) else ''}"
+                    f"{f'+{version_.group(5)}' if version_.group(5) else ''}"
                 )
-                # Fast approx.
     return None
 
 
@@ -101,8 +99,13 @@ def __from_metadata(name: str) -> str | None:
     """
     import importlib.metadata as importlib_metadata  # Python >= 3.8
 
+    logger.debug(
+        "Trying to get the version from the metadata of the package %s.", name
+    )
     with suppress(importlib_metadata.PackageNotFoundError):
-        return importlib_metadata.version(name).strip()
+        version_: str = importlib_metadata.version(name).strip()
+        logger.debug("Found version: %s", version_)
+        return version_
     return None
 
 
@@ -156,4 +159,10 @@ def get_version(name: str, file: str | Path) -> str | None:
 
     """
     file_: Path = Path(file).parent.parent / "pyproject.toml"
+    logger.debug(
+        "Trying to get the version from either the file %s or the metadata "
+        "of %s.",
+        file_,
+        name,
+    )
     return __from_pyproject(file_) or __from_metadata(name)
