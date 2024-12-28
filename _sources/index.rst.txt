@@ -32,10 +32,10 @@ To use this program you need to have this config file in
 .. include::  getting_started/config_file_snippet.rst
 
 
-Semantic Versioning
-^^^^^^^^^^^^^^^^^^^
+PyPA Versioning
+^^^^^^^^^^^^^^^
 
-.. include::  semantic_versioning.rst
+.. include::  pypa_versioning.rst
 
 Indices and tables
 ==================
