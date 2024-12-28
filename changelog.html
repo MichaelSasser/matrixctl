@@ -82,397 +82,311 @@
 <p>All notable changes to MatrixCtl will be documented in this file.</p>
 <p>You can find the issue tracker on
 <a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues">GitHub</a>.</p>
+<section id="b2-2024-12-28">
+<h3>[0.12.1b2] - 2024-12-28<a class="headerlink" href="#b2-2024-12-28" title="Link to this heading"></a></h3>
+<section id="bug-fixes">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Move versioning from semver to PyPA spec due to normalization</p></li>
+</ul>
+</section>
+</section>
 <section id="beta-1-2024-12-28">
-<h3>0.12.1-beta.1 - 2024-12-28<a class="headerlink" href="#beta-1-2024-12-28" title="Link to this heading"></a></h3>
+<h3>[0.12.1-beta.1] - 2024-12-28<a class="headerlink" href="#beta-1-2024-12-28" title="Link to this heading"></a></h3>
 <section id="breaking-changes">
 <h4>🏗️ Breaking changes<a class="headerlink" href="#breaking-changes" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Remove Jitsi related features.</p></li>
+</ul>
 </section>
 <section id="miscellaneous-tasks">
 <h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#miscellaneous-tasks" title="Link to this heading"></a></h4>
-<section id="classifiers">
-<h5>Classifiers<a class="headerlink" href="#classifiers" title="Link to this heading"></a></h5>
 <ul class="simple">
-<li><p>Add 3.12</p></li>
+<li><p><em>(deps)</em> Update pypa/gh-action-pypi-publish action to v1.8.14</p></li>
+<li><p><em>(deps)</em> Update pandoc/core docker tag to v2.19.2</p></li>
+<li><p><em>(deps)</em> Update dependency ubuntu to v22</p></li>
+<li><p><em>(deps)</em> Update pandoc/core docker tag to v3</p></li>
+<li><p><em>(deps)</em> Update softprops/action-gh-release action to v2</p></li>
+<li><p><em>(dependabot)</em> Remove Dependabot config as we use Renovate from now on</p></li>
+<li><p><em>(classifiers)</em> Add 3.12</p></li>
+<li><p><em>(deps)</em> Update actions/checkout action to v4.1.7</p></li>
+<li><p><em>(deps)</em> Update dependency ruff to v0.4.9</p></li>
+<li><p><em>(deps)</em> Update pypa/gh-action-pypi-publish action to v1.9.0</p></li>
+<li><p><em>(deps)</em> Update dependency flake8 to v7.1.0</p></li>
+<li><p><em>(deps)</em> Update dependency sphinx-autodoc-typehints to v2.2.0</p></li>
+<li><p><em>(deps)</em> Update dependency ruff to v0.4.10</p></li>
+<li><p><em>(deps)</em> Update dependency sphinx-autodoc-typehints to v2.2.1</p></li>
+<li><p><em>(deps)</em> Update dependency sphinx-autodoc-typehints to v2.2.2</p></li>
+<li><p><em>(deps)</em> Update dependency coverage to v7.5.4</p></li>
+<li><p><em>(deps)</em> Update dependency mypy to v1.10.1</p></li>
+<li><p><em>(deps)</em> Update dependency pylint to v3.2.4</p></li>
+<li><p><em>(deps)</em> Update pandoc/core docker tag to v3.2.1</p></li>
+<li><p><em>(deps)</em> Update dependency pylint to v3.2.5</p></li>
+<li><p><em>(deps)</em> Update actions/setup-python action to v5.1.1</p></li>
+<li><p><em>(deps)</em> Update dependency tox to v4.16.0</p></li>
+<li><p><em>(deps)</em> Update dependency ruff to v0.5.1</p></li>
+<li><p><em>(deps)</em> Update dependency coverage to v7.6.0</p></li>
+<li><p><em>(deps)</em> Update pandoc/core docker tag to v3.3.0</p></li>
+<li><p><em>(deps)</em> Update actions/setup-python action to v5.2.0</p></li>
+<li><p><em>(deps)</em> Update snok/install-poetry action to v1.4</p></li>
+<li><p><em>(deps)</em> Update pypa/gh-action-pypi-publish action to v1.10.1</p></li>
+<li><p><em>(deps)</em> Update pandoc/core docker tag to v3.4.0</p></li>
+<li><p><em>(deps)</em> Update pypa/gh-action-pypi-publish action to v1.10.2</p></li>
+<li><p><em>(deps)</em> Update dependency ruff to v0.6.8</p></li>
+<li><p><em>(deps)</em> Update dependency vulture to v2.12</p></li>
+<li><p><em>(deps)</em> Update dependency ubuntu to v24</p></li>
+<li><p><em>(deps)</em> Update actions/checkout action to v4.2.0</p></li>
+<li><p><em>(deps)</em> Update dependency pylint to v3.3.1</p></li>
+<li><p><em>(deps)</em> Update dependency tox to v4.20.0</p></li>
+<li><p><em>(deps)</em> Update dependency types-setuptools to v75</p></li>
+<li><p><em>(deps)</em> Update pypa/gh-action-pypi-publish action to v1.10.3</p></li>
+<li><p><em>(deps)</em> Update dependency ruff to v0.6.9</p></li>
+<li><p><em>(deps)</em> Update dependency tox to v4.21.2</p></li>
+<li><p><em>(deps)</em> Update dependency vulture to v2.13</p></li>
+<li><p><em>(deps)</em> Update actions/cache action to v4.1.0</p></li>
+<li><p><em>(deps)</em> Update dependency pre-commit to v4</p></li>
+<li><p><em>(deps)</em> Update actions/checkout action to v4.2.1</p></li>
+<li><p><em>(deps)</em> Update pandoc/core docker tag to v3.5.0</p></li>
+<li><p><em>(deps)</em> Update dependency pre-commit to v4.0.1</p></li>
+<li><p><em>(deps)</em> Update actions/checkout action to v4.2.1 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/856">#856</a>)</p></li>
+<li><p>Update dependencies</p></li>
+<li><p><em>(deps)</em> Update actions/checkout action to v4.2.2 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/857">#857</a>)</p></li>
+<li><p><em>(deps)</em> Update astral-sh/setup-uv action to v5 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/860">#860</a>)</p></li>
+<li><p><em>(deps)</em> Lock file maintenance (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/861">#861</a>)</p></li>
+<li><p>Bump version from v0.12.0 to v0.12.1-beta.1</p></li>
 </ul>
-</section>
-<section id="dependabot">
-<h5>Dependabot<a class="headerlink" href="#dependabot" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Remove Dependabot config as we use Renovate from now on</p></li>
-</ul>
-</section>
-<section id="deps">
-<h5>Deps<a class="headerlink" href="#deps" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Update pypa/gh-action-pypi-publish action to v1.8.14</p></li>
-<li><p>Update pandoc/core docker tag to v2.19.2</p></li>
-<li><p>Update dependency ubuntu to v22</p></li>
-<li><p>Update pandoc/core docker tag to v3</p></li>
-<li><p>Update softprops/action-gh-release action to v2</p></li>
-<li><p>Update actions/checkout action to v4.1.7</p></li>
-<li><p>Update dependency ruff to v0.4.9</p></li>
-<li><p>Update pypa/gh-action-pypi-publish action to v1.9.0</p></li>
-<li><p>Update dependency flake8 to v7.1.0</p></li>
-<li><p>Update dependency sphinx-autodoc-typehints to v2.2.0</p></li>
-<li><p>Update dependency ruff to v0.4.10</p></li>
-<li><p>Update dependency sphinx-autodoc-typehints to v2.2.1</p></li>
-<li><p>Update dependency sphinx-autodoc-typehints to v2.2.2</p></li>
-<li><p>Update dependency coverage to v7.5.4</p></li>
-<li><p>Update dependency mypy to v1.10.1</p></li>
-<li><p>Update dependency pylint to v3.2.4</p></li>
-<li><p>Update pandoc/core docker tag to v3.2.1</p></li>
-<li><p>Update dependency pylint to v3.2.5</p></li>
-<li><p>Update actions/setup-python action to v5.1.1</p></li>
-<li><p>Update dependency tox to v4.16.0</p></li>
-<li><p>Update dependency ruff to v0.5.1</p></li>
-<li><p>Update dependency coverage to v7.6.0</p></li>
-<li><p>Update pandoc/core docker tag to v3.3.0</p></li>
-<li><p>Update actions/setup-python action to v5.2.0</p></li>
-<li><p>Update snok/install-poetry action to v1.4</p></li>
-<li><p>Update pypa/gh-action-pypi-publish action to v1.10.1</p></li>
-<li><p>Update pandoc/core docker tag to v3.4.0</p></li>
-<li><p>Update pypa/gh-action-pypi-publish action to v1.10.2</p></li>
-<li><p>Update dependency ruff to v0.6.8</p></li>
-<li><p>Update dependency vulture to v2.12</p></li>
-<li><p>Update dependency ubuntu to v24</p></li>
-<li><p>Update actions/checkout action to v4.2.0</p></li>
-<li><p>Update dependency pylint to v3.3.1</p></li>
-<li><p>Update dependency tox to v4.20.0</p></li>
-<li><p>Update dependency types-setuptools to v75</p></li>
-<li><p>Update pypa/gh-action-pypi-publish action to v1.10.3</p></li>
-<li><p>Update dependency ruff to v0.6.9</p></li>
-<li><p>Update dependency tox to v4.21.2</p></li>
-<li><p>Update dependency vulture to v2.13</p></li>
-<li><p>Update actions/cache action to v4.1.0</p></li>
-<li><p>Update dependency pre-commit to v4</p></li>
-<li><p>Update actions/checkout action to v4.2.1</p></li>
-<li><p>Update pandoc/core docker tag to v3.5.0</p></li>
-<li><p>Update dependency pre-commit to v4.0.1</p></li>
-<li><p>Update actions/checkout action to v4.2.1 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/856">#856</a>)</p></li>
-<li><p>Update actions/checkout action to v4.2.2 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/857">#857</a>)</p></li>
-<li><p>Update astral-sh/setup-uv action to v5 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/860">#860</a>)</p></li>
-<li><p>Lock file maintenance (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/861">#861</a>)</p></li>
-</ul>
-</section>
 </section>
 <section id="features">
 <h4>🚀 Features<a class="headerlink" href="#features" title="Link to this heading"></a></h4>
-<section id="addon">
-<h5>Addon<a class="headerlink" href="#addon" title="Link to this heading"></a></h5>
 <ul class="simple">
-<li><p>Add download command</p></li>
+<li><p><em>(addon)</em> Add download command</p></li>
+<li><p>Remove unused dependencies</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">rye</span> <span class="pre">run</span> <span class="pre">doc</span></code> command for building the docs</p></li>
+<li><p>[<strong>breaking</strong>] Move from git-flow to GitHub Flow branching model</p></li>
+<li><p>Rename addons to commands and remove <code class="docutils literal notranslate"><span class="pre">api_path</span></code> as well as <code class="docutils literal notranslate"><span class="pre">api_version</span></code> from the API handler</p></li>
+<li><p><em>(ci)</em> Add codeql workflow</p></li>
 </ul>
 </section>
-<section id="ci">
-<h5>Ci<a class="headerlink" href="#ci" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Add codeql workflow</p></li>
-</ul>
-</section>
-</section>
-<section id="bug-fixes">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading"></a></h4>
 <section id="id1">
-<h5>Ci<a class="headerlink" href="#id1" title="Link to this heading"></a></h5>
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Replace master/develop branch with main branch</p></li>
-<li><p>Rye run sync regardless of cache hit; remove old codeql workflow</p></li>
-<li><p>Add <code class="docutils literal notranslate"><span class="pre">tomli</span></code> since it seems to be required for ci to build the docs</p></li>
-<li><p>Use a version matrix and let rye pin the python version</p></li>
-<li><p>Create <code class="docutils literal notranslate"><span class="pre">.python-version</span></code> before installing rye to avoid multiple toolchains</p></li>
-<li><p>Remove <code class="docutils literal notranslate"><span class="pre">--no-lock</span></code> from <code class="docutils literal notranslate"><span class="pre">rye</span> <span class="pre">sync</span></code></p></li>
-<li><p>Wrap make for docs in ‘uv run’</p></li>
+<li><p><em>(deps)</em> Update dependency psycopg to v3.2.1</p></li>
+<li><p><em>(docs)</em> Add docs for the download feature</p></li>
+<li><p>Break out the the sync status code handler from <code class="docutils literal notranslate"><span class="pre">_request</span></code> of the API handler into <code class="docutils literal notranslate"><span class="pre">handle_sync_response_status_code</span></code> and re-use it in <code class="docutils literal notranslate"><span class="pre">streamed_download</span></code></p></li>
+<li><p><em>(renovate)</em> Add missing <code class="docutils literal notranslate"><span class="pre">:</span></code></p></li>
+<li><p><em>(deps)</em> Update dependency psycopg to v3.2.2</p></li>
+<li><p><em>(deps)</em> Update dependency paramiko to v3.5.0</p></li>
+<li><p><em>(deps)</em> Update dependency psycopg to v3.2.3</p></li>
+<li><p><em>(deps)</em> Update dependency rich to v13.9.2</p></li>
+<li><p><em>(docs)</em> Replace master branch with main branch</p></li>
+<li><p><em>(ci)</em> Replace master/develop branch with main branch</p></li>
+<li><p><em>(ci)</em> Rye run sync regardless of cache hit; remove old codeql workflow</p></li>
+<li><p><em>(ci)</em> Add <code class="docutils literal notranslate"><span class="pre">tomli</span></code> since it seems to be required for ci to build the docs</p></li>
+<li><p>Add dependency <code class="docutils literal notranslate"><span class="pre">exceptiongroup</span></code> for python &lt; 3.11 to build docs</p></li>
+<li><p><em>(ci)</em> Use a version matrix and let rye pin the python version</p></li>
+<li><p><em>(ci)</em> Create <code class="docutils literal notranslate"><span class="pre">.python-version</span></code> before installing rye to avoid multiple toolchains</p></li>
+<li><p><em>(ci)</em> Create <code class="docutils literal notranslate"><span class="pre">.python-version</span></code> before installing rye to avoid multiple toolchains</p></li>
+<li><p><em>(ci)</em> Remove <code class="docutils literal notranslate"><span class="pre">--no-lock</span></code> from <code class="docutils literal notranslate"><span class="pre">rye</span> <span class="pre">sync</span></code></p></li>
+<li><p><em>(ci)</em> Remove <code class="docutils literal notranslate"><span class="pre">--no-lock</span></code> from <code class="docutils literal notranslate"><span class="pre">rye</span> <span class="pre">sync</span></code></p></li>
+<li><p><em>(docs)</em> Wrap make in ‘uv run’</p></li>
+<li><p><em>(ci)</em> Wrap make for docs in ‘uv run’</p></li>
+<li><p><em>(pre-commit)</em> Ignore all <code class="docutils literal notranslate"><span class="pre">lock</span></code> files</p></li>
 </ul>
-</section>
-<section id="id2">
-<h5>Deps<a class="headerlink" href="#id2" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Update dependency psycopg to v3.2.1</p></li>
-<li><p>Update dependency psycopg to v3.2.2</p></li>
-<li><p>Update dependency paramiko to v3.5.0</p></li>
-<li><p>Update dependency psycopg to v3.2.3</p></li>
-<li><p>Update dependency rich to v13.9.2</p></li>
-</ul>
-</section>
-<section id="docs">
-<h5>Docs<a class="headerlink" href="#docs" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Add docs for the download feature</p></li>
-<li><p>Replace master branch with main branch</p></li>
-<li><p>Wrap make in ‘uv run’</p></li>
-</ul>
-</section>
-<section id="pre-commit">
-<h5>Pre-commit<a class="headerlink" href="#pre-commit" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Ignore all <code class="docutils literal notranslate"><span class="pre">lock</span></code> files</p></li>
-</ul>
-</section>
-<section id="renovate">
-<h5>Renovate<a class="headerlink" href="#renovate" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Add missing <code class="docutils literal notranslate"><span class="pre">:</span></code></p></li>
-</ul>
-</section>
 </section>
 <section id="documentation">
 <h4>📚 Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><em>(changelog)</em> Make the old changelog available under changelog</p></li>
+<li><p>Replace rye with uv</p></li>
+<li><p><em>(readme)</em> Typo</p></li>
+</ul>
+</section>
+</section>
+<section id="id2">
+<h3>[0.12.0] - 2024-06-05<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <section id="id3">
-<h5>Changelog<a class="headerlink" href="#id3" title="Link to this heading"></a></h5>
+<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Make the old changelog available under changelog</p></li>
+<li><p><em>(dependencies)</em> Update mypy v0.991 -&gt; v1.1.1</p></li>
+<li><p><em>(dependencies)</em> Bump sphinx v5.2.3 -&gt; v6.1.3</p></li>
+<li><p><em>(dependencies)</em> Bump xdg v5.1.1 -&gt; v6.0.0</p></li>
+<li><p><em>(dependencies)</em> Bump paramiko v2.11.0 -&gt; v3.1.0</p></li>
+<li><p><em>(dependencies)</em> Bump some linters</p></li>
+<li><p>Update all dependencies</p></li>
+<li><p>Update ruff, towncrier pylint yapf attrs, httpx, ruamel.ymal</p></li>
+<li><p><em>(pre-commit)</em> Update sources</p></li>
+<li><p><em>(matrixctl)</em> Bump version from v0.12.0-beta.2 to v0.12.0</p></li>
 </ul>
-</section>
-<section id="readme">
-<h5>Readme<a class="headerlink" href="#readme" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Typo</p></li>
-</ul>
-</section>
-</section>
 </section>
 <section id="id4">
-<h3>0.12.0 - 2024-06-05<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<h4>🚀 Features<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Use ruff instead of flake8 and isort (and addons); refactor</p></li>
+<li><p>Update pre-commit, also run tests on 3.11</p></li>
+<li><p>Add largest-rooms command</p></li>
+</ul>
+</section>
 <section id="id5">
-<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
-<section id="dependencies">
-<h5>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h5>
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Update mypy v0.991 -&gt; v1.1.1</p></li>
-<li><p>Bump sphinx v5.2.3 -&gt; v6.1.3</p></li>
-<li><p>Bump xdg v5.1.1 -&gt; v6.0.0</p></li>
-<li><p>Bump paramiko v2.11.0 -&gt; v3.1.0</p></li>
-<li><p>Bump some linters</p></li>
+<li><p><em>(deepsource)</em> Add skipcq: PYL-W0212 for intentionally use of private type _SubParsersAction</p></li>
+<li><p><em>(largest-rooms)</em> Use processed variable to produce output for table instead of the input variable</p></li>
+<li><p>Build process due to poetry having new optional group config</p></li>
+<li><p><em>(ci)</em> Use Python 3.11 in CI</p></li>
+<li><p>Make linters happy</p></li>
+<li><p><em>(rtd)</em> Add ‘–all-extras’ to the install arguments</p></li>
+<li><p><em>(rtd)</em> Follow the latest guidelines</p></li>
 </ul>
-</section>
-<section id="matrixctl">
-<h5>Matrixctl<a class="headerlink" href="#matrixctl" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Bump version from v0.12.0-beta.2 to v0.12.0</p></li>
-</ul>
-</section>
-<section id="id6">
-<h5>Pre-commit<a class="headerlink" href="#id6" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Update sources</p></li>
-</ul>
-</section>
-</section>
-<section id="id7">
-<h4>🚀 Features<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
-</section>
-<section id="id8">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
-<section id="id9">
-<h5>Ci<a class="headerlink" href="#id9" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Use Python 3.11 in CI</p></li>
-</ul>
-</section>
-<section id="deepsource">
-<h5>Deepsource<a class="headerlink" href="#deepsource" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Add skipcq: PYL-W0212 for intentionally use of private type _SubParsersAction</p></li>
-</ul>
-</section>
-<section id="largest-rooms">
-<h5>Largest-rooms<a class="headerlink" href="#largest-rooms" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Use processed variable to produce output for table instead of the input variable</p></li>
-</ul>
-</section>
-<section id="rtd">
-<h5>Rtd<a class="headerlink" href="#rtd" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Add ‘–all-extras’ to the install arguments</p></li>
-<li><p>Follow the latest guidelines</p></li>
-</ul>
-</section>
 </section>
 </section>
 <section id="beta-2-2023-03-23">
-<h3>0.12.0-beta.2 - 2023-03-23<a class="headerlink" href="#beta-2-2023-03-23" title="Link to this heading"></a></h3>
-<section id="id10">
-<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
-<section id="workflow">
-<h5>Workflow<a class="headerlink" href="#workflow" title="Link to this heading"></a></h5>
+<h3>[0.12.0-beta.2] - 2023-03-23<a class="headerlink" href="#beta-2-2023-03-23" title="Link to this heading"></a></h3>
+<section id="id6">
+<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Update Python 3.9 -&gt; 3.10</p></li>
-<li><p>Fix Python version</p></li>
+<li><p>Update dependencies</p></li>
+<li><p><em>(workflow)</em> Update Python 3.9 -&gt; 3.10</p></li>
+<li><p><em>(workflow)</em> Fix Python version</p></li>
+<li><p>Update pre-commit dependencies</p></li>
+<li><p>Update poetry lock file</p></li>
+<li><p>Bump version from v0.12.0-beta.1 to v0.12.0-beta.2</p></li>
+<li><p>Bump version from v0.12.0-beta.1 to v0.12.0-beta.2</p></li>
+</ul>
+</section>
+<section id="id7">
+<h4>🚀 Features<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><em>(tests)</em> Add tests for sanitizers</p></li>
+<li><p>Add force-purge argument to delroom</p></li>
+</ul>
+</section>
+<section id="id8">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Lazy formatting of message string passed to logging module</p></li>
+<li><p>False positive BAN-B601</p></li>
+<li><p><em>(ssh)</em> Lazy formatting of message string passed to logging module</p></li>
+<li><p><em>(tox)</em> Update label from py39 -&gt; py310</p></li>
+<li><p><em>(yaml)</em> Don’t log the database password for synapse in debug mode</p></li>
+<li><p>Formatting strings passed to logging module</p></li>
+<li><p>Formatting strings passed to logging module</p></li>
+<li><p><em>(table)</em> Use correct types in docs</p></li>
+<li><p>Formatted string passed to logging module</p></li>
+</ul>
+</section>
+</section>
+<section id="beta-1-2021-12-02">
+<h3>[0.12.0-beta.1] - 2021-12-02<a class="headerlink" href="#beta-1-2021-12-02" title="Link to this heading"></a></h3>
+<section id="id9">
+<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Add breaking newsfragment</p></li>
+</ul>
+</section>
+<section id="id10">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><em>(purge-remote-media)</em> Message rooms -&gt; media files</p></li>
+<li><p><em>(purge-remote-media)</em> Message rooms -&gt; media files</p></li>
+<li><p><em>(doctest)</em> Ignore example (not meant as doctest)</p></li>
+<li><p><em>(api)</em> Remove f-string without any expression</p></li>
+<li><p><em>(table)</em> Error when table_data is empty</p></li>
+<li><p><em>(table)</em> Dicstring</p></li>
 </ul>
 </section>
 </section>
 <section id="id11">
-<h4>🚀 Features<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
-<section id="tests">
-<h5>Tests<a class="headerlink" href="#tests" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Add tests for sanitizers</p></li>
-</ul>
-</section>
-</section>
+<h3>[0.11.4] - 2021-12-01<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
 <section id="id12">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
-<section id="ssh">
-<h5>Ssh<a class="headerlink" href="#ssh" title="Link to this heading"></a></h5>
+<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Lazy formatting of message string passed to logging module</p></li>
+<li><p><em>(pre-commit)</em> Update dependencies</p></li>
 </ul>
 </section>
-<section id="table">
-<h5>Table<a class="headerlink" href="#table" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Use correct types in docs</p></li>
-</ul>
-</section>
-<section id="tox">
-<h5>Tox<a class="headerlink" href="#tox" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Update label from py39 -&gt; py310</p></li>
-</ul>
-</section>
-<section id="yaml">
-<h5>Yaml<a class="headerlink" href="#yaml" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Don’t log the database password for synapse in debug mode</p></li>
-</ul>
-</section>
-</section>
-</section>
-<section id="beta-1-2021-12-02">
-<h3>0.12.0-beta.1 - 2021-12-02<a class="headerlink" href="#beta-1-2021-12-02" title="Link to this heading"></a></h3>
 <section id="id13">
-<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><em>(api)</em> Typehints</p></li>
+</ul>
+</section>
 </section>
 <section id="id14">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
-<section id="api">
-<h5>Api<a class="headerlink" href="#api" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Remove f-string without any expression</p></li>
-</ul>
-</section>
-<section id="doctest">
-<h5>Doctest<a class="headerlink" href="#doctest" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Ignore example (not meant as doctest)</p></li>
-</ul>
-</section>
-<section id="purge-remote-media">
-<h5>Purge-remote-media<a class="headerlink" href="#purge-remote-media" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Message rooms -&gt; media files</p></li>
-</ul>
-</section>
+<h3>[0.11.3] - 2021-11-16<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
 <section id="id15">
-<h5>Table<a class="headerlink" href="#id15" title="Link to this heading"></a></h5>
+<h4>🚀 Features<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Error when table_data is empty</p></li>
-<li><p>Dicstring</p></li>
+<li><p>Implement make-room-admin API</p></li>
+<li><p>Implement get context API</p></li>
+<li><p><em>(rooms)</em> Add  switch argument</p></li>
+<li><p><em>(purge-history)</em> Add  switch</p></li>
+<li><p>Implement</p></li>
+<li><p>Implement delete-local-media addon</p></li>
+<li><p><em>(delroom)</em> Update delroom to use the “Delete Room API”</p></li>
+<li><p><em>(help)</em> Debloat</p></li>
+<li><p><em>(README)</em> Update help output</p></li>
+<li><p><em>(action)</em> Generate the release body with a script</p></li>
+<li><p>Add missing newsfragment and reorder release workflow</p></li>
 </ul>
-</section>
-</section>
 </section>
 <section id="id16">
-<h3>0.11.4 - 2021-12-01<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
-<section id="id17">
-<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
-<section id="id18">
-<h5>Pre-commit<a class="headerlink" href="#id18" title="Link to this heading"></a></h5>
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id16" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Update dependencies</p></li>
+<li><p><em>(users)</em> Set timeout to 10s</p></li>
+<li><p>Wrap long line</p></li>
+</ul>
+</section>
+</section>
+<section id="id17">
+<h3>[0.11.2] - 2021-09-26<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<section id="id18">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Unguarded next()</p></li>
 </ul>
 </section>
 </section>
 <section id="id19">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
+<h3>[0.10.1] - 2021-06-17<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
 <section id="id20">
-<h5>Api<a class="headerlink" href="#id20" title="Link to this heading"></a></h5>
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Typehints</p></li>
+<li><p>Use secure, temporary directory for ansible_runner’s private data (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/120">#120</a>)</p></li>
 </ul>
-</section>
 </section>
 </section>
 <section id="id21">
-<h3>0.11.3 - 2021-11-16<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<h3>[0.9.0] - 2021-04-23<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
 <section id="id22">
-<h4>🚀 Features<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
+<h4>📚 Documentation<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Add xref param type links</p></li>
+<li><p>Fix commandline example (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/77">#77</a>)</p></li>
+<li><p>Remove program name from changelog (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/80">#80</a>)</p></li>
+</ul>
+</section>
+</section>
 <section id="id23">
-<h5>README<a class="headerlink" href="#id23" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Update help output</p></li>
-</ul>
-</section>
-<section id="action">
-<h5>Action<a class="headerlink" href="#action" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Generate the release body with a script</p></li>
-</ul>
-</section>
-<section id="delroom">
-<h5>Delroom<a class="headerlink" href="#delroom" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Update delroom to use the “Delete Room API”</p></li>
-</ul>
-</section>
-<section id="help">
-<h5>Help<a class="headerlink" href="#help" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Debloat</p></li>
-</ul>
-</section>
-<section id="purge-history">
-<h5>Purge-history<a class="headerlink" href="#purge-history" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Add  switch</p></li>
-</ul>
-</section>
-<section id="rooms">
-<h5>Rooms<a class="headerlink" href="#rooms" title="Link to this heading"></a></h5>
-<ul class="simple">
-<li><p>Add  switch argument</p></li>
-</ul>
-</section>
-</section>
+<h3>[0.8.6] - 2021-04-17<a class="headerlink" href="#id23" title="Link to this heading"></a></h3>
 <section id="id24">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id24" title="Link to this heading"></a></h4>
-<section id="users">
-<h5>Users<a class="headerlink" href="#users" title="Link to this heading"></a></h5>
+<h4>🚀 Features<a class="headerlink" href="#id24" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>Set timeout to 10s</p></li>
+<li><p><strong>main</strong>.py instead of application.py (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/62">#62</a>)</p></li>
+<li><p>Add towncrier to generate a changelog (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/63">#63</a>)</p></li>
 </ul>
-</section>
-</section>
 </section>
 <section id="id25">
-<h3>0.11.2 - 2021-09-26<a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id25" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Logging TypeError (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/45">#45</a>) (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/66">#66</a>)</p></li>
+</ul>
+</section>
 <section id="id26">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id26" title="Link to this heading"></a></h4>
-</section>
-</section>
-<section id="id27">
-<h3>0.10.1 - 2021-06-17<a class="headerlink" href="#id27" title="Link to this heading"></a></h3>
-<section id="id28">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id28" title="Link to this heading"></a></h4>
-</section>
-</section>
-<section id="id29">
-<h3>0.9.0 - 2021-04-23<a class="headerlink" href="#id29" title="Link to this heading"></a></h3>
-<section id="id30">
-<h4>📚 Documentation<a class="headerlink" href="#id30" title="Link to this heading"></a></h4>
-</section>
-</section>
-<section id="id31">
-<h3>0.8.6 - 2021-04-17<a class="headerlink" href="#id31" title="Link to this heading"></a></h3>
-<section id="id32">
-<h4>🚀 Features<a class="headerlink" href="#id32" title="Link to this heading"></a></h4>
-</section>
-<section id="id33">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id33" title="Link to this heading"></a></h4>
-</section>
-<section id="id34">
-<h4>📚 Documentation<a class="headerlink" href="#id34" title="Link to this heading"></a></h4>
+<h4>📚 Documentation<a class="headerlink" href="#id26" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Add changelog to docs</p></li>
+<li><p>Minor</p></li>
+<li><p>Add rest of docstrings; set min. coverage 100%</p></li>
+</ul>
 <!-- generated by git-cliff --></section>
 </section>
 </section>
