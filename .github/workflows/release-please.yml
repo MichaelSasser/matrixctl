@@ -1,4 +1,6 @@
 ---
+name: release-please
+
 on:
   push:
     branches:
@@ -8,14 +10,65 @@ permissions:
   contents: write
   pull-requests: write
 
-name: release-please
-
 jobs:
   release-please:
+    name: Release Please
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
+        id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: python
           config-file: release-please-config.json
+
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        if: ${{ steps.release.outputs.release_created }}
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - name: Set up Python
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          echo '::group::UV Version'
+          uv --version
+          echo '::endgroup::'
+
+          echo '::group::Install Python'
+          uv python install 3.13
+          echo '::endgroup::'
+
+          echo '::group::Install Dependencies'
+          uv sync --all-extras --dev
+          echo '::endgroup::'
+
+      - name: Build project
+        if: ${{ steps.release.outputs.release_created }}
+        run: uv build
+
+      - name: Upload Release Artifact
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo '::group::Create Artifact ZIP-File'
+          zip --junk-paths matrixctl.zip  dist/* README.md LICENSE.txt CHANGELOG.md
+          echo '::endgroup::'
+
+          echo '::group::Upload Artifact'
+          gh release upload ${{ steps.release.outputs.tag_name }} ./matrixctl.zip
+          echo '::endgroup::'
+
+          rm -rf matrixctl.zip
+
+      - name: Publish
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.pypi_token }}
+        run: uv publish
