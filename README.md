@@ -187,7 +187,7 @@ projects matrix room `#matrixctl:matrix.org`.
 ## Semantic Versioning and Branching Model
 
 This Python package uses [SemVer](https://semver.org/) for its release cycle
-follows the
+and follows the
 [GitHub Flow](https://docs.github.com/en/get-started/using-github/github-flow).
 
 ## Contributing
