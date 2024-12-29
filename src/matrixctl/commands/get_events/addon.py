@@ -24,6 +24,7 @@ import logging
 import typing as t
 
 from argparse import Namespace
+from sys import stdout
 
 from rich.console import Console
 from rich.highlighter import RegexHighlighter
@@ -32,8 +33,10 @@ from rich.theme import Theme
 
 from .parser import OutputType
 
+from matrixctl.handlers.api import download_media_to_buf
 from matrixctl.handlers.db import db_connect
 from matrixctl.handlers.yaml import YAML
+from matrixctl.print_helpers import imgcat
 from matrixctl.sanitizers import MessageType
 from matrixctl.sanitizers import sanitize_message_type
 from matrixctl.sanitizers import sanitize_room_identifier
@@ -54,19 +57,18 @@ class HighlighterMatrixUser(RegexHighlighter):
     highlights = [r"(?P<matrix_user>@[\w-]+:([\w-]+\.)+[\w-]+)"]
 
 
-def to_row_ctx(kind: MessageType | str, ev: dict[str, t.Any]) -> Text:
+def to_row_ctx(
+    kind: MessageType | str, ev: dict[str, t.Any], yaml: YAML
+) -> Text:
     """Create an event context from a message type and it's content."""
 
     content = ev.get("content")
     ctx = Text()
+    buf: bytes = b""
     if isinstance(kind, str) or content is None:
         ctx.append("Unknown Message Type")
-
-    # 2024-11-12T20:33:13 | !iuyQXswfjgxQMZGrfQ:matrix.org | @michael:michaelsasser.org | m.room.redaction | $zVjqu0tytOH5jeyfHYbTXAlnQRkYCV64jqm73pYzhgw | Unknown Message Type
-
     elif kind == MessageType.M_ROOM_REDACTION:
         redacts = ev.get("redacts")
-
         ctx.append("REDACTION ", "bright_black italic")
         if redacts is not None:
             ctx.append(f"{{ redacts={redacts} }}", style="bright_black")
@@ -82,7 +84,6 @@ def to_row_ctx(kind: MessageType | str, ev: dict[str, t.Any]) -> Text:
     elif kind == MessageType.M_ROOM_POWER_LEVELS:
         ctx.append("POWER LEVELS ", "bright_black italic")
         ctx.append(f"{{ content={content} }}", style="bright_black")
-
     elif kind == MessageType.M_ROOM_ENCRYPTED:
         ctx.append("MESSAGE ENCRYPTED", "bright_black italic")
     elif kind == MessageType.M_REACTION:
@@ -168,6 +169,15 @@ def to_row_ctx(kind: MessageType | str, ev: dict[str, t.Any]) -> Text:
                     "bright_black",
                 )
             ctx.append(" }", "bright_black")
+
+            # Test: This should later follow the entry
+            buf_image = download_media_to_buf(
+                token=yaml.get("server", "api", "token"),
+                domain=yaml.get("server", "api", "domain"),
+                media_id=url,
+            )
+            buf += imgcat(buf_image, width="90%", preserve_aspect_ratio=True)
+
         elif mgstype == "m.file":
             url = content.get("url")
 
@@ -205,7 +215,7 @@ def to_row_ctx(kind: MessageType | str, ev: dict[str, t.Any]) -> Text:
     else:
         ctx.append("Unknown Message Type")
 
-    return ctx
+    return ctx, buf
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
@@ -305,7 +315,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
                     # content = ev.get("content")
 
-                    ctx = to_row_ctx(kind, ev)
+                    ctx, buf = to_row_ctx(kind, ev, yaml)
 
                     theme = Theme({"example.matrix_user": "magenta bold"})
                     console = Console(
@@ -326,7 +336,14 @@ def addon(arg: Namespace, yaml: YAML) -> int:
                     if tdelta.total_seconds() > 30.0:
                         text.append(" | ", style="bright_black")
                         text.append(f"Δt = {tdelta}", style="red bold")
-                    console.print(text, soft_wrap=True)
+                    console.print(
+                        text,
+                        soft_wrap=True,
+                        highlight=True,
+                    )
+                    if len(buf) > 0:
+                        stdout.buffer.write(buf)
+                        stdout.flush()
 
                     print()
 

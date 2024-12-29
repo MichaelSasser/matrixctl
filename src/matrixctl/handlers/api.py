@@ -830,4 +830,72 @@ def streamed_download(
     path_download_file.unlink()
 
 
+def download_media_to_buf(
+    token: str,
+    domain: str,
+    media_id: str,
+) -> bytes:
+    """Make a (a)synchronous request to the synapse API and receive a response.
+
+    Attributes
+    ----------
+    token : str
+        The token to authenticate against the homeserver's API.
+    domain : str
+        The domain of the homeserver.
+    media_id : str
+        The media ID
+
+    See Also
+    --------
+    RequestBuilder : matrixctl.handlers.api.RequestBuilder
+
+    Returns
+    -------
+    buf : bytes
+        A buffer containing the raw media data.
+
+    """
+
+    mxc_parts = media_id.removeprefix("mxc://").split("/")
+
+    if len(mxc_parts) != 2:  # noqa: PLR2004
+        logger.error("The URI is not a valid matrix media URI.")
+        return 1
+    homeserver, media_id = mxc_parts
+
+    request_config: RequestBuilder = RequestBuilder(
+        token=token,
+        domain=domain,
+        path=f"/_matrix/client/v1/media/download/{homeserver}/{media_id}",
+        method="GET",
+        params={"allow_redirect": "true"},
+    )
+
+    buf: bytes = b""
+    try:
+        with httpx.stream(
+            method=request_config.method,
+            data=request_config.data,  # type: ignore # noqa: PGH003
+            json=request_config.json,
+            content=request_config.content,  # type: ignore # noqa: PGH003
+            url=str(request_config),
+            params=request_config.params,
+            headers=request_config.headers_with_auth,
+            timeout=request_config.timeout,
+            follow_redirects=True,
+        ) as response:
+            handle_sync_response_status_code(
+                response,
+                request_config.success_codes,
+            )
+            for chunk in response.iter_bytes():
+                buf += chunk
+
+    except Exception as err:  # skipcq: PYL-W0703
+        raise InternalResponseError(payload=response) from err
+
+    return buf
+
+
 # vim: set ft=python :
