@@ -86,4 +86,12 @@ class InternalResponseError(Error):  # TODO: rename
     """Use this exception class for everything else."""
 
 
+class ParserError(Error):
+    """The parser was unable to parse the the given data correctly."""
+
+
+class NotAnEventError(Error):
+    """The given event data is not valid."""
+
+
 # vim: set ft=python :

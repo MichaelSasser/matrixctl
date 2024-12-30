@@ -22,12 +22,34 @@ import typing as t
 
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
+from enum import Enum
+from enum import unique
 
 from matrixctl.addon_manager import subparser
+from matrixctl.argparse_action import ArgparseActionEnum
 
 
 __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
+
+
+@unique
+class OutputType(Enum):
+    """Use this enum for describing the possible output types.
+
+    Supported output types are:
+
+    =========== ===================================================
+    Output Type Description
+    =========== ===================================================
+    rows        Output raw JSON.
+    json        Output only a summary as row.
+    =========== ===================================================
+
+    """
+
+    ROWS = "rows"
+    JSON = "json"
 
 
 @subparser
@@ -51,7 +73,15 @@ def subparser_get_events(subparsers: _SubParsersAction[t.Any]) -> None:
     )
     parser.add_argument("user", help="The user (e.g. @foo:bar.baz)")
     parser.add_argument("room_id", nargs="?", help="The room identifier")
-    parser.add_argument("-t", "--type", help="The message type")
+    parser.add_argument("-e", "--event-type", help="The event type")
+    parser.add_argument(
+        "-f",
+        "--output-format",
+        type=OutputType,
+        action=ArgparseActionEnum,
+        default=OutputType.JSON,
+        help="The Output type (rows, json)",
+    )
     parser.set_defaults(addon="get_events")
 
 

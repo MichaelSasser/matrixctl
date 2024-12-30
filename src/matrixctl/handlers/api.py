@@ -41,6 +41,8 @@ import rich.progress
 from matrixctl import __version__
 from matrixctl.errors import InternalResponseError
 from matrixctl.errors import QWorkerExit
+from matrixctl.parse import Mxc
+from matrixctl.parse import parse_mxc_uri
 
 
 __author__: str = "Michael Sasser"
@@ -828,6 +830,72 @@ def streamed_download(
     shutil.copy(path_download_file, download_path)
 
     path_download_file.unlink()
+
+
+def download_media_to_buf(
+    token: str,
+    domain: str,
+    media_id: str,
+) -> bytes:
+    """Make a (a)synchronous request to the synapse API and receive a response.
+
+    Attributes
+    ----------
+    token : str
+        The token to authenticate against the homeserver's API.
+    domain : str
+        The domain of the homeserver.
+    media_id : str
+        The media ID
+
+    See Also
+    --------
+    RequestBuilder : matrixctl.handlers.api.RequestBuilder
+
+    Returns
+    -------
+    buf : bytes
+        A buffer containing the raw media data.
+
+    """
+
+    mxc: Mxc = parse_mxc_uri(media_id)
+
+    request_config: RequestBuilder = RequestBuilder(
+        token=token,
+        domain=domain,
+        path=(
+            "/_matrix/client/v1/media/download/"
+            f"{mxc.homeserver}/{mxc.media_id}"
+        ),
+        method="GET",
+        params={"allow_redirect": "true"},
+    )
+
+    buf: bytes = b""
+    try:
+        with httpx.stream(
+            method=request_config.method,
+            data=request_config.data,  # type: ignore # noqa: PGH003
+            json=request_config.json,
+            content=request_config.content,  # type: ignore # noqa: PGH003
+            url=str(request_config),
+            params=request_config.params,
+            headers=request_config.headers_with_auth,
+            timeout=request_config.timeout,
+            follow_redirects=True,
+        ) as response:
+            handle_sync_response_status_code(
+                response,
+                request_config.success_codes,
+            )
+            for chunk in response.iter_bytes():
+                buf += chunk
+
+    except Exception as err:  # skipcq: PYL-W0703
+        raise InternalResponseError(payload=response) from err
+
+    return buf
 
 
 # vim: set ft=python :

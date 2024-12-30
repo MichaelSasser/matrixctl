@@ -41,6 +41,7 @@ dependencies = [
   "sshtunnel>=0.4.0,<0.5.0",
   "rich>=13.8.0,<14.0.0",
   "packaging>=24.2",
+  "typing-extensions>=4.12.2",
 ]
 
 requires-python = ">=3.10,<4.0"
@@ -140,6 +141,7 @@ task-tags = ["TODO", "FIXME", "WARN", "SEC", "SECURITY", "INFO", "NOTE"]
 ignore = [
   "D202",
   "D203",
+  "TC002",
   "TC003",
   "TC001",
   "ANN401",
@@ -196,6 +198,8 @@ known-third-party = [
   "httpx",
   "attr",
   "ansible_runner",
+  "psycopg",
+  "rich",
 ]
 
 [tool.ruff.lint.per-file-ignores]
