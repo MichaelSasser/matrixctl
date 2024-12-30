@@ -30,9 +30,9 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-BIN_ESC: bytes[str] = b"\033"
-BIN_NL: bytes[str] = b"\n"
-BIN_BEL: bytes[str] = b"\a"
+BIN_ESC: bytes = b"\033"
+BIN_NL: bytes = b"\n"
+BIN_BEL: bytes = b"\a"
 
 
 # TODO: Check if used and for what; type?; docs.
@@ -85,7 +85,7 @@ def timestamp_to_dt(ts: str, sep: str = " ") -> str:
 
 def _generate_osc_cs(
     command: int, arguments: dict[str, str], *, term_is_tmux: bool = False
-) -> bytes[str]:
+) -> bytes:
     """Get an operating system command (OSC) control sequence.
 
     Parameters
@@ -99,7 +99,7 @@ def _generate_osc_cs(
         Contains the OSC control sequence.
 
     """
-    buf: bytes[str] = BIN_ESC
+    buf: bytes = BIN_ESC
     if term_is_tmux:
         buf += b"Ptmux;"
         buf += BIN_ESC
@@ -116,7 +116,7 @@ def _generate_osc_cs(
     return buf
 
 
-def _generate_st(*, term_is_tmux: bool = False) -> bytes[str]:
+def _generate_st(*, term_is_tmux: bool = False) -> bytes:
     """Generate an ST space character.
 
     Parameters
@@ -131,7 +131,7 @@ def _generate_st(*, term_is_tmux: bool = False) -> bytes[str]:
 
     """
 
-    buf: bytes[str] = BIN_BEL
+    buf: bytes = BIN_BEL
     if term_is_tmux:
         buf += BIN_ESC
         buf += b"\\"
@@ -147,7 +147,7 @@ def imgcat(
     *,
     preserve_aspect_ratio: bool = False,
     inline: bool = True,
-) -> bytes[str]:
+) -> bytes:
     """Output an image on the terminal.
 
     Parameters
@@ -205,7 +205,7 @@ def imgcat(
     """
     term_is_tmux: bool = os.environ["TERM"].startswith("screen")
 
-    buf: bytes[str] = _generate_osc_cs(
+    buf: bytes = _generate_osc_cs(
         1337,
         {
             "File": "",

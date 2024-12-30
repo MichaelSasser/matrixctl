@@ -92,7 +92,7 @@ def _ev_m_room_redaction(ev: Event, _: YAML) -> Ctx:
     redacts = ev.get("redacts")
     ctx.append(Text("REDACTION ", "bright_black italic"))
     if redacts is not None:
-        ctx.append(f"{{ redacts={redacts} }}", style="bright_black")
+        ctx.append(Text(f"{{ redacts={redacts} }}", style="bright_black"))
 
     return ctx
 

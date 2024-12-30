@@ -33,15 +33,14 @@ from rich.theme import Theme
 
 from .parser import OutputType
 
-from matrixctl.handlers.api import download_media_to_buf
 from matrixctl.handlers.db import db_connect
+from matrixctl.handlers.rows import Ctx
+from matrixctl.handlers.rows import to_row_context
 from matrixctl.handlers.yaml import YAML
-from matrixctl.print_helpers import imgcat
 from matrixctl.sanitizers import MessageType
 from matrixctl.sanitizers import sanitize_message_type
 from matrixctl.sanitizers import sanitize_room_identifier
 from matrixctl.sanitizers import sanitize_user_identifier
-from matrixctl.handlers.rows import Ctx, to_row_context
 
 
 __author__: str = "Michael Sasser"
