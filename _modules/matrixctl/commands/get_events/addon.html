@@ -94,13 +94,24 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
 
 <span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">stdout</span>
+
+<span class="kn">from</span> <span class="nn">psycopg.cursor</span> <span class="kn">import</span> <span class="n">Cursor</span>
+<span class="kn">from</span> <span class="nn">psycopg.rows</span> <span class="kn">import</span> <span class="n">TupleRow</span>
+<span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+<span class="kn">from</span> <span class="nn">rich.text</span> <span class="kn">import</span> <span class="n">Text</span>
+
+<span class="kn">from</span> <span class="nn">.parser</span> <span class="kn">import</span> <span class="n">OutputType</span>
 
 <span class="kn">from</span> <span class="nn">matrixctl.handlers.db</span> <span class="kn">import</span> <span class="n">db_connect</span>
+<span class="kn">from</span> <span class="nn">matrixctl.handlers.rows</span> <span class="kn">import</span> <span class="n">Ctx</span>
+<span class="kn">from</span> <span class="nn">matrixctl.handlers.rows</span> <span class="kn">import</span> <span class="n">to_row_context</span>
 <span class="kn">from</span> <span class="nn">matrixctl.handlers.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
 <span class="kn">from</span> <span class="nn">matrixctl.sanitizers</span> <span class="kn">import</span> <span class="n">MessageType</span>
 <span class="kn">from</span> <span class="nn">matrixctl.sanitizers</span> <span class="kn">import</span> <span class="n">sanitize_message_type</span>
@@ -113,6 +124,8 @@
 
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">WARN_FOR_EVENTS_OLDER_THAN</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">30.0</span>
 
 
 <div class="viewcode-block" id="addon">
@@ -152,14 +165,15 @@
 
     <span class="c1"># Sanitize message_type</span>
     <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+        <span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">event_type</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">message_type</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">1</span>
 
     <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;SELECT json FROM event_json WHERE event_id IN (&quot;</span>
-        <span class="s2">&quot;SELECT event_id FROM events WHERE sender = (</span><span class="si">%s</span><span class="s2">)&quot;</span>
+        <span class="s2">&quot;WITH evs AS (&quot;</span>
+        <span class="s2">&quot;SELECT event_id, origin_server_ts, received_ts &quot;</span>
+        <span class="s2">&quot;FROM events WHERE sender = (</span><span class="si">%s</span><span class="s2">)&quot;</span>
     <span class="p">)</span>
     <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">user_identifier</span><span class="p">]</span>
 
@@ -175,26 +189,120 @@
 
     <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;)&quot;</span>
 
+    <span class="n">query</span> <span class="o">+=</span> <span class="p">(</span>
+        <span class="s2">&quot;SELECT &quot;</span>
+        <span class="s2">&quot;event_json.event_id, &quot;</span>
+        <span class="s2">&quot;event_json.json, &quot;</span>
+        <span class="s2">&quot;evs.origin_server_ts, &quot;</span>
+        <span class="s2">&quot;evs.received_ts &quot;</span>
+        <span class="s2">&quot;FROM &quot;</span>
+        <span class="s2">&quot;event_json INNER JOIN evs ON event_json.event_id = evs.event_id &quot;</span>
+        <span class="s2">&quot;ORDER BY evs.origin_server_ts ASC&quot;</span>
+    <span class="p">)</span>
+
     <span class="k">with</span> <span class="n">db_connect</span><span class="p">(</span><span class="n">yaml</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">,</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
         <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="n">not_first_line</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">cur</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">not_first_line</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">not_first_line</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="nb">print</span><span class="p">(</span>
-                    <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
-                    <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-                <span class="s2">&quot;Unable to process the response data to JSON.&quot;</span><span class="p">,</span>
+        <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">output_format</span> <span class="o">==</span> <span class="n">OutputType</span><span class="o">.</span><span class="n">ROWS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">output_as_rows</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">yaml</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">output_format</span> <span class="o">==</span> <span class="n">OutputType</span><span class="o">.</span><span class="n">JSON</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">output_as_json</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="output_as_rows">
+<a class="viewcode-back" href="../../../../contributer_documentation/commands.html#matrixctl.commands.get_events.addon.output_as_rows">[docs]</a>
+<span class="k">def</span> <span class="nf">output_as_rows</span><span class="p">(</span><span class="n">cur</span><span class="p">:</span> <span class="n">Cursor</span><span class="p">[</span><span class="n">TupleRow</span><span class="p">],</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Output the events as rows.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">cur</span><span class="p">:</span>
+            <span class="n">event_id</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">ev</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="n">origin_server_ts_</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">received_ts_</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+            <span class="n">origin_server_ts</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span>
+                <span class="n">origin_server_ts_</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="mi">1</span>
+            <span class="n">received_ts</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span>
+                <span class="n">received_ts_</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span>
+            <span class="p">)</span>
+
+            <span class="n">tdelta</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span> <span class="o">=</span> <span class="n">received_ts</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span>
+            <span class="p">)</span> <span class="o">-</span> <span class="n">origin_server_ts</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">ts_str</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">origin_server_ts</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;+00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">room_id</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;room_id&quot;</span><span class="p">)</span>
+
+            <span class="n">sender</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sender&quot;</span><span class="p">)</span>
+
+            <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
+
+            <span class="n">ctx</span><span class="p">:</span> <span class="n">Ctx</span> <span class="o">=</span> <span class="n">to_row_context</span><span class="p">(</span><span class="n">ev</span><span class="p">,</span> <span class="n">yaml</span><span class="p">)</span>
+
+            <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ts_str</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;blue bold&quot;</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; | &quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;bright_black&quot;</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">room_id</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;bright_yellow&quot;</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; | &quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;bright_black&quot;</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;bright_magenta&quot;</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; | &quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;bright_black&quot;</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;steel_blue1&quot;</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; | &quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;bright_black&quot;</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event_id</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;purple3&quot;</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; | &quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;bright_black&quot;</span><span class="p">)</span>
+            <span class="n">text</span><span class="o">.</span><span class="n">append_text</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tdelta</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">WARN_FOR_EVENTS_OLDER_THAN</span><span class="p">:</span>
+                <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot; | &quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;bright_black&quot;</span><span class="p">)</span>
+                <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Δt = </span><span class="si">{</span><span class="n">tdelta</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;red bold&quot;</span><span class="p">)</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span>
+                <span class="n">text</span><span class="p">,</span>
+                <span class="n">soft_wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">post_buf</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">stdout</span><span class="o">.</span><span class="n">buffer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">post_buf</span><span class="p">)</span>
+                <span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+            <span class="nb">print</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+            <span class="s2">&quot;Unable to process the response data to JSON.&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="output_as_json">
+<a class="viewcode-back" href="../../../../contributer_documentation/commands.html#matrixctl.commands.get_events.addon.output_as_json">[docs]</a>
+<span class="k">def</span> <span class="nf">output_as_json</span><span class="p">(</span><span class="n">cur</span><span class="p">:</span> <span class="n">Cursor</span><span class="p">[</span><span class="n">TupleRow</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Output the events as JSON.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">not_first_line</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">cur</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">not_first_line</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">not_first_line</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+                <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+            <span class="s2">&quot;Unable to process the response data to JSON.&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="mi">0</span></div>
 
 

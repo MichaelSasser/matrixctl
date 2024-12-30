@@ -94,14 +94,21 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
 
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64encode</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timezone</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
 <span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael@MichaelSasser.org&quot;</span>
+
+
+<span class="n">BIN_ESC</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">&quot;</span>
+<span class="n">BIN_NL</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="n">BIN_BEL</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\a</span><span class="s2">&quot;</span>
 
 
 <span class="c1"># TODO: Check if used and for what; type?; docs.</span>
@@ -155,6 +162,153 @@
         <span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
         <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
     <span class="p">)</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_generate_osc_cs</span><span class="p">(</span>
+    <span class="n">command</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">arguments</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">term_is_tmux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get an operating system command (OSC) control sequence.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">     term_is_tmux : bool</span>
+<span class="sd">        `True`, if the terminal is tmux, `False` if not.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bytes : bytes</span>
+<span class="sd">        Contains the OSC control sequence.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">buf</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">BIN_ESC</span>
+    <span class="k">if</span> <span class="n">term_is_tmux</span><span class="p">:</span>
+        <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;Ptmux;&quot;</span>
+        <span class="n">buf</span> <span class="o">+=</span> <span class="n">BIN_ESC</span>
+        <span class="n">buf</span> <span class="o">+=</span> <span class="n">BIN_ESC</span>
+    <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;]&quot;</span>
+
+    <span class="n">buf</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">command</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">arguments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;;&quot;</span>
+        <span class="n">buf</span> <span class="o">+=</span> <span class="n">k</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+        <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;=&quot;</span>
+        <span class="n">buf</span> <span class="o">+=</span> <span class="n">v</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">buf</span>
+
+
+<span class="k">def</span> <span class="nf">_generate_st</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">term_is_tmux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate an ST space character.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">     term_is_tmux : bool</span>
+<span class="sd">        `True`, if the terminal is tmux, `False` if not.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bytes : bytes</span>
+<span class="sd">        Contains the ST space character.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">buf</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">BIN_BEL</span>
+    <span class="k">if</span> <span class="n">term_is_tmux</span><span class="p">:</span>
+        <span class="n">buf</span> <span class="o">+=</span> <span class="n">BIN_ESC</span>
+        <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span>
+
+    <span class="n">buf</span> <span class="o">+=</span> <span class="n">BIN_NL</span>
+    <span class="k">return</span> <span class="n">buf</span>
+
+
+<div class="viewcode-block" id="imgcat">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.print_helpers.imgcat">[docs]</a>
+<span class="k">def</span> <span class="nf">imgcat</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="n">height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">preserve_aspect_ratio</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">inline</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Output an image on the terminal.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : bytes</span>
+<span class="sd">        A buffer containing the raw image data.</span>
+<span class="sd">    width : int or str</span>
+<span class="sd">        The width are given as a number followed by a unit, or the</span>
+<span class="sd">        word &quot;auto&quot;.</span>
+
+<span class="sd">        - `N`: N character cells.</span>
+<span class="sd">        - `&quot;Npx&quot;`: N pixels.</span>
+<span class="sd">        - `&quot;N%&quot;`: N percent of the session&#39;s width or height.</span>
+<span class="sd">        - `&quot;auto&quot;`: The image&#39;s inherent size will be used to determine an</span>
+<span class="sd">          appropriate dimension.</span>
+<span class="sd">    height : int or str</span>
+<span class="sd">        The height are given as a number followed by a unit, or the</span>
+<span class="sd">        word &quot;auto&quot;.</span>
+
+<span class="sd">        - `N`: N character cells.</span>
+<span class="sd">        - `&quot;Npx&quot;`: N pixels.</span>
+<span class="sd">        - `&quot;N%&quot;`: N percent of the session&#39;s width or height.</span>
+<span class="sd">        - `&quot;auto&quot;`: The image&#39;s inherent size will be used to determine an</span>
+<span class="sd">          appropriate dimension.</span>
+<span class="sd">    preserve_aspect_ratio : bool</span>
+<span class="sd">        If set to `False`, then the image&#39;s inherent aspect ratio will not be</span>
+<span class="sd">        respected; otherwise, it will fill the specified width and height</span>
+<span class="sd">        as much as possible without stretching. Defaults to `True`.</span>
+<span class="sd">    inline : bool</span>
+<span class="sd">        If set to `True`, the file will be displayed inline. Otherwise,</span>
+<span class="sd">        it will be downloaded with no visual representation in the terminal</span>
+<span class="sd">        session. Defaults to `True`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bytes : bytes</span>
+<span class="sd">        A buffer containing the entire escape sequence, which can be written</span>
+<span class="sd">        to the terminal as follows.</span>
+
+<span class="sd">        .. code-block::python</span>
+<span class="sd">           from sys import stdout</span>
+
+
+<span class="sd">           buf = imgcat(...)</span>
+
+<span class="sd">           stdout.buffer.write(buf)</span>
+<span class="sd">           stdout.flush()</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The documentation for this function mostly comes from:</span>
+<span class="sd">    - `Escape Codes &lt;https://iterm2.com/documentation-escape-codes.html&gt;`_</span>
+<span class="sd">    - `Terminal Images &lt;https://iterm2.com/documentation-images.html&gt;`_</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">term_is_tmux</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TERM&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;screen&quot;</span><span class="p">)</span>
+
+    <span class="n">buf</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">_generate_osc_cs</span><span class="p">(</span>
+        <span class="mi">1337</span><span class="p">,</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;File&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span>
+            <span class="s2">&quot;inline&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">inline</span><span class="p">)),</span>
+            <span class="s2">&quot;preserveAspectRatio&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">preserve_aspect_ratio</span><span class="p">)),</span>
+            <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">width</span><span class="p">),</span>
+            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">height</span><span class="p">),</span>
+        <span class="p">},</span>
+        <span class="n">term_is_tmux</span><span class="o">=</span><span class="n">term_is_tmux</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">buf</span> <span class="o">+=</span> <span class="sa">b</span><span class="s2">&quot;:&quot;</span>
+    <span class="n">buf</span> <span class="o">+=</span> <span class="n">b64encode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># ST</span>
+    <span class="n">buf</span> <span class="o">+=</span> <span class="n">_generate_st</span><span class="p">(</span><span class="n">term_is_tmux</span><span class="o">=</span><span class="n">term_is_tmux</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">buf</span></div>
 
 
 

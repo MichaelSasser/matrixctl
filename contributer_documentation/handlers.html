@@ -491,6 +491,40 @@ afterwards.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.api.download_media_to_buf">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">download_media_to_buf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">media_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#download_media_to_buf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.download_media_to_buf" title="Link to this definition"></a></dt>
+<dd><p>Make a (a)synchronous request to the synapse API and receive a response.</p>
+<dl class="field-list">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
+</dd>
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>token</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The token to authenticate against the homeserver’s API.</p>
+</dd>
+<dt><strong>domain</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The domain of the homeserver.</p>
+</dd>
+<dt><strong>media_id</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The media ID</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>buf</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code></a></span></dt><dd><p>A buffer containing the raw media data.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#matrixctl.handlers.api.RequestBuilder" title="matrixctl.handlers.api.RequestBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RequestBuilder</span></code></a></dt><dd><p>matrixctl.handlers.api.RequestBuilder</p>
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.handlers.api.exec_async_request">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">exec_async_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#exec_async_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.exec_async_request" title="Link to this definition"></a></dt>
 <dd><p>Use this coro to generate and run workers and group the responses.</p>

@@ -123,20 +123,24 @@
 
 <span class="sd">    Supported events:</span>
 
-<span class="sd">    ===================== ===================================================</span>
-<span class="sd">    message_type          Usage</span>
-<span class="sd">    ===================== ===================================================</span>
-<span class="sd">    m.room.message        This event is used when sending messages in a room</span>
-<span class="sd">    m.room.name           This event sets the name of an room</span>
-<span class="sd">    m.room.topic          This events sets the room topic</span>
-<span class="sd">    m.room.avatar         This event sets the room avatar</span>
-<span class="sd">    m.room.pinned_events  This event pins events</span>
-<span class="sd">    m.room.member         Adjusts the membership state for a user in a room</span>
-<span class="sd">    m.room.join_rules     This event sets the join rules</span>
-<span class="sd">    m.room.create         This event creates a room</span>
-<span class="sd">    m.room.power_levels   This event sets a rooms power levels</span>
-<span class="sd">    m.room.redaction      This event redacts other events</span>
-<span class="sd">    ===================== ===================================================</span>
+<span class="sd">    =========================  ===========================================</span>
+<span class="sd">    message_type               Usage</span>
+<span class="sd">    =========================  ===========================================</span>
+<span class="sd">    m.room.message             This event to send messages to a room</span>
+<span class="sd">    m.room.name                This event sets the name of an room</span>
+<span class="sd">    m.room.topic               This events sets the room topic</span>
+<span class="sd">    m.room.avatar              This event sets the room avatar</span>
+<span class="sd">    m.room.pinned_events       This event pins events</span>
+<span class="sd">    m.room.member              Adjusts the membership for a user in a room</span>
+<span class="sd">    m.room.join_rules          This event sets the join rules</span>
+<span class="sd">    m.room.create              This event creates a room</span>
+<span class="sd">    m.room.power_levels        This event sets a rooms power levels</span>
+<span class="sd">    m.room.redaction           This event redacts other events</span>
+<span class="sd">    m.reaction                 This event is a reaction to another event</span>
+<span class="sd">    m.room.encrypted           This event is used for encrypted messages</span>
+<span class="sd">    m.room.history_visibility  This event sets the history visibility</span>
+<span class="sd">    m.room.guest_access        This event sets the guest access</span>
+<span class="sd">    =========================  ===========================================</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -149,7 +153,35 @@
     <span class="n">M_ROOM_JOIN_RULES</span> <span class="o">=</span> <span class="s2">&quot;m.room.join_rules&quot;</span>
     <span class="n">M_ROOM_CREATE</span> <span class="o">=</span> <span class="s2">&quot;m.room.create&quot;</span>
     <span class="n">M_ROOM_POWER_LEVELS</span> <span class="o">=</span> <span class="s2">&quot;m.room.power_levels&quot;</span>
-    <span class="n">M_ROOM_REDACTION</span> <span class="o">=</span> <span class="s2">&quot;m.room.redaction&quot;</span></div>
+    <span class="n">M_ROOM_REDACTION</span> <span class="o">=</span> <span class="s2">&quot;m.room.redaction&quot;</span>
+    <span class="n">M_REACTION</span> <span class="o">=</span> <span class="s2">&quot;m.reaction&quot;</span>
+    <span class="n">M_ROOM_ENCRYPTED</span> <span class="o">=</span> <span class="s2">&quot;m.room.encrypted&quot;</span>
+    <span class="n">M_ROOM_HISTORY_VISIBILITY</span> <span class="o">=</span> <span class="s2">&quot;m.room.history_visibility&quot;</span>
+    <span class="n">M_ROOM_GUEST_ACCESS</span> <span class="o">=</span> <span class="s2">&quot;m.room.guest_access&quot;</span>
+
+<div class="viewcode-block" id="MessageType.from_string">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.from_string">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageType</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a string to a MessageType.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        s : str</span>
+<span class="sd">            The string to convert to a MessageType.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        message_type : MessageType</span>
+<span class="sd">            The MessageType object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MessageType</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;The message type is not supported by MatrixCtl.&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span></div>
+</div>
 
 
 

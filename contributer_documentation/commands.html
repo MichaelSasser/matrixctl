@@ -1672,6 +1672,39 @@ by the synapse playbook to run a query on the Database.</p>
 <section id="module-matrixctl.commands.get_events.parser">
 <span id="get-events"></span><h2>get-events<a class="headerlink" href="#module-matrixctl.commands.get_events.parser" title="Link to this heading"></a></h2>
 <p>Use this module to get an events of an user from the Database.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.commands.get_events.parser.OutputType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.commands.get_events.parser.</span></span><span class="sig-name descname"><span class="pre">OutputType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/commands/get_events/parser.html#OutputType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.commands.get_events.parser.OutputType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>Use this enum for describing the possible output types.</p>
+<p>Supported output types are:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Output Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>rows</p></td>
+<td><p>Output raw JSON.</p></td>
+</tr>
+<tr class="row-odd"><td><p>json</p></td>
+<td><p>Output only a summary as row.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.commands.get_events.parser.OutputType.JSON">
+<span class="sig-name descname"><span class="pre">JSON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'json'</span></em><a class="headerlink" href="#matrixctl.commands.get_events.parser.OutputType.JSON" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.commands.get_events.parser.OutputType.ROWS">
+<span class="sig-name descname"><span class="pre">ROWS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'rows'</span></em><a class="headerlink" href="#matrixctl.commands.get_events.parser.OutputType.ROWS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.commands.get_events.parser.subparser_get_events">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.commands.get_events.parser.</span></span><span class="sig-name descname"><span class="pre">subparser_get_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subparsers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/commands/get_events/parser.html#subparser_get_events"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.commands.get_events.parser.subparser_get_events" title="Link to this definition"></a></dt>
@@ -1716,6 +1749,28 @@ by the synapse playbook to run a query on the Database.</p>
 <dt><strong>err_code</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Non-zero value indicates error code, or zero on success.</p>
 </dd>
 </dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.commands.get_events.addon.output_as_json">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.commands.get_events.addon.</span></span><span class="sig-name descname"><span class="pre">output_as_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cur</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/commands/get_events/addon.html#output_as_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.commands.get_events.addon.output_as_json" title="Link to this definition"></a></dt>
+<dd><p>Output the events as JSON.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.commands.get_events.addon.output_as_rows">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.commands.get_events.addon.</span></span><span class="sig-name descname"><span class="pre">output_as_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/commands/get_events/addon.html#output_as_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.commands.get_events.addon.output_as_rows" title="Link to this definition"></a></dt>
+<dd><p>Output the events as rows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>

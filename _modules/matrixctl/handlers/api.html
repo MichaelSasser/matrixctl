@@ -117,6 +117,8 @@
 <span class="kn">from</span> <span class="nn">matrixctl</span> <span class="kn">import</span> <span class="n">__version__</span>
 <span class="kn">from</span> <span class="nn">matrixctl.errors</span> <span class="kn">import</span> <span class="n">InternalResponseError</span>
 <span class="kn">from</span> <span class="nn">matrixctl.errors</span> <span class="kn">import</span> <span class="n">QWorkerExit</span>
+<span class="kn">from</span> <span class="nn">matrixctl.parse</span> <span class="kn">import</span> <span class="n">Mxc</span>
+<span class="kn">from</span> <span class="nn">matrixctl.parse</span> <span class="kn">import</span> <span class="n">parse_mxc_uri</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -933,6 +935,75 @@
     <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">path_download_file</span><span class="p">,</span> <span class="n">download_path</span><span class="p">)</span>
 
     <span class="n">path_download_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="download_media_to_buf">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.api.download_media_to_buf">[docs]</a>
+<span class="k">def</span> <span class="nf">download_media_to_buf</span><span class="p">(</span>
+    <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">media_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a (a)synchronous request to the synapse API and receive a response.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    token : str</span>
+<span class="sd">        The token to authenticate against the homeserver&#39;s API.</span>
+<span class="sd">    domain : str</span>
+<span class="sd">        The domain of the homeserver.</span>
+<span class="sd">    media_id : str</span>
+<span class="sd">        The media ID</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    RequestBuilder : matrixctl.handlers.api.RequestBuilder</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    buf : bytes</span>
+<span class="sd">        A buffer containing the raw media data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">mxc</span><span class="p">:</span> <span class="n">Mxc</span> <span class="o">=</span> <span class="n">parse_mxc_uri</span><span class="p">(</span><span class="n">media_id</span><span class="p">)</span>
+
+    <span class="n">request_config</span><span class="p">:</span> <span class="n">RequestBuilder</span> <span class="o">=</span> <span class="n">RequestBuilder</span><span class="p">(</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span>
+        <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;/_matrix/client/v1/media/download/&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mxc</span><span class="o">.</span><span class="n">homeserver</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">mxc</span><span class="o">.</span><span class="n">media_id</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">),</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+        <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;allow_redirect&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="n">buf</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>  <span class="c1"># type: ignore # noqa: PGH003</span>
+            <span class="n">json</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">json</span><span class="p">,</span>
+            <span class="n">content</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>  <span class="c1"># type: ignore # noqa: PGH003</span>
+            <span class="n">url</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">request_config</span><span class="p">),</span>
+            <span class="n">params</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">headers_with_auth</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">request_config</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="n">follow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+            <span class="n">handle_sync_response_status_code</span><span class="p">(</span>
+                <span class="n">response</span><span class="p">,</span>
+                <span class="n">request_config</span><span class="o">.</span><span class="n">success_codes</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_bytes</span><span class="p">():</span>
+                <span class="n">buf</span> <span class="o">+=</span> <span class="n">chunk</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>  <span class="c1"># skipcq: PYL-W0703</span>
+        <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">response</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+
+    <span class="k">return</span> <span class="n">buf</span></div>
 
 
 

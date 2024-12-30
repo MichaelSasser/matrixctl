@@ -257,7 +257,7 @@ of it is stored in the packages metadata.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>m.room.message</p></td>
-<td><p>This event is used when sending messages in a room</p></td>
+<td><p>This event to send messages to a room</p></td>
 </tr>
 <tr class="row-odd"><td><p>m.room.name</p></td>
 <td><p>This event sets the name of an room</p></td>
@@ -272,7 +272,7 @@ of it is stored in the packages metadata.</p>
 <td><p>This event pins events</p></td>
 </tr>
 <tr class="row-odd"><td><p>m.room.member</p></td>
-<td><p>Adjusts the membership state for a user in a room</p></td>
+<td><p>Adjusts the membership for a user in a room</p></td>
 </tr>
 <tr class="row-even"><td><p>m.room.join_rules</p></td>
 <td><p>This event sets the join rules</p></td>
@@ -286,8 +286,25 @@ of it is stored in the packages metadata.</p>
 <tr class="row-odd"><td><p>m.room.redaction</p></td>
 <td><p>This event redacts other events</p></td>
 </tr>
+<tr class="row-even"><td><p>m.reaction</p></td>
+<td><p>This event is a reaction to another event</p></td>
+</tr>
+<tr class="row-odd"><td><p>m.room.encrypted</p></td>
+<td><p>This event is used for encrypted messages</p></td>
+</tr>
+<tr class="row-even"><td><p>m.room.history_visibility</p></td>
+<td><p>This event sets the history visibility</p></td>
+</tr>
+<tr class="row-odd"><td><p>m.room.guest_access</p></td>
+<td><p>This event sets the guest access</p></td>
+</tr>
 </tbody>
 </table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_REACTION">
+<span class="sig-name descname"><span class="pre">M_REACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.reaction'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_REACTION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_AVATAR">
 <span class="sig-name descname"><span class="pre">M_ROOM_AVATAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.avatar'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_AVATAR" title="Link to this definition"></a></dt>
@@ -296,6 +313,21 @@ of it is stored in the packages metadata.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_CREATE">
 <span class="sig-name descname"><span class="pre">M_ROOM_CREATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.create'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_CREATE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_ENCRYPTED">
+<span class="sig-name descname"><span class="pre">M_ROOM_ENCRYPTED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.encrypted'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_ENCRYPTED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_GUEST_ACCESS">
+<span class="sig-name descname"><span class="pre">M_ROOM_GUEST_ACCESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.guest_access'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_GUEST_ACCESS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_HISTORY_VISIBILITY">
+<span class="sig-name descname"><span class="pre">M_ROOM_HISTORY_VISIBILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.history_visibility'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_HISTORY_VISIBILITY" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -337,6 +369,29 @@ of it is stored in the packages metadata.</p>
 <dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_TOPIC">
 <span class="sig-name descname"><span class="pre">M_ROOM_TOPIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.topic'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_TOPIC" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.from_string">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#MessageType.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.MessageType.from_string" title="Link to this definition"></a></dt>
+<dd><p>Convert a string to a MessageType.</p>
+<dl class="field-list">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#matrixctl.sanitizers.MessageType" title="matrixctl.sanitizers.MessageType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageType</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>s</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The string to convert to a MessageType.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>message_type</strong><span class="classifier"><a class="reference internal" href="#matrixctl.sanitizers.MessageType" title="matrixctl.sanitizers.MessageType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageType</span></code></a></span></dt><dd><p>The MessageType object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -568,6 +623,62 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 </dl>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.print_helpers.imgcat">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.print_helpers.</span></span><span class="sig-name descname"><span class="pre">imgcat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_aspect_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/print_helpers.html#imgcat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.print_helpers.imgcat" title="Link to this definition"></a></dt>
+<dd><p>Output an image on the terminal.</p>
+<dl class="field-list">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code></a></span></dt><dd><p>A buffer containing the raw image data.</p>
+</dd>
+<dt><strong>width</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The width are given as a number followed by a unit, or the
+word “auto”.</p>
+<ul class="simple">
+<li><p><cite>N</cite>: N character cells.</p></li>
+<li><p><cite>“Npx”</cite>: N pixels.</p></li>
+<li><p><cite>“N%”</cite>: N percent of the session’s width or height.</p></li>
+<li><p><cite>“auto”</cite>: The image’s inherent size will be used to determine an
+appropriate dimension.</p></li>
+</ul>
+</dd>
+<dt><strong>height</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The height are given as a number followed by a unit, or the
+word “auto”.</p>
+<ul class="simple">
+<li><p><cite>N</cite>: N character cells.</p></li>
+<li><p><cite>“Npx”</cite>: N pixels.</p></li>
+<li><p><cite>“N%”</cite>: N percent of the session’s width or height.</p></li>
+<li><p><cite>“auto”</cite>: The image’s inherent size will be used to determine an
+appropriate dimension.</p></li>
+</ul>
+</dd>
+<dt><strong>preserve_aspect_ratio</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.13)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>If set to <cite>False</cite>, then the image’s inherent aspect ratio will not be
+respected; otherwise, it will fill the specified width and height
+as much as possible without stretching. Defaults to <cite>True</cite>.</p>
+</dd>
+<dt><strong>inline</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.13)"><span class="xref std std-ref">bool</span></a></span></dt><dd><p>If set to <cite>True</cite>, the file will be displayed inline. Otherwise,
+it will be downloaded with no visual representation in the terminal
+session. Defaults to <cite>True</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>bytes</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes</span></code></a></span></dt><dd><p>A buffer containing the entire escape sequence, which can be written
+to the terminal as follows.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The documentation for this function mostly comes from:
+- <a class="reference external" href="https://iterm2.com/documentation-escape-codes.html">Escape Codes</a>
+- <a class="reference external" href="https://iterm2.com/documentation-images.html">Terminal Images</a></p>
 </dd></dl>
 
 <dl class="py function">
