@@ -86,4 +86,8 @@ class InternalResponseError(Error):  # TODO: rename
     """Use this exception class for everything else."""
 
 
+class ParserError(Error):
+    """The parser was unable to parse the the given data correctly."""
+
+
 # vim: set ft=python :

@@ -27,6 +27,8 @@ from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import streamed_download
 from matrixctl.handlers.yaml import YAML
+from matrixctl.parser import parse_mxc_uri
+from matrixctl.parser import Mxc
 
 
 __author__: str = "Michael Sasser"
@@ -51,18 +53,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    mxc: str = arg.mxc.strip()
+    mxc_uri: str = arg.mxc.strip()
 
-    # TODO: Make this into a proper sanitizer. Therefore ignoring warnings.
-    if not str(mxc).startswith("mxc://"):
-        logger.error("The URI is not a valid matrix media URI.")
-        return 1
-    mxc_parts = mxc.removeprefix("mxc://").split("/")
-
-    if len(mxc_parts) != 2:  # noqa: PLR2004
-        logger.error("The URI is not a valid matrix media URI.")
-        return 1
-    homeserver, media_id = mxc_parts
+    mxc: Mxc = parse_mxc_uri(mxc_uri)
 
     file_path: Path = Path(arg.file).absolute()
     logger.debug("Download file_path: %s", file_path)
@@ -70,7 +63,10 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     req: RequestBuilder = RequestBuilder(
         token=yaml.get("server", "api", "token"),
         domain=yaml.get("server", "api", "domain"),
-        path=f"/_matrix/client/v1/media/download/{homeserver}/{media_id}",
+        path=(
+            "/_matrix/client/v1/media/download/"
+            f"{mxc.homeserver}/{mxc.media_id}"
+        ),
         method="GET",
         params={"allow_redirect": "true"},
     )

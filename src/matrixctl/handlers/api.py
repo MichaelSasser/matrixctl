@@ -41,6 +41,7 @@ import rich.progress
 from matrixctl import __version__
 from matrixctl.errors import InternalResponseError
 from matrixctl.errors import QWorkerExit
+from matrixctl.parse import parse_mxc_uri, Mxc
 
 
 __author__: str = "Michael Sasser"
@@ -857,17 +858,15 @@ def download_media_to_buf(
 
     """
 
-    mxc_parts = media_id.removeprefix("mxc://").split("/")
-
-    if len(mxc_parts) != 2:  # noqa: PLR2004
-        logger.error("The URI is not a valid matrix media URI.")
-        return 1
-    homeserver, media_id = mxc_parts
+    mxc: Mxc = parse_mxc_uri(media_id)
 
     request_config: RequestBuilder = RequestBuilder(
         token=token,
         domain=domain,
-        path=f"/_matrix/client/v1/media/download/{homeserver}/{media_id}",
+        path=(
+            "/_matrix/client/v1/media/download/"
+            f"{mxc.homeserver}/{mxc.media_id}"
+        ),
         method="GET",
         params={"allow_redirect": "true"},
     )
