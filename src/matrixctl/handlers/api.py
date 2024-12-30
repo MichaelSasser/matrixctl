@@ -41,7 +41,8 @@ import rich.progress
 from matrixctl import __version__
 from matrixctl.errors import InternalResponseError
 from matrixctl.errors import QWorkerExit
-from matrixctl.parse import parse_mxc_uri, Mxc
+from matrixctl.parse import Mxc
+from matrixctl.parse import parse_mxc_uri
 
 
 __author__: str = "Michael Sasser"
