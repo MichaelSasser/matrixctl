@@ -27,7 +27,7 @@ from types import TracebackType
 
 from paramiko import AutoAddPolicy
 from paramiko import SSHClient
-from paramiko.channel import ChannelFile  # noqa: TC002
+from paramiko.channel import ChannelFile
 
 
 __author__: str = "Michael Sasser"

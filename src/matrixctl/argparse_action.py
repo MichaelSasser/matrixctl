@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing as t
 
 from argparse import Action
+from argparse import ArgumentParser
 from enum import Enum
 
 
@@ -12,7 +13,7 @@ from enum import Enum
 class ArgparseActionEnum(Action):
     """Custom argparse action for Enums."""
 
-    def __init__(
+    def __init__(  # type: ignore[no-untyped-def]
         self,
         choices: t.Sequence[str] | None = None,
         type: t.Any | None = None,  # noqa: A002
@@ -32,12 +33,14 @@ class ArgparseActionEnum(Action):
 
         super().__init__(choices=choices, **kwargs)
 
-    def __call__(  # noqa: ANN204, D102
+    def __call__(  # noqa: D102
         self,
-        _parser,
+        _parser: ArgumentParser,
         namespace: t.Any,
-        values: str | t.Sequence[t.Any],
+        values: str | t.Sequence[t.Any] | None,
         _option_string: str | None = None,
-    ):
+    ) -> None:
+        if values is None:
+            return
         value = self._enum(values)
         setattr(namespace, self.dest, value)

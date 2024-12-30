@@ -141,6 +141,7 @@ task-tags = ["TODO", "FIXME", "WARN", "SEC", "SECURITY", "INFO", "NOTE"]
 ignore = [
   "D202",
   "D203",
+  "TC002",
   "TC003",
   "TC001",
   "ANN401",
