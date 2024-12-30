@@ -6,6 +6,7 @@ import logging
 import typing as t
 
 from rich.text import Text
+from typing_extensions import Self
 
 from matrixctl.errors import NotAnEventError
 from matrixctl.handlers.api import download_media_to_buf
@@ -20,11 +21,13 @@ __email__: str = "Michael@MichaelSasser.org"
 
 logger = logging.getLogger(__name__)
 
-event_content: t.TypeAlias = dict[str, t.Any]
-event: t.TypeAlias = dict[str, t.Any | event_content]
+EventContent: t.TypeAlias = dict[str, t.Any]
+Event: t.TypeAlias = dict[str, t.Any | EventContent]
 
 
 class Ctx:
+    """A container that keeps track of the text and post_buf."""
+
     def __init__(
         self, text: None | Text = None, post_buf: None | bytes = None
     ) -> None:
@@ -34,23 +37,27 @@ class Ctx:
     def append(
         self, text: None | Text = None, post_buf: None | bytes = None
     ) -> None:
+        """Append text or post_buf to the context."""
         if text is not None:
             self.text += text
         if post_buf is not None:
             self.post_buf += post_buf
 
     def __add__(self, cls: Ctx) -> Ctx:
+        """Merge two contexts together, creating a new one."""
         return Ctx(
             text=self.text + cls.text, post_buf=self.post_buf + cls.post_buf
         )
 
-    def __iadd__(self, cls: Ctx) -> Ctx:
+    def __iadd__(self, cls: Ctx) -> Self:
+        """Merge two contexts together, modifying the current one."""
         self.text += cls.text
         self.post_buf += cls.post_buf
         return self
 
 
-def get_event_type_from_event(ev: event) -> MessageType | str:
+def get_event_type_from_event(ev: Event) -> MessageType | str:
+    """Get the event type from the event."""
     kind_: t.Any = ev.get("type")
     if not isinstance(kind_, str):
         err_msg: str = f"The given event data is not a valid event. {ev=}"
@@ -64,7 +71,8 @@ def get_event_type_from_event(ev: event) -> MessageType | str:
     return kind
 
 
-def get_event_content_from_event(ev: event) -> dict[str, t.Any]:
+def get_event_content_from_event(ev: Event) -> dict[str, t.Any]:
+    """Get the event content from the event."""
     content: None | t.Any = ev.get("content")
     if not isinstance(content, dict):
         kind = get_event_type_from_event(ev)
@@ -77,7 +85,8 @@ def get_event_content_from_event(ev: event) -> dict[str, t.Any]:
     return content
 
 
-def _ev_m_room_redaction(ev: event, _: YAML) -> Ctx:
+def _ev_m_room_redaction(ev: Event, _: YAML) -> Ctx:
+    """Create a context for a redaction event."""
     ctx: Ctx = Ctx()
 
     redacts = ev.get("redacts")
@@ -88,10 +97,11 @@ def _ev_m_room_redaction(ev: event, _: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_guest_access(ev: event, _: YAML) -> Ctx:
+def _ev_m_room_guest_access(ev: Event, _: YAML) -> Ctx:
+    """Create a context for a guest access event."""
     ctx: Ctx = Ctx()
 
-    content: event_content = get_event_content_from_event(ev)
+    content: EventContent = get_event_content_from_event(ev)
 
     ctx.append(Text("GUEST ACCESS ", "bright_black italic"))
     ctx.append(Text(f"{{ content={content} }}", style="bright_black"))
@@ -99,10 +109,11 @@ def _ev_m_room_guest_access(ev: event, _: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_history_visibility(ev: event, _: YAML) -> Ctx:
+def _ev_m_room_history_visibility(ev: Event, _: YAML) -> Ctx:
+    """Create a context for a history visibility event."""
     ctx: Ctx = Ctx()
 
-    content: event_content = get_event_content_from_event(ev)
+    content: EventContent = get_event_content_from_event(ev)
 
     ctx.append(Text("HISTORY VISIBILITY ", "bright_black italic"))
     ctx.append(Text(f"{{ content={content} }}", style="bright_black"))
@@ -110,10 +121,11 @@ def _ev_m_room_history_visibility(ev: event, _: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_join_rules(ev: event, _: YAML) -> Ctx:
+def _ev_m_room_join_rules(ev: Event, _: YAML) -> Ctx:
+    """Create a context for a join rules event."""
     ctx: Ctx = Ctx()
 
-    content: event_content = get_event_content_from_event(ev)
+    content: EventContent = get_event_content_from_event(ev)
 
     ctx.append(Text("JOIN RULES ", "bright_black italic"))
     ctx.append(Text(f"{{ content={content} }}", style="bright_black"))
@@ -121,10 +133,11 @@ def _ev_m_room_join_rules(ev: event, _: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_power_levels(ev: event, _: YAML) -> Ctx:
+def _ev_m_room_power_levels(ev: Event, _: YAML) -> Ctx:
+    """Create a context for a power levels event."""
     ctx: Ctx = Ctx()
 
-    content: event_content = get_event_content_from_event(ev)
+    content: EventContent = get_event_content_from_event(ev)
 
     ctx.append(Text("POWER LEVELS ", "bright_black italic"))
     ctx.append(Text(f"{{ content={content} }}", style="bright_black"))
@@ -132,7 +145,8 @@ def _ev_m_room_power_levels(ev: event, _: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_encrypted(ev: event, _: YAML) -> Ctx:
+def _ev_m_room_encrypted(_1: Event, _2: YAML) -> Ctx:
+    """Create a context for an encrypted event."""
     ctx: Ctx = Ctx()
 
     ctx.append(Text("MESSAGE ENCRYPTED", "bright_black italic"))
@@ -140,10 +154,11 @@ def _ev_m_room_encrypted(ev: event, _: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_reaction(ev: event, _: YAML) -> Ctx:
+def _ev_m_reaction(ev: Event, _: YAML) -> Ctx:
+    """Create a context for a reaction event."""
     ctx: Ctx = Ctx()
 
-    content: event_content = get_event_content_from_event(ev)
+    content: EventContent = get_event_content_from_event(ev)
 
     relates_to = content.get("m.relates_to")
 
@@ -190,10 +205,11 @@ def _ev_m_reaction(ev: event, _: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_message_text(ev: event, _: YAML) -> Ctx:
+def _ev_m_room_message_text(ev: Event, _: YAML) -> Ctx:
+    """Create a context for a text message event."""
     ctx: Ctx = Ctx()
 
-    content: event_content = get_event_content_from_event(ev)
+    content: EventContent = get_event_content_from_event(ev)
     body: str = str(content.get("body"))
 
     mgstype: str = str(content.get("msgtype"))
@@ -221,10 +237,11 @@ def _ev_m_room_message_text(ev: event, _: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_message_image(ev: event, yaml: YAML) -> Ctx:
+def _ev_m_room_message_image(ev: Event, yaml: YAML) -> Ctx:
+    """Create a context for an image message event."""
     ctx: Ctx = Ctx()
 
-    content: event_content = get_event_content_from_event(ev)
+    content: EventContent = get_event_content_from_event(ev)
     body: str = str(content.get("body"))
     url = content.get("url")
 
@@ -267,10 +284,11 @@ def _ev_m_room_message_image(ev: event, yaml: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_message_file(ev: event, _: YAML) -> Ctx:
+def _ev_m_room_message_file(ev: Event, _: YAML) -> Ctx:
+    """Create a context for a file message event."""
     ctx: Ctx = Ctx()
 
-    content: event_content = get_event_content_from_event(ev)
+    content: EventContent = get_event_content_from_event(ev)
 
     body: str = str(content.get("body"))
     url = content.get("url")
@@ -299,10 +317,11 @@ def _ev_m_room_message_file(ev: event, _: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_message(ev: event, yaml: YAML) -> Ctx:
+def _ev_m_room_message(ev: Event, yaml: YAML) -> Ctx:
+    """Create a context for a message event."""
     ctx: Ctx = Ctx()
 
-    content: event_content = get_event_content_from_event(ev)
+    content: EventContent = get_event_content_from_event(ev)
 
     mgstype: str = str(content.get("msgtype"))
 
@@ -319,10 +338,11 @@ def _ev_m_room_message(ev: event, yaml: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_member(ev: event, _: YAML) -> Ctx:
+def _ev_m_room_member(ev: Event, _: YAML) -> Ctx:
+    """Create a context for a member event."""
     ctx: Ctx = Ctx()
 
-    content: event_content = get_event_content_from_event(ev)
+    content: EventContent = get_event_content_from_event(ev)
     avatar_url: str | None = content.get("avatar_url")
     displayname: str | None = content.get("displayname")
     membership: str | None = content.get("membership")
