@@ -27,8 +27,8 @@ from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import streamed_download
 from matrixctl.handlers.yaml import YAML
-from matrixctl.parser import Mxc
-from matrixctl.parser import parse_mxc_uri
+from matrixctl.parse import Mxc
+from matrixctl.parse import parse_mxc_uri
 
 
 __author__: str = "Michael Sasser"
