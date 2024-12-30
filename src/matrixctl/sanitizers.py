@@ -45,9 +45,9 @@ class MessageType(Enum):
 
     Supported events:
 
-    ========================   ================================================
+    =========================  ===========================================
     message_type               Usage
-    ========================   ================================================
+    =========================  ===========================================
     m.room.message             This event to send messages to a room
     m.room.name                This event sets the name of an room
     m.room.topic               This events sets the room topic
@@ -62,7 +62,7 @@ class MessageType(Enum):
     m.room.encrypted           This event is used for encrypted messages
     m.room.history_visibility  This event sets the history visibility
     m.room.guest_access        This event sets the guest access
-    =========================  ================================================
+    =========================  ===========================================
 
     """
 

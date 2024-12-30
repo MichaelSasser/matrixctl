@@ -187,7 +187,7 @@ def imgcat(
         A buffer containing the entire escape sequence, which can be written
         to the terminal as follows.
 
-        .. code-block:: python
+        .. code-block::python
            from sys import stdout
 
 
