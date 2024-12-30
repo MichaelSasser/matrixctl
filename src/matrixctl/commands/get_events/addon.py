@@ -41,6 +41,7 @@ from matrixctl.sanitizers import MessageType
 from matrixctl.sanitizers import sanitize_message_type
 from matrixctl.sanitizers import sanitize_room_identifier
 from matrixctl.sanitizers import sanitize_user_identifier
+from matrixctl.handlers.rows import Ctx, to_row_context
 
 
 __author__: str = "Michael Sasser"
@@ -55,167 +56,6 @@ class HighlighterMatrixUser(RegexHighlighter):
 
     base_style = "example."
     highlights = [r"(?P<matrix_user>@[\w-]+:([\w-]+\.)+[\w-]+)"]
-
-
-def to_row_ctx(
-    kind: MessageType | str, ev: dict[str, t.Any], yaml: YAML
-) -> Text:
-    """Create an event context from a message type and it's content."""
-
-    content = ev.get("content")
-    ctx = Text()
-    buf: bytes = b""
-    if isinstance(kind, str) or content is None:
-        ctx.append("Unknown Message Type")
-    elif kind == MessageType.M_ROOM_REDACTION:
-        redacts = ev.get("redacts")
-        ctx.append("REDACTION ", "bright_black italic")
-        if redacts is not None:
-            ctx.append(f"{{ redacts={redacts} }}", style="bright_black")
-    elif kind == MessageType.M_ROOM_GUEST_ACCESS:
-        ctx.append("GUEST ACCESS ", "bright_black italic")
-        ctx.append(f"{{ content={content} }}", style="bright_black")
-    elif kind == MessageType.M_ROOM_HISTORY_VISIBILITY:
-        ctx.append("HISTORY VISIBILITY ", "bright_black italic")
-        ctx.append(f"{{ content={content} }}", style="bright_black")
-    elif kind == MessageType.M_ROOM_JOIN_RULES:
-        ctx.append("JOIN RULES ", "bright_black italic")
-        ctx.append(f"{{ content={content} }}", style="bright_black")
-    elif kind == MessageType.M_ROOM_POWER_LEVELS:
-        ctx.append("POWER LEVELS ", "bright_black italic")
-        ctx.append(f"{{ content={content} }}", style="bright_black")
-    elif kind == MessageType.M_ROOM_ENCRYPTED:
-        ctx.append("MESSAGE ENCRYPTED", "bright_black italic")
-    elif kind == MessageType.M_REACTION:
-        relates_to = content.get("m.relates_to")
-
-        if relates_to is not None:
-            relates_to_event_id = relates_to.get("event_id")
-            rel_type = relates_to.get("rel_type")
-
-            if rel_type == "m.annotation":
-                ctx.append("ANNOTATION ", "bright_black italic")
-                ctx.append("{ ", style="bright_black")
-
-                key = relates_to.get("key")
-
-                ctx.append(
-                    "key='",
-                    "bright_black",
-                )
-
-                ctx.append(
-                    key,
-                    "green",
-                )
-
-                ctx.append(
-                    "' ",
-                    "bright_black",
-                )
-
-                ctx.append(
-                    f"relates_to={relates_to_event_id} rel_type={rel_type} ",
-                    "bright_black",
-                )
-
-                ctx.append("}", style="bright_black")
-    elif kind == MessageType.M_ROOM_MESSAGE:
-        mgstype: str = str(content.get("msgtype"))
-        body: str = str(content.get("body"))
-
-        if mgstype in {"m.text", "m.notice"}:
-            ctx.append(
-                f"{mgstype.lstrip('m.').upper() } ", "bright_black italic"
-            )
-            ctx.append("{ ", style="bright_black")
-
-            ctx.append("body='", style="bright_black")
-            ctx.append(body, style="green")
-            ctx.append("' ", style="bright_black")
-
-            relates_to = content.get("m.relates_to")
-            reply_to_event_id = None
-            if relates_to is not None:
-                in_reply_to = relates_to.get("m.in_reply_to")
-                if in_reply_to is not None:
-                    reply_to_event_id = in_reply_to.get("event_id")
-                    ctx.append(
-                        f"replies_to={reply_to_event_id} ", "bright_black"
-                    )
-
-            ctx.append("}", style="bright_black")
-        elif mgstype == "m.image":
-            url = content.get("url")
-
-            info = content.get("info")
-
-            ctx.append("IMAGE ", "bright_black italic")
-            ctx.append(
-                f"{{ {body=}, {url=}",
-                "bright_black",
-            )
-            if info is not None:
-                mimetype = info.get("mimetype")
-                size = info.get("size")
-                width = info.get("w")
-                height = info.get("h")
-
-                ctx.append(
-                    (
-                        f" mimetype={mimetype}, size={size},"
-                        f" width={width}, height={height}"
-                    ),
-                    "bright_black",
-                )
-            ctx.append(" }", "bright_black")
-
-            # Test: This should later follow the entry
-            buf_image = download_media_to_buf(
-                token=yaml.get("server", "api", "token"),
-                domain=yaml.get("server", "api", "domain"),
-                media_id=url,
-            )
-            buf += imgcat(buf_image, width="90%", preserve_aspect_ratio=True)
-
-        elif mgstype == "m.file":
-            url = content.get("url")
-
-            info = content.get("info")
-
-            ctx.append("FILE ", "bright_black italic")
-            ctx.append(
-                f"{{ {body=}, {url=}",
-                "bright_black",
-            )
-            if info is not None:
-                mimetype = info.get("mimetype")
-                size = info.get("size")
-
-                ctx.append(
-                    (f" mimetype={mimetype}, size={size},"),
-                    "bright_black",
-                )
-            ctx.append(" }", "bright_black")
-
-        else:
-            ctx.append(f"Unknown Message Type '{mgstype}")
-
-    elif kind == MessageType.M_ROOM_MEMBER:
-        avatar_url: str | None = content.get("avatar_url")
-        displayname: str | None = content.get("displayname")
-        membership: str | None = content.get("membership")
-
-        ctx.append("MEMBERSHIP ", "bright_black italic")
-        ctx.append(
-            f"{{ {membership=}, {displayname=}, {avatar_url=} }}",
-            "bright_black",
-        )
-
-    else:
-        ctx.append("Unknown Message Type")
-
-    return ctx, buf
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
@@ -313,9 +153,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
                     except ValueError:
                         kind = kind_
 
-                    # content = ev.get("content")
-
-                    ctx, buf = to_row_ctx(kind, ev, yaml)
+                    ctx: Ctx = to_row_context(ev, yaml)
 
                     theme = Theme({"example.matrix_user": "magenta bold"})
                     console = Console(
@@ -332,7 +170,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
                     text.append(" | ", style="bright_black")
                     text.append(event_id, style="purple3")
                     text.append(" | ", style="bright_black")
-                    text.append_text(ctx)
+                    text.append_text(ctx.text)
                     if tdelta.total_seconds() > 30.0:
                         text.append(" | ", style="bright_black")
                         text.append(f"Δt = {tdelta}", style="red bold")
@@ -341,8 +179,8 @@ def addon(arg: Namespace, yaml: YAML) -> int:
                         soft_wrap=True,
                         highlight=True,
                     )
-                    if len(buf) > 0:
-                        stdout.buffer.write(buf)
+                    if len(ctx.post_buf) > 0:
+                        stdout.buffer.write(ctx.post_buf)
                         stdout.flush()
 
                     print()

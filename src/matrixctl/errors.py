@@ -90,4 +90,8 @@ class ParserError(Error):
     """The parser was unable to parse the the given data correctly."""
 
 
+class NotAnEventError(Error):
+    """The given event data is not valid."""
+
+
 # vim: set ft=python :
