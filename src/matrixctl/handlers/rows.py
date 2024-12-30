@@ -213,9 +213,7 @@ def _ev_m_room_message_text(ev: Event, _: YAML) -> Ctx:
     body: str = str(content.get("body"))
 
     mgstype: str = str(content.get("msgtype"))
-    ctx.append(
-        Text(f"{mgstype.lstrip('m.').upper() } ", "bright_black italic")
-    )
+    ctx.append(Text(f"{mgstype.lstrip('m.').upper()} ", "bright_black italic"))
     ctx.append(Text("{ ", style="bright_black"))
 
     ctx.append(Text("body='", style="bright_black"))
