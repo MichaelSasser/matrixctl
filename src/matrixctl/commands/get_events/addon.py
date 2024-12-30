@@ -26,10 +26,10 @@ import typing as t
 from argparse import Namespace
 from sys import stdout
 
+from psycopg.cursor import Cursor
+from psycopg.rows import TupleRow
 from rich.console import Console
-from rich.highlighter import RegexHighlighter
 from rich.text import Text
-from rich.theme import Theme
 
 from .parser import OutputType
 
@@ -49,12 +49,7 @@ __email__: str = "Michael@MichaelSasser.org"
 
 logger = logging.getLogger(__name__)
 
-
-class HighlighterMatrixUser(RegexHighlighter):
-    """Apply style to anything that looks like an email."""
-
-    base_style = "example."
-    highlights = [r"(?P<matrix_user>@[\w-]+:([\w-]+\.)+[\w-]+)"]
+WARN_FOR_EVENTS_OLDER_THAN: float = 30.0
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
@@ -97,7 +92,11 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     if message_type is False:
         return 1
 
-    query: str = "WITH evs AS (SELECT event_id, origin_server_ts, received_ts FROM events WHERE sender = (%s)"
+    query: str = (
+        "WITH evs AS ("
+        "SELECT event_id, origin_server_ts, received_ts "
+        "FROM events WHERE sender = (%s)"
+    )
     values = [user_identifier]
 
     # Add room identifier to the query
@@ -112,102 +111,114 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     query += ")"
 
-    query += "SELECT event_json.event_id, event_json.json, evs.origin_server_ts, evs.received_ts FROM event_json INNER JOIN evs ON event_json.event_id = evs.event_id ORDER BY evs.origin_server_ts ASC"
+    query += (
+        "SELECT "
+        "event_json.event_id, "
+        "event_json.json, "
+        "evs.origin_server_ts, "
+        "evs.received_ts "
+        "FROM "
+        "event_json INNER JOIN evs ON event_json.event_id = evs.event_id "
+        "ORDER BY evs.origin_server_ts ASC"
+    )
 
     with db_connect(yaml) as conn, conn.cursor() as cur:
         cur.execute(query, values)
         if arg.output_format == OutputType.ROWS:
-            try:
-                for event in cur:
-                    event_id = event[0]
-                    ev = json.loads(event[1])
-
-                    origin_server_ts_ = int(event[2])
-                    received_ts_ = int(event[3])
-
-                    origin_server_ts = datetime.datetime.fromtimestamp(
-                        origin_server_ts_ / 1000.0, tz=datetime.timezone.utc
-                    )
-                    received_ts = datetime.datetime.fromtimestamp(
-                        received_ts_ / 1000.0, tz=datetime.timezone.utc
-                    )
-
-                    tdelta: datetime.timedelta = received_ts.replace(
-                        microsecond=0
-                    ) - origin_server_ts.replace(microsecond=0)
-
-                    ts_str = (
-                        origin_server_ts.replace(microsecond=0)
-                        .isoformat()
-                        .replace("+00:00", "")
-                    )
-                    room_id = ev.get("room_id")
-
-                    sender = ev.get("sender")
-
-                    kind_: str = ev.get("type")
-                    kind: MessageType | str
-                    try:
-                        kind = MessageType.from_string(kind_)
-                    except ValueError:
-                        kind = kind_
-
-                    ctx: Ctx = to_row_context(ev, yaml)
-
-                    theme = Theme({"example.matrix_user": "magenta bold"})
-                    console = Console(
-                        highlighter=HighlighterMatrixUser(), theme=theme
-                    )
-                    text = Text()
-                    text.append(ts_str, style="blue bold")
-                    text.append(" | ", style="bright_black")
-                    text.append(room_id, style="bright_yellow")
-                    text.append(" | ", style="bright_black")
-                    text.append(sender, style="bright_magenta")
-                    text.append(" | ", style="bright_black")
-                    text.append(kind_, style="steel_blue1")
-                    text.append(" | ", style="bright_black")
-                    text.append(event_id, style="purple3")
-                    text.append(" | ", style="bright_black")
-                    text.append_text(ctx.text)
-                    if tdelta.total_seconds() > 30.0:
-                        text.append(" | ", style="bright_black")
-                        text.append(f"Δt = {tdelta}", style="red bold")
-                    console.print(
-                        text,
-                        soft_wrap=True,
-                        highlight=True,
-                    )
-                    if len(ctx.post_buf) > 0:
-                        stdout.buffer.write(ctx.post_buf)
-                        stdout.flush()
-
-                    print()
-
-            except json.decoder.JSONDecodeError:
-                logger.exception(
-                    "Unable to process the response data to JSON.",
-                )
-                return 1
+            return output_as_rows(cur, yaml)
         if arg.output_format == OutputType.JSON:
-            try:
-                print("[", end="")
-                not_first_line: bool = False
-                for event in cur:
-                    if not_first_line:
-                        print(",")
-                    else:
-                        not_first_line = True
-                    print(
-                        json.dumps(json.loads(event[1]), indent=4),
-                        end="",
-                    )
-                print("]")
-            except json.decoder.JSONDecodeError:
-                logger.exception(
-                    "Unable to process the response data to JSON.",
-                )
-                return 1
+            return output_as_json(cur)
+    return 0
+
+
+def output_as_rows(cur: Cursor[TupleRow], yaml: YAML) -> int:
+    """Output the events as rows."""
+    try:
+        for event in cur:
+            event_id = event[0]
+            ev = json.loads(event[1])
+
+            origin_server_ts_ = int(event[2])
+            received_ts_ = int(event[3])
+
+            origin_server_ts = datetime.datetime.fromtimestamp(
+                origin_server_ts_ / 1000.0, tz=datetime.timezone.utc
+            )
+            received_ts = datetime.datetime.fromtimestamp(
+                received_ts_ / 1000.0, tz=datetime.timezone.utc
+            )
+
+            tdelta: datetime.timedelta = received_ts.replace(
+                microsecond=0
+            ) - origin_server_ts.replace(microsecond=0)
+
+            ts_str = (
+                origin_server_ts.replace(microsecond=0)
+                .isoformat()
+                .replace("+00:00", "")
+            )
+            room_id = ev.get("room_id")
+
+            sender = ev.get("sender")
+
+            kind: str = ev.get("type")
+
+            ctx: Ctx = to_row_context(ev, yaml)
+
+            console = Console()
+            text = Text()
+            text.append(ts_str, style="blue bold")
+            text.append(" | ", style="bright_black")
+            text.append(room_id, style="bright_yellow")
+            text.append(" | ", style="bright_black")
+            text.append(sender, style="bright_magenta")
+            text.append(" | ", style="bright_black")
+            text.append(kind, style="steel_blue1")
+            text.append(" | ", style="bright_black")
+            text.append(event_id, style="purple3")
+            text.append(" | ", style="bright_black")
+            text.append_text(ctx.text)
+            if tdelta.total_seconds() > WARN_FOR_EVENTS_OLDER_THAN:
+                text.append(" | ", style="bright_black")
+                text.append(f"Δt = {tdelta}", style="red bold")
+            console.print(
+                text,
+                soft_wrap=True,
+            )
+            if len(ctx.post_buf) > 0:
+                stdout.buffer.write(ctx.post_buf)
+                stdout.flush()
+
+            print()
+
+    except json.decoder.JSONDecodeError:
+        logger.exception(
+            "Unable to process the response data to JSON.",
+        )
+        return 1
+    return 0
+
+
+def output_as_json(cur: Cursor[TupleRow]) -> int:
+    """Output the events as JSON."""
+    try:
+        print("[", end="")
+        not_first_line: bool = False
+        for event in cur:
+            if not_first_line:
+                print(",")
+            else:
+                not_first_line = True
+            print(
+                json.dumps(json.loads(event[1]), indent=4),
+                end="",
+            )
+        print("]")
+    except json.decoder.JSONDecodeError:
+        logger.exception(
+            "Unable to process the response data to JSON.",
+        )
+        return 1
     return 0
 
 
