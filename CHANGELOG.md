@@ -7,6 +7,26 @@ All notable changes to MatrixCtl will be documented in this file.
 You can find the issue tracker on
 [GitHub](https://github.com/MichaelSasser/matrixctl/issues).
 
+## [0.13.0](https://github.com/MichaelSasser/matrixctl/compare/v0.13.0...v0.13.0) (2024-12-31)
+
+
+### Features
+
+* **get-events:** Add option to format events as rows, with image support ([#859](https://github.com/MichaelSasser/matrixctl/issues/859)) ([339fcad](https://github.com/MichaelSasser/matrixctl/commit/339fcad8ada0e2117e807487730e566554aa3f0c))
+* **rows:** make images in rows configurable ([253b632](https://github.com/MichaelSasser/matrixctl/commit/253b632e618b8e275ce8b972e62a01f1dc5ab9fd))
+* try out release-please ([80363a9](https://github.com/MichaelSasser/matrixctl/commit/80363a9c3965cf53cc2ef27f284a9bac45f624fc))
+
+
+### Documentation
+
+* **readme:** Improve wording ([007e292](https://github.com/MichaelSasser/matrixctl/commit/007e292d745d5325ad3a079c8c2d4a32f929653f))
+
+
+### Miscellaneous Chores
+
+* release 0.13.0 ([5ac62f4](https://github.com/MichaelSasser/matrixctl/commit/5ac62f4fa4edd788144ed7b2be1f3f592ea92d64))
+* release 0.13.0b3 ([b152e4b](https://github.com/MichaelSasser/matrixctl/commit/b152e4bcb360ebf5ef95e0ccc4ee452eb91c9cca))
+
 ## [0.12.1b2] - 2024-12-28
 
 ### 🐛 Bug Fixes
