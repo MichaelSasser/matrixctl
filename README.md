@@ -7,11 +7,9 @@
 # MatrixCtl
 
 MatrixCtl is a simple, but feature-rich tool to remotely control, manage,
-provision and deploy your Matrix homeservers and users from your virtual
-terminal.
+provision and deploy your Matrix homeservers right from your virtual terminal.
 
 ```console
-$ matrixctl
 usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG] Command ...
 
 MatrixCtl is a simple, but feature-rich tool to remotely control, manage, provision and deploy Matrix homeservers.
@@ -20,10 +18,8 @@ options:
   -h, --help            show this help message and exit
   --version             show program's version number and exit
   -d, --debug           Enables debugging mode.
-  -s SERVER, --server SERVER
-                        Select the server. (default: "default")
-  -c CONFIG, --config CONFIG
-                        A path to an alternative config file.
+  -s, --server SERVER   Select the server. (default: "default")
+  -c, --config CONFIG   A path to an alternative config file.
 
 Commands:
   The following are commands, you can use to accomplish various tasks.
@@ -184,11 +180,11 @@ If you have any thoughts or questions, you can ask them in the
 [discusions](https://github.com/MichaelSasser/matrixctl/discussions) or in the
 projects matrix room `#matrixctl:matrix.org`.
 
-## PyPA Versioning and Branching Model
+## Versioning and Branching Model
 
-This Python package uses
-[PyPA](https://packaging.python.org/en/latest/specifications/) for its release
-cycle and follows the
+This Python package follows the
+[PyPA](https://packaging.python.org/en/latest/specifications/) specification
+for its release cycle and follows the
 [GitHub Flow](https://docs.github.com/en/get-started/using-github/github-flow).
 
 ## Contributing
@@ -198,5 +194,5 @@ Please check our
 
 ## License
 
-Copyright &copy; 2020-2001 Michael Sasser <Info@MichaelSasser.org>. Released
+Copyright &copy; 2020-2024 Michael Sasser <Info@MichaelSasser.org>. Released
 under the GPLv3 license.
