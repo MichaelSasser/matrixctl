@@ -26,6 +26,7 @@ class Config(t.TypedDict):
 
     servers: dict[str, ConfigServer]
     server: ConfigServer
+    ui: ConfigUi
 
 
 class ConfigServer(t.TypedDict):
@@ -35,7 +36,7 @@ class ConfigServer(t.TypedDict):
     synapse: ConfigServerSynapse
     api: ConfigServerAPI
     ssh: ConfigServerSSH
-    maintenance: ConfigServerMaintenance  # default = 4
+    maintenance: ConfigServerMaintenance
 
 
 class ConfigServerAnsible(t.TypedDict):
@@ -71,6 +72,20 @@ class ConfigServerMaintenance(t.TypedDict):
     """Add `maintenance` to `server` in the YAML config structure."""
 
     tasks: list[str]
+
+
+class ConfigUi(t.TypedDict):
+    """Add `Ui` to `server` in the YAML config structure."""
+
+    image: ConfigUiImage
+
+
+class ConfigUiImage(t.TypedDict):
+    """Add `image` to `server` in the YAML config structure."""
+
+    enabled: bool
+    scale_factor: float  # Must be > 0.0
+    max_height_of_terminal: float  # Must be > 0.0 and <= 1.0
 
 
 # vim: set ft=python :

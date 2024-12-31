@@ -18,6 +18,8 @@
 
 from __future__ import annotations
 
+import pytest
+
 from matrixctl.handlers.yaml import YAML
 
 
@@ -156,29 +158,76 @@ def test_get_ssh_user(yaml: YAML) -> None:
     # Cleanup - None
 
 
+def test_get_ui_image_enabled(yaml: YAML) -> None:
+    """Test ui -> image -> enabled."""
+
+    # Setup
+    desired: bool = True
+
+    # Exercise
+    actual: bool = yaml.get("ui", "image", "enabled")
+
+    # Verify
+    assert actual == desired
+
+    # Cleanup - None
+    #
+
+
+def test_get_ui_image_scale_factor(yaml: YAML) -> None:
+    """Test ui -> image -> scale_factor."""
+
+    # Setup
+    desired: float = 2.0
+
+    # Exercise
+    actual: float = yaml.get("ui", "image", "scale_factor")
+
+    # Verify
+    assert pytest.approx(actual, 0.1) == desired
+
+    # Cleanup - None
+
+
+def test_get_ui_image_max_height_of_terminal(yaml: YAML) -> None:
+    """Test ui -> image -> max_height_of_terminal."""
+
+    # Setup
+    desired: float = 0.33
+
+    # Exercise
+    actual: float = yaml.get("ui", "image", "max_height_of_terminal")
+
+    # Verify
+    assert pytest.approx(actual, 0.1) == desired
+
+    # Cleanup - None
+
+
 def test_str(yaml: YAML) -> None:
     """Test __str__()."""
 
     # Setup
     desired: str = (
-        "{'servers': {'default': {'ansible': {'playbook': '/path/to/ansible/"
-        "playbook'}, 'synapse': {'playbook': '/path/to/synapse/playbook'}, '"
-        "api': {'domain': 'example.com', 'username': 'johndoe', 'token': 'M"
-        "DAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQow"
-        "MDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHN"
-        "hc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cW"
-        "J2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbE"
-        "uII8wp3YrAKEa4K', 'concurrent_limit': 10}, 'ssh': {'address': 'matr"
-        "ix.example.com', 'port': 22, 'user': 'john'}}}, 'server': {'ansible"
-        "': {'playbook': '/path/to/ansible/playbook'}, 'synapse': {'playbook"
-        "': '/path/to/synapse/playbook'}, 'api': {'domain': 'example.com', '"
-        "username': 'johndoe', 'token': 'MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXI"
-        "ub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2"
-        "VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gY"
-        "WNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1"
-        "cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKEa4K', 'concurrent_limi"
-        "t': 10}, 'ssh': {'address': 'matrix.example.com', 'port': 22, 'user"
-        "': 'john'}}}"
+        "{'ui': {'image': {'enabled': True, 'scale_factor': 2.0, "
+        "'max_height_of_terminal': 0.33}}, 'servers': {'default': {'ansible': "
+        "{'playbook': '/path/to/ansible/playbook'}, 'synapse': {'playbook': "
+        "'/path/to/synapse/playbook'}, 'api': {'domain': 'example.com', "
+        "'username': 'johndoe', 'token': 'MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIu"
+        "b3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX"
+        "2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZX"
+        "NzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTB"
+        "HhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKEa4K', 'concurrent_limit': 10}, "
+        "'ssh': {'address': 'matrix.example.com', 'port': 22, 'user': 'john'"
+        "}}}, 'server': {'ansible': {'playbook': '/path/to/ansible/playbook'}"
+        ", 'synapse': {'playbook': '/path/to/synapse/playbook'}, 'api': "
+        "{'domain': 'example.com', 'username': 'johndoe', 'token': 'MDAxasdfY"
+        "2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkI"
+        "GdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vc"
+        "mcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyM"
+        "Ul3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKE"
+        "a4K', 'concurrent_limit': 10}, 'ssh': {'address': 'matrix.example."
+        "com', 'port': 22, 'user': 'john'}}}"
     )
 
     # Exercise
@@ -196,24 +245,25 @@ def test_repr(yaml: YAML) -> None:
 
     # Setup
     desired: str = (
-        "{'servers': {'default': {'ansible': {'playbook': '/path/to/ansible/"
-        "playbook'}, 'synapse': {'playbook': '/path/to/synapse/playbook'}, '"
-        "api': {'domain': 'example.com', 'username': 'johndoe', 'token': 'M"
-        "DAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQow"
-        "MDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHN"
-        "hc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cW"
-        "J2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbE"
-        "uII8wp3YrAKEa4K', 'concurrent_limit': 10}, 'ssh': {'address': 'matr"
-        "ix.example.com', 'port': 22, 'user': 'john'}}}, 'server': {'ansible"
-        "': {'playbook': '/path/to/ansible/playbook'}, 'synapse': {'playbook"
-        "': '/path/to/synapse/playbook'}, 'api': {'domain': 'example.com', '"
-        "username': 'johndoe', 'token': 'MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXI"
-        "ub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2"
-        "VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gY"
-        "WNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1"
-        "cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKEa4K', 'concurrent_limi"
-        "t': 10}, 'ssh': {'address': 'matrix.example.com', 'port': 22, 'user"
-        "': 'john'}}}"
+        "{'ui': {'image': {'enabled': True, 'scale_factor': 2.0, "
+        "'max_height_of_terminal': 0.33}}, 'servers': {'default': {'ansible': "
+        "{'playbook': '/path/to/ansible/playbook'}, 'synapse': {'playbook': "
+        "'/path/to/synapse/playbook'}, 'api': {'domain': 'example.com', "
+        "'username': 'johndoe', 'token': 'MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIu"
+        "b3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX"
+        "2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZX"
+        "NzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTB"
+        "HhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKEa4K', 'concurrent_limit': 10}, "
+        "'ssh': {'address': 'matrix.example.com', 'port': 22, 'user': 'john'"
+        "}}}, 'server': {'ansible': {'playbook': '/path/to/ansible/playbook'}"
+        ", 'synapse': {'playbook': '/path/to/synapse/playbook'}, 'api': "
+        "{'domain': 'example.com', 'username': 'johndoe', 'token': 'MDAxasdfY"
+        "2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkI"
+        "GdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vc"
+        "mcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyM"
+        "Ul3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKE"
+        "a4K', 'concurrent_limit': 10}, 'ssh': {'address': 'matrix.example."
+        "com', 'port': 22, 'user': 'john'}}}"
     )
 
     # Exercise

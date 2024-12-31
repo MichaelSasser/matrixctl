@@ -53,7 +53,7 @@ lint-type: ##@ Run basedpyright
 	uv run basedpyright
 
 tox: ##@ Run tox
-	uv tool run tox
+	uv tool run tox -- -vv
 
 ##@
 ##@ Documentation Related Commands

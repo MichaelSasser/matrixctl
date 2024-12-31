@@ -37,8 +37,9 @@ from ruamel.yaml.error import YAMLError
 from matrixctl import __version__
 from matrixctl.errors import ConfigFileError
 from matrixctl.structures import Config
-from matrixctl.structures import ConfigServer
 from matrixctl.structures import ConfigServerAPI
+from matrixctl.structures import ConfigUi
+from matrixctl.structures import ConfigUiImage
 
 
 __author__: str = "Michael Sasser"
@@ -268,33 +269,74 @@ class YAML:
         return t.cast(Config, {})
 
     @staticmethod
-    def apply_defaults(server: ConfigServer) -> ConfigServer:
+    def apply_defaults(config: Config, server: str) -> Config:
         """Apply defaults to the configuration.
 
         Parameters
         ----------
-        server : matrixctl.structures.ConfigServer
-            The configuration of a (home)server.
+        config : matrixctl.structures.Config
+            The configuration.
+
+        server : str
+            The selected server.
 
         Returns
         -------
-        server : matrixctl.structures.ConfigServer
-            The configuration of a (home)server with applied defaults.
+        server : matrixctl.structures.Config
+            The altered configuration.
 
         """
+
+        #
+        # Server
+        #
+
         # Create api if it does not exist
         try:
-            server["api"]["concurrent_limit"]
+            config["servers"][server]["api"]["concurrent_limit"]
         except KeyError:
-            server["api"] = t.cast(ConfigServerAPI, {})
+            config["servers"][server]["api"] = t.cast(ConfigServerAPI, {})
 
         # Create default for concurrent_limit
         try:
-            server["api"]["concurrent_limit"]
+            config["servers"][server]["api"]["concurrent_limit"]
         except KeyError:
-            server["api"]["concurrent_limit"] = 4
+            config["servers"][server]["api"]["concurrent_limit"] = 4
 
-        return server
+        #
+        # Ui
+        #
+
+        # Create ui if it does not exist
+        try:
+            config["ui"]["image"]
+        except KeyError:
+            config["ui"] = t.cast(ConfigUi, {})
+
+        # Create ui if it does not exist
+        try:
+            config["ui"]["image"]["scale_factor"]
+        except KeyError:
+            config["ui"]["image"] = t.cast(ConfigUiImage, {})
+
+        # Create default for display_scale_factor
+        try:
+            config["ui"]["image"]["scale_factor"]
+        except KeyError:
+            config["ui"]["image"]["scale_factor"] = 1.0
+
+        # Create default for display_max_height_of_terminal
+        try:
+            config["ui"]["image"]["max_height_of_terminal"]
+        except KeyError:
+            config["ui"]["image"]["max_height_of_terminal"] = 0.33
+
+        try:
+            config["ui"]["image"]["enabled"]
+        except KeyError:
+            config["ui"]["image"]["enabled"] = False
+
+        return config
 
     def get_server_config(
         self: YAML,
@@ -343,7 +385,8 @@ class YAML:
                     ),
                 ),
             )
-            conf["server"] = self.apply_defaults(conf["servers"][server])
+            conf = self.apply_defaults(conf, server)
+            conf["server"] = conf["servers"][server]
 
         except KeyError:
             logger.exception(

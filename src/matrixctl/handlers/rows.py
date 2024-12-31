@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import logging
+import os
+import shutil
 import typing as t
 
 from rich.text import Text
@@ -11,8 +13,10 @@ from typing_extensions import Self
 from matrixctl.errors import NotAnEventError
 from matrixctl.handlers.api import download_media_to_buf
 from matrixctl.handlers.yaml import YAML
-from matrixctl.print_helpers import imgcat
 from matrixctl.sanitizers import MessageType
+from matrixctl.terminal import TerminalCellSizePx
+from matrixctl.terminal import get_terminal_cell_size_in_px
+from matrixctl.terminal import imgcat
 
 
 __author__: str = "Michael Sasser"
@@ -269,14 +273,63 @@ def _ev_m_room_message_image(ev: Event, yaml: YAML) -> Ctx:
         )
     ctx.append(Text(" }", "bright_black"))
 
-    if isinstance(url, str):
+    if (
+        isinstance(url, str)
+        and url.startswith("mxc://")
+        and yaml.get("ui", "image", "enabled")
+    ):
+        terminal_cell_size: TerminalCellSizePx | None = (
+            get_terminal_cell_size_in_px()
+        )
+
+        if terminal_cell_size is not None:
+            terminal_size: os.terminal_size = shutil.get_terminal_size(
+                (80, 20)
+            )
+            # Number of lines times their height in px
+            terminal_height: int = (
+                terminal_size.lines * terminal_cell_size.height
+            )
+            terminal_width: int = (
+                terminal_size.columns * terminal_cell_size.width
+            )
+
+            user_scale_factor: float = yaml.get("ui", "image", "scale_factor")
+            user_image_max_heigt: float = yaml.get(
+                "ui", "image", "max_height_of_terminal"
+            )
+
+            image_max_height: float = 1.0 / user_image_max_heigt
+
+            user_height: float = height * user_scale_factor
+            user_width: float = width * user_scale_factor
+
+            scale_factor_height: float = 1.0
+            scale_factor_width: float = 1.0
+            if (user_height) > (terminal_height / image_max_height):
+                # Scale down height
+                scale_factor_height = user_height / (
+                    terminal_height / image_max_height
+                )
+            if (user_width) > terminal_width:
+                # Scale down width
+                scale_factor_width = user_width / terminal_width
+            scale_factor: float = max(scale_factor_height, scale_factor_width)
+            logger.debug("Scale factor. scale_factor=%f", scale_factor)
+
+            scaled_height: int = int(user_height / scale_factor)
+
         # Test: This should later follow the entry
         buf_image = download_media_to_buf(
             token=yaml.get("server", "api", "token"),
             domain=yaml.get("server", "api", "domain"),
             media_id=url,
         )
-        buf = imgcat(buf_image, width="90%", preserve_aspect_ratio=True)
+        buf = imgcat(
+            buf_image,
+            height=f"{scaled_height}px",
+            preserve_aspect_ratio=True,
+        )
         ctx.append(post_buf=buf)
 
     return ctx
