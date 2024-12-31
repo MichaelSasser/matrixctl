@@ -113,8 +113,9 @@
 <span class="kn">from</span> <span class="nn">matrixctl</span> <span class="kn">import</span> <span class="n">__version__</span>
 <span class="kn">from</span> <span class="nn">matrixctl.errors</span> <span class="kn">import</span> <span class="n">ConfigFileError</span>
 <span class="kn">from</span> <span class="nn">matrixctl.structures</span> <span class="kn">import</span> <span class="n">Config</span>
-<span class="kn">from</span> <span class="nn">matrixctl.structures</span> <span class="kn">import</span> <span class="n">ConfigServer</span>
 <span class="kn">from</span> <span class="nn">matrixctl.structures</span> <span class="kn">import</span> <span class="n">ConfigServerAPI</span>
+<span class="kn">from</span> <span class="nn">matrixctl.structures</span> <span class="kn">import</span> <span class="n">ConfigUi</span>
+<span class="kn">from</span> <span class="nn">matrixctl.structures</span> <span class="kn">import</span> <span class="n">ConfigUiImage</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -363,33 +364,74 @@
 <div class="viewcode-block" id="YAML.apply_defaults">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.apply_defaults">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">apply_defaults</span><span class="p">(</span><span class="n">server</span><span class="p">:</span> <span class="n">ConfigServer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConfigServer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">apply_defaults</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span> <span class="n">server</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Config</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply defaults to the configuration.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        server : matrixctl.structures.ConfigServer</span>
-<span class="sd">            The configuration of a (home)server.</span>
+<span class="sd">        config : matrixctl.structures.Config</span>
+<span class="sd">            The configuration.</span>
+
+<span class="sd">        server : str</span>
+<span class="sd">            The selected server.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        server : matrixctl.structures.ConfigServer</span>
-<span class="sd">            The configuration of a (home)server with applied defaults.</span>
+<span class="sd">        server : matrixctl.structures.Config</span>
+<span class="sd">            The altered configuration.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1">#</span>
+        <span class="c1"># Server</span>
+        <span class="c1">#</span>
+
         <span class="c1"># Create api if it does not exist</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">server</span><span class="p">[</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;concurrent_limit&quot;</span><span class="p">]</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;concurrent_limit&quot;</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="n">server</span><span class="p">[</span><span class="s2">&quot;api&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">ConfigServerAPI</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">ConfigServerAPI</span><span class="p">,</span> <span class="p">{})</span>
 
         <span class="c1"># Create default for concurrent_limit</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">server</span><span class="p">[</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;concurrent_limit&quot;</span><span class="p">]</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;concurrent_limit&quot;</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="n">server</span><span class="p">[</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;concurrent_limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;concurrent_limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
 
-        <span class="k">return</span> <span class="n">server</span></div>
+        <span class="c1">#</span>
+        <span class="c1"># Ui</span>
+        <span class="c1">#</span>
+
+        <span class="c1"># Create ui if it does not exist</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ui&quot;</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ui&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">ConfigUi</span><span class="p">,</span> <span class="p">{})</span>
+
+        <span class="c1"># Create ui if it does not exist</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ui&quot;</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="s2">&quot;scale_factor&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ui&quot;</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">ConfigUiImage</span><span class="p">,</span> <span class="p">{})</span>
+
+        <span class="c1"># Create default for display_scale_factor</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ui&quot;</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="s2">&quot;scale_factor&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ui&quot;</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="s2">&quot;scale_factor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+        <span class="c1"># Create default for display_max_height_of_terminal</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ui&quot;</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="s2">&quot;max_height_of_terminal&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ui&quot;</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="s2">&quot;max_height_of_terminal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.33</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ui&quot;</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;ui&quot;</span><span class="p">][</span><span class="s2">&quot;image&quot;</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="n">config</span></div>
 
 
 <div class="viewcode-block" id="YAML.get_server_config">
@@ -441,7 +483,8 @@
                     <span class="p">),</span>
                 <span class="p">),</span>
             <span class="p">)</span>
-            <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_defaults</span><span class="p">(</span><span class="n">conf</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">])</span>
+            <span class="n">conf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_defaults</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
+            <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">]</span>
 
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>

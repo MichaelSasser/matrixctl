@@ -117,21 +117,23 @@ and the <a class="reference internal" href="commands.html#commands"><span class=
 
 <dl class="py method">
 <dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.apply_defaults">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">apply_defaults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.apply_defaults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.apply_defaults" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">apply_defaults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.apply_defaults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.apply_defaults" title="Link to this definition"></a></dt>
 <dd><p>Apply defaults to the configuration.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServer</span></code></a></span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.Config" title="matrixctl.structures.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a></span></p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
-<dt><strong>server</strong><span class="classifier"><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.structures.ConfigServer</span></code></a></span></dt><dd><p>The configuration of a (home)server.</p>
+<dt><strong>config</strong><span class="classifier"><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.Config" title="matrixctl.structures.Config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.structures.Config</span></code></a></span></dt><dd><p>The configuration.</p>
+</dd>
+<dt><strong>server</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The selected server.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>server</strong><span class="classifier"><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.structures.ConfigServer</span></code></a></span></dt><dd><p>The configuration of a (home)server with applied defaults.</p>
+<dt><strong>server</strong><span class="classifier"><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.Config" title="matrixctl.structures.Config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.structures.Config</span></code></a></span></dt><dd><p>The altered configuration.</p>
 </dd>
 </dl>
 </dd>

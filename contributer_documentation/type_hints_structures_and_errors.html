@@ -117,6 +117,11 @@ They are giving the person instructions, how to hand in a bug report.</p>
 <span class="sig-name descname"><span class="pre">servers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference internal" href="#matrixctl.structures.ConfigServer" title="matrixctl.structures.ConfigServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServer</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#matrixctl.structures.Config.servers" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.Config.ui">
+<span class="sig-name descname"><span class="pre">ui</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigUi" title="matrixctl.structures.ConfigUi"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigUi</span></code></a></em><a class="headerlink" href="#matrixctl.structures.Config.ui" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -232,6 +237,40 @@ They are giving the person instructions, how to hand in a bug report.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerSynapse.playbook">
 <span class="sig-name descname"><span class="pre">playbook</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerSynapse.playbook" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigUi">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigUi</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigUi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigUi" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<p>Add <cite>Ui</cite> to <cite>server</cite> in the YAML config structure.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigUi.image">
+<span class="sig-name descname"><span class="pre">image</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigUiImage" title="matrixctl.structures.ConfigUiImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigUiImage</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigUi.image" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigUiImage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigUiImage</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigUiImage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigUiImage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<p>Add <cite>image</cite> to <cite>server</cite> in the YAML config structure.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigUiImage.enabled">
+<span class="sig-name descname"><span class="pre">enabled</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigUiImage.enabled" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigUiImage.max_height_of_terminal">
+<span class="sig-name descname"><span class="pre">max_height_of_terminal</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigUiImage.max_height_of_terminal" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigUiImage.scale_factor">
+<span class="sig-name descname"><span class="pre">scale_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigUiImage.scale_factor" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

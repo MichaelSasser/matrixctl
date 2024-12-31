@@ -103,7 +103,8 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast the YAML config to a typed dict.&quot;&quot;&quot;</span>
 
     <span class="n">servers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ConfigServer</span><span class="p">]</span>
-    <span class="n">server</span><span class="p">:</span> <span class="n">ConfigServer</span></div>
+    <span class="n">server</span><span class="p">:</span> <span class="n">ConfigServer</span>
+    <span class="n">ui</span><span class="p">:</span> <span class="n">ConfigUi</span></div>
 
 
 
@@ -116,7 +117,7 @@
     <span class="n">synapse</span><span class="p">:</span> <span class="n">ConfigServerSynapse</span>
     <span class="n">api</span><span class="p">:</span> <span class="n">ConfigServerAPI</span>
     <span class="n">ssh</span><span class="p">:</span> <span class="n">ConfigServerSSH</span>
-    <span class="n">maintenance</span><span class="p">:</span> <span class="n">ConfigServerMaintenance</span>  <span class="c1"># default = 4</span></div>
+    <span class="n">maintenance</span><span class="p">:</span> <span class="n">ConfigServerMaintenance</span></div>
 
 
 
@@ -167,6 +168,26 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `maintenance` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
 
     <span class="n">tasks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="ConfigUi">
+<a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigUi">[docs]</a>
+<span class="k">class</span> <span class="nc">ConfigUi</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `Ui` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
+
+    <span class="n">image</span><span class="p">:</span> <span class="n">ConfigUiImage</span></div>
+
+
+
+<div class="viewcode-block" id="ConfigUiImage">
+<a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigUiImage">[docs]</a>
+<span class="k">class</span> <span class="nc">ConfigUiImage</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `image` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
+
+    <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">scale_factor</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Must be &gt; 0.0</span>
+    <span class="n">max_height_of_terminal</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Must be &gt; 0.0 and &lt;= 1.0</span></div>
 
 
 

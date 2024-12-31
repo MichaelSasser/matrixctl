@@ -94,6 +94,8 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">pytest</span>
+
 <span class="kn">from</span> <span class="nn">matrixctl.handlers.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
 
 
@@ -256,6 +258,61 @@
     <span class="c1"># Cleanup - None</span>
 
 
+<div class="viewcode-block" id="test_get_ui_image_enabled">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ui_image_enabled">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_ui_image_enabled</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test ui -&gt; image -&gt; enabled.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ui&quot;</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;enabled&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+
+    <span class="c1"># Cleanup - None</span>
+    <span class="c1">#</span>
+
+
+<div class="viewcode-block" id="test_get_ui_image_scale_factor">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ui_image_scale_factor">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_ui_image_scale_factor</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test ui -&gt; image -&gt; scale_factor.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ui&quot;</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;scale_factor&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+
+    <span class="c1"># Cleanup - None</span>
+
+
+<div class="viewcode-block" id="test_get_ui_image_max_height_of_terminal">
+<a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_get_ui_image_max_height_of_terminal">[docs]</a>
+<span class="k">def</span> <span class="nf">test_get_ui_image_max_height_of_terminal</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test ui -&gt; image -&gt; max_height_of_terminal.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Setup</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.33</span>
+
+    <span class="c1"># Exercise</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ui&quot;</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;max_height_of_terminal&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Verify</span>
+    <span class="k">assert</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">==</span> <span class="n">desired</span></div>
+
+
+    <span class="c1"># Cleanup - None</span>
+
+
 <div class="viewcode-block" id="test_str">
 <a class="viewcode-back" href="../../../../contributer_documentation/tests.html#tests.matrixctl.handlers.test_yaml.test_str">[docs]</a>
 <span class="k">def</span> <span class="nf">test_str</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -263,24 +320,25 @@
 
     <span class="c1"># Setup</span>
     <span class="n">desired</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;{&#39;servers&#39;: {&#39;default&#39;: {&#39;ansible&#39;: {&#39;playbook&#39;: &#39;/path/to/ansible/&quot;</span>
-        <span class="s2">&quot;playbook&#39;}, &#39;synapse&#39;: {&#39;playbook&#39;: &#39;/path/to/synapse/playbook&#39;}, &#39;&quot;</span>
-        <span class="s2">&quot;api&#39;: {&#39;domain&#39;: &#39;example.com&#39;, &#39;username&#39;: &#39;johndoe&#39;, &#39;token&#39;: &#39;M&quot;</span>
-        <span class="s2">&quot;DAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQow&quot;</span>
-        <span class="s2">&quot;MDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHN&quot;</span>
-        <span class="s2">&quot;hc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cW&quot;</span>
-        <span class="s2">&quot;J2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbE&quot;</span>
-        <span class="s2">&quot;uII8wp3YrAKEa4K&#39;, &#39;concurrent_limit&#39;: 10}, &#39;ssh&#39;: {&#39;address&#39;: &#39;matr&quot;</span>
-        <span class="s2">&quot;ix.example.com&#39;, &#39;port&#39;: 22, &#39;user&#39;: &#39;john&#39;}}}, &#39;server&#39;: {&#39;ansible&quot;</span>
-        <span class="s2">&quot;&#39;: {&#39;playbook&#39;: &#39;/path/to/ansible/playbook&#39;}, &#39;synapse&#39;: {&#39;playbook&quot;</span>
-        <span class="s2">&quot;&#39;: &#39;/path/to/synapse/playbook&#39;}, &#39;api&#39;: {&#39;domain&#39;: &#39;example.com&#39;, &#39;&quot;</span>
-        <span class="s2">&quot;username&#39;: &#39;johndoe&#39;, &#39;token&#39;: &#39;MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXI&quot;</span>
-        <span class="s2">&quot;ub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2&quot;</span>
-        <span class="s2">&quot;VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gY&quot;</span>
-        <span class="s2">&quot;WNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1&quot;</span>
-        <span class="s2">&quot;cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKEa4K&#39;, &#39;concurrent_limi&quot;</span>
-        <span class="s2">&quot;t&#39;: 10}, &#39;ssh&#39;: {&#39;address&#39;: &#39;matrix.example.com&#39;, &#39;port&#39;: 22, &#39;user&quot;</span>
-        <span class="s2">&quot;&#39;: &#39;john&#39;}}}&quot;</span>
+        <span class="s2">&quot;{&#39;ui&#39;: {&#39;image&#39;: {&#39;enabled&#39;: True, &#39;scale_factor&#39;: 2.0, &quot;</span>
+        <span class="s2">&quot;&#39;max_height_of_terminal&#39;: 0.33}}, &#39;servers&#39;: {&#39;default&#39;: {&#39;ansible&#39;: &quot;</span>
+        <span class="s2">&quot;{&#39;playbook&#39;: &#39;/path/to/ansible/playbook&#39;}, &#39;synapse&#39;: {&#39;playbook&#39;: &quot;</span>
+        <span class="s2">&quot;&#39;/path/to/synapse/playbook&#39;}, &#39;api&#39;: {&#39;domain&#39;: &#39;example.com&#39;, &quot;</span>
+        <span class="s2">&quot;&#39;username&#39;: &#39;johndoe&#39;, &#39;token&#39;: &#39;MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIu&quot;</span>
+        <span class="s2">&quot;b3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX&quot;</span>
+        <span class="s2">&quot;2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZX&quot;</span>
+        <span class="s2">&quot;NzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTB&quot;</span>
+        <span class="s2">&quot;HhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKEa4K&#39;, &#39;concurrent_limit&#39;: 10}, &quot;</span>
+        <span class="s2">&quot;&#39;ssh&#39;: {&#39;address&#39;: &#39;matrix.example.com&#39;, &#39;port&#39;: 22, &#39;user&#39;: &#39;john&#39;&quot;</span>
+        <span class="s2">&quot;}}}, &#39;server&#39;: {&#39;ansible&#39;: {&#39;playbook&#39;: &#39;/path/to/ansible/playbook&#39;}&quot;</span>
+        <span class="s2">&quot;, &#39;synapse&#39;: {&#39;playbook&#39;: &#39;/path/to/synapse/playbook&#39;}, &#39;api&#39;: &quot;</span>
+        <span class="s2">&quot;{&#39;domain&#39;: &#39;example.com&#39;, &#39;username&#39;: &#39;johndoe&#39;, &#39;token&#39;: &#39;MDAxasdfY&quot;</span>
+        <span class="s2">&quot;2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkI&quot;</span>
+        <span class="s2">&quot;GdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vc&quot;</span>
+        <span class="s2">&quot;mcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyM&quot;</span>
+        <span class="s2">&quot;Ul3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKE&quot;</span>
+        <span class="s2">&quot;a4K&#39;, &#39;concurrent_limit&#39;: 10}, &#39;ssh&#39;: {&#39;address&#39;: &#39;matrix.example.&quot;</span>
+        <span class="s2">&quot;com&#39;, &#39;port&#39;: 22, &#39;user&#39;: &#39;john&#39;}}}&quot;</span>
     <span class="p">)</span>
 
     <span class="c1"># Exercise</span>
@@ -301,24 +359,25 @@
 
     <span class="c1"># Setup</span>
     <span class="n">desired</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;{&#39;servers&#39;: {&#39;default&#39;: {&#39;ansible&#39;: {&#39;playbook&#39;: &#39;/path/to/ansible/&quot;</span>
-        <span class="s2">&quot;playbook&#39;}, &#39;synapse&#39;: {&#39;playbook&#39;: &#39;/path/to/synapse/playbook&#39;}, &#39;&quot;</span>
-        <span class="s2">&quot;api&#39;: {&#39;domain&#39;: &#39;example.com&#39;, &#39;username&#39;: &#39;johndoe&#39;, &#39;token&#39;: &#39;M&quot;</span>
-        <span class="s2">&quot;DAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQow&quot;</span>
-        <span class="s2">&quot;MDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHN&quot;</span>
-        <span class="s2">&quot;hc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cW&quot;</span>
-        <span class="s2">&quot;J2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbE&quot;</span>
-        <span class="s2">&quot;uII8wp3YrAKEa4K&#39;, &#39;concurrent_limit&#39;: 10}, &#39;ssh&#39;: {&#39;address&#39;: &#39;matr&quot;</span>
-        <span class="s2">&quot;ix.example.com&#39;, &#39;port&#39;: 22, &#39;user&#39;: &#39;john&#39;}}}, &#39;server&#39;: {&#39;ansible&quot;</span>
-        <span class="s2">&quot;&#39;: {&#39;playbook&#39;: &#39;/path/to/ansible/playbook&#39;}, &#39;synapse&#39;: {&#39;playbook&quot;</span>
-        <span class="s2">&quot;&#39;: &#39;/path/to/synapse/playbook&#39;}, &#39;api&#39;: {&#39;domain&#39;: &#39;example.com&#39;, &#39;&quot;</span>
-        <span class="s2">&quot;username&#39;: &#39;johndoe&#39;, &#39;token&#39;: &#39;MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXI&quot;</span>
-        <span class="s2">&quot;ub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2&quot;</span>
-        <span class="s2">&quot;VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gY&quot;</span>
-        <span class="s2">&quot;WNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1&quot;</span>
-        <span class="s2">&quot;cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKEa4K&#39;, &#39;concurrent_limi&quot;</span>
-        <span class="s2">&quot;t&#39;: 10}, &#39;ssh&#39;: {&#39;address&#39;: &#39;matrix.example.com&#39;, &#39;port&#39;: 22, &#39;user&quot;</span>
-        <span class="s2">&quot;&#39;: &#39;john&#39;}}}&quot;</span>
+        <span class="s2">&quot;{&#39;ui&#39;: {&#39;image&#39;: {&#39;enabled&#39;: True, &#39;scale_factor&#39;: 2.0, &quot;</span>
+        <span class="s2">&quot;&#39;max_height_of_terminal&#39;: 0.33}}, &#39;servers&#39;: {&#39;default&#39;: {&#39;ansible&#39;: &quot;</span>
+        <span class="s2">&quot;{&#39;playbook&#39;: &#39;/path/to/ansible/playbook&#39;}, &#39;synapse&#39;: {&#39;playbook&#39;: &quot;</span>
+        <span class="s2">&quot;&#39;/path/to/synapse/playbook&#39;}, &#39;api&#39;: {&#39;domain&#39;: &#39;example.com&#39;, &quot;</span>
+        <span class="s2">&quot;&#39;username&#39;: &#39;johndoe&#39;, &#39;token&#39;: &#39;MDAxasdfY2F0aW9uIG1pY2hhZWxzYXNzZXIu&quot;</span>
+        <span class="s2">&quot;b3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkIGdlbiA9IDEKMDAyZGNpZCB1c2VyX&quot;</span>
+        <span class="s2">&quot;2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vcmcKMDAxNmNpZCB0eXBlID0gYWNjZX&quot;</span>
+        <span class="s2">&quot;NzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyMUl3N0J1CjAwMmZzaWduYXR1cmUgeTB&quot;</span>
+        <span class="s2">&quot;HhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKEa4K&#39;, &#39;concurrent_limit&#39;: 10}, &quot;</span>
+        <span class="s2">&quot;&#39;ssh&#39;: {&#39;address&#39;: &#39;matrix.example.com&#39;, &#39;port&#39;: 22, &#39;user&#39;: &#39;john&#39;&quot;</span>
+        <span class="s2">&quot;}}}, &#39;server&#39;: {&#39;ansible&#39;: {&#39;playbook&#39;: &#39;/path/to/ansible/playbook&#39;}&quot;</span>
+        <span class="s2">&quot;, &#39;synapse&#39;: {&#39;playbook&#39;: &#39;/path/to/synapse/playbook&#39;}, &#39;api&#39;: &quot;</span>
+        <span class="s2">&quot;{&#39;domain&#39;: &#39;example.com&#39;, &#39;username&#39;: &#39;johndoe&#39;, &#39;token&#39;: &#39;MDAxasdfY&quot;</span>
+        <span class="s2">&quot;2F0aW9uIG1pY2hhZWxzYXNzZXIub3JnCjAwMTNpZGVudGlmaWVyIGtleQowMDEwY2lkI&quot;</span>
+        <span class="s2">&quot;GdlbiA9IDEKMDAyZGNpZCB1c2VyX2lkID0gQG1pY2hhZWw6bWljaGFlbHNhc3Nlci5vc&quot;</span>
+        <span class="s2">&quot;mcKMDAxNmNpZCB0eXBlID0gYWNjZXNzCjAwMjFjaWQgbm9uY2UgPSB1cWJ2Tys1VlFyM&quot;</span>
+        <span class="s2">&quot;Ul3N0J1CjAwMmZzaWduYXR1cmUgeTBHhFmQrXiWjop8gQvg8I8ZuSHbEuII8wp3YrAKE&quot;</span>
+        <span class="s2">&quot;a4K&#39;, &#39;concurrent_limit&#39;: 10}, &#39;ssh&#39;: {&#39;address&#39;: &#39;matrix.example.&quot;</span>
+        <span class="s2">&quot;com&#39;, &#39;port&#39;: 22, &#39;user&#39;: &#39;john&#39;}}}&quot;</span>
     <span class="p">)</span>
 
     <span class="c1"># Exercise</span>
