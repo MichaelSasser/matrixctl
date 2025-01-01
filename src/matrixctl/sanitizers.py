@@ -37,6 +37,7 @@ logger = logging.getLogger(__name__)
 EVENT_ID_PATTERN: t.Pattern[str] = re.compile(r"^\$[0-9a-zA-Z.=_-]{1,255}$")
 USER_ID_PATTERN: t.Pattern[str] = re.compile(r"^\@.*\:.*\..*$")
 ROOM_ID_PATTERN: t.Pattern[str] = re.compile(r"^\!.*\:.*\..*$")
+MXC_PATTERN: t.Pattern[str] = re.compile(r"^mxc:\/\/.*\..*\/.*$")
 
 
 @unique
@@ -308,6 +309,47 @@ def sanitize_room_identifier(
             "The given room identifier has an invalid format. Please make sure"
             " you use one with the correct format. For example:"
             " !iuyQXswfjgxQMZGrfQ:matrix.org"
+        ),
+    )
+
+
+def sanitize_mxc(
+    uri: t.Any,
+) -> str | t.Literal[False] | None:
+    """Sanitize an room identifier.
+
+    Examples
+    --------
+    >>> sanitize_mxc("mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj")
+    'mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj'
+
+    >>> sanitize_mxc(" mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj ")
+    'mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj'
+
+    >>> sanitize_mxc("something invalid")
+    False
+
+    >>> sanitize_mxc(None)
+
+    Parameters
+    ----------
+    mxc : typing.Any
+        The media URI to sanitize
+
+    Returns
+    -------
+    mxc_sanitized : typing.Literal[False] or str, optional
+        The function returns ``None`` if ``mxc`` is ``None``,
+        the sanitized string, when it is valid, otherwise ``False``
+
+    """
+    return sanitize(
+        pattern=MXC_PATTERN,
+        identifier=uri,
+        error_message=(
+            "The given mxc has an invalid format. Please make sure"
+            " you use one with the correct format. For example:"
+            " mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj"
         ),
     )
 
