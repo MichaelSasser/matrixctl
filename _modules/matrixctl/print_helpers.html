@@ -78,14 +78,28 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
 
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timezone</span>
 
+<span class="kn">from</span> <span class="nn">matrixctl.errors</span> <span class="kn">import</span> <span class="n">ParserError</span>
+<span class="kn">from</span> <span class="nn">matrixctl.handlers.api</span> <span class="kn">import</span> <span class="n">download_media_to_buf</span>
+<span class="kn">from</span> <span class="nn">matrixctl.handlers.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
+<span class="kn">from</span> <span class="nn">matrixctl.sanitizers</span> <span class="kn">import</span> <span class="n">sanitize_mxc</span>
+<span class="kn">from</span> <span class="nn">matrixctl.terminal</span> <span class="kn">import</span> <span class="n">TerminalCellSizePx</span>
+<span class="kn">from</span> <span class="nn">matrixctl.terminal</span> <span class="kn">import</span> <span class="n">get_terminal_cell_size_in_px</span>
+<span class="kn">from</span> <span class="nn">matrixctl.terminal</span> <span class="kn">import</span> <span class="n">imgcat</span>
+
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
 <span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael@MichaelSasser.org&quot;</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <span class="c1"># TODO: Check if used and for what; type?; docs.</span>
@@ -138,6 +152,68 @@
         <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span> <span class="o">//</span> <span class="mf">1000.0</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
         <span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
         <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="render_image_from_mxc">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.print_helpers.render_image_from_mxc">[docs]</a>
+<span class="k">def</span> <span class="nf">render_image_from_mxc</span><span class="p">(</span>
+    <span class="n">uri</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Render an image from a mxc:// URI in the terminal.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ui&quot;</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;enabled&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">uri_sanitized</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitize_mxc</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">uri_sanitized</span><span class="p">:</span>
+        <span class="n">error_msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;The given URI is not a valid mxc:// URI.&quot;</span>
+        <span class="k">raise</span> <span class="n">ParserError</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+
+    <span class="n">terminal_cell_size</span><span class="p">:</span> <span class="n">TerminalCellSizePx</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">get_terminal_cell_size_in_px</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">terminal_cell_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">terminal_size</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">terminal_size</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">get_terminal_size</span><span class="p">((</span><span class="mi">80</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+        <span class="c1"># Number of lines times their height in px</span>
+        <span class="n">terminal_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">terminal_size</span><span class="o">.</span><span class="n">lines</span> <span class="o">*</span> <span class="n">terminal_cell_size</span><span class="o">.</span><span class="n">height</span>
+        <span class="n">terminal_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">terminal_size</span><span class="o">.</span><span class="n">columns</span> <span class="o">*</span> <span class="n">terminal_cell_size</span><span class="o">.</span><span class="n">width</span>
+
+        <span class="n">user_scale_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ui&quot;</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;scale_factor&quot;</span><span class="p">)</span>
+        <span class="n">user_image_max_heigt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;ui&quot;</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;max_height_of_terminal&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">image_max_height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">user_image_max_heigt</span>
+
+        <span class="n">user_height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">height</span> <span class="o">*</span> <span class="n">user_scale_factor</span>
+        <span class="n">user_width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">width</span> <span class="o">*</span> <span class="n">user_scale_factor</span>
+
+        <span class="n">scale_factor_height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">scale_factor_width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">user_height</span><span class="p">)</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">terminal_height</span> <span class="o">/</span> <span class="n">image_max_height</span><span class="p">):</span>
+            <span class="c1"># Scale down height</span>
+            <span class="n">scale_factor_height</span> <span class="o">=</span> <span class="n">user_height</span> <span class="o">/</span> <span class="p">(</span>
+                <span class="n">terminal_height</span> <span class="o">/</span> <span class="n">image_max_height</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">user_width</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">terminal_width</span><span class="p">:</span>
+            <span class="c1"># Scale down width</span>
+            <span class="n">scale_factor_width</span> <span class="o">=</span> <span class="n">user_width</span> <span class="o">/</span> <span class="n">terminal_width</span>
+        <span class="n">scale_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">scale_factor_height</span><span class="p">,</span> <span class="n">scale_factor_width</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Scale factor. scale_factor=</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">)</span>
+
+        <span class="n">scaled_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">user_height</span> <span class="o">/</span> <span class="n">scale_factor</span><span class="p">)</span>
+
+    <span class="c1"># Test: This should later follow the entry</span>
+    <span class="n">buf_image</span> <span class="o">=</span> <span class="n">download_media_to_buf</span><span class="p">(</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;token&quot;</span><span class="p">),</span>
+        <span class="n">domain</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">),</span>
+        <span class="n">media_id</span><span class="o">=</span><span class="n">uri_sanitized</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">imgcat</span><span class="p">(</span>
+        <span class="n">buf_image</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scaled_height</span><span class="si">}</span><span class="s2">px&quot;</span><span class="p">,</span>
+        <span class="n">preserve_aspect_ratio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 

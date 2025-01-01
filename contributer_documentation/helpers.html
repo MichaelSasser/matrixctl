@@ -518,6 +518,46 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_mxc">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_mxc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_mxc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_mxc" title="Link to this definition"></a></dt>
+<dd><p>Sanitize an room identifier.</p>
+<dl class="field-list">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">False</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>mxc</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Any</span></code></a></span></dt><dd><p>The media URI to sanitize</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>mxc_sanitized</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">mxc</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+the sanitized string, when it is valid, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_mxc</span><span class="p">(</span><span class="s2">&quot;mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj&quot;</span><span class="p">)</span>
+<span class="go">&#39;mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_mxc</span><span class="p">(</span><span class="s2">&quot; mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj &quot;</span><span class="p">)</span>
+<span class="go">&#39;mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_mxc</span><span class="p">(</span><span class="s2">&quot;something invalid&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_mxc</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_room_identifier">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_room_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">room_identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_room_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_room_identifier" title="Link to this definition"></a></dt>
 <dd><p>Sanitize an room identifier.</p>
@@ -621,6 +661,17 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 <code class="docutils literal notranslate"><span class="pre">&quot;False&quot;</span></code> if expression is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 </dd>
 </dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.print_helpers.render_image_from_mxc">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.print_helpers.</span></span><span class="sig-name descname"><span class="pre">render_image_from_mxc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/print_helpers.html#render_image_from_mxc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.print_helpers.render_image_from_mxc" title="Link to this definition"></a></dt>
+<dd><p>Render an image from a mxc:// URI in the terminal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
