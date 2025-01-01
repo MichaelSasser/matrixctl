@@ -646,7 +646,7 @@ wheels = [
 
 [[package]]
 name = "matrixctl"
-version = "0.13.0b2"
+version = "0.13.0"
 source = { editable = "." }
 dependencies = [
     { name = "ansible-runner" },
