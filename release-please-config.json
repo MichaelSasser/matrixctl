@@ -1,12 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "plugins": ["sentence-case"],
   "packages": {
     ".": {
       "changelog-path": "CHANGELOG.md",
       "release-type": "python",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
-      "draft": false
+      "draft": false,
+      "extra-files": ["uv.lock"]
     }
   }
 }
