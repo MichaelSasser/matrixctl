@@ -21,6 +21,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: python
           config-file: release-please-config.json
+          extra-files: |
+            uv.lock
 
       - name: Checkout code
         uses: actions/checkout@v4.2.2
