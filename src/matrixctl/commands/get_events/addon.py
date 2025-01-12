@@ -122,7 +122,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     ):
         return 1  # sanitation failed
 
-    since: datetime.datetime = arg.since or datetime.datetime.min
+    since: datetime.datetime = arg.since or datetime.datetime(
+        1970, 1, 1, tzinfo=datetime.timezone.utc
+    )
     until: datetime.datetime | None = arg.until
 
     query: str = (
