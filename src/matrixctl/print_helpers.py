@@ -9,6 +9,7 @@ import typing as t
 
 from datetime import datetime
 from datetime import timezone
+from functools import lru_cache
 
 from matrixctl.errors import ParserError
 from matrixctl.handlers.api import download_media_to_buf
@@ -74,6 +75,7 @@ def timestamp_to_dt(ts: str, sep: str = " ") -> str:
     )
 
 
+@lru_cache(128)
 def render_image_from_mxc(
     uri: t.Any | None, width: int, height: int, yaml: YAML
 ) -> bytes | None:

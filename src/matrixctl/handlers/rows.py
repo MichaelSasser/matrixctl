@@ -5,10 +5,13 @@ from __future__ import annotations
 import logging
 import typing as t
 
+from httpx import ReadTimeout
 from rich.text import Text
 from typing_extensions import Self
 
+from matrixctl.errors import InternalResponseError
 from matrixctl.errors import NotAnEventError
+from matrixctl.errors import ParserError
 from matrixctl.handlers.yaml import YAML
 from matrixctl.print_helpers import render_image_from_mxc
 from matrixctl.sanitizers import EventType
@@ -327,7 +330,7 @@ def _ev_m_room_message(ev: Event, yaml: YAML) -> Ctx:
     return ctx
 
 
-def _ev_m_room_member(ev: Event, _: YAML) -> Ctx:
+def _ev_m_room_member(ev: Event, yaml: YAML) -> Ctx:
     """Create a context for a member event."""
     ctx: Ctx = Ctx()
 
@@ -343,6 +346,32 @@ def _ev_m_room_member(ev: Event, _: YAML) -> Ctx:
             "bright_black",
         )
     )
+
+    if avatar_url:
+        try:
+            ctx.append(
+                post_buf=render_image_from_mxc(
+                    avatar_url, width=100, height=100, yaml=yaml
+                )
+            )
+        except (
+            ReadTimeout,
+            UnboundLocalError,
+            InternalResponseError,
+            ParserError,
+        ) as e:
+            logger.debug(
+                (
+                    "Unable to render image from mxc:// URI. avatar_uri='%s'. "
+                    "Original error: %s"
+                ),
+                avatar_url,
+                e,
+            )
+            logger.info(
+                "Unable to render image from mxc:// URI. avatar_uri='%s'.",
+                avatar_url,
+            )
 
     return ctx
 
