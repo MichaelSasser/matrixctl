@@ -100,6 +100,8 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">argparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">Namespace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sys</span><span class="w"> </span><span class="kn">import</span> <span class="n">stdout</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">psycopg.cursor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cursor</span>
@@ -113,9 +115,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.rows</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ctx</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.rows</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_row_context</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.yaml</span><span class="w"> </span><span class="kn">import</span> <span class="n">YAML</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.sanitizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageType</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.sanitizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">sanitize_message_type</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.sanitizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.sanitizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">sanitize_event_type</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.sanitizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">sanitize_room_identifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.sanitizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">sanitize_sequence</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.sanitizers</span><span class="w"> </span><span class="kn">import</span> <span class="n">sanitize_user_identifier</span>
 
 
@@ -126,6 +129,41 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="n">WARN_FOR_EVENTS_OLDER_THAN</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">30.0</span>
+
+
+<div class="viewcode-block" id="add_tuple_to_query_workaround">
+<a class="viewcode-back" href="../../../../contributer_documentation/commands.html#matrixctl.commands.get_events.addon.add_tuple_to_query_workaround">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_tuple_to_query_workaround</span><span class="p">(</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]],</span>
+    <span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Enum</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Enum</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this function as a workaround for adding a tuple to the query.&quot;&quot;&quot;</span>
+    <span class="n">query_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="n">values_</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="p">:</span>  <span class="c1"># One element</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">query_</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; AND </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2"> = (%s)&quot;</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Enum</span><span class="p">):</span>
+                <span class="n">values_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">values_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># Multiple elements</span>
+            <span class="c1"># TODO: `foo = ANY(%s)` does not seem work. Something not getting</span>
+            <span class="c1">#       escaped properly?</span>
+            <span class="n">query_</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; AND </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2"> IN (&quot;</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">query_</span> <span class="o">+=</span> <span class="s2">&quot;, &quot;</span>
+                <span class="n">query_</span> <span class="o">+=</span> <span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">)&quot;</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+                    <span class="n">values_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">values_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+            <span class="n">query_</span> <span class="o">+=</span> <span class="s2">&quot;)&quot;</span>
+    <span class="k">return</span> <span class="n">query_</span><span class="p">,</span> <span class="n">values_</span></div>
+
 
 
 <div class="viewcode-block" id="addon">
@@ -149,45 +187,57 @@
 <span class="sd">        Non-zero value indicates error code, or zero on success.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Sanitize user identifier</span>
-    <span class="n">user_identifier</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitize_user_identifier</span><span class="p">(</span>
-        <span class="n">arg</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">user_identifier</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
 
-    <span class="c1"># Sanitize room identifier</span>
-    <span class="n">room_identifier</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">sanitize_room_identifier</span><span class="p">(</span>
-        <span class="n">arg</span><span class="o">.</span><span class="n">room_id</span><span class="p">,</span>
+    <span class="c1"># Sanitize the input</span>
+    <span class="n">user_identifiers</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitize_sequence</span><span class="p">(</span><span class="n">sanitize_user_identifier</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">users</span><span class="p">)</span>
     <span class="p">)</span>
-    <span class="k">if</span> <span class="n">room_identifier</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">room_identifiers</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitize_sequence</span><span class="p">(</span><span class="n">sanitize_room_identifier</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">room_ids</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">event_types</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">EventType</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitize_sequence</span><span class="p">(</span><span class="n">sanitize_event_type</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">event_types</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
+        <span class="n">b</span> <span class="ow">is</span> <span class="kc">False</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="p">{</span><span class="n">user_identifiers</span><span class="p">,</span> <span class="n">room_identifiers</span><span class="p">,</span> <span class="n">event_types</span><span class="p">}</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>  <span class="c1"># sanitation failed</span>
 
-    <span class="c1"># Sanitize message_type</span>
-    <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">event_type</span><span class="p">)</span>
+    <span class="n">since</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">since</span> <span class="ow">or</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span>
+        <span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span>
     <span class="p">)</span>
-    <span class="k">if</span> <span class="n">message_type</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">until</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">until</span>
 
     <span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;WITH evs AS (&quot;</span>
         <span class="s2">&quot;SELECT event_id, origin_server_ts, received_ts &quot;</span>
-        <span class="s2">&quot;FROM events WHERE sender = (</span><span class="si">%s</span><span class="s2">)&quot;</span>
+        <span class="s2">&quot;FROM events WHERE origin_server_ts &gt;= (</span><span class="si">%s</span><span class="s2">)&quot;</span>
     <span class="p">)</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">user_identifier</span><span class="p">]</span>
+    <span class="n">values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">since</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Add until to the query</span>
+    <span class="k">if</span> <span class="n">until</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot; AND origin_server_ts &lt; (</span><span class="si">%s</span><span class="s2">)&quot;</span>
+        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">until</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
+
+    <span class="c1"># Add user identifier to the query</span>
+    <span class="n">query</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="n">add_tuple_to_query_workaround</span><span class="p">(</span>
+        <span class="n">query</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">user_identifiers</span><span class="p">,</span> <span class="s2">&quot;sender&quot;</span>
+    <span class="p">)</span>
 
     <span class="c1"># Add room identifier to the query</span>
-    <span class="k">if</span> <span class="n">room_identifier</span><span class="p">:</span>
-        <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot; AND room_id = (</span><span class="si">%s</span><span class="s2">)&quot;</span>
-        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">room_identifier</span><span class="p">)</span>
+    <span class="n">query</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="n">add_tuple_to_query_workaround</span><span class="p">(</span>
+        <span class="n">query</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">room_identifiers</span><span class="p">,</span> <span class="s2">&quot;room_id&quot;</span>
+    <span class="p">)</span>
 
     <span class="c1"># Add message type to the query</span>
-    <span class="k">if</span> <span class="n">message_type</span><span class="p">:</span>
-        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message_type</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot; AND type = (</span><span class="si">%s</span><span class="s2">)&quot;</span>
+    <span class="n">query</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="n">add_tuple_to_query_workaround</span><span class="p">(</span>
+        <span class="n">query</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">event_types</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span>
+    <span class="p">)</span>
 
-    <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;)&quot;</span>
+    <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;) &quot;</span>
 
     <span class="n">query</span> <span class="o">+=</span> <span class="p">(</span>
         <span class="s2">&quot;SELECT &quot;</span>
@@ -201,7 +251,7 @@
     <span class="p">)</span>
 
     <span class="k">with</span> <span class="n">db_connect</span><span class="p">(</span><span class="n">yaml</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">,</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
-        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">output_format</span> <span class="o">==</span> <span class="n">OutputType</span><span class="o">.</span><span class="n">ROWS</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">output_as_rows</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">yaml</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">output_format</span> <span class="o">==</span> <span class="n">OutputType</span><span class="o">.</span><span class="n">JSON</span><span class="p">:</span>

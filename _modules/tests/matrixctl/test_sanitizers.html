@@ -113,11 +113,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -133,12 +133,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.MESSAGE&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -154,11 +154,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -174,12 +174,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_NAME</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_NAME</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.NAME&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -195,11 +195,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_TOPIC</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_TOPIC</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -215,12 +215,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_TOPIC</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_TOPIC</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.TOPIC&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -236,11 +236,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_AVATAR</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_AVATAR</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -256,12 +256,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_AVATAR</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_AVATAR</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.AVATAR&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -277,13 +277,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_PINNED_EVENTS</span>
-    <span class="p">)</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_PINNED_EVENTS</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -299,14 +297,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_PINNED_EVENTS</span>
-    <span class="p">)</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_PINNED_EVENTS</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.PINNED_EVENTS&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -322,11 +318,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MEMBER</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_MEMBER</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -342,12 +338,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MEMBER</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_MEMBER</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.MEMBER&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -363,11 +359,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_JOIN_RULES</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_JOIN_RULES</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -383,12 +379,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_JOIN_RULES</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_JOIN_RULES</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.JOIN_RULES&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -404,11 +400,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_CREATE</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_CREATE</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -424,12 +420,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_CREATE</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_CREATE</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.CREATE&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -445,13 +441,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_POWER_LEVELS</span>
-    <span class="p">)</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_POWER_LEVELS</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -467,14 +461,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_POWER_LEVELS</span>
-    <span class="p">)</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_POWER_LEVELS</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.POWER_LEVELS&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -490,11 +482,11 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as MessageType.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">desired</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -510,12 +502,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.REDACTION&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -535,8 +527,8 @@
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;M.ROOM.INVALID_TYPE&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -552,12 +544,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as string with spaces around.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; M.ROOM.REDACTION &quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -573,12 +565,12 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Test valid message type as lowercase string.&quot;&quot;&quot;</span>
 
     <span class="c1"># Setup</span>
-    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
+    <span class="n">desired</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">=</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_REDACTION</span>
     <span class="n">testdata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;m.room.redaction&quot;</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>
@@ -598,8 +590,8 @@
     <span class="n">testdata</span><span class="p">:</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># Exercise</span>
-    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
+    <span class="n">actual</span><span class="p">:</span> <span class="n">sanitizers</span><span class="o">.</span><span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sanitizers</span><span class="o">.</span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">testdata</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="c1"># Verify</span>

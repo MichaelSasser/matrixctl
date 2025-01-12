@@ -98,6 +98,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">suppress</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">unique</span>
@@ -109,6 +110,8 @@
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
+<span class="n">T</span> <span class="o">=</span> <span class="n">VariableType</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+
 
 <span class="n">EVENT_ID_PATTERN</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\$[0-9a-zA-Z.=_-]{1,255}$&quot;</span><span class="p">)</span>
 <span class="n">USER_ID_PATTERN</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\@.*\:.*\..*$&quot;</span><span class="p">)</span>
@@ -116,10 +119,10 @@
 <span class="n">MXC_PATTERN</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Pattern</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^mxc:\/\/.*\..*\/.*$&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="MessageType">
-<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType">[docs]</a>
+<div class="viewcode-block" id="EventType">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.EventType">[docs]</a>
 <span class="nd">@unique</span>
-<span class="k">class</span><span class="w"> </span><span class="nc">MessageType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EventType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this enum for describing message types.</span>
 
 <span class="sd">    Supported events:</span>
@@ -160,10 +163,10 @@
     <span class="n">M_ROOM_HISTORY_VISIBILITY</span> <span class="o">=</span> <span class="s2">&quot;m.room.history_visibility&quot;</span>
     <span class="n">M_ROOM_GUEST_ACCESS</span> <span class="o">=</span> <span class="s2">&quot;m.room.guest_access&quot;</span>
 
-<div class="viewcode-block" id="MessageType.from_string">
-<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.MessageType.from_string">[docs]</a>
+<div class="viewcode-block" id="EventType.from_string">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.EventType.from_string">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_string</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageType</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_string</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EventType</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a string to a MessageType.</span>
 
 <span class="sd">        Parameters</span>
@@ -178,7 +181,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">MessageType</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)]</span>
+            <span class="k">return</span> <span class="n">EventType</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)]</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;The message type is not supported by MatrixCtl.&quot;</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span></div>
@@ -186,48 +189,48 @@
 
 
 
-<div class="viewcode-block" id="sanitize_message_type">
-<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_message_type">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">sanitize_message_type</span><span class="p">(</span>
-    <span class="n">message_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">MessageType</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sanitize an message type.</span>
+<div class="viewcode-block" id="sanitize_event_type">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_event_type">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">sanitize_event_type</span><span class="p">(</span>
+    <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">EventType</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EventType</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sanitize an event type.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    &gt;&gt;&gt; sanitize_message_type(&quot;m.room.message&quot;)</span>
-<span class="sd">    &lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; sanitize_event_type(&quot;m.room.message&quot;)</span>
+<span class="sd">    &lt;EventType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
 
-<span class="sd">    &gt;&gt;&gt; sanitize_message_type(&quot;M.RooM.MeSsAgE&quot;)</span>
-<span class="sd">    &lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; sanitize_event_type(&quot;M.RooM.MeSsAgE&quot;)</span>
+<span class="sd">    &lt;EventType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
 
-<span class="sd">    &gt;&gt;&gt; sanitize_message_type(&quot; m.room.message   &quot;)</span>
-<span class="sd">    &lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; sanitize_event_type(&quot; m.room.message   &quot;)</span>
+<span class="sd">    &lt;EventType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
 
-<span class="sd">    &gt;&gt;&gt; sanitize_message_type(MessageType.M_ROOM_MESSAGE)</span>
-<span class="sd">    &lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; sanitize_event_type(EventType.M_ROOM_MESSAGE)</span>
+<span class="sd">    &lt;EventType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
 
-<span class="sd">    &gt;&gt;&gt; sanitize_message_type(&quot;something invalid&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; sanitize_event_type(&quot;something invalid&quot;)</span>
 <span class="sd">    False</span>
 
-<span class="sd">    &gt;&gt;&gt; sanitize_message_type(None)</span>
+<span class="sd">    &gt;&gt;&gt; sanitize_event_type(None)</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    message_type : typing.Any</span>
+<span class="sd">    event_type : typing.Any</span>
 <span class="sd">        The event identifier to sanitize</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    message_type_sanitized : typing.Literal[False] or MessageType, optional</span>
+<span class="sd">    event_type_sanitized : typing.Literal[False] or MessageType, optional</span>
 <span class="sd">        The function returns ``None`` if ``message_type`` is ``None``,</span>
 <span class="sd">        ``MessageType``, if it is valid, otherwise ``False``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message_type</span><span class="p">,</span> <span class="n">MessageType</span><span class="p">)</span> <span class="ow">or</span> <span class="n">message_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">message_type</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_type</span><span class="p">,</span> <span class="n">EventType</span><span class="p">)</span> <span class="ow">or</span> <span class="n">event_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">event_type</span>
     <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">MessageType</span><span class="p">[</span><span class="n">message_type</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">EventType</span><span class="p">[</span><span class="n">event_type</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The message type is not wrong.&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="kc">False</span></div>
 
@@ -451,6 +454,30 @@
             <span class="s2">&quot; mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj&quot;</span>
         <span class="p">),</span>
     <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="sanitize_sequence">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.sanitizers.sanitize_sequence">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">sanitize_sequence</span><span class="p">(</span>
+    <span class="n">sanitizer</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">],</span> <span class="n">T</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">],</span>  <span class="c1"># type: ignore[valid-type]</span>
+    <span class="n">args</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># type: ignore[valid-type]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># type: ignore[valid-type]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run a sanitizer against a sequence.&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">args_u</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">T</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>  <span class="c1"># type: ignore[valid-type]</span>
+        <span class="n">sanitizer</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="kc">True</span> <span class="k">for</span> <span class="n">event_type</span> <span class="ow">in</span> <span class="n">args_u</span> <span class="k">if</span> <span class="n">event_type</span> <span class="ow">in</span> <span class="p">{</span><span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">}):</span>
+        <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># There was one ore more invalid arguments</span>
+
+    <span class="c1"># This is equivalent to `return args_u` by now, but the type checker has</span>
+    <span class="c1"># some issues figuring that out. Therefore we do that instead.</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">arg</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args_u</span> <span class="k">if</span> <span class="n">arg</span><span class="p">)</span></div>
 
 
 

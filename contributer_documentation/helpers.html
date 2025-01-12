@@ -244,8 +244,8 @@ of it is stored in the packages metadata.</p>
 <span id="sanitizers"></span><h2>Sanitizers<a class="headerlink" href="#module-matrixctl.sanitizers" title="Link to this heading"></a></h2>
 <p>Use the functions of this module as printing helpers.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">MessageType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#MessageType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.MessageType" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">EventType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#EventType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.EventType" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
 <p>Use this enum for describing message types.</p>
 <p>Supported events:</p>
@@ -301,82 +301,82 @@ of it is stored in the packages metadata.</p>
 </tbody>
 </table>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_REACTION">
-<span class="sig-name descname"><span class="pre">M_REACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.reaction'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_REACTION" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_REACTION">
+<span class="sig-name descname"><span class="pre">M_REACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.reaction'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_REACTION" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_AVATAR">
-<span class="sig-name descname"><span class="pre">M_ROOM_AVATAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.avatar'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_AVATAR" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_AVATAR">
+<span class="sig-name descname"><span class="pre">M_ROOM_AVATAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.avatar'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_AVATAR" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_CREATE">
-<span class="sig-name descname"><span class="pre">M_ROOM_CREATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.create'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_CREATE" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_CREATE">
+<span class="sig-name descname"><span class="pre">M_ROOM_CREATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.create'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_CREATE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_ENCRYPTED">
-<span class="sig-name descname"><span class="pre">M_ROOM_ENCRYPTED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.encrypted'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_ENCRYPTED" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_ENCRYPTED">
+<span class="sig-name descname"><span class="pre">M_ROOM_ENCRYPTED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.encrypted'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_ENCRYPTED" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_GUEST_ACCESS">
-<span class="sig-name descname"><span class="pre">M_ROOM_GUEST_ACCESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.guest_access'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_GUEST_ACCESS" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_GUEST_ACCESS">
+<span class="sig-name descname"><span class="pre">M_ROOM_GUEST_ACCESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.guest_access'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_GUEST_ACCESS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_HISTORY_VISIBILITY">
-<span class="sig-name descname"><span class="pre">M_ROOM_HISTORY_VISIBILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.history_visibility'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_HISTORY_VISIBILITY" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_HISTORY_VISIBILITY">
+<span class="sig-name descname"><span class="pre">M_ROOM_HISTORY_VISIBILITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.history_visibility'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_HISTORY_VISIBILITY" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_JOIN_RULES">
-<span class="sig-name descname"><span class="pre">M_ROOM_JOIN_RULES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.join_rules'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_JOIN_RULES" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_JOIN_RULES">
+<span class="sig-name descname"><span class="pre">M_ROOM_JOIN_RULES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.join_rules'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_JOIN_RULES" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_MEMBER">
-<span class="sig-name descname"><span class="pre">M_ROOM_MEMBER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.member'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_MEMBER" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_MEMBER">
+<span class="sig-name descname"><span class="pre">M_ROOM_MEMBER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.member'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_MEMBER" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_MESSAGE">
-<span class="sig-name descname"><span class="pre">M_ROOM_MESSAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.message'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_MESSAGE" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_MESSAGE">
+<span class="sig-name descname"><span class="pre">M_ROOM_MESSAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.message'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_MESSAGE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_NAME">
-<span class="sig-name descname"><span class="pre">M_ROOM_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.name'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_NAME" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_NAME">
+<span class="sig-name descname"><span class="pre">M_ROOM_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.name'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_NAME" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_PINNED_EVENTS">
-<span class="sig-name descname"><span class="pre">M_ROOM_PINNED_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.pinned_events'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_PINNED_EVENTS" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_PINNED_EVENTS">
+<span class="sig-name descname"><span class="pre">M_ROOM_PINNED_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.pinned_events'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_PINNED_EVENTS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_POWER_LEVELS">
-<span class="sig-name descname"><span class="pre">M_ROOM_POWER_LEVELS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.power_levels'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_POWER_LEVELS" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_POWER_LEVELS">
+<span class="sig-name descname"><span class="pre">M_ROOM_POWER_LEVELS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.power_levels'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_POWER_LEVELS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_REDACTION">
-<span class="sig-name descname"><span class="pre">M_ROOM_REDACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.redaction'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_REDACTION" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_REDACTION">
+<span class="sig-name descname"><span class="pre">M_ROOM_REDACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.redaction'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_REDACTION" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.M_ROOM_TOPIC">
-<span class="sig-name descname"><span class="pre">M_ROOM_TOPIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.topic'</span></em><a class="headerlink" href="#matrixctl.sanitizers.MessageType.M_ROOM_TOPIC" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.M_ROOM_TOPIC">
+<span class="sig-name descname"><span class="pre">M_ROOM_TOPIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'m.room.topic'</span></em><a class="headerlink" href="#matrixctl.sanitizers.EventType.M_ROOM_TOPIC" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.MessageType.from_string">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#MessageType.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.MessageType.from_string" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.EventType.from_string">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#EventType.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.EventType.from_string" title="Link to this definition"></a></dt>
 <dd><p>Convert a string to a MessageType.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#matrixctl.sanitizers.MessageType" title="matrixctl.sanitizers.MessageType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageType</span></code></a></span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#matrixctl.sanitizers.EventType" title="matrixctl.sanitizers.EventType"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventType</span></code></a></span></p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
@@ -386,7 +386,7 @@ of it is stored in the packages metadata.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>message_type</strong><span class="classifier"><a class="reference internal" href="#matrixctl.sanitizers.MessageType" title="matrixctl.sanitizers.MessageType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageType</span></code></a></span></dt><dd><p>The MessageType object.</p>
+<dt><strong>message_type</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageType</span></code></span></dt><dd><p>The MessageType object.</p>
 </dd>
 </dl>
 </dd>
@@ -470,49 +470,49 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_message_type">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_message_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_message_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_message_type" title="Link to this definition"></a></dt>
-<dd><p>Sanitize an message type.</p>
+<dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_event_type">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_event_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_event_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_event_type" title="Link to this definition"></a></dt>
+<dd><p>Sanitize an event type.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#matrixctl.sanitizers.MessageType" title="matrixctl.sanitizers.MessageType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageType</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">False</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#matrixctl.sanitizers.EventType" title="matrixctl.sanitizers.EventType"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventType</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">False</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
-<dt><strong>message_type</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Any</span></code></a></span></dt><dd><p>The event identifier to sanitize</p>
+<dt><strong>event_type</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Any</span></code></a></span></dt><dd><p>The event identifier to sanitize</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>message_type_sanitized</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <a class="reference internal" href="#matrixctl.sanitizers.MessageType" title="matrixctl.sanitizers.MessageType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageType</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">message_type</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+<dt><strong>event_type_sanitized</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Literal</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">False</span></code></a>] <code class="xref py py-obj docutils literal notranslate"><span class="pre">or</span></code> <code class="xref py py-obj docutils literal notranslate"><span class="pre">MessageType</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>The function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if <code class="docutils literal notranslate"><span class="pre">message_type</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
 <code class="docutils literal notranslate"><span class="pre">MessageType</span></code>, if it is valid, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="s2">&quot;m.room.message&quot;</span><span class="p">)</span>
-<span class="go">&lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="s2">&quot;m.room.message&quot;</span><span class="p">)</span>
+<span class="go">&lt;EventType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="s2">&quot;M.RooM.MeSsAgE&quot;</span><span class="p">)</span>
-<span class="go">&lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="s2">&quot;M.RooM.MeSsAgE&quot;</span><span class="p">)</span>
+<span class="go">&lt;EventType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="s2">&quot; m.room.message   &quot;</span><span class="p">)</span>
-<span class="go">&lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="s2">&quot; m.room.message   &quot;</span><span class="p">)</span>
+<span class="go">&lt;EventType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="n">MessageType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span><span class="p">)</span>
-<span class="go">&lt;MessageType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="n">EventType</span><span class="o">.</span><span class="n">M_ROOM_MESSAGE</span><span class="p">)</span>
+<span class="go">&lt;EventType.M_ROOM_MESSAGE: &#39;m.room.message&#39;&gt;</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="s2">&quot;something invalid&quot;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="s2">&quot;something invalid&quot;</span><span class="p">)</span>
 <span class="go">False</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_message_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_event_type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -595,6 +595,17 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sanitize_room_identifier</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_sequence">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sanitizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_sequence" title="Link to this definition"></a></dt>
+<dd><p>Run a sanitizer against a sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">T</span></code>), <a class="reference external" href="https://docs.python.org/3/library/constants.html#Ellipsis" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">False</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
