@@ -85,6 +85,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">timezone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">lru_cache</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParserError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_media_to_buf</span>
@@ -158,6 +159,7 @@
 
 <div class="viewcode-block" id="render_image_from_mxc">
 <a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.print_helpers.render_image_from_mxc">[docs]</a>
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">render_image_from_mxc</span><span class="p">(</span>
     <span class="n">uri</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
