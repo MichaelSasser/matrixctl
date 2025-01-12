@@ -7,6 +7,22 @@ All notable changes to MatrixCtl will be documented in this file.
 You can find the issue tracker on
 [GitHub](https://github.com/MichaelSasser/matrixctl/issues).
 
+## [0.14.0](https://github.com/MichaelSasser/matrixctl/compare/v0.13.0...v0.14.0) (2025-01-12)
+
+
+### Features
+
+* put the functionallity for rendering an image in terminal from a mxc into its own helper function ([2053965](https://github.com/MichaelSasser/matrixctl/commit/2053965b9ffa6ff4b1b68b4d20bb64c692841c75))
+
+
+### Bug Fixes
+
+* **ci:** add manifest, move 'extra-files' into config ([7a96f38](https://github.com/MichaelSasser/matrixctl/commit/7a96f38a57521ad108d5e30bd780bb210651a939))
+* **deps:** update dependency sphinx-autodoc-typehints to v3 ([#866](https://github.com/MichaelSasser/matrixctl/issues/866)) ([4192c74](https://github.com/MichaelSasser/matrixctl/commit/4192c74970b1da55d29d2e9185230d7e586a52a7))
+* **get-events:** use  instead of ([04d90bf](https://github.com/MichaelSasser/matrixctl/commit/04d90bfc2c34f4f27491b3a2855059aec17bd108))
+* **pre-commit:** disable pycln ([03eb8ba](https://github.com/MichaelSasser/matrixctl/commit/03eb8ba0688e571f3371ce635bb2068b209da4b6))
+* **release:** also update version in lock file ([d03a5f1](https://github.com/MichaelSasser/matrixctl/commit/d03a5f1c3abd0519de6af91a02ccb42843218517))
+
 ## [0.13.0](https://github.com/MichaelSasser/matrixctl/compare/v0.13.0...v0.13.0) (2024-12-31)
 
 
