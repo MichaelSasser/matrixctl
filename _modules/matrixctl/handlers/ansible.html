@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>matrixctl.handlers.ansible &mdash; MatrixCtl None.0.13.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
@@ -92,15 +92,15 @@
 
 <span class="sd">&quot;&quot;&quot;Run a ansible playbook with this module.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
 
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">ansible_runner.interface</span> <span class="kn">import</span> <span class="n">Runner</span>
-<span class="kn">from</span> <span class="nn">ansible_runner.runner_config</span> <span class="kn">import</span> <span class="n">RunnerConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansible_runner.interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ansible_runner.runner_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunnerConfig</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -112,7 +112,7 @@
 <span class="c1"># TODO: Make async to get debug output while running</span>
 <div class="viewcode-block" id="ansible_run">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.ansible.ansible_run">[docs]</a>
-<span class="k">def</span> <span class="nf">ansible_run</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ansible_run</span><span class="p">(</span>
     <span class="n">playbook</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
     <span class="n">tags</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">extra_vars</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>

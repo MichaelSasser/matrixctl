@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>matrixctl.commands.delroom.addon &mdash; MatrixCtl None.0.13.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
 
@@ -92,20 +92,20 @@
 
 <span class="sd">&quot;&quot;&quot;Use this module to add the ``delroom`` subcommand to ``matrixctl``.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">argparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">Namespace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">sleep</span>
 
-<span class="kn">from</span> <span class="nn">matrixctl.errors</span> <span class="kn">import</span> <span class="n">InternalResponseError</span>
-<span class="kn">from</span> <span class="nn">matrixctl.handlers.api</span> <span class="kn">import</span> <span class="n">RequestBuilder</span>
-<span class="kn">from</span> <span class="nn">matrixctl.handlers.api</span> <span class="kn">import</span> <span class="n">Response</span>
-<span class="kn">from</span> <span class="nn">matrixctl.handlers.api</span> <span class="kn">import</span> <span class="n">request</span>
-<span class="kn">from</span> <span class="nn">matrixctl.handlers.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
-<span class="kn">from</span> <span class="nn">matrixctl.typehints</span> <span class="kn">import</span> <span class="n">JsonDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">InternalResponseError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">RequestBuilder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">request</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.yaml</span><span class="w"> </span><span class="kn">import</span> <span class="n">YAML</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">JsonDict</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -117,7 +117,7 @@
 
 <div class="viewcode-block" id="addon">
 <a class="viewcode-back" href="../../../../contributer_documentation/commands.html#matrixctl.commands.delroom.addon.addon">[docs]</a>
-<span class="k">def</span> <span class="nf">addon</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">addon</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete an empty room from the database.</span>
 
 <span class="sd">    Parameters</span>
@@ -155,7 +155,7 @@
     <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;The JSON response could not be loaded by MatrixCtl.&quot;</span><span class="p">)</span>
         <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The response was: </span><span class="si">{</span><span class="n">response</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span>
-        <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">json_response</span> <span class="o">=</span> <span class="n">handle_status</span><span class="p">(</span>
@@ -180,7 +180,7 @@
 <span class="c1"># ruff: noqa: C901</span>
 <div class="viewcode-block" id="handle_status">
 <a class="viewcode-back" href="../../../../contributer_documentation/commands.html#matrixctl.commands.delroom.addon.handle_status">[docs]</a>
-<span class="k">def</span> <span class="nf">handle_status</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">,</span> <span class="n">delete_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JsonDict</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_status</span><span class="p">(</span><span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">,</span> <span class="n">delete_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JsonDict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle the status of a delete room request.</span>
 
 <span class="sd">    Parameters</span>
@@ -217,7 +217,7 @@
                 <span class="s2">&quot;The delete room request was probably successful but the&quot;</span>
                 <span class="s2">&quot; status request failed. You just have to wait a bit.&quot;</span>
             <span class="p">)</span>
-            <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+            <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">json_response</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
@@ -226,7 +226,7 @@
                 <span class="s2">&quot;The JSON status response could not be loaded by MatrixCtl.&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">msg_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The response was: </span><span class="si">{</span><span class="n">response</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span>
-            <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">msg_</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+            <span class="k">raise</span> <span class="n">InternalResponseError</span><span class="p">(</span><span class="n">msg_</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
         <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;response: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
@@ -281,7 +281,7 @@
 
 <div class="viewcode-block" id="handle_arguments">
 <a class="viewcode-back" href="../../../../contributer_documentation/commands.html#matrixctl.commands.delroom.addon.handle_arguments">[docs]</a>
-<span class="k">def</span> <span class="nf">handle_arguments</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JsonDict</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_arguments</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JsonDict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Build the parameters used for the delroom request.</span>
 
 <span class="sd">    Parameters</span>

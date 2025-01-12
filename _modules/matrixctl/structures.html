@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>matrixctl.structures &mdash; MatrixCtl None.0.13.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
@@ -92,14 +92,14 @@
 
 <span class="sd">&quot;&quot;&quot;Use this module for structures.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
 
 
 <div class="viewcode-block" id="Config">
 <a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.Config">[docs]</a>
-<span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast the YAML config to a typed dict.&quot;&quot;&quot;</span>
 
     <span class="n">servers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ConfigServer</span><span class="p">]</span>
@@ -110,7 +110,7 @@
 
 <div class="viewcode-block" id="ConfigServer">
 <a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServer">[docs]</a>
-<span class="k">class</span> <span class="nc">ConfigServer</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigServer</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a `server` to the YAML config structure.&quot;&quot;&quot;</span>
 
     <span class="n">ansible</span><span class="p">:</span> <span class="n">ConfigServerAnsible</span>
@@ -123,7 +123,7 @@
 
 <div class="viewcode-block" id="ConfigServerAnsible">
 <a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerAnsible">[docs]</a>
-<span class="k">class</span> <span class="nc">ConfigServerAnsible</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigServerAnsible</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `ansible` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
 
     <span class="n">playbook</span><span class="p">:</span> <span class="nb">str</span></div>
@@ -132,7 +132,7 @@
 
 <div class="viewcode-block" id="ConfigServerSynapse">
 <a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerSynapse">[docs]</a>
-<span class="k">class</span> <span class="nc">ConfigServerSynapse</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigServerSynapse</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `synapse` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
 
     <span class="n">playbook</span><span class="p">:</span> <span class="nb">str</span></div>
@@ -141,7 +141,7 @@
 
 <div class="viewcode-block" id="ConfigServerAPI">
 <a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerAPI">[docs]</a>
-<span class="k">class</span> <span class="nc">ConfigServerAPI</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigServerAPI</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `api` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
 
     <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span>
@@ -153,7 +153,7 @@
 
 <div class="viewcode-block" id="ConfigServerSSH">
 <a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerSSH">[docs]</a>
-<span class="k">class</span> <span class="nc">ConfigServerSSH</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigServerSSH</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `ssh` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
 
     <span class="n">address</span><span class="p">:</span> <span class="nb">str</span>
@@ -164,7 +164,7 @@
 
 <div class="viewcode-block" id="ConfigServerMaintenance">
 <a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerMaintenance">[docs]</a>
-<span class="k">class</span> <span class="nc">ConfigServerMaintenance</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigServerMaintenance</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `maintenance` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
 
     <span class="n">tasks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
@@ -173,7 +173,7 @@
 
 <div class="viewcode-block" id="ConfigUi">
 <a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigUi">[docs]</a>
-<span class="k">class</span> <span class="nc">ConfigUi</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigUi</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `Ui` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
 
     <span class="n">image</span><span class="p">:</span> <span class="n">ConfigUiImage</span></div>
@@ -182,7 +182,7 @@
 
 <div class="viewcode-block" id="ConfigUiImage">
 <a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigUiImage">[docs]</a>
-<span class="k">class</span> <span class="nc">ConfigUiImage</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigUiImage</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `image` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
 
     <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span>

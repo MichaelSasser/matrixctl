@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>matrixctl.handlers.vcs &mdash; MatrixCtl None.0.13.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
@@ -92,21 +92,21 @@
 
 <span class="sd">&quot;&quot;&quot;Update and manage the synapse playbook repository with this module.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">get_terminal_size</span>
-<span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">TextWrapper</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shutil</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_terminal_size</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">textwrap</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextWrapper</span>
 
-<span class="kn">from</span> <span class="nn">git</span> <span class="kn">import</span> <span class="n">GitCommandError</span>
-<span class="kn">from</span> <span class="nn">git</span> <span class="kn">import</span> <span class="n">Repo</span>
-<span class="kn">from</span> <span class="nn">git.cmd</span> <span class="kn">import</span> <span class="n">Git</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">git</span><span class="w"> </span><span class="kn">import</span> <span class="n">GitCommandError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">git</span><span class="w"> </span><span class="kn">import</span> <span class="n">Repo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">git.cmd</span><span class="w"> </span><span class="kn">import</span> <span class="n">Git</span>
 
-<span class="kn">from</span> <span class="nn">.table</span> <span class="kn">import</span> <span class="n">table</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.table</span><span class="w"> </span><span class="kn">import</span> <span class="n">table</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -118,10 +118,10 @@
 
 <div class="viewcode-block" id="VCS">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.vcs.VCS">[docs]</a>
-<span class="k">class</span> <span class="nc">VCS</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">VCS</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Update and manage a repository.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">VCS</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">VCS</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="p">:</span> <span class="n">Repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
 
@@ -137,7 +137,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">master</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="o">.</span><span class="n">master</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">datetime_last_pulled_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">VCS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">datetime_last_pulled_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">VCS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the datetime the commit was pulled last from git.</span>
 
 <span class="sd">        This is used to determine which messages will be produced in the table.</span>
@@ -161,7 +161,7 @@
 
 <div class="viewcode-block" id="VCS.log">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.vcs.VCS.log">[docs]</a>
-    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">VCS</span><span class="p">,</span> <span class="n">since</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">VCS</span><span class="p">,</span> <span class="n">since</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Print a table of date, user and commit message since the last pull.</span>
 
 <span class="sd">        Parameters</span>
@@ -231,7 +231,7 @@
 
 <div class="viewcode-block" id="VCS.pull">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.vcs.VCS.pull">[docs]</a>
-    <span class="k">def</span> <span class="nf">pull</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">VCS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pull</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">VCS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Git pull the latest commits from GH.</span>
 
 <span class="sd">        Parameters</span>

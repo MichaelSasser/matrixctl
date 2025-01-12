@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>matrixctl.handlers.ssh &mdash; MatrixCtl None.0.13.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
@@ -92,18 +92,18 @@
 
 <span class="sd">&quot;&quot;&quot;Run and evaluate commands on the host machine of your synapse server.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">shlex</span>
-<span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shlex</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
 
-<span class="kn">from</span> <span class="nn">getpass</span> <span class="kn">import</span> <span class="n">getuser</span>
-<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">TracebackType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">getpass</span><span class="w"> </span><span class="kn">import</span> <span class="n">getuser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">TracebackType</span>
 
-<span class="kn">from</span> <span class="nn">paramiko</span> <span class="kn">import</span> <span class="n">AutoAddPolicy</span>
-<span class="kn">from</span> <span class="nn">paramiko</span> <span class="kn">import</span> <span class="n">SSHClient</span>
-<span class="kn">from</span> <span class="nn">paramiko.channel</span> <span class="kn">import</span> <span class="n">ChannelFile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">paramiko</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoAddPolicy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">paramiko</span><span class="w"> </span><span class="kn">import</span> <span class="n">SSHClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">paramiko.channel</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChannelFile</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -115,7 +115,7 @@
 
 <div class="viewcode-block" id="SSHResponse">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.ssh.SSHResponse">[docs]</a>
-<span class="k">class</span> <span class="nc">SSHResponse</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">NamedTuple</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SSHResponse</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">NamedTuple</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Store the response of a SSH command as response.&quot;&quot;&quot;</span>
 
     <span class="n">stdin</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
@@ -126,12 +126,12 @@
 
 <div class="viewcode-block" id="SSH">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.ssh.SSH">[docs]</a>
-<span class="k">class</span> <span class="nc">SSH</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SSH</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Run and evaluate commands on the host machine of your synapse server.&quot;&quot;&quot;</span>
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;__client&quot;</span><span class="p">,</span> <span class="s2">&quot;address&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">,</span>
         <span class="n">address</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">user</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -145,7 +145,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__client</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__connect</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__connect</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__connect</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Connect to the SSH server.</span>
 
 <span class="sd">        Parameters</span>
@@ -160,7 +160,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;SSH connected&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Disconnect from the SSH server.</span>
 
 <span class="sd">        Parameters</span>
@@ -176,7 +176,7 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;SSH disconnected&quot;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">__str_from</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">ChannelFile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__str_from</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">ChannelFile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a ChannelFile to str.</span>
 
 <span class="sd">        Parameters</span>
@@ -197,7 +197,7 @@
 
 <div class="viewcode-block" id="SSH.run_cmd">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.ssh.SSH.run_cmd">[docs]</a>
-    <span class="k">def</span> <span class="nf">run_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SSHResponse</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SSHResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Run a command on the host machine and receive a response.</span>
 
 <span class="sd">        Parameters</span>
@@ -229,7 +229,7 @@
         <span class="k">return</span> <span class="n">response</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SSH</span><span class="p">:</span>  <span class="c1"># noqa: PYI034</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SSH</span><span class="p">:</span>  <span class="c1"># noqa: PYI034</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Connect to the SSH server with the &quot;with&quot; statement.</span>
 
 <span class="sd">        Parameters</span>
@@ -245,7 +245,7 @@
 
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">,</span>
         <span class="n">exc_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">exc_val</span><span class="p">:</span> <span class="ne">BaseException</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
@@ -275,7 +275,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__disconnect</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">SSH</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Close the connection to the SSH.</span>
 
 <span class="sd">        Parameters</span>

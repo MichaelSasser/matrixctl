@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>matrixctl.commands.set_admin.addon &mdash; MatrixCtl None.0.13.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
 
@@ -92,16 +92,16 @@
 
 <span class="sd">&quot;&quot;&quot;Use this module to get the number of user in a Matrix room.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">Namespace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">argparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">Namespace</span>
 
-<span class="kn">from</span> <span class="nn">matrixctl.errors</span> <span class="kn">import</span> <span class="n">InternalResponseError</span>
-<span class="kn">from</span> <span class="nn">matrixctl.handlers.api</span> <span class="kn">import</span> <span class="n">RequestBuilder</span>
-<span class="kn">from</span> <span class="nn">matrixctl.handlers.api</span> <span class="kn">import</span> <span class="n">request</span>
-<span class="kn">from</span> <span class="nn">matrixctl.handlers.yaml</span> <span class="kn">import</span> <span class="n">YAML</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">InternalResponseError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">RequestBuilder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">request</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.yaml</span><span class="w"> </span><span class="kn">import</span> <span class="n">YAML</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -113,7 +113,7 @@
 
 <div class="viewcode-block" id="addon">
 <a class="viewcode-back" href="../../../../contributer_documentation/commands.html#matrixctl.commands.set_admin.addon.addon">[docs]</a>
-<span class="k">def</span> <span class="nf">addon</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">addon</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span> <span class="n">yaml</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Change whether a user is an admin or not.</span>
 
 <span class="sd">    Parameters</span>

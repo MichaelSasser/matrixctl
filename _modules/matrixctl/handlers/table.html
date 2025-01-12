@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>matrixctl.handlers.table &mdash; MatrixCtl None.0.13.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
@@ -92,12 +92,12 @@
 
 <span class="sd">&quot;&quot;&quot;Use this handler to generate and print tables.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Generator</span>
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -109,7 +109,7 @@
 
 <div class="viewcode-block" id="get_colum_length">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.table.get_colum_length">[docs]</a>
-<span class="k">def</span> <span class="nf">get_colum_length</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_colum_length</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
     <span class="n">headers</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
@@ -149,7 +149,7 @@
 
 <div class="viewcode-block" id="transpose_newlines_to_rows">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.table.transpose_newlines_to_rows">[docs]</a>
-<span class="k">def</span> <span class="nf">transpose_newlines_to_rows</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">transpose_newlines_to_rows</span><span class="p">(</span>
     <span class="n">split</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
     <span class="n">occurrences</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
@@ -183,7 +183,7 @@
 
 <div class="viewcode-block" id="handle_newlines">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.table.handle_newlines">[docs]</a>
-<span class="k">def</span> <span class="nf">handle_newlines</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_newlines</span><span class="p">(</span>
     <span class="n">part</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
     <span class="n">newlines</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
@@ -238,7 +238,7 @@
 
 <div class="viewcode-block" id="newlines_in_row">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.table.newlines_in_row">[docs]</a>
-<span class="k">def</span> <span class="nf">newlines_in_row</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">newlines_in_row</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the highest number of newlines per row.</span>
 
 <span class="sd">    The highest number of newlines for a row is used to determine in how</span>
@@ -261,7 +261,7 @@
 
 <div class="viewcode-block" id="find_newlines">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.table.find_newlines">[docs]</a>
-<span class="k">def</span> <span class="nf">find_newlines</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_newlines</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Find newlines and return a dict with positions (key) and occurrences.</span>
 
 <span class="sd">    Notes</span>
@@ -290,7 +290,7 @@
 
 <div class="viewcode-block" id="format_table_row">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.table.format_table_row">[docs]</a>
-<span class="k">def</span> <span class="nf">format_table_row</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">max_column_len</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_table_row</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">max_column_len</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Format a table row into a ``str``.</span>
 
 <span class="sd">    Parameters</span>
@@ -316,7 +316,7 @@
 
 <div class="viewcode-block" id="cells_to_str">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.table.cells_to_str">[docs]</a>
-<span class="k">def</span> <span class="nf">cells_to_str</span><span class="p">(</span><span class="n">part</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">none</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cells_to_str</span><span class="p">(</span><span class="n">part</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">none</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert all cells to strings and format ``None`` values.</span>
 
 <span class="sd">    Parameters</span>
@@ -341,7 +341,7 @@
 
 <div class="viewcode-block" id="table">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.table.table">[docs]</a>
-<span class="k">def</span> <span class="nf">table</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">table</span><span class="p">(</span>
     <span class="n">table_data</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
     <span class="n">table_headers</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">none</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
