@@ -118,12 +118,12 @@ repos:
     hooks:
       - id: vulture
 
-  # pycln
-  - repo: https://github.com/hadialqattan/pycln
-    rev: v2.4.0
-    hooks:
-      - id: pycln
-        args: [--config=pyproject.toml]
+  # # pycln
+  # - repo: https://github.com/hadialqattan/pycln
+  #   rev: v2.4.0
+  #   hooks:
+  #     - id: pycln
+  #       args: [--config=pyproject.toml]
 
   # # basedpyright
   # - repo: https://github.com/DetachHead/basedpyright-pre-commit-mirror
