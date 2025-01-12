@@ -24,6 +24,8 @@ import logging
 import typing as t
 
 from argparse import Namespace
+from copy import deepcopy
+from enum import Enum
 from sys import stdout
 
 from psycopg.cursor import Cursor
@@ -37,9 +39,10 @@ from matrixctl.handlers.db import db_connect
 from matrixctl.handlers.rows import Ctx
 from matrixctl.handlers.rows import to_row_context
 from matrixctl.handlers.yaml import YAML
-from matrixctl.sanitizers import MessageType
-from matrixctl.sanitizers import sanitize_message_type
+from matrixctl.sanitizers import EventType
+from matrixctl.sanitizers import sanitize_event_type
 from matrixctl.sanitizers import sanitize_room_identifier
+from matrixctl.sanitizers import sanitize_sequence
 from matrixctl.sanitizers import sanitize_user_identifier
 
 
@@ -50,6 +53,38 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 WARN_FOR_EVENTS_OLDER_THAN: float = 30.0
+
+
+def add_tuple_to_query_workaround(
+    query: str,
+    values: list[str | int | tuple[str | int, ...]],
+    args: tuple[str | Enum, ...] | t.Literal[False] | None,
+    token: str | Enum,
+) -> tuple[str, list[str | int | tuple[str | int, ...]]]:
+    """Use this function as a workaround for adding a tuple to the query."""
+    query_: str = deepcopy(query)
+    values_: list[str | int | tuple[str | int, ...]] = deepcopy(values)
+    if args:  # One element
+        if len(args) == 1:
+            query_ += f" AND {token} = (%s)"
+            if isinstance(args[0], Enum):
+                values_.append(args[0].value)
+            else:
+                values_.append(args[0])
+        else:  # Multiple elements
+            # TODO: `foo = ANY(%s)` does not seem work. Something not getting
+            #       escaped properly?
+            query_ += f" AND {token} IN ("
+            for i, arg in enumerate(args):
+                if i > 0:
+                    query_ += ", "
+                query_ += "(%s)"
+                if isinstance(arg, Enum):
+                    values_.append(arg.value)
+                else:
+                    values_.append(arg)
+            query_ += ")"
+    return query_, values_
 
 
 def addon(arg: Namespace, yaml: YAML) -> int:
@@ -71,45 +106,55 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    # Sanitize user identifier
-    user_identifier: str | t.Literal[False] | None = sanitize_user_identifier(
-        arg.user,
-    )
-    if not user_identifier:
-        return 1
 
-    # Sanitize room identifier
-    room_identifier: str | t.Literal[False] | None = sanitize_room_identifier(
-        arg.room_id,
+    # Sanitize the input
+    user_identifiers: tuple[str, ...] | t.Literal[False] | None = (
+        sanitize_sequence(sanitize_user_identifier, arg.users)
     )
-    if room_identifier is False:
-        return 1
+    room_identifiers: tuple[str, ...] | t.Literal[False] | None = (
+        sanitize_sequence(sanitize_room_identifier, arg.room_ids)
+    )
+    event_types: tuple[EventType, ...] | t.Literal[False] | None = (
+        sanitize_sequence(sanitize_event_type, arg.event_types)
+    )
+    if any(
+        b is False for b in {user_identifiers, room_identifiers, event_types}
+    ):
+        return 1  # sanitation failed
 
-    # Sanitize message_type
-    message_type: MessageType | t.Literal[False] | None = (
-        sanitize_message_type(arg.event_type)
-    )
-    if message_type is False:
-        return 1
+    since: datetime.datetime = arg.since or datetime.datetime.min
+    until: datetime.datetime | None = arg.until
 
     query: str = (
         "WITH evs AS ("
         "SELECT event_id, origin_server_ts, received_ts "
-        "FROM events WHERE sender = (%s)"
+        "FROM events WHERE origin_server_ts >= (%s)"
     )
-    values = [user_identifier]
+    values: list[str | int | tuple[str | int, ...]] = [
+        int(since.timestamp() * 1000)
+    ]
+
+    # Add until to the query
+    if until:
+        query += " AND origin_server_ts < (%s)"
+        values.append(int(until.timestamp() * 1000))
+
+    # Add user identifier to the query
+    query, values = add_tuple_to_query_workaround(
+        query, values, user_identifiers, "sender"
+    )
 
     # Add room identifier to the query
-    if room_identifier:
-        query += " AND room_id = (%s)"
-        values.append(room_identifier)
+    query, values = add_tuple_to_query_workaround(
+        query, values, room_identifiers, "room_id"
+    )
 
     # Add message type to the query
-    if message_type:
-        values.append(message_type.value)
-        query += " AND type = (%s)"
+    query, values = add_tuple_to_query_workaround(
+        query, values, event_types, "type"
+    )
 
-    query += ")"
+    query += ") "
 
     query += (
         "SELECT "
@@ -123,7 +168,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     )
 
     with db_connect(yaml) as conn, conn.cursor() as cur:
-        cur.execute(query, values)
+        cur.execute(query, tuple(values))
         if arg.output_format == OutputType.ROWS:
             return output_as_rows(cur, yaml)
         if arg.output_format == OutputType.JSON:

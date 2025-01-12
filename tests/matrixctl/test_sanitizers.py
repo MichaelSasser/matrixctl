@@ -35,11 +35,11 @@ def test_sanitize_message_type_m_room_message_1() -> None:
     """Test valid message type as MessageType."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_MESSAGE
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_MESSAGE
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(desired)
     )
 
     # Verify
@@ -52,12 +52,12 @@ def test_sanitize_message_type_m_room_message_2() -> None:
     """Test valid message type as string."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_MESSAGE
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_MESSAGE
     testdata: str = "M.ROOM.MESSAGE"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -70,11 +70,11 @@ def test_sanitize_message_type_m_room_name_1() -> None:
     """Test valid message type as MessageType."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_MESSAGE
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_MESSAGE
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(desired)
     )
 
     # Verify
@@ -87,12 +87,12 @@ def test_sanitize_message_type_m_room_name_2() -> None:
     """Test valid message type as string."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_NAME
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_NAME
     testdata: str = "M.ROOM.NAME"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -105,11 +105,11 @@ def test_sanitize_message_type_m_room_topic_1() -> None:
     """Test valid message type as MessageType."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_TOPIC
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_TOPIC
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(desired)
     )
 
     # Verify
@@ -122,12 +122,12 @@ def test_sanitize_message_type_m_room_topic_2() -> None:
     """Test valid message type as string."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_TOPIC
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_TOPIC
     testdata: str = "M.ROOM.TOPIC"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -140,11 +140,11 @@ def test_sanitize_message_type_m_room_avatar_1() -> None:
     """Test valid message type as MessageType."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_AVATAR
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_AVATAR
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(desired)
     )
 
     # Verify
@@ -157,12 +157,12 @@ def test_sanitize_message_type_m_room_avatar_2() -> None:
     """Test valid message type as string."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_AVATAR
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_AVATAR
     testdata: str = "M.ROOM.AVATAR"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -175,13 +175,11 @@ def test_sanitize_message_type_m_room_pinned_events_1() -> None:
     """Test valid message type as MessageType."""
 
     # Setup
-    desired: sanitizers.MessageType = (
-        sanitizers.MessageType.M_ROOM_PINNED_EVENTS
-    )
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_PINNED_EVENTS
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(desired)
     )
 
     # Verify
@@ -194,14 +192,12 @@ def test_sanitize_message_type_m_room_pinned_events_2() -> None:
     """Test valid message type as string."""
 
     # Setup
-    desired: sanitizers.MessageType = (
-        sanitizers.MessageType.M_ROOM_PINNED_EVENTS
-    )
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_PINNED_EVENTS
     testdata: str = "M.ROOM.PINNED_EVENTS"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -214,11 +210,11 @@ def test_sanitize_message_type_m_room_member_1() -> None:
     """Test valid message type as MessageType."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_MEMBER
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_MEMBER
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(desired)
     )
 
     # Verify
@@ -231,12 +227,12 @@ def test_sanitize_message_type_m_room_member_2() -> None:
     """Test valid message type as string."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_MEMBER
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_MEMBER
     testdata: str = "M.ROOM.MEMBER"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -249,11 +245,11 @@ def test_sanitize_message_type_m_room_join_rules_1() -> None:
     """Test valid message type as MessageType."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_JOIN_RULES
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_JOIN_RULES
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(desired)
     )
 
     # Verify
@@ -266,12 +262,12 @@ def test_sanitize_message_type_m_room_join_rules_2() -> None:
     """Test valid message type as string."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_JOIN_RULES
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_JOIN_RULES
     testdata: str = "M.ROOM.JOIN_RULES"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -284,11 +280,11 @@ def test_sanitize_message_type_m_room_create_1() -> None:
     """Test valid message type as MessageType."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_CREATE
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_CREATE
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(desired)
     )
 
     # Verify
@@ -301,12 +297,12 @@ def test_sanitize_message_type_m_room_create_2() -> None:
     """Test valid message type as string."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_CREATE
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_CREATE
     testdata: str = "M.ROOM.CREATE"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -319,13 +315,11 @@ def test_sanitize_message_type_m_room_power_levels_1() -> None:
     """Test valid message type as MessageType."""
 
     # Setup
-    desired: sanitizers.MessageType = (
-        sanitizers.MessageType.M_ROOM_POWER_LEVELS
-    )
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_POWER_LEVELS
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(desired)
     )
 
     # Verify
@@ -338,14 +332,12 @@ def test_sanitize_message_type_m_room_power_levels_2() -> None:
     """Test valid message type as string."""
 
     # Setup
-    desired: sanitizers.MessageType = (
-        sanitizers.MessageType.M_ROOM_POWER_LEVELS
-    )
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_POWER_LEVELS
     testdata: str = "M.ROOM.POWER_LEVELS"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -358,11 +350,11 @@ def test_sanitize_message_type_m_room_redaction_1() -> None:
     """Test valid message type as MessageType."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_REDACTION
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_REDACTION
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(desired)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(desired)
     )
 
     # Verify
@@ -375,12 +367,12 @@ def test_sanitize_message_type_m_room_redaction_2() -> None:
     """Test valid message type as string."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_REDACTION
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_REDACTION
     testdata: str = "M.ROOM.REDACTION"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -397,8 +389,8 @@ def test_sanitize_message_type_invalid() -> None:
     testdata: str = "M.ROOM.INVALID_TYPE"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -411,12 +403,12 @@ def test_sanitize_message_type_with_spaces() -> None:
     """Test valid message type as string with spaces around."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_REDACTION
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_REDACTION
     testdata: str = " M.ROOM.REDACTION "
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -429,12 +421,12 @@ def test_sanitize_message_type_lower_case() -> None:
     """Test valid message type as lowercase string."""
 
     # Setup
-    desired: sanitizers.MessageType = sanitizers.MessageType.M_ROOM_REDACTION
+    desired: sanitizers.EventType = sanitizers.EventType.M_ROOM_REDACTION
     testdata: str = "m.room.redaction"
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify
@@ -451,8 +443,8 @@ def test_sanitize_message_type_none() -> None:
     testdata: None = None
 
     # Exercise
-    actual: sanitizers.MessageType | t.Literal[False] | None = (
-        sanitizers.sanitize_message_type(testdata)
+    actual: sanitizers.EventType | t.Literal[False] | None = (
+        sanitizers.sanitize_event_type(testdata)
     )
 
     # Verify

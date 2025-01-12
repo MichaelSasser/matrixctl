@@ -11,7 +11,7 @@ from typing_extensions import Self
 from matrixctl.errors import NotAnEventError
 from matrixctl.handlers.yaml import YAML
 from matrixctl.print_helpers import render_image_from_mxc
-from matrixctl.sanitizers import MessageType
+from matrixctl.sanitizers import EventType
 
 
 __author__: str = "Michael Sasser"
@@ -55,16 +55,16 @@ class Ctx:
         return self
 
 
-def get_event_type_from_event(ev: Event) -> MessageType | str:
+def get_event_type_from_event(ev: Event) -> EventType | str:
     """Get the event type from the event."""
     kind_: t.Any = ev.get("type")
     if not isinstance(kind_, str):
         err_msg: str = f"The given event data is not a valid event. {ev=}"
         logger.error(err_msg)
         raise NotAnEventError(err_msg)
-    kind: MessageType | str
+    kind: EventType | str
     try:
-        kind = MessageType.from_string(kind_)
+        kind = EventType.from_string(kind_)
     except ValueError:
         kind = kind_
     return kind
@@ -351,25 +351,25 @@ def to_row_context(ev: dict[str, t.Any], yaml: YAML) -> Ctx:
     """Create an event context from a message type and it's content."""
     ctx: Ctx
 
-    kind: MessageType | str = get_event_type_from_event(ev)
+    kind: EventType | str = get_event_type_from_event(ev)
     match kind:
-        case MessageType.M_ROOM_REDACTION:
+        case EventType.M_ROOM_REDACTION:
             ctx = _ev_m_room_redaction(ev, yaml)
-        case MessageType.M_ROOM_GUEST_ACCESS:
+        case EventType.M_ROOM_GUEST_ACCESS:
             ctx = _ev_m_room_guest_access(ev, yaml)
-        case MessageType.M_ROOM_HISTORY_VISIBILITY:
+        case EventType.M_ROOM_HISTORY_VISIBILITY:
             ctx = _ev_m_room_history_visibility(ev, yaml)
-        case MessageType.M_ROOM_JOIN_RULES:
+        case EventType.M_ROOM_JOIN_RULES:
             ctx = _ev_m_room_join_rules(ev, yaml)
-        case MessageType.M_ROOM_POWER_LEVELS:
+        case EventType.M_ROOM_POWER_LEVELS:
             ctx = _ev_m_room_power_levels(ev, yaml)
-        case MessageType.M_ROOM_ENCRYPTED:
+        case EventType.M_ROOM_ENCRYPTED:
             ctx = _ev_m_room_encrypted(ev, yaml)
-        case MessageType.M_REACTION:
+        case EventType.M_REACTION:
             ctx = _ev_m_reaction(ev, yaml)
-        case MessageType.M_ROOM_MESSAGE:
+        case EventType.M_ROOM_MESSAGE:
             ctx = _ev_m_room_message(ev, yaml)
-        case MessageType.M_ROOM_MEMBER:
+        case EventType.M_ROOM_MEMBER:
             ctx = _ev_m_room_member(ev, yaml)
         case _:
             ctx = Ctx(Text("Unknown Message Type"))

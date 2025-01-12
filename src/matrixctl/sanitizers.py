@@ -22,6 +22,7 @@ import logging
 import re
 import typing as t
 
+from collections.abc import Sequence
 from contextlib import suppress
 from enum import Enum
 from enum import unique
@@ -33,6 +34,8 @@ __email__: str = "Michael@MichaelSasser.org"
 
 logger = logging.getLogger(__name__)
 
+T = VariableType = t.TypeVar("T")
+
 
 EVENT_ID_PATTERN: t.Pattern[str] = re.compile(r"^\$[0-9a-zA-Z.=_-]{1,255}$")
 USER_ID_PATTERN: t.Pattern[str] = re.compile(r"^\@.*\:.*\..*$")
@@ -41,7 +44,7 @@ MXC_PATTERN: t.Pattern[str] = re.compile(r"^mxc:\/\/.*\..*\/.*$")
 
 
 @unique
-class MessageType(Enum):
+class EventType(Enum):
     """Use this enum for describing message types.
 
     Supported events:
@@ -83,7 +86,7 @@ class MessageType(Enum):
     M_ROOM_GUEST_ACCESS = "m.room.guest_access"
 
     @staticmethod
-    def from_string(s: str) -> MessageType:
+    def from_string(s: str) -> EventType:
         """Convert a string to a MessageType.
 
         Parameters
@@ -98,52 +101,52 @@ class MessageType(Enum):
 
         """
         try:
-            return MessageType[s.upper().replace(".", "_")]
+            return EventType[s.upper().replace(".", "_")]
         except KeyError as e:
             err_msg = "The message type is not supported by MatrixCtl."
             raise ValueError(err_msg) from e
 
 
-def sanitize_message_type(
-    message_type: str | MessageType | None,
-) -> MessageType | t.Literal[False] | None:
-    """Sanitize an message type.
+def sanitize_event_type(
+    event_type: str | EventType | None,
+) -> EventType | t.Literal[False] | None:
+    """Sanitize an event type.
 
     Examples
     --------
-    >>> sanitize_message_type("m.room.message")
-    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+    >>> sanitize_event_type("m.room.message")
+    <EventType.M_ROOM_MESSAGE: 'm.room.message'>
 
-    >>> sanitize_message_type("M.RooM.MeSsAgE")
-    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+    >>> sanitize_event_type("M.RooM.MeSsAgE")
+    <EventType.M_ROOM_MESSAGE: 'm.room.message'>
 
-    >>> sanitize_message_type(" m.room.message   ")
-    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+    >>> sanitize_event_type(" m.room.message   ")
+    <EventType.M_ROOM_MESSAGE: 'm.room.message'>
 
-    >>> sanitize_message_type(MessageType.M_ROOM_MESSAGE)
-    <MessageType.M_ROOM_MESSAGE: 'm.room.message'>
+    >>> sanitize_event_type(EventType.M_ROOM_MESSAGE)
+    <EventType.M_ROOM_MESSAGE: 'm.room.message'>
 
-    >>> sanitize_message_type("something invalid")
+    >>> sanitize_event_type("something invalid")
     False
 
-    >>> sanitize_message_type(None)
+    >>> sanitize_event_type(None)
 
     Parameters
     ----------
-    message_type : typing.Any
+    event_type : typing.Any
         The event identifier to sanitize
 
     Returns
     -------
-    message_type_sanitized : typing.Literal[False] or MessageType, optional
+    event_type_sanitized : typing.Literal[False] or MessageType, optional
         The function returns ``None`` if ``message_type`` is ``None``,
         ``MessageType``, if it is valid, otherwise ``False``
 
     """
-    if isinstance(message_type, MessageType) or message_type is None:
-        return message_type
+    if isinstance(event_type, EventType) or event_type is None:
+        return event_type
     with suppress(TypeError, KeyError, AttributeError):
-        return MessageType[message_type.strip().replace(".", "_").upper()]
+        return EventType[event_type.strip().replace(".", "_").upper()]
     logger.error("The message type is not wrong.")
     return False
 
@@ -352,6 +355,27 @@ def sanitize_mxc(
             " mxc://matrix.org/asdfDfjskksjdiIlakjidjLAjdj"
         ),
     )
+
+
+def sanitize_sequence(
+    sanitizer: t.Callable[[T], T | t.Literal[False] | None],  # type: ignore[valid-type]
+    args: Sequence[T] | None,  # type: ignore[valid-type]
+) -> tuple[T, ...] | t.Literal[False] | None:  # type: ignore[valid-type]
+    """Run a sanitizer against a sequence."""
+
+    if not args:
+        return None
+
+    args_u: tuple[T | t.Literal[False] | None, ...] = tuple(  # type: ignore[valid-type]
+        sanitizer(arg) for arg in args
+    )
+
+    if any(True for event_type in args_u if event_type in {False, None}):
+        return False  # There was one ore more invalid arguments
+
+    # This is equivalent to `return args_u` by now, but the type checker has
+    # some issues figuring that out. Therefore we do that instead.
+    return tuple(arg for arg in args_u if arg)
 
 
 # vim: set ft=python :

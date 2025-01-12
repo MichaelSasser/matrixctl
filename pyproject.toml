@@ -43,6 +43,8 @@ dependencies = [
   "rich>=13.8.0,<14.0.0",
   "packaging>=24.2",
   "typing-extensions>=4.12.2",
+  "dateparser>=1.2.0",
+  "python-dateutil>=2.9.0.post0",
 ]
 
 requires-python = ">=3.10,<4.0"
@@ -66,12 +68,12 @@ dev-dependencies = [
   "types-paramiko>=3.4.0.20240423,<4.0.0.0",
   "types-attrs>=19.1.0,<20.0.0",
   "types-Jinja2>=2.11.9,<3.0.0",
-
+  "types-python-dateutil>=2.9.0.20241206",
+  "types-dateparser>=1.2.0.20240420",
   # Dev tools
   "ruff>=0.6.8",
   "pytest>=8.3.3",
   "coverage>=7.6.1",
-  # "tox>=4.20.0",
   "pre-commit>=3.8.0",
   "basedpyright>=1.18.2",
   "git-cliff>=2.6.1",
@@ -91,18 +93,6 @@ docs = [
 
 [project.scripts]
 matrixctl = "matrixctl.__main__:main"
-
-# doc = { cmd = "sphinx-build -T -W -b html docs/source docs/build/html" }
-#
-# # Linting
-# check = { chain = ["check:lint", "check:fmt"] }
-# "check:lint" = "rye lint"
-# "check:fmt" = "rye fmt --check"
-# "check:type" = "rye run basedpyright"
-#
-# fix = { chain = ["fix:lint", "fix:fmt"] }
-# "fix:lint" = "rye lint --fix"
-# "fix:fmt" = "rye fmt"
 
 [build-system]
 requires = ["hatchling"]

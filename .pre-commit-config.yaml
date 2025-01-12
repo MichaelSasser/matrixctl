@@ -5,10 +5,12 @@ exclude: ^.*\.lock$
 repos:
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.
-    rev: 0.5.10
+    rev: 0.5.18
     hooks:
       # Update the uv lockfile
       - id: uv-lock
+      - id: uv-sync
+        args: ["--locked", "--all-extras", "--upgrade", "--dev"]
 
   - repo: meta
     hooks:
@@ -100,6 +102,8 @@ repos:
           - types-tabulate
           - types-paramiko
           - types-attrs
+          - types-dateparser
+          - types-python-dateutil
 
   - repo: https://github.com/econchick/interrogate
     rev: 1.7.0

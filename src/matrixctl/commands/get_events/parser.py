@@ -26,7 +26,9 @@ from enum import Enum
 from enum import unique
 
 from matrixctl.addon_manager import subparser
+from matrixctl.argparse_action import ArgparseActionDateParser
 from matrixctl.argparse_action import ArgparseActionEnum
+from matrixctl.argparse_action import TimeDirection
 
 
 __author__: str = "Michael Sasser"
@@ -71,16 +73,44 @@ def subparser_get_events(subparsers: _SubParsersAction[t.Any]) -> None:
         "get-events",
         help="Get events from the database",
     )
-    parser.add_argument("user", help="The user (e.g. @foo:bar.baz)")
-    parser.add_argument("room_id", nargs="?", help="The room identifier")
-    parser.add_argument("-e", "--event-type", help="The event type")
+    parser.add_argument(
+        "users",
+        nargs="*",
+        help="The users (e.g. @michael:foo.bar,@dwight:foo.bar)",
+    )
+    parser.add_argument(
+        "-r", "--room_ids", nargs="+", help="The room identifiers"
+    )
+    parser.add_argument(
+        "-e", "--event-types", nargs="+", help="The event types"
+    )
     parser.add_argument(
         "-f",
         "--output-format",
         type=OutputType,
         action=ArgparseActionEnum,
-        default=OutputType.JSON,
-        help="The Output type (rows, json)",
+        default=OutputType.ROWS,
+        help="The Output type (default: 'rows')",
+    )
+    parser.add_argument(
+        "-s",
+        "--since",
+        action=ArgparseActionDateParser,
+        time_direction=TimeDirection.PAST,
+        help=(
+            "Show events on or newer than the specified date. "
+            "(Date must be in the past)"
+        ),
+    )
+    parser.add_argument(
+        "-u",
+        "--until",
+        action=ArgparseActionDateParser,
+        time_direction=TimeDirection.PAST,
+        help=(
+            "Show events on or older than the specified date. "
+            "(Date must be in the past)"
+        ),
     )
     parser.set_defaults(addon="get_events")
 
