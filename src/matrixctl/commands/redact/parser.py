@@ -48,7 +48,7 @@ def subparser_redact(subparsers: _SubParsersAction[t.Any]) -> None:
     """
     parser: ArgumentParser = subparsers.add_parser(
         "redact",
-        help="Redact events",
+        help="Redact the events of a given user",
         formatter_class=RawDescriptionHelpFormatter,
         description=(
             "This command allows an admin to redact the events of a given"
