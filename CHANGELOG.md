@@ -7,6 +7,13 @@ All notable changes to MatrixCtl will be documented in this file.
 You can find the issue tracker on
 [GitHub](https://github.com/MichaelSasser/matrixctl/issues).
 
+## [0.15.0](https://github.com/MichaelSasser/matrixctl/compare/v0.14.0...v0.15.0) (2025-01-12)
+
+
+### Features
+
+* **rows:** render avatars in membership events ([d152b44](https://github.com/MichaelSasser/matrixctl/commit/d152b441d8aa1001549aadd9c83133e0045941c0))
+
 ## [0.14.0](https://github.com/MichaelSasser/matrixctl/compare/v0.13.0...v0.14.0) (2025-01-12)
 
 
