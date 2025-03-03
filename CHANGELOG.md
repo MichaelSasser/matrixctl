@@ -7,6 +7,18 @@ All notable changes to MatrixCtl will be documented in this file.
 You can find the issue tracker on
 [GitHub](https://github.com/MichaelSasser/matrixctl/issues).
 
+## [0.15.0](https://github.com/MichaelSasser/matrixctl/compare/v0.14.0...v0.15.0) (2025-03-03)
+
+
+### Features
+
+* **rows:** render avatars in membership events ([d152b44](https://github.com/MichaelSasser/matrixctl/commit/d152b441d8aa1001549aadd9c83133e0045941c0))
+
+
+### Bug Fixes
+
+* **deps:** update dependency sphinx-autodoc-typehints to &gt;=3,&lt;3.2 ([#875](https://github.com/MichaelSasser/matrixctl/issues/875)) ([53371db](https://github.com/MichaelSasser/matrixctl/commit/53371db52faa94df0123ab25ad5f352959d91927))
+
 ## [0.14.0](https://github.com/MichaelSasser/matrixctl/compare/v0.13.0...v0.14.0) (2025-01-12)
 
 
