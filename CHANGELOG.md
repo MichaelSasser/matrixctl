@@ -7,6 +7,13 @@ All notable changes to MatrixCtl will be documented in this file.
 You can find the issue tracker on
 [GitHub](https://github.com/MichaelSasser/matrixctl/issues).
 
+## [0.14.2](https://github.com/MichaelSasser/matrixctl/compare/v0.14.1...v0.14.2) (2025-04-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency rich to v14 ([#881](https://github.com/MichaelSasser/matrixctl/issues/881)) ([17e6127](https://github.com/MichaelSasser/matrixctl/commit/17e61275c960ce16d8dcda3673c7e849f6c5900c))
+
 ## [0.14.1](https://github.com/MichaelSasser/matrixctl/compare/v0.14.0...v0.14.1) (2025-03-17)
 
 
