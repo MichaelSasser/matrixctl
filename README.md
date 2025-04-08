@@ -42,6 +42,7 @@ Commands:
     make-room-admin     Grant a user the highest power level available to a local user in this room
     purge-history       Purge historic events from the database
     purge-remote-media  Purge cached, remote media
+    redact              Redact the events of a given user
     report              Get a report event by report identifier
     reports             Lists reported events
     rooms               List rooms
