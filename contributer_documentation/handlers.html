@@ -178,8 +178,7 @@ Let’s say, you are looking for the synapse path:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.get_paths_to_config">
 <em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_paths_to_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.get_paths_to_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.get_paths_to_config" title="Link to this definition"></a></dt>
-<dd><p>Generate a tuple of path which may contain a configuration file.
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#Ellipsis" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code></a>]</span></p>
+<dd><p>Generate a tuple of path which may contain a configuration file.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This function preserves the order. The priority of the user
@@ -196,6 +195,12 @@ extension <code class="docutils literal notranslate"><span class="pre">yml</span
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
 <dt><strong>config_paths</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a> <code class="xref py py-obj docutils literal notranslate"><span class="pre">of</span></code> <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a></span></dt><dd><p>A tuple of paths, which might contain a config file.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#Ellipsis" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code></a>]</span>
+..</p>
 </dd>
 </dl>
 </dd>
@@ -236,8 +241,7 @@ returned.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.read_from_file">
 <em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.read_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.read_from_file" title="Link to this definition"></a></dt>
-<dd><p>Read the config from a YAML file and render the Jinja2 tmplates.
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.Config" title="matrixctl.structures.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a></span></p>
+<dd><p>Read the config from a YAML file and render the Jinja2 tmplates.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
@@ -260,6 +264,12 @@ returned.</p></li>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
 <dt><strong>full_config</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.typehints.Config</span></code></span></dt><dd><p>The full (with server name) config file as dict.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="type_hints_structures_and_errors.html#matrixctl.structures.Config" title="matrixctl.structures.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a></span>
+..</p>
 </dd>
 </dl>
 </dd>
