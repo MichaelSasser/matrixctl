@@ -32,6 +32,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         with:
           enable-cache: true
+          activate-environment: true
           cache-dependency-glob: "uv.lock"
 
       - name: Set up Python

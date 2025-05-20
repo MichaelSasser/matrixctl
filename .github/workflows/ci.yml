@@ -28,6 +28,7 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
+          activate-environment: true
 
       - name: Set up Python ${{ matrix.python-version }}
         run: |
