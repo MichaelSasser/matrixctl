@@ -355,7 +355,8 @@ class TokenManager:
         )
         return access_token
 
-    def _generate_pkce(self) -> tuple[str, str]:
+    @staticmethod
+    def _generate_pkce() -> tuple[str, str]:
         """Generate PKCE code verifier and challenge pair.
 
         Returns
