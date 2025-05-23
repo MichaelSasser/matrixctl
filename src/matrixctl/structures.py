@@ -83,7 +83,7 @@ class ConfigServerAPIAuthOidc(t.TypedDict):
 
     # Dynamically generated. Any user input will be overwritten.
     user_info: JsonDict
-    claims: JsonDict
+    payload: JsonDict
 
 
 class ConfigServerSSH(t.TypedDict):

@@ -122,6 +122,9 @@ class TokenManager:
         self.refresh_token: str | None = None
         self.id_token: str | None = None
         self.expires_at: float = 0.0
+        logger.debug(
+            "TokenManager initialized with cache path: %s", self.cache_path
+        )
 
     def recall_cached_token(self, key: str) -> bool:
         """Load and validate cached tokens from disk.
@@ -140,19 +143,37 @@ class TokenManager:
         """
         try:
             if not self.cache_path.exists():
+                logger.debug(
+                    "Cache file does not exist: %s",
+                    self.cache_path,
+                )
                 return False
 
             with self.cache_path.open() as fp:
                 data: JsonDict = json.load(fp)
 
+            logger.debug("Cache file exists: %s", self.cache_path)
             keyed: JsonDict = t.cast("JsonDict", data.get(key.strip().lower()))
 
             self.access_token = keyed.get("access_token")
             self.refresh_token = keyed.get("refresh_token")
-            self.id_token = keyed.get("id_token")
+            self.id_token = keyed.get("id_token") or self.id_token
             self.expires_at = keyed.get("expires_at", 0.0)
 
+            logger.debug(
+                "Recalled refresh token contains: "
+                "{access_token: %s, "
+                "refresh_token: %s, "
+                "id_token: %s, "
+                "expires_at: %s}",
+                self.access_token is not None,
+                self.refresh_token is not None,
+                self.id_token is not None,
+                self.expires_at is not None,
+            )
+
             if time.time() < self.expires_at:
+                logger.debug("Token is not expired on recall")
                 return True
         except PermissionError:
             logger.exception(
@@ -187,8 +208,8 @@ class TokenManager:
             )
 
         self.access_token = None
-        self.refresh_token = None
         self.expires_at = 0.0
+        logger.debug("Token is expired or invalid")
         return False
 
     def store_cache_token(
@@ -217,10 +238,23 @@ class TokenManager:
         - refresh_token
         - expires_at
         """
+        logger.debug("Started storing cached token: %s", self.cache_path)
         self.access_token = access_token
         self.refresh_token = refresh_token
         self.id_token = id_token
         self.expires_at = time.time() + expires_in
+
+        logger.debug(
+            "Stored refresh token contains: "
+            "{access_token: %s, "
+            "refresh_token: %s, "
+            "id_token: %s, "
+            "expires_at: %s}",
+            self.access_token is not None,
+            self.refresh_token is not None,
+            self.id_token is not None,
+            self.expires_at is not None,
+        )
 
         try:
             self.cache_path.parent.mkdir(parents=True, exist_ok=True)
@@ -251,6 +285,7 @@ class TokenManager:
             )
         except OSError:
             logger.exception("Failed to open/write to oidc token cache file")
+        logger.debug("Finished storing cached token: %s", self.cache_path)
 
     def get_user_info(self) -> JsonDict:
         """Retrieve user information from the userinfo endpoint.
@@ -282,15 +317,17 @@ class TokenManager:
             timeout=10,
         )
         _ = response.raise_for_status()
-        return t.cast("JsonDict", response.json())
+        user_info: JsonDict = t.cast("JsonDict", response.json())
+        logger.debug("User info retrieved: %s", user_info)
+        return user_info
 
-    def get_claims(self) -> JsonDict:
-        """Retrieve claims from the ID token.
+    def get_payload(self) -> JsonDict:
+        """Decode payload from the ID token.
 
         Returns
         -------
         dict[str, Any]
-            Decoded ID token claims
+            Decoded ID token payload
 
         Raises
         ------
@@ -303,14 +340,19 @@ class TokenManager:
 
         try:
             # Split JWT into parts
-            _, payload, _ = self.id_token.split(".")
+            _, payload_unpadded, _ = self.id_token.split(".")
             # Add padding and decode
-            padded = payload + "=" * (-len(payload) % 4)
-            decoded = base64.urlsafe_b64decode(padded)
-            return t.cast("JsonDict", json.loads(decoded))
+            payload_padded = payload_unpadded + "=" * (
+                -len(payload_unpadded) % 4
+            )
+            payload_decoded = base64.urlsafe_b64decode(payload_padded)
+            payload: JsonDict = t.cast("JsonDict", json.loads(payload_decoded))
         except Exception as e:
             err_msg: str = f"Failed to decode ID token: {e!s}"
             raise ValueError(err_msg) from e
+
+        logger.debug("Payload decoded: %s", payload)
+        return payload
 
     def get_client_credentials_token(self) -> str:
         """Get access token using client credentials flow.
@@ -327,12 +369,15 @@ class TokenManager:
         ValueError
             If token response is invalid
         """
+        logger.debug("Started client credentials token request")
         if self.recall_cached_token("user") and self.access_token:
-            return self.access_token
-
-        if self.recall_cached_token("user") and self.access_token:
+            logger.debug(
+                "Recalled cached token, which contains the  access token."
+            )
             if time.time() < self.expires_at:
+                logger.debug("Recalled token is not expired")
                 return self.access_token
+            logger.debug("Recalled token is expired, refreshing it")
             refresh_token = self.refresh_access_token()
             if refresh_token:
                 return refresh_token
@@ -370,7 +415,7 @@ class TokenManager:
         self.store_cache_token(
             access_token,
             token_data.get("refresh_token"),
-            token_data.get("id_token"),
+            token_data.get("id_token") or self.id_token,
             t.cast("int", token_data.get("expires_in", 3600)),
             "user",
         )
@@ -449,16 +494,28 @@ class TokenManager:
         ValueError
             If token response is invalid
         """
-        # TODO: Use cache key
-        if self.recall_cached_token("user") and self.access_token:
-            if time.time() < self.expires_at:
-                return self.access_token
-            refresh_token = self.refresh_access_token()
-            if refresh_token:
-                return refresh_token
+        self.recall_cached_token("user")
+        logger.debug("Recalled cached token for 'user'")
+
+        if self.access_token and time.time() < self.expires_at:
+            logger.debug("Recalled acces token exists and is not expired")
+            return self.access_token
+        logger.debug("Recalled access token was invalid or is expired")
+
+        if self.refresh_token:
+            logger.debug("Refresh token exists")
+            new_access_token = self.refresh_access_token()
+            logger.debug(
+                "Using recalled refresh token token to get a new access token"
+            )
+            if new_access_token:
+                logger.debug("Refreshed access token exists")
+                return new_access_token
 
         code_verifier, code_challenge = self._generate_pkce()
         server, port = self._start_local_server()
+        logger.debug("Started local server")
+        # TODO: make this configuratble
         redirect_uri = f"http://localhost:{port}/callback"
 
         auth_url = f"{self.auth_endpoint}?"
@@ -466,7 +523,6 @@ class TokenManager:
             "response_type": "code",
             "client_id": self.client_id,
             "redirect_uri": redirect_uri,
-            # TODO: add: urn:synapse:admin
             "scope": " ".join(claims),
             "code_challenge": code_challenge,
             "code_challenge_method": "S256",
@@ -490,12 +546,15 @@ class TokenManager:
                 < type(self).wait_for_auth_code_timeout
             ):  # 5 minute timeout
                 if server.auth_code:
+                    logger.debug("Got auth code from from browser flow")
                     break
                 time.sleep(1)
             else:
                 err_msg: str = "Authorization timed out"
+                logger.debug("Browser flow authorization timed out")
                 raise TimeoutError(err_msg)
 
+            logger.debug("Requesting access token")
             token_response = httpx.post(
                 self.token_endpoint,
                 data={
@@ -511,22 +570,24 @@ class TokenManager:
             _ = token_response.raise_for_status()
             token_data: JsonDict = t.cast("JsonDict", token_response.json())
 
-            access_token: str
-            if not (
-                access_token := t.cast("str", token_data.get("access_token"))
-            ):
+            access_token: str = t.cast("str", token_data.get("access_token"))
+            logger.debug("Got response from requesting access token")
+            if not access_token:
+                logger.debug("There was no acccess token in the response")
                 err_msg = "No access token in response"
                 raise ValueError(err_msg)
 
             self.store_cache_token(
                 access_token,
                 token_data.get("refresh_token"),
-                token_data.get("id_token"),
+                token_data.get("id_token") or self.id_token,
                 t.cast("int", token_data.get("expires_in", 3600)),
                 "user",
             )
+            logger.debug("Cached token stored")
             return access_token
         finally:
+            logger.debug("Shutting down web server")
             server.shutdown()
 
     def refresh_access_token(self) -> str | None:
@@ -537,7 +598,12 @@ class TokenManager:
         str | None
             New access token if successful, None otherwise
         """
+        logger.debug("Started refresing access token")
         if not self.refresh_token:
+            logger.debug(
+                "Unable to refresh access token. "
+                "I don not have a refresh token"
+            )
             return None
 
         try:
@@ -551,6 +617,7 @@ class TokenManager:
                 },
             )
             _ = response.raise_for_status()
+            logger.debug("Got refresh token response")
             token_data: JsonDict = t.cast("JsonDict", response.json())
 
             access_token: str
@@ -561,10 +628,11 @@ class TokenManager:
                         "str",
                         token_data.get("refresh_token", self.refresh_token),
                     ),
-                    token_data.get("id_token"),
+                    token_data.get("id_token") or self.id_token,
                     t.cast("int", token_data.get("expires_in", 3600)),
                     "user",
                 )
+                logger.debug("Stored refreshed token")
                 return access_token
         except httpx.HTTPStatusError as e:
             logger.exception(
@@ -589,7 +657,7 @@ class TokenManager:
         logger.error("No access token in response")
         return None
 
-    def _exchange_code(
+    def _exchange_code(  # TODO: Unused
         self, code_verifier: str, auth_code: str | None, redirect_uri: str
     ) -> dict[str, t.Any]:
         """Exchange authorization code for tokens."""

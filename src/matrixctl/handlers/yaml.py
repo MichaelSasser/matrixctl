@@ -114,7 +114,7 @@ def secrets_filter(tree: dict[str, str], key: str) -> t.Any:
     None
 
     """
-    redact = {"token", "synapse_password", "client_secret"}
+    redact = {"token", "synapse_password", "client_secret", "client_id"}
     return (
         f"<redacted length={len(tree[key])}>" if key in redact else tree[key]
     )
@@ -405,7 +405,7 @@ class YAML:
                 dict(
                     ChainMap(
                         *(
-                            t.cast("MutableMapping[t.Any, t.Any]", config)
+                            t.cast(MutableMapping[t.Any, t.Any], config)  # noqa: TC006
                             for config in configs
                             if config
                         ),
@@ -521,7 +521,7 @@ class YAML:
             discovery_url = issuer_url.rstrip("/")
             response = httpx.get(discovery_url, timeout=10)
             _ = response.raise_for_status()
-            return t.cast("JsonDict", response.json())
+            oidc_config: JsonDict = t.cast("JsonDict", response.json())
         except httpx.HTTPStatusError as e:
             logger.exception(
                 "Discovery request failed: %s %s",
@@ -540,8 +540,11 @@ class YAML:
             )
             raise
 
+        logger.debug("OIDC discovery response: %s", oidc_config)
+        return oidc_config
+
     # TODO: Simplify. Maybe use get() instead of try/except?
-    def ensure_api_auth(self) -> None:
+    def ensure_api_auth(self) -> None:  # noqa: C901 PLR0915
         """Ensure the API authentication configuration is valid and prepared.
 
         This method checks the authentication type specified in the
@@ -688,23 +691,16 @@ class YAML:
                         "urn:matrix:org.matrix.msc2967.client:api:*",
                     }
                     _: str = token_manager.get_user_token(using_claims)
-                    claims = token_manager.get_claims()
+                    payload = token_manager.get_payload()
                     user_info = token_manager.get_user_info()
 
-                    self.__yaml["server"]["api"]["auth_oidc"]["claims"] = (
-                        claims
+                    self.__yaml["server"]["api"]["auth_oidc"]["payload"] = (
+                        payload
                     )
                     self.__yaml["server"]["api"]["auth_oidc"]["user_info"] = (
                         user_info
                     )
                     self.token_manager = token_manager
-
-                    # # TODO: SEC: Remove the print statements below!
-                    # print("\nID Token Claims:")
-                    # print(json.dumps(token_manager.get_claims(), indent=2))
-                    #
-                    # print("\nUser Information:")
-                    # print(json.dumps(token_manager.get_user_info(), indent=2))
             case _:
                 err_msg = (
                     f"Unknown auth type {auth_type} in your config file."
@@ -735,7 +731,9 @@ class YAML:
         self.ensure_api_auth()
         match self.get("server", "api", "auth_type"):
             case "token":
-                return self.get("server", "api", "auth_token", "username")
+                return t.cast(
+                    "str", self.get("server", "api", "auth_token", "username")
+                )
             case "oidc":
                 localpart = self.get(
                     "server", "api", "auth_oidc", "user_info", "username"
@@ -768,7 +766,9 @@ class YAML:
         self.ensure_api_auth()
         match self.get("server", "api", "auth_type"):
             case "token":
-                return self.get("server", "api", "auth_token", "token")
+                return t.cast(
+                    "str", self.get("server", "api", "auth_token", "token")
+                )
             case "oidc":
                 using_claims: set[str] = {
                     "openid",
