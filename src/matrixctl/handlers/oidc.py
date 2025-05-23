@@ -123,7 +123,7 @@ class TokenManager:
         self.id_token: str | None = None
         self.expires_at: float = 0.0
 
-    def recall_cached_token(self) -> bool:
+    def recall_cached_token(self, key: str) -> bool:
         """Load and validate cached tokens from disk.
 
         Returns
@@ -145,10 +145,12 @@ class TokenManager:
             with self.cache_path.open() as fp:
                 data: JsonDict = json.load(fp)
 
-            self.access_token = data.get("access_token")
-            self.refresh_token = data.get("refresh_token")
-            self.id_token = data.get("id_token")
-            self.expires_at = data.get("expires_at", 0.0)
+            keyed: JsonDict = t.cast("JsonDict", data.get(key.strip().lower()))
+
+            self.access_token = keyed.get("access_token")
+            self.refresh_token = keyed.get("refresh_token")
+            self.id_token = keyed.get("id_token")
+            self.expires_at = keyed.get("expires_at", 0.0)
 
             if time.time() < self.expires_at:
                 return True
@@ -175,6 +177,14 @@ class TokenManager:
                 ),
                 self.cache_path,
             )
+        except AttributeError:
+            logger.exception(
+                (
+                    "The oidc token cache file exist, but it's content is not "
+                    "does not contain the expected keys. Cache file: %s"
+                ),
+                self.cache_path,
+            )
 
         self.access_token = None
         self.refresh_token = None
@@ -187,6 +197,7 @@ class TokenManager:
         refresh_token: str | None,
         id_token: str | None,
         expires_in: int,
+        key: str,
     ) -> None:
         """Cache tokens to disk with expiration information.
 
@@ -216,10 +227,12 @@ class TokenManager:
             with self.cache_path.open("w") as fp:
                 json.dump(
                     {
-                        "access_token": access_token,
-                        "refresh_token": refresh_token,
-                        "id_token": id_token,
-                        "expires_at": self.expires_at,
+                        key.strip().lower(): {
+                            "access_token": access_token,
+                            "refresh_token": refresh_token,
+                            "id_token": id_token,
+                            "expires_at": self.expires_at,
+                        }
                     },
                     fp,
                 )
@@ -239,7 +252,7 @@ class TokenManager:
         except OSError:
             logger.exception("Failed to open/write to oidc token cache file")
 
-    def get_user_info(self) -> dict[str, t.Any]:
+    def get_user_info(self) -> JsonDict:
         """Retrieve user information from the userinfo endpoint.
 
         Returns
@@ -269,9 +282,9 @@ class TokenManager:
             timeout=10,
         )
         _ = response.raise_for_status()
-        return t.cast("dict[str, t.Any]", response.json())
+        return t.cast("JsonDict", response.json())
 
-    def get_claims(self) -> dict[str, t.Any]:
+    def get_claims(self) -> JsonDict:
         """Retrieve claims from the ID token.
 
         Returns
@@ -294,7 +307,7 @@ class TokenManager:
             # Add padding and decode
             padded = payload + "=" * (-len(payload) % 4)
             decoded = base64.urlsafe_b64decode(padded)
-            return t.cast("dict[str, t.Any]", json.loads(decoded))
+            return t.cast("JsonDict", json.loads(decoded))
         except Exception as e:
             err_msg: str = f"Failed to decode ID token: {e!s}"
             raise ValueError(err_msg) from e
@@ -314,8 +327,15 @@ class TokenManager:
         ValueError
             If token response is invalid
         """
-        if self.recall_cached_token() and self.access_token:
+        if self.recall_cached_token("user") and self.access_token:
             return self.access_token
+
+        if self.recall_cached_token("user") and self.access_token:
+            if time.time() < self.expires_at:
+                return self.access_token
+            refresh_token = self.refresh_access_token()
+            if refresh_token:
+                return refresh_token
 
         try:
             response = httpx.post(
@@ -352,6 +372,7 @@ class TokenManager:
             token_data.get("refresh_token"),
             token_data.get("id_token"),
             t.cast("int", token_data.get("expires_in", 3600)),
+            "user",
         )
         return access_token
 
@@ -411,7 +432,7 @@ class TokenManager:
         thread.start()
         return server, server.server_address[1]
 
-    def get_user_token(self) -> str:
+    def get_user_token(self, claims: t.Iterable[str]) -> str:
         """Get access token using authorization code flow with PKCE.
 
         Returns
@@ -429,7 +450,7 @@ class TokenManager:
             If token response is invalid
         """
         # TODO: Use cache key
-        if self.recall_cached_token() and self.access_token:
+        if self.recall_cached_token("user") and self.access_token:
             if time.time() < self.expires_at:
                 return self.access_token
             refresh_token = self.refresh_access_token()
@@ -446,7 +467,7 @@ class TokenManager:
             "client_id": self.client_id,
             "redirect_uri": redirect_uri,
             # TODO: add: urn:synapse:admin
-            "scope": "openid urn:matrix:org.matrix.msc2967.client:api:*",
+            "scope": " ".join(claims),
             "code_challenge": code_challenge,
             "code_challenge_method": "S256",
             "state": "active",
@@ -457,7 +478,7 @@ class TokenManager:
             print("A new tab should have opened in your browser.")
             print(
                 "If not, please visit this URL in your browser "
-                "manually:\n{url}\n"
+                f"manually:\n{url}\n"
             )
         else:
             print(f"Please visit this URL in your browser:\n{url}\n")
@@ -502,6 +523,7 @@ class TokenManager:
                 token_data.get("refresh_token"),
                 token_data.get("id_token"),
                 t.cast("int", token_data.get("expires_in", 3600)),
+                "user",
             )
             return access_token
         finally:
@@ -541,6 +563,7 @@ class TokenManager:
                     ),
                     token_data.get("id_token"),
                     t.cast("int", token_data.get("expires_in", 3600)),
+                    "user",
                 )
                 return access_token
         except httpx.HTTPStatusError as e:
@@ -588,42 +611,3 @@ class TokenManager:
         )
         _ = response.raise_for_status()
         return t.cast("dict[str, t.Any]", response.json())
-
-
-def get_oidc_config(issuer_url: str) -> dict[str, t.Any]:
-    """Retrieve OIDC provider configuration via discovery.
-
-    Parameters
-    ----------
-    issuer_url : str
-        Base URL of the OIDC issuer
-
-    Returns
-    -------
-    dict[str, t.Any]
-        OIDC provider configuration
-
-    Raises
-    ------
-    httpx.HTTPStatusError
-        For HTTP request failures
-    ValueError
-        If discovery document is invalid
-    """
-    try:
-        discovery_url = (
-            f"{issuer_url.rstrip('/')}/.well-known/openid-configuration"
-        )
-        response = httpx.get(discovery_url, timeout=10)
-        _ = response.raise_for_status()
-        return t.cast("dict[str, t.Any]", response.json())
-    except httpx.HTTPStatusError as e:
-        logger.exception(
-            "Discovery request failed: %s %s",
-            e.response.status_code,
-            e.response.text,
-        )
-        raise
-    except Exception:
-        logger.exception("Discovery request failed")
-        raise

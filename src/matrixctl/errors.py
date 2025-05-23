@@ -86,6 +86,10 @@ class InternalResponseError(Error):  # TODO: rename
     """Use this exception class for everything else."""
 
 
+class ShouldNeverHappenError(Error):
+    """Use this exception class for everything that should never happen."""
+
+
 class ParserError(Error):
     """The parser was unable to parse the the given data correctly."""
 

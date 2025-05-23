@@ -70,14 +70,14 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         arg.user = f"@{arg.user}"
 
     if ":" not in arg.user:
-        arg.user = f"{arg.user}:{yaml.get('server', 'api','domain')}"
+        arg.user = f"{arg.user}:{yaml.get('server', 'api', 'domain')}"
 
     logger.debug("room = %s", arg.room)
     logger.debug("user = %s", arg.user)
 
     # request
     request_config: RequestBuilder = RequestBuilder(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         path=f"/_synapse/admin/v1/join/{arg.room}",
         method="POST",

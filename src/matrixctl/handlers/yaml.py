@@ -18,6 +18,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 import sys
@@ -29,6 +30,8 @@ from collections.abc import MutableMapping
 from getpass import getuser
 from pathlib import Path
 
+import httpx
+
 from jinja2 import Template
 from jinja2 import Undefined
 from ruamel.yaml import YAML as RuamelYAML  # noqa: N811
@@ -36,10 +39,14 @@ from ruamel.yaml.error import YAMLError
 
 from matrixctl import __version__
 from matrixctl.errors import ConfigFileError
+from matrixctl.errors import ShouldNeverHappenError
+from matrixctl.handlers.oidc import TokenManager
 from matrixctl.structures import Config
 from matrixctl.structures import ConfigServerAPI
+from matrixctl.structures import ConfigServerAPIAuthOidc
 from matrixctl.structures import ConfigUi
 from matrixctl.structures import ConfigUiImage
+from matrixctl.typehints import JsonDict
 
 
 __author__: str = "Michael Sasser"
@@ -107,7 +114,7 @@ def secrets_filter(tree: dict[str, str], key: str) -> t.Any:
     None
 
     """
-    redact = {"token", "synapse_password"}
+    redact = {"token", "synapse_password", "client_secret"}
     return (
         f"<redacted length={len(tree[key])}>" if key in redact else tree[key]
     )
@@ -137,8 +144,9 @@ class YAML:
         "user": getuser(),
         "default_ssh_port": 22,
         "default_api_concurrent_limit": 4,
+        "well_knowen_path": ".well-known/openid-configuration",
     }
-    __slots__ = ("__yaml", "server")
+    __slots__ = ("__yaml", "api_auth_prepared", "server", "token_manager")
 
     def __init__(
         self: YAML,
@@ -153,6 +161,8 @@ class YAML:
             paths or self.get_paths_to_config(),
             self.server,
         )
+        self.token_manager: TokenManager | None = None
+        self.api_auth_prepared: bool = False
 
         if not self.__yaml:  # dict is empty
             logger.error(
@@ -245,7 +255,7 @@ class YAML:
                 rendered = YAML.JINJA_PREDEFINED | yaml.load(template.render())
                 rendered["home"] = str(Path.home())
                 # Override default return type t.Any with Config
-                return t.cast(Config, yaml.load(template.render(rendered)))
+                return t.cast("Config", yaml.load(template.render(rendered)))
         except YAMLError:
             logger.exception(
                 (
@@ -266,7 +276,7 @@ class YAML:
                 str(path),
             )
 
-        return t.cast(Config, {})
+        return t.cast("Config", {})
 
     @staticmethod
     def apply_defaults(config: Config, server: str) -> Config:
@@ -295,13 +305,30 @@ class YAML:
         try:
             config["servers"][server]["api"]["concurrent_limit"]
         except KeyError:
-            config["servers"][server]["api"] = t.cast(ConfigServerAPI, {})
+            config["servers"][server]["api"] = t.cast("ConfigServerAPI", {})
 
         # Create default for concurrent_limit
         try:
             config["servers"][server]["api"]["concurrent_limit"]
         except KeyError:
             config["servers"][server]["api"]["concurrent_limit"] = 4
+
+        # Auth type
+        try:
+            config["servers"][server]["api"]["auth_type"]
+        except KeyError:
+            config["servers"][server]["api"]["auth_type"] = "token"
+        config["servers"][server]["api"]["auth_type"] = config["servers"][
+            server
+        ]["api"]["auth_type"].lower()
+
+        # Create api.auth_oidc if it does not exist
+        try:
+            config["servers"][server]["api"]["auth_oidc"]["client_id"]
+        except KeyError:
+            config["servers"][server]["api"]["auth_oidc"] = t.cast(
+                "ConfigServerAPIAuthOidc", {}
+            )
 
         #
         # Ui
@@ -311,13 +338,13 @@ class YAML:
         try:
             config["ui"]["image"]
         except KeyError:
-            config["ui"] = t.cast(ConfigUi, {})
+            config["ui"] = t.cast("ConfigUi", {})
 
         # Create ui if it does not exist
         try:
             config["ui"]["image"]["scale_factor"]
         except KeyError:
-            config["ui"]["image"] = t.cast(ConfigUiImage, {})
+            config["ui"]["image"] = t.cast("ConfigUiImage", {})
 
         # Create default for display_scale_factor
         try:
@@ -374,11 +401,11 @@ class YAML:
         )
         try:
             conf: Config = t.cast(
-                Config,
+                "Config",
                 dict(
                     ChainMap(
                         *(
-                            t.cast(MutableMapping[t.Any, t.Any], config)
+                            t.cast("MutableMapping[t.Any, t.Any]", config)
                             for config in configs
                             if config
                         ),
@@ -468,6 +495,296 @@ class YAML:
             "not a entire section."
         )
         raise ConfigFileError(msg)
+
+    @staticmethod
+    def __get_oidc_config(issuer_url: str) -> JsonDict:
+        """Retrieve OIDC provider configuration via discovery.
+
+        Parameters
+        ----------
+        issuer_url : str
+            Base URL of the OIDC issuer
+
+        Returns
+        -------
+        dict[str, t.Any]
+            OIDC provider configuration
+
+        Raises
+        ------
+        httpx.HTTPStatusError
+            For HTTP request failures
+        ValueError
+            If discovery document is invalid
+        """
+        try:
+            discovery_url = issuer_url.rstrip("/")
+            response = httpx.get(discovery_url, timeout=10)
+            _ = response.raise_for_status()
+            return t.cast("JsonDict", response.json())
+        except httpx.HTTPStatusError as e:
+            logger.exception(
+                "Discovery request failed: %s %s",
+                e.response.status_code,
+                e.response.text,
+            )
+            raise
+
+        except json.JSONDecodeError:
+            logger.exception(
+                (
+                    "The discovery request JSON response could not be "
+                    "decoded. Invalid JSON: %s"
+                ),
+                response,
+            )
+            raise
+
+    # TODO: Simplify. Maybe use get() instead of try/except?
+    def ensure_api_auth(self) -> None:
+        """Ensure the API authentication configuration is valid and prepared.
+
+        This method checks the authentication type specified in the
+        configuration and validates that all required fields for the selected
+        authentication method are present. It supports 'token' and 'oidc'
+        authentication types.
+
+        For 'token' authentication, it verifies the presence of 'auth_token',
+        'username', and 'token'. For 'oidc' authentication, it checks for
+        required OIDC endpoints and credentials, and if necessary, fetches
+        OIDC configuration from a discovery endpoint. It also initializes the
+        TokenManager and retrieves claims and user information.
+
+        Raises
+        ------
+        ConfigFileError
+            If required configuration fields are missing or invalid.
+        ValueError
+            If the OIDC authorization endpoint is not found.
+        """
+        if self.api_auth_prepared:
+            return
+        # exists because it has a default value
+        auth_type: str = self.__yaml["server"]["api"]["auth_type"]
+        err_msg: str
+        match auth_type:
+            case "token":
+                try:
+                    self.__yaml["server"]["api"]["auth_token"]
+                except KeyError as e:
+                    err_msg = (
+                        "You need to set the auth_token in your api config of "
+                        "your config file if you use the token auth type."
+                    )
+                    raise ConfigFileError(err_msg) from e
+
+                try:
+                    self.__yaml["server"]["api"]["auth_token"]["username"]
+                    self.__yaml["server"]["api"]["auth_token"]["token"]
+                except KeyError as e:
+                    err_msg = (
+                        "When using the token auth type, you need to set "
+                        "api.auth_token.username and api.auth_token.token in "
+                        "the config file."
+                    )
+                    raise ConfigFileError(err_msg) from e
+            case "oidc":
+                # server.api.auth_oidc exisits because it has a default value
+
+                # check if we need the server.api.auth_oidc.discovery_endpoint
+                try:
+                    self.__yaml["server"]["api"]["auth_oidc"]["token_endpoint"]
+                    self.__yaml["server"]["api"]["auth_oidc"]["auth_endpoint"]
+                    self.__yaml["server"]["api"]["auth_oidc"][
+                        "userinfo_endpoint"
+                    ]
+                    self.__yaml["server"]["api"]["auth_oidc"]["jwks_uri"]
+                except KeyError:
+                    try:
+                        discovery_endpoint: str = self.__yaml["server"]["api"][
+                            "auth_oidc"
+                        ]["discovery_endpoint"]
+                        oidc_config: JsonDict = self.__get_oidc_config(
+                            discovery_endpoint
+                        )
+
+                        self.__yaml["server"]["api"]["auth_oidc"][
+                            "token_endpoint"
+                        ] = t.cast("str", oidc_config["token_endpoint"])
+                        self.__yaml["server"]["api"]["auth_oidc"][
+                            "auth_endpoint"
+                        ] = t.cast(
+                            "str", oidc_config.get("authorization_endpoint")
+                        )
+                        self.__yaml["server"]["api"]["auth_oidc"][
+                            "userinfo_endpoint"
+                        ] = t.cast("str", oidc_config.get("userinfo_endpoint"))
+                        self.__yaml["server"]["api"]["auth_oidc"][
+                            "jwks_uri"
+                        ] = t.cast("str", oidc_config.get("jwks_uri"))
+                    except KeyError as e:
+                        err_msg = (
+                            "To use the oidc auth type, you need to set "
+                            "either the api.auth_oidc.discovery_endpoint or "
+                            "api.auth_oidc.token_endpoint, "
+                            "api.auth_oidc.auth_endpoint, "
+                            "api.auth_oidc.userinfo_endpoint and "
+                            "api.auth_oidc.jwks_uri "
+                        )
+                        raise ConfigFileError(err_msg) from e
+
+                    try:
+                        self.__yaml["server"]["api"]["auth_oidc"]["client_id"]
+                    except KeyError as e:
+                        err_msg = (
+                            "You need to set the client_id in your config "
+                            "file, under api.auth_oidc.client_id, if you use "
+                            "the oidc auth."
+                        )
+                        raise ConfigFileError(err_msg) from e
+                    try:
+                        self.__yaml["server"]["api"]["auth_oidc"][
+                            "client_secret"
+                        ]
+                    except KeyError as e:
+                        err_msg = (
+                            "You need to set the client_secret in your config "
+                            "file, under api.auth_oidc.client_secret, if you "
+                            "use the oidc auth."
+                        )
+                        raise ConfigFileError(err_msg) from e
+
+                    token_manager = TokenManager(
+                        token_endpoint=self.__yaml["server"]["api"][
+                            "auth_oidc"
+                        ]["token_endpoint"],
+                        client_id=self.__yaml["server"]["api"]["auth_oidc"][
+                            "client_id"
+                        ],
+                        client_secret=self.__yaml["server"]["api"][
+                            "auth_oidc"
+                        ]["client_secret"],
+                        auth_endpoint=self.__yaml["server"]["api"][
+                            "auth_oidc"
+                        ]["auth_endpoint"],
+                        userinfo_endpoint=self.__yaml["server"]["api"][
+                            "auth_oidc"
+                        ]["userinfo_endpoint"],
+                        jwks_uri=self.__yaml["server"]["api"]["auth_oidc"][
+                            "jwks_uri"
+                        ],
+                    )
+
+                    if not token_manager.auth_endpoint:
+                        err_msg = (
+                            "Authorization endpoint not found in OIDC "
+                            "configuration"
+                        )
+                        raise ValueError(err_msg) from None
+
+                    using_claims: set[str] = {
+                        "openid",
+                        "urn:synapse:admin:*",
+                        "urn:matrix:org.matrix.msc2967.client:api:*",
+                    }
+                    _: str = token_manager.get_user_token(using_claims)
+                    claims = token_manager.get_claims()
+                    user_info = token_manager.get_user_info()
+
+                    self.__yaml["server"]["api"]["auth_oidc"]["claims"] = (
+                        claims
+                    )
+                    self.__yaml["server"]["api"]["auth_oidc"]["user_info"] = (
+                        user_info
+                    )
+                    self.token_manager = token_manager
+
+                    # # TODO: SEC: Remove the print statements below!
+                    # print("\nID Token Claims:")
+                    # print(json.dumps(token_manager.get_claims(), indent=2))
+                    #
+                    # print("\nUser Information:")
+                    # print(json.dumps(token_manager.get_user_info(), indent=2))
+            case _:
+                err_msg = (
+                    f"Unknown auth type {auth_type} in your config file."
+                    "Possible values are: 'token' and 'oidc'."
+                )
+                raise ConfigFileError(err_msg)
+        self.api_auth_prepared = True
+
+    def get_api_username(self) -> str:
+        """Retrieve the API token for authentication.
+
+        This method ensures API authentication is set up, then retrieves
+        the username based on the configured authentication type. Supports
+        'token' and 'oidc' auth types.
+
+        Returns
+        -------
+        username : str
+            The username.
+
+        Raises
+        ------
+        ShouldNeverHappenError
+            If the token manager is not initialized or the auth type is
+            unknown.
+
+        """
+        self.ensure_api_auth()
+        match self.get("server", "api", "auth_type"):
+            case "token":
+                return self.get("server", "api", "auth_token", "username")
+            case "oidc":
+                localpart = self.get(
+                    "server", "api", "auth_oidc", "user_info", "username"
+                )
+                server = self.get("server", "api", "domain")
+                return f"@{localpart}:{server}"
+            case _:
+                err_msg = "Unknown Username"
+                raise ShouldNeverHappenError(err_msg)
+
+    def get_api_token(self) -> str:
+        """Retrieve the API token for authentication.
+
+        This method ensures API authentication is set up, then retrieves
+        the token based on the configured authentication type. Supports
+        'token' and 'oidc' auth types.
+
+        Returns
+        -------
+        token : str
+            The API token string.
+
+        Raises
+        ------
+        ShouldNeverHappenError
+            If the token manager is not initialized or the auth type is
+            unknown.
+
+        """
+        self.ensure_api_auth()
+        match self.get("server", "api", "auth_type"):
+            case "token":
+                return self.get("server", "api", "auth_token", "token")
+            case "oidc":
+                using_claims: set[str] = {
+                    "openid",
+                    "urn:synapse:admin:*",
+                    "urn:matrix:org.matrix.msc2967.client:api:*",
+                }
+                if not self.token_manager:
+                    err_msg = (
+                        "Token manager not initialized. "
+                        "Call ensure_api_auth() first."
+                    )
+                    raise ShouldNeverHappenError(err_msg)
+                return self.token_manager.get_user_token(using_claims)
+            case _:
+                err_msg = "Unknown Token"
+                raise ShouldNeverHappenError(err_msg)
 
     def __repr__(self: YAML) -> str:
         """Wrap RuamelYAML repr."""

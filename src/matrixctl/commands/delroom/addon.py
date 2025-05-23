@@ -58,7 +58,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     body: JsonDict = handle_arguments(arg)
 
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         path=f"/_synapse/admin/v2/rooms/{arg.room}",
         method="DELETE",
@@ -116,7 +116,7 @@ def handle_status(yaml: YAML, delete_id: str) -> JsonDict:
 
     """
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         path=f"/_synapse/admin/v2/rooms/delete_status/{delete_id}",
         method="GET",
@@ -152,8 +152,7 @@ def handle_status(yaml: YAML, delete_id: str) -> JsonDict:
             # complete
             if json_response["status"] == "complete":
                 print(
-                    "Status: Complete (the room has been deleted"
-                    "successfully)",
+                    "Status: Complete (the room has been deletedsuccessfully)",
                 )
                 break
             # shutting_down
