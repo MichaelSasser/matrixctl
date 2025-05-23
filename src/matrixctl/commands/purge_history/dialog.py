@@ -83,7 +83,7 @@ def dialog_input(arg: Namespace) -> dict[str, str | int]:
             )
             if not ask_question("Do you want to continue?"):
                 sys.exit(0)
-        request_body["purge_up_to_ts"] = int(round(time.time() * 1000))
+        request_body["purge_up_to_ts"] = round(time.time() * 1000)
     else:
         point_in_time: dict[str, str | int] | None = check_point_in_time(
             arg.event_or_timestamp,

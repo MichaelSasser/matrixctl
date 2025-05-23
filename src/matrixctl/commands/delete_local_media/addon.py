@@ -124,7 +124,7 @@ def handle_timestamp(timestamp: int | None, *, force: bool) -> int:
             )
             if not ask_question("Do you want to continue?"):
                 sys.exit(0)
-        return int(round(ts * 1000))
+        return round(ts * 1000)
     try:
         dt = datetime.fromtimestamp(float(timestamp) / 1000, tz=timezone.utc)
         logger.info("Delete until %s", dt)

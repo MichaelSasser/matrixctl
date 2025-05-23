@@ -34,9 +34,11 @@ from copy import deepcopy
 from mimetypes import MimeTypes
 from pathlib import Path
 
-import attr
 import httpx
 import rich.progress
+
+from attrs import define
+from attrs import field
 
 from matrixctl import __version__
 from matrixctl.errors import InternalResponseError
@@ -87,25 +89,27 @@ class RequestStrategy(t.NamedTuple):
     iterations: int
 
 
-@attr.s(slots=True, auto_attribs=True, repr=False)
+@define(slots=True, auto_attribs=True, repr=False)
 class RequestBuilder:
     """Build the URL for an API request."""
 
-    token: str = attr.ib()
-    domain: str = attr.ib()
-    path: str = attr.ib()
-    scheme: str = "https"
-    subdomain: str = "matrix"
-    data: dict[str, t.Any] | None = None  # just key/value store
-    json: dict[str, t.Any] | None = None  # json
-    content: str | bytes | Iterable[bytes] | None = None  # bytes
-    method: str = "GET"
-    params: dict[str, str | int] = {}  # noqa: RUF012
+    token: str = field()
+    domain: str = field()
+    path: str = field()
+    scheme: str = field(default="https")
+    subdomain: str = field(default="matrix")
+    data: dict[str, t.Any] | None = field(default=None)  # just key/value store
+    json: dict[str, t.Any] | None = field(default=None)  # json
+    content: str | bytes | Iterable[bytes] | None = field(
+        default=None
+    )  # bytes
+    method: str = field(default="GET")
+    params: dict[str, str | int] = field(factory=dict)
     # Cannot be none with MatrixCtl
-    headers: dict[str, str] = {}  # noqa: RUF012
-    concurrent_limit: int = 4
-    timeout: float = 5.0  # seconds
-    success_codes: tuple[int, ...] = DEFAULT_SUCCESS_CODES
+    headers: dict[str, str] = field(factory=dict)
+    concurrent_limit: int = field(default=4, converter=int)
+    timeout: float = field(default=5.0, converter=float)  # seconds
+    success_codes: tuple[int, ...] = field(default=DEFAULT_SUCCESS_CODES)
 
     @property
     def headers_with_auth(self) -> dict[str, str]:
