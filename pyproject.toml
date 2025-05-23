@@ -132,9 +132,10 @@ task-tags = ["TODO", "FIXME", "WARN", "SEC", "SECURITY", "INFO", "NOTE"]
 ignore = [
   "D202",
   "D203",
+  "TC001",
   "TC002",
   "TC003",
-  "TC001",
+  "TC006",   # Runtime cast value
   "ANN401",
   "T201",    # Print statements
   "TD002",   # Missing TODO author

@@ -153,7 +153,7 @@ class TokenManager:
                 data: JsonDict = json.load(fp)
 
             logger.debug("Cache file exists: %s", self.cache_path)
-            keyed: JsonDict = t.cast("JsonDict", data.get(key.strip().lower()))
+            keyed: JsonDict = t.cast(JsonDict, data.get(key.strip().lower()))
 
             self.access_token = keyed.get("access_token")
             self.refresh_token = keyed.get("refresh_token")
@@ -317,7 +317,7 @@ class TokenManager:
             timeout=10,
         )
         _ = response.raise_for_status()
-        user_info: JsonDict = t.cast("JsonDict", response.json())
+        user_info: JsonDict = t.cast(JsonDict, response.json())
         logger.debug("User info retrieved: %s", user_info)
         return user_info
 
@@ -346,7 +346,7 @@ class TokenManager:
                 -len(payload_unpadded) % 4
             )
             payload_decoded = base64.urlsafe_b64decode(payload_padded)
-            payload: JsonDict = t.cast("JsonDict", json.loads(payload_decoded))
+            payload: JsonDict = t.cast(JsonDict, json.loads(payload_decoded))
         except Exception as e:
             err_msg: str = f"Failed to decode ID token: {e!s}"
             raise ValueError(err_msg) from e
@@ -394,7 +394,7 @@ class TokenManager:
             )
             _ = response.raise_for_status()
             token_data: dict[str, t.Any] = t.cast(
-                "dict[str, t.Any]", response.json()
+                dict[str, t.Any], response.json()
             )
         except httpx.HTTPStatusError as e:
             logger.exception(
@@ -408,7 +408,7 @@ class TokenManager:
             raise
 
         access_token: str
-        if not (access_token := t.cast("str", token_data.get("access_token"))):
+        if not (access_token := t.cast(str, token_data.get("access_token"))):
             err_msg: str = "No access token in response"
             raise ValueError(err_msg)
 
@@ -416,7 +416,7 @@ class TokenManager:
             access_token,
             token_data.get("refresh_token"),
             token_data.get("id_token") or self.id_token,
-            t.cast("int", token_data.get("expires_in", 3600)),
+            t.cast(int, token_data.get("expires_in", 3600)),
             "user",
         )
         return access_token
@@ -462,7 +462,7 @@ class TokenManager:
                         b"Authentication successful! "
                         b"You can close this window."
                     )
-                    auth_server = t.cast("OidcTCPServer", self.server)
+                    auth_server = t.cast(OidcTCPServer, self.server)
                     auth_server.auth_code = query["code"][0]
                 else:
                     self.send_response(400)
@@ -568,9 +568,9 @@ class TokenManager:
                 },
             )
             _ = token_response.raise_for_status()
-            token_data: JsonDict = t.cast("JsonDict", token_response.json())
+            token_data: JsonDict = t.cast(JsonDict, token_response.json())
 
-            access_token: str = t.cast("str", token_data.get("access_token"))
+            access_token: str = t.cast(str, token_data.get("access_token"))
             logger.debug("Got response from requesting access token")
             if not access_token:
                 logger.debug("There was no acccess token in the response")
@@ -581,7 +581,7 @@ class TokenManager:
                 access_token,
                 token_data.get("refresh_token"),
                 token_data.get("id_token") or self.id_token,
-                t.cast("int", token_data.get("expires_in", 3600)),
+                t.cast(int, token_data.get("expires_in", 3600)),
                 "user",
             )
             logger.debug("Cached token stored")
@@ -618,18 +618,18 @@ class TokenManager:
             )
             _ = response.raise_for_status()
             logger.debug("Got refresh token response")
-            token_data: JsonDict = t.cast("JsonDict", response.json())
+            token_data: JsonDict = t.cast(JsonDict, response.json())
 
             access_token: str
-            if access_token := t.cast("str", token_data.get("access_token")):
+            if access_token := t.cast(str, token_data.get("access_token")):
                 self.store_cache_token(
                     access_token,
                     t.cast(
-                        "str",
+                        str,
                         token_data.get("refresh_token", self.refresh_token),
                     ),
                     token_data.get("id_token") or self.id_token,
-                    t.cast("int", token_data.get("expires_in", 3600)),
+                    t.cast(int, token_data.get("expires_in", 3600)),
                     "user",
                 )
                 logger.debug("Stored refreshed token")
@@ -678,4 +678,4 @@ class TokenManager:
             },
         )
         _ = response.raise_for_status()
-        return t.cast("dict[str, t.Any]", response.json())
+        return t.cast(dict[str, t.Any], response.json())

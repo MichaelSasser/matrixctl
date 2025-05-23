@@ -255,7 +255,7 @@ class YAML:
                 rendered = YAML.JINJA_PREDEFINED | yaml.load(template.render())
                 rendered["home"] = str(Path.home())
                 # Override default return type t.Any with Config
-                return t.cast("Config", yaml.load(template.render(rendered)))
+                return t.cast(Config, yaml.load(template.render(rendered)))
         except YAMLError:
             logger.exception(
                 (
@@ -276,7 +276,7 @@ class YAML:
                 str(path),
             )
 
-        return t.cast("Config", {})
+        return t.cast(Config, {})
 
     @staticmethod
     def apply_defaults(config: Config, server: str) -> Config:
@@ -305,7 +305,7 @@ class YAML:
         try:
             config["servers"][server]["api"]["concurrent_limit"]
         except KeyError:
-            config["servers"][server]["api"] = t.cast("ConfigServerAPI", {})
+            config["servers"][server]["api"] = t.cast(ConfigServerAPI, {})
 
         # Create default for concurrent_limit
         try:
@@ -327,7 +327,7 @@ class YAML:
             config["servers"][server]["api"]["auth_oidc"]["client_id"]
         except KeyError:
             config["servers"][server]["api"]["auth_oidc"] = t.cast(
-                "ConfigServerAPIAuthOidc", {}
+                ConfigServerAPIAuthOidc, {}
             )
 
         #
@@ -338,13 +338,13 @@ class YAML:
         try:
             config["ui"]["image"]
         except KeyError:
-            config["ui"] = t.cast("ConfigUi", {})
+            config["ui"] = t.cast(ConfigUi, {})
 
         # Create ui if it does not exist
         try:
             config["ui"]["image"]["scale_factor"]
         except KeyError:
-            config["ui"]["image"] = t.cast("ConfigUiImage", {})
+            config["ui"]["image"] = t.cast(ConfigUiImage, {})
 
         # Create default for display_scale_factor
         try:
@@ -401,11 +401,11 @@ class YAML:
         )
         try:
             conf: Config = t.cast(
-                "Config",
+                Config,
                 dict(
                     ChainMap(
                         *(
-                            t.cast(MutableMapping[t.Any, t.Any], config)  # noqa: TC006
+                            t.cast(MutableMapping[t.Any, t.Any], config)
                             for config in configs
                             if config
                         ),
@@ -521,7 +521,7 @@ class YAML:
             discovery_url = issuer_url.rstrip("/")
             response = httpx.get(discovery_url, timeout=10)
             _ = response.raise_for_status()
-            oidc_config: JsonDict = t.cast("JsonDict", response.json())
+            oidc_config: JsonDict = t.cast(JsonDict, response.json())
         except httpx.HTTPStatusError as e:
             logger.exception(
                 "Discovery request failed: %s %s",
@@ -613,18 +613,18 @@ class YAML:
 
                         self.__yaml["server"]["api"]["auth_oidc"][
                             "token_endpoint"
-                        ] = t.cast("str", oidc_config["token_endpoint"])
+                        ] = t.cast(str, oidc_config["token_endpoint"])
                         self.__yaml["server"]["api"]["auth_oidc"][
                             "auth_endpoint"
                         ] = t.cast(
-                            "str", oidc_config.get("authorization_endpoint")
+                            str, oidc_config.get("authorization_endpoint")
                         )
                         self.__yaml["server"]["api"]["auth_oidc"][
                             "userinfo_endpoint"
-                        ] = t.cast("str", oidc_config.get("userinfo_endpoint"))
+                        ] = t.cast(str, oidc_config.get("userinfo_endpoint"))
                         self.__yaml["server"]["api"]["auth_oidc"][
                             "jwks_uri"
-                        ] = t.cast("str", oidc_config.get("jwks_uri"))
+                        ] = t.cast(str, oidc_config.get("jwks_uri"))
                     except KeyError as e:
                         err_msg = (
                             "To use the oidc auth type, you need to set "
@@ -732,7 +732,7 @@ class YAML:
         match self.get("server", "api", "auth_type"):
             case "token":
                 return t.cast(
-                    "str", self.get("server", "api", "auth_token", "username")
+                    str, self.get("server", "api", "auth_token", "username")
                 )
             case "oidc":
                 localpart = self.get(
@@ -767,7 +767,7 @@ class YAML:
         match self.get("server", "api", "auth_type"):
             case "token":
                 return t.cast(
-                    "str", self.get("server", "api", "auth_token", "token")
+                    str, self.get("server", "api", "auth_token", "token")
                 )
             case "oidc":
                 using_claims: set[str] = {
