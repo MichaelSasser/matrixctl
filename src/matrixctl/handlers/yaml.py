@@ -85,7 +85,7 @@ def tree_printer(tree: t.Any, depth: int = 0) -> None:
                 key,
                 secrets_filter(tree, key),
             )
-        elif isinstance(tree[key], list | tuple):
+        elif isinstance(tree[key], t.Iterable):
             logger.debug(
                 "%s├─── %s: [%s]",
                 "│ " * depth,
@@ -279,7 +279,7 @@ class YAML:
         return t.cast(Config, {})
 
     @staticmethod
-    def apply_defaults(config: Config, server: str) -> Config:
+    def apply_defaults(config: Config, server: str) -> Config:  # noqa: C901
         """Apply defaults to the configuration.
 
         Parameters
@@ -328,6 +328,18 @@ class YAML:
         except KeyError:
             config["servers"][server]["api"]["auth_oidc"] = t.cast(
                 ConfigServerAPIAuthOidc, {}
+            )
+        try:
+            config["servers"][server]["api"]["auth_oidc"]["claims"]
+        except KeyError:
+            config["servers"][server]["api"]["auth_oidc"]["claims"] = (
+                frozenset(
+                    {
+                        "openid",
+                        "urn:synapse:admin:*",
+                        "urn:matrix:org.matrix.msc2967.client:api:*",
+                    }
+                )
             )
 
         #
@@ -434,7 +446,7 @@ class YAML:
         return conf
 
     # TODO: doctest + fixture
-    def get(self: YAML, *keys: str) -> t.Any:
+    def get(self: YAML, *keys: str, or_else: t.Any = None) -> t.Any:
         """Get a value from a config entry safely.
 
         **Usage**
@@ -470,6 +482,8 @@ class YAML:
             for key in keys:
                 yaml_walker = yaml_walker[key]
         except KeyError:
+            if or_else is not None:
+                return or_else
             tree: str = ".".join(keys[:-1]).replace(
                 "server",
                 f"servers.{self.server}",
@@ -556,7 +570,7 @@ class YAML:
         'username', and 'token'. For 'oidc' authentication, it checks for
         required OIDC endpoints and credentials, and if necessary, fetches
         OIDC configuration from a discovery endpoint. It also initializes the
-        TokenManager and retrieves claims and user information.
+        TokenManager and retrieves payload and user information.
 
         Raises
         ------
@@ -685,12 +699,9 @@ class YAML:
                         )
                         raise ValueError(err_msg) from None
 
-                    using_claims: set[str] = {
-                        "openid",
-                        "urn:synapse:admin:*",
-                        "urn:matrix:org.matrix.msc2967.client:api:*",
-                    }
-                    _: str = token_manager.get_user_token(using_claims)
+                    # must exist because of the default value
+                    claims = self.get("server", "api", "auth_oidc", "claims")
+                    _: str = token_manager.get_user_token(claims)
                     payload = token_manager.get_payload()
                     user_info = token_manager.get_user_info()
 
@@ -770,18 +781,15 @@ class YAML:
                     str, self.get("server", "api", "auth_token", "token")
                 )
             case "oidc":
-                using_claims: set[str] = {
-                    "openid",
-                    "urn:synapse:admin:*",
-                    "urn:matrix:org.matrix.msc2967.client:api:*",
-                }
                 if not self.token_manager:
                     err_msg = (
                         "Token manager not initialized. "
                         "Call ensure_api_auth() first."
                     )
                     raise ShouldNeverHappenError(err_msg)
-                return self.token_manager.get_user_token(using_claims)
+                return self.token_manager.get_user_token(
+                    self.get("server", "api", "auth_oidc", "claims")
+                )
             case _:
                 err_msg = "Unknown Token"
                 raise ShouldNeverHappenError(err_msg)

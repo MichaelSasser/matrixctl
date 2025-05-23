@@ -80,6 +80,7 @@ class ConfigServerAPIAuthOidc(t.TypedDict):
     auth_endpoint: str
     userinfo_endpoint: str
     jwks_uri: str
+    claims: t.Iterable[str]
 
     # Dynamically generated. Any user input will be overwritten.
     user_info: JsonDict
