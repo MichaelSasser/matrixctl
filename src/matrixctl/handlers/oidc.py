@@ -32,7 +32,7 @@ from urllib.parse import urlparse
 
 import httpx
 
-from xdg import xdg_data_home
+from xdg_base_dirs import xdg_data_home
 
 from matrixctl.typehints import JsonDict
 
