@@ -679,3 +679,50 @@ class TokenManager:
         )
         _ = response.raise_for_status()
         return t.cast(dict[str, t.Any], response.json())
+
+
+def discover_oidc_endpoints(issuer_url: str) -> JsonDict:
+    """Retrieve OIDC provider configuration via discovery.
+
+    Parameters
+    ----------
+    issuer_url : str
+        Base URL of the OIDC issuer
+
+    Returns
+    -------
+    dict[str, t.Any]
+        OIDC provider configuration
+
+    Raises
+    ------
+    httpx.HTTPStatusError
+        For HTTP request failures
+    ValueError
+        If discovery document is invalid
+    """
+    try:
+        discovery_url = issuer_url.rstrip("/")
+        response = httpx.get(discovery_url, timeout=10)
+        _ = response.raise_for_status()
+        oidc_config: JsonDict = t.cast(JsonDict, response.json())
+    except httpx.HTTPStatusError as e:
+        logger.exception(
+            "Discovery request failed: %s %s",
+            e.response.status_code,
+            e.response.text,
+        )
+        raise
+
+    except json.JSONDecodeError:
+        logger.exception(
+            (
+                "The discovery request JSON response could not be "
+                "decoded. Invalid JSON: %s"
+            ),
+            response,
+        )
+        raise
+
+    logger.debug("OIDC discovery response: %s", oidc_config)
+    return oidc_config

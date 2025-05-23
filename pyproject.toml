@@ -434,7 +434,7 @@ commands =
 
 [testenv]
 runner = uv-venv-lock-runner
-uv_sync_flags=--python={env_python}
+# uv_sync_flags=--python={env_python}
 allow_externals = converge
 with_dev = true
 extras =

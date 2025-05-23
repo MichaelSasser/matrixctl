@@ -18,7 +18,6 @@
 
 from __future__ import annotations
 
-import json
 import logging
 import os
 import sys
@@ -30,8 +29,6 @@ from collections.abc import MutableMapping
 from getpass import getuser
 from pathlib import Path
 
-import httpx
-
 from jinja2 import Template
 from jinja2 import Undefined
 from ruamel.yaml import YAML as RuamelYAML  # noqa: N811
@@ -41,9 +38,11 @@ from matrixctl import __version__
 from matrixctl.errors import ConfigFileError
 from matrixctl.errors import ShouldNeverHappenError
 from matrixctl.handlers.oidc import TokenManager
+from matrixctl.handlers.oidc import discover_oidc_endpoints
 from matrixctl.structures import Config
 from matrixctl.structures import ConfigServerAPI
 from matrixctl.structures import ConfigServerAPIAuthOidc
+from matrixctl.structures import ConfigServerAPIAuthToken
 from matrixctl.structures import ConfigUi
 from matrixctl.structures import ConfigUiImage
 from matrixctl.typehints import JsonDict
@@ -85,7 +84,7 @@ def tree_printer(tree: t.Any, depth: int = 0) -> None:
                 key,
                 secrets_filter(tree, key),
             )
-        elif isinstance(tree[key], t.Iterable):
+        elif isinstance(tree[key], list | tuple | set | frozenset):
             logger.debug(
                 "%s├─── %s: [%s]",
                 "│ " * depth,
@@ -329,6 +328,15 @@ class YAML:
             config["servers"][server]["api"]["auth_oidc"] = t.cast(
                 ConfigServerAPIAuthOidc, {}
             )
+
+        # Create api.auth_token if it does not exist
+        try:
+            config["servers"][server]["api"]["auth_token"]["token"]
+        except KeyError:
+            config["servers"][server]["api"]["auth_token"] = t.cast(
+                ConfigServerAPIAuthToken, {}
+            )
+
         try:
             config["servers"][server]["api"]["auth_oidc"]["claims"]
         except KeyError:
@@ -446,7 +454,7 @@ class YAML:
         return conf
 
     # TODO: doctest + fixture
-    def get(self: YAML, *keys: str, or_else: t.Any = None) -> t.Any:
+    def get(self: YAML, *keys: str, or_else: t.Any = ...) -> t.Any:
         """Get a value from a config entry safely.
 
         **Usage**
@@ -482,7 +490,7 @@ class YAML:
             for key in keys:
                 yaml_walker = yaml_walker[key]
         except KeyError:
-            if or_else is not None:
+            if or_else is not Ellipsis:
                 return or_else
             tree: str = ".".join(keys[:-1]).replace(
                 "server",
@@ -510,55 +518,74 @@ class YAML:
         )
         raise ConfigFileError(msg)
 
-    @staticmethod
-    def __get_oidc_config(issuer_url: str) -> JsonDict:
-        """Retrieve OIDC provider configuration via discovery.
+    def _set(
+        self: YAML, *keys: str, value: t.Any, overwrite_existing: bool = True
+    ) -> None:
+        """Set a value in the config entry safely.
+
+        **Usage**
+
+        Pass strings describing the path in the ``self.__yaml`` dictionary
+        where the value should be set.
+
+        Examples
+        --------
+        .. code-block:: python
+
+           from matrixctl.handlers.yaml import YAML
+
+           yaml: YAML = YAML()
+           yaml.set("server", "ssh", "port", value=22)
 
         Parameters
         ----------
-        issuer_url : str
-            Base URL of the OIDC issuer
-
-        Returns
-        -------
-        dict[str, t.Any]
-            OIDC provider configuration
+        *keys : str
+            A tuple of strings describing the path where the value should be
+            set.
+        value : any
+            The value to set at the specified path.
 
         Raises
         ------
-        httpx.HTTPStatusError
-            For HTTP request failures
-        ValueError
-            If discovery document is invalid
+        ConfigFileError
+            If any intermediate key in the path is not a dictionary or cannot
+            be created.
         """
-        try:
-            discovery_url = issuer_url.rstrip("/")
-            response = httpx.get(discovery_url, timeout=10)
-            _ = response.raise_for_status()
-            oidc_config: JsonDict = t.cast(JsonDict, response.json())
-        except httpx.HTTPStatusError as e:
-            logger.exception(
-                "Discovery request failed: %s %s",
-                e.response.status_code,
-                e.response.text,
-            )
-            raise
+        err_msg: str
+        if not keys:
+            err_msg = "At least one key must be provided."
+            raise ValueError(err_msg)
 
-        except json.JSONDecodeError:
-            logger.exception(
-                (
-                    "The discovery request JSON response could not be "
-                    "decoded. Invalid JSON: %s"
-                ),
-                response,
-            )
-            raise
+        yaml_walker: t.Any = self.__yaml
 
-        logger.debug("OIDC discovery response: %s", oidc_config)
-        return oidc_config
+        for key in keys[:-1]:
+            if not isinstance(yaml_walker, dict):
+                err_msg = (
+                    f"Expected a dictionary at key '{key}', "
+                    f"found {type(yaml_walker).__name__}."
+                )
+                raise ConfigFileError(err_msg)
+            if key not in yaml_walker:
+                yaml_walker[key] = {}
+            elif not isinstance(yaml_walker[key], dict):
+                err_msg = f"Key '{key}' is not a dictionary."
+                raise ConfigFileError(err_msg)
+            yaml_walker = yaml_walker[key]
+
+        last_key = keys[-1]
+        if not isinstance(yaml_walker, dict):
+            err_msg = "Parent of the last key is not a dictionary."
+            raise ConfigFileError(err_msg)
+        if last_key in yaml_walker and not overwrite_existing:
+            logger.debug(
+                "Key '%s' already exists and overwrite is disabled. "
+                "Keeping current value",
+                last_key,
+            )
+        yaml_walker[last_key] = value
 
     # TODO: Simplify. Maybe use get() instead of try/except?
-    def ensure_api_auth(self) -> None:  # noqa: C901 PLR0915
+    def ensure_api_auth(self) -> None:
         """Ensure the API authentication configuration is valid and prepared.
 
         This method checks the authentication type specified in the
@@ -586,15 +613,9 @@ class YAML:
         err_msg: str
         match auth_type:
             case "token":
-                try:
-                    self.__yaml["server"]["api"]["auth_token"]
-                except KeyError as e:
-                    err_msg = (
-                        "You need to set the auth_token in your api config of "
-                        "your config file if you use the token auth type."
-                    )
-                    raise ConfigFileError(err_msg) from e
+                # server.api.auth_token exists because it has a default value
 
+                # chack if username and token exist
                 try:
                     self.__yaml["server"]["api"]["auth_token"]["username"]
                     self.__yaml["server"]["api"]["auth_token"]["token"]
@@ -608,38 +629,49 @@ class YAML:
             case "oidc":
                 # server.api.auth_oidc exisits because it has a default value
 
-                # check if we need the server.api.auth_oidc.discovery_endpoint
-                try:
-                    self.__yaml["server"]["api"]["auth_oidc"]["token_endpoint"]
-                    self.__yaml["server"]["api"]["auth_oidc"]["auth_endpoint"]
-                    self.__yaml["server"]["api"]["auth_oidc"][
-                        "userinfo_endpoint"
-                    ]
-                    self.__yaml["server"]["api"]["auth_oidc"]["jwks_uri"]
-                except KeyError:
-                    try:
-                        discovery_endpoint: str = self.__yaml["server"]["api"][
-                            "auth_oidc"
-                        ]["discovery_endpoint"]
-                        oidc_config: JsonDict = self.__get_oidc_config(
-                            discovery_endpoint
-                        )
-
-                        self.__yaml["server"]["api"]["auth_oidc"][
-                            "token_endpoint"
-                        ] = t.cast(str, oidc_config["token_endpoint"])
-                        self.__yaml["server"]["api"]["auth_oidc"][
-                            "auth_endpoint"
-                        ] = t.cast(
-                            str, oidc_config.get("authorization_endpoint")
-                        )
-                        self.__yaml["server"]["api"]["auth_oidc"][
-                            "userinfo_endpoint"
-                        ] = t.cast(str, oidc_config.get("userinfo_endpoint"))
-                        self.__yaml["server"]["api"]["auth_oidc"][
-                            "jwks_uri"
-                        ] = t.cast(str, oidc_config.get("jwks_uri"))
-                    except KeyError as e:
+                # check if all endpoints are defined or if we need to use the
+                # server.api.auth_oidc.discovery_endpoint to discover them
+                required_endpoints: frozenset[t.Any] = frozenset(
+                    {
+                        self.get(
+                            "server",
+                            "api",
+                            "auth_oidc",
+                            "token_endpoint",
+                            or_else=None,
+                        ),
+                        self.get(
+                            "server",
+                            "api",
+                            "auth_oidc",
+                            "auth_endpoint",
+                            or_else=None,
+                        ),
+                        self.get(
+                            "server",
+                            "api",
+                            "auth_oidc",
+                            "userinfo_endpoint",
+                            or_else=None,
+                        ),
+                        self.get(
+                            "server",
+                            "api",
+                            "auth_oidc",
+                            "jwks_uri",
+                            or_else=None,
+                        ),
+                    }
+                )
+                if not all(required_endpoints):
+                    discovery_endpoint: str | None = self.get(
+                        "server",
+                        "api",
+                        "auth_oidc",
+                        "discovery_endpoint",
+                        or_else=None,
+                    )
+                    if not discovery_endpoint:
                         err_msg = (
                             "To use the oidc auth type, you need to set "
                             "either the api.auth_oidc.discovery_endpoint or "
@@ -648,48 +680,102 @@ class YAML:
                             "api.auth_oidc.userinfo_endpoint and "
                             "api.auth_oidc.jwks_uri "
                         )
-                        raise ConfigFileError(err_msg) from e
+                        raise ConfigFileError(err_msg)
 
-                    try:
-                        self.__yaml["server"]["api"]["auth_oidc"]["client_id"]
-                    except KeyError as e:
+                    oidc_config: JsonDict = discover_oidc_endpoints(
+                        discovery_endpoint
+                    )
+
+                    self._set(
+                        "server",
+                        "api",
+                        "auth_oidc",
+                        "token_endpoint",
+                        value=t.cast(str, oidc_config["token_endpoint"]),
+                        overwrite_existing=False,
+                    )
+                    self._set(
+                        "server",
+                        "api",
+                        "auth_oidc",
+                        "auth_endpoint",
+                        value=t.cast(
+                            str, oidc_config.get("authorization_endpoint")
+                        ),
+                        overwrite_existing=False,
+                    )
+                    self._set(
+                        "server",
+                        "api",
+                        "auth_oidc",
+                        "userinfo_endpoint",
+                        value=t.cast(
+                            str, oidc_config.get("userinfo_endpoint")
+                        ),
+                        overwrite_existing=False,
+                    )
+                    self._set(
+                        "server",
+                        "api",
+                        "auth_oidc",
+                        "jwks_uri",
+                        value=t.cast(str, oidc_config.get("jwks_uri")),
+                        overwrite_existing=False,
+                    )
+
+                    if (
+                        self.get(
+                            "server",
+                            "api",
+                            "auth_oidc",
+                            "client_id",
+                            or_else=None,
+                        )
+                        is None
+                    ):
                         err_msg = (
                             "You need to set the client_id in your config "
                             "file, under api.auth_oidc.client_id, if you use "
                             "the oidc auth."
                         )
-                        raise ConfigFileError(err_msg) from e
-                    try:
-                        self.__yaml["server"]["api"]["auth_oidc"][
-                            "client_secret"
-                        ]
-                    except KeyError as e:
+                        raise ConfigFileError(err_msg)
+
+                    if (
+                        self.get(
+                            "server",
+                            "api",
+                            "auth_oidc",
+                            "client_secret",
+                            or_else=None,
+                        )
+                        is None
+                    ):
                         err_msg = (
                             "You need to set the client_secret in your config "
                             "file, under api.auth_oidc.client_secret, if you "
                             "use the oidc auth."
                         )
-                        raise ConfigFileError(err_msg) from e
+                        raise ConfigFileError(err_msg)
 
                     token_manager = TokenManager(
-                        token_endpoint=self.__yaml["server"]["api"][
-                            "auth_oidc"
-                        ]["token_endpoint"],
-                        client_id=self.__yaml["server"]["api"]["auth_oidc"][
-                            "client_id"
-                        ],
-                        client_secret=self.__yaml["server"]["api"][
-                            "auth_oidc"
-                        ]["client_secret"],
-                        auth_endpoint=self.__yaml["server"]["api"][
-                            "auth_oidc"
-                        ]["auth_endpoint"],
-                        userinfo_endpoint=self.__yaml["server"]["api"][
-                            "auth_oidc"
-                        ]["userinfo_endpoint"],
-                        jwks_uri=self.__yaml["server"]["api"]["auth_oidc"][
-                            "jwks_uri"
-                        ],
+                        token_endpoint=self.get(
+                            "server", "api", "auth_oidc", "token_endpoint"
+                        ),
+                        client_id=self.get(
+                            "server", "api", "auth_oidc", "client_id"
+                        ),
+                        client_secret=self.get(
+                            "server", "api", "auth_oidc", "client_secret"
+                        ),
+                        auth_endpoint=self.get(
+                            "server", "api", "auth_oidc", "auth_endpoint"
+                        ),
+                        userinfo_endpoint=self.get(
+                            "server", "api", "auth_oidc", "userinfo_endpoint"
+                        ),
+                        jwks_uri=self.get(
+                            "server", "api", "auth_oidc", "jwks_uri"
+                        ),
                     )
 
                     if not token_manager.auth_endpoint:
@@ -705,11 +791,15 @@ class YAML:
                     payload = token_manager.get_payload()
                     user_info = token_manager.get_user_info()
 
-                    self.__yaml["server"]["api"]["auth_oidc"]["payload"] = (
-                        payload
+                    self._set(
+                        "server", "api", "auth_oidc", "payload", value=payload
                     )
-                    self.__yaml["server"]["api"]["auth_oidc"]["user_info"] = (
-                        user_info
+                    self._set(
+                        "server",
+                        "api",
+                        "auth_oidc",
+                        "user_info",
+                        value=user_info,
                     )
                     self.token_manager = token_manager
             case _:
