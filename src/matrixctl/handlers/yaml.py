@@ -616,16 +616,31 @@ class YAML:
                 # server.api.auth_token exists because it has a default value
 
                 # chack if username and token exist
-                try:
-                    self.__yaml["server"]["api"]["auth_token"]["username"]
-                    self.__yaml["server"]["api"]["auth_token"]["token"]
-                except KeyError as e:
+                required_auth_config: frozenset[t.Any] = frozenset(
+                    {
+                        self.get(
+                            "server",
+                            "api",
+                            "auth_token",
+                            "username",
+                            or_else=None,
+                        ),
+                        self.get(
+                            "server",
+                            "api",
+                            "auth_token",
+                            "token",
+                            or_else=None,
+                        ),
+                    }
+                )
+                if not all(required_auth_config):
                     err_msg = (
                         "When using the token auth type, you need to set "
                         "api.auth_token.username and api.auth_token.token in "
                         "the config file."
                     )
-                    raise ConfigFileError(err_msg) from e
+                    raise ConfigFileError(err_msg)
             case "oidc":
                 # server.api.auth_oidc exisits because it has a default value
 
