@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>matrixctl.addon_manager &mdash; MatrixCtl None.0.14.1.0 documentation</title>
+  <title>matrixctl.command &mdash; MatrixCtl None.0.14.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -64,7 +64,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">matrixctl.addon_manager</li>
+      <li class="breadcrumb-item active">matrixctl.command</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -73,7 +73,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for matrixctl.addon_manager</h1><div class="highlight"><pre>
+  <h1>Source code for matrixctl.command</h1><div class="highlight"><pre>
 <span></span><span class="c1"># matrixctl</span>
 <span class="c1"># Copyright (c) 2021-2023  Michael Sasser &lt;Michael@MichaelSasser.org&gt;</span>
 <span class="c1">#</span>
@@ -121,7 +121,7 @@
 
 
 <div class="viewcode-block" id="import_commands_from">
-<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.addon_manager.import_commands_from">[docs]</a>
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.command.import_commands_from">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">import_commands_from</span><span class="p">(</span>
     <span class="n">addon_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">addon_module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -163,7 +163,7 @@
 
 
 <div class="viewcode-block" id="subparser">
-<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.addon_manager.subparser">[docs]</a>
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.command.subparser">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">subparser</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">SubParserType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SubParserType</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorate subparsers with, to add them to (global) commands on import.</span>
 
@@ -189,7 +189,7 @@
 
 
 <div class="viewcode-block" id="setup">
-<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.addon_manager.setup">[docs]</a>
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.command.setup">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">ParserSetupType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add subparsers to the (main) parser.</span>
 

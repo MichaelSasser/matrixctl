@@ -88,12 +88,12 @@
   <section id="helpers">
 <h1>Helpers<a class="headerlink" href="#helpers" title="Link to this heading"></a></h1>
 <p>Helpers or helper function are common functions used throughout the project.</p>
-<section id="module-matrixctl.addon_manager">
-<span id="addon-manager"></span><h2>Addon Manager<a class="headerlink" href="#module-matrixctl.addon_manager" title="Link to this heading"></a></h2>
+<section id="module-matrixctl.command">
+<span id="command"></span><h2>Command<a class="headerlink" href="#module-matrixctl.command" title="Link to this heading"></a></h2>
 <p>Use this module as addon manager.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="matrixctl.addon_manager.import_commands_from">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">import_commands_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addon_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addon_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#import_commands_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.import_commands_from" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.command.import_commands_from">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.command.</span></span><span class="sig-name descname"><span class="pre">import_commands_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addon_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addon_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/command.html#import_commands_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.command.import_commands_from" title="Link to this definition"></a></dt>
 <dd><p>Import commands in (global) commands.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -124,8 +124,8 @@ subparsers with <code class="docutils literal notranslate"><span class="pre">mat
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="matrixctl.addon_manager.setup">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.setup" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.command.setup">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.command.</span></span><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/command.html#setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.command.setup" title="Link to this definition"></a></dt>
 <dd><p>Add subparsers to the (main) parser.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -147,8 +147,8 @@ subparsers with <code class="docutils literal notranslate"><span class="pre">mat
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="matrixctl.addon_manager.subparser">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.addon_manager.</span></span><span class="sig-name descname"><span class="pre">subparser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/addon_manager.html#subparser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.addon_manager.subparser" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.command.subparser">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.command.</span></span><span class="sig-name descname"><span class="pre">subparser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/command.html#subparser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.command.subparser" title="Link to this definition"></a></dt>
 <dd><p>Decorate subparsers with, to add them to (global) commands on import.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
