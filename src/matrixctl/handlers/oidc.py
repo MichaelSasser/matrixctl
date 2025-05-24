@@ -258,6 +258,8 @@ class TokenManager:
 
         try:
             self.cache_path.parent.mkdir(parents=True, exist_ok=True)
+            self.cache_path.touch(exist_ok=True)
+            self.cache_path.chmod(0o600)
             with self.cache_path.open("w") as fp:
                 json.dump(
                     {
@@ -516,7 +518,7 @@ class TokenManager:
         server, port = self._start_local_server()
         logger.debug("Started local server")
         # TODO: make this configuratble
-        redirect_uri = f"http://localhost:{port}/callback"
+        redirect_uri = f"http://127.0.0.1:{port}/callback"
 
         auth_url = f"{self.auth_endpoint}?"
         params = {
