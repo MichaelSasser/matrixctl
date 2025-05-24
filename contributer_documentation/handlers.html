@@ -112,7 +112,12 @@ and the <a class="reference internal" href="commands.html#commands"><span class=
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.JINJA_PREDEFINED">
-<span class="sig-name descname"><span class="pre">JINJA_PREDEFINED</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ClassVar" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> <span class="pre">|</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'default_api_concurrent_limit':</span> <span class="pre">4,</span> <span class="pre">'default_ssh_port':</span> <span class="pre">22,</span> <span class="pre">'home':</span> <span class="pre">'/home/runner',</span> <span class="pre">'user':</span> <span class="pre">'runner'}</span></em><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.JINJA_PREDEFINED" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">JINJA_PREDEFINED</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ClassVar" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">ClassVar</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> <span class="pre">|</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a><span class="pre">]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'default_api_concurrent_limit':</span> <span class="pre">4,</span> <span class="pre">'default_ssh_port':</span> <span class="pre">22,</span> <span class="pre">'home':</span> <span class="pre">'/home/runner',</span> <span class="pre">'user':</span> <span class="pre">'runner',</span> <span class="pre">'well_knowen_path':</span> <span class="pre">'.well-known/openid-configuration'}</span></em><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.JINJA_PREDEFINED" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.api_auth_prepared">
+<span class="sig-name descname"><span class="pre">api_auth_prepared</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></em><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.api_auth_prepared" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -141,8 +146,36 @@ and the <a class="reference internal" href="commands.html#commands"><span class=
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.ensure_api_auth">
+<span class="sig-name descname"><span class="pre">ensure_api_auth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.ensure_api_auth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.ensure_api_auth" title="Link to this definition"></a></dt>
+<dd><p>Ensure the API authentication configuration is valid and prepared.</p>
+<p>This method checks the authentication type specified in the
+configuration and validates that all required fields for the selected
+authentication method are present. It supports ‘token’ and ‘oidc’
+authentication types.</p>
+<p>For ‘token’ authentication, it verifies the presence of ‘auth_token’,
+‘username’, and ‘token’. For ‘oidc’ authentication, it checks for
+required OIDC endpoints and credentials, and if necessary, fetches
+OIDC configuration from a discovery endpoint. It also initializes the
+TokenManager and retrieves payload and user information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConfigFileError</span></code></dt><dd><p>If required configuration fields are missing or invalid.</p>
+</dd>
+<dt><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueError</span></code></a></dt><dd><p>If the OIDC authorization endpoint is not found.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.get" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">or_else</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.get" title="Link to this definition"></a></dt>
 <dd><p>Get a value from a config entry safely.</p>
 <p><strong>Usage</strong></p>
 <p>Pass strings, describing the path in the <code class="docutils literal notranslate"><span class="pre">self.__yaml</span></code> dictionary.
@@ -173,6 +206,60 @@ Let’s say, you are looking for the synapse path:</p>
 <span class="c1"># Output: 22</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.get_api_token">
+<span class="sig-name descname"><span class="pre">get_api_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.get_api_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.get_api_token" title="Link to this definition"></a></dt>
+<dd><p>Retrieve the API token for authentication.</p>
+<p>This method ensures API authentication is set up, then retrieves
+the token based on the configured authentication type. Supports
+‘token’ and ‘oidc’ auth types.</p>
+<dl class="field-list">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>token</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The API token string.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">ShouldNeverHappenError</span></code></dt><dd><p>If the token manager is not initialized or the auth type is
+unknown.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.get_api_username">
+<span class="sig-name descname"><span class="pre">get_api_username</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/yaml.html#YAML.get_api_username"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.get_api_username" title="Link to this definition"></a></dt>
+<dd><p>Retrieve the API token for authentication.</p>
+<p>This method ensures API authentication is set up, then retrieves
+the username based on the configured authentication type. Supports
+‘token’ and ‘oidc’ auth types.</p>
+<dl class="field-list">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>username</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The username.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">ShouldNeverHappenError</span></code></dt><dd><p>If the token manager is not initialized or the auth type is
+unknown.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -281,6 +368,11 @@ returned.</p></li>
 <span class="sig-name descname"><span class="pre">server</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.server" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.yaml.YAML.token_manager">
+<span class="sig-name descname"><span class="pre">token_manager</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.handlers.oidc.TokenManager" title="matrixctl.handlers.oidc.TokenManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">TokenManager</span></code></a> <span class="pre">|</span> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></em><a class="headerlink" href="#matrixctl.handlers.yaml.YAML.token_manager" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
@@ -334,12 +426,262 @@ afterwards.</p>
 </dd></dl>
 
 </section>
+<section id="module-matrixctl.handlers.oidc">
+<span id="oidc"></span><h2>OIDC<a class="headerlink" href="#module-matrixctl.handlers.oidc" title="Link to this heading"></a></h2>
+<p>An OIDC Client for Matrix Authentication Service.</p>
+<p>If you are reading this you might probably ask yourself:
+“why yet another OIDC client?”. The answer is unfortunately. It was easier to
+write one from scratch (for this specific usecase) than to use any of the
+existing ones I found. Either the documentation was in a devastating state
+or they were unmaintained for years. It’s pretty sad.</p>
+<p>Nevertheless, this should not stop us from having nice things, too.
+So here we are with yet another OIDC client.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.OidcTCPServer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.oidc.</span></span><span class="sig-name descname"><span class="pre">OidcTCPServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/oidc.html#OidcTCPServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.oidc.OidcTCPServer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/socketserver.html#socketserver.TCPServer" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCPServer</span></code></a></p>
+<p>TCP server wrapper for handling OIDC authentication callbacks.</p>
+<p>This server listens for incoming HTTP requests containing the OIDC
+authorization code and stores it for later retrieval.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.TokenManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.oidc.</span></span><span class="sig-name descname"><span class="pre">TokenManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token_endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth_endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">userinfo_endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jwks_uri</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/oidc.html#TokenManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.oidc.TokenManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Manager for OIDC tokens handling.</p>
+<p>It supports both client credentials and authorization code flows.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>token_endpoint</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>OIDC provider’s token endpoint URL</p>
+</dd>
+<dt><strong>client_id</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Client ID for OIDC authentication</p>
+</dd>
+<dt><strong>client_secret</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Client secret for OIDC authentication</p>
+</dd>
+<dt><strong>auth_endpoint</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>Authorization endpoint URL for user authentication flow, by default
+None</p>
+</dd>
+<dt><strong>userinfo_endpoint</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>Userinfo endpoint URL, by default None</p>
+</dd>
+<dt><strong>jwks_uri</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>JWKS endpoint URL, by default None</p>
+</dd>
+<dt><strong>cache_path</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>Path to token cache file, by default “~/.oidc_token_cache.json”</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.TokenManager.get_client_credentials_token">
+<span class="sig-name descname"><span class="pre">get_client_credentials_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/oidc.html#TokenManager.get_client_credentials_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.oidc.TokenManager.get_client_credentials_token" title="Link to this definition"></a></dt>
+<dd><p>Get access token using client credentials flow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></dt><dd><p>Valid access token</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">httpx.HTTPStatusError</span></code></dt><dd><p>For HTTP request failures</p>
+</dd>
+<dt><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueError</span></code></a></dt><dd><p>If token response is invalid</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.TokenManager.get_payload">
+<span class="sig-name descname"><span class="pre">get_payload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/oidc.html#TokenManager.get_payload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.oidc.TokenManager.get_payload" title="Link to this definition"></a></dt>
+<dd><p>Decode payload from the ID token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Any</span></code>]</dt><dd><p>Decoded ID token payload</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueError</span></code></a></dt><dd><p>If no ID token available</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.TokenManager.get_user_info">
+<span class="sig-name descname"><span class="pre">get_user_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/oidc.html#TokenManager.get_user_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.oidc.TokenManager.get_user_info" title="Link to this definition"></a></dt>
+<dd><p>Retrieve user information from the userinfo endpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Any</span></code>]</dt><dd><p>User claims dictionary</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueError</span></code></a></dt><dd><p>If userinfo endpoint not configured or no access token</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">httpx.HTTPStatusError</span></code></dt><dd><p>For HTTP request failures</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.TokenManager.get_user_token">
+<span class="sig-name descname"><span class="pre">get_user_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">claims</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/oidc.html#TokenManager.get_user_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.oidc.TokenManager.get_user_token" title="Link to this definition"></a></dt>
+<dd><p>Get access token using authorization code flow with PKCE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></dt><dd><p>Valid access token</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TimeoutError" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeoutError</span></code></a></dt><dd><p>If user doesn’t complete authentication within 5 minutes</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">httpx.HTTPStatusError</span></code></dt><dd><p>For HTTP request failures</p>
+</dd>
+<dt><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueError</span></code></a></dt><dd><p>If token response is invalid</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.TokenManager.recall_cached_token">
+<span class="sig-name descname"><span class="pre">recall_cached_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/oidc.html#TokenManager.recall_cached_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.oidc.TokenManager.recall_cached_token" title="Link to this definition"></a></dt>
+<dd><p>Load and validate cached tokens from disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bltin-boolean-values" title="(in Python v3.13)"><span class="xref std std-ref">bool</span></a></dt><dd><p>True if valid token was loaded, False otherwise</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Sets instance attributes:
+- access_token: Loaded access token or None
+- refresh_token: Loaded refresh token or None
+- expires_at: Expiration timestamp or 0</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.TokenManager.refresh_access_token">
+<span class="sig-name descname"><span class="pre">refresh_access_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/oidc.html#TokenManager.refresh_access_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.oidc.TokenManager.refresh_access_token" title="Link to this definition"></a></dt>
+<dd><p>Refresh access token using refresh token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></dt><dd><p>New access token if successful, None otherwise</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.TokenManager.store_cache_token">
+<span class="sig-name descname"><span class="pre">store_cache_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">access_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expires_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/oidc.html#TokenManager.store_cache_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.oidc.TokenManager.store_cache_token" title="Link to this definition"></a></dt>
+<dd><p>Cache tokens to disk with expiration information.</p>
+<dl class="field-list">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>access_token</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>New access token to cache</p>
+</dd>
+<dt><strong>refresh_token</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Optional refresh token to cache</p>
+</dd>
+<dt><strong>expires_in</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Time in seconds until token expiration</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Updates instance attributes:
+- access_token
+- refresh_token
+- expires_at</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.TokenManager.wait_for_auth_code_timeout">
+<span class="sig-name descname"><span class="pre">wait_for_auth_code_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">300</span></em><a class="headerlink" href="#matrixctl.handlers.oidc.TokenManager.wait_for_auth_code_timeout" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.handlers.oidc.discover_oidc_endpoints">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.oidc.</span></span><span class="sig-name descname"><span class="pre">discover_oidc_endpoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">issuer_url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/oidc.html#discover_oidc_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.oidc.discover_oidc_endpoints" title="Link to this definition"></a></dt>
+<dd><p>Retrieve OIDC provider configuration via discovery.</p>
+<dl class="field-list">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>issuer_url</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Base URL of the OIDC issuer</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">t.Any</span></code>]</dt><dd><p>OIDC provider configuration</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">httpx.HTTPStatusError</span></code></dt><dd><p>For HTTP request failures</p>
+</dd>
+<dt><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ValueError</span></code></a></dt><dd><p>If discovery document is invalid</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-matrixctl.handlers.api">
 <span id="api"></span><h2>API<a class="headerlink" href="#module-matrixctl.handlers.api" title="Link to this heading"></a></h2>
 <p>Get access to the API of your homeserver.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="matrixctl.handlers.api.RequestBuilder">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">RequestBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdomain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'matrix'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GET'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrent_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">success_codes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(200,</span> <span class="pre">201,</span> <span class="pre">202,</span> <span class="pre">203,</span> <span class="pre">204,</span> <span class="pre">205,</span> <span class="pre">206,</span> <span class="pre">207,</span> <span class="pre">226)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#RequestBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder" title="Link to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.handlers.api.</span></span><span class="sig-name descname"><span class="pre">RequestBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdomain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'matrix'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GET'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concurrent_limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">success_codes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(200,</span> <span class="pre">201,</span> <span class="pre">202,</span> <span class="pre">203,</span> <span class="pre">204,</span> <span class="pre">205,</span> <span class="pre">206,</span> <span class="pre">207,</span> <span class="pre">226)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/handlers/api.html#RequestBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.handlers.api.RequestBuilder" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Build the URL for an API request.</p>
 <dl class="py attribute">

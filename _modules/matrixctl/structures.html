@@ -96,6 +96,8 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">JsonDict</span>
+
 
 <div class="viewcode-block" id="Config">
 <a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.Config">[docs]</a>
@@ -145,9 +147,40 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `api` to `server` in the YAML config structure.&quot;&quot;&quot;</span>
 
     <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">token</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">auth_type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">auth_token</span><span class="p">:</span> <span class="n">ConfigServerAPIAuthToken</span>
+    <span class="n">auth_oidc</span><span class="p">:</span> <span class="n">ConfigServerAPIAuthOidc</span>
     <span class="n">concurrent_limit</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+
+<div class="viewcode-block" id="ConfigServerAPIAuthToken">
+<a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerAPIAuthToken">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigServerAPIAuthToken</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `auth_token` to `server.api` in the YAML config structure.&quot;&quot;&quot;</span>
+
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">token</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+
+<div class="viewcode-block" id="ConfigServerAPIAuthOidc">
+<a class="viewcode-back" href="../../contributer_documentation/type_hints_structures_and_errors.html#matrixctl.structures.ConfigServerAPIAuthOidc">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigServerAPIAuthOidc</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add `auth_oidc` to `server.api` in the YAML config structure.&quot;&quot;&quot;</span>
+
+    <span class="n">discovery_endpoint</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">token_endpoint</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">auth_endpoint</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">userinfo_endpoint</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">jwks_uri</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">claims</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="c1"># Dynamically generated. Any user input will be overwritten.</span>
+    <span class="n">user_info</span><span class="p">:</span> <span class="n">JsonDict</span>
+    <span class="n">payload</span><span class="p">:</span> <span class="n">JsonDict</span></div>
 
 
 

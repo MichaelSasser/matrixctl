@@ -162,6 +162,21 @@ They are giving the person instructions, how to hand in a bug report.</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
 <p>Add <cite>api</cite> to <cite>server</cite> in the YAML config structure.</p>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI.auth_oidc">
+<span class="sig-name descname"><span class="pre">auth_oidc</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerAPIAuthOidc" title="matrixctl.structures.ConfigServerAPIAuthOidc"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerAPIAuthOidc</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.auth_oidc" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI.auth_token">
+<span class="sig-name descname"><span class="pre">auth_token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerAPIAuthToken" title="matrixctl.structures.ConfigServerAPIAuthToken"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerAPIAuthToken</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.auth_token" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI.auth_type">
+<span class="sig-name descname"><span class="pre">auth_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.auth_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI.concurrent_limit">
 <span class="sig-name descname"><span class="pre">concurrent_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.concurrent_limit" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -171,14 +186,78 @@ They are giving the person instructions, how to hand in a bug report.</p>
 <span class="sig-name descname"><span class="pre">domain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.domain" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerAPIAuthOidc</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerAPIAuthOidc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<p>Add <cite>auth_oidc</cite> to <cite>server.api</cite> in the YAML config structure.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI.token">
-<span class="sig-name descname"><span class="pre">token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.token" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc.auth_endpoint">
+<span class="sig-name descname"><span class="pre">auth_endpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc.auth_endpoint" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPI.username">
-<span class="sig-name descname"><span class="pre">username</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPI.username" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc.claims">
+<span class="sig-name descname"><span class="pre">claims</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc.claims" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc.client_id">
+<span class="sig-name descname"><span class="pre">client_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc.client_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc.client_secret">
+<span class="sig-name descname"><span class="pre">client_secret</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc.client_secret" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc.discovery_endpoint">
+<span class="sig-name descname"><span class="pre">discovery_endpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc.discovery_endpoint" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc.jwks_uri">
+<span class="sig-name descname"><span class="pre">jwks_uri</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc.jwks_uri" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc.payload">
+<span class="sig-name descname"><span class="pre">payload</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc.payload" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc.token_endpoint">
+<span class="sig-name descname"><span class="pre">token_endpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc.token_endpoint" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc.user_info">
+<span class="sig-name descname"><span class="pre">user_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc.user_info" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthOidc.userinfo_endpoint">
+<span class="sig-name descname"><span class="pre">userinfo_endpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthOidc.userinfo_endpoint" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthToken">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerAPIAuthToken</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerAPIAuthToken"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthToken" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<p>Add <cite>auth_token</cite> to <cite>server.api</cite> in the YAML config structure.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthToken.token">
+<span class="sig-name descname"><span class="pre">token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthToken.token" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthToken.username">
+<span class="sig-name descname"><span class="pre">username</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthToken.username" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -324,6 +403,13 @@ They are giving the person instructions, how to hand in a bug report.</p>
 <em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.errors.</span></span><span class="sig-name descname"><span class="pre">QWorkerExit</span></span><a class="reference internal" href="../_modules/matrixctl/errors.html#QWorkerExit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.errors.QWorkerExit" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
 <p>Use this exception when you want to exit an Queue worker.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="matrixctl.errors.ShouldNeverHappenError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.errors.</span></span><span class="sig-name descname"><span class="pre">ShouldNeverHappenError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/errors.html#ShouldNeverHappenError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.errors.ShouldNeverHappenError" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#matrixctl.errors.Error" title="matrixctl.errors.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a></p>
+<p>Use this exception class for everything that should never happen.</p>
 </dd></dl>
 
 </section>

@@ -1,0 +1,872 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>matrixctl.handlers.oidc &mdash; MatrixCtl None.0.14.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=b14809f9"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            MatrixCtl
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributer_documentation/index.html">Contributor Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html#changelog-deprecated">Changelog (deprecated)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MatrixCtl</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">matrixctl.handlers.oidc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for matrixctl.handlers.oidc</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;An OIDC Client for Matrix Authentication Service.</span>
+
+<span class="sd">If you are reading this you might probably ask yourself:</span>
+<span class="sd">&quot;why yet another OIDC client?&quot;. The answer is unfortunately. It was easier to</span>
+<span class="sd">write one from scratch (for this specific usecase) than to use any of the</span>
+<span class="sd">existing ones I found. Either the documentation was in a devastating state</span>
+<span class="sd">or they were unmaintained for years. It&#39;s pretty sad.</span>
+
+<span class="sd">Nevertheless, this should not stop us from having nice things, too.</span>
+<span class="sd">So here we are with yet another OIDC client.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">http.server</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socketserver</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.parse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">webbrowser</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_qs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlparse</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">xdg_base_dirs</span><span class="w"> </span><span class="kn">import</span> <span class="n">xdg_data_home</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">JsonDict</span>
+
+
+<span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
+<span class="n">__email__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael@MichaelSasser.org&quot;</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="OidcTCPServer">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.oidc.OidcTCPServer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OidcTCPServer</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;TCP server wrapper for handling OIDC authentication callbacks.</span>
+
+<span class="sd">    This server listens for incoming HTTP requests containing the OIDC</span>
+<span class="sd">    authorization code and stores it for later retrieval.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">server_address</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+        <span class="n">RequestHandlerClass</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">socketserver</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">],</span>  <span class="c1"># noqa: N803</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the OidcTCPServer.</span>
+
+<span class="sd">        This mehod only adds the `auth_code` attribute to the server instance.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        server_address : tuple[str, int]</span>
+<span class="sd">            The address on which the server listens.</span>
+<span class="sd">        RequestHandlerClass : type[socketserver.BaseRequestHandler])</span>
+<span class="sd">            The request handler class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">server_address</span><span class="p">,</span> <span class="n">RequestHandlerClass</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="TokenManager">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.oidc.TokenManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TokenManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manager for OIDC tokens handling.</span>
+
+<span class="sd">    It supports both client credentials and authorization code flows.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    token_endpoint : str</span>
+<span class="sd">        OIDC provider&#39;s token endpoint URL</span>
+<span class="sd">    client_id : str</span>
+<span class="sd">        Client ID for OIDC authentication</span>
+<span class="sd">    client_secret : str</span>
+<span class="sd">        Client secret for OIDC authentication</span>
+<span class="sd">    auth_endpoint : str | None, optional</span>
+<span class="sd">        Authorization endpoint URL for user authentication flow, by default</span>
+<span class="sd">        None</span>
+<span class="sd">    userinfo_endpoint : str | None, optional</span>
+<span class="sd">        Userinfo endpoint URL, by default None</span>
+<span class="sd">    jwks_uri : str | None, optional</span>
+<span class="sd">        JWKS endpoint URL, by default None</span>
+<span class="sd">    cache_path : str, optional</span>
+<span class="sd">        Path to token cache file, by default &quot;~/.oidc_token_cache.json&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">wait_for_auth_code_timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># noqa: PLR0913</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">token_endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">auth_endpoint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">userinfo_endpoint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">jwks_uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">cache_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data_home</span> <span class="o">=</span> <span class="n">xdg_data_home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;matrixctl&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_endpoint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">token_endpoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">client_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">client_secret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth_endpoint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">auth_endpoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">userinfo_endpoint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">userinfo_endpoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jwks_uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">jwks_uri</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">cache_path</span> <span class="ow">or</span> <span class="n">data_home</span> <span class="o">/</span> <span class="s2">&quot;oidc_token_cache.json&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expires_at</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;TokenManager initialized with cache path: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="TokenManager.recall_cached_token">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.oidc.TokenManager.recall_cached_token">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">recall_cached_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load and validate cached tokens from disk.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            True if valid token was loaded, False otherwise</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        Sets instance attributes:</span>
+<span class="sd">        - access_token: Loaded access token or None</span>
+<span class="sd">        - refresh_token: Loaded refresh token or None</span>
+<span class="sd">        - expires_at: Expiration timestamp or 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s2">&quot;Cache file does not exist: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Cache file exists: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">)</span>
+            <span class="n">keyed</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">JsonDict</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">keyed</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;access_token&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refresh_token</span> <span class="o">=</span> <span class="n">keyed</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span> <span class="o">=</span> <span class="n">keyed</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_token&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expires_at</span> <span class="o">=</span> <span class="n">keyed</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;expires_at&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;Recalled refresh token contains: &quot;</span>
+                <span class="s2">&quot;{access_token: </span><span class="si">%s</span><span class="s2">, &quot;</span>
+                <span class="s2">&quot;refresh_token: </span><span class="si">%s</span><span class="s2">, &quot;</span>
+                <span class="s2">&quot;id_token: </span><span class="si">%s</span><span class="s2">, &quot;</span>
+                <span class="s2">&quot;expires_at: </span><span class="si">%s</span><span class="s2">}&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">refresh_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">expires_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">expires_at</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Token is not expired on recall&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="s2">&quot;Insufficiant permissions to opent the file: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IsADirectoryError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="s2">&quot;The oidc token cache file </span><span class="si">%s</span><span class="s2"> should be a file, not &quot;</span>
+                    <span class="s2">&quot;a directory&quot;</span>
+                <span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Failed to open/write to oidc token cache file&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="s2">&quot;The oidc token cache file exist, but it&#39;s content is not &quot;</span>
+                    <span class="s2">&quot;valid JSON: </span><span class="si">%s</span><span class="s2">&quot;</span>
+                <span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="s2">&quot;The oidc token cache file exist, but it&#39;s content is not &quot;</span>
+                    <span class="s2">&quot;does not contain the expected keys. Cache file: </span><span class="si">%s</span><span class="s2">&quot;</span>
+                <span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expires_at</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Token is expired or invalid&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="TokenManager.store_cache_token">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.oidc.TokenManager.store_cache_token">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">store_cache_token</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">refresh_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">id_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">expires_in</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cache tokens to disk with expiration information.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        access_token : str</span>
+<span class="sd">            New access token to cache</span>
+<span class="sd">        refresh_token : str | None</span>
+<span class="sd">            Optional refresh token to cache</span>
+<span class="sd">        expires_in : int</span>
+<span class="sd">            Time in seconds until token expiration</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        Updates instance attributes:</span>
+<span class="sd">        - access_token</span>
+<span class="sd">        - refresh_token</span>
+<span class="sd">        - expires_at</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Started storing cached token: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh_token</span> <span class="o">=</span> <span class="n">refresh_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span> <span class="o">=</span> <span class="n">id_token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expires_at</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="n">expires_in</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Stored refresh token contains: &quot;</span>
+            <span class="s2">&quot;{access_token: </span><span class="si">%s</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;refresh_token: </span><span class="si">%s</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;id_token: </span><span class="si">%s</span><span class="s2">, &quot;</span>
+            <span class="s2">&quot;expires_at: </span><span class="si">%s</span><span class="s2">}&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">refresh_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expires_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="o">.</span><span class="n">touch</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="mo">0o600</span><span class="p">)</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="n">key</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span> <span class="p">{</span>
+                            <span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="n">access_token</span><span class="p">,</span>
+                            <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="n">refresh_token</span><span class="p">,</span>
+                            <span class="s2">&quot;id_token&quot;</span><span class="p">:</span> <span class="n">id_token</span><span class="p">,</span>
+                            <span class="s2">&quot;expires_at&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">expires_at</span><span class="p">,</span>
+                        <span class="p">}</span>
+                    <span class="p">},</span>
+                    <span class="n">fp</span><span class="p">,</span>
+                <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="s2">&quot;Insufficiant permissions to opent the file: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IsADirectoryError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="s2">&quot;The oidc token cache file </span><span class="si">%s</span><span class="s2"> must be a file, &quot;</span>
+                    <span class="s2">&quot;not a directory&quot;</span>
+                <span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Failed to open/write to oidc token cache file&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Finished storing cached token: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TokenManager.get_user_info">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.oidc.TokenManager.get_user_info">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_user_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JsonDict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve user information from the userinfo endpoint.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict[str, Any]</span>
+<span class="sd">            User claims dictionary</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If userinfo endpoint not configured or no access token</span>
+<span class="sd">        httpx.HTTPStatusError</span>
+<span class="sd">            For HTTP request failures</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">err_msg</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">userinfo_endpoint</span><span class="p">:</span>
+            <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;Userinfo endpoint not configured&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">:</span>
+            <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;No access token available&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">userinfo_endpoint</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">user_info</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">JsonDict</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;User info retrieved: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">user_info</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">user_info</span></div>
+
+
+<div class="viewcode-block" id="TokenManager.get_payload">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.oidc.TokenManager.get_payload">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JsonDict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decode payload from the ID token.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict[str, Any]</span>
+<span class="sd">            Decoded ID token payload</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If no ID token available</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span><span class="p">:</span>
+            <span class="n">err_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;No ID token available&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Split JWT into parts</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">payload_unpadded</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+            <span class="c1"># Add padding and decode</span>
+            <span class="n">payload_padded</span> <span class="o">=</span> <span class="n">payload_unpadded</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="p">(</span>
+                <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">payload_unpadded</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span>
+            <span class="p">)</span>
+            <span class="n">payload_decoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">payload_padded</span><span class="p">)</span>
+            <span class="n">payload</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">JsonDict</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">payload_decoded</span><span class="p">))</span>
+
+        <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="p">(</span><span class="s2">&quot;Unable to decode payload. Invalid JSON&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">raise</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Payload decoded: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">payload</span></div>
+
+
+<div class="viewcode-block" id="TokenManager.get_client_credentials_token">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.oidc.TokenManager.get_client_credentials_token">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_client_credentials_token</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get access token using client credentials flow.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Valid access token</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        httpx.HTTPStatusError</span>
+<span class="sd">            For HTTP request failures</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If token response is invalid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Started client credentials token request&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recall_cached_token</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;Recalled cached token, which contains the  access token.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">expires_at</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Recalled token is not expired&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Recalled token is expired, refreshing it&quot;</span><span class="p">)</span>
+            <span class="n">refresh_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_access_token</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">refresh_token</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">refresh_token</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">token_endpoint</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+                    <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">token_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">],</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">httpx</span><span class="o">.</span><span class="n">HTTPStatusError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="s2">&quot;Token request failed: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span>
+                <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">raise</span>
+
+        <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="s2">&quot;The returned client credentials token could not be &quot;</span>
+                    <span class="s2">&quot;decoded. Invalid JSON&quot;</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">raise</span>
+
+        <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">access_token</span> <span class="o">:=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;access_token&quot;</span><span class="p">))):</span>
+            <span class="n">err_msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;No access token in response&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">store_cache_token</span><span class="p">(</span>
+            <span class="n">access_token</span><span class="p">,</span>
+            <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">),</span>
+            <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_token&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span><span class="p">,</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;expires_in&quot;</span><span class="p">,</span> <span class="mi">3600</span><span class="p">)),</span>
+            <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">access_token</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_pkce</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate PKCE code verifier and challenge pair.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple[str, str]</span>
+<span class="sd">            (code_verifier, code_challenge) pair</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">code_verifier</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+        <span class="n">code_challenge</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span>
+                <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">code_verifier</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">code_verifier</span><span class="p">,</span> <span class="n">code_challenge</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_start_local_server</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">OidcTCPServer</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Start temporary HTTP server for OIDC callback.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple[OidcTCPServer, int]</span>
+<span class="sd">            (server instance, port number)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">class</span><span class="w"> </span><span class="nc">CallbackHandler</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">SimpleHTTPRequestHandler</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Handler for OIDC redirect with authorization code capture.&quot;&quot;&quot;</span>
+
+            <span class="k">def</span><span class="w"> </span><span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: N802</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;Handle GET request for OIDC callback.&quot;&quot;&quot;</span>
+                <span class="n">query</span> <span class="o">=</span> <span class="n">parse_qs</span><span class="p">(</span><span class="n">urlparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s2">&quot;code&quot;</span> <span class="ow">in</span> <span class="n">query</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+                    <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                        <span class="sa">b</span><span class="s2">&quot;Authentication successful! &quot;</span>
+                        <span class="sa">b</span><span class="s2">&quot;You can close this window.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">auth_server</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">OidcTCPServer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
+                    <span class="n">auth_server</span><span class="o">.</span><span class="n">auth_code</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">send_response</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">end_headers</span><span class="p">()</span>
+                    <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;Missing authorization code&quot;</span><span class="p">)</span>
+
+        <span class="c1"># TODO: Find out if we can do random ports in MAS instead of having</span>
+        <span class="c1">#       a fixed one.</span>
+        <span class="n">server_address</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">8298</span><span class="p">)</span>
+        <span class="n">server</span> <span class="o">=</span> <span class="n">OidcTCPServer</span><span class="p">(</span><span class="n">server_address</span><span class="p">,</span> <span class="n">CallbackHandler</span><span class="p">)</span>
+        <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">)</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">server</span><span class="p">,</span> <span class="n">server</span><span class="o">.</span><span class="n">server_address</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<div class="viewcode-block" id="TokenManager.get_user_token">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.oidc.TokenManager.get_user_token">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_user_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">claims</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get access token using authorization code flow with PKCE.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Valid access token</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TimeoutError</span>
+<span class="sd">            If user doesn&#39;t complete authentication within 5 minutes</span>
+<span class="sd">        httpx.HTTPStatusError</span>
+<span class="sd">            For HTTP request failures</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If token response is invalid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recall_cached_token</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Recalled cached token for &#39;user&#39;&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span> <span class="ow">and</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">expires_at</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Recalled acces token exists and is not expired&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">access_token</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Recalled access token was invalid or is expired&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_token</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Refresh token exists&quot;</span><span class="p">)</span>
+            <span class="n">new_access_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_access_token</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;Using recalled refresh token token to get a new access token&quot;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">new_access_token</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Refreshed access token exists&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">new_access_token</span>
+
+        <span class="n">code_verifier</span><span class="p">,</span> <span class="n">code_challenge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_pkce</span><span class="p">()</span>
+        <span class="n">server</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_local_server</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Started local server&quot;</span><span class="p">)</span>
+        <span class="c1"># TODO: make this configuratble</span>
+        <span class="n">redirect_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;http://127.0.0.1:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/callback&quot;</span>
+
+        <span class="n">auth_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">auth_endpoint</span><span class="si">}</span><span class="s2">?&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;response_type&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+            <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="n">redirect_uri</span><span class="p">,</span>
+            <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">claims</span><span class="p">),</span>
+            <span class="s2">&quot;code_challenge&quot;</span><span class="p">:</span> <span class="n">code_challenge</span><span class="p">,</span>
+            <span class="s2">&quot;code_challenge_method&quot;</span><span class="p">:</span> <span class="s2">&quot;S256&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;active&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">auth_url</span><span class="si">}{</span><span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">params</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">if</span> <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new_tab</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A new tab should have opened in your browser.&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;If not, please visit this URL in your browser &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;manually:</span><span class="se">\n</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Please visit this URL in your browser:</span><span class="se">\n</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">while</span> <span class="p">(</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+                <span class="o">&lt;</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">wait_for_auth_code_timeout</span>
+            <span class="p">):</span>  <span class="c1"># 5 minute timeout</span>
+                <span class="k">if</span> <span class="n">server</span><span class="o">.</span><span class="n">auth_code</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Got auth code from from browser flow&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">err_msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Authorization timed out&quot;</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Browser flow authorization timed out&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Requesting access token&quot;</span><span class="p">)</span>
+            <span class="n">token_response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">token_endpoint</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;authorization_code&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+                    <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+                    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">server</span><span class="o">.</span><span class="n">auth_code</span><span class="p">,</span>
+                    <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="n">redirect_uri</span><span class="p">,</span>
+                    <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;active&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;code_verifier&quot;</span><span class="p">:</span> <span class="n">code_verifier</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">)</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="n">token_response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">token_data</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">JsonDict</span><span class="p">,</span> <span class="n">token_response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+
+            <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;access_token&quot;</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Got response from requesting access token&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">access_token</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;There was no acccess token in the response&quot;</span><span class="p">)</span>
+                <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;No access token in response&quot;</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">store_cache_token</span><span class="p">(</span>
+                <span class="n">access_token</span><span class="p">,</span>
+                <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">),</span>
+                <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_token&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span><span class="p">,</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;expires_in&quot;</span><span class="p">,</span> <span class="mi">3600</span><span class="p">)),</span>
+                <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Cached token stored&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">access_token</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Shutting down web server&quot;</span><span class="p">)</span>
+            <span class="n">server</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TokenManager.refresh_access_token">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.oidc.TokenManager.refresh_access_token">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">refresh_access_token</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Refresh access token using refresh token.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str | None</span>
+<span class="sd">            New access token if successful, None otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Started refresing access token&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_token</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to refresh access token. &quot;</span>
+                <span class="s2">&quot;I don not have a refresh token&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">token_endpoint</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;refresh_token&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+                    <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+                    <span class="s2">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_token</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">)</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Got refresh token response&quot;</span><span class="p">)</span>
+            <span class="n">token_data</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">JsonDict</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+
+            <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span>
+            <span class="k">if</span> <span class="n">access_token</span> <span class="o">:=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;access_token&quot;</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">store_cache_token</span><span class="p">(</span>
+                    <span class="n">access_token</span><span class="p">,</span>
+                    <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                        <span class="nb">str</span><span class="p">,</span>
+                        <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;refresh_token&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_token</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_token&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_token</span><span class="p">,</span>
+                    <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">token_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;expires_in&quot;</span><span class="p">,</span> <span class="mi">3600</span><span class="p">)),</span>
+                    <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Stored refreshed token&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">access_token</span>
+        <span class="k">except</span> <span class="n">httpx</span><span class="o">.</span><span class="n">HTTPStatusError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="s2">&quot;Token refresh failed: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span>
+                <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="s2">&quot;The returned refresh token could not be decoded. Invalid &quot;</span>
+                    <span class="s2">&quot;JSON: </span><span class="si">%s</span><span class="s2">&quot;</span>
+                <span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cache_path</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No access token in response&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_exchange_code</span><span class="p">(</span>  <span class="c1"># TODO: Unused</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">code_verifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">auth_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">redirect_uri</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Exchange authorization code for tokens.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">auth_code</span><span class="p">:</span>
+            <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;Missing authorization code&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token_endpoint</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;authorization_code&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+                <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_secret</span><span class="p">,</span>
+                <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">auth_code</span><span class="p">,</span>
+                <span class="s2">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="n">redirect_uri</span><span class="p">,</span>
+                <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;active&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;code_verifier&quot;</span><span class="p">:</span> <span class="n">code_verifier</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">],</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="discover_oidc_endpoints">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.oidc.discover_oidc_endpoints">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">discover_oidc_endpoints</span><span class="p">(</span><span class="n">issuer_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JsonDict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieve OIDC provider configuration via discovery.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    issuer_url : str</span>
+<span class="sd">        Base URL of the OIDC issuer</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict[str, t.Any]</span>
+<span class="sd">        OIDC provider configuration</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    httpx.HTTPStatusError</span>
+<span class="sd">        For HTTP request failures</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If discovery document is invalid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">discovery_url</span> <span class="o">=</span> <span class="n">issuer_url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">discovery_url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">oidc_config</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">JsonDict</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">httpx</span><span class="o">.</span><span class="n">HTTPStatusError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+            <span class="s2">&quot;Discovery request failed: </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span>
+            <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">raise</span>
+
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="s2">&quot;The discovery request JSON response could not be &quot;</span>
+                <span class="s2">&quot;decoded. Invalid JSON: </span><span class="si">%s</span><span class="s2">&quot;</span>
+            <span class="p">),</span>
+            <span class="n">response</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">raise</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;OIDC discovery response: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">oidc_config</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">oidc_config</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Michael Sasser.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

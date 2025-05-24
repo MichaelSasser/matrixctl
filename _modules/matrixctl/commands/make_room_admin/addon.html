@@ -138,7 +138,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">req</span><span class="p">:</span> <span class="n">RequestBuilder</span> <span class="o">=</span> <span class="n">RequestBuilder</span><span class="p">(</span>
-        <span class="n">token</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;token&quot;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get_api_token</span><span class="p">(),</span>
         <span class="n">domain</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">),</span>
         <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;/_synapse/admin/v1/rooms/</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">room</span><span class="si">}</span><span class="s2">/make_room_admin&quot;</span><span class="p">,</span>
         <span class="n">method</span><span class="o">=</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span>

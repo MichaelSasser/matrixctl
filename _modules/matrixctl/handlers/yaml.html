@@ -112,10 +112,16 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigFileError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShouldNeverHappenError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.oidc</span><span class="w"> </span><span class="kn">import</span> <span class="n">TokenManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.handlers.oidc</span><span class="w"> </span><span class="kn">import</span> <span class="n">discover_oidc_endpoints</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigServerAPI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigServerAPIAuthOidc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigServerAPIAuthToken</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigUi</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigUiImage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.typehints</span><span class="w"> </span><span class="kn">import</span> <span class="n">JsonDict</span>
 
 
 <span class="n">__author__</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Michael Sasser&quot;</span>
@@ -156,7 +162,7 @@
                 <span class="n">key</span><span class="p">,</span>
                 <span class="n">secrets_filter</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span>
             <span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="nb">set</span> <span class="o">|</span> <span class="nb">frozenset</span><span class="p">):</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">├─── </span><span class="si">%s</span><span class="s2">: [</span><span class="si">%s</span><span class="s2">]&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;│ &quot;</span> <span class="o">*</span> <span class="n">depth</span><span class="p">,</span>
@@ -188,7 +194,7 @@
 <span class="sd">    None</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">redact</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;token&quot;</span><span class="p">,</span> <span class="s2">&quot;synapse_password&quot;</span><span class="p">}</span>
+    <span class="n">redact</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;token&quot;</span><span class="p">,</span> <span class="s2">&quot;synapse_password&quot;</span><span class="p">,</span> <span class="s2">&quot;client_secret&quot;</span><span class="p">,</span> <span class="s2">&quot;client_id&quot;</span><span class="p">}</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;&lt;redacted length=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tree</span><span class="p">[</span><span class="n">key</span><span class="p">])</span><span class="si">}</span><span class="s2">&gt;&quot;</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">redact</span> <span class="k">else</span> <span class="n">tree</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
     <span class="p">)</span></div>
@@ -224,8 +230,9 @@
         <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">getuser</span><span class="p">(),</span>
         <span class="s2">&quot;default_ssh_port&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
         <span class="s2">&quot;default_api_concurrent_limit&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s2">&quot;well_knowen_path&quot;</span><span class="p">:</span> <span class="s2">&quot;.well-known/openid-configuration&quot;</span><span class="p">,</span>
     <span class="p">}</span>
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;__yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;server&quot;</span><span class="p">)</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;__yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;api_auth_prepared&quot;</span><span class="p">,</span> <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;token_manager&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">YAML</span><span class="p">,</span>
@@ -240,6 +247,8 @@
             <span class="n">paths</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_paths_to_config</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_manager</span><span class="p">:</span> <span class="n">TokenManager</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_auth_prepared</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__yaml</span><span class="p">:</span>  <span class="c1"># dict is empty</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
@@ -364,7 +373,7 @@
 <div class="viewcode-block" id="YAML.apply_defaults">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.apply_defaults">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">apply_defaults</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span> <span class="n">server</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Config</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_defaults</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span> <span class="n">server</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Config</span><span class="p">:</span>  <span class="c1"># noqa: C901</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply defaults to the configuration.</span>
 
 <span class="sd">        Parameters</span>
@@ -397,6 +406,44 @@
             <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;concurrent_limit&quot;</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;concurrent_limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+
+        <span class="c1"># Auth type</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_type&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;token&quot;</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span>
+            <span class="n">server</span>
+        <span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="c1"># Create api.auth_oidc if it does not exist</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_oidc&quot;</span><span class="p">][</span><span class="s2">&quot;client_id&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_oidc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                <span class="n">ConfigServerAPIAuthOidc</span><span class="p">,</span> <span class="p">{}</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Create api.auth_token if it does not exist</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_token&quot;</span><span class="p">][</span><span class="s2">&quot;token&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                <span class="n">ConfigServerAPIAuthToken</span><span class="p">,</span> <span class="p">{}</span>
+            <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_oidc&quot;</span><span class="p">][</span><span class="s2">&quot;claims&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;servers&quot;</span><span class="p">][</span><span class="n">server</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_oidc&quot;</span><span class="p">][</span><span class="s2">&quot;claims&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="nb">frozenset</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;openid&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;urn:synapse:admin:*&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;urn:matrix:org.matrix.msc2967.client:api:*&quot;</span><span class="p">,</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
 
         <span class="c1">#</span>
         <span class="c1"># Ui</span>
@@ -508,7 +555,7 @@
     <span class="c1"># TODO: doctest + fixture</span>
 <div class="viewcode-block" id="YAML.get">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.get">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">YAML</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">YAML</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">or_else</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a value from a config entry safely.</span>
 
 <span class="sd">        **Usage**</span>
@@ -544,6 +591,8 @@
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
                 <span class="n">yaml_walker</span> <span class="o">=</span> <span class="n">yaml_walker</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">or_else</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">Ellipsis</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">or_else</span>
             <span class="n">tree</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keys</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
                 <span class="s2">&quot;server&quot;</span><span class="p">,</span>
                 <span class="sa">f</span><span class="s2">&quot;servers.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -569,6 +618,396 @@
             <span class="s2">&quot;not a entire section.&quot;</span>
         <span class="p">)</span>
         <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">YAML</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">overwrite_existing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set a value in the config entry safely.</span>
+
+<span class="sd">        **Usage**</span>
+
+<span class="sd">        Pass strings describing the path in the ``self.__yaml`` dictionary</span>
+<span class="sd">        where the value should be set.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">           from matrixctl.handlers.yaml import YAML</span>
+
+<span class="sd">           yaml: YAML = YAML()</span>
+<span class="sd">           yaml.set(&quot;server&quot;, &quot;ssh&quot;, &quot;port&quot;, value=22)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        *keys : str</span>
+<span class="sd">            A tuple of strings describing the path where the value should be</span>
+<span class="sd">            set.</span>
+<span class="sd">        value : any</span>
+<span class="sd">            The value to set at the specified path.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ConfigFileError</span>
+<span class="sd">            If any intermediate key in the path is not a dictionary or cannot</span>
+<span class="sd">            be created.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">err_msg</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;At least one key must be provided.&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+        <span class="n">yaml_walker</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__yaml</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">yaml_walker</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Expected a dictionary at key &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;found </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">yaml_walker</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+                <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">yaml_walker</span><span class="p">:</span>
+                <span class="n">yaml_walker</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">yaml_walker</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">err_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Key &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39; is not a dictionary.&quot;</span>
+                <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+            <span class="n">yaml_walker</span> <span class="o">=</span> <span class="n">yaml_walker</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="n">last_key</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">yaml_walker</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;Parent of the last key is not a dictionary.&quot;</span>
+            <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">last_key</span> <span class="ow">in</span> <span class="n">yaml_walker</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite_existing</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;Key &#39;</span><span class="si">%s</span><span class="s2">&#39; already exists and overwrite is disabled. &quot;</span>
+                <span class="s2">&quot;Keeping current value&quot;</span><span class="p">,</span>
+                <span class="n">last_key</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">yaml_walker</span><span class="p">[</span><span class="n">last_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="c1"># TODO: Simplify. Maybe use get() instead of try/except?</span>
+<div class="viewcode-block" id="YAML.ensure_api_auth">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.ensure_api_auth">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ensure_api_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure the API authentication configuration is valid and prepared.</span>
+
+<span class="sd">        This method checks the authentication type specified in the</span>
+<span class="sd">        configuration and validates that all required fields for the selected</span>
+<span class="sd">        authentication method are present. It supports &#39;token&#39; and &#39;oidc&#39;</span>
+<span class="sd">        authentication types.</span>
+
+<span class="sd">        For &#39;token&#39; authentication, it verifies the presence of &#39;auth_token&#39;,</span>
+<span class="sd">        &#39;username&#39;, and &#39;token&#39;. For &#39;oidc&#39; authentication, it checks for</span>
+<span class="sd">        required OIDC endpoints and credentials, and if necessary, fetches</span>
+<span class="sd">        OIDC configuration from a discovery endpoint. It also initializes the</span>
+<span class="sd">        TokenManager and retrieves payload and user information.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ConfigFileError</span>
+<span class="sd">            If required configuration fields are missing or invalid.</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the OIDC authorization endpoint is not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_auth_prepared</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="c1"># exists because it has a default value</span>
+        <span class="n">auth_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__yaml</span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">][</span><span class="s2">&quot;api&quot;</span><span class="p">][</span><span class="s2">&quot;auth_type&quot;</span><span class="p">]</span>
+        <span class="n">err_msg</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="k">match</span> <span class="n">auth_type</span><span class="p">:</span>
+            <span class="k">case</span> <span class="s2">&quot;token&quot;</span><span class="p">:</span>
+                <span class="c1"># server.api.auth_token exists because it has a default value</span>
+
+                <span class="c1"># chack if username and token exist</span>
+                <span class="n">required_auth_config</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;auth_token&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;username&quot;</span><span class="p">,</span>
+                            <span class="n">or_else</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="p">),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;auth_token&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;token&quot;</span><span class="p">,</span>
+                            <span class="n">or_else</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="p">),</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">required_auth_config</span><span class="p">):</span>
+                    <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="s2">&quot;When using the token auth type, you need to set &quot;</span>
+                        <span class="s2">&quot;api.auth_token.username and api.auth_token.token in &quot;</span>
+                        <span class="s2">&quot;the config file.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+            <span class="k">case</span> <span class="s2">&quot;oidc&quot;</span><span class="p">:</span>
+                <span class="c1"># server.api.auth_oidc exisits because it has a default value</span>
+
+                <span class="c1"># check if all endpoints are defined or if we need to use the</span>
+                <span class="c1"># server.api.auth_oidc.discovery_endpoint to discover them</span>
+                <span class="n">required_endpoints</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
+                    <span class="p">{</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;token_endpoint&quot;</span><span class="p">,</span>
+                            <span class="n">or_else</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="p">),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;auth_endpoint&quot;</span><span class="p">,</span>
+                            <span class="n">or_else</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="p">),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;userinfo_endpoint&quot;</span><span class="p">,</span>
+                            <span class="n">or_else</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="p">),</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;jwks_uri&quot;</span><span class="p">,</span>
+                            <span class="n">or_else</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="p">),</span>
+                    <span class="p">}</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">required_endpoints</span><span class="p">):</span>
+                    <span class="n">discovery_endpoint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                        <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;discovery_endpoint&quot;</span><span class="p">,</span>
+                        <span class="n">or_else</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">discovery_endpoint</span><span class="p">:</span>
+                        <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="s2">&quot;To use the oidc auth type, you need to set &quot;</span>
+                            <span class="s2">&quot;either the api.auth_oidc.discovery_endpoint or &quot;</span>
+                            <span class="s2">&quot;api.auth_oidc.token_endpoint, &quot;</span>
+                            <span class="s2">&quot;api.auth_oidc.auth_endpoint, &quot;</span>
+                            <span class="s2">&quot;api.auth_oidc.userinfo_endpoint and &quot;</span>
+                            <span class="s2">&quot;api.auth_oidc.jwks_uri &quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+                    <span class="n">oidc_config</span><span class="p">:</span> <span class="n">JsonDict</span> <span class="o">=</span> <span class="n">discover_oidc_endpoints</span><span class="p">(</span>
+                        <span class="n">discovery_endpoint</span>
+                    <span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">(</span>
+                        <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;token_endpoint&quot;</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">oidc_config</span><span class="p">[</span><span class="s2">&quot;token_endpoint&quot;</span><span class="p">]),</span>
+                        <span class="n">overwrite_existing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">(</span>
+                        <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;auth_endpoint&quot;</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                            <span class="nb">str</span><span class="p">,</span> <span class="n">oidc_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;authorization_endpoint&quot;</span><span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="n">overwrite_existing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">(</span>
+                        <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;userinfo_endpoint&quot;</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                            <span class="nb">str</span><span class="p">,</span> <span class="n">oidc_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userinfo_endpoint&quot;</span><span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="n">overwrite_existing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">(</span>
+                        <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;jwks_uri&quot;</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">oidc_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;jwks_uri&quot;</span><span class="p">)),</span>
+                        <span class="n">overwrite_existing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;client_id&quot;</span><span class="p">,</span>
+                            <span class="n">or_else</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="p">)</span>
+                        <span class="ow">is</span> <span class="kc">None</span>
+                    <span class="p">):</span>
+                        <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="s2">&quot;You need to set the client_id in your config &quot;</span>
+                            <span class="s2">&quot;file, under api.auth_oidc.client_id, if you use &quot;</span>
+                            <span class="s2">&quot;the oidc auth.&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;client_secret&quot;</span><span class="p">,</span>
+                            <span class="n">or_else</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="p">)</span>
+                        <span class="ow">is</span> <span class="kc">None</span>
+                    <span class="p">):</span>
+                        <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="s2">&quot;You need to set the client_secret in your config &quot;</span>
+                            <span class="s2">&quot;file, under api.auth_oidc.client_secret, if you &quot;</span>
+                            <span class="s2">&quot;use the oidc auth.&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+                    <span class="n">token_manager</span> <span class="o">=</span> <span class="n">TokenManager</span><span class="p">(</span>
+                        <span class="n">token_endpoint</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;token_endpoint&quot;</span>
+                        <span class="p">),</span>
+                        <span class="n">client_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;client_id&quot;</span>
+                        <span class="p">),</span>
+                        <span class="n">client_secret</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;client_secret&quot;</span>
+                        <span class="p">),</span>
+                        <span class="n">auth_endpoint</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_endpoint&quot;</span>
+                        <span class="p">),</span>
+                        <span class="n">userinfo_endpoint</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;userinfo_endpoint&quot;</span>
+                        <span class="p">),</span>
+                        <span class="n">jwks_uri</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                            <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;jwks_uri&quot;</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">auth_endpoint</span><span class="p">:</span>
+                        <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="s2">&quot;Authorization endpoint not found in OIDC &quot;</span>
+                            <span class="s2">&quot;configuration&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+
+                    <span class="c1"># must exist because of the default value</span>
+                    <span class="n">claims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;claims&quot;</span><span class="p">)</span>
+                    <span class="n">_</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_user_token</span><span class="p">(</span><span class="n">claims</span><span class="p">)</span>
+                    <span class="n">payload</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_payload</span><span class="p">()</span>
+                    <span class="n">user_info</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_user_info</span><span class="p">()</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">(</span>
+                        <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;payload&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">payload</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_set</span><span class="p">(</span>
+                        <span class="s2">&quot;server&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;api&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;user_info&quot;</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">user_info</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">token_manager</span> <span class="o">=</span> <span class="n">token_manager</span>
+            <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+                <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Unknown auth type </span><span class="si">{</span><span class="n">auth_type</span><span class="si">}</span><span class="s2"> in your config file.&quot;</span>
+                    <span class="s2">&quot;Possible values are: &#39;token&#39; and &#39;oidc&#39;.&quot;</span>
+                <span class="p">)</span>
+                <span class="k">raise</span> <span class="n">ConfigFileError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_auth_prepared</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="YAML.get_api_username">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.get_api_username">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_api_username</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the API token for authentication.</span>
+
+<span class="sd">        This method ensures API authentication is set up, then retrieves</span>
+<span class="sd">        the username based on the configured authentication type. Supports</span>
+<span class="sd">        &#39;token&#39; and &#39;oidc&#39; auth types.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        username : str</span>
+<span class="sd">            The username.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ShouldNeverHappenError</span>
+<span class="sd">            If the token manager is not initialized or the auth type is</span>
+<span class="sd">            unknown.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ensure_api_auth</span><span class="p">()</span>
+        <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_type&quot;</span><span class="p">):</span>
+            <span class="k">case</span> <span class="s2">&quot;token&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                    <span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_token&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">case</span> <span class="s2">&quot;oidc&quot;</span><span class="p">:</span>
+                <span class="n">localpart</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;user_info&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span>
+                <span class="p">)</span>
+                <span class="n">server</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">localpart</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">server</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+                <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;Unknown Username&quot;</span>
+                <span class="k">raise</span> <span class="n">ShouldNeverHappenError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="YAML.get_api_token">
+<a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.get_api_token">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_api_token</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the API token for authentication.</span>
+
+<span class="sd">        This method ensures API authentication is set up, then retrieves</span>
+<span class="sd">        the token based on the configured authentication type. Supports</span>
+<span class="sd">        &#39;token&#39; and &#39;oidc&#39; auth types.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        token : str</span>
+<span class="sd">            The API token string.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ShouldNeverHappenError</span>
+<span class="sd">            If the token manager is not initialized or the auth type is</span>
+<span class="sd">            unknown.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ensure_api_auth</span><span class="p">()</span>
+        <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_type&quot;</span><span class="p">):</span>
+            <span class="k">case</span> <span class="s2">&quot;token&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                    <span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_token&quot;</span><span class="p">,</span> <span class="s2">&quot;token&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">case</span> <span class="s2">&quot;oidc&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_manager</span><span class="p">:</span>
+                    <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="s2">&quot;Token manager not initialized. &quot;</span>
+                        <span class="s2">&quot;Call ensure_api_auth() first.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">ShouldNeverHappenError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_manager</span><span class="o">.</span><span class="n">get_user_token</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;claims&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+                <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;Unknown Token&quot;</span>
+                <span class="k">raise</span> <span class="n">ShouldNeverHappenError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">YAML</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>

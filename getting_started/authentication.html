@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Access Token &mdash; MatrixCtl None.0.14.1.0 documentation</title>
+  <title>Authentication &mdash; MatrixCtl None.0.14.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
@@ -49,7 +49,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="config_file.html">Config File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="synapse_playbook.html">Synapse Playbook</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Access Token</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Authentication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ssh_pubkey.html">SSH Public Key</a></li>
 </ul>
 </li>
@@ -73,9 +73,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Getting Started</a></li>
-      <li class="breadcrumb-item active">Access Token</li>
+      <li class="breadcrumb-item active">Authentication</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/getting_started/access_token.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/getting_started/authentication.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -83,11 +83,90 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="access-token">
-<h1>Access Token<a class="headerlink" href="#access-token" title="Link to this heading"></a></h1>
-<p>To use the API of Synapse you need a access token of an administrator.
-To get an access token, you need an user account.
-MatrixCtl helps you to register one. Just run:</p>
+  <section id="authentication">
+<h1>Authentication<a class="headerlink" href="#authentication" title="Link to this heading"></a></h1>
+<p>MatrixCtl supports two different ways to authenticate against the Synapse API.</p>
+<p>1. OpenID Connect
+1. Access Token</p>
+<section id="openid-connect">
+<h2>OpenID Connect<a class="headerlink" href="#openid-connect" title="Link to this heading"></a></h2>
+<p>Since MAS (the Matrix Authentication Service) has become stable it became the
+default authentication method for many of us, it also brought the feature of
+refresh tokens. This means that the access token method still works, but
+the access tokens expire after a couple of minutes. This means that you
+have to swap them out basically every time you run a command. Getting long
+lived access tokens is not easy anymore. Therefore we added OpenID Connect
+support to MatrixCtl. Just like any other Matrix client, that is using MAS,
+MatrixCtl will do the same.</p>
+<p>We have written a simple OpenID Connect client for it that handles the
+token refreshing for you.</p>
+<p>To get started with OpenID Connect, you need to create a
+<a class="reference external" href="https://element-hq.github.io/matrix-authentication-service/reference/configuration.html#clients">new client</a>
+on your MAS instance.</p>
+<p>For example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">01JVZSJNTM8EPFCA9R55V2PFW9</span>
+<span class="w">  </span><span class="nt">client_auth_method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">client_secret_post</span>
+<span class="w">  </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7eQgWf5XIwIVkrVmzc5nxw731u4Riu16YK1oHOfTDR2xU4iD7C7ijiSD8wclfTDn</span>
+<span class="w">  </span><span class="nt">redirect_uris</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:8298/callback</span>
+</pre></div>
+</div>
+<p>The <cite>client_id</cite> has to be a valid ULID. You can generate one using an
+<a class="reference external" href="https://ulidgenerator.com">ulid generator</a>.
+The <cite>client_secret</cite>, for example can be generated using the <cite>openssl</cite> command:
+<cite>openssl rand -base64 32 | tr -d ‘n’</cite> or <cite>pwgen -s 64 1</cite>. The <cite>redirect_uris</cite>
+is will be a list that only contains one entry,
+<cite>http://127.0.0.1:8298/callback</cite>. The <cite>client_auth_method</cite> must be
+<cite>client_secret_post</cite></p>
+<p>That’s all we need to make MAS acquainted with MatrixCtl. Now we need to
+tell MatrixCtl about the MAS, our OpenID provider.</p>
+<p>Open the <cite>config.yml</cite> file and add the following lines to it:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">servers</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">default</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">api</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yourdomain.tld</span>
+<span class="w">      </span><span class="nt">auth_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oidc</span>
+<span class="w">      </span><span class="nt">auth_oidc</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">client_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">01JVZSJNTM8EPFCA9R55V2PFW9</span>
+<span class="w">        </span><span class="nt">client_secret</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7eQgWf5XIwIVkrVmzc5nxw731u4Riu16YK1oHOfTDR2xU4iD7C7ijiSD8wclfTDn</span>
+<span class="w">        </span><span class="nt">discovery_endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://mas.yourdomain.tld/.well-known/openid-configuration</span>
+
+<span class="w">        </span><span class="c1"># Optional, when discovery_endpoint is not set</span>
+<span class="w">        </span><span class="c1"># token_endpoint:</span>
+<span class="w">        </span><span class="c1"># auth_endpoint:</span>
+<span class="w">        </span><span class="c1"># userinfo_endpoint:</span>
+<span class="w">        </span><span class="c1"># jwks_uri:</span>
+</pre></div>
+</div>
+<p>To use OpenID Connect, you first need to set the <cite>auth_type</cite> to <cite>oidc</cite>. Then
+you either need to set the <cite>discovery_endpoint</cite> (recommended) or fill out the
+<cite>token_endpoint</cite>, <cite>auth_endpoint</cite>, <cite>userinfo_endpoint</cite>, <cite>jwks_uri</cite>.
+Then you copy the <cite>client_id</cite> and <cite>client_secret</cite> from the client you created.
+Make sure not to share the <cite>client_secret</cite> with anyone else.
+This is the secret that is used to authenticate MatrixCtl against the OpenID
+provider.</p>
+<p>Now, when the Synapse API is called for the first time, MatrixCtl will use the
+OpenID Connect browser flow to authenticate against the OpenID provider.
+This will launch a browser window and ask you to login. After you have logged
+in, the browser will redirect to the <cite>redirect_uri</cite> you set in the client.</p>
+<p>If everything went well, you will be authenticated and you can use MatrixCtl
+just like before. The current, short lived acces token will be stored,
+together with the refresh token and expire information in
+<cite>${XDG_DATA_HOME}/matrixctl/oidc_token_cache.json</cite> (most likely
+<cite>~/.local/share/matrixctl/oidc_token_cache.json</cite>). Just like with the
+client_secret, make sure not to share this file with anyone else.</p>
+</section>
+<section id="access-token">
+<h2>Access Token<a class="headerlink" href="#access-token" title="Link to this heading"></a></h2>
+<p>If you haven’t jumped onto the OpenID Connect bandwagon yet, you can still use
+MatrixCtl with the access token method. This is the old way of doing things
+and is less complex than using OpenID Connect. The access token is a long lived
+(when not using MAS) and can be found in the Element web client. As long as
+the element session is active, the access token is valid.</p>
+<p>If you don’t have any users yet, and you are using the Ansible playbook, you
+can easily create a user account with the playbook. Just run the following
+command (given, that you configured the playbook in the MatrixCtl config file).
+If you already have a user account, you can skip this step and continue below.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>matrixctl<span class="w"> </span>adduser<span class="w"> </span>--ansible<span class="w"> </span>--admin<span class="w"> </span>myusername
 <span class="go">Password:</span>
 <span class="go">Password (again):</span>
@@ -113,7 +192,7 @@ will be generated for you. If you are satisfied with it, enter [y].</p>
 <code class="docutils literal notranslate"><span class="pre">--admin</span></code> makes sure, that you create an administrator account instead of an
 user account. The <code class="docutils literal notranslate"><span class="pre">--ansible</span></code> argument is needed, because you currently have
 no access to the admin API. After all that steps you don’t need the
-<code class="docutils literal notranslate"><span class="pre">--ansible</span></code> anymore.</p>
+<code class="docutils literal notranslate"><span class="pre">--ansible</span></code> argument anymore.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can use this user account as your personal main user account.</p>
@@ -165,6 +244,7 @@ In the Advanced section you find <code class="docutils literal notranslate"><spa
 </figure>
 <p>This is your access token. It is already highlighted for you. Just copy it into
 the config file into the <code class="docutils literal notranslate"><span class="pre">api</span></code> section.</p>
+</section>
 <section id="copy-the-token">
 <h2>Copy The Token<a class="headerlink" href="#copy-the-token" title="Link to this heading"></a></h2>
 <p>Now you can copy the token into the <code class="docutils literal notranslate"><span class="pre">api</span></code> section of your config file.
