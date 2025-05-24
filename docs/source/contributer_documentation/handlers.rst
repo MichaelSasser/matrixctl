@@ -85,6 +85,12 @@ Database
    :undoc-members:
    :show-inheritance:
 
+Rows
+----
 
-..
+.. automodule:: matrixctl.handlers.rows
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
    vim: set ft=rst :

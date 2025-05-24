@@ -412,6 +412,19 @@ purge-remote-media
  :undoc-members:
  :show-inheritance:
 
+redact
+------
+
+.. automodule:: matrixctl.commands.redact.parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: matrixctl.commands.redact.addon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 delete-local-media
 ------------------
 
