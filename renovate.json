@@ -1,8 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  lockFileMaintenance: {
-    enabled: true,
-  },
   "extends": [
     "config:recommended",
     ":dependencyDashboard",
@@ -18,6 +15,8 @@
     ":automergePatch",
     ":automergeRequireAllStatusChecks",
     ":renovatePrefix",
-    ":rebaseStalePrs"
+    ":rebaseStalePrs",
+    ":enablePreCommit",
+    ":maintainLockFilesWeekly"
   ]
 }
