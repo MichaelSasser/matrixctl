@@ -10,5 +10,5 @@ compatible.
 
    config_file
    synapse_playbook
-   access_token
+   authentication
    ssh_pubkey
