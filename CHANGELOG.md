@@ -7,6 +7,25 @@ All notable changes to MatrixCtl will be documented in this file.
 You can find the issue tracker on
 [GitHub](https://github.com/MichaelSasser/matrixctl/issues).
 
+## [0.15.0](https://github.com/MichaelSasser/matrixctl/compare/v0.14.1...v0.15.0) (2025-05-24)
+
+
+### Features
+
+* **renovate:** enable pre-commit and schedule lock file maintenance ([d800c70](https://github.com/MichaelSasser/matrixctl/commit/d800c7027dac37ded11b9eb4ff0530c48e801136))
+
+
+### Bug Fixes
+
+* **deps:** update dependency rich to v14 ([#881](https://github.com/MichaelSasser/matrixctl/issues/881)) ([17e6127](https://github.com/MichaelSasser/matrixctl/commit/17e61275c960ce16d8dcda3673c7e849f6c5900c))
+* **deps:** update dependency sphinx-autodoc-typehints to &gt;=3,&lt;3.3 ([#888](https://github.com/MichaelSasser/matrixctl/issues/888)) ([b9aa57d](https://github.com/MichaelSasser/matrixctl/commit/b9aa57d9935f6bba873df0256953253781deba40))
+* **release-please:** fix manifest ([8f23997](https://github.com/MichaelSasser/matrixctl/commit/8f23997869bf917eff59076b323d8c834f97bfaa))
+
+
+### Miscellaneous Chores
+
+* release 0.15.0 ([71f013d](https://github.com/MichaelSasser/matrixctl/commit/71f013da523f3a9471ca46ac71cc994b7bd5f5c8))
+
 ## [0.14.1](https://github.com/MichaelSasser/matrixctl/compare/v0.14.0...v0.14.1) (2025-03-17)
 
 
