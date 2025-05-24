@@ -28,7 +28,7 @@ from types import ModuleType
 import coloredlogs
 
 from matrixctl import __version__
-from matrixctl import addon_manager
+from matrixctl import command
 from matrixctl.handlers.yaml import YAML
 
 
@@ -137,8 +137,8 @@ def main() -> int:
     addon_dir: Path = Path(__file__).resolve().parent / "commands"
 
     # Setup Commands
-    addon_manager.import_commands_from(str(addon_dir), addon_module, "parser")
-    parser: argparse.ArgumentParser = addon_manager.setup(setup_parser)
+    command.import_commands_from(str(addon_dir), addon_module, "parser")
+    parser: argparse.ArgumentParser = command.setup(setup_parser)
 
     args: argparse.Namespace = parser.parse_args()
 

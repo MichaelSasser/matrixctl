@@ -25,10 +25,10 @@ from argparse import _SubParsersAction
 from enum import Enum
 from enum import unique
 
-from matrixctl.addon_manager import subparser
 from matrixctl.argparse_action import ArgparseActionDateParser
 from matrixctl.argparse_action import ArgparseActionEnum
 from matrixctl.argparse_action import TimeDirection
+from matrixctl.command import subparser
 
 
 __author__: str = "Michael Sasser"
