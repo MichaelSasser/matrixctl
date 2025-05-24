@@ -1,4 +1,5 @@
 .PHONY: all
+ARGS?=--help
 
 all: help
 
@@ -6,6 +7,13 @@ all: help
 ##@
 ##@ Build Commands
 ##@
+
+
+sync: ##@ Update the dependencies according to the
+			##@  lockfile. [alias: s]
+	uv sync --all-extras
+
+s: sync
 
 update: ##@ Update the dependencies to the ones defined
 				##@ in the pyproject.toml [alias: u]
@@ -19,7 +27,7 @@ build: ##@ Build the application [alias: b]
 b: build
 
 run: ##@ Build and run the application [alias: r]
-	uv run matrixctl
+	uv run matrixctl $(ARGS)
 
 r: run
 
@@ -41,7 +49,7 @@ t: test
 fmt: ##@ Format the project
 	ruff format
 
-lint: lint-toml lint-python lint-type ##@ Lint the the source code (Rust, TOML)
+lint: lint-toml lint-python lint-type ##@ Lint the the source code (Python, TOML)
 
 lint-toml: ##@  Lint all TOML files
 	taplo lint --colors always
