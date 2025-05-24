@@ -54,7 +54,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         path=f"/_synapse/admin/v1/event_reports/{arg.report_id}",
     )

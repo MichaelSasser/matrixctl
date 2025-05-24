@@ -63,7 +63,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     timestamp = handle_timestamp(arg.timestamp, force=arg.force)
 
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         path="/_synapse/admin/v1/purge_media_cache",
         params={"before_ts": timestamp},
@@ -121,7 +121,7 @@ def handle_timestamp(timestamp: int | None, *, force: bool) -> int:
             )
             if not ask_question("Do you want to continue?"):
                 sys.exit(0)
-        return int(round(ts * 1000))
+        return round(ts * 1000)
     try:
         dt = datetime.fromtimestamp(float(timestamp) / 1000, tz=timezone.utc)
         logger.info("Delete until dt = %s", dt)

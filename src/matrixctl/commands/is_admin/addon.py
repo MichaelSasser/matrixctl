@@ -59,9 +59,9 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    user_id = f"@{arg.user}:{yaml.get('server', 'api','domain')}"
+    user_id = f"@{arg.user}:{yaml.get('server', 'api', 'domain')}"
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         path=f"/_synapse/admin/v1/users/{user_id}/admin",
         method="GET",

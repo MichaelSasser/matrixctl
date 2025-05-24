@@ -61,7 +61,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     logger.debug("Download file_path: %s", file_path)
 
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         path=(
             "/_matrix/client/v1/media/download/"

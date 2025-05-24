@@ -80,10 +80,10 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         )
         return 0
 
-    user_id = f"@{arg.user}:{yaml.get('server', 'api','domain')}"
+    user_id = f"@{arg.user}:{yaml.get('server', 'api', 'domain')}"
     req: RequestBuilder = RequestBuilder(
         domain=yaml.get("server", "api", "domain"),
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         path=f"/_synapse/admin/v2/users/{user_id}",
         json={"password": passwd, "admin": arg.admin},
         method="PUT",

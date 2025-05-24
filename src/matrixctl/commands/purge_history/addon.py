@@ -66,7 +66,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     logger.debug("request_body: %s", request_body)
 
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         path=f"/_synapse/admin/v1/purge_history/{arg.room_id.strip()}",
         method="POST",

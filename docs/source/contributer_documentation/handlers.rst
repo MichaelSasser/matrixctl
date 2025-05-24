@@ -29,6 +29,14 @@ YAML
    :undoc-members:
    :show-inheritance:
 
+OIDC
+----
+
+.. automodule:: matrixctl.handlers.oidc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 API
 ---
 

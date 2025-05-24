@@ -59,7 +59,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         path="/_synapse/admin/v1/statistics/database/rooms",
     )

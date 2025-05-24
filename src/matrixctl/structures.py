@@ -20,6 +20,8 @@ from __future__ import annotations
 
 import typing as t
 
+from matrixctl.typehints import JsonDict
+
 
 class Config(t.TypedDict):
     """Cast the YAML config to a typed dict."""
@@ -55,9 +57,34 @@ class ConfigServerAPI(t.TypedDict):
     """Add `api` to `server` in the YAML config structure."""
 
     domain: str
+    auth_type: str
+    auth_token: ConfigServerAPIAuthToken
+    auth_oidc: ConfigServerAPIAuthOidc
+    concurrent_limit: int
+
+
+class ConfigServerAPIAuthToken(t.TypedDict):
+    """Add `auth_token` to `server.api` in the YAML config structure."""
+
     username: str
     token: str
-    concurrent_limit: int
+
+
+class ConfigServerAPIAuthOidc(t.TypedDict):
+    """Add `auth_oidc` to `server.api` in the YAML config structure."""
+
+    discovery_endpoint: str
+    client_id: str
+    client_secret: str
+    token_endpoint: str
+    auth_endpoint: str
+    userinfo_endpoint: str
+    jwks_uri: str
+    claims: t.Iterable[str]
+
+    # Dynamically generated. Any user input will be overwritten.
+    user_info: JsonDict
+    payload: JsonDict
 
 
 class ConfigServerSSH(t.TypedDict):

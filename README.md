@@ -108,15 +108,36 @@ servers:
       # is not enough.
       domain: example.com
 
-      # The username your admin user
-      username: johndoe
+      # How you want to authenticate. The default is "token". You can also use
+      auth_type: oidc # possible values: oidc, token
 
-      # To use the API you need to have an administrator account. Enter your Token
-      # here. If you use the element client you will find it your user settings
-      # (click on your username on the upper left corner on your browser) in the
-      # "Help & About" tab. If you scroll down click next to "Access-Token:" on
-      # "<click to reveal>". It will be marked for you. Copy it in here.
-      token: "MyMatrixToken"
+      # Only required if you use the token authentication method (auth_type)
+      auth_token:
+        # The localpart of your admin user
+        username: johndoe # johndoe from @johndoe:example.com
+
+        # To use the API you need to have an administrator account. Enter your Token
+        # here. If you use the element client you will find it your user settings
+        # (click on your username on the upper left corner on your browser) in the
+        # "Help & About" tab. If you scroll down click next to "Access-Token:" on
+        # "<click to reveal>". It will be marked for you. Copy it in here.
+        token: "MyMatrixToken"
+
+      # Only required if you use the OIDC authentication method (auth_type)
+      # To get more information about the OIDC authentication method, check out
+      # docs.
+      auth_oidc:
+        discovery_endpoint: https://mas.yourdomain.tld/.well-known/openid-configuration
+        client_id: 01JVZSJNTM8EPFCA9R55V2PFW9
+        client_secret: 7eQgWf5XIwIVkrVmzc5nxw731u4Riu16YK1oHOfTDR2xU4iD7C7ijiSD8wclfTDn
+
+        # Optional, when discovery_endpoint is not set or to overwrite the
+        # the discovered values.
+
+        # token_endpoint:
+        # auth_endpoint:
+        # userinfo_endpoint:
+        # jwks_uri:
 
       # In some cases, MatrixCtl does need to make many requests. To speed those
       # requests a notch, you can set a concurrent_limit which is greater than
@@ -169,6 +190,8 @@ Predefined Jinja2 placeholders (all placeholders can be overwritten):
 - `"{{ user }}"` -- The current users username e.g. `michael`,
 - `"{{ default_ssh_port }}"` -- The default ssh port `22`,
 - `"{{ default_api_concurrent_limit }}"` -- The default concurrent limit `4`.
+- `"{{ well_knowen_path }}"` -- The OIDC well-known path
+  `.well-known/openid-configuration`.
 
 Check out the
 [documentation](https://matrixctl.readthedocs.io/en/latest/getting_started/config_file.html)
