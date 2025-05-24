@@ -349,9 +349,12 @@ class TokenManager:
             )
             payload_decoded = base64.urlsafe_b64decode(payload_padded)
             payload: JsonDict = t.cast(JsonDict, json.loads(payload_decoded))
-        except Exception as e:
-            err_msg: str = f"Failed to decode ID token: {e!s}"
-            raise ValueError(err_msg) from e
+
+        except json.JSONDecodeError:
+            logger.exception(
+                ("Unable to decode payload. Invalid JSON"),
+            )
+            raise
 
         logger.debug("Payload decoded: %s", payload)
         return payload
@@ -405,8 +408,14 @@ class TokenManager:
                 e.response.text,
             )
             raise
-        except Exception:
-            logger.exception("Token request failed")
+
+        except json.JSONDecodeError:
+            logger.exception(
+                (
+                    "The returned client credentials token could not be "
+                    "decoded. Invalid JSON"
+                ),
+            )
             raise
 
         access_token: str
@@ -651,9 +660,6 @@ class TokenManager:
                 ),
                 self.cache_path,
             )
-            return None
-        except Exception:
-            logger.exception("Token refresh failed")
             return None
 
         logger.error("No access token in response")
