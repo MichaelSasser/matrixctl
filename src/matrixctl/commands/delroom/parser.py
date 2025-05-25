@@ -24,6 +24,7 @@ from argparse import ArgumentParser
 from argparse import RawDescriptionHelpFormatter
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -31,8 +32,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_delroom(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.ROOM)
+def subparser_delroom(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl delroom`` command.
 
     Parameters
@@ -61,6 +65,7 @@ def subparser_delroom(subparsers: _SubParsersAction[t.Any]) -> None:
             " With the message argument a message can be sent to the new room."
             " All room aliases will be transfared to the new room."
         ),
+        parents=[common_parser],
     )
     parser.add_argument("room", type=str, help="The room identifier")
     parser.add_argument(

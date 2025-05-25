@@ -23,6 +23,7 @@ import typing as t
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -30,8 +31,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_make_room_admin(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.ROOM)
+def subparser_make_room_admin(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl make-room-admin`` command.
 
     Parameters
@@ -51,6 +55,7 @@ def subparser_make_room_admin(subparsers: _SubParsersAction[t.Any]) -> None:
             "Grant a user the highest power level available to a "
             "local user in this room"
         ),
+        parents=[common_parser],
     )
     parser.add_argument("room", help="The room alias or identifier")
     parser.add_argument(

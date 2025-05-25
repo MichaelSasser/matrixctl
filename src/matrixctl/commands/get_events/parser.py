@@ -28,6 +28,7 @@ from enum import unique
 from matrixctl.argparse_action import ArgparseActionDateParser
 from matrixctl.argparse_action import ArgparseActionEnum
 from matrixctl.argparse_action import TimeDirection
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -54,8 +55,11 @@ class OutputType(Enum):
     JSON = "json"
 
 
-@subparser
-def subparser_get_events(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.ROOM)
+def subparser_get_events(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl get-event`` command.
 
     Parameters
@@ -72,6 +76,7 @@ def subparser_get_events(subparsers: _SubParsersAction[t.Any]) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "get-events",
         help="Get events from the database",
+        parents=[common_parser],
     )
     parser.add_argument(
         "users",
@@ -85,7 +90,7 @@ def subparser_get_events(subparsers: _SubParsersAction[t.Any]) -> None:
         "-e", "--event-types", nargs="+", help="The event types"
     )
     parser.add_argument(
-        "-f",
+        "-o",
         "--output-format",
         type=OutputType,
         action=ArgparseActionEnum,

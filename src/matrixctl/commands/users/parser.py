@@ -23,6 +23,7 @@ import typing as t
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -30,8 +31,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_users(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.USER)
+def subparser_users(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl users`` command.
 
     Parameters
@@ -47,6 +51,7 @@ def subparser_users(subparsers: _SubParsersAction[t.Any]) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "users",
         help="Lists all users of the homeserver",
+        parents=[common_parser],
     )
     parser.add_argument(
         "limit",
@@ -68,7 +73,7 @@ def subparser_users(subparsers: _SubParsersAction[t.Any]) -> None:
         help="Shows guests",
     )
     parser.add_argument(
-        "-d",
+        "-D",
         "--with-deactivated",
         action="store_true",
         help="Shows deactivated accounts",

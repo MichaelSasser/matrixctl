@@ -23,6 +23,7 @@ import typing as t
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -30,8 +31,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_get_event(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.ROOM)
+def subparser_get_event(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl get-event`` command.
 
     Parameters
@@ -48,6 +52,7 @@ def subparser_get_event(subparsers: _SubParsersAction[t.Any]) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "get-event",
         help="Get an event from the database",
+        parents=[common_parser],
     )
     parser.add_argument("event_id", help="The event identifier")
     parser.set_defaults(addon="get_event")

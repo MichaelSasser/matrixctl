@@ -23,6 +23,7 @@ import typing as t
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -30,8 +31,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_adduser(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.USER)
+def subparser_adduser(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl adduser`` command.
 
     Parameters
@@ -48,6 +52,7 @@ def subparser_adduser(subparsers: _SubParsersAction[t.Any]) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "adduser",
         help="Add users to the homeserver",
+        parents=[common_parser],
     )
     parser.add_argument("user", help="The username of the new user")
     parser.add_argument(

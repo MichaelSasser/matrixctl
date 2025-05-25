@@ -10,53 +10,28 @@ MatrixCtl is a simple, but feature-rich tool to remotely control, manage,
 provision and deploy your Matrix homeservers right from your virtual terminal.
 
 ```console
-usage: matrixctl [-h] [--version] [-d] [-s SERVER] [-c CONFIG] Command ...
+usage: matrixctl [-h] [-d] [-S SERVER] [-c CONFIG] [--version] Category ...
 
 MatrixCtl is a simple, but feature-rich tool to remotely control, manage, provision and deploy Matrix homeservers.
 
 options:
-  -h, --help            show this help message and exit
-  --version             show program's version number and exit
-  -d, --debug           Enables debugging mode.
-  -s, --server SERVER   Select the server. (default: "default")
-  -c, --config CONFIG   A path to an alternative config file.
+  -h, --help           show this help message and exit
+  -d, --debug          Enables debugging mode.
+  -S, --server SERVER  Select the server. (default: "default")
+  -c, --config CONFIG  A path to an alternative config file.
+  --version            show program's version number and exit
 
-Commands:
-  The following are commands, you can use to accomplish various tasks.
+Categoties:
+  Please select a category to see the available commands.
 
-  Command
-    adduser             Add users to the homeserver
-    check               Checks the deployment with Ansible
-    delete-local-media  Delete cached (local) media that was last accessed before a specific point in time
-    delroom             Shutdown a room
-    deluser             Deactivate users
-    deploy              Provision and deploy the Ansible playbook
-    download            Download a media file.
-    get-event           Get an event from the database
-    get-event-context   Get the context of an event
-    get-events          Get events from the database
-    is-admin            Check, if a user is a homeserver administrator
-    joinroom            Join a user to a room
-    largest-rooms       List an approximation of the 10 largest rooms in the database
-    maintenance         Run maintenance tasks
-    make-room-admin     Grant a user the highest power level available to a local user in this room
-    purge-history       Purge historic events from the database
-    purge-remote-media  Purge cached, remote media
-    report              Get a report event by report identifier
-    reports             Lists reported events
-    rooms               List rooms
-    server-notice       Send a server notice to a user
-    set-admin           Change whether a user is a homeserver admin or not
-    start               Starts all OCI containers
-    restart             Restarts all OCI containers (alias for start)
-    stop                Stop and disable all OCI containers
-    update              Updates the ansible playbook repository
-    upload              Upload a media file.
-    user                Get information about a specific user
-    users               Lists all users of the homeserver
-    version             Get the version information of the Synapse instance
+  Category
+    room               Manage rooms.
+    user               Manage users.
+    media              Manage media files on the server.
+    server             Manage the homeserver instance.
+    mod                Moderation commands for rooms and users.
+    self               Manage MatrixCtl.
 
-Thank you for using MatrixCtl!
 Check out the docs: https://matrixctl.rtfd.io
 Report bugs to: https://github.com/MichaelSasser/matrixctl/issues/new/choose
 ```

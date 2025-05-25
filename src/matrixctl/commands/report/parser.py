@@ -23,6 +23,7 @@ import typing as t
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -30,8 +31,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_report(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.MOD)
+def subparser_report(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl report`` command.
 
     Parameters
@@ -47,6 +51,7 @@ def subparser_report(subparsers: _SubParsersAction[t.Any]) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "report",
         help="Get a report event by report identifier",
+        parents=[common_parser],
     )
     parser.add_argument("report_id", help="The report identifier")
     parser.set_defaults(addon="report")

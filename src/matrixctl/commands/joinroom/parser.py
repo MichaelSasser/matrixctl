@@ -23,6 +23,7 @@ import typing as t
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -30,8 +31,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_deluser(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.USER)
+def subparser_deluser(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl joinroom`` command.
 
     Parameters
@@ -48,6 +52,7 @@ def subparser_deluser(subparsers: _SubParsersAction[t.Any]) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "joinroom",
         help="Join a user to a room",
+        parents=[common_parser],
     )
     parser.add_argument("room", help="The room identifier or alias")
     parser.add_argument("user", help='The username of the user e.g. "michael"')

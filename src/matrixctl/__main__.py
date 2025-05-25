@@ -42,7 +42,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 
-def setup_parser() -> argparse.ArgumentParser:
+def setup_parser() -> tuple[argparse.ArgumentParser, argparse.ArgumentParser]:
     """Use this class to initialize the parser.
 
     Parameters
@@ -55,6 +55,24 @@ def setup_parser() -> argparse.ArgumentParser:
         The parser object, which can be used to parse the arguments.
 
     """
+    common_parser = argparse.ArgumentParser(add_help=False)
+    common_parser.add_argument(
+        "-d",
+        "--debug",
+        action="store_true",
+        help="Enables debugging mode.",
+    )
+    common_parser.add_argument(
+        "-S",
+        "--server",
+        help='Select the server. (default: "default")',
+    )
+    common_parser.add_argument(
+        "-c",
+        "--config",
+        help="A path to an alternative config file.",
+    )
+
     parser = argparse.ArgumentParser(
         description=(
             "MatrixCtl is a simple, but feature-rich tool to remotely "
@@ -62,31 +80,15 @@ def setup_parser() -> argparse.ArgumentParser:
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
-            "Thank you for using MatrixCtl!\n"
             "Check out the docs: https://matrixctl.rtfd.io\n"
             "Report bugs to: "
             "https://github.com/MichaelSasser/matrixctl/issues/new/choose"
         ),
+        parents=[common_parser],
     )
 
     parser.add_argument("--version", action="version", version=__version__)
-    parser.add_argument(
-        "-d",
-        "--debug",
-        action="store_true",
-        help="Enables debugging mode.",
-    )
-    parser.add_argument(
-        "-s",
-        "--server",
-        help='Select the server. (default: "default")',
-    )
-    parser.add_argument(
-        "-c",
-        "--config",
-        help="A path to an alternative config file.",
-    )
-    return parser
+    return parser, common_parser
 
 
 def setup_logging(*, debug_mode: bool) -> None:

@@ -26,6 +26,7 @@ import typing as t
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -33,8 +34,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_purge_history(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.ROOM)
+def subparser_purge_history(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl purge-history`` command.
 
     Parameters
@@ -50,6 +54,7 @@ def subparser_purge_history(subparsers: _SubParsersAction[t.Any]) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "purge-history",
         help="Purge historic events from the database",
+        parents=[common_parser],
     )
     parser.add_argument(
         "-l",

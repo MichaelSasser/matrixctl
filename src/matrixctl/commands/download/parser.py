@@ -23,6 +23,7 @@ import typing as t
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -30,8 +31,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_download(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.MEDIA)
+def subparser_download(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl download`` command.
 
     Parameters
@@ -47,6 +51,7 @@ def subparser_download(subparsers: _SubParsersAction[t.Any]) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "download",
         help="Download a media file.",
+        parents=[common_parser],
     )
     parser.add_argument("mxc", help="The matrix content URI")
     parser.add_argument("file", help="The path to where to download a file")

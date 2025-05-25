@@ -23,6 +23,7 @@ import typing as t
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -30,8 +31,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_rooms(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.ROOM)
+def subparser_rooms(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl rooms`` command.
 
     Parameters
@@ -44,7 +48,11 @@ def subparser_rooms(subparsers: _SubParsersAction[t.Any]) -> None:
     None
 
     """
-    parser: ArgumentParser = subparsers.add_parser("rooms", help="List rooms")
+    parser: ArgumentParser = subparsers.add_parser(
+        "rooms",
+        help="List rooms",
+        parents=[common_parser],
+    )
     parser.add_argument(
         "limit",
         type=int,

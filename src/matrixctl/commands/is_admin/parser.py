@@ -23,6 +23,7 @@ import typing as t
 from argparse import ArgumentParser
 from argparse import _SubParsersAction
 
+from matrixctl.command import SubCommand
 from matrixctl.command import subparser
 
 
@@ -30,8 +31,11 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-@subparser
-def subparser_is_admin(subparsers: _SubParsersAction[t.Any]) -> None:
+@subparser(SubCommand.USER)
+def subparser_is_admin(
+    subparsers: _SubParsersAction[t.Any],
+    common_parser: ArgumentParser,
+) -> None:
     """Create a subparser for the ``matrixctl is-admin`` command.
 
     Parameters
@@ -48,6 +52,7 @@ def subparser_is_admin(subparsers: _SubParsersAction[t.Any]) -> None:
     parser: ArgumentParser = subparsers.add_parser(
         "is-admin",
         help="Check, if a user is a homeserver administrator",
+        parents=[common_parser],
     )
     parser.add_argument("user", help="The username")
     parser.add_argument(
