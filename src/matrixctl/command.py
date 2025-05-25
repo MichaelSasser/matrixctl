@@ -39,7 +39,10 @@ logger = logging.getLogger(__name__)
 # skipcq: PYL-W0212  # noqa: ERA001
 # pyright: reportPrivateUsage=false
 SubParsersAction = argparse._SubParsersAction  # noqa: SLF001
-SubParserType = Callable[[SubParsersAction, argparse.ArgumentParser], None]  # type: ignore # noqa: PGH003
+SubParserType = Callable[
+    [SubParsersAction, argparse.ArgumentParser],  # type: ignore # noqa: PGH003
+    None,
+]
 ParserSetupType = Callable[
     [], tuple[argparse.ArgumentParser, argparse.ArgumentParser]
 ]
@@ -246,21 +249,21 @@ def setup(func: ParserSetupType) -> argparse.ArgumentParser:
 
         for subcommand in SubCommand:
             # Create a subparser for each subcommand
-            subparser = command_base.add_parser(
+            nested_parser = command_base.add_parser(
                 str(subcommand), help=subcommand.get_help()
             )
             if subcommand in commands:
-                subcommand_base = subparser.add_subparsers(
+                subcommand_base = nested_parser.add_subparsers(
                     title="Commands",
                     description="Available Commands.",
                     metavar="Command",
                 )
                 subcommand_base.required = True
-                subparser.set_defaults()
+                nested_parser.set_defaults()
                 for subparser_ in commands[subcommand]:
                     subparser_(subcommand_base, common_parser)
 
             # Hook in our custom error handler
-            subparser.error = create_error_handler(subparser)
+            nested_parser.error = create_error_handler(nested_parser)
 
     return parser
