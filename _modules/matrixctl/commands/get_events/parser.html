@@ -104,6 +104,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.argparse_action</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArgparseActionDateParser</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.argparse_action</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArgparseActionEnum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.argparse_action</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeDirection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.command</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubCommand</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.command</span><span class="w"> </span><span class="kn">import</span> <span class="n">subparser</span>
 
 
@@ -135,8 +136,11 @@
 
 <div class="viewcode-block" id="subparser_get_events">
 <a class="viewcode-back" href="../../../../contributer_documentation/commands.html#matrixctl.commands.get_events.parser.subparser_get_events">[docs]</a>
-<span class="nd">@subparser</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">subparser_get_events</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="nd">@subparser</span><span class="p">(</span><span class="n">SubCommand</span><span class="o">.</span><span class="n">ROOM</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">subparser_get_events</span><span class="p">(</span>
+    <span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">],</span>
+    <span class="n">common_parser</span><span class="p">:</span> <span class="n">ArgumentParser</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a subparser for the ``matrixctl get-event`` command.</span>
 
 <span class="sd">    Parameters</span>
@@ -153,6 +157,7 @@
     <span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;get-events&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Get events from the database&quot;</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser</span><span class="p">],</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;users&quot;</span><span class="p">,</span>
@@ -166,7 +171,7 @@
         <span class="s2">&quot;-e&quot;</span><span class="p">,</span> <span class="s2">&quot;--event-types&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The event types&quot;</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
         <span class="s2">&quot;--output-format&quot;</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="n">OutputType</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="n">ArgparseActionEnum</span><span class="p">,</span>

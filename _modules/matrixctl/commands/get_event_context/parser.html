@@ -99,6 +99,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">argparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArgumentParser</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">argparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">_SubParsersAction</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.command</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubCommand</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matrixctl.command</span><span class="w"> </span><span class="kn">import</span> <span class="n">subparser</span>
 
 
@@ -108,8 +109,11 @@
 
 <div class="viewcode-block" id="subparser_get_event_context">
 <a class="viewcode-back" href="../../../../contributer_documentation/commands.html#matrixctl.commands.get_event_context.parser.subparser_get_event_context">[docs]</a>
-<span class="nd">@subparser</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">subparser_get_event_context</span><span class="p">(</span><span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="nd">@subparser</span><span class="p">(</span><span class="n">SubCommand</span><span class="o">.</span><span class="n">ROOM</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">subparser_get_event_context</span><span class="p">(</span>
+    <span class="n">subparsers</span><span class="p">:</span> <span class="n">_SubParsersAction</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">],</span>
+    <span class="n">common_parser</span><span class="p">:</span> <span class="n">ArgumentParser</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a subparser for the ``matrixctl get-event-context`` command.</span>
 
 <span class="sd">    Parameters</span>
@@ -126,6 +130,7 @@
     <span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;get-event-context&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Get the context of an event&quot;</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser</span><span class="p">],</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;room&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The room identifier&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;event&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The event identifier&quot;</span><span class="p">)</span>

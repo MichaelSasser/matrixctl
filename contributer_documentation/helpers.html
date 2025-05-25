@@ -90,7 +90,93 @@
 <p>Helpers or helper function are common functions used throughout the project.</p>
 <section id="module-matrixctl.command">
 <span id="command"></span><h2>Command<a class="headerlink" href="#module-matrixctl.command" title="Link to this heading"></a></h2>
-<p>Use this module as addon manager.</p>
+<p>Use this module to dynamically create a commands structure.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.command.SubCommand">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.command.</span></span><span class="sig-name descname"><span class="pre">SubCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/command.html#SubCommand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.command.SubCommand" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>Use to enumerate possible subcommands for the command-line interface.</p>
+<p>Each member represents a distinct subcommand that can be invoked by the
+user.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.command.SubCommand.MEDIA">
+<span class="sig-name descname"><span class="pre">MEDIA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#matrixctl.command.SubCommand.MEDIA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.command.SubCommand.MOD">
+<span class="sig-name descname"><span class="pre">MOD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#matrixctl.command.SubCommand.MOD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.command.SubCommand.ROOM">
+<span class="sig-name descname"><span class="pre">ROOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#matrixctl.command.SubCommand.ROOM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.command.SubCommand.SELF">
+<span class="sig-name descname"><span class="pre">SELF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#matrixctl.command.SubCommand.SELF" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.command.SubCommand.SERVER">
+<span class="sig-name descname"><span class="pre">SERVER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#matrixctl.command.SubCommand.SERVER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.command.SubCommand.USER">
+<span class="sig-name descname"><span class="pre">USER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#matrixctl.command.SubCommand.USER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.command.SubCommand.generate_commands">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_commands</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/command.html#SubCommand.generate_commands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.command.SubCommand.generate_commands" title="Link to this definition"></a></dt>
+<dd><p>Generate a dictionary of subcommands with empty lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference internal" href="#matrixctl.command.SubCommand" title="matrixctl.command.SubCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubCommand</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">_SubParsersAction</span></code>, <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="matrixctl.command.SubCommand.get_help">
+<span class="sig-name descname"><span class="pre">get_help</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/command.html#SubCommand.get_help"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.command.SubCommand.get_help" title="Link to this definition"></a></dt>
+<dd><p>Get a help string for the subcommand.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="matrixctl.command.create_error_handler">
+<span class="sig-prename descclassname"><span class="pre">matrixctl.command.</span></span><span class="sig-name descname"><span class="pre">create_error_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/command.html#create_error_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.command.create_error_handler" title="Link to this definition"></a></dt>
+<dd><p>Create a custom error handler for each subparser to display its help.</p>
+<p>Creates a custom error handler for an argparse subparser that prints
+the parser’s help message and exits with status code 2 when called.</p>
+<dl class="field-list">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>parser</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code></a></span></dt><dd><p>The subparser to handle errors for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>handler</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Callable</span></code>[[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>]</span></dt><dd><p>The error handler function.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.command.import_commands_from">
 <span class="sig-prename descclassname"><span class="pre">matrixctl.command.</span></span><span class="sig-name descname"><span class="pre">import_commands_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addon_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addon_module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/command.html#import_commands_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.command.import_commands_from" title="Link to this definition"></a></dt>
@@ -148,17 +234,19 @@ subparsers with <code class="docutils literal notranslate"><span class="pre">mat
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.command.subparser">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.command.</span></span><span class="sig-name descname"><span class="pre">subparser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/command.html#subparser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.command.subparser" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.command.</span></span><span class="sig-name descname"><span class="pre">subparser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subcommand</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/command.html#subparser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.command.subparser" title="Link to this definition"></a></dt>
 <dd><p>Decorate subparsers with, to add them to (global) commands on import.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">_SubParsersAction</span></code>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">_SubParsersAction</span></code>, <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">_SubParsersAction</span></code>, <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]]</span></p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
-<dt><strong>func</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.addon_manager.SubParserType</span></code></span></dt><dd><p>A subparser.</p>
+<dt><strong>fn</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.addon_manager.SubParserType</span></code></span></dt><dd><p>The supparser to be wrapped.</p>
 </dd>
-<dt><strong>..Note:</strong></dt><dd><p>The nothing will be imported, when the subparser is not in (global)
+<dt><strong>subcommand</strong><span class="classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrixctl.addon_manager.SubCommand</span></code></span></dt><dd><p>The subcommand (or category) to which the subparser belongs.</p>
+</dd>
+<dt><strong>..Note:</strong></dt><dd><p>Nothing will be imported, when the subparser is not in (global)
 commands. To add the subparse to commands you need to decorate the
 subparsers with <code class="docutils literal notranslate"><span class="pre">matrixctl.addon_manager.subparser</span></code></p>
 </dd>

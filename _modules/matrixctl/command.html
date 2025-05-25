@@ -90,7 +90,7 @@
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
-<span class="sd">&quot;&quot;&quot;Use this module as addon manager.&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Use this module to dynamically create a commands structure.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -99,6 +99,8 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">importlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">import_module</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pkgutil</span><span class="w"> </span><span class="kn">import</span> <span class="n">iter_modules</span>
 
@@ -113,11 +115,81 @@
 <span class="c1"># skipcq: PYL-W0212  # noqa: ERA001</span>
 <span class="c1"># pyright: reportPrivateUsage=false</span>
 <span class="n">SubParsersAction</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">_SubParsersAction</span>  <span class="c1"># noqa: SLF001</span>
-<span class="n">SubParserType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">SubParsersAction</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>  <span class="c1"># type: ignore # noqa: PGH003</span>
-<span class="n">ParserSetupType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">]</span>
+<span class="n">SubParserType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">SubParsersAction</span><span class="p">,</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>  <span class="c1"># type: ignore # noqa: PGH003</span>
+<span class="n">ParserSetupType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[</span>
+    <span class="p">[],</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">,</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">]</span>
+<span class="p">]</span>
 
 <span class="c1"># global</span>
-<span class="n">commands</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubParserType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<span class="c1"># StrEnum was 3.11</span>
+<div class="viewcode-block" id="SubCommand">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.command.SubCommand">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SubCommand</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use to enumerate possible subcommands for the command-line interface.</span>
+
+<span class="sd">    Each member represents a distinct subcommand that can be invoked by the</span>
+<span class="sd">    user.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ROOM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">USER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MEDIA</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SERVER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MOD</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SELF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SubCommand.get_help">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.command.SubCommand.get_help">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_help</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a help string for the subcommand.&quot;&quot;&quot;</span>
+        <span class="k">match</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">ROOM</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Manage rooms.&quot;</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">USER</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Manage users.&quot;</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">MEDIA</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Manage media files on the server.&quot;</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">SERVER</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Manage the homeserver instance.&quot;</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">MOD</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Moderation commands for rooms and users.&quot;</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">SELF</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Manage MatrixCtl.&quot;</span></div>
+
+
+<div class="viewcode-block" id="SubCommand.generate_commands">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.command.SubCommand.generate_commands">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_commands</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">SubCommand</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubParserType</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a dictionary of subcommands with empty lists.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">SubCommand</span><span class="p">}</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the string representation of the subcommand.&quot;&quot;&quot;</span>
+        <span class="k">match</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">ROOM</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;room&quot;</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">USER</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;user&quot;</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">MEDIA</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;media&quot;</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">SERVER</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;server&quot;</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">MOD</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;mod&quot;</span>
+            <span class="k">case</span> <span class="n">SubCommand</span><span class="o">.</span><span class="n">SELF</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;self&quot;</span></div>
+
+
+
+<span class="c1"># Global commands dictionary</span>
+<span class="n">commands</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">SubCommand</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubParserType</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">SubCommand</span><span class="o">.</span><span class="n">generate_commands</span><span class="p">()</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="import_commands_from">
@@ -164,15 +236,21 @@
 
 <div class="viewcode-block" id="subparser">
 <a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.command.subparser">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">subparser</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">SubParserType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SubParserType</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">subparser</span><span class="p">(</span>
+    <span class="n">subcommand</span><span class="p">:</span> <span class="n">SubCommand</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">SubParserType</span><span class="p">],</span> <span class="n">SubParserType</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorate subparsers with, to add them to (global) commands on import.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    func : matrixctl.addon_manager.SubParserType</span>
-<span class="sd">        A subparser.</span>
+<span class="sd">    fn : matrixctl.addon_manager.SubParserType</span>
+<span class="sd">        The supparser to be wrapped.</span>
+
+<span class="sd">    subcommand : matrixctl.addon_manager.SubCommand</span>
+<span class="sd">        The subcommand (or category) to which the subparser belongs.</span>
+
 <span class="sd">    ..Note:</span>
-<span class="sd">        The nothing will be imported, when the subparser is not in (global)</span>
+<span class="sd">        Nothing will be imported, when the subparser is not in (global)</span>
 <span class="sd">        commands. To add the subparse to commands you need to decorate the</span>
 <span class="sd">        subparsers with ``matrixctl.addon_manager.subparser``</span>
 
@@ -182,9 +260,47 @@
 <span class="sd">        The same subparser which was used as argument. (Without any changes)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">func</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
-        <span class="n">commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">func</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">subparser_inner</span><span class="p">(</span><span class="n">fn</span><span class="p">:</span> <span class="n">SubParserType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SubParserType</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Inner function to register the subparser.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">fn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]:</span>
+            <span class="n">commands</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fn</span>
+
+    <span class="k">return</span> <span class="n">subparser_inner</span></div>
+
+
+
+<div class="viewcode-block" id="create_error_handler">
+<a class="viewcode-back" href="../../contributer_documentation/helpers.html#matrixctl.command.create_error_handler">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_error_handler</span><span class="p">(</span>
+    <span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a custom error handler for each subparser to display its help.</span>
+
+<span class="sd">    Creates a custom error handler for an argparse subparser that prints</span>
+<span class="sd">    the parser&#39;s help message and exits with status code 2 when called.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parser : argparse.ArgumentParser</span>
+<span class="sd">        The subparser to handle errors for.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    handler : Callable[[str], None]</span>
+<span class="sd">        The error handler function.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Use this as a custom error handler for the subparser.&quot;&quot;&quot;</span>
+
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">handler</span></div>
 
 
 
@@ -209,21 +325,40 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
             <span class="s2">&quot;The Argparse Addon Manager was not able to find any commands. &quot;</span>
             <span class="s2">&quot;Have you imported the commands with &quot;</span>
-            <span class="s1">&#39;&quot;AddonManager.import_commands_from()&quot;?&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;&quot;Command.import_commands_from()&quot;?&#39;</span><span class="p">,</span>
         <span class="p">)</span>
 
-    <span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
+    <span class="n">parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span>
+    <span class="n">common_parser</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span>
+    <span class="n">parser</span><span class="p">,</span> <span class="n">common_parser</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">subparsers</span><span class="p">:</span> <span class="n">SubParsersAction</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
-            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Commands&quot;</span><span class="p">,</span>
+        <span class="n">command_base</span><span class="p">:</span> <span class="n">SubParsersAction</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Categoties&quot;</span><span class="p">,</span>
             <span class="n">description</span><span class="o">=</span><span class="p">(</span>
-                <span class="s2">&quot;The following are commands, you can use to accomplish &quot;</span>
-                <span class="s2">&quot;various tasks.&quot;</span>
+                <span class="s2">&quot;Please select a category to see the available commands.&quot;</span>
             <span class="p">),</span>
-            <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;Command&quot;</span><span class="p">,</span>
+            <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;Category&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">for</span> <span class="n">subparser_</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
-            <span class="n">subparser_</span><span class="p">(</span><span class="n">subparsers</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">subcommand</span> <span class="ow">in</span> <span class="n">SubCommand</span><span class="p">:</span>
+            <span class="c1"># Create a subparser for each subcommand</span>
+            <span class="n">subparser</span> <span class="o">=</span> <span class="n">command_base</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">subcommand</span><span class="p">),</span> <span class="n">help</span><span class="o">=</span><span class="n">subcommand</span><span class="o">.</span><span class="n">get_help</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">subcommand</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
+                <span class="n">subcommand_base</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+                    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Commands&quot;</span><span class="p">,</span>
+                    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Available Commands.&quot;</span><span class="p">,</span>
+                    <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;Command&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">subcommand_base</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">subparser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">subparser_</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]:</span>
+                    <span class="n">subparser_</span><span class="p">(</span><span class="n">subcommand_base</span><span class="p">,</span> <span class="n">common_parser</span><span class="p">)</span>
+
+            <span class="c1"># Hook in our custom error handler</span>
+            <span class="n">subparser</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="n">create_error_handler</span><span class="p">(</span><span class="n">subparser</span><span class="p">)</span>
+
     <span class="k">return</span> <span class="n">parser</span></div>
 
 </pre></div>
