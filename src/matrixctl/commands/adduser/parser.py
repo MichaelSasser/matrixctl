@@ -51,7 +51,7 @@ def subparser_adduser(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "adduser",
-        help="Add users to the homeserver",
+        help="Create a new user on the homeserver",
         parents=[common_parser],
     )
     parser.add_argument("user", help="The username of the new user")
@@ -59,12 +59,12 @@ def subparser_adduser(
         "-a",
         "--admin",
         action="store_true",
-        help="Create the user as homeserver admin",
+        help="Make this user a homeserver admin",
     )
     parser.add_argument(
         "--ansible",
         action="store_true",
-        help="Use ansible instead of an API call",
+        help="Create the user using ansible instead of the API",
     )
 
     parser.set_defaults(addon="adduser")

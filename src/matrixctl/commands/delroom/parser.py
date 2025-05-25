@@ -110,16 +110,19 @@ def subparser_delroom(
         "--no-purge",
         action="store_false",
         help=(
-            "Do not remove all trace of the old room from the database after "
-            "removing all local users"
+            "Do not purge the (old) room from the database after "
+            "all local users where removed. (This will keep the room)"
         ),
     )
     parser.add_argument(
         "--force-purge",
         action="store_true",
         help=(
-            "force a purge to go ahead even if there are local users still in "
-            "the room. Do not use this unless a regular purge operation fails"
+            "Force the purge to go ahead even if there are still local users "
+            "in the room. Do not use this unless the regular purge operation "
+            "failed. Keep in mind that even this operation could fail. "
+            "We recommand a full backup of the database before using this "
+            "artument."
         ),
     )
     parser.set_defaults(addon="delroom")

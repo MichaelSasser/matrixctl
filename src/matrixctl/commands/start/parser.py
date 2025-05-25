@@ -50,7 +50,7 @@ def subparser_start(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "start",
-        help="Starts all OCI containers",
+        help="(Re)Start the OCI containers",
         parents=[common_parser],
     )
     parser.set_defaults(addon="start")
@@ -83,7 +83,7 @@ def subparser_restart(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "restart",
-        help="Restarts all OCI containers (alias for start)",
+        help="(Re)Start the OCI containers (alias for start)",
         parents=[common_parser],
     )
     parser.set_defaults(addon="start")  # Keep it "start"

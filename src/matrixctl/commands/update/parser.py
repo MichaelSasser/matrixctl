@@ -50,7 +50,7 @@ def subparser_update(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "update",
-        help="Updates the ansible playbook repository",
+        help="Updates the ansible playbook repository (git pull)",
         parents=[common_parser],
     )
     parser.set_defaults(addon="update")

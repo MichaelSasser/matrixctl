@@ -50,7 +50,7 @@ def subparser_reports(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "reports",
-        help="Lists reported events",
+        help="Lists reports",
         parents=[common_parser],
     )
     parser.add_argument(
@@ -64,7 +64,7 @@ def subparser_reports(
         "-j",
         "--to-json",
         action="store_true",
-        help="Output the data as JSON",
+        help="Change the output format to JSON",
     )
     parser.set_defaults(addon="reports")
 

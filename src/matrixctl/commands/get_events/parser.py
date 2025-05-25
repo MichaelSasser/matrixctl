@@ -75,19 +75,22 @@ def subparser_get_events(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "get-events",
-        help="Get events from the database",
+        help="Query events from the database",
         parents=[common_parser],
     )
     parser.add_argument(
         "users",
         nargs="*",
-        help="The users (e.g. @michael:foo.bar,@dwight:foo.bar)",
+        help="Filter by users (e.g. @michael:foo.bar,@dwight:foo.bar)",
     )
     parser.add_argument(
-        "-r", "--room_ids", nargs="+", help="The room identifiers"
+        "-r",
+        "--room_ids",
+        nargs="+",
+        help="Filter by rooms using the room identifiers",
     )
     parser.add_argument(
-        "-e", "--event-types", nargs="+", help="The event types"
+        "-e", "--event-types", nargs="+", help="Filter by event types"
     )
     parser.add_argument(
         "-o",
@@ -95,7 +98,7 @@ def subparser_get_events(
         type=OutputType,
         action=ArgparseActionEnum,
         default=OutputType.ROWS,
-        help="The Output type (default: 'rows')",
+        help="The Output format (default: 'rows')",
     )
     parser.add_argument(
         "-s",
@@ -103,7 +106,7 @@ def subparser_get_events(
         action=ArgparseActionDateParser,
         time_direction=TimeDirection.PAST,
         help=(
-            "Show events on or newer than the specified date. "
+            "Show events on or newer than the specified date and time. "
             "(Date must be in the past)"
         ),
     )
@@ -112,10 +115,7 @@ def subparser_get_events(
         "--until",
         action=ArgparseActionDateParser,
         time_direction=TimeDirection.PAST,
-        help=(
-            "Show events on or older than the specified date. "
-            "(Date must be in the past)"
-        ),
+        help=("Show events on or older than the specified date. "),
     )
     parser.set_defaults(addon="get_events")
 

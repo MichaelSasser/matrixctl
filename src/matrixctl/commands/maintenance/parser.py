@@ -51,20 +51,20 @@ def subparser_maintenance(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "maintenance",
-        help="Run maintenance tasks",
-        description="Perform various maintenance tasks.",
+        help="Perform maintenance tasks",
         parents=[common_parser],
     )
     parser.add_argument(
         "-l",
         "--list",
         action="store_true",
-        help="Show a list of all available tasks",
+        help="List all available tasks",
     )
     parser.add_argument(
         "tasks",
         nargs="*",
-        help="Maintenance tasks to run (overrides configuration)",
+        help="Maintenance tasks to run. When left empty, it runs the tasks "
+        "specified in the config file",
     )
     parser.set_defaults(addon="maintenance")
 

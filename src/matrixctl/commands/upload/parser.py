@@ -50,7 +50,7 @@ def subparser_upload(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "upload",
-        help="Upload a media file.",
+        help="Upload a media file",
         parents=[common_parser],
     )
     parser.add_argument("file", help="The path to a file or image to upload")

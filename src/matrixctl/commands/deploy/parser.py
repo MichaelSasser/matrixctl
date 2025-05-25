@@ -51,7 +51,7 @@ def subparser_deploy(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "deploy",
-        help="Provision and deploy the Ansible playbook",
+        help="Deploy the homerserver using the Ansible playbook",
         parents=[common_parser],
     )
 
@@ -60,8 +60,9 @@ def subparser_deploy(
         "--start",
         action="store_true",
         help=(
-            "Start/Restart the homeserver and its components after the"
-            " deployment"
+            "Start/Restart the homeserver and its components after the "
+            "deployment. Alternatively, you could run the start/restart "
+            "command manually after the deployment is done."
         ),
     )
     parser.set_defaults(addon="deploy")

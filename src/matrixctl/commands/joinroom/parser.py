@@ -55,7 +55,9 @@ def subparser_deluser(
         parents=[common_parser],
     )
     parser.add_argument("room", help="The room identifier or alias")
-    parser.add_argument("user", help='The username of the user e.g. "michael"')
+    parser.add_argument(
+        "user", help='The localpart of the user e.g. "michael"'
+    )
     parser.set_defaults(addon="joinroom")
 
 

@@ -51,7 +51,10 @@ def subparser_get_event_context(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "get-event-context",
-        help="Get the context of an event",
+        help=(
+            "Get a specific event plus multiple adjacent events from the "
+            "homeserver"
+        ),
         parents=[common_parser],
     )
     parser.add_argument("room", help="The room identifier")

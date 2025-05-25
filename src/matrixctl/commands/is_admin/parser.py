@@ -51,15 +51,15 @@ def subparser_is_admin(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "is-admin",
-        help="Check, if a user is a homeserver administrator",
+        help="Check, whether the user is a homeserver administrator",
         parents=[common_parser],
     )
-    parser.add_argument("user", help="The username")
+    parser.add_argument("user", help="The localpart of the user to check")
     parser.add_argument(
         "-j",
         "--to-json",
         action="store_true",
-        help="Output the data as JSON",
+        help="Change the output format to JSON",
     )
     parser.set_defaults(addon="is_admin")
 

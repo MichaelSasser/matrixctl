@@ -51,7 +51,7 @@ def subparser_get_event(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "get-event",
-        help="Get an event from the database",
+        help="Query an event from the database",
         parents=[common_parser],
     )
     parser.add_argument("event_id", help="The event identifier")

@@ -50,7 +50,7 @@ def subparser_report(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "report",
-        help="Get a report event by report identifier",
+        help="Get a report event by the report identifier",
         parents=[common_parser],
     )
     parser.add_argument("report_id", help="The report identifier")

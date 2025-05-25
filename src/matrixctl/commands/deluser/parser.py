@@ -54,7 +54,7 @@ def subparser_deluser(
         help="Deactivate users",
         parents=[common_parser],
     )
-    parser.add_argument("user", help="The username of the user to deactivate")
+    parser.add_argument("user", help="The localpart of the user to deactivate")
     parser.set_defaults(addon="deluser")
 
 

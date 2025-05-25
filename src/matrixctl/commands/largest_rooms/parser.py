@@ -50,14 +50,14 @@ def subparser_rooms(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "largest-rooms",
-        help="List an approximation of the 10 largest rooms in the database",
+        help="Show an approximation of the 10 largest rooms in the database",
         parents=[common_parser],
     )
     parser.add_argument(
         "-j",
         "--to-json",
         action="store_true",
-        help="Output the data as JSON",
+        help="Change the output format to JSON",
     )
     parser.set_defaults(addon="largest_rooms")
 

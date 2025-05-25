@@ -50,7 +50,7 @@ def subparser_version(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "version",
-        help="Get the version information of the Synapse instance",
+        help="Show the version information of the homeserver",
         parents=[common_parser],
     )
     parser.set_defaults(addon="version")

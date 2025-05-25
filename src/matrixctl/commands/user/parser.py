@@ -50,16 +50,16 @@ def subparser_user(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "user",
-        help="Get information about a specific user",
+        help="Get information about a user",
         parents=[common_parser],
     )
-    parser.add_argument("user", help="The username of the user")
+    parser.add_argument("user", help="The localpart of the user")
 
     parser.add_argument(
         "-j",
         "--to-json",
         action="store_true",
-        help="Output the data as JSON",
+        help="Change the output format to JSON",
     )
     parser.set_defaults(addon="user")
 

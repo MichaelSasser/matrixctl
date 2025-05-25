@@ -50,7 +50,7 @@ def subparser_stop(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "stop",
-        help="Stop and disable all OCI containers",
+        help="Stop the OCI containers",
         parents=[common_parser],
     )
     parser.set_defaults(addon="stop")

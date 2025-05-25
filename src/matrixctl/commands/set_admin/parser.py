@@ -51,12 +51,12 @@ def subparser_set_admin(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "set-admin",
-        help="Change whether a user is a homeserver admin or not",
+        help="Give a user administrator privileges or remove them from them",
         parents=[common_parser],
     )
     parser.add_argument(
         "user",
-        help="The username of the user to promote/demote",
+        help="The localpart of the user to promote/demote",
     )
     parser.add_argument(
         "admin",

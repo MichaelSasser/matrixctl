@@ -50,11 +50,16 @@ def subparser_download(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "download",
-        help="Download a media file.",
+        help=(
+            "Download a media file from your homerserver to your local machine"
+        ),
         parents=[common_parser],
     )
-    parser.add_argument("mxc", help="The matrix content URI")
-    parser.add_argument("file", help="The path to where to download a file")
+    parser.add_argument("mxc", help="The Matrix content URI")
+    parser.add_argument(
+        "file",
+        help="The path where the downloaded file should be saved",
+    )
     parser.set_defaults(addon="download")
 
 

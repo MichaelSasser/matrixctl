@@ -50,7 +50,7 @@ def subparser_users(
     """
     parser: ArgumentParser = subparsers.add_parser(
         "users",
-        help="Lists all users of the homeserver",
+        help="Lists all users registerd to the homeserver",
         parents=[common_parser],
     )
     parser.add_argument(
@@ -58,31 +58,31 @@ def subparser_users(
         type=int,
         default=-1,
         nargs="?",
-        help="Limit the number of users to show",
+        help="Limit the number of users shown",
     )
     parser.add_argument(
         "-a",
         "--all",
         action="store_true",
-        help="Shows all users",
+        help="Show all users",
     )
     parser.add_argument(
         "-g",
         "--with-guests",
         action="store_true",
-        help="Shows guests",
+        help="Also include guest accounts",
     )
     parser.add_argument(
         "-D",
         "--with-deactivated",
         action="store_true",
-        help="Shows deactivated accounts",
+        help="Also include deactivated accounts",
     )
     parser.add_argument(
         "-j",
         "--to-json",
         action="store_true",
-        help="Output the data as JSON",
+        help="Change the output format to JSON",
     )
     parser.set_defaults(addon="users")
 

@@ -60,12 +60,12 @@ def subparser_purge_history(
         "-l",
         "--local-events",
         action="store_true",
-        help="Delete local message events as well",
+        help="Delete local events as well",
     )
     parser.add_argument(
         "room_id",
         type=str,
-        help="The Room to purge historic message events in",
+        help="The Room identifier or alias",
     )
     parser.add_argument(
         "event_or_timestamp",
@@ -73,15 +73,15 @@ def subparser_purge_history(
         nargs="?",
         default=None,
         help=(
-            "An event identifier or timestamp (UNIX epoch) as point in time,"
-            "to which events will be purged"
+            "An event identifier or timestamp (UNIX epoch) as a time "
+            "reference to which events will be purged"
         ),
     )
     parser.add_argument(
         "-f",
         "--force",
         action="store_true",
-        help="No questions asked",
+        help="Force the operation, no questions asked",
     )
     parser.set_defaults(addon="purge_history")
 

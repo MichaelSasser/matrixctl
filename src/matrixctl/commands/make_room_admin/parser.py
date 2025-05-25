@@ -52,8 +52,8 @@ def subparser_make_room_admin(
     parser: ArgumentParser = subparsers.add_parser(
         "make-room-admin",
         help=(
-            "Grant a user the highest power level available to a "
-            "local user in this room"
+            "Grant a user the same powerlevel as the user with the "
+            "highest power level, from your homeserver, in the room"
         ),
         parents=[common_parser],
     )

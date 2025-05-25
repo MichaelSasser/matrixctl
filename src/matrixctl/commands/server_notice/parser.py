@@ -55,10 +55,7 @@ def subparser_server_notice(
     )
     parser.add_argument(
         "username",
-        help=(
-            "The user which will receive the server-notice."
-            "(e.g. for '@Michael@MichaelSasser.org' use 'michael')"
-        ),
+        help=("The localpart of the recipient"),
     )
     parser.add_argument("message", help="The message")
     parser.set_defaults(addon="server_notice")
