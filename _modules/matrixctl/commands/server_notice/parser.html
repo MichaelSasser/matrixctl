@@ -133,10 +133,7 @@
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;username&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="p">(</span>
-            <span class="s2">&quot;The user which will receive the server-notice.&quot;</span>
-            <span class="s2">&quot;(e.g. for &#39;@Michael@MichaelSasser.org&#39; use &#39;michael&#39;)&quot;</span>
-        <span class="p">),</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;The localpart of the recipient&quot;</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The message&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">addon</span><span class="o">=</span><span class="s2">&quot;server_notice&quot;</span><span class="p">)</span></div>

@@ -130,8 +130,8 @@
     <span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;make-room-admin&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="p">(</span>
-            <span class="s2">&quot;Grant a user the highest power level available to a &quot;</span>
-            <span class="s2">&quot;local user in this room&quot;</span>
+            <span class="s2">&quot;Grant a user the same powerlevel as the user with the &quot;</span>
+            <span class="s2">&quot;highest power level, from your homeserver, in the room&quot;</span>
         <span class="p">),</span>
         <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser</span><span class="p">],</span>
     <span class="p">)</span>

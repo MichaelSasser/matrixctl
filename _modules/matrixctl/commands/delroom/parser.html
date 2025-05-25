@@ -188,16 +188,19 @@
         <span class="s2">&quot;--no-purge&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="p">(</span>
-            <span class="s2">&quot;Do not remove all trace of the old room from the database after &quot;</span>
-            <span class="s2">&quot;removing all local users&quot;</span>
+            <span class="s2">&quot;Do not purge the (old) room from the database after &quot;</span>
+            <span class="s2">&quot;all local users where removed. (This will keep the room)&quot;</span>
         <span class="p">),</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--force-purge&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="p">(</span>
-            <span class="s2">&quot;force a purge to go ahead even if there are local users still in &quot;</span>
-            <span class="s2">&quot;the room. Do not use this unless a regular purge operation fails&quot;</span>
+            <span class="s2">&quot;Force the purge to go ahead even if there are still local users &quot;</span>
+            <span class="s2">&quot;in the room. Do not use this unless the regular purge operation &quot;</span>
+            <span class="s2">&quot;failed. Keep in mind that even this operation could fail. &quot;</span>
+            <span class="s2">&quot;We recommand a full backup of the database before using this &quot;</span>
+            <span class="s2">&quot;artument.&quot;</span>
         <span class="p">),</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">addon</span><span class="o">=</span><span class="s2">&quot;delroom&quot;</span><span class="p">)</span></div>

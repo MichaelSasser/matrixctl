@@ -129,7 +129,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span><span class="p">:</span> <span class="n">ArgumentParser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s2">&quot;deploy&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Provision and deploy the Ansible playbook&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Deploy the homerserver using the Ansible playbook&quot;</span><span class="p">,</span>
         <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser</span><span class="p">],</span>
     <span class="p">)</span>
 
@@ -138,8 +138,9 @@
         <span class="s2">&quot;--start&quot;</span><span class="p">,</span>
         <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="p">(</span>
-            <span class="s2">&quot;Start/Restart the homeserver and its components after the&quot;</span>
-            <span class="s2">&quot; deployment&quot;</span>
+            <span class="s2">&quot;Start/Restart the homeserver and its components after the &quot;</span>
+            <span class="s2">&quot;deployment. Alternatively, you could run the start/restart &quot;</span>
+            <span class="s2">&quot;command manually after the deployment is done.&quot;</span>
         <span class="p">),</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">addon</span><span class="o">=</span><span class="s2">&quot;deploy&quot;</span><span class="p">)</span></div>
