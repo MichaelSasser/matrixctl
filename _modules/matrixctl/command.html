@@ -115,7 +115,10 @@
 <span class="c1"># skipcq: PYL-W0212  # noqa: ERA001</span>
 <span class="c1"># pyright: reportPrivateUsage=false</span>
 <span class="n">SubParsersAction</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">_SubParsersAction</span>  <span class="c1"># noqa: SLF001</span>
-<span class="n">SubParserType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">SubParsersAction</span><span class="p">,</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>  <span class="c1"># type: ignore # noqa: PGH003</span>
+<span class="n">SubParserType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[</span>
+    <span class="p">[</span><span class="n">SubParsersAction</span><span class="p">,</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">],</span>  <span class="c1"># type: ignore # noqa: PGH003</span>
+    <span class="kc">None</span><span class="p">,</span>
+<span class="p">]</span>
 <span class="n">ParserSetupType</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[</span>
     <span class="p">[],</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">,</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">]</span>
 <span class="p">]</span>
@@ -342,22 +345,22 @@
 
         <span class="k">for</span> <span class="n">subcommand</span> <span class="ow">in</span> <span class="n">SubCommand</span><span class="p">:</span>
             <span class="c1"># Create a subparser for each subcommand</span>
-            <span class="n">subparser</span> <span class="o">=</span> <span class="n">command_base</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+            <span class="n">nested_parser</span> <span class="o">=</span> <span class="n">command_base</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
                 <span class="nb">str</span><span class="p">(</span><span class="n">subcommand</span><span class="p">),</span> <span class="n">help</span><span class="o">=</span><span class="n">subcommand</span><span class="o">.</span><span class="n">get_help</span><span class="p">()</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">subcommand</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
-                <span class="n">subcommand_base</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+                <span class="n">subcommand_base</span> <span class="o">=</span> <span class="n">nested_parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
                     <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Commands&quot;</span><span class="p">,</span>
                     <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Available Commands.&quot;</span><span class="p">,</span>
                     <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;Command&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">subcommand_base</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="n">subparser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
+                <span class="n">nested_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">subparser_</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">[</span><span class="n">subcommand</span><span class="p">]:</span>
                     <span class="n">subparser_</span><span class="p">(</span><span class="n">subcommand_base</span><span class="p">,</span> <span class="n">common_parser</span><span class="p">)</span>
 
             <span class="c1"># Hook in our custom error handler</span>
-            <span class="n">subparser</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="n">create_error_handler</span><span class="p">(</span><span class="n">subparser</span><span class="p">)</span>
+            <span class="n">nested_parser</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="n">create_error_handler</span><span class="p">(</span><span class="n">nested_parser</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">parser</span></div>
 
