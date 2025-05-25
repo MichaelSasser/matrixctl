@@ -57,10 +57,7 @@ def setup_parser() -> tuple[argparse.ArgumentParser, argparse.ArgumentParser]:
     """
     common_parser = argparse.ArgumentParser(add_help=False)
     common_parser.add_argument(
-        "-d",
-        "--debug",
-        action="store_true",
-        help="Enables debugging mode.",
+        "-d", "--debug", action="store_true", help="Show debug information."
     )
     common_parser.add_argument(
         "-S",
@@ -70,7 +67,7 @@ def setup_parser() -> tuple[argparse.ArgumentParser, argparse.ArgumentParser]:
     common_parser.add_argument(
         "-c",
         "--config",
-        help="A path to an alternative config file.",
+        help="The path to an alternative config file",
     )
 
     parser = argparse.ArgumentParser(
@@ -87,7 +84,12 @@ def setup_parser() -> tuple[argparse.ArgumentParser, argparse.ArgumentParser]:
         parents=[common_parser],
     )
 
-    parser.add_argument("--version", action="version", version=__version__)
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=__version__,
+        help="Show the version of MatrixCtl.",
+    )
     return parser, common_parser
 
 
