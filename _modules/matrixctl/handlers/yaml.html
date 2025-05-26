@@ -932,12 +932,18 @@
 
 <div class="viewcode-block" id="YAML.get_api_username">
 <a class="viewcode-back" href="../../../contributer_documentation/handlers.html#matrixctl.handlers.yaml.YAML.get_api_username">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_api_username</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_api_username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">full</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the API token for authentication.</span>
 
 <span class="sd">        This method ensures API authentication is set up, then retrieves</span>
 <span class="sd">        the username based on the configured authentication type. Supports</span>
 <span class="sd">        &#39;token&#39; and &#39;oidc&#39; auth types.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        full : bool, optional</span>
+<span class="sd">            If True, returns the full user identifier.</span>
+<span class="sd">            If False (default), it only returns the localpart.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -952,20 +958,24 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ensure_api_auth</span><span class="p">()</span>
+        <span class="n">localpart</span><span class="p">:</span> <span class="nb">str</span>
         <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_type&quot;</span><span class="p">):</span>
             <span class="k">case</span> <span class="s2">&quot;token&quot;</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
+                <span class="n">localpart</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span>
                     <span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_token&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="k">case</span> <span class="s2">&quot;oidc&quot;</span><span class="p">:</span>
                 <span class="n">localpart</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
                     <span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_oidc&quot;</span><span class="p">,</span> <span class="s2">&quot;user_info&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span>
                 <span class="p">)</span>
-                <span class="n">server</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">localpart</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">server</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
                 <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;Unknown Username&quot;</span>
-                <span class="k">raise</span> <span class="n">ShouldNeverHappenError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span></div>
+                <span class="k">raise</span> <span class="n">ShouldNeverHappenError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">full</span><span class="p">:</span>
+            <span class="n">server</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">localpart</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">server</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">localpart</span></div>
 
 
 <div class="viewcode-block" id="YAML.get_api_token">
