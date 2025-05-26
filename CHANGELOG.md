@@ -7,6 +7,32 @@ All notable changes to MatrixCtl will be documented in this file.
 You can find the issue tracker on
 [GitHub](https://github.com/MichaelSasser/matrixctl/issues).
 
+## [0.15.0](https://github.com/MichaelSasser/matrixctl/compare/v0.14.1...v0.15.0) (2025-05-26)
+
+
+### Features
+
+* **command:** do not redefine variable from outer scope ([9fe9e2f](https://github.com/MichaelSasser/matrixctl/commit/9fe9e2fdf5ba4c24cfc578d70a35ebfb3b4771b9))
+* **command:** nest commands in subcommands ([d7401a5](https://github.com/MichaelSasser/matrixctl/commit/d7401a509e9bc2d778a1ac70e849bd7271721b5c))
+* **commands:** add send_event command ([e966c0b](https://github.com/MichaelSasser/matrixctl/commit/e966c0b339049e0703ac38c06b5570ad5e0fd7c8))
+* **commands:** add send_message command ([f53ed74](https://github.com/MichaelSasser/matrixctl/commit/f53ed746c851bffa379abaea1d8e63968161cb6c))
+* **commands:** Revisit the help texts ([17329d5](https://github.com/MichaelSasser/matrixctl/commit/17329d545929270302b641be3680e09ca7c22d1c))
+* **commands:** Revisit the help texts for __main__ ([fc8b89b](https://github.com/MichaelSasser/matrixctl/commit/fc8b89b9d25107c1edc155322246442794fd0884))
+* **config:** add an option to ger_username, to either return the user_id or just the localpart ([d431b38](https://github.com/MichaelSasser/matrixctl/commit/d431b38ba986e7850f4575bbd5ecf8ad5cb756f0))
+* **renovate:** enable pre-commit and schedule lock file maintenance ([d800c70](https://github.com/MichaelSasser/matrixctl/commit/d800c7027dac37ded11b9eb4ff0530c48e801136))
+
+
+### Bug Fixes
+
+* **deps:** update dependency rich to v14 ([#881](https://github.com/MichaelSasser/matrixctl/issues/881)) ([17e6127](https://github.com/MichaelSasser/matrixctl/commit/17e61275c960ce16d8dcda3673c7e849f6c5900c))
+* **deps:** update dependency sphinx-autodoc-typehints to &gt;=3,&lt;3.3 ([#888](https://github.com/MichaelSasser/matrixctl/issues/888)) ([b9aa57d](https://github.com/MichaelSasser/matrixctl/commit/b9aa57d9935f6bba873df0256953253781deba40))
+* **release-please:** fix manifest ([8f23997](https://github.com/MichaelSasser/matrixctl/commit/8f23997869bf917eff59076b323d8c834f97bfaa))
+
+
+### Miscellaneous Chores
+
+* release 0.15.0 ([71f013d](https://github.com/MichaelSasser/matrixctl/commit/71f013da523f3a9471ca46ac71cc994b7bd5f5c8))
+
 ## [0.14.1](https://github.com/MichaelSasser/matrixctl/compare/v0.14.0...v0.14.1) (2025-03-17)
 
 
