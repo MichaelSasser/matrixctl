@@ -485,7 +485,7 @@ of it is stored in the packages metadata.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn_alias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize" title="Link to this definition"></a></dt>
 <dd><p>Create a new sanitizer based on compiled RegEx expressions.</p>
 <p>A helper function for simplifying the latter sanitize identifier specific
 functions.</p>
@@ -501,6 +501,8 @@ functions.</p>
 </dd>
 <dt><strong>error_message</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The error string used for logging errors</p>
 </dd>
+<dt><strong>fn_alias</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">typing.Callable</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">optional</span></code></span></dt><dd><p>A function that can be used to convert an alias to an identifier</p>
+</dd>
 </dl>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -515,7 +517,7 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_event_identifier">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_event_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_event_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_event_identifier" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_event_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_event_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_event_identifier" title="Link to this definition"></a></dt>
 <dd><p>Sanitize an event identifier.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -559,7 +561,7 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_event_type">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_event_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_event_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_event_type" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_event_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_event_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_event_type" title="Link to this definition"></a></dt>
 <dd><p>Sanitize an event type.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -607,7 +609,7 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_mxc">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_mxc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_mxc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_mxc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_mxc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_mxc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_mxc" title="Link to this definition"></a></dt>
 <dd><p>Sanitize an room identifier.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -647,7 +649,7 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_room_identifier">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_room_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">room_identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_room_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_room_identifier" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_room_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">room_identifier_or_alias</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn_alias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_room_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_room_identifier" title="Link to this definition"></a></dt>
 <dd><p>Sanitize an room identifier.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -687,7 +689,7 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_sequence">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sanitizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_sequence" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sanitizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn_alias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_sequence" title="Link to this definition"></a></dt>
 <dd><p>Run a sanitizer against a sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -698,7 +700,7 @@ the sanitized string, when it is valid, otherwise <code class="docutils literal 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="matrixctl.sanitizers.sanitize_user_identifier">
-<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_user_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_identifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_user_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_user_identifier" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">matrixctl.sanitizers.</span></span><span class="sig-name descname"><span class="pre">sanitize_user_identifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/matrixctl/sanitizers.html#sanitize_user_identifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.sanitizers.sanitize_user_identifier" title="Link to this definition"></a></dt>
 <dd><p>Sanitize an user identifier.</p>
 <dl class="field-list">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>

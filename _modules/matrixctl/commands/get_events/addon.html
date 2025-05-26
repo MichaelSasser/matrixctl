@@ -193,7 +193,11 @@
         <span class="n">sanitize_sequence</span><span class="p">(</span><span class="n">sanitize_user_identifier</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">users</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="n">room_identifiers</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">sanitize_sequence</span><span class="p">(</span><span class="n">sanitize_room_identifier</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">room_ids</span><span class="p">)</span>
+        <span class="n">sanitize_sequence</span><span class="p">(</span>
+            <span class="n">sanitize_room_identifier</span><span class="p">,</span>
+            <span class="n">arg</span><span class="o">.</span><span class="n">room_ids</span><span class="p">,</span>
+            <span class="n">yaml</span><span class="o">.</span><span class="n">get_room_alias</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="p">)</span>
     <span class="n">event_types</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">EventType</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">|</span> <span class="n">t</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">sanitize_sequence</span><span class="p">(</span><span class="n">sanitize_event_type</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">event_types</span><span class="p">)</span>

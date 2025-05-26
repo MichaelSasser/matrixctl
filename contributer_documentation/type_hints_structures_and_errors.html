@@ -130,6 +130,11 @@ They are giving the person instructions, how to hand in a bug report.</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
 <p>Add a <cite>server</cite> to the YAML config structure.</p>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServer.alias">
+<span class="sig-name descname"><span class="pre">alias</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerAlias" title="matrixctl.structures.ConfigServerAlias"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerAlias</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.alias" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServer.ansible">
 <span class="sig-name descname"><span class="pre">ansible</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#matrixctl.structures.ConfigServerAnsible" title="matrixctl.structures.ConfigServerAnsible"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerAnsible</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServer.ansible" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -258,6 +263,35 @@ They are giving the person instructions, how to hand in a bug report.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAPIAuthToken.username">
 <span class="sig-name descname"><span class="pre">username</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAPIAuthToken.username" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAlias">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerAlias</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerAlias"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerAlias" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<p>Add a <cite>alias</cite> to <cite>server</cite> in the YAML config structure.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAlias.room">
+<span class="sig-name descname"><span class="pre">room</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a><span class="pre">[</span><a class="reference internal" href="#matrixctl.structures.ConfigServerAliasRoom" title="matrixctl.structures.ConfigServerAliasRoom"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigServerAliasRoom</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/constants.html#Ellipsis" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAlias.room" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAliasRoom">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">matrixctl.structures.</span></span><span class="sig-name descname"><span class="pre">ConfigServerAliasRoom</span></span><a class="reference internal" href="../_modules/matrixctl/structures.html#ConfigServerAliasRoom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#matrixctl.structures.ConfigServerAliasRoom" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></a></p>
+<p>Add a <cite>room</cite> to <cite>server.alias</cite> in the YAML config structure.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAliasRoom.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAliasRoom.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="matrixctl.structures.ConfigServerAliasRoom.room_id">
+<span class="sig-name descname"><span class="pre">room_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#matrixctl.structures.ConfigServerAliasRoom.room_id" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
