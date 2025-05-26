@@ -379,7 +379,10 @@ def sanitize_mxc(
 
 
 def sanitize_sequence(
-    sanitizer: t.Callable[[T, FN_ALIAS], T | t.Literal[False] | None],  # type: ignore[valid-type]
+    sanitizer: t.Callable[  # type: ignore[valid-type]
+        [T, FN_ALIAS],  # type: ignore[valid-type]
+        T | t.Literal[False] | None,  # type: ignore[valid-type]
+    ],
     args: Sequence[T] | None,  # type: ignore[valid-type]
     fn_alias: FN_ALIAS = None,
 ) -> tuple[T, ...] | t.Literal[False] | None:  # type: ignore[valid-type]
