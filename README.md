@@ -60,9 +60,18 @@ To use this tool you need to have a configuration file in
 ```yaml
 # Define your homeservers in "servers" here.
 servers:
-  # Your default server. You can specify muliple servers here with arbitrary
+  # Your default server. You can specify multiple servers here with arbitrary
   # Names
   default:
+    alias:
+      # Remembering internal room identifiers is not your strong suit?
+      # Mine neither. Therefore you can define some aliases for your rooms.
+      # They will be automatically translated to the internal room IDs.
+      room:
+        - {name: test, room_id: "!BuuJZEbstPPYUZgbt:michaelsasser.org"}
+        - {name: mjolnir, room_id: "!mJoLnIrRoOm:matrix.org"}
+        - {name: foo, room_id: "!fO0BArBAzFJTbhaTvU:michaelsasser.org"}
+
     ansible:
       # The absolute path to your playbook
       playbook: /path/to/ansible/playbook
@@ -73,9 +82,9 @@ servers:
       playbook: /path/to/synapse/playbook
 
     # If your matrix server is deployed, you may want to fill out the API section.
-    # It enables matrixctl to run more and faster commands. You can deploy and
+    # It enables MatrixCtl to run more and faster commands. You can deploy and
     # provision your Server without this section. You also can create a user with
-    # "matrixctl adduser --ansible YourUsername" and add your privileges after
+    # "matrixctl user adduser --ansible YourUsername" and add your privileges after
     # that.
     api:
       # Your domain should be something like "michaelsasser.org" without the

@@ -35,6 +35,7 @@ __email__: str = "Michael@MichaelSasser.org"
 logger = logging.getLogger(__name__)
 
 T = VariableType = t.TypeVar("T")
+FN_ALIAS = t.Callable[[str], str | None] | None
 
 
 EVENT_ID_PATTERN: t.Pattern[str] = re.compile(r"^\$[0-9a-zA-Z.=_-]{1,255}$")
@@ -109,6 +110,7 @@ class EventType(Enum):
 
 def sanitize_event_type(
     event_type: str | EventType | None,
+    _: FN_ALIAS = None,
 ) -> EventType | t.Literal[False] | None:
     """Sanitize an event type.
 
@@ -155,6 +157,7 @@ def sanitize(
     pattern: t.Pattern[str],
     identifier: t.Any | None,
     error_message: str,
+    fn_alias: FN_ALIAS = None,
 ) -> str | t.Literal[False] | None:
     """Create a new sanitizer based on compiled RegEx expressions.
 
@@ -169,6 +172,8 @@ def sanitize(
         The identifier to sanitize based on the pattern
     error_message : str
         The error string used for logging errors
+    fn_alias : typing.Callable, optional
+        A function that can be used to convert an alias to an identifier
 
     Returns
     -------
@@ -185,12 +190,24 @@ def sanitize(
         if pattern.match(identifier):
             logger.debug("The identifier is valid.")
             return t.cast(str, identifier)
-    logger.error(error_message)
+
+    if fn_alias is not None:
+        logger.debug(
+            "The identifier is not valid, checking if it was an alias instead."
+        )
+        return sanitize(
+            pattern,
+            fn_alias(identifier),
+            error_message,
+            None,
+        )
+    logger.error("%s Your input was: %s", error_message, identifier)
     return False
 
 
 def sanitize_event_identifier(
     event_identifier: t.Any,
+    _: FN_ALIAS = None,
 ) -> str | t.Literal[False] | None:
     """Sanitize an event identifier.
 
@@ -236,6 +253,7 @@ def sanitize_event_identifier(
 
 def sanitize_user_identifier(
     user_identifier: t.Any,
+    _: FN_ALIAS = None,
 ) -> str | t.Literal[False] | None:
     """Sanitize an user identifier.
 
@@ -276,7 +294,8 @@ def sanitize_user_identifier(
 
 
 def sanitize_room_identifier(
-    room_identifier: t.Any,
+    room_identifier_or_alias: t.Any,
+    fn_alias: FN_ALIAS = None,
 ) -> str | t.Literal[False] | None:
     """Sanitize an room identifier.
 
@@ -307,17 +326,19 @@ def sanitize_room_identifier(
     """
     return sanitize(
         pattern=ROOM_ID_PATTERN,
-        identifier=room_identifier,
+        identifier=room_identifier_or_alias,
         error_message=(
             "The given room identifier has an invalid format. Please make sure"
             " you use one with the correct format. For example:"
             " !iuyQXswfjgxQMZGrfQ:matrix.org"
         ),
+        fn_alias=fn_alias,
     )
 
 
 def sanitize_mxc(
     uri: t.Any,
+    _: FN_ALIAS = None,
 ) -> str | t.Literal[False] | None:
     """Sanitize an room identifier.
 
@@ -358,8 +379,9 @@ def sanitize_mxc(
 
 
 def sanitize_sequence(
-    sanitizer: t.Callable[[T], T | t.Literal[False] | None],  # type: ignore[valid-type]
+    sanitizer: t.Callable[[T, FN_ALIAS], T | t.Literal[False] | None],  # type: ignore[valid-type]
     args: Sequence[T] | None,  # type: ignore[valid-type]
+    fn_alias: FN_ALIAS = None,
 ) -> tuple[T, ...] | t.Literal[False] | None:  # type: ignore[valid-type]
     """Run a sanitizer against a sequence."""
 
@@ -367,7 +389,7 @@ def sanitize_sequence(
         return None
 
     args_u: tuple[T | t.Literal[False] | None, ...] = tuple(  # type: ignore[valid-type]
-        sanitizer(arg) for arg in args
+        sanitizer(arg, fn_alias) for arg in args
     )
 
     if any(True for event_type in args_u if event_type in {False, None}):

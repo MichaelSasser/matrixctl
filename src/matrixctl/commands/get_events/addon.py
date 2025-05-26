@@ -112,7 +112,11 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         sanitize_sequence(sanitize_user_identifier, arg.users)
     )
     room_identifiers: tuple[str, ...] | t.Literal[False] | None = (
-        sanitize_sequence(sanitize_room_identifier, arg.room_ids)
+        sanitize_sequence(
+            sanitize_room_identifier,
+            arg.room_ids,
+            yaml.get_room_alias,
+        )
     )
     event_types: tuple[EventType, ...] | t.Literal[False] | None = (
         sanitize_sequence(sanitize_event_type, arg.event_types)

@@ -36,10 +36,13 @@ from ruamel.yaml.error import YAMLError
 
 from matrixctl import __version__
 from matrixctl.errors import ConfigFileError
+from matrixctl.errors import InternalResponseError
 from matrixctl.errors import ShouldNeverHappenError
 from matrixctl.handlers.oidc import TokenManager
 from matrixctl.handlers.oidc import discover_oidc_endpoints
 from matrixctl.structures import Config
+from matrixctl.structures import ConfigServerAlias
+from matrixctl.structures import ConfigServerAliasRoom
 from matrixctl.structures import ConfigServerAPI
 from matrixctl.structures import ConfigServerAPIAuthOidc
 from matrixctl.structures import ConfigServerAPIAuthToken
@@ -53,6 +56,28 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 logger = logging.getLogger(__name__)
+
+
+def secrets_filter(tree: dict[str, str], key: str) -> t.Any:
+    """Redact secrets when printing the configuration file.
+
+    Parameters
+    ----------
+    tree : dict [str, str]
+        A patrial of ``tree`` from ``tree_printer``. (Can only be this type)
+        afterwards.
+    key : str
+        A ``dict`` key. (Can only be this type)
+
+    Returns
+    -------
+    None
+
+    """
+    redact = {"token", "synapse_password", "client_secret", "client_id"}
+    return (
+        f"<redacted length={len(tree[key])}>" if key in redact else tree[key]
+    )
 
 
 # Make sure the number of places of the source files line number does not
@@ -85,38 +110,21 @@ def tree_printer(tree: t.Any, depth: int = 0) -> None:
                 secrets_filter(tree, key),
             )
         elif isinstance(tree[key], list | tuple | set | frozenset):
-            logger.debug(
-                "%s├─── %s: [%s]",
-                "│ " * depth,
-                key,
-                ", ".join(tree[key]),
-            )
+            s = tuple(s for s in tree[key] if isinstance(s, str))
+            ns = (s for s in tree[key] if not isinstance(s, str))
+            if len(s) > 0:
+                logger.debug(
+                    "%s├─── %s: [%s]",
+                    "│ " * depth,
+                    key,
+                    ", ".join(s),
+                )
+            for n in ns:
+                tree_printer(n, depth + 1)
         else:
             logger.debug("%s├─┬─ %s:", "│ " * depth, key)
             tree_printer(tree[key], depth + 1)
     logger.debug("%s┴", "│ " * depth)
-
-
-def secrets_filter(tree: dict[str, str], key: str) -> t.Any:
-    """Redact secrets when printing the configuration file.
-
-    Parameters
-    ----------
-    tree : dict [str, str]
-        A patrial of ``tree`` from ``tree_printer``. (Can only be this type)
-        afterwards.
-    key : str
-        A ``dict`` key. (Can only be this type)
-
-    Returns
-    -------
-    None
-
-    """
-    redact = {"token", "synapse_password", "client_secret", "client_id"}
-    return (
-        f"<redacted length={len(tree[key])}>" if key in redact else tree[key]
-    )
 
 
 class JinjaUndefined(Undefined):  # type: ignore  # noqa: PGH003
@@ -278,7 +286,10 @@ class YAML:
         return t.cast(Config, {})
 
     @staticmethod
-    def apply_defaults(config: Config, server: str) -> Config:  # noqa: C901
+    def apply_defaults(  # noqa: C901 PLR0912 PLR0915
+        config: Config,
+        server: str,
+    ) -> Config:
         """Apply defaults to the configuration.
 
         Parameters
@@ -348,6 +359,18 @@ class YAML:
                         "urn:matrix:org.matrix.msc2967.client:api:*",
                     }
                 )
+            )
+
+        try:
+            config["servers"][server]["alias"]
+        except KeyError:
+            config["servers"][server]["alias"] = t.cast(ConfigServerAlias, {})
+
+        try:
+            config["servers"][server]["alias"]["room"]
+        except KeyError:
+            config["servers"][server]["alias"]["room"] = t.cast(
+                tuple[ConfigServerAliasRoom, ...], ()
             )
 
         #
@@ -908,6 +931,59 @@ class YAML:
             case _:
                 err_msg = "Unknown Token"
                 raise ShouldNeverHappenError(err_msg)
+
+    def get_room_alias(self, alias: str) -> str | None:
+        """
+        Retrieve the room ID associated with a given alias name.
+
+        Parameters
+        ----------
+        alias : str
+            The name of the alias to look up.
+
+        Returns
+        -------
+        room_id : str, optional
+            The room ID if found, otherwise None.
+
+        Raises
+        ------
+        InternalResponseError
+            If multiple aliases with the same name are found.
+
+        """
+        alias = alias.strip().lower()
+
+        aliases: tuple[ConfigServerAliasRoom, ...] = self.__yaml["server"][
+            "alias"
+        ]["room"]
+        logger.debug("available_aliases: %s", aliases)
+
+        filtered_aliases: tuple[str, ...] = tuple(
+            a["room_id"] for a in aliases if a["name"] == alias
+        )
+
+        logger.debug("filtered_aliases: %s", filtered_aliases)
+
+        if len(filtered_aliases) > 1:
+            err_msg: str = (
+                "The confiuration contains room aliases with the same name. "
+                "The names must be unique."
+            )
+            logger.error(err_msg)
+            raise InternalResponseError(err_msg)
+
+        if len(filtered_aliases) < 1:
+            logger.debug("Did not find an alias with the name: %s", alias)
+            return None
+        found: str = filtered_aliases[0].strip()
+
+        logger.debug(
+            "Found alias '%s' with room ID: %s",
+            alias,
+            found,
+        )
+        return found
 
     def __repr__(self: YAML) -> str:
         """Wrap RuamelYAML repr."""

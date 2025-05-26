@@ -39,6 +39,20 @@ class ConfigServer(t.TypedDict):
     api: ConfigServerAPI
     ssh: ConfigServerSSH
     maintenance: ConfigServerMaintenance
+    alias: ConfigServerAlias
+
+
+class ConfigServerAlias(t.TypedDict):
+    """Add a `alias` to `server` in the YAML config structure."""
+
+    room: tuple[ConfigServerAliasRoom, ...]
+
+
+class ConfigServerAliasRoom(t.TypedDict):
+    """Add a `room` to `server.alias` in the YAML config structure."""
+
+    name: str
+    room_id: str
 
 
 class ConfigServerAnsible(t.TypedDict):

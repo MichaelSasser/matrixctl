@@ -73,7 +73,7 @@ def send_event(  # noqa: PLR0913 C901 PLR0912 PLR0911
     """
     # room identifier
     sanitized_room: str | t.Literal[False] | None = sanitize_room_identifier(
-        room
+        room, yaml.get_room_alias
     )
     if sanitized_room is None:
         logger.error("Room identifier is missing")
