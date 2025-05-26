@@ -14,14 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Use this module to add the ``send-event`` subcommand to ``matrixctl``."""
+"""Use this module to add the ``send-message`` subcommand to ``matrixctl``."""
 
 from __future__ import annotations
 
 import typing as t
 
 from argparse import ArgumentParser
-from argparse import BooleanOptionalAction
 from argparse import _SubParsersAction
 
 from matrixctl.command import SubCommand
@@ -33,11 +32,11 @@ __email__: str = "Michael@MichaelSasser.org"
 
 
 @subparser(SubCommand.ROOM)
-def subparser_send_event(
+def subparser_send_message(
     subparsers: _SubParsersAction[t.Any],
     common_parser: ArgumentParser,
 ) -> None:
-    """Create a subparser for the ``matrixctl send-event`` command.
+    """Create a subparser for the ``matrixctl send-message`` command.
 
     Parameters
     ----------
@@ -50,8 +49,8 @@ def subparser_send_event(
 
     """
     parser: ArgumentParser = subparsers.add_parser(
-        "send-event",
-        help="Send an event to a room",
+        "send-message",
+        help="Send a message to a room",
         parents=[common_parser],
     )
     parser.add_argument(
@@ -60,33 +59,26 @@ def subparser_send_event(
     )
 
     parser.add_argument(
-        "content",
-        help=("The Content as JSON string"),
+        "body",
+        help=("The message as plain text"),
     )
     parser.add_argument(
-        "-t",
-        "--type",
-        help=("The type of the event to send (default: m.room.message)"),
-        default="m.room.message",
+        "-f",
+        "--formatted-body",
+        help=("The HTML formatted version of the message"),
     )
     parser.add_argument(
-        "-s",
-        "--state-key",
-        help=("The state key of the event to send (only for state events"),
+        "-n",
+        "--notice",
+        help=("Set msgtype to m.notice instead of m.text"),
+        action="store_true",
     )
     parser.add_argument(
         "--confirm",
         help=("Show the event before sending it and ask for confirmation"),
-        type=bool,
-        default=True,
-        action=BooleanOptionalAction,
+        action="store_true",
     )
-    parser.add_argument(
-        "--force",
-        help=("Ignore all warnings and send the event anyway"),
-        type=bool,
-    )
-    parser.set_defaults(addon="send_event")
+    parser.set_defaults(addon="send_message")
 
 
 # vim: set ft=python :
