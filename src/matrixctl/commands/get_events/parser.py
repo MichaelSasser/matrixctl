@@ -105,10 +105,7 @@ def subparser_get_events(
         "--since",
         action=ArgparseActionDateParser,
         time_direction=TimeDirection.PAST,
-        help=(
-            "Show events on or newer than the specified date and time. "
-            "(Date must be in the past)"
-        ),
+        help=("Show events on or newer than the specified date and time."),
     )
     parser.add_argument(
         "-u",
