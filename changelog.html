@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changelog &mdash; MatrixCtl None.0.14.1.0 documentation</title>
+  <title>Changelog &mdash; MatrixCtl None.0.15.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -14,7 +14,7 @@
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=b14809f9"></script>
+      <script src="_static/documentation_options.js?v=3ded7ce6"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
@@ -83,36 +83,66 @@
 <p>You can find the issue tracker on
 <a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues">GitHub</a>.</p>
 <section id="id1">
-<h3><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/compare/v0.14.0...v0.14.1">0.14.1</a> (2025-03-17)<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<h3><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/compare/v0.14.1...v0.15.0">0.15.0</a> (2025-05-26)<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <section id="features">
 <h4>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><strong>rows:</strong> render avatars in membership events (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/d152b441d8aa1001549aadd9c83133e0045941c0">d152b44</a>)</p></li>
+<li><p><strong>command:</strong> do not redefine variable from outer scope (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/9fe9e2fdf5ba4c24cfc578d70a35ebfb3b4771b9">9fe9e2f</a>)</p></li>
+<li><p><strong>command:</strong> nest commands in subcommands (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/d7401a509e9bc2d778a1ac70e849bd7271721b5c">d7401a5</a>)</p></li>
+<li><p><strong>commands:</strong> add send_event command (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/e966c0b339049e0703ac38c06b5570ad5e0fd7c8">e966c0b</a>)</p></li>
+<li><p><strong>commands:</strong> add send_message command (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/f53ed746c851bffa379abaea1d8e63968161cb6c">f53ed74</a>)</p></li>
+<li><p><strong>commands:</strong> Revisit the help texts (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/17329d545929270302b641be3680e09ca7c22d1c">17329d5</a>)</p></li>
+<li><p><strong>commands:</strong> Revisit the help texts for <strong>main</strong> (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/fc8b89b9d25107c1edc155322246442794fd0884">fc8b89b</a>)</p></li>
+<li><p><strong>config:</strong> add an option to ger_username, to either return the user_id or just the localpart (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/d431b38ba986e7850f4575bbd5ecf8ad5cb756f0">d431b38</a>)</p></li>
+<li><p><strong>renovate:</strong> enable pre-commit and schedule lock file maintenance (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/d800c7027dac37ded11b9eb4ff0530c48e801136">d800c70</a>)</p></li>
 </ul>
 </section>
 <section id="bug-fixes">
 <h4>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><strong>deps:</strong> update dependency sphinx-autodoc-typehints to &gt;=3,&lt;3.2 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/875">#875</a>) (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/53371db52faa94df0123ab25ad5f352959d91927">53371db</a>)</p></li>
+<li><p><strong>deps:</strong> update dependency rich to v14 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/881">#881</a>) (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/17e61275c960ce16d8dcda3673c7e849f6c5900c">17e6127</a>)</p></li>
+<li><p><strong>deps:</strong> update dependency sphinx-autodoc-typehints to &gt;=3,&lt;3.3 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/888">#888</a>) (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/b9aa57d9935f6bba873df0256953253781deba40">b9aa57d</a>)</p></li>
+<li><p><strong>release-please:</strong> fix manifest (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/8f23997869bf917eff59076b323d8c834f97bfaa">8f23997</a>)</p></li>
 </ul>
 </section>
 <section id="miscellaneous-chores">
 <h4>Miscellaneous Chores<a class="headerlink" href="#miscellaneous-chores" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>release 0.14.1 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/bf27865c3dceb771eff9d0c5ba4c8cf27c14d88c">bf27865</a>)</p></li>
+<li><p>release 0.15.0 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/71f013da523f3a9471ca46ac71cc994b7bd5f5c8">71f013d</a>)</p></li>
 </ul>
 </section>
 </section>
 <section id="id2">
-<h3><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/compare/v0.13.0...v0.14.0">0.14.0</a> (2025-01-12)<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<h3><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/compare/v0.14.0...v0.14.1">0.14.1</a> (2025-03-17)<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <section id="id3">
 <h4>Features<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p>put the functionallity for rendering an image in terminal from a mxc into its own helper function (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/2053965b9ffa6ff4b1b68b4d20bb64c692841c75">2053965</a>)</p></li>
+<li><p><strong>rows:</strong> render avatars in membership events (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/d152b441d8aa1001549aadd9c83133e0045941c0">d152b44</a>)</p></li>
 </ul>
 </section>
 <section id="id4">
 <h4>Bug Fixes<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>deps:</strong> update dependency sphinx-autodoc-typehints to &gt;=3,&lt;3.2 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/875">#875</a>) (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/53371db52faa94df0123ab25ad5f352959d91927">53371db</a>)</p></li>
+</ul>
+</section>
+<section id="id5">
+<h4>Miscellaneous Chores<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>release 0.14.1 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/bf27865c3dceb771eff9d0c5ba4c8cf27c14d88c">bf27865</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h3><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/compare/v0.13.0...v0.14.0">0.14.0</a> (2025-01-12)<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<section id="id7">
+<h4>Features<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>put the functionallity for rendering an image in terminal from a mxc into its own helper function (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/2053965b9ffa6ff4b1b68b4d20bb64c692841c75">2053965</a>)</p></li>
+</ul>
+</section>
+<section id="id8">
+<h4>Bug Fixes<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>ci:</strong> add manifest, move ‘extra-files’ into config (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/7a96f38a57521ad108d5e30bd780bb210651a939">7a96f38</a>)</p></li>
 <li><p><strong>deps:</strong> update dependency sphinx-autodoc-typehints to v3 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/866">#866</a>) (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/4192c74970b1da55d29d2e9185230d7e586a52a7">4192c74</a>)</p></li>
@@ -122,10 +152,10 @@
 </ul>
 </section>
 </section>
-<section id="id5">
-<h3><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/compare/v0.13.0...v0.13.0">0.13.0</a> (2024-12-31)<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
-<section id="id6">
-<h4>Features<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
+<section id="id9">
+<h3><a class="reference external" href="https://github.com/MichaelSasser/matrixctl/compare/v0.13.0...v0.13.0">0.13.0</a> (2024-12-31)<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<section id="id10">
+<h4>Features<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>get-events:</strong> Add option to format events as rows, with image support (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/859">#859</a>) (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/339fcad8ada0e2117e807487730e566554aa3f0c">339fcad</a>)</p></li>
 <li><p><strong>rows:</strong> make images in rows configurable (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/253b632e618b8e275ce8b972e62a01f1dc5ab9fd">253b632</a>)</p></li>
@@ -138,8 +168,8 @@
 <li><p><strong>readme:</strong> Improve wording (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/007e292d745d5325ad3a079c8c2d4a32f929653f">007e292</a>)</p></li>
 </ul>
 </section>
-<section id="id7">
-<h4>Miscellaneous Chores<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<section id="id11">
+<h4>Miscellaneous Chores<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>release 0.13.0 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/5ac62f4fa4edd788144ed7b2be1f3f592ea92d64">5ac62f4</a>)</p></li>
 <li><p>release 0.13.0b3 (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/commit/b152e4bcb360ebf5ef95e0ccc4ee452eb91c9cca">b152e4b</a>)</p></li>
@@ -148,8 +178,8 @@
 </section>
 <section id="b2-2024-12-28">
 <h3>[0.12.1b2] - 2024-12-28<a class="headerlink" href="#b2-2024-12-28" title="Link to this heading"></a></h3>
-<section id="id8">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+<section id="id12">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Move versioning from semver to PyPA spec due to normalization</p></li>
 </ul>
@@ -220,8 +250,8 @@
 <li><p>Bump version from v0.12.0 to v0.12.1-beta.1</p></li>
 </ul>
 </section>
-<section id="id9">
-<h4>🚀 Features<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+<section id="id13">
+<h4>🚀 Features<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>(addon)</em> Add download command</p></li>
 <li><p>Remove unused dependencies</p></li>
@@ -231,8 +261,8 @@
 <li><p><em>(ci)</em> Add codeql workflow</p></li>
 </ul>
 </section>
-<section id="id10">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
+<section id="id14">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>(deps)</em> Update dependency psycopg to v3.2.1</p></li>
 <li><p><em>(docs)</em> Add docs for the download feature</p></li>
@@ -257,8 +287,8 @@
 <li><p><em>(pre-commit)</em> Ignore all <code class="docutils literal notranslate"><span class="pre">lock</span></code> files</p></li>
 </ul>
 </section>
-<section id="id11">
-<h4>📚 Documentation<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
+<section id="id15">
+<h4>📚 Documentation<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>(changelog)</em> Make the old changelog available under changelog</p></li>
 <li><p>Replace rye with uv</p></li>
@@ -266,10 +296,10 @@
 </ul>
 </section>
 </section>
-<section id="id12">
-<h3>[0.12.0] - 2024-06-05<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
-<section id="id13">
-<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
+<section id="id16">
+<h3>[0.12.0] - 2024-06-05<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<section id="id17">
+<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>(dependencies)</em> Update mypy v0.991 -&gt; v1.1.1</p></li>
 <li><p><em>(dependencies)</em> Bump sphinx v5.2.3 -&gt; v6.1.3</p></li>
@@ -282,16 +312,16 @@
 <li><p><em>(matrixctl)</em> Bump version from v0.12.0-beta.2 to v0.12.0</p></li>
 </ul>
 </section>
-<section id="id14">
-<h4>🚀 Features<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
+<section id="id18">
+<h4>🚀 Features<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Use ruff instead of flake8 and isort (and addons); refactor</p></li>
 <li><p>Update pre-commit, also run tests on 3.11</p></li>
 <li><p>Add largest-rooms command</p></li>
 </ul>
 </section>
-<section id="id15">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
+<section id="id19">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>(deepsource)</em> Add skipcq: PYL-W0212 for intentionally use of private type _SubParsersAction</p></li>
 <li><p><em>(largest-rooms)</em> Use processed variable to produce output for table instead of the input variable</p></li>
@@ -305,8 +335,8 @@
 </section>
 <section id="beta-2-2023-03-23">
 <h3>[0.12.0-beta.2] - 2023-03-23<a class="headerlink" href="#beta-2-2023-03-23" title="Link to this heading"></a></h3>
-<section id="id16">
-<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id16" title="Link to this heading"></a></h4>
+<section id="id20">
+<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Update dependencies</p></li>
 <li><p><em>(workflow)</em> Update Python 3.9 -&gt; 3.10</p></li>
@@ -317,15 +347,15 @@
 <li><p>Bump version from v0.12.0-beta.1 to v0.12.0-beta.2</p></li>
 </ul>
 </section>
-<section id="id17">
-<h4>🚀 Features<a class="headerlink" href="#id17" title="Link to this heading"></a></h4>
+<section id="id21">
+<h4>🚀 Features<a class="headerlink" href="#id21" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>(tests)</em> Add tests for sanitizers</p></li>
 <li><p>Add force-purge argument to delroom</p></li>
 </ul>
 </section>
-<section id="id18">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
+<section id="id22">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Lazy formatting of message string passed to logging module</p></li>
 <li><p>False positive BAN-B601</p></li>
@@ -341,14 +371,14 @@
 </section>
 <section id="beta-1-2021-12-02">
 <h3>[0.12.0-beta.1] - 2021-12-02<a class="headerlink" href="#beta-1-2021-12-02" title="Link to this heading"></a></h3>
-<section id="id19">
-<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id19" title="Link to this heading"></a></h4>
+<section id="id23">
+<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id23" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Add breaking newsfragment</p></li>
 </ul>
 </section>
-<section id="id20">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id20" title="Link to this heading"></a></h4>
+<section id="id24">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id24" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>(purge-remote-media)</em> Message rooms -&gt; media files</p></li>
 <li><p><em>(purge-remote-media)</em> Message rooms -&gt; media files</p></li>
@@ -359,25 +389,25 @@
 </ul>
 </section>
 </section>
-<section id="id21">
-<h3>[0.11.4] - 2021-12-01<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
-<section id="id22">
-<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id22" title="Link to this heading"></a></h4>
+<section id="id25">
+<h3>[0.11.4] - 2021-12-01<a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
+<section id="id26">
+<h4>⚙️ Miscellaneous Tasks<a class="headerlink" href="#id26" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>(pre-commit)</em> Update dependencies</p></li>
 </ul>
 </section>
-<section id="id23">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id23" title="Link to this heading"></a></h4>
+<section id="id27">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id27" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>(api)</em> Typehints</p></li>
 </ul>
 </section>
 </section>
-<section id="id24">
-<h3>[0.11.3] - 2021-11-16<a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
-<section id="id25">
-<h4>🚀 Features<a class="headerlink" href="#id25" title="Link to this heading"></a></h4>
+<section id="id28">
+<h3>[0.11.3] - 2021-11-16<a class="headerlink" href="#id28" title="Link to this heading"></a></h3>
+<section id="id29">
+<h4>🚀 Features<a class="headerlink" href="#id29" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Implement make-room-admin API</p></li>
 <li><p>Implement get context API</p></li>
@@ -392,36 +422,36 @@
 <li><p>Add missing newsfragment and reorder release workflow</p></li>
 </ul>
 </section>
-<section id="id26">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id26" title="Link to this heading"></a></h4>
+<section id="id30">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id30" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><em>(users)</em> Set timeout to 10s</p></li>
 <li><p>Wrap long line</p></li>
 </ul>
 </section>
 </section>
-<section id="id27">
-<h3>[0.11.2] - 2021-09-26<a class="headerlink" href="#id27" title="Link to this heading"></a></h3>
-<section id="id28">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id28" title="Link to this heading"></a></h4>
+<section id="id31">
+<h3>[0.11.2] - 2021-09-26<a class="headerlink" href="#id31" title="Link to this heading"></a></h3>
+<section id="id32">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id32" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Unguarded next()</p></li>
 </ul>
 </section>
 </section>
-<section id="id29">
-<h3>[0.10.1] - 2021-06-17<a class="headerlink" href="#id29" title="Link to this heading"></a></h3>
-<section id="id30">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id30" title="Link to this heading"></a></h4>
+<section id="id33">
+<h3>[0.10.1] - 2021-06-17<a class="headerlink" href="#id33" title="Link to this heading"></a></h3>
+<section id="id34">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id34" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Use secure, temporary directory for ansible_runner’s private data (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/120">#120</a>)</p></li>
 </ul>
 </section>
 </section>
-<section id="id31">
-<h3>[0.9.0] - 2021-04-23<a class="headerlink" href="#id31" title="Link to this heading"></a></h3>
-<section id="id32">
-<h4>📚 Documentation<a class="headerlink" href="#id32" title="Link to this heading"></a></h4>
+<section id="id35">
+<h3>[0.9.0] - 2021-04-23<a class="headerlink" href="#id35" title="Link to this heading"></a></h3>
+<section id="id36">
+<h4>📚 Documentation<a class="headerlink" href="#id36" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Add xref param type links</p></li>
 <li><p>Fix commandline example (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/77">#77</a>)</p></li>
@@ -429,23 +459,23 @@
 </ul>
 </section>
 </section>
-<section id="id33">
-<h3>[0.8.6] - 2021-04-17<a class="headerlink" href="#id33" title="Link to this heading"></a></h3>
-<section id="id34">
-<h4>🚀 Features<a class="headerlink" href="#id34" title="Link to this heading"></a></h4>
+<section id="id37">
+<h3>[0.8.6] - 2021-04-17<a class="headerlink" href="#id37" title="Link to this heading"></a></h3>
+<section id="id38">
+<h4>🚀 Features<a class="headerlink" href="#id38" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p><strong>main</strong>.py instead of application.py (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/62">#62</a>)</p></li>
 <li><p>Add towncrier to generate a changelog (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/63">#63</a>)</p></li>
 </ul>
 </section>
-<section id="id35">
-<h4>🐛 Bug Fixes<a class="headerlink" href="#id35" title="Link to this heading"></a></h4>
+<section id="id39">
+<h4>🐛 Bug Fixes<a class="headerlink" href="#id39" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Logging TypeError (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/45">#45</a>) (<a class="reference external" href="https://github.com/MichaelSasser/matrixctl/issues/66">#66</a>)</p></li>
 </ul>
 </section>
-<section id="id36">
-<h4>📚 Documentation<a class="headerlink" href="#id36" title="Link to this heading"></a></h4>
+<section id="id40">
+<h4>📚 Documentation<a class="headerlink" href="#id40" title="Link to this heading"></a></h4>
 <ul class="simple">
 <li><p>Add changelog to docs</p></li>
 <li><p>Minor</p></li>
