@@ -825,12 +825,18 @@ class YAML:
                 raise ConfigFileError(err_msg)
         self.api_auth_prepared = True
 
-    def get_api_username(self) -> str:
+    def get_api_username(self, *, full: bool = False) -> str:
         """Retrieve the API token for authentication.
 
         This method ensures API authentication is set up, then retrieves
         the username based on the configured authentication type. Supports
         'token' and 'oidc' auth types.
+
+        Parameters
+        ----------
+        full : bool, optional
+            If True, returns the full user identifier.
+            If False (default), it only returns the localpart.
 
         Returns
         -------
@@ -845,20 +851,24 @@ class YAML:
 
         """
         self.ensure_api_auth()
+        localpart: str
         match self.get("server", "api", "auth_type"):
             case "token":
-                return t.cast(
+                localpart = t.cast(
                     str, self.get("server", "api", "auth_token", "username")
                 )
             case "oidc":
                 localpart = self.get(
                     "server", "api", "auth_oidc", "user_info", "username"
                 )
-                server = self.get("server", "api", "domain")
-                return f"@{localpart}:{server}"
             case _:
                 err_msg = "Unknown Username"
                 raise ShouldNeverHappenError(err_msg)
+
+        if full:
+            server = self.get("server", "api", "domain")
+            return f"@{localpart}:{server}"
+        return localpart
 
     def get_api_token(self) -> str:
         """Retrieve the API token for authentication.
