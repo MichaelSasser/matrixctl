@@ -7,6 +7,13 @@ All notable changes to MatrixCtl will be documented in this file.
 You can find the issue tracker on
 [GitHub](https://github.com/MichaelSasser/matrixctl/issues).
 
+## [0.16.0](https://github.com/MichaelSasser/matrixctl/compare/v0.15.0...v0.16.0) (2025-05-30)
+
+
+### Features
+
+* **config:** add room alias feature for all sanitized rooms ([46bf91b](https://github.com/MichaelSasser/matrixctl/commit/46bf91b29958b396ec83a082b1cd6d0cb5b6cb70))
+
 ## [0.15.0](https://github.com/MichaelSasser/matrixctl/compare/v0.14.1...v0.15.0) (2025-05-26)
 
 
