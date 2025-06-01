@@ -189,7 +189,7 @@ def sanitize(
         identifier = str(identifier).strip()
         if pattern.match(identifier):
             logger.debug("The identifier is valid.")
-            return t.cast(str, identifier)
+            return identifier
 
     if fn_alias is not None:
         logger.debug(
