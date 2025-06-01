@@ -101,17 +101,19 @@ def tree_printer(tree: t.Any, depth: int = 0) -> None:
     if not isinstance(tree, dict):
         msg: str = "There is something wrong with your config file."
         raise ConfigFileError(msg)
-    for key in tree:
-        if isinstance(tree[key], str | int | float | bool):
+    for key, value in tree.items():
+        if isinstance(value, str | int | float | bool):
             logger.debug(
                 "%s├─── %s: %s",
                 "│ " * depth,
                 key,
                 secrets_filter(tree, key),
             )
-        elif isinstance(tree[key], list | tuple | set | frozenset):
-            s = tuple(s for s in tree[key] if isinstance(s, str))
-            ns = (s for s in tree[key] if not isinstance(s, str))
+        elif isinstance(value, list | tuple | set | frozenset):
+            s: tuple[str, ...] = tuple(s for s in value if isinstance(s, str))
+            ns: t.Generator[t.Any, None, None] = (
+                s for s in value if not isinstance(s, str)
+            )
             if len(s) > 0:
                 logger.debug(
                     "%s├─── %s: [%s]",
@@ -123,7 +125,7 @@ def tree_printer(tree: t.Any, depth: int = 0) -> None:
                 tree_printer(n, depth + 1)
         else:
             logger.debug("%s├─┬─ %s:", "│ " * depth, key)
-            tree_printer(tree[key], depth + 1)
+            tree_printer(value, depth + 1)
     logger.debug("%s┴", "│ " * depth)
 
 
