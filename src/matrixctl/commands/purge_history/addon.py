@@ -62,7 +62,10 @@ def addon(arg: Namespace, yaml: YAML) -> int:
 
     """
     sanitized_room_id: str | t.Literal[False] | None = (
-        sanitize_room_identifier(arg.room_id)
+        sanitize_room_identifier(
+            arg.room_id,
+            arg.get_room_alias,
+        )
     )
     if not sanitized_room_id:
         logger.error("Room ID is not valid or missing: %s", arg.room_id)
