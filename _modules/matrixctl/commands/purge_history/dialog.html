@@ -133,13 +133,6 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">request_body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="c1"># Sanitizing input</span>
-
-    <span class="c1"># check room_id (! = internal; # = local)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">room_id</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;!&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">arg</span><span class="o">.</span><span class="n">room_id</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)):</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;The room_id is incorrect. Please check it again.&quot;</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
     <span class="c1"># Delete local events; Q: Are you sure?</span>
     <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">local_events</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">arg</span><span class="o">.</span><span class="n">force</span><span class="p">:</span>
