@@ -55,13 +55,6 @@ def dialog_input(arg: Namespace) -> dict[str, str | int]:
     """
     request_body: dict[str, str | int] = {}
 
-    # Sanitizing input
-
-    # check room_id (! = internal; # = local)
-    if not (arg.room_id.startswith("!") or arg.room_id.startswith("#")):
-        logger.critical("The room_id is incorrect. Please check it again.")
-        sys.exit(1)
-
     # Delete local events; Q: Are you sure?
     if arg.local_events:
         if not arg.force:

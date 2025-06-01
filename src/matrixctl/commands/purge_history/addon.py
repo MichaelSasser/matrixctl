@@ -22,6 +22,7 @@ Use this module to add the ``purge-histoy`` subcommand to ``matrixctl``.
 from __future__ import annotations
 
 import logging
+import typing as t
 
 from argparse import Namespace
 from contextlib import suppress
@@ -33,6 +34,7 @@ from matrixctl.errors import InternalResponseError
 from matrixctl.handlers.api import RequestBuilder
 from matrixctl.handlers.api import request
 from matrixctl.handlers.yaml import YAML
+from matrixctl.sanitizers import sanitize_room_identifier
 from matrixctl.typehints import JsonDict
 
 
@@ -59,7 +61,11 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    arg.room_id = arg.room_id.strip()
+    sanitized_room_id: str | t.Literal[False] | None = (
+        sanitize_room_identifier(arg.room_id)
+    )
+    if not sanitized_room_id:
+        logger.error("Room ID is not valid or missing: %s", arg.room_id)
 
     request_body: dict[str, str | int] = dialog_input(arg)
 
@@ -68,7 +74,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
     req: RequestBuilder = RequestBuilder(
         token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
-        path=f"/_synapse/admin/v1/purge_history/{arg.room_id.strip()}",
+        path=f"/_synapse/admin/v1/purge_history/{sanitized_room_id}",
         method="POST",
         json=request_body,
         timeout=10,
