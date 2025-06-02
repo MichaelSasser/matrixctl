@@ -124,7 +124,7 @@ def render_image_from_mxc(
 
     # Test: This should later follow the entry
     buf_image = download_media_to_buf(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         media_id=uri_sanitized,
     )

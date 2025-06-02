@@ -56,7 +56,7 @@ def handle_purge_status(yaml: YAML, purge_id: str) -> int:
 
     """
     req: RequestBuilder = RequestBuilder(
-        token=yaml.get("server", "api", "token"),
+        token=yaml.get_api_token(),
         domain=yaml.get("server", "api", "domain"),
         path=f"/_synapse/admin/v1/purge_history_status/{purge_id}",
         method="GET",
