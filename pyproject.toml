@@ -1,6 +1,6 @@
 [project]
 name = "matrixctl"
-version = "0.15.1"
+version = "0.15.2"
 description = "Control, manage, provision and deploy matrix homeservers."
 authors = [{ name = "Michael Sasser", email = "Michael@MichaelSasser.org" }]
 maintainers = [{ name = "Michael Sasser", email = "Michael@MichaelSasser.org" }]
