@@ -208,7 +208,7 @@
 
     <span class="c1"># Test: This should later follow the entry</span>
     <span class="n">buf_image</span> <span class="o">=</span> <span class="n">download_media_to_buf</span><span class="p">(</span>
-        <span class="n">token</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;token&quot;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get_api_token</span><span class="p">(),</span>
         <span class="n">domain</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;server&quot;</span><span class="p">,</span> <span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;domain&quot;</span><span class="p">),</span>
         <span class="n">media_id</span><span class="o">=</span><span class="n">uri_sanitized</span><span class="p">,</span>
     <span class="p">)</span>
