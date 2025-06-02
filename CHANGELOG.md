@@ -7,6 +7,23 @@ All notable changes to MatrixCtl will be documented in this file.
 You can find the issue tracker on
 [GitHub](https://github.com/MichaelSasser/matrixctl/issues).
 
+## [0.15.2](https://github.com/MichaelSasser/matrixctl/compare/v0.15.1...v0.15.2) (2025-06-02)
+
+
+### Features
+
+* **yaml:** simplify tree_printer a little ([424874d](https://github.com/MichaelSasser/matrixctl/commit/424874df90710180f98132b0ccb1afa1d926b2d0))
+
+
+### Bug Fixes
+
+* **print_helpers:** use new token method ([0c39f05](https://github.com/MichaelSasser/matrixctl/commit/0c39f05048d623b2bba166d2749ca5907631c88b))
+
+
+### Miscellaneous Chores
+
+* release 0.15.2 ([62077fa](https://github.com/MichaelSasser/matrixctl/commit/62077fa8f8586c96eb5569324d63973cb8f9ea6a))
+
 ## [0.15.1](https://github.com/MichaelSasser/matrixctl/compare/v0.15.0...v0.15.1) (2025-06-01)
 
 
