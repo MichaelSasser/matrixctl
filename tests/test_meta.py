@@ -28,6 +28,8 @@ import re
 
 from packaging import version as pversion
 
+from matrixctl import __version__
+
 
 logger = logging.getLogger(__name__)
 
@@ -59,8 +61,6 @@ def test_version() -> None:
     )
 
     # Exercise
-    from matrixctl import __version__
-
     actual = __version__
 
     # Verify
