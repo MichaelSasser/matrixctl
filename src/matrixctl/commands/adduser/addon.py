@@ -66,7 +66,7 @@ def addon(arg: Namespace, yaml: YAML) -> int:
         Non-zero value indicates error code, or zero on success.
 
     """
-    passwd: str = create_user(arg.user, arg.admin)
+    passwd: str = create_user(arg.user, admin=arg.admin)
 
     if arg.ansible:
         ansible_run(
