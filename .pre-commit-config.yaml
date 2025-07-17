@@ -5,7 +5,7 @@ exclude: ^.*\.lock$
 repos:
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.
-    rev: 0.7.21
+    rev: 0.7.22
     hooks:
       # Update the uv lockfile
       - id: uv-lock
