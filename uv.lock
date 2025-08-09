@@ -460,7 +460,7 @@ name = "exceptiongroup"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [
@@ -822,7 +822,7 @@ dev = [
     { name = "types-attrs", specifier = ">=19.1.0,<20.0.0" },
     { name = "types-dateparser", specifier = ">=1.2.0.20240420" },
     { name = "types-jinja2", specifier = ">=2.11.9,<3.0.0" },
-    { name = "types-paramiko", specifier = ">=3.4.0.20240423,<4.0.0.0" },
+    { name = "types-paramiko", specifier = ">=4.0.0.20250809,<4.1.0.0" },
     { name = "types-python-dateutil", specifier = ">=2.9.0.20241206" },
     { name = "types-setuptools", specifier = ">=75.1.0.20240917" },
 ]
@@ -1648,14 +1648,14 @@ wheels = [
 
 [[package]]
 name = "types-paramiko"
-version = "3.5.0.20250801"
+version = "4.0.0.20250809"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d5/c4/4df427c835e9c795662241410732ab936c6f58be798ec25ce7015771c448/types_paramiko-3.5.0.20250801.tar.gz", hash = "sha256:e79ff84eaf44f2a5ad811743edef5d9c0cd6632a264a526f00405b87db1ec99b", size = 28838, upload-time = "2025-08-01T03:48:52.777Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b7/1f/fff9b859cc3bf7bf36c27a223b2e1a57f420e5ed5da7c512ecab724d2725/types_paramiko-4.0.0.20250809.tar.gz", hash = "sha256:e1fbe847fd2106984fe7aac0c6c15caa93a91b6d4c5e56486f9b84bfb9203f9f", size = 28640, upload-time = "2025-08-09T03:16:22.424Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bd/5b/0f0bb1e45f7547d081ae9d490a88c6f6031d0f2c97459236e0a2a8b27207/types_paramiko-3.5.0.20250801-py3-none-any.whl", hash = "sha256:3e02a0fcf2b7e7b213e0cd569f7223ff9af417052a4d149d84172ebaa6fd742e", size = 39705, upload-time = "2025-08-01T03:48:51.855Z" },
+    { url = "https://files.pythonhosted.org/packages/16/ec/c1475ca868e044534e5ec7f6a7dbbfbc1cfde7a6db7d72e7d61c22ee08a7/types_paramiko-4.0.0.20250809-py3-none-any.whl", hash = "sha256:9777f62f209ced1daa8292f664e6a2975c84961e8ad56f9d4e677047dab0d9d5", size = 38796, upload-time = "2025-08-09T03:16:21.578Z" },
 ]
 
 [[package]]
