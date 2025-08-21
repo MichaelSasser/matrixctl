@@ -500,7 +500,6 @@ def request(
 ) -> httpx.Response: ...
 
 
-# flake8: noqa: C901
 def request(
     request_config: RequestBuilder | Generator[RequestBuilder, None, None],
 ) -> list[httpx.Response] | httpx.Response:

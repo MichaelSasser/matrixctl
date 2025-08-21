@@ -28,6 +28,7 @@ be determined, it will return ``None``.
 
 from __future__ import annotations
 
+import importlib.metadata as importlib_metadata  # Python >= 3.8
 import logging
 import re
 import typing as t
@@ -97,8 +98,6 @@ def __from_metadata(name: str) -> str | None:
         of it is stored in the packages metadata.
 
     """
-    import importlib.metadata as importlib_metadata  # Python >= 3.8
-
     logger.debug(
         "Trying to get the version from the metadata of the package %s.", name
     )
