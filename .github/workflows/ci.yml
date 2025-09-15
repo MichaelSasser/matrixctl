@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4.3.0
 
       # - name: "Set Python Version ${{ matrix.python-version }}"
       #   run: echo '${{ matrix.python-version }}' > .python-version
