@@ -161,7 +161,7 @@ name = "cffi"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "implementation_name != 'PyPy'" },
+    { name = "pycparser", marker = "(python_full_version < '3.11' and implementation_name != 'PyPy') or (implementation_name != 'PyPy' and platform_python_implementation != 'PyPy')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/eb/56/b1ba7935a17738ae8453301356628e8147c79dbb825bcbc73dc7401f9846/cffi-2.0.0.tar.gz", hash = "sha256:44d1b5909021139fe36001ae048dbdde8214afa20200eda0f64c068cac5d5529", size = 523588, upload-time = "2025-09-08T23:24:04.541Z" }
 wheels = [
@@ -534,7 +534,7 @@ name = "exceptiongroup"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [
@@ -923,7 +923,7 @@ dev = [
     { name = "types-attrs", specifier = ">=19.1.0,<20.0.0" },
     { name = "types-dateparser", specifier = ">=1.2.0.20240420" },
     { name = "types-jinja2", specifier = ">=2.11.9,<3.0.0" },
-    { name = "types-paramiko", specifier = ">=3.4.0.20240423,<4.0.0.0" },
+    { name = "types-paramiko", specifier = ">=4.0.0.20250822,<4.1.0.0" },
     { name = "types-python-dateutil", specifier = ">=2.9.0.20241206" },
     { name = "types-setuptools", specifier = ">=75.1.0.20240917" },
 ]
@@ -1829,14 +1829,14 @@ wheels = [
 
 [[package]]
 name = "types-paramiko"
-version = "3.5.0.20250801"
+version = "4.0.0.20250822"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d5/c4/4df427c835e9c795662241410732ab936c6f58be798ec25ce7015771c448/types_paramiko-3.5.0.20250801.tar.gz", hash = "sha256:e79ff84eaf44f2a5ad811743edef5d9c0cd6632a264a526f00405b87db1ec99b", size = 28838, upload-time = "2025-08-01T03:48:52.777Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b7/b8/c6ff3b10c2f7b9897650af746f0dc6c5cddf054db857bc79d621f53c7d22/types_paramiko-4.0.0.20250822.tar.gz", hash = "sha256:1b56b0cbd3eec3d2fd123c9eb2704e612b777e15a17705a804279ea6525e0c53", size = 28730, upload-time = "2025-08-22T03:03:43.262Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bd/5b/0f0bb1e45f7547d081ae9d490a88c6f6031d0f2c97459236e0a2a8b27207/types_paramiko-3.5.0.20250801-py3-none-any.whl", hash = "sha256:3e02a0fcf2b7e7b213e0cd569f7223ff9af417052a4d149d84172ebaa6fd742e", size = 39705, upload-time = "2025-08-01T03:48:51.855Z" },
+    { url = "https://files.pythonhosted.org/packages/79/a1/b3774ed924a66ee2c041224d89c36f0c21f4f6cf75036d6ee7698bf8a4b9/types_paramiko-4.0.0.20250822-py3-none-any.whl", hash = "sha256:55bdb14db75ca89039725ec64ae3fa26b8d57b6991cfb476212fa8f83a59753c", size = 38833, upload-time = "2025-08-22T03:03:42.072Z" },
 ]
 
 [[package]]
