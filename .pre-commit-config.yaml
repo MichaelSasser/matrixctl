@@ -19,7 +19,7 @@ repos:
 
   # pre-commit-hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       # Prevent giant files from being committed.
       - id: check-added-large-files
