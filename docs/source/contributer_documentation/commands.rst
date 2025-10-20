@@ -412,6 +412,19 @@ purge-remote-media
  :undoc-members:
  :show-inheritance:
 
+get_api_token
+-------------
+
+.. automodule:: matrixctl.commands.get_api_token.parser
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
+.. automodule:: matrixctl.commands.get_api_token.addon
+ :members:
+ :undoc-members:
+ :show-inheritance:
+
 delete-local-media
 ------------------
 
