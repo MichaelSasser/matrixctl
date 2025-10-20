@@ -62,7 +62,9 @@ strict = true
 [tool.uv]
 python-preference = "only-managed"
 managed = true
-dev-dependencies = [
+
+[dependency-groups]
+dev = [
   # Typesheds
   "types-setuptools>=75.1.0.20240917",
   "types-paramiko>=3.4.0.20240423,<4.0.0.0",
@@ -77,6 +79,7 @@ dev-dependencies = [
   "pre-commit>=3.8.0",
   "basedpyright>=1.18.2",
   "git-cliff>=2.6.1",
+
 ]
 
 [project.optional-dependencies]
