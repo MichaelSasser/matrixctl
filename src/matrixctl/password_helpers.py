@@ -30,7 +30,7 @@ __author__: str = "Michael Sasser"
 __email__: str = "Michael@MichaelSasser.org"
 
 
-def create_user(user: str, admin: bool | None = None) -> str:
+def create_user(user: str, *, admin: bool | None = None) -> str:
     """Ask the user to create a password.
 
     The user will be asked twice for a password. After
